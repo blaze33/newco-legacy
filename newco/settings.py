@@ -177,6 +177,9 @@ INSTALLED_APPS = [
     # project
     "about",
     "profiles",
+    
+    #deployment
+    "south",
 ]
 
 FIXTURE_DIRS = [
