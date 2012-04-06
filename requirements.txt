@@ -1,1 +1,0 @@
---requirement = ./newco/requirements/project.txt
