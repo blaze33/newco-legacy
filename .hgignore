@@ -6,7 +6,7 @@ syntax: glob
 *~
 
 #IDE files
-.settings/*
+.settings/**
 
 #setup files
 build/
