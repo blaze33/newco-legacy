@@ -13,3 +13,4 @@ build/
 
 #GIT setup
 .git/**
+.gitignore
