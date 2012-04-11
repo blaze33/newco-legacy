@@ -8,10 +8,12 @@
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
-    <h1>{% trans "Welcome to Pinax" %}</h1>
+    <br /> <h1 align="center">{% trans "NewCo Project" %}</h1>
+    <p align="center" style="font-family:Arial,sans-serif; font-size:2.5em;" ><i><b> --  Be Prepared  -- </b></i></p>
+    <br />
     <p>
         {% blocktrans %}
-        <b>Pinax</b> is a <a href="http://djangoproject.com/">Django</a>
+        <b>NewCo</b> is a <a href="http://djangoproject.com/">Django</a>
         project intended to provide a starting point for websites. By
         integrating numerous reusable Django apps to take care of the
         things that many sites have in common, it lets you focus on what
@@ -35,9 +37,9 @@
         {% url acct_login as login_url %}
         {% ifsetting ACCOUNT_OPEN_SIGNUP %}
             {% url acct_signup as signup_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
+            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
         {% else %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn primary large">Log In</a> to try out the site.{% endblocktrans %}</p>
+            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-primary btn-large">Log In</a> to try out the site.{% endblocktrans %}</p>
         {% endifsetting %}
     {% endif %}
 {% endblock %}
