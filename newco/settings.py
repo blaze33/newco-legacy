@@ -7,7 +7,7 @@ import socket
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-if socket.gethostname() == 'newco-project.fr':
+if socket.gethostname() == 'herokuapp.com':
     DEBUG = False
 else:
     DEBUG = True
