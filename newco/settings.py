@@ -7,10 +7,7 @@ import socket
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-if socket.gethostname() == 'herokuapp.com':
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through the staticfiles app.
