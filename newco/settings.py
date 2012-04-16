@@ -177,6 +177,7 @@ INSTALLED_APPS = [
     
     #deployment
     "south",
+    "gunicorn",
 ]
 
 FIXTURE_DIRS = [

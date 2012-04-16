@@ -18,6 +18,7 @@ django-openid==0.3a1
 django-pagination==1.0.7
 django-staticfiles==1.2.1
 django-timezones==0.2
+gunicorn==0.14.2
 idios==0.2a1
 metron==0.1
 pinax-theme-bootstrap==2.0.1
