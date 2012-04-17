@@ -8,25 +8,17 @@
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
-    <br /> <h1 align="center">{% trans "NewCo Project" %}</h1>
-    <p align="center" style="font-family:Arial,sans-serif; font-size:2.5em;" ><i><b> --  Be Prepared  -- </b></i></p>
     <br />
-    <p>
-        {% blocktrans %}
-        <b>NewCo</b> is a <a href="http://djangoproject.com/">Django</a>
-        project intended to provide a starting point for websites. By
-        integrating numerous reusable Django apps to take care of the
-        things that many sites have in common, it lets you focus on what
-        makes your site different.
-        {% endblocktrans %}
-    </p>
+    <div style="text-align:center">
+    <h1>NewCo</h1>
+    <i><h2>Buy better, Buy faster.</h2></i></div>
+    <br />
     
-    <h2>About Basic Project</h2>
+    <h2>Avec NewCo, Achetez en toute confiance.</h2>
     <p>
         {% blocktrans %}
-        This project takes the account_project and adds profiles and notifications.
-        It is a foundation suitable for many sites that have user accounts with
-        profiles.
+        Vous trouverez ici l'objectivité et la qualité des recommandations produits qu'on trouve difficilement sur internet. Pour cela, on a besoin de vos connaissances! 
+        <br /> <br />Vous êtes surement experts dans un domaine. Si c'est autre chose que la nouvelle saison de Gossip Girl, faites-le nous savoir!
         {% endblocktrans %}
     </p>
     
@@ -42,4 +34,55 @@
             <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-primary btn-large">Log In</a> to try out the site.{% endblocktrans %}</p>
         {% endifsetting %}
     {% endif %}
+{% endblock %}
+
+{% block column-1 %}
+<h2>Le Coin Cuisine</h2>
+    <img src="{{STATIC_URL}}img/robotmixeur.jpg" alt="Robot" align="left" style="border:4px solid white;"/> 
+Ici, vous saurez tout sur comment équiper votre cuisine. Vous pourrez découvrir les appareils de cuisine de vos amis, ainsi que plusieurs experts reconnus, dont des chefs étoilés.
+{% endblock %}
+
+{% block column-2 %}
+<h2>Le Coin Passion</h2>
+    <img src="{{STATIC_URL}}img/raquette.jpg" alt="Raquette" align="left" style="border:4px solid white;"/> Les produits passions, c'est par là. Faites-nous partager vos passions, et pourquoi pas découvrir un nouvel univers.
+{% endblock %}
+{% block column-3 %}
+<h2>Règles du Jeu</h2>
+<img src="{{STATIC_URL}}img/thumbs.jpg" alt="thumbs" align="left" style="border:4px solid white;"/> Votez, Classez, Récompensez!
+{% endblock %}
+
+{% block body_base %}
+{{ block.super }}
+<br />
+<div class="container">
+    <div class="row">
+	    <div class="span4">
+            <h2>F.Lalanne Fanbase</h2>
+                <img src="{{STATIC_URL}}img/guitare.jpg" alt="Guitare" align="left" style="border:4px solid white;"/> 
+    Vous, les ronds de cuir, fans de hard rock ou d'électro. Ambiancez un peu et dites-nous quel matériel il faut pour envoyer le gros son, la sauce, la puree...Pour faire chier les voisins quoi!
+	    </div>
+	<div class="span4">
+		<h2>Coup de coeur</h2>
+    <img src="{{STATIC_URL}}img/coeur.jpg" alt="Coeur" align="left" style="border:4px solid white;"/> 
+    Le coup de coeur de la semaine. Ce qui est in (le must-have) et ce qui est out (le fashion faux-pas, ou plutot le lave-linge faux-pas)
+    </div>
+    <div class="span4">
+		<h2>Concours</h2>
+    <img src="{{STATIC_URL}}img/podium.jpg" alt="Podium" align="left" style="border:4px solid white;"/> 
+    Des concours seront très bientot organisés, pour récompenser les meilleurs experts, ce dans plusieurs domaines encore à l'étude. Un conseil: c'est le moment de retourner bachoter pour tout savoir des dernières tendances.</div>
+    </div>
+    <div class="row">
+    <div class="span6">
+    <h2>Questions/Réponses</h2>
+Vous hésitez entre 2 produits? 
+<br />Vous avez seulement quelques questions précises à poser à nos "Rockstars"? 
+<br />Voire même, vous aimez bien poser des questions pour embêter les gens. Participez, on adore ca!
+    </div>
+    <div class="span6">
+		<h2>Les Zexperts</h2>
+    <img src="{{STATIC_URL}}img/experts.jpg" alt="Experts" align="left" style="border:4px solid white;"/> 
+    Retrouvez une selection des meilleurs experts du mois, leur train de vie. Et ce qu'ils ont a vous dire, si c'est le cas.</div>
+</div>
+</div>
+
 {% endblock %}
