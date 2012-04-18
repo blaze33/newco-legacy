@@ -9,3 +9,6 @@ class Profile(ProfileBase):
     about = models.TextField(_("about"), null=True, blank=True)
     location = models.CharField(_("location"), max_length=40, null=True, blank=True)
     website = models.URLField(_("website"), null=True, blank=True, verify_exists=False)
+    
+    def get_absolute_url(self):
+        return "/profiles/profile/%s/" % self.user

@@ -155,6 +155,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.comments",
     
     "pinax.templatetags",
     
@@ -175,6 +176,8 @@ INSTALLED_APPS = [
     "idios",
     "metron",
     "social_auth",
+    "configurableproduct",
+    "shop",
     
     # Pinax
     "pinax.apps.account",
@@ -184,6 +187,7 @@ INSTALLED_APPS = [
     "about",
     "profiles",
     "socauth",
+    "pp",
     
     
     #deployment
@@ -213,7 +217,7 @@ ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
+#    "pinax.apps.account.auth_backends.AuthenticationBackend",
     
     # social_auth backends
 #    'social_auth.backends.twitter.TwitterBackend',
@@ -249,6 +253,7 @@ LOGIN_ERROR_URL = LOGIN_URL
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 
+ENABLE_CPRODUCT_ADMIN = True
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
