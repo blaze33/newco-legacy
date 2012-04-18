@@ -219,15 +219,16 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 # S3 storage settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
