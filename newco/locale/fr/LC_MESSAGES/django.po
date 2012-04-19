@@ -22,7 +22,7 @@ msgstr "Bienvenue"
 
 #: templates/homepage.html:12
 msgid "Welcome to Pinax"
-msgstr "Bienevenue sur le site"
+msgstr "Bienvenue sur le site"
 
 #: templates/homepage.html:15
 msgid ""

@@ -7,10 +7,7 @@ import socket
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-if socket.gethostname() == 'newco-project.fr':
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through the staticfiles app.
@@ -203,6 +200,8 @@ INSTALLED_APPS = [
     
     #deployment
     "south",
+    "gunicorn",
+    "storages",
 ]
 
 FIXTURE_DIRS = [
@@ -220,7 +219,7 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_OPEN_SIGNUP = False
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
@@ -269,6 +268,18 @@ ENABLE_CPRODUCT_ADMIN = True
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
+
+# S3 storage settings
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

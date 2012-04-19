@@ -7,6 +7,8 @@
 # See http://pip-installer.org/requirement-format.html for more information.
 
 South>=0.7.4
+psycopg2==2.4.5
+
 django-social-auth>=0.6.6
 oauth2>=1.5.211
 selenium>=2.20.0
