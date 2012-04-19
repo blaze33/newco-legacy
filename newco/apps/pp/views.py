@@ -10,7 +10,9 @@ from configurableproduct.models import ProductType
 def index(request):
     product_list = DProduct.objects.all()
     producttype_list = ProductType.objects.all()
-    return render_to_response('pp/index.html', {'product_list': product_list, 'producttype_list': producttype_list})
+    return render_to_response('pp/index.html',
+                              {'product_list': product_list, 'producttype_list': producttype_list},
+                              context_instance=RequestContext(request))
 
 def detail(request, product_id):
     p = get_object_or_404(DProduct, pk=product_id)
@@ -22,5 +24,6 @@ def detail(request, product_id):
     else:
         form = CommentForm(p)
 
-    return render_to_response('pp/detail.html', {'product': p, 'form' : form},
+    return render_to_response('pp/detail.html',
+                              {'product': p, 'form' : form},
                                context_instance=RequestContext(request))

@@ -1,4 +1,12 @@
-{% load comments i18n %}
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load ifsetting_tag %}
+{% load account_tags %}
+{% load comments %}
+
+{% block body %}
 
 <h1>{{ product.name }}</h1>
 <h2>{{ product.type }}</h2>
@@ -39,3 +47,4 @@
 	<p><a href="{{ comment.user_url }}">{{ comment.user }}</a>, {{ comment.submit_date }}</p>
 	<p>{{ comment.comment }}</p>
 {% endfor %}
+{% endblock %}
