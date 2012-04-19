@@ -5,23 +5,51 @@
 
 {% block head_title %}{% trans "Welcome" %}{% endblock %}
 
+{% block extra_head_base %}
+{{ block.super }}
+
+<!--Google Analytics-->
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-30326927-1']);
+_gaq.push(['_setDomainName', 'newco-project.fr']);
+_gaq.push(['_setAllowLinker', true]);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<!--End of Google Analytics-->
+{% endblock %}
+
+
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
     <br />
     <div style="text-align:center">
     <h1>NewCo</h1>
-    <i><h2>Buy better, Buy faster.</h2></i></div>
+    <i>Buy better, Buy faster.</i></div>
     <br />
     
-    <h2>Avec NewCo, Achetez en toute confiance.</h2>
+    <div class="container">
+    <div class="row">
+	    <div class="span6">
+    <h3>Avec NewCo, Achetez en toute confiance.</h3>
     <p>
-        {% blocktrans %}
-        Vous trouverez ici l'objectivité et la qualité des recommandations produits qu'on trouve difficilement sur internet. Pour cela, on a besoin de vos connaissances! 
-        <br /> <br />Vous êtes surement experts dans un domaine. Si c'est autre chose que la nouvelle saison de Gossip Girl, faites-le nous savoir!
-        {% endblocktrans %}
+        Vous trouverez ici l'objectivité et la qualité des recommandations produits qu'on trouve difficilement sur internet. 
+       
     </p>
-    
+        </div>
+        
+        <div class="span6">
+        	<h3>Vous êtes surement experts dans un domaine. </h3>
+        	<p>Si c'est autre chose que Gossip Girl, participez!
+        </p> </div>
+    </div>    
+    </div>
     {% if user.is_authenticated %}
         {% url what_next as what_next_url %}
         <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}" class="btn primary large">What Next</a>?{% endblocktrans %}</p>
@@ -37,7 +65,7 @@
 {% endblock %}
 
 {% block column-1 %}
-<h2>Le Coin Cuisine</h2>
+<h2><a href="http://www.newco-project.fr">Le Coin Cuisine</a></h2>
     <img src="{{STATIC_URL}}img/robotmixeur.jpg" alt="Robot" align="left" style="border:4px solid white;"/> 
 Ici, vous saurez tout sur comment équiper votre cuisine. Vous pourrez découvrir les appareils de cuisine de vos amis, ainsi que plusieurs experts reconnus, dont des chefs étoilés.
 {% endblock %}
