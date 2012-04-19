@@ -1,0 +1,41 @@
+{% load comments i18n %}
+
+<h1>{{ product.name }}</h1>
+<h2>{{ product.type }}</h2>
+<ul>
+{% for field in product.field_list %}
+	<li>{{ field.field }} : {{ field.value }}</li>
+{% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+	<table>
+		<h4>Leave a review</h4>
+		<form action="{% comment_form_target %}" method="post">
+	    	{% csrf_token %}
+	    	{{ form }}
+	    	<tr>
+	      		<td colspan="2">
+	        		<input type="submit" name="submit" value="Post">
+	        		<input type="submit" name="preview" value="Preview">
+	      		</td>
+	    	</tr>
+	    	<input type="hidden" name="next" value='{% url product_detail product.id%}'>
+	  	</form>
+	</table>
+{% else %}
+	<p>{% blocktrans %}<a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a>{% endblocktrans %}</p>
+{% endif %}
+
+{% get_comment_count for product as comment_count %}
+
+<p>This product has {{ comment_count }} comments.</p>
+
+<h3>Previous reviews</h3>
+
+{% get_comment_list for product as comment_list %}
+
+{% for comment in comment_list %}
+	<p><a href="{{ comment.user_url }}">{{ comment.user }}</a>, {{ comment.submit_date }}</p>
+	<p>{{ comment.comment }}</p>
+{% endfor %}
