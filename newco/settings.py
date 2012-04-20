@@ -134,7 +134,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "pinax.apps.account.context_processors.account",
     
-    "notification.context_processors.notification",
+    # "notification.context_processors.notification", # commented for django 1.4
     "announcements.context_processors.site_wide_announcements",
 ]
 
@@ -154,7 +154,7 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
     
     # external
-    "notification", # must be first
+    # "notification", # must be first # commented for django 1.4
     "staticfiles",
     "compressor",
     "debug_toolbar",

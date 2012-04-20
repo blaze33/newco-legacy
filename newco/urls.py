@@ -21,7 +21,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
     url(r"^profiles/", include("idios.urls")),
-    url(r"^notices/", include("notification.urls")),
+    # url(r"^notices/", include("notification.urls")), # commented for django 1.4
     url(r"^announcements/", include("announcements.urls")),
 )
 
