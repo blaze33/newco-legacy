@@ -1,0 +1,45 @@
+<div class="slide-out-div">
+            <a class="handle" href="http://www.newco-project.fr/">Accueil</a>
+
+
+
+    <form class="well form-horizontal" action="http://www.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="Name">Nom (optionnel) :</label>
+            <div class="controls">
+                <input name="Name"class="span4"/>
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="email">Email (optionnel) :</label>
+            <div class="controls">
+                <input name="email" class="span4"/>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="subject" >Sujet (optionnel) :</label>
+            <div class="controls">
+                <input name="subject" class="span4"/>
+            </div>
+        </div>
+        
+        
+        <!--<div class="control-group">
+            <label class="control-label" for="input">Votre message :</label>
+        </div>-->
+        <textarea id="input" name="Feedback_html" rows="12" cols="20">Ecrivez votre message ici !</textarea><br><br>
+        
+        
+        <button class="btn btn-primary" type="submit">
+        	Envoyer !
+        </button>
+    </form>
+    Merci pour votre feedback !<br>
+    
+
+
+</div>
+
+
