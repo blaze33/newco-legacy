@@ -8,10 +8,12 @@
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
-    <br />
+    
     <div style="text-align:center">
     <h1>NewCo</h1>
-    <i><h2>Buy better, Buy faster.</h2></i></div>
+    <i><h2>Buy smarter, buy faster</h2></i></div>
+    <br />
+    <br />
     <br />
     
     <h2>Avec NewCo, Achetez en toute confiance.</h2>
@@ -22,6 +24,7 @@
         {% endblocktrans %}
     </p>
     
+    <!--
     {% if user.is_authenticated %}
         {% url what_next as what_next_url %}
         <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}" class="btn primary large">What Next</a>?{% endblocktrans %}</p>
@@ -34,6 +37,7 @@
             <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-primary btn-large">Log In</a> to try out the site.{% endblocktrans %}</p>
         {% endifsetting %}
     {% endif %}
+    -->
 {% endblock %}
 
 {% block column-1 %}
