@@ -25,7 +25,6 @@ urlpatterns = patterns("",
 
 urlpatterns += patterns("",
     url(r'^comments/', include('django.contrib.comments.urls')),
-#    (r'^comments/', include('django.contrib.comments.urls')),
 )
 
 urlpatterns += patterns("",

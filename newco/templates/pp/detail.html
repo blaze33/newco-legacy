@@ -21,25 +21,23 @@
 		<h4>Leave a review</h4>
 		<form action="{% comment_form_target %}" method="post">
 	    	{% csrf_token %}
-	    	{{ form }}
+	    	{{ form|as_bootstrap }}
 	    	<tr>
 	      		<td colspan="2">
 	        		<input type="submit" name="submit" value="Post">
-	        		<input type="submit" name="preview" value="Preview">
 	      		</td>
 	    	</tr>
-	    	<input type="hidden" name="next" value='{% url product_detail product.id%}'>
+	    	<input type="hidden" name="next" value='{% url product_detail product.id %}'>
 	  	</form>
 	</table>
+	
 {% else %}
-	<p>{% blocktrans %}<a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a>{% endblocktrans %}</p>
+	<p><a href="{% url acct_login %}" class="btn">Log In</a> or <a href="{% url acct_signup %}" class="btn primary">Sign Up</a> if you want to leave a review.</p>
 {% endif %}
 
 {% get_comment_count for product as comment_count %}
 
-<p>This product has {{ comment_count }} comments.</p>
-
-<h3>Previous reviews</h3>
+<h3>Previous reviews ({{ comment_count }} posted)</h3>
 
 {% get_comment_list for product as comment_list %}
 
@@ -47,4 +45,5 @@
 	<p><a href="{{ comment.user_url }}">{{ comment.user }}</a>, {{ comment.submit_date }}</p>
 	<p>{{ comment.comment }}</p>
 {% endfor %}
+
 {% endblock %}

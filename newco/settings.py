@@ -197,7 +197,6 @@ INSTALLED_APPS = [
     "socauth",
     "pp",
     
-    
     #deployment
     "south",
     "gunicorn",
@@ -227,7 +226,7 @@ ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
-#    "pinax.apps.account.auth_backends.AuthenticationBackend",
+    "pinax.apps.account.auth_backends.AuthenticationBackend",
     
     # social_auth backends
 #    'social_auth.backends.twitter.TwitterBackend',
