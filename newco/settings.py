@@ -4,6 +4,7 @@
 import os.path
 import posixpath
 import socket
+import django_pylibmc
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -102,6 +103,9 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -216,6 +220,12 @@ EMAIL_DEBUG = DEBUG
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
+    }
 }
 
 # S3 storage settings
