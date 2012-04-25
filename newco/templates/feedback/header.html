@@ -1,32 +1,52 @@
 
-<script src="http://tab-slide-out.googlecode.com/files/jquery.tabSlideOut.v1.3.js"></script>
-
-<script type="text/javascript">
-    $(function(){
-        $('.slide-out-div').tabSlideOut({
-            tabHandle: '.handle',                     //class of the element that will become your tab
-            pathToTabImage: 'http://newco-project.fr/static/img/Feedback_button.png', //path to the image for the tab //Optionally can be set using css
-            imageHeight: '70px',                     //height of tab image           //Optionally can be set using css
-            imageWidth: '29px',                       //width of tab image            //Optionally can be set using css
-            tabLocation: 'right',                      //side of screen where tab lives, top, right, bottom, or left
-            speed: 300,                               //speed of animation
-            action: 'click',                          //options: 'click' or 'hover', action to trigger animation
-            topPos: '150px',                          //position from the top/ use if tabLocation is left or right
-            leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
-            fixedPosition: false                      //options: true makes it stick(fixed position) on scroll
-        });
-
-    });
-
-</script>
-
-
 <style type="text/css">
       
-      .slide-out-div {
-          padding: 20px;
-          width: 540px;
-          background: #ccc;
-          border: 1px solid #29216d;
-      }      
+    .slide-out-div {
+        padding: 20px;
+        width: 540px;
+        background: #ccc;
+        border: 1px solid #29216d;
+    }
+      
+    /*
+    .tab-withoutSlider {
+        position: absolute;
+        top: 250px;
+        right: 0px;
+        background: url(http://newco-project.fr/static/img/Feedback_button.png) no-repeat;
+        width: 29px;
+        height: 70px;
+    }*/
+      
+    /*@media tags are made to change the style according to screen size*/
+    /* Landscape phones and down */
+    @media (max-width: 480px) {
+    	.slide-out-div {
+    		padding: 20px;
+    		width: 250px;
+    		background: #ccc;
+    		border: 1px solid #29216d;
+    	}
+    }
+      
+    @media (min-width: 481px) and (max-width: 767px) {
+    	.slide-out-div {
+    		padding: 20px;
+    		width: 420px;
+    		background: #ccc;
+    		border: 1px solid #29216d;
+    	}
+    }
+    
+    @media (min-width: 768px) {
+    	.slide-out-div {
+    		padding: 20px;
+    		width: 540px;
+    		background: #ccc;
+    		border: 1px solid #29216d;
+    	}
+    }
 </style>
+
+<!--Sources of files for the html text editor : feedback uses it.-->
+<link rel="stylesheet" type="text/css" href="http://www.newco-project.fr/static/css/jquery.cleditor.css">
