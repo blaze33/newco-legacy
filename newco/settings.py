@@ -4,6 +4,7 @@
 import os.path
 import posixpath
 import socket
+import django_pylibmc
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -216,6 +217,12 @@ EMAIL_DEBUG = DEBUG
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
+    }
 }
 
 # S3 storage settings
