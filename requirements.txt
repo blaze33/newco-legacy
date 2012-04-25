@@ -18,7 +18,7 @@ django-mailer==0.2a1
 django-notification==0.2
 django-openid==0.3a1
 django-pagination==1.0.7
-django-pylibmc==0.2.1
+django-pylibmc-sasl==0.2.4
 django-staticfiles==1.2.1
 django-storages==1.1.4
 django-timezones==0.2
