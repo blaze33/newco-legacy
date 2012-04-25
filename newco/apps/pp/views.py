@@ -19,17 +19,5 @@ def index(request):
 def detail(request, product_id):
     p = get_object_or_404(DProduct, pk=product_id)
 
-    if request.user.is_authenticated():
-        # Hard coding of the user profile url into comment url
-        profile_url = request.user.get_profile().get_absolute_url()
-        form = CommentForm(p, initial={'url': request.build_absolute_uri(profile_url)})
-    else:
-        form = CommentForm(p)
-    
-    # Hide unwanted fields
-    for attr in {'name', 'url', 'email', 'honeypot'}:
-        form.fields[attr].widget = Field.hidden_widget()
-
-    return render_to_response('pp/detail.html',
-                              {'product': p, 'form' : form},
+    return render_to_response('pp/detail.html', {'product': p},
                               context_instance=RequestContext(request))

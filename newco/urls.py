@@ -35,6 +35,10 @@ urlpatterns += patterns("",
     url(r'', include('pp.urls')),
 )
 
+urlpatterns += patterns("",
+    url(r'', include('reviews.urls')),
+)
+
 
 if settings.SERVE_MEDIA:
     urlpatterns += patterns("",

@@ -196,6 +196,7 @@ INSTALLED_APPS = [
     "profiles",
     "socauth",
     "pp",
+    "reviews",
     
     #deployment
     "south",
@@ -263,6 +264,12 @@ EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 
 ENABLE_CPRODUCT_ADMIN = True
+
+# reviews settings
+REVIEWS_SHOW_PREVIEW = True
+REVIEWS_IS_MODERATED = False
+REVIEWS_IS_EMAIL_REQUIRED = False
+REVIEWS_IS_NAME_REQUIRED = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

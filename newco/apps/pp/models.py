@@ -10,4 +10,4 @@ class DProduct(CProduct):
         proxy = True
 
     def get_absolute_url(self):
-        return "/products/%i/" % self.id
+        return "/products/product/%i/" % self.id

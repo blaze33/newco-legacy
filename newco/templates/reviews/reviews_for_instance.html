@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<h1 class="reviews">{% trans 'Reviews' %}</h1>
+
+{% if has_rated %}
+    <p> {% trans 'You have already rated' %} </p>
+{% else %}
+    <p><a href='{% url reviews_add content_type_id content_id %}'> {% trans 'Add review' %} </a></p>
+{% endif %}
+
+<br />
+
+{% for review in reviews %}
+    <p> <a href='{% url profile_detail review.user %}'> {{ review.user }} </a> &nbsp &nbsp {{ review.get_score_display }} </p>
+    <p> {{ review.comment|linebreaks }} </p>
+{% endfor %}

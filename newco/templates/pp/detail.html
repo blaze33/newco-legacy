@@ -5,6 +5,7 @@
 {% load ifsetting_tag %}
 {% load account_tags %}
 {% load comments %}
+{% load reviews_tags %}
 
 {% block body %}
 
@@ -16,34 +17,16 @@
 {% endfor %}
 </ul>
 
+</br>
+</br>
+</br>
+
 {% if user.is_authenticated %}
-	<table>
-		<h4>Leave a review</h4>
-		<form action="{% comment_form_target %}" method="post">
-	    	{% csrf_token %}
-	    	{{ form|as_bootstrap }}
-	    	<tr>
-	      		<td colspan="2">
-	        		<input type="submit" name="submit" value="Post">
-	      		</td>
-	    	</tr>
-	    	<input type="hidden" name="next" value='{% url product_detail product.id %}'>
-	  	</form>
-	</table>
+	{% average_for_instance product %} 
 	
+	{% reviews_for_instance product %}
 {% else %}
 	<p><a href="{% url acct_login %}" class="btn">Log In</a> or <a href="{% url acct_signup %}" class="btn primary">Sign Up</a> if you want to leave a review.</p>
 {% endif %}
-
-{% get_comment_count for product as comment_count %}
-
-<h3>Previous reviews ({{ comment_count }} posted)</h3>
-
-{% get_comment_list for product as comment_list %}
-
-{% for comment in comment_list %}
-	<p><a href="{{ comment.user_url }}">{{ comment.user }}</a>, {{ comment.submit_date }}</p>
-	<p>{{ comment.comment }}</p>
-{% endfor %}
 
 {% endblock %}
