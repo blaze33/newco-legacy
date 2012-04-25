@@ -25,7 +25,7 @@ django-timezones==0.2
 gunicorn==0.14.2
 idios==0.2a1
 metron==0.1
-pinax-theme-bootstrap==2.0.1
+-e git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax_theme_bootstrap-dev
 psycopg2==2.4.5
 pylibmc==1.2.2
 python-openid==2.2.5
