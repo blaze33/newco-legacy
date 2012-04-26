@@ -239,6 +239,7 @@ if not DEBUG:
 
     STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+    AWS_QUERYSTRING_AUTH = False # Don't include auth in every url
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
