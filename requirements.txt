@@ -44,6 +44,9 @@ gunicorn==0.14.2
 ## PostgreSQL adapter for Python
 psycopg2==2.4.5
 
+## monitoring
+newrelic
+
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
 distribute==0.6.24
