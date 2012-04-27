@@ -24,7 +24,7 @@ idios==0.2a1
 metron==0.1
 
 ## upgraded pinax-theme-bootstrap
-pinax-theme-bootstrap==2.0.2.post3
+git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax_theme_bootstrap-dev
 
 ## schema and data migrations
 South==0.7.4
