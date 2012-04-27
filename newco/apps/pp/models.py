@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from configurableproduct.models import CProduct
 
@@ -10,4 +11,5 @@ class DProduct(CProduct):
         proxy = True
 
     def get_absolute_url(self):
-        return "/products/product/%i/" % self.id
+        kwargs = {"product_id": self.id}
+        return reverse("product_detail", kwargs=kwargs)

@@ -4,13 +4,15 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 # reviews imports
 from reviews.managers import ActiveManager
 from reviews.settings import SCORE_CHOICES
 
 class Review(models.Model):
-    """A ``Review`` consists on a comment and a rating.
+    """
+    A ``Review`` consists on a comment and a rating.
     """
     content_type   = models.ForeignKey(ContentType, verbose_name=_(u"Content type"), related_name="content_type_set_for_%(class)s")
     content_id = models.PositiveIntegerField(_(u"Content ID"), blank=True, null=True)
@@ -37,6 +39,13 @@ class Review(models.Model):
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.score)
+    
+    def get_absolute_url(self):
+        if self.content_type.name == "Product":
+            kwargs = {"product_id": self.content_id}
+            return reverse("product_detail", kwargs=kwargs)
+        else:
+            return ''
 
     @property
     def name(self):

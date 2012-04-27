@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load voting_tags %}
 
 <h1 class="reviews">{% trans 'Reviews' %}</h1>
 
@@ -8,9 +9,57 @@
     <p><a href='{% url reviews_add content_type_id content_id %}'> {% trans 'Add review' %} </a></p>
 {% endif %}
 
-<br />
+</br>
 
-{% for review in reviews %}
-    <p> <a href='{% url profile_detail review.user %}'> {{ review.user }} </a> &nbsp &nbsp {{ review.get_score_display }} </p>
-    <p> {{ review.comment|linebreaks }} </p>
-{% endfor %}
+{% scores_for_objects reviews as score_dict %}
+{% votes_by_user user on reviews as vote_dict %}
+
+<table>
+<col width="1"></col>
+<col></col>
+<thead>
+  <tr>
+    <th>Vote</th>
+    <th>Review</th>
+  </tr>
+</thead>
+<tbody>
+  {% for review in reviews %}<tr class="{% cycle odd,even %}">
+    <td class="vote">
+	  {% dict_entry_for_item review from vote_dict as vote %}
+	  {% dict_entry_for_item review from score_dict as score %}
+	  
+	  
+	  {% url object_voting review.id "up" as urlup %}
+	  {% url object_voting review.id "clear" as urlclear %}
+	  {% url object_voting review.id "down" as urldown %}
+
+      <form class="reviewvote" id="reviewdown{{ review.id }}" action="{% if vote and vote.is_upvote %}{{ urlclear }}{% else %}{{ urlup }}{% endif %}" method="POST">
+		{% csrf_token %}
+		<button type="submit" id="reviewdownarrow{{ review.id }}" class="btn btn-mini{% if vote and vote.is_upvote %} btn-warning{% endif %}"> <i class="icon-arrow-up"></i> </button>
+	  </form>
+	
+	  <form class="reviewvote" id="reviewdown{{ review.id }}" action="{% if vote and vote.is_downvote %}{{ urlclear }}{% else %}{{ urldown }}{% endif %}" method="POST">
+		{% csrf_token %}
+		<button type="submit" id="reviewdownarrow{{ review.id }}" class="btn btn-mini{% if vote and vote.is_downvote %} btn-warning{% endif %}"> <i class="icon-arrow-down"></i> </button>
+	  </form>
+
+    </td>
+    
+    <td class="item">
+      <p style="text-align: center;"> {{ review.get_score_display }} </p>
+      <p> {{ review.comment|linebreaks }} </p>
+      <p class="details">
+        <span class="score" id="reviewscore{{ review.id }}"
+              title="after {{ score.num_votes|default:0 }} vote{{ score.num_votes|default:0|pluralize }}">
+         {{ score.score|default:0 }} point{{ score.score|default:0|pluralize }},
+        </span>
+        review posted {{ review.creation_date }} by
+        <span class="user"><a href='{% url profile_detail review.user %}'> {{ review.user.username }} </a></span>
+
+      </p>
+    </td>
+  </tr>{% endfor %}
+</tbody>
+</table>
+

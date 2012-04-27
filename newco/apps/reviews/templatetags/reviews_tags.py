@@ -22,6 +22,7 @@ def reviews_for_instance(context, instance):
         "has_rated" : has_rated,
         "content_id" : instance.id,
         "content_type_id" : ctype.id,
+        "user" : request.user,
         "MEDIA_URL" : context.get("MEDIA_URL")
     }
 

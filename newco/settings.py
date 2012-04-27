@@ -186,6 +186,7 @@ INSTALLED_APPS = [
     "social_auth",
     "configurableproduct",
     "shop",
+    "voting",
     
     # Pinax
     "pinax.apps.account",
@@ -197,6 +198,7 @@ INSTALLED_APPS = [
     "socauth",
     "pp",
     "reviews",
+    "vote_urls",
     
     #deployment
     "south",

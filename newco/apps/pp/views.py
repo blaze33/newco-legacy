@@ -18,6 +18,5 @@ def index(request):
 
 def detail(request, product_id):
     p = get_object_or_404(DProduct, pk=product_id)
-
     return render_to_response('pp/detail.html', {'product': p},
                               context_instance=RequestContext(request))

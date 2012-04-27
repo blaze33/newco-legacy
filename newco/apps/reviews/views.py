@@ -48,7 +48,9 @@ def add_form(request, content_type_id, content_id, template_name="reviews/review
     object = ctype.get_object_for_this_type(pk=content_id)
 
     if reviews_utils.has_rated(request, object):
-        return HttpResponseRedirect(reverse("reviews_already_rated"))
+        return render_to_response('reviews/already_rated.html',
+                                  {'ctype': ctype, 'object': object},
+                                  context_instance=RequestContext(request))
 
     scores = []
     for i, score in enumerate(SCORE_CHOICES):

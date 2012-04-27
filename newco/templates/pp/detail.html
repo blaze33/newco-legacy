@@ -1,13 +1,12 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
-{% load bootstrap_tags %}
-{% load ifsetting_tag %}
-{% load account_tags %}
-{% load comments %}
 {% load reviews_tags %}
+{% load voting_tags %}
 
 {% block body %}
+
+{# FICHE TECHNIQUE #}
 
 <h1>{{ product.name }}</h1>
 <h2>{{ product.type }}</h2>
@@ -20,6 +19,8 @@
 </br>
 </br>
 </br>
+
+{# REVIEWS #}
 
 {% if user.is_authenticated %}
 	{% average_for_instance product %} 

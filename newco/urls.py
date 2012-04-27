@@ -29,14 +29,9 @@ urlpatterns += patterns("",
 
 urlpatterns += patterns("",
     url(r'', include('socauth.urls')),
-)
-
-urlpatterns += patterns("",
     url(r'', include('pp.urls')),
-)
-
-urlpatterns += patterns("",
     url(r'', include('reviews.urls')),
+    url(r'', include('vote_urls.urls')),
 )
 
 
