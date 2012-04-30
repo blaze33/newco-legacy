@@ -6,7 +6,7 @@ syntax: glob
 *~
 
 #dev file
-dev*.db
+db*.db
 
 #IDE files
 .settings/**
