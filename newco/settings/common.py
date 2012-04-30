@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
-# Django settings for basic pinax project.
+### default.py
+### Django settings for basic pinax project.
 
+import sys
 import os.path
 import posixpath
 import socket
-import django_pylibmc
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+########## PATH CONFIGURATION
+# Absolute filesystem path to this Django project directory.
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+# Add all necessary filesystem paths to our system path so that we can use
+# python import statements.
+sys.path.append(os.path.normpath(os.path.join(PROJECT_ROOT, 'apps')))
+########## END PATH CONFIGURATION
+
+########## DEBUG CONFIGURATION
+# Disable debugging by default.
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+########## END DEBUG CONFIGURATION
 
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
@@ -27,17 +38,6 @@ ADMINS = [
 ]
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "dev-prod.db",                       # Or path to database file if using sqlite3 dev.db.
-        "USER": "",                             # Not used with sqlite3.
-        "PASSWORD": "",                         # Not used with sqlite3.
-        "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
-        "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -103,9 +103,6 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -140,6 +137,11 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
+    
+    # social_auth
+#    'social_auth.context_processors.social_auth_by_name_backends',
+#    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
 ]
 
 INSTALLED_APPS = [
@@ -151,6 +153,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.comments",
     
     "pinax.templatetags",
     
@@ -170,6 +173,10 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "social_auth",
+    "configurableproduct",
+    "shop",
+    "voting",
     
     # Pinax
     "pinax.apps.account",
@@ -178,6 +185,10 @@ INSTALLED_APPS = [
     # project
     "about",
     "profiles",
+    "socauth",
+    "pp",
+    "reviews",
+    "vote_urls",
     
     #deployment
     "south",
@@ -209,41 +220,50 @@ ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
+    
+    # social_auth backends
+#    'social_auth.backends.twitter.TwitterBackend',
+#    'social_auth.backends.facebook.FacebookBackend',
+#    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+#    'social_auth.backends.yahoo.YahooBackend',
+#    'social_auth.backends.browserid.BrowserIDBackend',
+#    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+#    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+#    'social_auth.backends.contrib.orkut.OrkutBackend',
+#    'social_auth.backends.contrib.foursquare.FoursquareBackend',    
+#    'social_auth.backends.contrib.github.GithubBackend',
+#    'social_auth.backends.contrib.dropbox.DropboxBackend',
+#    'social_auth.backends.contrib.flickr.FlickrBackend',
+#    'social_auth.backends.contrib.instagram.InstagramBackend',
+#    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_ENABLED_BACKENDS = [
+    'google',
 ]
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
+LOGIN_REDIRECT_URL = "/about/what_next"
+
 LOGOUT_REDIRECT_URLNAME = "home"
+LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
+
+ENABLE_CPRODUCT_ADMIN = True
+
+# reviews settings
+REVIEWS_SHOW_PREVIEW = True
+REVIEWS_IS_MODERATED = False
+REVIEWS_IS_EMAIL_REQUIRED = False
+REVIEWS_IS_NAME_REQUIRED = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
-    }
-}
-
-# S3 storage settings
-if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-
-    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-    AWS_QUERYSTRING_AUTH = False # Don't include auth in every url
-
-# local_settings.py can be used to override environment-specific settings
-# like database and email that differ between development and production.
-try:
-    from local_settings import *
-except ImportError:
-    pass
