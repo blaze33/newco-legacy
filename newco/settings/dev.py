@@ -4,6 +4,9 @@ from common import *
 DEBUG = True
 ### other development-specific stuff
 
+# tells Pinax to serve media through the staticfiles app.
+SERVE_MEDIA = DEBUG
+
 # Database settings will be overriden when deployed on Heroku
 DATABASES = {
     "default": {
