@@ -137,11 +137,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
-    
-    # social_auth
-#    'social_auth.context_processors.social_auth_by_name_backends',
-#    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
 ]
 
 INSTALLED_APPS = [
@@ -153,7 +148,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
-    "django.contrib.comments",
     
     "pinax.templatetags",
     
@@ -173,10 +167,6 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
-    "social_auth",
-    "configurableproduct",
-    "shop",
-    "voting",
     
     # Pinax
     "pinax.apps.account",
@@ -185,10 +175,6 @@ INSTALLED_APPS = [
     # Project
     "about",
     "profiles",
-    "socauth",
-    "pp",
-    "reviews",
-    "vote_urls",
     
     # Deployment
     "south",
@@ -223,29 +209,6 @@ ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
-    
-    # social_auth backends
-#    'social_auth.backends.twitter.TwitterBackend',
-#    'social_auth.backends.facebook.FacebookBackend',
-#    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-#    'social_auth.backends.yahoo.YahooBackend',
-#    'social_auth.backends.browserid.BrowserIDBackend',
-#    'social_auth.backends.contrib.linkedin.LinkedinBackend',
-#    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-#    'social_auth.backends.contrib.orkut.OrkutBackend',
-#    'social_auth.backends.contrib.foursquare.FoursquareBackend',    
-#    'social_auth.backends.contrib.github.GithubBackend',
-#    'social_auth.backends.contrib.dropbox.DropboxBackend',
-#    'social_auth.backends.contrib.flickr.FlickrBackend',
-#    'social_auth.backends.contrib.instagram.InstagramBackend',
-#    'social_auth.backends.OpenIDBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-SOCIAL_AUTH_ENABLED_BACKENDS = [
-    'google',
 ]
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
@@ -257,14 +220,6 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-ENABLE_CPRODUCT_ADMIN = True
-
-# reviews settings
-REVIEWS_SHOW_PREVIEW = True
-REVIEWS_IS_MODERATED = False
-REVIEWS_IS_EMAIL_REQUIRED = False
-REVIEWS_IS_NAME_REQUIRED = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
