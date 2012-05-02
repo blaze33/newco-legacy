@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
-# Django settings for basic pinax project.
+### default.py
+### Django settings for basic pinax project.
 
+import sys
 import os.path
 import posixpath
 import socket
-import django_pylibmc
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+########## PATH CONFIGURATION
+# Absolute filesystem path to this Django project directory.
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+# Add all necessary filesystem paths to our system path so that we can use
+# python import statements.
+sys.path.append(os.path.normpath(os.path.join(PROJECT_ROOT, 'apps')))
+########## END PATH CONFIGURATION
+
+########## DEBUG CONFIGURATION
+# Disable debugging by default.
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+########## END DEBUG CONFIGURATION
 
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
@@ -27,17 +38,6 @@ ADMINS = [
 ]
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "dev-prod.db",                       # Or path to database file if using sqlite3 dev.db.
-        "USER": "",                             # Not used with sqlite3.
-        "PASSWORD": "",                         # Not used with sqlite3.
-        "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
-        "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -103,9 +103,6 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -185,7 +182,7 @@ INSTALLED_APPS = [
     "pinax.apps.account",
     "pinax.apps.signup_codes",
     
-    # project
+    # Project
     "about",
     "profiles",
     "socauth",
@@ -193,10 +190,13 @@ INSTALLED_APPS = [
     "reviews",
     "vote_urls",
     
-    #deployment
+    # Deployment
     "south",
     "gunicorn",
     "storages",
+    
+    # Monitoring
+    'raven.contrib.django',
 ]
 
 FIXTURE_DIRS = [
@@ -270,28 +270,4 @@ DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
-    }
-}
-
-# S3 storage settings
-if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-
-    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-    AWS_QUERYSTRING_AUTH = False # Don't include auth in every url
-
-# local_settings.py can be used to override environment-specific settings
-# like database and email that differ between development and production.
-try:
-    from local_settings import *
-except ImportError:
-    pass
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
