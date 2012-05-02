@@ -45,10 +45,12 @@ gunicorn==0.14.2
 psycopg2==2.4.5
 
 ## monitoring
-newrelic
+newrelic==1.2.1.265
+raven==1.7.5
 
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
 distribute==0.6.24
 django-appconf==0.5
 wsgiref==0.1.2
+simplejson==2.5.0
