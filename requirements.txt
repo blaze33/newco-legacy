@@ -8,7 +8,7 @@ Pinax==0.9b1.dev10
 
 django-debug-toolbar==0.9.1
 django-staticfiles==1.2.1
-django_compressor==1.1.2
+django-compressor==1.1.2
 
 django-mailer==0.2a1
 django-email-confirmation==0.2
@@ -50,10 +50,25 @@ django-heroku-postgresify==0.2
 newrelic==1.2.1.265
 raven==1.7.5
 
+## product pages
+django-shop==0.0.13
+django-shop-configurableproduct==0.3.1
+
+## voting application
+django-voting==0.1
+
+## login with google
+django-social-auth==0.6.9
+
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
 distribute==0.6.24
 django-appconf==0.5
+django-classy-tags==0.3.4.1
+django-polymorphic==0.2
+httplib2==0.7.4
+oauth2==1.5.211
+sorl-thumbnail==11.12
 wsgiref==0.1.2
 simplejson==2.5.0
 dj-database-url==0.1.2

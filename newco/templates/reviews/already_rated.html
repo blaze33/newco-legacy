@@ -1,0 +1,14 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+
+<h1>{% trans 'Review' %}</h1>
+<p>{% trans 'You have already rated for this product.' %}</p>
+
+{% ifequal ctype.name "Product" %}
+	<a href='{% url product_detail object.id %}'>Go Back</a>
+{% endifequal %}
+
+{% endblock %}

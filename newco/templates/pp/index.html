@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load ifsetting_tag %}
+{% load account_tags %}
+
+{% block head_title %}{% trans "Products" %}{% endblock %}
+
+{% block body %}
+
+<h1>Product Database</h1>
+
+{% if product_list %}
+    <ul>
+    {% for producttype in producttype_list %}
+    	<h2>{{ producttype }}</h2>
+    	{% for product in product_list %}
+    		{% if producttype == product.type %}
+        		<li><a href='{% url product_detail product.id%}'>{{ product.name }}</a></li>
+        	{% endif %}
+    	{% endfor %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No products are available.</p>
+{% endif %}
+
+{% endblock %}
