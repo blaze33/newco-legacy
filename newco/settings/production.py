@@ -41,4 +41,6 @@ DATABASES = {
     }
 }
 
-DATABASES = postgresify()
+HEROKU_DATABASES = postgresify()
+if HEROKU_DATABASES:
+    DATABASES = HEROKU_DATABASES
