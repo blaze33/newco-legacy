@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 ### production.py
 from common import *
+from postgresify import postgresify
+import django_pylibmc
 ### other production-specific stuff
 
 # memcache settings
@@ -8,7 +10,7 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ] + MIDDLEWARE_CLASSES
-import django_pylibmc
+
 CACHES = {
     'default': {
         'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
@@ -38,3 +40,5 @@ DATABASES = {
         "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+DATABASES = postgresify()

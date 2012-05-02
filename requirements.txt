@@ -43,6 +43,8 @@ gunicorn==0.14.2
 ## Database backends
 ## PostgreSQL adapter for Python
 psycopg2==2.4.5
+## Database configuration for heroku
+django-heroku-postgresify==0.2
 
 ## monitoring
 newrelic==1.2.1.265
@@ -54,3 +56,4 @@ distribute==0.6.24
 django-appconf==0.5
 wsgiref==0.1.2
 simplejson==2.5.0
+dj-database-url==0.1.2
