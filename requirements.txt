@@ -5,6 +5,7 @@ Django==1.3.1
 --extra-index-url=http://dist.pinaxproject.com/dev/
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
+
 django-debug-toolbar==0.9.1
 django-staticfiles==1.2.1
 django-compressor==1.1.2
@@ -42,9 +43,12 @@ gunicorn==0.14.2
 ## Database backends
 ## PostgreSQL adapter for Python
 psycopg2==2.4.5
+## Database configuration for heroku
+django-heroku-postgresify==0.2
 
 ## monitoring
 newrelic==1.2.1.265
+raven==1.7.5
 
 ## product pages
 django-shop==0.0.13
@@ -66,3 +70,5 @@ httplib2==0.7.4
 oauth2==1.5.211
 sorl-thumbnail==11.12
 wsgiref==0.1.2
+simplejson==2.5.0
+dj-database-url==0.1.2

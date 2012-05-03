@@ -182,7 +182,7 @@ INSTALLED_APPS = [
     "pinax.apps.account",
     "pinax.apps.signup_codes",
     
-    # project
+    # Project
     "about",
     "profiles",
     "socauth",
@@ -190,10 +190,13 @@ INSTALLED_APPS = [
     "reviews",
     "vote_urls",
     
-    #deployment
+    # Deployment
     "south",
     "gunicorn",
     "storages",
+    
+    # Monitoring
+    'raven.contrib.django',
 ]
 
 FIXTURE_DIRS = [
@@ -267,3 +270,4 @@ DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
