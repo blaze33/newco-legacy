@@ -1,7 +1,54 @@
 {% load i18n %}
+{% load voting_tags %}
+
 <div class="profile_info">
     {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
     {% if profile.about %}<p><b>{% trans "About" %}</b>: {{ profile.about }}</p>{% endif %}
     {% if profile.location %}<p><b>{% trans "Location" %}</b>: {{ profile.location }}</p>{% endif %}
     {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
+</div>
+
+</br>
+
+<div>
+
+    {% scores_for_objects profile.reviews.all as score_dict %}
+    {% votes_by_user user on profile.reviews.all as vote_dict %}
+
+    <table>
+    <col width="1"></col>
+    <col></col>
+    <thead>
+      <tr>
+        <th>Vote</th>
+        <th>Review</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in profile.reviews.all %}
+        <tr class="{% cycle odd,even %}">
+        {% dict_entry_for_item review from vote_dict as vote %}
+        {% dict_entry_for_item review from score_dict as score %}
+        <td class="vote">
+          <button class="btn btn-mini{% if vote and vote.is_upvote %} btn-warning{% endif %} disabled"> <i class="icon-arrow-up"></i> </button>
+          </p>
+          <button class="btn btn-mini{% if vote and vote.is_downvote %} btn-warning{% endif %} disabled"> <i class="icon-arrow-down"></i> </button>
+        </td>
+
+        <td class="item">
+          <p style="text-align: center;"> {{ review.get_score_display }} on <a href="{% url product_detail review.content.id %}">{{ review.content.name }}</a></p>
+          <p> {{ review.comment|linebreaks }} </p>
+          <p class="details">
+          <span class="score" id="reviewscore{{ review.id }}"
+                  title="after {{ score.num_votes|default:0 }} vote{{ score.num_votes|default:0|pluralize }}">
+             {{ score.score|default:0 }} point{{ score.score|default:0|pluralize }},
+          </span>
+          review posted {{ review.creation_date }} by
+          <span class="user"><a href='{% url profile_detail review.user %}'> {{ review.user.username }} </a></span>
+          </p>
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
 </div>

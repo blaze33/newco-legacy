@@ -15,6 +15,9 @@ from reviews import utils as reviews_utils
 from reviews.models import Review
 from reviews.settings import SCORE_CHOICES
 
+# profile import
+from profiles.models import Profile
+
 
 class ReviewAddForm(ModelForm):
     """Form to add a review.
@@ -138,8 +141,13 @@ def save(request):
         new_review.ip_address = request.META.get("REMOTE_ADDR")
         if request.user.is_authenticated():
             new_review.user = request.user
+            p = Profile.objects.get(user=request.user)
+            
         new_review.active = not settings.REVIEWS_IS_MODERATED
         new_review.save()
+        
+        if request.user.is_authenticated():
+            p.reviews.add(new_review)
 
         # Fire up signal
         reviews.signals.review_added.send(new_review)
@@ -150,7 +158,6 @@ def save(request):
         request.session["last-rated-object"] = object
 
         return HttpResponseRedirect(reverse("reviews_thank_you"))
-#        return HttpResponseRedirect(object.get_absolute_url())
 
 def preview(request, template_name="reviews/review_preview.html"):
     """Displays a preview of the review.
