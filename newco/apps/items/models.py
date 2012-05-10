@@ -1,18 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
-
-class Question(models.Model):
-    content = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(_('date published'))
-
-class Answer(models.Model):
-    question = models.ForeignKey(Question)
-    content = models.CharField(max_length=1000)
-
-class Story(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.CharField(max_length=2000)
+from django.db.models import permalink
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
@@ -20,5 +10,31 @@ class Item(models.Model):
     last_modified = models.DateTimeField(auto_now=True,
         verbose_name=_('Last modified'))
     tags = TaggableManager()
-    questions = models.ManyToManyField(Question)
-    stories = models.ManyToManyField(Story)
+
+    class Meta:
+             pass
+    def __unicode__(self):
+        return u'%s' % (self.name)
+    
+    @permalink
+    def get_absolute_url(self):
+            return ('item_detail', None, {"item_id": self.id,"slug": self.slug} )
+
+class Question(models.Model):
+    content = models.CharField(max_length=200)
+    pub_date = models.DateTimeField(_('date published'))
+    author = models.ForeignKey(User)
+    items = models.ManyToManyField(Item)
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question)
+    content = models.CharField(max_length=1000)
+    pub_date = models.DateTimeField(_('date published'))
+    author = models.ForeignKey(User)
+
+class Story(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.CharField(max_length=2000)
+    items = models.ManyToManyField(Item)
+
+

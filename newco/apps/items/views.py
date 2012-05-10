@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from items.models import Item
 
 def index(request):
@@ -20,3 +20,10 @@ class ItemCreateView(CreateView):
     # template_name = 'author_new.html'
     #success_url = 'success'
 
+class ItemDetailView(DetailView):
+    model=Item,
+    context_object_name="item"
+    
+    def get_queryset(self):
+        item = get_object_or_404(Item.objects, pk=self.kwargs['item_id'])
+        return Item.objects.filter(pk=self.kwargs['item_id'])

@@ -16,12 +16,14 @@
     <ul>
         {% for item in item_list %}
             <li>
-                <a href='{% url item-detail item.id %}'>{{ item.name }}</a>
+                <a href='{{ item.get_absolute_url  }}'>{{ item.name }}</a>
             </li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No products are available.</p>
 {% endif %}
-
+<p>
+<a class="btn" href="{% url item_create %}">Add an entry</a>
+</p>
 {% endblock %}
