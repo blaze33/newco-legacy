@@ -3,13 +3,18 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
+from django.template.defaultfilters import slugify
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    slug = models.SlugField(verbose_name=_('Slug'), unique=True)
+    slug = models.SlugField(verbose_name=_('Slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
         verbose_name=_('Last modified'))
     tags = TaggableManager()
+    
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Item, self).save()
 
     class Meta:
              pass

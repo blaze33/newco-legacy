@@ -25,5 +25,5 @@ class ItemDetailView(DetailView):
     context_object_name="item"
     
     def get_queryset(self):
-        item = get_object_or_404(Item.objects, pk=self.kwargs['item_id'])
+        # item = get_object_or_404(Item.objects, pk=self.kwargs['item_id'])
         return Item.objects.filter(pk=self.kwargs['item_id'])
