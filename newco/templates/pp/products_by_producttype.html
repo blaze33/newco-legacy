@@ -1,0 +1,10 @@
+{% extends "site_base.html" %}
+
+{% block body %}
+    <h2>{{ producttype.name }}</h2>
+    <ul>
+        {% for product in product_list %}
+            <li><a href='{% url product_detail product.id%}'>{{ product.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

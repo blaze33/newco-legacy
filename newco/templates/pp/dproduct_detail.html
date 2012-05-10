@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load reviews_tags %}
+{% load voting_tags %}
+
+{% block body %}
+
+{# FICHE TECHNIQUE #}
+
+<h1>{{ product.name }}</h1>
+<h2>{{ product.type }}</h2>
+<ul>
+{% for field in product.field_list %}
+    <li>{{ field.field }} : {{ field.value }}</li>
+{% endfor %}
+</ul>
+
+</br>
+</br>
+</br>
+
+{# REVIEWS #}
+
+{% if user.is_authenticated %}
+    {% average_for_instance product %}
+
+    {% reviews_for_instance product %}
+{% else %}
+    <p><a href="{% url acct_login %}" class="btn">Log In</a> or <a href="{% url acct_signup %}" class="btn primary">Sign Up</a> if you want to leave a review.</p>
+{% endif %}
+
+{% endblock %}
