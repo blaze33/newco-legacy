@@ -9,7 +9,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.SlugField(verbose_name=_('Slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-        verbose_name=_('Last modified'))
+                                         verbose_name=_('Last modified'))
     tags = TaggableManager()
     
     def save(self):
@@ -18,6 +18,7 @@ class Item(models.Model):
 
     class Meta:
              pass
+             
     def __unicode__(self):
         return u'%s' % (self.name)
     
