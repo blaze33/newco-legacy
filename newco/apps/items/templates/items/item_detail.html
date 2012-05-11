@@ -9,16 +9,25 @@
 <h1>{{ item }}</h1>
 <br />
 <ul>
-    <li>{{ item.name }}</li>
-    <li>{{ item.last_modified }}</li>
+    <li>Name: {{ item.name }}</li>
+    <li>ID: {{ item.id }}</li>
+    <li>Last modified: {{ item.last_modified }}</li>
 </ul>
+<br />
+<p>
+<a class="btn" href='{% url item_edit item.id %}'>
+    <i class="icon-edit"></i> Edit Item
+</a>
+<a class="btn" href="{% url item_index %}">
+    <i class="icon-list"></i> Items list</a>
+</p>
 
 {# REVIEWS #}
 
 {% if user.is_authenticated %}
         
 {% else %}
-        <p><a href="{% url acct_login %}" class="btn">Log In</a> or <a href="{% url acct_signup %}" class="btn primary">Sign Up</a> if you want to leave a review.</p>
+
 {% endif %}
 
 {% endblock %}

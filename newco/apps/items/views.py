@@ -2,12 +2,18 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from django.views.generic import ListView, CreateView, DetailView
-from items.models import Item
+from django.views.generic import FormView, ListView, CreateView, DetailView, UpdateView
+from items.models import *
 
-class ItemCreateView(CreateView):
-    # form_class = AuthorForm
+class ItemView(FormView):
+    form_class = ItemForm
     model = Item
+
+class ItemCreateView(ItemView, CreateView): pass
+class ItemUpdateView(ItemView, UpdateView):
+    def get_object(self, queryset=None):
+        obj = Item.objects.get(pk=self.kwargs['id'])
+        return obj
 
 class ItemDetailView(DetailView):
     model=Item,

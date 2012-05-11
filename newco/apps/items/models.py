@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
+from django.forms import ModelForm
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
@@ -42,5 +43,9 @@ class Story(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
     items = models.ManyToManyField(Item)
+    
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
 
 

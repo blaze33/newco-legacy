@@ -17,6 +17,10 @@
         {% for item in item_list %}
             <li>
                 <a href='{{ item.get_absolute_url  }}'>{{ item.name }}</a>
+                &nbsp;
+                <a href='{% url item_edit item.id %}'>
+                    <i class="icon-edit"></i>
+                </a>
             </li>
         {% endfor %}
     </ul>
@@ -24,6 +28,6 @@
     <p>No products are available.</p>
 {% endif %}
 <p>
-<a class="btn" href="{% url item_create %}">Add an entry</a>
+<a class="btn" href="{% url item_create %}"><i class="icon-plus-sign"></i> Add an entry</a>
 </p>
 {% endblock %}

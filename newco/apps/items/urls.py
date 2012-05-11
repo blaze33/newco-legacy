@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import UpdateView, ListView, CreateView, DetailView
 from items.models import Item
-from items.views import ItemCreateView, ItemDetailView
+from items.views import *
 
 urlpatterns = patterns('',
     url(r"^$", ListView.as_view(
@@ -11,5 +11,6 @@ urlpatterns = patterns('',
         ), name="item_index"),
     url(r"^(?P<item_id>\d+)/(?P<slug>[-\w]+)/$", ItemDetailView.as_view(
         ), name="item_detail"),
-    url(r"^add/$", CreateView.as_view(model=Item), name="item_create"),
+    url(r"^add/item/$", CreateView.as_view(model=Item), name="item_create"),
+    url(r"^edit/item/(?P<id>\d+)/$", ItemUpdateView.as_view(), name="item_edit"),
 )
