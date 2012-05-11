@@ -12,6 +12,7 @@
     <li>Name: {{ item.name }}</li>
     <li>ID: {{ item.id }}</li>
     <li>Last modified: {{ item.last_modified }}</li>
+    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
 </ul>
 <br />
 <p>
