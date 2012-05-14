@@ -11,6 +11,6 @@ urlpatterns = patterns('',
         ), name="item_index"),
     url(r"^(?P<item_id>\d+)/(?P<slug>[-\w]+)/$", ItemDetailView.as_view(
         ), name="item_detail"),
-    url(r"^add/item/$", CreateView.as_view(model=Item), name="item_create"),
+    url(r"^add/(?P<model_name>[-\w]+)/$", ContentCreateView.as_view(), name="item_create"),
     url(r"^edit/item/(?P<id>\d+)/$", ItemUpdateView.as_view(), name="item_edit"),
 )
