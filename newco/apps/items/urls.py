@@ -9,8 +9,7 @@ urlpatterns = patterns('',
         model=Item,
         context_object_name="item_list",
         ), name="item_index"),
-    url(r"^(?P<item_id>\d+)/(?P<slug>[-\w]+)/$", ItemDetailView.as_view(
-        ), name="item_detail"),
+    url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]+)/$", ContentDetailView.as_view(), name="item_detail"),
     url(r"^add/(?P<model_name>[-\w]+)/$", ContentCreateView.as_view(), name="item_create"),
-    url(r"^edit/item/(?P<id>\d+)/$", ItemUpdateView.as_view(), name="item_edit"),
+    url(r"^edit/(?P<model_name>[-\w]+)/(?P<pk>\d+)/$", ContentUpdateView.as_view(), name="item_edit"),
 )

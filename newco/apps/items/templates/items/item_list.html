@@ -18,7 +18,7 @@
             <li>
                 <a href='{{ item.get_absolute_url  }}'>{{ item.name }}</a>
                 &nbsp;
-                <a href='{% url item_edit item.id %}'>
+                <a href='{% url item_edit "item" item.id %}'>
                     <i class="icon-edit"></i>
                 </a>
             </li>

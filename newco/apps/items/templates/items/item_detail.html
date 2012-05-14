@@ -22,7 +22,7 @@
 {% endfor %}
 
 <p>
-<a class="btn" href='{% url item_edit item.id %}'>
+<a class="btn" href='{% url item_edit "item" item.id %}'>
     <i class="icon-edit"></i> Edit Item
 </a>
 <a class="btn" href="{% url item_index %}">

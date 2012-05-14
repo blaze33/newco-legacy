@@ -25,7 +25,7 @@ class Item(models.Model):
     
     @permalink
     def get_absolute_url(self):
-            return ('item_detail', None, {"item_id": self.id,"slug": self.slug} )
+            return ('item_detail', None, {"model_name":"item","pk": self.id,"slug": self.slug} )
 
 class Question(models.Model):
     content = models.CharField(max_length=200)
