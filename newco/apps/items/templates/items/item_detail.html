@@ -15,6 +15,12 @@
     <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
 </ul>
 <br />
+
+{% for question in item.question_set.all %}
+    <h3>{{ question }}</h3>
+    {% for answer in question.answer_set.all %}<p>{{answer}}</p>{% endfor %}
+{% endfor %}
+
 <p>
 <a class="btn" href='{% url item_edit item.id %}'>
     <i class="icon-edit"></i> Edit Item
@@ -26,7 +32,7 @@
 {# REVIEWS #}
 
 {% if user.is_authenticated %}
-        
+
 {% else %}
 
 {% endif %}
