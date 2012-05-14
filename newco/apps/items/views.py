@@ -5,13 +5,16 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import FormView, ListView, CreateView, DetailView, UpdateView
 from items.models import *
 from django.db.models.loading import get_model
+from django.core.urlresolvers import resolve
+
+app_name = 'items'
 
 class ItemView(FormView):
     model = Item
 
 class ContentCreateView(CreateView):
     def get(self, request, *args, **kwargs):
-        self.model = get_model("items", kwargs['model_name'])
+        self.model = get_model(app_name, kwargs['model_name'])
         return super(ContentCreateView, self).get(request, *args, **kwargs)
 
 class ItemUpdateView(ItemView, UpdateView):
