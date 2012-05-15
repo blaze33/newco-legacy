@@ -1,6 +1,5 @@
 from django.views.generic import DetailView, CreateView
 from django.views.generic import UpdateView, DeleteView
-from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
@@ -15,7 +14,6 @@ class ItemCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.slug = slugify(self.object.name)
 
         if self.request.user.is_authenticated():
             self.object.user = self.request.user
@@ -44,8 +42,8 @@ class ItemDeleteView(DeleteView):
     def get_object(self, queryset=None):
         """ Hook to ensure object is owned by request.user. """
         obj = super(ItemDeleteView, self).get_object()
-#        if not obj.user == self.request.user:
-#            raise Http404
+        if obj.user and not obj.user == self.request.user:
+            raise Http404
         return obj
 
 

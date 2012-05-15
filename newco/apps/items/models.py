@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
-from django.forms import ModelForm
+from django.template.defaultfilters import slugify
 
 
 class Item(models.Model):
@@ -21,6 +21,10 @@ class Item(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.name)
+
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Item, self).save()
 
     @permalink
     def get_absolute_url(self):
@@ -45,8 +49,3 @@ class Story(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
     items = models.ManyToManyField(Item)
-
-
-class ItemForm(ModelForm):
-    class Meta:
-        model = Item
