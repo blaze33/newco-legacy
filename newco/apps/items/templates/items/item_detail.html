@@ -7,21 +7,24 @@
 {# FICHE TECHNIQUE #}
 
 <h1>{{ item }}</h1>
-<br />
+</br>
 <ul>
     <li>Name: {{ item.name }}</li>
     <li>ID: {{ item.id }}</li>
+    <li>Owner: {% if item.user %}{{ item.user }}{% else %}Anonymous{% endif %}</li>
     <li>Last modified: {{ item.last_modified }}</li>
     <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
 </ul>
-<br />
+</br>
 <p>
-<a class="btn" href='{% url item_edit item.id %}'>
-    <i class="icon-edit"></i> Edit Item
-</a>
-<a class="btn" href="{% url item_index %}">
-    <i class="icon-list"></i> Items list</a>
+<a class="btn" href="{% url item_edit item.id %}"><i class="icon-edit"></i> Edit Item</a>
+<a class="btn" href="{% url item_delete item.id %}"><i class="icon-trash"></i> Delete Item</a>
 </p>
+
+<p>
+<a class="btn" href="{% url item_index %}"><i class="icon-list"></i>Items list</a>
+</p>
+
 
 {# REVIEWS #}
 
