@@ -6,7 +6,12 @@
 
 {# FICHE TECHNIQUE #}
 
-<h1>{{ item }}</h1>
+<h1>
+    {{ item }}
+    <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
+    <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
+</h1>
+
 </br>
 <ul>
     <li>Name: {{ item.name }}</li>
@@ -16,15 +21,21 @@
     <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
 </ul>
 </br>
-<p>
-<a class="btn" href="{% url item_edit item.id %}"><i class="icon-edit"></i> Edit Item</a>
-<a class="btn" href="{% url item_delete item.id %}"><i class="icon-trash"></i> Delete Item</a>
-</p>
 
 <p>
 <a class="btn" href="{% url item_index %}"><i class="icon-list"></i>Items list</a>
 </p>
 
+{% include "items/question_form_add.html" %}
+
+{% for question in item.question_set.all %}
+    <p>
+        {{ question.content }} &nbsp;
+        <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
+        <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+    </p>
+    {# {% for answer in question.answer_set.all %}<p>{{answer}}</p>{% endfor %} #}
+{% endfor %}
 
 {# REVIEWS #}
 

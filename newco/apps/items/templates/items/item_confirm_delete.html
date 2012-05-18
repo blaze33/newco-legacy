@@ -6,11 +6,11 @@
 
 <p>Do you wanna delete?</p>
 
-<form class="item_delete_confirm" action="{% url item_delete item.id %}" method="POST">
+<form class="item_delete_confirm" action='{% url item_delete model_name object.id %}' method="POST">
     {% csrf_token %}
     <button type="submit" class="btn"> <i class="icon-trash"></i> Yes</button>
 </form>
-<form class="item_delete_deny" action="{% url item_detail item.id item.slug %}" method="POST">
+<form class="item_delete_deny" action='{% url item_detail item.id item.slug %}' method="POST">
     {% csrf_token %}
     <button type="submit" class="btn"> <i class="icon-off"></i> No</button>
 </form>
