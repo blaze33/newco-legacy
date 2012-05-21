@@ -1,0 +1,19 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+
+<p>Do you wanna delete?</p>
+
+<form class="item_delete_confirm" action='{% url item_delete "item" item.id %}' method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn"> <i class="icon-trash"></i> Yes</button>
+</form>
+
+
+    <a class="btn" href='{% url item_detail "item" item.id item.slug %}'> <i class="icon-off"></i> No</a>
+
+
+
+{% endblock %}

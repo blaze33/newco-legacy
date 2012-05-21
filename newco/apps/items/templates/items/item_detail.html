@@ -22,19 +22,16 @@
 {% endfor %}
 
 <p>
-<a class="btn" href='{% url item_edit "item" item.id %}'>
-    <i class="icon-edit"></i> Edit Item
-</a>
 <a class="btn" href="{% url item_index %}">
     <i class="icon-list"></i> Items list</a>
+<a class="btn" href='{% url item_edit "item" item.id %}'>
+    <i class="icon-edit"></i> Edit Item</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url item_delete "item" item.id %}'>
+    <i class="icon-trash"></i> Delete Item</a>
+{% endif %}
 </p>
 
 {# REVIEWS #}
-
-{% if user.is_authenticated %}
-
-{% else %}
-
-{% endif %}
 
 {% endblock %}
