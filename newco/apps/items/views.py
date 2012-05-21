@@ -11,9 +11,11 @@ app_name = 'items'
 
 class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
-        self.model = get_model(app_name, kwargs['model_name'])
+        if 'model_name' in kwargs:
+            self.model = get_model(app_name, kwargs['model_name'])
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 class ContentCreateView(ContentView, CreateView): pass
 class ContentUpdateView(ContentView, UpdateView): pass
 class ContentDetailView(ContentView, DetailView): pass
+class ContentListView(ContentView, ListView): pass
