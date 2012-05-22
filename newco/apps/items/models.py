@@ -71,12 +71,26 @@ class Answer(models.Model):
 
     @permalink
     def get_absolute_url(self):
+        item = self.question.item
         return ('item_detail', None,
-                {"item_id": self.question.item.id, "slug": self.question.item.slug})
+                {"item_id": item.id, "slug": item.slug})
 #        return self.question.get_absolute_url
 
 
 class Story(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
-    items = models.ManyToManyField(Item)
+    pub_date = models.DateTimeField(auto_now=True,
+                    verbose_name=_('Date published'))
+    item = models.ForeignKey(Item, null=True, blank=True, default=None,
+                    verbose_name=_("Item"), editable=False)
+    user = models.ForeignKey(User, null=True, blank=True, default=None,
+                    verbose_name=_("User"), editable=False)
+
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name_plural = "stories"
+
+    def __unicode__(self):
+        return u'%s' % (self.title)
