@@ -4,16 +4,13 @@
 
 {% block body %}
 
-<p>Do you wanna delete?</p>
-
+<h1>The item  <i>{{ item.name }}</i>  will be deleted: </h1>
+<br>
 <form class="item_delete_confirm" action='{% url item_delete "item" item.id %}' method="POST">
     {% csrf_token %}
     <button type="submit" class="btn"> <i class="icon-trash"></i> Yes</button>
-</form>
-
-
+    &nbsp;
     <a class="btn" href='{% url item_detail "item" item.id item.slug %}'> <i class="icon-off"></i> No</a>
-
-
+</form>
 
 {% endblock %}
