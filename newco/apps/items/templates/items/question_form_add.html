@@ -1,6 +1,6 @@
 <form method="POST" action='{% url item_create "question" %}'>
     {% csrf_token %}
     {{ question_form.as_p }}
-    <input type="submit" class="btn" value="Submit"/>
+    <input type="submit" name="add_question" class="btn" value="Submit"/>
     <input type="hidden" name="item_id" value="{{ item.id }}"/>
 </form>

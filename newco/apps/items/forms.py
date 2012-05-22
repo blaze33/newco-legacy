@@ -1,7 +1,6 @@
 from django.forms import ModelForm
 
-from items.models import Item, Question
-
+from items.models import Item, Question, Answer
 
 class ItemForm(ModelForm):
 
@@ -13,3 +12,9 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
+
+
+class AnswerForm(ModelForm):
+
+    class Meta:
+        model = Answer

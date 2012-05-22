@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
-from django.core.urlresolvers import reverse
 
 
 class Item(models.Model):
@@ -35,7 +34,8 @@ class Item(models.Model):
 
 
 class Question(models.Model):
-    content = models.CharField(max_length=200, verbose_name=_('Ask a question'))
+    content = models.CharField(max_length=200,
+                    verbose_name=_('Ask a question'))
     pub_date = models.DateTimeField(auto_now=True,
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
@@ -50,16 +50,29 @@ class Question(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('item_detail', None, {"item_id": self.item.id, "slug": self.item.slug})
+        return ('item_detail', None,
+                {"item_id": self.item.id, "slug": self.item.slug})
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, null=True, blank=True, default=None,
+                    verbose_name=_("Question"), editable=False)
     content = models.CharField(max_length=1000)
     pub_date = models.DateTimeField(auto_now=True,
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
                     verbose_name=_("User"), editable=False)
+
+    objects = models.Manager()
+
+    def __unicode__(self):
+        return u'%s' % (self.content)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None,
+                {"item_id": self.question.item.id, "slug": self.question.item.slug})
+#        return self.question.get_absolute_url
 
 
 class Story(models.Model):

@@ -10,10 +10,10 @@
 
 </br>
 
-<form action="." method="post">
+<form action="." method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" class="btn" value="Submit" />
+    <input type="submit" name="add_item" class="btn" value="Submit" />
 </form>
 
 {% endblock %}

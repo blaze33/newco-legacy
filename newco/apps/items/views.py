@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.db.models.loading import get_model
 
-from items.models import Item
-from items.forms import QuestionForm
+from items.models import Item, Question
+from items.forms import QuestionForm, AnswerForm
 
 app_name = 'items'
 
@@ -19,32 +19,51 @@ class ContentView(View):
 class ContentCreateView(ContentView, CreateView):
 
     def form_valid(self, form):
+        model_name = self.model.__name__
         self.object = form.save(commit=False)
 
         if self.request.user.is_authenticated():
             self.object.user = self.request.user
 
-        if self.model.__name__ == "Question":
+        if model_name == "Question":
             item_id = self.request.POST['item_id']
-            item = Item.objects.get(pk=item_id)
-            self.object.item = item
+            self.object.item = Item.objects.get(pk=item_id)
+        elif model_name == "Answer":
+            question_id = self.request.POST['question_id']
+            self.object.question = Question.objects.get(pk=question_id)
 
         return super(ContentCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+
+        if self.model.__name__ == "Answer" and "ans_form" in self.request.POST:
+            question_id = self.request.POST['question_id']
+            context['question'] = Question.objects.get(pk=question_id)
+            context['form'] = AnswerForm()
+
+        return context
 
 
 class ContentUpdateView(ContentView, UpdateView):
 
     def get_template_names(self):
         model_name = self.model.__name__
-        if model_name == "Question":
-            return ("items/question_form_edit.html")
-        elif model_name == "Item":
+        if model_name == "Item":
             return ("items/item_form.html")
+        elif model_name == "Question":
+            return ("items/question_form_edit.html")
+        elif model_name == "Answer":
+            return ("items/answer_form.html")
 
     def get_success_url(self):
         model_name = self.model.__name__
-        if model_name == "Question":
+        if model_name == "Item":
+            return self.object.get_absolute_url()
+        elif model_name == "Question":
             return self.object.item.get_absolute_url()
+        elif model_name == "Answer":
+            return self.object.question.item.get_absolute_url()
         else:
             return super(ContentUpdateView, self).get_success_url(self)
 
@@ -53,6 +72,8 @@ class ContentUpdateView(ContentView, UpdateView):
         model_name = self.model.__name__
         if model_name == "Question":
             context['item'] = self.object.item
+        elif model_name == "Answer":
+            context['question'] = self.object.question
 
         return context
 
@@ -63,10 +84,12 @@ class ContentDeleteView(ContentView, DeleteView):
 
     def get_success_url(self):
         model_name = self.model.__name__
-        if model_name == "Question":
-            return self.object.item.get_absolute_url()
-        elif model_name == "Item":
+        if model_name == "Item":
             return reverse("item_index")
+        elif model_name == "Question":
+            return self.object.item.get_absolute_url()
+        elif model_name == "Answer":
+            return self.object.question.item.get_absolute_url()
         else:
             return reverse("item_index")
 
@@ -81,10 +104,12 @@ class ContentDeleteView(ContentView, DeleteView):
         context = super(ContentDeleteView, self).get_context_data(**kwargs)
         context['model_name'] = self.model.__name__
 
-        if context['model_name'] == "Question":
-            context['item'] = self.object.item
-        elif context['model_name'] == "Item":
+        if context['model_name'] == "Item":
             context['item'] = self.object
+        elif context['model_name'] == "Question":
+            context['item'] = self.object.item
+        elif context['model_name'] == "Answer":
+            context['item'] = self.object.question.item
 
         return context
 
@@ -96,6 +121,5 @@ class ItemDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)
         if not self.request.POST:
-#            initial = {'user': self.request.user}
-            context['question_form'] = QuestionForm()   # (initial=initial)
+            context['question_form'] = QuestionForm()
         return context
