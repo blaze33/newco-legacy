@@ -57,7 +57,8 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, null=True, blank=True, default=None,
                     verbose_name=_("Question"), editable=False)
-    content = models.CharField(max_length=1000)
+    content = models.CharField(max_length=1000,
+                    verbose_name=_('Suggest an answer'))
     pub_date = models.DateTimeField(auto_now=True,
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
