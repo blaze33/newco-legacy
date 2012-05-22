@@ -50,6 +50,9 @@ django-heroku-postgresify==0.2
 newrelic==1.2.1.265
 raven==1.7.5
 
+## tagging
+django-taggit==0.9.3
+
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
 distribute==0.6.24
