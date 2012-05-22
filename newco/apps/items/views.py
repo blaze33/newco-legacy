@@ -6,6 +6,8 @@ from django.views.generic import View, FormView, ListView, CreateView, DetailVie
 from items.models import *
 from django.db.models.loading import get_model
 from django.core.urlresolvers import resolve, reverse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import permission_required
 
 app_name = 'items'
 
@@ -19,7 +21,13 @@ class ContentCreateView(ContentView, CreateView): pass
 class ContentUpdateView(ContentView, UpdateView): pass
 class ContentDetailView(ContentView, DetailView): pass
 class ContentListView(ContentView, ListView): pass
+
 class ContentDeleteView(ContentView, DeleteView):
+
+    @method_decorator(permission_required('is_superuser'))
+    def delete(self, request, *args, **kwargs):
+        return super(ContentDeleteView, self).delete(request, *args, **kwargs)
+
     def get_success_url(self):
         model_name = self.model.__name__
         if model_name == "Question":
