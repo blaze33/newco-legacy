@@ -20,20 +20,24 @@
 
     </br>
 
-    <h3>Questions asked by {{ page_user_display }}</h3>
-    {% for question in questions %}
-        <p>
-            <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> on
-            <a href="{{ question.item.get_absolute_url }}">{{ question.item }}</a>
-        </p>
-    {% endfor %}
+    {% if questions %}
+        <h3>Questions asked by {{ page_user_display }}</h3>
+        {% for question in questions %}
+            <p>
+                <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> on
+                <a href="{{ question.item.get_absolute_url }}">{{ question.item }}</a>
+            </p>
+        {% endfor %}
+    {% endif %}
 
-    <h3>Answers suggested by {{ page_user_display }}</h3>
-    {% for answer in answers %}
-        <p>
-            <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> on
-            <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
-            (<a href="{{ answer.question.item.get_absolute_url }}">{{ answer.question.item }}</a>)
-        </p>
-    {% endfor %}
+    {% if answers %}
+        <h3>Answers suggested by {{ page_user_display }}</h3>
+        {% for answer in answers %}
+            <p>
+                <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> on
+                <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
+                (<a href="{{ answer.question.item.get_absolute_url }}">{{ answer.question.item }}</a>)
+            </p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
