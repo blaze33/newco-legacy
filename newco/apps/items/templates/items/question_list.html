@@ -1,0 +1,39 @@
+<table class = "table">
+    <col width="20%"></col>
+    <col></col>
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answers</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in item.question_set.all %}
+            <tr class="{% cycle odd,even %}">
+                <td class="question">
+                    <p>{{ question.content }}</p>
+                    <p>
+                        <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
+                        <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+                    </p>
+                </td>
+
+                <td class="answer">
+                    <form method="POST" action='{% url item_create "answer" %}'>
+                        {% csrf_token %}
+                        <button type="submit" class="btn" name="ans_form"><i class="icon-share-alt"></i> Answer</button>
+                        <input type="hidden" name="question_id" value="{{ question.id }}"/>
+                    </form>
+
+                    {% for answer in question.answer_set.all %}
+                        <p>
+                            {{ answer.content }} &nbsp; &nbsp;
+                            <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
+                            <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+                        </p>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -7,83 +7,16 @@
 
 {# FICHE TECHNIQUE #}
 
-<h1>
-    {{ item }}
-    <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
-    <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
-</h1>
+{% include "items/data_sheet.html" %}
 
 </br>
-<ul>
-    <li>Name: {{ item.name }}</li>
-    <li>ID: {{ item.id }}</li>
-    <li>
-        Owner:
-        {% if item.user %}
-            <a href='{% url profile_detail item.user %}'>{{ item.user }}</a>
-        {% else %}
-            Anonymous
-        {% endif %}
-    </li>
-    <li>Last modified: {{ item.last_modified }}</li>
-    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
-</ul>
-</br>
 
-<p>
-<a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a>
-</p>
+<p><a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a></p>
 
 </br>
 
 {% include "items/question_form_add.html" %}
 
-<table class = "table">
-<col width="20%"></col>
-<col></col>
-<thead>
-    <tr>
-        <th>Question</th>
-        <th>Answers</th>
-    </tr>
-</thead>
-<tbody>
-{% for question in item.question_set.all %}
-<tr class="{% cycle odd,even %}">
-    <td class="question">
-        <p>{{ question.content }}</p>
-        <p>
-            <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
-            <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
-        </p>
-    </td>
-
-    <td class="answer">
-        <form method="POST" action='{% url item_create "answer" %}'>
-            {% csrf_token %}
-            <button type="submit" class="btn" name="ans_form"><i class="icon-share-alt"></i> Answer</button>
-            <input type="hidden" name="question_id" value="{{ question.id }}"/>
-        </form>
-
-        {% for answer in question.answer_set.all %}
-            <p>
-                {{ answer.content }} &nbsp; &nbsp;
-                <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
-                <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
-            </p>
-        {% endfor %}
-    </td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-
-{# REVIEWS #}
-
-{% if user.is_authenticated %}
-
-{% else %}
-
-{% endif %}
+{% include "items/question_list.html" %}
 
 {% endblock %}
