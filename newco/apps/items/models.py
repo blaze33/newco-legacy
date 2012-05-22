@@ -74,7 +74,6 @@ class Answer(models.Model):
         item = self.question.item
         return ('item_detail', None,
                 {"item_id": item.id, "slug": item.slug})
-#        return self.question.get_absolute_url
 
 
 class Story(models.Model):
@@ -94,3 +93,8 @@ class Story(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.title)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None,
+                {"item_id": self.item.id, "slug": self.item.slug})
