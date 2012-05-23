@@ -33,17 +33,20 @@ class Item(models.Model):
         return ('item_detail', None, {"item_id": self.id, "slug": self.slug})
 
 
-class Question(models.Model):
-    content = models.CharField(max_length=200,
-                    verbose_name=_('Ask a question'))
+class Content(models.Model):
     pub_date = models.DateTimeField(auto_now=True,
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
                     verbose_name=_("User"), editable=False)
-    item = models.ForeignKey(Item, null=True, blank=True, default=None,
-                    verbose_name=_("Item"), editable=False)
 
     objects = models.Manager()
+
+
+class Question(Content):
+    content = models.CharField(max_length=200,
+                    verbose_name=_('Ask a question'))
+    item = models.ForeignKey(Item, null=True, blank=True, default=None,
+                    verbose_name=_("Item"), editable=False)
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -54,17 +57,11 @@ class Question(models.Model):
                 {"item_id": self.item.id, "slug": self.item.slug})
 
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, null=True, blank=True, default=None,
-                    verbose_name=_("Question"), editable=False)
+class Answer(Content):
     content = models.CharField(max_length=1000,
                     verbose_name=_('Suggest an answer'))
-    pub_date = models.DateTimeField(auto_now=True,
-                    verbose_name=_('Date published'))
-    user = models.ForeignKey(User, null=True, blank=True, default=None,
-                    verbose_name=_("User"), editable=False)
-
-    objects = models.Manager()
+    question = models.ForeignKey(Question, null=True, blank=True, default=None,
+                    verbose_name=_("Question"), editable=False)
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -76,17 +73,11 @@ class Answer(models.Model):
                 {"item_id": item.id, "slug": item.slug})
 
 
-class Story(models.Model):
+class Story(Content):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
-    pub_date = models.DateTimeField(auto_now=True,
-                    verbose_name=_('Date published'))
     item = models.ForeignKey(Item, null=True, blank=True, default=None,
                     verbose_name=_("Item"), editable=False)
-    user = models.ForeignKey(User, null=True, blank=True, default=None,
-                    verbose_name=_("User"), editable=False)
-
-    objects = models.Manager()
 
     class Meta:
         verbose_name_plural = "stories"
