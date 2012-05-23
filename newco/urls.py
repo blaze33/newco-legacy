@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 
 from django.contrib import admin
@@ -24,7 +24,8 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
-    url(r"^profiles/", include("idios.urls"))
+    url(r"^profiles/", include("idios.urls")),
+    url(r"^votes/", include('votes.urls'))
 )
 
 
