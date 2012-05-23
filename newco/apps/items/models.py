@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
+from django.contrib.contenttypes import generic
+
+from taggit.managers import TaggableManager
+from voting.models import Vote
 
 
 class Item(models.Model):
@@ -38,6 +41,7 @@ class Content(models.Model):
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
                     verbose_name=_("User"), editable=False)
+    votes = generic.GenericRelation(Vote)
 
     objects = models.Manager()
 
@@ -47,6 +51,10 @@ class Question(Content):
                     verbose_name=_('Ask a question'))
     item = models.ForeignKey(Item, null=True, blank=True, default=None,
                     verbose_name=_("Item"), editable=False)
+
+    def delete(self):
+        self.votes.all().delete()
+        super(Question, self).delete()
 
     def __unicode__(self):
         return u'%s' % (self.content)

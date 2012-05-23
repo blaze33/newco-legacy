@@ -1,17 +1,50 @@
+{% load voting_tags %}
+
 {% if item.question_set.all %}
 <table class = "table">
+    <col width="10%"></col>
     <col width="20%"></col>
     <col></col>
     <thead>
         <tr>
+            <th>Useful?</th>
             <th>Question</th>
             <th>Answers</th>
         </tr>
     </thead>
     <tbody>
+
+        {% scores_for_objects item.question_set.all as score_dict %}
+        {% votes_by_user user on item.question_set.all as vote_dict %}
+
         {% for question in item.question_set.all %}
+
+            {% dict_entry_for_item question from vote_dict as vote %}
+            {% dict_entry_for_item question from score_dict as score %}
+
+            {% url question_voting question.id "up" as urlup %}
+            {% url question_voting question.id "clear" as urlclear %}
+            {% url question_voting question.id "down" as urldown %}
+
             <tr class="{% cycle odd,even %}">
-                <td class="question">
+                <td class="votecell">
+                    <div class="vote" align="center">
+<!--                        <p><a class="btn btn-mini{% if vote and vote.is_upvote %} btn-warning{% endif %}" href="{% if vote and vote.is_upvote %}{{ urlclear }}{% else %}{{ urlup }}{% endif %}"><i class="icon-arrow-up"></i></a></p>-->
+<!--                        <p>{{ score.score }}</p>-->
+<!--                        <p><a class="btn btn-mini{% if vote and vote.is_downvote %} btn-warning{% endif %}" href="{% if vote and vote.is_downvote %}{{ urlclear }}{% else %}{{ urldown }}{% endif %}"><i class="icon-arrow-down"></i></a></p>-->
+
+                        <form action="{% if vote and vote.is_upvote %}{{ urlclear }}{% else %}{{ urlup }}{% endif %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini{% if vote and vote.is_upvote %} btn-warning{% endif %}"> <i class="icon-arrow-up"></i> </button>
+                        </form>
+                        <form action="{% if vote and vote.is_downvote %}{{ urlclear }}{% else %}{{ urldown }}{% endif %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-mini{% if vote and vote.is_downvote %} btn-warning{% endif %}"> <i class="icon-arrow-down"></i> </button>
+                        </form>
+                        <p>{{ score.score }}</p>
+                    </div>
+                </td>
+                <td class="questioncell">
                     <p>{{ question.content }}</p>
                     <p>asked <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.user %}'>{{ question.user }}</a></p>
                     <p>
@@ -20,7 +53,7 @@
                     </p>
                 </td>
 
-                <td class="answer">
+                <td class="answercell">
                     <form method="POST" action='{% url item_create "answer" %}'>
                         {% csrf_token %}
                         <button type="submit" class="btn" name="ans_form"><i class="icon-share-alt"></i> Answer</button>
