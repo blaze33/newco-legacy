@@ -1,0 +1,6 @@
+<form method="POST" action='{% url item_create "story" %}'>
+    {% csrf_token %}
+    {{ story_form.as_p }}
+    <input type="submit" name="add_story" class="btn" value="Submit"/>
+    <input type="hidden" name="item_id" value="{{ item.id }}"/>
+</form>
