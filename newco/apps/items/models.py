@@ -43,7 +43,7 @@ class Content(models.Model):
                     verbose_name=_("User"), editable=False)
 
     def delete(self):
-        if self.votes:
+        if 'votes' in self.__dict__.keys():
             self.votes.all().delete()
         super(Content, self).delete()
 
@@ -51,8 +51,7 @@ class Content(models.Model):
 
 
 class Question(Content):
-    content = models.CharField(max_length=200,
-                    verbose_name=_('Ask a question'))
+    content = models.CharField(max_length=200)
     item = models.ForeignKey(Item, null=True, blank=True, default=None,
                     verbose_name=_("Item"), editable=False)
     votes = generic.GenericRelation(Vote)
@@ -67,8 +66,7 @@ class Question(Content):
 
 
 class Answer(Content):
-    content = models.CharField(max_length=1000,
-                    verbose_name=_('Suggest an answer'))
+    content = models.CharField(max_length=1000)
     question = models.ForeignKey(Question, null=True, blank=True, default=None,
                     verbose_name=_("Question"), editable=False)
     votes = generic.GenericRelation(Vote)
@@ -88,6 +86,7 @@ class Story(Content):
     content = models.CharField(max_length=2000)
     item = models.ForeignKey(Item, null=True, blank=True, default=None,
                     verbose_name=_("Item"), editable=False)
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name_plural = "stories"

@@ -14,8 +14,29 @@
 
 </br>
 
-{% include "items/question_form_add.html" %}
+<table class = "table">
+    <col></col>
+    <col></col>
+    <thead>
+        <tr>
+            <th>Ask a question</th>
+            <th>Tell us a story</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {% include "items/question_add_form.html" %}
+            </td>
+            <td>
+                {% include "items/story_add_form.html" %}
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 {% include "items/question_list.html" %}
+
+{% include "items/story_list.html" %}
 
 {% endblock %}

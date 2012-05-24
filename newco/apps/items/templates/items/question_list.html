@@ -45,7 +45,7 @@
                 <td class="answercell">
                     <form method="POST" action='{% url item_create "answer" %}'>
                         {% csrf_token %}
-                        <button type="submit" class="btn" name="ans_form"><i class="icon-share-alt"></i> Answer</button>
+                        <button type="submit" class="btn" name="answer_form"><i class="icon-share-alt"></i> Answer</button>
                         <input type="hidden" name="question_id" value="{{ question.id }}"/>
                     </form>
 
