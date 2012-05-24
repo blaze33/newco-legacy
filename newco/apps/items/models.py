@@ -41,10 +41,10 @@ class Content(models.Model):
                     verbose_name=_('Date published'))
     user = models.ForeignKey(User, null=True, blank=True, default=None,
                     verbose_name=_("User"), editable=False)
-    votes = generic.GenericRelation(Vote)
 
     def delete(self):
-        self.votes.all().delete()
+        if self.votes:
+            self.votes.all().delete()
         super(Content, self).delete()
 
     objects = models.Manager()
@@ -55,6 +55,7 @@ class Question(Content):
                     verbose_name=_('Ask a question'))
     item = models.ForeignKey(Item, null=True, blank=True, default=None,
                     verbose_name=_("Item"), editable=False)
+    votes = generic.GenericRelation(Vote)
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -70,6 +71,7 @@ class Answer(Content):
                     verbose_name=_('Suggest an answer'))
     question = models.ForeignKey(Question, null=True, blank=True, default=None,
                     verbose_name=_("Question"), editable=False)
+    votes = generic.GenericRelation(Vote)
 
     def __unicode__(self):
         return u'%s' % (self.content)
