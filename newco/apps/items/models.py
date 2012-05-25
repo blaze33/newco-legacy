@@ -66,10 +66,13 @@ class QuestionForm(ModelForm):
         }
 
     def save(self, request, commit=True, **kwargs):
-        question = super(QuestionForm, self).save(commit=False)
-        question.author = request.user
-        question.save()
-        question.items.add(kwargs.pop('pk'))
+        if commit:
+            question = super(QuestionForm, self).save(commit=False)
+            question.author = request.user
+            question.save()
+            question.items.add(kwargs.pop('pk'))
+        else:
+            return super(QuestionForm, self).save(commit)
 
 class AnswerForm(ModelForm):
     class Meta:
