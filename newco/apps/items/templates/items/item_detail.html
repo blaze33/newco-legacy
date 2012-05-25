@@ -29,7 +29,14 @@
 </form>
 {% for question in item.question_set.all %}
     <h3>{{ question.content }}</h3><p>{{ question.author }} {{ question.pub_date }}</p>
-    {% for answer in question.answer_set.all %}<p>{{answer}}</p>{% endfor %}
+    {% for answer in question.answer_set.all %}<p>{{answer.content}}</p>{% endfor %}
+    <form method="POST" action='{% url item_create "answer" %}'>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-mini" name="answer_form"><i class="icon-share-alt"></i> 
+    {% if question.answer_set.all %}Add a better answer{% else %}
+    Answer this question{% endif %}</button>
+    <input type="hidden" name="question_id" value="{{ question.id }}"/>
+    </form>
 {% endfor %}
 <br>
 <p>

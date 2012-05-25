@@ -43,8 +43,14 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question)
     content = models.CharField(max_length=1000)
-    pub_date = models.DateTimeField(_('date published'))
+    pub_date = models.DateTimeField(default=datetime.datetime.today(),
+                                    editable=False,
+                                    verbose_name=_('date published'))
     author = models.ForeignKey(User)
+    
+    @permalink
+    def get_absolute_url(self):
+            return ('item_detail', None, {"model_name":"item","pk": self.question.items.all()[0].id,"slug": self.question.items.all()[0].slug} )
 
 class Story(models.Model):
     title = models.CharField(max_length=200)

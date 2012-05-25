@@ -1,0 +1,24 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Answer" %}{% endblock %}
+
+{% block body %}
+
+<h1>{{ question.content }}</h1>
+
+</br>
+
+<h3>Suggest an answer</h3>
+
+</br>
+
+<form action="." method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="add_answer" class="btn" value="Submit" />
+    <input type="hidden" name="question_id" value="{{ question.id }}"/>
+</form>
+
+{% endblock %}
