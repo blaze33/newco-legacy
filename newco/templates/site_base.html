@@ -37,6 +37,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
         <ul class="nav">{% spaceless %}
             <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
             <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
+            <li id="tab_index"><a href="{% url item_index %}">{% trans "Products index" %}</a></li>
         {% endspaceless %}</ul>
     {% endif %}
 {% endblock %}
