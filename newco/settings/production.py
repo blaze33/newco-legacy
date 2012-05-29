@@ -50,3 +50,4 @@ DATABASES = {
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
     DATABASES = HEROKU_DATABASES
+    DATABASES['default']['OPTIONS'] = { 'autocommit': True }
