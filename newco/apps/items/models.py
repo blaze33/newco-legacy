@@ -3,7 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
-from django.db import transaction
 from django.template.defaultfilters import slugify
 from django.forms import ModelForm
 import datetime
@@ -124,15 +123,13 @@ class AnswerForm(ModelForm):
         widgets = {
             'content': Textarea(attrs={'class': 'span6', 'placeholder': 'Be concise and to the point.', 'rows': 6}),
         }
-      
-    @transaction.commit_manually  
+        
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             answer = super(AnswerForm, self).save(commit=False)
             answer.author = self.user
             answer.question = self.question
             answer.save()
-            transaction.commit()
             return answer
         else:
             return super(AnswerForm, self).save(commit)
