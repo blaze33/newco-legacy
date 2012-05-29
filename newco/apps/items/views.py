@@ -27,15 +27,21 @@ class ContentFormMixin(object):
     object = None
 
     def get(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.form_class(**{'request':request})
+        if self.form_class:
+            form = self.form_class(**{'request':request})
+        else:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
         return self.render_to_response(self.get_context_data(form=form))
 
     def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form_kwargs = self.get_form_kwargs()
-        form_kwargs.update({'request':request})
-        form = self.form_class(**form_kwargs)
+        if self.form_class:
+            form_kwargs = self.get_form_kwargs()
+            form_kwargs.update({'request':request})
+            form = self.form_class(**form_kwargs)
+        else:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -90,10 +96,7 @@ class ContentDeleteView(ContentView, DeleteView):
         return super(ContentDeleteView, self).delete(request, *args, **kwargs)
 
     def get_success_url(self):
+        if self.model.__name__ == 'Item':
+            return reverse("item_index")
         if self.success_url:
             return self.success_url
-        model_name = self.model.__name__
-        if model_name == "Question":
-            return self.object.item.get_absolute_url()
-        else:
-            return reverse("item_index")
