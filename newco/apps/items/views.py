@@ -89,11 +89,20 @@ class ContentListView(ContentView, ListView): pass
 
 class ContentDeleteView(ContentView, DeleteView):
 
-    @method_decorator(permission_required('is_superuser'))
     def delete(self, request, *args, **kwargs):
         if 'success_url' in request.REQUEST:
             self.success_url = request.REQUEST['success_url']
-        return super(ContentDeleteView, self).delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        try:
+            if not self.object.user_can_manage_me(request.user):
+                raise CannotManage
+        except CannotManage:
+            # need to redirect to 403 - delete forbidden
+            return HttpResponseRedirect(self.get_success_url())
+        except AttributeError:
+            pass
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         if self.model.__name__ == 'Item':

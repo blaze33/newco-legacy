@@ -7,8 +7,24 @@ from django.template.defaultfilters import slugify
 from django.forms import ModelForm
 import datetime
 from django.forms.widgets import Textarea
+from django.shortcuts import get_object_or_404
 
-class Item(models.Model):
+class CannotManage(Exception): pass
+
+class Content(models.Model):
+
+    def user_can_manage_me(self, user):
+        try:
+            if user == self.author:
+                return user == self.author or user.is_superuser
+        except AttributeError:
+            pass
+        return user.is_superuser
+    
+    class Meta:
+        abstract = True
+
+class Item(Content):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.SlugField(verbose_name=_('Slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
@@ -29,7 +45,7 @@ class Item(models.Model):
     def get_absolute_url(self):
             return ('item_detail', None, {"model_name":"item","pk": self.id,"slug": self.slug} )
 
-class Question(models.Model):
+class Question(Content):
     content = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=datetime.datetime.today(),
                                     editable=False,
@@ -44,7 +60,7 @@ class Question(models.Model):
     def get_absolute_url(self):
             return ('item_detail', None, {"model_name":"item","pk": self.items.all()[0].id,"slug": self.items.all()[0].slug} )
 
-class Answer(models.Model):
+class Answer(Content):
     question = models.ForeignKey(Question)
     content = models.CharField(max_length=1000)
     pub_date = models.DateTimeField(default=datetime.datetime.today(),
