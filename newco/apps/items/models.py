@@ -39,6 +39,10 @@ class Question(models.Model):
     
     def __unicode__(self):
         return u'%s' % (self.content)
+    
+    @permalink
+    def get_absolute_url(self):
+            return ('item_detail', None, {"model_name":"item","pk": self.items.all()[0].id,"slug": self.items.all()[0].slug} )
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
@@ -58,6 +62,16 @@ class Story(models.Model):
     items = models.ManyToManyField(Item)
     
 class QuestionForm(ModelForm):
+
+    create = False
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+        return super(QuestionForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Question
         exclude = ('author', 'items')
@@ -65,10 +79,10 @@ class QuestionForm(ModelForm):
             'content': Textarea(attrs={'class': 'span4', 'placeholder': 'Ask something specific. Be concise.', 'rows': 1}),
         }
 
-    def save(self, request, commit=True, **kwargs):
-        if commit:
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
-            question.author = request.user
+            question.author = self.user
             question.save()
             question.items.add(kwargs.pop('pk'))
         else:
