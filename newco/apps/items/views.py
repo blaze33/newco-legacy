@@ -17,9 +17,30 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
+            form_class_name = kwargs['model_name'].title()+'Form'
+            if form_class_name in globals():
+                self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
-class ContentCreateView(ContentView, CreateView): pass
+class ContentCreateView(ContentView, CreateView):
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.form_class(**{'request':request})
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form_kwargs = self.get_form_kwargs()
+        form_kwargs.update({'request':request})
+        form = self.form_class(**form_kwargs)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
 class ContentUpdateView(ContentView, UpdateView): pass
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 

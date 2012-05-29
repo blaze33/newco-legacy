@@ -75,8 +75,30 @@ class QuestionForm(ModelForm):
             return super(QuestionForm, self).save(commit)
 
 class AnswerForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        self.user = self.request.user
+        self.question_id = self.request.REQUEST['question_id']
+        self.question = Question.objects.get(pk=self.question_id)
+        return super(AnswerForm, self).__init__(*args, **kwargs)
+    
     class Meta:
         model = Answer
+        fields = ('content', )
+        widgets = {
+            'content': Textarea(attrs={'class': 'span6', 'placeholder': 'Be concise and to the point.', 'rows': 6}),
+        }
+        
+    def save(self, commit=True, **kwargs):
+        if commit:
+            answer = super(AnswerForm, self).save(commit=False)
+            answer.author = self.user
+            answer.question = self.question
+            answer.save()
+            return answer
+        else:
+            return super(QuestionForm, self).save(commit)
 
 class StoryForm(ModelForm):
     class Meta:
