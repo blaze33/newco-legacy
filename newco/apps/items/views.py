@@ -50,32 +50,32 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         self.object = self.get_object()
         if self.model == Item:
-            QuestionFormSet = formset_factory(QuestionForm)
+#            QuestionFormSet = formset_factory(QuestionForm)
             if self.request.POST:
-                fs = QuestionFormSet(self.request.POST, prefix='questions')
+                f = QuestionForm(self.request.POST, request=self.request)
+#                fs = QuestionFormSet(self.request.POST, prefix='questions')
             else:
-                fs = QuestionFormSet(prefix='questions')
-            context['formset'] = fs
+                f = QuestionForm(request=self.request)
+#                fs = QuestionFormSet(prefix='questions')
+#            context['formset'] = fs
+            context['form'] = f
             context['item'] = self.object
         return context
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
-    def form_valid(self, formset, request, **kwargs):
-        for form in formset:
-            if form.cleaned_data:
-                self.object = form.save(request, **kwargs)
-                form.save_m2m()     
+    def form_valid(self, form, request, **kwargs):
+        if form.cleaned_data:
+            self.object = form.save(**kwargs)
+            form.save_m2m()     
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
     def post(self, request, *args, **kwargs):
         if 'question_ask' in request.POST:
-            self.formset_class = formset_factory(QuestionForm)
-            formset = self.formset_class(data=self.request.POST,
-                                         prefix='questions')
-            if formset.is_valid():
-                return self.form_valid(formset, request, **kwargs)
+            form = QuestionForm(self.request.POST, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
         else:
             return self.form_invalid(form)
     
