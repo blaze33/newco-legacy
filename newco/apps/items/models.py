@@ -79,7 +79,7 @@ class AnswerForm(ModelForm):
     create = False
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs:
+        if 'instance' not in kwargs or kwargs['instance'] == None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user

@@ -1,16 +1,18 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body %}
 
-<h1>The item  <i>{{ item.name }}</i>  will be deleted: </h1>
+<h1>The {{ object|to_class_name }} <i>{{ object.name }}</i>  will be deleted: </h1>
 <br>
-<form class="item_delete_confirm" action='{% url item_delete "item" item.id %}' method="POST">
+<form class="item_delete_confirm" action='{% url item_delete object|to_class_name object.id %}' method="POST">
     {% csrf_token %}
+    <input type="hidden" name="success_url" value="{{ request.META.HTTP_REFERER }}">
     <button type="submit" class="btn"> <i class="icon-trash"></i> Yes</button>
     &nbsp;
-    <a class="btn" href='{% url item_detail "item" item.id item.slug %}'> <i class="icon-off"></i> No</a>
+    <a class="btn" href='{% firstof request.META.HTTP_REFERER '/' %}'> <i class="icon-off"></i> No</a>
 </form>
 
 {% endblock %}

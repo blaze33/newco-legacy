@@ -85,9 +85,13 @@ class ContentDeleteView(ContentView, DeleteView):
 
     @method_decorator(permission_required('is_superuser'))
     def delete(self, request, *args, **kwargs):
+        if 'success_url' in request.REQUEST:
+            self.success_url = request.REQUEST['success_url']
         return super(ContentDeleteView, self).delete(request, *args, **kwargs)
 
     def get_success_url(self):
+        if self.success_url:
+            return self.success_url
         model_name = self.model.__name__
         if model_name == "Question":
             return self.object.item.get_absolute_url()
