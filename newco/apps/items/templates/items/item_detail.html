@@ -29,7 +29,10 @@
 </form>
 {% for question in item.question_set.all %}
     <h3>{{ question.content }}</h3><p>{{ question.author }} {{ question.pub_date }}</p>
-    {% for answer in question.answer_set.all %}<p>{{answer.content}}</p>{% endfor %}
+    {% for answer in question.answer_set.all %}<p>{{answer.content}}
+    <a href='{% url item_edit "answer" answer.id %}'>
+                    <i class="icon-edit"></i>
+                </a></p>{% endfor %}
     <p><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'><i class="icon-share-alt"></i> 
     {% if question.answer_set.all %}Add a better answer{% else %}
     Answer this question{% endif %}</a></p>

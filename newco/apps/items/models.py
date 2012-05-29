@@ -76,11 +76,15 @@ class QuestionForm(ModelForm):
 
 class AnswerForm(ModelForm):
 
+    create = False
+
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
-        self.user = self.request.user
-        self.question_id = self.request.REQUEST['question_id']
-        self.question = Question.objects.get(pk=self.question_id)
+        if 'instance' not in kwargs:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.question_id = self.request.REQUEST['question_id']
+            self.question = Question.objects.get(pk=self.question_id)
         return super(AnswerForm, self).__init__(*args, **kwargs)
     
     class Meta:
@@ -91,14 +95,14 @@ class AnswerForm(ModelForm):
         }
         
     def save(self, commit=True, **kwargs):
-        if commit:
+        if commit and self.create:
             answer = super(AnswerForm, self).save(commit=False)
             answer.author = self.user
             answer.question = self.question
             answer.save()
             return answer
         else:
-            return super(QuestionForm, self).save(commit)
+            return super(AnswerForm, self).save(commit)
 
 class StoryForm(ModelForm):
     class Meta:

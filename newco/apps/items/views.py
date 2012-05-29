@@ -22,16 +22,16 @@ class ContentView(View):
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
-class ContentCreateView(ContentView, CreateView):
+class ContentFormMixin(object):
+
+    object = None
 
     def get(self, request, *args, **kwargs):
-        self.object = None
         form_class = self.get_form_class()
         form = self.form_class(**{'request':request})
         return self.render_to_response(self.get_context_data(form=form))
 
     def post(self, request, *args, **kwargs):
-        self.object = None
         form_class = self.get_form_class()
         form_kwargs = self.get_form_kwargs()
         form_kwargs.update({'request':request})
@@ -41,7 +41,9 @@ class ContentCreateView(ContentView, CreateView):
         else:
             return self.form_invalid(form)
 
+class ContentCreateView(ContentView, ContentFormMixin, CreateView): pass
 class ContentUpdateView(ContentView, UpdateView): pass
+
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
