@@ -6,10 +6,9 @@ import django_pylibmc
 ### other production-specific stuff
 
 # memcache settings
-MIDDLEWARE_CLASSES = [
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
-] + MIDDLEWARE_CLASSES
+MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
+                     MIDDLEWARE_CLASSES + \
+                     ["django.middleware.cache.FetchFromCacheMiddleware"]
 
 CACHES = {
     'default': {
