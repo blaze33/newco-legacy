@@ -1,42 +1,28 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% block head_title %}{% trans item.name %}{% endblock %}
 
 {% block body %}
 
 {# FICHE TECHNIQUE #}
 
-{% include "items/data_sheet.html" %}
-
-</br>
-
 <p><a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a></p>
 
 </br>
 
-<table class = "table">
-    <col></col>
-    <col></col>
-    <thead>
-        <tr>
-            <th>Ask a question</th>
-            <th>Tell us a story</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                {% include "items/question_add_form.html" %}
-            </td>
-            <td>
-                {% include "items/story_add_form.html" %}
-            </td>
-        </tr>
-    </tbody>
-</table>
+{% include "items/data_sheet.html" %}
+
+</br>
+
+<form method="POST" action="." class="form-inline">
+    {% csrf_token %}
+    <div class="input-prepend input-append">
+    <span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
+    </div>
+    {{ form.errors }}
+</form>
 
 {% include "items/question_list.html" %}
-
-{% include "items/story_list.html" %}
 
 {% endblock %}

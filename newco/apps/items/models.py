@@ -1,25 +1,45 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
-from django.contrib.contenttypes import generic
-
-from taggit.managers import TaggableManager
-from voting.models import Vote
+import datetime
 
 
-class Item(models.Model):
+class CannotManage(Exception):
+    pass
 
+
+class Content(models.Model):
+
+    author = models.ForeignKey(User)
+    pub_date = models.DateTimeField(default=datetime.datetime.today(),
+                                    editable=False,
+                                    verbose_name=_('date published'))
+
+    def user_can_manage_me(self, user):
+        try:
+            if user == self.author:
+                return user == self.author or user.is_superuser
+        except AttributeError:
+            pass
+        return user.is_superuser
+
+    class Meta:
+        abstract = True
+
+
+class Item(Content):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.SlugField(verbose_name=_('Slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-                    verbose_name=_('Last modified'))
-    user = models.ForeignKey(User, null=True, blank=True, default=None,
-                    verbose_name=_("User"), editable=False)
+                                         verbose_name=_('Last modified'))
     tags = TaggableManager()
 
-    objects = models.Manager()
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Item, self).save()
 
     class Meta:
         pass
@@ -27,74 +47,40 @@ class Item(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-    def save(self):
-        self.slug = slugify(self.name)
-        super(Item, self).save()
-
     @permalink
     def get_absolute_url(self):
-        return ('item_detail', None, {"item_id": self.id, "slug": self.slug})
-
-
-class Content(models.Model):
-    pub_date = models.DateTimeField(auto_now=True,
-                    verbose_name=_('Date published'))
-    user = models.ForeignKey(User, null=True, blank=True, default=None,
-                    verbose_name=_("User"), editable=False)
-
-    def delete(self):
-        if 'votes' in self.__dict__.keys():
-            self.votes.all().delete()
-        super(Content, self).delete()
-
-    objects = models.Manager()
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.id,
+                                      "slug": self.slug})
 
 
 class Question(Content):
     content = models.CharField(max_length=200)
-    item = models.ForeignKey(Item, null=True, blank=True, default=None,
-                    verbose_name=_("Item"), editable=False)
-    votes = generic.GenericRelation(Vote)
+    items = models.ManyToManyField(Item)
 
     def __unicode__(self):
         return u'%s' % (self.content)
 
     @permalink
     def get_absolute_url(self):
-        return ('item_detail', None,
-                {"item_id": self.item.id, "slug": self.item.slug})
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})
 
 
 class Answer(Content):
+    question = models.ForeignKey(Question)
     content = models.CharField(max_length=1000)
-    question = models.ForeignKey(Question, null=True, blank=True, default=None,
-                    verbose_name=_("Question"), editable=False)
-    votes = generic.GenericRelation(Vote)
-
-    def __unicode__(self):
-        return u'%s' % (self.content)
 
     @permalink
     def get_absolute_url(self):
-        item = self.question.item
-        return ('item_detail', None,
-                {"item_id": item.id, "slug": item.slug})
+        item = self.question.items.all()[0]
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": item.id,
+                                      "slug": item.slug})
 
 
-class Story(Content):
+class Story(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
-    item = models.ForeignKey(Item, null=True, blank=True, default=None,
-                    verbose_name=_("Item"), editable=False)
-    votes = generic.GenericRelation(Vote)
-
-    class Meta:
-        verbose_name_plural = "stories"
-
-    def __unicode__(self):
-        return u'%s' % (self.title)
-
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None,
-                {"item_id": self.item.id, "slug": self.item.slug})
+    items = models.ManyToManyField(Item)
