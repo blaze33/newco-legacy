@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
+from django.contrib.contenttypes import generic
 import datetime
+
+from voting.models import Vote
 
 
 class CannotManage(Exception):
@@ -18,6 +21,9 @@ class Content(models.Model):
                                     editable=False,
                                     verbose_name=_('date published'))
 
+    class Meta:
+        abstract = True
+
     def user_can_manage_me(self, user):
         try:
             if user == self.author:
@@ -26,8 +32,12 @@ class Content(models.Model):
             pass
         return user.is_superuser
 
-    class Meta:
-        abstract = True
+    def delete(self):
+        try:
+            self.votes.all().delete()
+        except:
+            pass
+        super(Content, self).delete()
 
 
 class Item(Content):
@@ -57,6 +67,7 @@ class Item(Content):
 class Question(Content):
     content = models.CharField(max_length=200)
     items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -71,6 +82,10 @@ class Question(Content):
 class Answer(Content):
     question = models.ForeignKey(Question)
     content = models.CharField(max_length=1000)
+    votes = generic.GenericRelation(Vote)
+
+    def __unicode__(self):
+        return u'Answer %s on %s' % (self.id, self.question)
 
     @permalink
     def get_absolute_url(self):
@@ -84,3 +99,4 @@ class Story(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=2000)
     items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)

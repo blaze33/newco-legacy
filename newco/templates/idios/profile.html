@@ -25,7 +25,7 @@
         {% for question in questions %}
             <p>
                 <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> on
-                <a href="{{ question.item.get_absolute_url }}">{{ question.item }}</a>
+                <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a>
             </p>
         {% endfor %}
     {% endif %}
@@ -36,7 +36,7 @@
             <p>
                 <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> on
                 <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
-                (<a href="{{ answer.question.item.get_absolute_url }}">{{ answer.question.item }}</a>)
+                (<a href="{{ answer.question.items.all.0.get_absolute_url }}">{{ answer.question.items.all.0 }}</a>)
             </p>
         {% endfor %}
     {% endif %}
