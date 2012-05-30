@@ -189,6 +189,9 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "votes",
+    
+    #Test Seb
+    "reputation",
 ]
 
 FIXTURE_DIRS = [
