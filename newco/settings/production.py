@@ -9,9 +9,9 @@ import django_pylibmc
 # memcache settings
 HEROKU_CACHE = memcacheify()
 if HEROKU_CACHE:
-    MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
-                         MIDDLEWARE_CLASSES + \
-                         ["django.middleware.cache.FetchFromCacheMiddleware"]
+#    MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
+#                         MIDDLEWARE_CLASSES + \
+#                         ["django.middleware.cache.FetchFromCacheMiddleware"]
     CACHES = HEROKU_CACHE
 
 # S3 storage settings
