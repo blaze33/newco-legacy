@@ -35,19 +35,21 @@
 
                 <td class="questioncell">
                     <p>{{ question.content }}</p>
-                    <p>asked <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.user %}'>{{ question.user }}</a></p>
+                    <p>asked <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ question.author }}</a></p>
+                    {% if user.is_superuser or question.author == request.user %}
                     <p>
                         <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
                         <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
                     </p>
+                    {% endif %}
                 </td>
 
                 <td class="answercell">
-                    <form method="POST" action='{% url item_create "answer" %}'>
-                        {% csrf_token %}
-                        <button type="submit" class="btn" name="answer_form"><i class="icon-share-alt"></i> Answer</button>
-                        <input type="hidden" name="question_id" value="{{ question.id }}"/>
-                    </form>
+
+                    <p>
+                        <a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'><i class="icon-share-alt"></i> {% if question.answer_set.all %}Add a better answer
+                                          {% else %}Answer this question{% endif %}</a>
+                    </p>
 
                     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
                     {% scores_for_objects question.answer_set.all as answer_score_dict %}
@@ -57,9 +59,11 @@
                         {% dict_entry_for_item answer from answer_score_dict as score %}
                         <form action='{% url object_voting "Answer" answer.id %}' method="POST">
                             {{ answer.content }} &nbsp; &nbsp;
-                            answered <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.user %}'>{{ answer.user }}</a> &nbsp; &nbsp;
+                            answered <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a> &nbsp; &nbsp;
+                            {% if user.is_superuser or answer.author == request.user %}
                             <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
                             <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+                            {% endif %}
                             &nbsp; &nbsp;
                             {% csrf_token %}
                             <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
