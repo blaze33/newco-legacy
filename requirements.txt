@@ -36,6 +36,8 @@ django-storages==1.1.4
 ## memcache interface
 pylibmc==1.2.2
 django-pylibmc-sasl==0.2.4
+## memcache configuration for heroku
+django-heroku-memcacheify==0.2
 
 ## production webserver
 gunicorn==0.14.2

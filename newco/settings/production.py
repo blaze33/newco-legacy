@@ -2,19 +2,17 @@
 ### production.py
 from common import *
 from postgresify import postgresify
+from memcacheify import memcacheify
 import django_pylibmc
 ### other production-specific stuff
 
 # memcache settings
-MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
-                     MIDDLEWARE_CLASSES + \
-                     ["django.middleware.cache.FetchFromCacheMiddleware"]
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache'
-    }
-}
+HEROKU_CACHE = memcacheify()
+if HEROKU_CACHE:
+    MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
+                         MIDDLEWARE_CLASSES + \
+                         ["django.middleware.cache.FetchFromCacheMiddleware"]
+    CACHES = HEROKU_CACHE
 
 # S3 storage settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
