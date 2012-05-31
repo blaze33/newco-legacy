@@ -24,8 +24,7 @@ class ItemForm(ModelForm):
             item = super(ItemForm, self).save(commit=False)
             item.author = self.user
             item.save()
-            tags = self.cleaned_data['tags']
-            item.tags.add(*tags)
+            self.save_m2m()
             return item
         else:
             return super(ItemForm, self).save(commit)
