@@ -192,6 +192,7 @@ INSTALLED_APPS = [
     
     #Test Seb
     "reputation",
+    "affiliation",
 ]
 
 FIXTURE_DIRS = [
