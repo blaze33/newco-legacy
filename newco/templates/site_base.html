@@ -7,12 +7,13 @@
 {% block extra_style %}
 <link rel="icon" href="{% static "img/favicon.png" %}" type="image/png" />
 <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+{% include "feedback/header.html" %}
 {% endblock %}
 
 {% block extra_head_base %}
 {{ block.super }}
 
-{% include "feedback/header.html" %}
+
 
 
 

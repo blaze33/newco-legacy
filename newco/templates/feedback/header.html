@@ -19,4 +19,11 @@
     
     div#feedbackModal div.visible-phone textarea { width: 100% }
     
+    /* css rule to circumvent broken fade rendering on a phone
+       cf. open issue https://github.com/twitter/bootstrap/issues/2130 */
+    @media (max-width: 480px) { 
+        .modal.fade.in { top: 5%; }
+     }
+
+    
 </style>
