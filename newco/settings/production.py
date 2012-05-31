@@ -6,6 +6,10 @@ from memcacheify import memcacheify
 import django_pylibmc
 ### other production-specific stuff
 
+# serving gzipped content
+MIDDLEWARE_CLASSES = ["django.middleware.gzip.GZipMiddleware"] + \
+                         MIDDLEWARE_CLASSES
+
 # memcache settings
 if os.environ.get('USE_MEMCACHE'):
     MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
