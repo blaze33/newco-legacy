@@ -7,15 +7,14 @@ from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
-#from django.utils.decorators import method_decorator
-#from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 app_name = 'items'
 
 
 class ContentView(View):
 
-#    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
@@ -52,7 +51,12 @@ class ContentFormMixin(object):
 
 
 class ContentCreateView(ContentView, ContentFormMixin, CreateView):
-    pass
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentCreateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
 
 
 class ContentUpdateView(ContentView, UpdateView):
@@ -83,6 +87,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             form.save_m2m()
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
