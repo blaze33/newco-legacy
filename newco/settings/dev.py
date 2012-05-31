@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ### dev.py
 from common import *
+from postgresify import postgresify
 DEBUG = True
 ### other development-specific stuff
 
@@ -18,3 +19,7 @@ DATABASES = {
         "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+HEROKU_DATABASES = postgresify()
+if HEROKU_DATABASES:
+    DATABASES = HEROKU_DATABASES
