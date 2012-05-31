@@ -24,7 +24,8 @@ idios==0.2a1
 metron==0.1
 
 ## upgraded pinax-theme-bootstrap
-git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
+## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
+pinax-theme-bootstrap==2.0.3
 
 ## schema and data migrations
 South==0.7.4
@@ -62,3 +63,4 @@ django-appconf==0.5
 wsgiref==0.1.2
 simplejson==2.5.0
 dj-database-url==0.1.2
+django-forms-bootstrap==2.0.3.post1
