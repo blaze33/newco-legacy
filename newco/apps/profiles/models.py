@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from django.db.models.signals import post_save
-
-from idios.models import ProfileBase
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from idios.models import ProfileBase
+
+from voting.models import Vote
 
 import datetime
+
 
 class Profile(ProfileBase):
     name = models.CharField(_("name"), max_length=50, null=True, blank=True)
@@ -28,3 +30,13 @@ def create_reputation(sender, instance=None, **kwargs):
         return
     reputation, created = Reputation.objects.get_or_create(user=instance)
 post_save.connect(create_reputation, sender=User)
+
+
+def increment_reputation(sender, instance=None, **kwargs):
+    if instance is None:
+        return
+    obj = instance.object
+    reputation = Reputation.objects.get(user=obj.author)
+    reputation.reputation_value += instance.vote
+    reputation.save()
+post_save.connect(increment_reputation, sender=Vote)
