@@ -98,8 +98,8 @@ SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
-    "django.template.loaders.filesystem.load_template_source",
-    "django.template.loaders.app_directories.load_template_source",
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -159,7 +159,7 @@ INSTALLED_APPS = [
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    "mailer",
+    #"mailer",
     "django_openid",
     "timezones",
     "emailconfirmation",
@@ -182,7 +182,11 @@ INSTALLED_APPS = [
     "storages",
     
     # Monitoring
-    'raven.contrib.django',
+    "raven.contrib.django",
+    
+    # our business
+    "items",
+    "taggit",
 ]
 
 FIXTURE_DIRS = [
@@ -191,7 +195,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+#EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -206,6 +210,7 @@ ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",

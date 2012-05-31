@@ -1,0 +1,57 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% block head_title %}{% trans item.name %}{% endblock %}
+
+{% block body %}
+
+{# FICHE TECHNIQUE #}
+
+<h1>{{ item }}</h1>
+<br />
+<ul>
+    <li>Name: {{ item.name }}</li>
+    <li>ID: {{ item.id }}</li>
+    <li>Last modified: {{ item.last_modified }}</li>
+    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
+</ul>
+<br />
+<form method="POST" action="" class="form-inline">
+    {% csrf_token %}
+    <div class="input-prepend input-append">
+    <span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
+    </div>
+    {{ form.errors }}
+    
+</form>
+{% for question in item.question_set.all %}
+    <h3>{{ question.content }}</h3><p>{{ question.author }} {{ question.pub_date }}
+    {% if user.is_superuser or question.author == request.user %}
+    <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
+    <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+    {% endif %}</p>
+    {% for answer in question.answer_set.all %}<p>{{answer.content}}
+    {% if user.is_superuser or answer.author == request.user %}
+    <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
+    <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+    {% endif %}
+    </p>{% endfor %}
+    <p><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'><i class="icon-share-alt"></i> 
+    {% if question.answer_set.all %}Add a better answer{% else %}
+    Answer this question{% endif %}</a></p>
+{% endfor %}
+<br>
+<p>
+<a class="btn" href="{% url item_index %}">
+    <i class="icon-list"></i> Items list</a>
+<a class="btn" href='{% url item_edit "item" item.id %}'>
+    <i class="icon-edit"></i> Edit Item</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url item_delete "item" item.id %}'>
+    <i class="icon-trash"></i> Delete Item</a>
+{% endif %}
+</p>
+
+{# REVIEWS #}
+
+{% endblock %}

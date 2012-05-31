@@ -36,6 +36,8 @@ django-storages==1.1.4
 ## memcache interface
 pylibmc==1.2.2
 django-pylibmc-sasl==0.2.4
+## memcache configuration for heroku
+django-heroku-memcacheify==0.2
 
 ## production webserver
 gunicorn==0.14.2
@@ -49,6 +51,9 @@ django-heroku-postgresify==0.2
 ## monitoring
 newrelic==1.2.1.265
 raven==1.7.5
+
+## tagging
+django-taggit==0.9.3
 
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1

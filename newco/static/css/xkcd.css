@@ -1,5 +1,4 @@
 /* Homepage specific styling */
-{% load static from staticfiles %}
 #xkcd {
 	width: 100%;
 	margin: auto;
