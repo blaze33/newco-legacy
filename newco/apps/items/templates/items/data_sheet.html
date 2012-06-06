@@ -1,0 +1,23 @@
+<h1>
+    {{ item }}
+    <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
+    {% if user.is_superuser %}
+    <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
+    {% endif %}
+</h1>
+
+<br />
+
+<ul>
+    <li>Name: {{ item.name }}</li>
+    <li>ID: {{ item.id }}</li>
+    <li>
+        Owner:
+        {% if item.author %}<a href='{% url profile_detail item.author %}'>{{ item.author }}</a>
+        {% else %}Anonymous
+        {% endif %}
+    </li>
+    <li>Last modified: {{ item.last_modified }}</li>
+    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
+    <!--<li>Affiliation link (with ): <span class="label"></span></li>-->
+</ul>
