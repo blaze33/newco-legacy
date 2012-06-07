@@ -1,26 +1,28 @@
 # Create your views here.
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
-from django.views.generic import View, FormView, ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import View, ListView, CreateView, DetailView
+from django.views.generic import UpdateView, DeleteView
 from django.views.generic.edit import ProcessFormView, FormMixin
-from items.models import *
+from items.models import Item, CannotManage
+from items.forms import QuestionForm, AnswerForm, ItemForm
 from django.db.models.loading import get_model
-from django.core.urlresolvers import resolve, reverse
+from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import permission_required
-from django.forms.models import formset_factory
+from django.contrib.auth.decorators import login_required, permission_required
 
 app_name = 'items'
 
+
 class ContentView(View):
+
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
-            form_class_name = kwargs['model_name'].title()+'Form'
+            form_class_name = kwargs['model_name'].title() + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
+
 
 class ContentFormMixin(object):
 
@@ -28,7 +30,7 @@ class ContentFormMixin(object):
 
     def get(self, request, *args, **kwargs):
         if self.form_class:
-            form = self.form_class(**{'request':request})
+            form = self.form_class(**{'request': request})
         else:
             form_class = self.get_form_class()
             form = self.get_form(form_class)
@@ -37,7 +39,7 @@ class ContentFormMixin(object):
     def post(self, request, *args, **kwargs):
         if self.form_class:
             form_kwargs = self.get_form_kwargs()
-            form_kwargs.update({'request':request})
+            form_kwargs.update({'request': request})
             form = self.form_class(**form_kwargs)
         else:
             form_class = self.get_form_class()
@@ -47,8 +49,24 @@ class ContentFormMixin(object):
         else:
             return self.form_invalid(form)
 
-class ContentCreateView(ContentView, ContentFormMixin, CreateView): pass
-class ContentUpdateView(ContentView, UpdateView): pass
+
+class ContentCreateView(ContentView, ContentFormMixin, CreateView):
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentCreateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
+
+
+class ContentUpdateView(ContentView, UpdateView):
+
+    @method_decorator(permission_required(app_name))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentUpdateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
+
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
@@ -56,36 +74,39 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         self.object = self.get_object()
         if self.model == Item:
-#            QuestionFormSet = formset_factory(QuestionForm)
             if self.request.POST:
                 f = QuestionForm(self.request.POST, request=self.request)
-#                fs = QuestionFormSet(self.request.POST, prefix='questions')
             else:
                 f = QuestionForm(request=self.request)
-#                fs = QuestionFormSet(prefix='questions')
-#            context['formset'] = fs
             context['form'] = f
             context['item'] = self.object
         return context
 
     def form_invalid(self, form):
+        self.object = self.get_object()
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, request, **kwargs):
         if form.cleaned_data:
             self.object = form.save(**kwargs)
-            form.save_m2m()     
+            form.save_m2m()
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
         else:
             return self.form_invalid(form)
-    
-class ContentListView(ContentView, ListView): pass
+
+
+class ContentListView(ContentView, ListView):
+    pass
+
 
 class ContentDeleteView(ContentView, DeleteView):
 

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 
 from django.contrib import admin
@@ -20,10 +20,12 @@ urlpatterns = patterns("",
     url(r"^about/", include("about.urls")),
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
-    url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r"^announcements/", include("announcements.urls")),
-    url(r"^content/", include("items.urls"))
+    url(r"^content/", include("items.urls")),
+    url(r"^profiles/", include("profiles.urls")),
+    url(r"^profiles/", include("idios.urls")),
+    url(r"^votes/", include('votes.urls'))
 )
 
 
