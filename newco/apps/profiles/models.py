@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save, post_save, post_delete
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 
 from idios.models import ProfileBase
 
@@ -83,3 +84,19 @@ def amend_reputation(sender, instance=None, **kwargs):
     rep.reputation_incremented += instance.vote
     rep.save()
 pre_save.connect(amend_reputation, sender=Vote)
+
+
+def update_permissions(sender, instance=None, **kwargs):
+    if instance is None:
+        return
+
+    content_type = ContentType.objects.get(app_label=Vote._meta.app_label, model=Vote._meta.module_name)
+    permission, created = Permission.objects.get_or_create(codename='can_vote',
+                                       name='Can vote on content',
+                                       content_type=content_type)
+
+    if instance.reputation_incremented >= 5:
+        instance.user.user_permissions.add(permission)
+    else:
+        instance.user.user_permissions.remove(permission)
+post_save.connect(update_permissions, sender=Reputation)

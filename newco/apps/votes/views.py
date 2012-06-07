@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.db.models.loading import get_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ObjectDoesNotExist
 
 from voting.views import vote_on_object
@@ -9,6 +9,7 @@ APP_NAME = 'items'
 
 
 @login_required
+@permission_required('voting.can_vote')
 def rate_object(request, model_name, object_id):
 
     model = get_model(APP_NAME, model_name)
