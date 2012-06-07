@@ -1,0 +1,4 @@
+    h3 [class^="icon-"],[class*=" icon-"] {
+         vertical-align: baseline;
+    }
+

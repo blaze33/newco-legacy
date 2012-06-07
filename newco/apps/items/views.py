@@ -8,7 +8,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from taggit.models import Tag
 
 from affiliation.models import AffiliationItemStore
@@ -53,16 +53,7 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
 
-class ContentTagView(ContentView, ContentFormMixin, CreateView):
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ContentTagView, self).dispatch(request,
-                                                       *args,
-                                                       **kwargs)
-
-
-class ContentCreateView(ContentView, ContentFormMixin):
+class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -72,7 +63,12 @@ class ContentCreateView(ContentView, ContentFormMixin):
 
 
 class ContentUpdateView(ContentView, UpdateView):
-    pass
+
+#    @method_decorator(permission_required(app_name))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentUpdateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
 
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):

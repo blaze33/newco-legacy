@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from items.models import Item
-from items.views import ContentListView, ContentDetailView, ContentTagView
+from items.views import ContentListView, ContentDetailView
 from items.views import ContentCreateView, ContentUpdateView, ContentDeleteView
 
 urlpatterns = patterns('',

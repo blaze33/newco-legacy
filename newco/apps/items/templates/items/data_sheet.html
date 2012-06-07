@@ -1,33 +1,30 @@
-<h1>
-    {{ item }}
-    <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
-    {% if user.is_superuser %}
-    <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
-    {% endif %}
-</h1>
+<div class="row">
+    <div class="span7">
+        <h1>
+            {{ item }}
+            <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
+            {% if user.is_superuser %}
+                <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
+            {% endif %}
+        </h1>
+    </div>
+</div>
 
-<br />
+<p>Author: <a href='{% url profile_detail item.author %}'>{{ item.author }}</a></p>
 
-<ul>
-    <li>Name: {{ item.name }}</li>
-    <li>ID: {{ item.id }}</li>
-    <li>
-        Owner:
-        {% if item.author %}<a href='{% url profile_detail item.author %}'>{{ item.author }}</a>
-        {% else %}Anonymous
-        {% endif %}
-    </li>
-    <li>Last modified: {{ item.last_modified }}</li>
-    <li>Tags: {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</li>
+<br>
+
+<div>
+    {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
 	<br>
     {% if affiliations %}
         {% for aff in affiliations %}
-            <li>
+            <p>
                 Acheter <a href='{{ aff.url }}'>{{ aff.item }} chez {{ aff.store }}</a> pour {{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
                 &nbsp;
-            </li>
+            </p>
         {% endfor %}
 	{% else %}
     	<p>Il n'y a pas encore de lien d'affiliation disponible pour cet article. Seuls les membres seniors peuvent ajouter des liens d'affiliation.</p>
 	{% endif %}
-</ul>
+</div>

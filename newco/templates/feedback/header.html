@@ -1,52 +1,29 @@
-
+{% load staticfiles %}
 <style type="text/css">
-      
-    .slide-out-div {
-        padding: 20px;
-        width: 540px;
-        background: #ccc;
-        border: 1px solid #29216d;
-    }
-      
-    /*
-    .tab-withoutSlider {
-        position: absolute;
-        top: 250px;
+    .feedbackTab {
+        position: fixed;
+        top: 150px;
         right: 0px;
-        background: url(http://newco-project.fr/static/img/Feedback_button.png) no-repeat;
+        background: url({% static "img/Feedback_button.png" %}) no-repeat;
         width: 29px;
         height: 70px;
-    }*/
-      
-    /*@media tags are made to change the style according to screen size*/
-    /* Landscape phones and down */
-    @media (max-width: 480px) {
-    	.slide-out-div {
-    		padding: 20px;
-    		width: 250px;
-    		background: #ccc;
-    		border: 1px solid #29216d;
-    	}
-    }
-      
-    @media (min-width: 481px) and (max-width: 767px) {
-    	.slide-out-div {
-    		padding: 20px;
-    		width: 420px;
-    		background: #ccc;
-    		border: 1px solid #29216d;
-    	}
     }
     
-    @media (min-width: 768px) {
-    	.slide-out-div {
-    		padding: 20px;
-    		width: 540px;
-    		background: #ccc;
-    		border: 1px solid #29216d;
-    	}
+    div#feedbackModal textarea { 
+        width: 90%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        resize: vertical;
     }
-</style>
+    
+    div#feedbackModal div.visible-phone textarea { width: 100% }
+    
+    /* css rule to circumvent broken fade rendering on a phone
+       cf. open issue https://github.com/twitter/bootstrap/issues/2130 */
+    @media (max-width: 480px) { 
+        .modal.fade.in { top: 5%; }
+     }
 
-<!--Sources of files for the html text editor : feedback uses it.-->
-<link rel="stylesheet" type="text/css" href="http://www.newco-project.fr/static/css/jquery.cleditor.css">
+    
+</style>
