@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block extra_style %}
 {{ block.super }}
@@ -37,8 +38,7 @@
     <div class="span5">
     <h3>{{ question.content }}
     {% if user.is_superuser or question.author == request.user %}
-    <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
-    <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+    {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
     {% endif %}</h3></div>
     <div class="span2">
        <p><small>{{ question.author }}<br>{{ question.pub_date }}</small></p>
@@ -47,9 +47,8 @@
 {% for answer in question.answer_set.all %}
 <div class="row">
     <div class="span5"><p>{{answer.content}}
-    {% if user.is_superuser or answer.author == request.user %}
-    <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
-    <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+    {% if user.is_superuser or item.author == request.user %}
+    {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
     {% endif %}
     </p>
     </div>
