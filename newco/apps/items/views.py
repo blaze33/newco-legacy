@@ -61,7 +61,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
 class ContentUpdateView(ContentView, UpdateView):
 
-    @method_decorator(permission_required(app_name))
+#    @method_decorator(permission_required(app_name))
     def dispatch(self, request, *args, **kwargs):
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
