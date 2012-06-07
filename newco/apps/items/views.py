@@ -9,6 +9,7 @@ from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from taggit.models import Tag
 
 from affiliation.models import AffiliationItemStore
 
@@ -52,7 +53,16 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
 
-class ContentCreateView(ContentView, ContentFormMixin, CreateView):
+class ContentTagView(ContentView, ContentFormMixin, CreateView):
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentTagView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
+
+
+class ContentCreateView(ContentView, ContentFormMixin):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -103,7 +113,19 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
 
 class ContentListView(ContentView, ListView):
-    pass
+    
+    def get_queryset(self):
+        if 'tag_slug' in self.kwargs:
+            tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
+            return Item.objects.filter(tags=tag)
+        else:
+            return super(ContentListView, self).get_queryset()
+    
+    def get_context_data(self, **kwargs):
+        context = super(ContentListView, self).get_context_data(**kwargs)
+        if 'tag_slug' in self.kwargs:
+            context['tag'] = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        return context
 
 
 class ContentDeleteView(ContentView, DeleteView):

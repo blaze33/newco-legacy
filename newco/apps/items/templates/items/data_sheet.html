@@ -18,7 +18,7 @@
         {% endif %}
     </li>
     <li>Last modified: {{ item.last_modified }}</li>
-    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
+    <li>Tags: {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</li>
 	<br>
     {% if affiliations %}
         {% for aff in affiliations %}

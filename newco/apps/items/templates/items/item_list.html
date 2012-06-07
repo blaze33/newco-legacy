@@ -6,11 +6,14 @@
 
 {% block body %}
 
-<h1>Make your choice !</h1>
-
-</br>
 
 {% if item_list %}
+    {% if tag %}
+    	<h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a> :</h3>
+    {% else %}
+    	<h1>List of items in database :</h1>
+    {% endif %}
+    </br>
     <ul>
         {% for item in item_list %}
             <li>
@@ -23,7 +26,7 @@
 {% else %}
     <p>No products are available.</p>
 {% endif %}
-
+<br>
 <p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> Add an entry</a></p>
 
 {% endblock %}
