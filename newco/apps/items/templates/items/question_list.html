@@ -1,79 +1,63 @@
 {% load voting_tags %}
 
-{% if item.question_set.all %}
-<table class = "table">
-    <col width="10%"></col>
-    <col width="20%"></col>
-    <col></col>
-    <thead>
-        <tr>
-            <th>Useful?</th>
-            <th>Question</th>
-            <th>Answers</th>
-        </tr>
-    </thead>
-    <tbody>
+{% votes_by_user user on item.question_set.all as question_vote_dict %}
+{% scores_for_objects item.question_set.all as question_score_dict %}
 
-        {% votes_by_user user on item.question_set.all as question_vote_dict %}
-        {% scores_for_objects item.question_set.all as question_score_dict %}
+{% for question in item.question_set.all %}
+    {% dict_entry_for_item question from question_vote_dict as vote %}
+    {% dict_entry_for_item question from question_score_dict as score %}
 
-        {% for question in item.question_set.all %}
-            {% dict_entry_for_item question from question_vote_dict as vote %}
-            {% dict_entry_for_item question from question_score_dict as score %}
+    <div class="row">
+        <div class="span1" style="text-align: center;">
+            <form action='{% url object_voting "Question" question.id %}' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
+                <h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3>
+                <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
+            </form>
+        </div>
+        <div class="span4"><h3>
+            {{ question.content }}
+            {% if user.is_superuser or question.author == request.user %}
+                <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
+                <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+            {% endif %}
+        </h3></div>
+        <div class="span2"><p><small>
+            <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ question.author }}</a>
+        </small></p></div>
+    </div>
 
-            <tr class="{% cycle odd,even %}">
-                <td class="votecell">
-                    <div class="vote" align="center">
-                        <form action='{% url object_voting "Question" question.id %}' method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
-                            <h2>{% if score %}{{ score.score }}{% else %}0{% endif %}</h2>
-                            <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
-                        </form>
-                    </div>
-                </td>
+    {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
+    {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-                <td class="questioncell">
-                    <p>{{ question.content }}</p>
-                    <p>asked <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ question.author }}</a></p>
-                    {% if user.is_superuser or question.author == request.user %}
-                    <p>
-                        <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
-                        <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
-                    </p>
-                    {% endif %}
-                </td>
+    {% for answer in question.answer_set.all %}
+        {% dict_entry_for_item answer from answer_vote_dict as vote %}
+        {% dict_entry_for_item answer from answer_score_dict as score %}
+        <div class="row">
+            <div class="span2" style="text-align: right;">
+                <form action='{% url object_voting "Answer" answer.id %}' method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
+                    {% if score %}{{ score.score }}{% else %}0{% endif %}
+                    <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
+                </form>
+            </div>
 
-                <td class="answercell">
-
-                    <p>
-                        <a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'><i class="icon-share-alt"></i> {% if question.answer_set.all %}Add a better answer
-                                          {% else %}Answer this question{% endif %}</a>
-                    </p>
-
-                    {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
-                    {% scores_for_objects question.answer_set.all as answer_score_dict %}
-
-                    {% for answer in question.answer_set.all %}
-                        {% dict_entry_for_item answer from answer_vote_dict as vote %}
-                        {% dict_entry_for_item answer from answer_score_dict as score %}
-                        <form action='{% url object_voting "Answer" answer.id %}' method="POST">
-                            {{ answer.content }} &nbsp; &nbsp;
-                            answered <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a> &nbsp; &nbsp;
-                            {% if user.is_superuser or answer.author == request.user %}
-                            <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
-                            <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
-                            {% endif %}
-                            &nbsp; &nbsp;
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
-                            {% if score %}{{ score.score }}{% else %}0{% endif %}
-                            <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
-                        </form>
-                    {% endfor %}
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+            <div class="span3"><p>
+                {{ answer.content }}
+                {% if user.is_superuser or answer.author == request.user %}
+                    <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
+                    <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+                {% endif %}
+            </p></div>
+            <div class="span2"><p><small>
+                <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ answer.author }}</a>
+            </small></p></div>
+        </div>
+    {% endfor %}
+    <p><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'>
+        <i class="icon-share-alt"></i>{% if question.answer_set.all %}Add a better answer{% else %}Answer this question{% endif %}
+    </a></p>
+    <hr>
+{% endfor %}
