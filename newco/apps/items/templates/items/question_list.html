@@ -1,4 +1,5 @@
 {% load voting_tags %}
+{% load content_utils %}
 
 {% votes_by_user user on item.question_set.all as question_vote_dict %}
 {% scores_for_objects item.question_set.all as question_score_dict %}
@@ -19,8 +20,7 @@
         <div class="span4"><h3>
             {{ question.content }}
             {% if user.is_superuser or question.author == request.user %}
-                <a href='{% url item_edit "question" question.id %}'><i class="icon-edit"></i></a>
-                <a href='{% url item_delete "question" question.id %}'><i class="icon-trash"></i></a>
+                {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
         <div class="span2"><p><small>
@@ -47,8 +47,7 @@
             <div class="span3"><p>
                 {{ answer.content }}
                 {% if user.is_superuser or answer.author == request.user %}
-                    <a href='{% url item_edit "answer" answer.id %}'><i class="icon-edit"></i></a>
-                    <a href='{% url item_delete "answer" answer.id %}'><i class="icon-trash"></i></a>
+                    {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
             <div class="span2"><p><small>
