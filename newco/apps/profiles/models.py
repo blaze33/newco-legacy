@@ -88,7 +88,8 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Vote._meta.app_label, model=Vote._meta.module_name)
+    content_type = ContentType.objects.get(app_label=Vote._meta.app_label,
+                                           model=Vote._meta.module_name)
     permission, created = Permission.objects.get_or_create(codename='can_vote',
                                        name='Can vote on content',
                                        content_type=content_type)
