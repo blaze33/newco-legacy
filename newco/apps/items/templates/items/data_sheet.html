@@ -19,4 +19,15 @@
     </li>
     <li>Last modified: {{ item.last_modified }}</li>
     <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
+	<br>
+    {% if affiliations %}
+        {% for aff in affiliations %}
+            <li>
+                Acheter <a href='{{ aff.url }}'>{{ aff.item }} chez {{ aff.store }}</a> pour {{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
+                &nbsp;
+            </li>
+        {% endfor %}
+	{% else %}
+    	<p>Il n'y a pas encore de lien d'affiliation disponible pour cet article. Seuls les membres seniors peuvent ajouter des liens d'affiliation.</p>
+	{% endif %}
 </ul>
