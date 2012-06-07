@@ -52,7 +52,7 @@
                 {% endif %}
             </p></div>
             <div class="span2"><p><small>
-                <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ answer.author }}</a>
+                <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a>
             </small></p></div>
         </div>
     {% endfor %}
