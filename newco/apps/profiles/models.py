@@ -94,7 +94,7 @@ def update_permissions(sender, instance=None, **kwargs):
                                        name='Can vote on content',
                                        content_type=content_type)
 
-    if instance.reputation_incremented >= 5:
+    if instance.reputation_incremented >= 2:
         instance.user.user_permissions.add(permission)
     else:
         instance.user.user_permissions.remove(permission)
