@@ -16,7 +16,7 @@ class CannotManage(Exception):
 
 class Content(models.Model):
 
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.datetime.today(),
                                     editable=False,
                                     verbose_name=_('date published'))
