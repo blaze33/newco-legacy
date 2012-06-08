@@ -12,8 +12,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from taggit.models import Tag
 
-from django import http
-
 from affiliation.models import AffiliationItemStore
 
 app_name = 'items'
@@ -86,7 +84,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
-            context['affiliations'] = AffiliationItemStore.objects.filter(item=self.object)
+            context['affs'] = AffiliationItemStore.objects.filter(item=self.object)
         return context
 
     def form_invalid(self, form):
@@ -112,14 +110,14 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
 
 class ContentListView(ContentView, ListView, RedirectView):
-    
+
     def get_queryset(self):
         if 'tag_slug' in self.kwargs:
             tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
             return Item.objects.filter(tags=tag)
         else:
             return super(ContentListView, self).get_queryset()
-    
+
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
         if 'tag_slug' in self.kwargs:
@@ -133,8 +131,8 @@ class ContentListView(ContentView, ListView, RedirectView):
             return HttpResponseRedirect(item.get_absolute_url())
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
-    
-    
+
+
 class ContentDeleteView(ContentView, DeleteView):
 
     def delete(self, request, *args, **kwargs):
@@ -157,4 +155,3 @@ class ContentDeleteView(ContentView, DeleteView):
             return reverse("item_index")
         if self.success_url:
             return self.success_url
-

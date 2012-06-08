@@ -11,19 +11,19 @@
     </div>
 </div>
 {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
-	
+
 <p>{% trans "Author" %} : <a href='{% url profile_detail item.author %}'>{{ item.author }}</a></p>
 
 <div>
     <br>
-    {% if affiliations %}
-        {% for aff in affiliations %}
+    {% if affs %}
+        {% for aff in affs %}
             <p>
                 {% blocktrans %} Acheter <a href='{{ aff.url }}'>{{ aff.item }} chez {{ aff.store }}</a> pour {% endblocktrans %}{{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
                 &nbsp;
             </p>
         {% endfor %}
-	{% else %}
-    	<p>{% trans "Il n'y a pas encore de lien d'affiliation disponible pour cet article. Seuls les membres seniors peuvent ajouter des liens d'affiliation." %}</p>
+    {% else %}
+        <p>{% trans "Il n'y a pas encore de lien d'affiliation disponible pour cet article. Seuls les membres seniors peuvent ajouter des liens d'affiliation." %}</p>
 	{% endif %}
 </div>

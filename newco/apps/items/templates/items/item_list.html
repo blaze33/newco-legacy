@@ -10,18 +10,18 @@
 {% if item_list %}
     {% if tag %}
         <form action="." method="POST" class="well form-search">{% csrf_token %}
-	    	<div class="input-append">
-		        <input name="item_name" type="text" placeholder="Chercher un article ayant le tag {{ tag.name}}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
-	        </div>
-	    </form>
-    	<h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a> :</h3>
+            <div class="input-append">
+                <input name="item_name" type="text" placeholder="Chercher un article ayant le tag {{ tag.name}}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
+            </div>
+        </form>
+        <h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a> :</h3>
     {% else %}
         <form action="." method="POST" class="well form-search">{% csrf_token %}
-	    	<div class="input-append">
-		        <input name="item_name" type="text" placeholder="Chercher un article" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
-	        </div>
-	    </form>
-    	<h1>List of items in database :</h1>
+            <div class="input-append">
+                <input name="item_name" type="text" placeholder="Chercher un article" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
+            </div>
+        </form>
+        <h1>List of items in database :</h1>
     {% endif %}
     </br>
 

@@ -190,9 +190,6 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "votes",
-    
-    #Test Seb
-    "reputation",
     "affiliation",
 ]
 
