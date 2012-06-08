@@ -2,6 +2,7 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
@@ -10,6 +11,8 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from taggit.models import Tag
+
+from django import http
 
 from affiliation.models import AffiliationItemStore
 
@@ -108,7 +111,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             return self.form_invalid(form)
 
 
-class ContentListView(ContentView, ListView):
+class ContentListView(ContentView, ListView, RedirectView):
     
     def get_queryset(self):
         if 'tag_slug' in self.kwargs:
@@ -123,7 +126,15 @@ class ContentListView(ContentView, ListView):
             context['tag'] = Tag.objects.get(slug=self.kwargs['tag_slug'])
         return context
 
-
+    def post(self, request, *args, **kwargs):
+        if 'item_name' in request.POST:
+            item_name = request.POST['item_name']
+            item = Item.objects.filter(name=item_name)[0]
+            return HttpResponseRedirect(item.get_absolute_url())
+        else:
+            return super(ContentListView, self).post(request, *args, **kwargs)
+    
+    
 class ContentDeleteView(ContentView, DeleteView):
 
     def delete(self, request, *args, **kwargs):
@@ -146,3 +157,4 @@ class ContentDeleteView(ContentView, DeleteView):
             return reverse("item_index")
         if self.success_url:
             return self.success_url
+
