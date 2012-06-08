@@ -80,7 +80,7 @@ class Question(Content):
 
 
 class Answer(Content):
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000)
     votes = generic.GenericRelation(Vote)
 
