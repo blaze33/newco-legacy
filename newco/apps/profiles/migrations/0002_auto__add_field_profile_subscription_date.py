@@ -8,24 +8,12 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Reputation'
-        db.create_table('profiles_reputation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('reputation_incremented', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('reputation_computed', self.gf('django.db.models.fields.IntegerField')(default=0)),
-        ))
-        db.send_create_signal('profiles', ['Reputation'])
-
         # Adding field 'Profile.subscription_date'
         db.add_column('profiles_profile', 'subscription_date',
                       self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 8, 0, 0)),
                       keep_default=False)
 
     def backwards(self, orm):
-        # Deleting model 'Reputation'
-        db.delete_table('profiles_reputation')
-
         # Deleting field 'Profile.subscription_date'
         db.delete_column('profiles_profile', 'subscription_date')
 
@@ -75,13 +63,6 @@ class Migration(SchemaMigration):
             'subscription_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 8, 0, 0)'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
-        },
-        'profiles.reputation': {
-            'Meta': {'object_name': 'Reputation'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'reputation_computed': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'reputation_incremented': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
 
