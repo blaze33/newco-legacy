@@ -7,12 +7,13 @@
 {% block extra_style %}
 <link rel="icon" href="{% static "img/favicon.png" %}" type="image/png" />
 <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+{% include "feedback/header.html" %}
 {% endblock %}
 
 {% block extra_head_base %}
 {{ block.super }}
 
-{% include "feedback/header.html" %}
+
 
 
 
@@ -52,42 +53,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     {% analytics %}
     {% block extra_body %}{% endblock %}
     
-    
-    
     {{ block.super }}
     {% include "feedback/button.html" %}
-    <script src="http://tab-slide-out.googlecode.com/files/jquery.tabSlideOut.v1.3.js"></script>
-    
-    <script type="text/javascript">
-    $(function(){
-        $('.slide-out-div').tabSlideOut({
-            tabHandle: '.handle',                     //class of the element that will become your tab
-            pathToTabImage: 'http://newco-project.fr/static/img/Feedback_button.png', //path to the image for the tab //Optionally can be set using css
-            imageHeight: '70px',                     //height of tab image           //Optionally can be set using css
-            imageWidth: '29px',                       //width of tab image            //Optionally can be set using css
-            tabLocation: 'right',                      //side of screen where tab lives, top, right, bottom, or left
-            speed: 300,                               //speed of animation
-            action: 'click',                          //options: 'click' or 'hover', action to trigger animation
-            topPos: '150px',                          //position from the top/ use if tabLocation is left or right
-            leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
-            fixedPosition: false                      //options: true makes it stick(fixed position) on scroll
-        });
-
-    });
-    </script>
-
-
-
-<!--Sources of files for the html text editor : feedback uses it. It requires jquery.min.js, si il n'est pas deja charge, mettre un lien-->
-      <script type="text/javascript" src="http://www.newco-project.fr/static/js/jquery.cleditor.min.js"></script>
-      <script type="text/javascript" src="http://www.newco-project.fr/static/js/jquery.cleditor.advancedtable.min.js"></script>
-      <script type="text/javascript" src="http://www.newco-project.fr//static/js/jquery.cleditor.icon.min.js"></script>
-      <script type="text/javascript">
-      $(document).ready(function() {
-        $("#input").cleditor();
-      });
-      </script>
-<!--End of Sources of files for the html text editor-->
-
     
 {% endblock %}

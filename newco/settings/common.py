@@ -152,6 +152,7 @@ INSTALLED_APPS = [
     "pinax.templatetags",
 
     # theme
+    "django_forms_bootstrap",
     "pinax_theme_bootstrap",
 
     # external
@@ -159,7 +160,7 @@ INSTALLED_APPS = [
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    "mailer",
+    #"mailer",
     "django_openid",
     "timezones",
     "emailconfirmation",
@@ -197,7 +198,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+#EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -212,6 +213,7 @@ ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
