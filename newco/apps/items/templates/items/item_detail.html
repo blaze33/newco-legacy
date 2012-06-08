@@ -1,21 +1,35 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
-{% load util %}
+
+{% block extra_style %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/content.css">
+{% endblock %}
+
+{% block head_title %}{% trans item.name %}{% endblock %}
 
 {% block body %}
 
-{# FICHE TECHNIQUE #}
+<p><a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a></p>
+
+<br>
 
 {% include "items/data_sheet.html" %}
 
-</br>
+<br>
 
-<p><a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a></p>
-
-</br>
-
-{% include "items/question_form_add.html" %}
+<div class="row">
+    <div class="span7">
+        <form method="POST" action="" class="form-inline">
+            {% csrf_token %}
+                <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
+                </div>
+            {{ form.errors }}
+        </form>
+        <hr>
+    </div>
+</div>
 
 {% include "items/question_list.html" %}
 

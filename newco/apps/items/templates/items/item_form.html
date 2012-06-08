@@ -6,14 +6,13 @@
 
 {% block body %}
 
-<h1>Add something new to talk about:</h1>
+<h1>{% block form_header %}Add something new to talk about:{% endblock %}</h1>
 
-</br>
+<br />
 
-<form action="." method="POST">
-    {% csrf_token %}
+<form action="." method="POST">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" name="add_item" class="btn" value="Submit" />
+    <input type="submit" class="btn" value="Submit"/>
 </form>
 
 {% endblock %}

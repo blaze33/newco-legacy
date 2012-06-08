@@ -6,7 +6,11 @@
 
 {% block body %}
 
-<h1>{{ question.content }}</h1>
+<h1>{{ form.question.content }}</h1>
+
+</br>
+
+<h3>You answer:</h3>
 
 </br>
 
@@ -14,7 +18,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="add_answer" class="btn" value="Submit" />
-    <input type="hidden" name="question_id" value="{{ question.id }}"/>
+    <input type="hidden" name="question_id" value="{{ form.question.id }}"/>
 </form>
 
 {% endblock %}

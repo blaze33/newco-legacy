@@ -1,20 +1,19 @@
-<h1>
-    {{ item }}
-    <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
-    <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
-</h1>
+<div class="row">
+    <div class="span7">
+        <h1>
+            {{ item }}
+            <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
+            {% if user.is_superuser %}
+                <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
+            {% endif %}
+        </h1>
+    </div>
+</div>
 
-</br>
+<p>Author: <a href='{% url profile_detail item.author %}'>{{ item.author }}</a></p>
 
-<ul>
-    <li>Name: {{ item.name }}</li>
-    <li>ID: {{ item.id }}</li>
-    <li>
-        Owner:
-        {% if item.user %}<a href='{% url profile_detail item.user %}'>{{ item.user }}</a>
-        {% else %}Anonymous
-        {% endif %}
-    </li>
-    <li>Last modified: {{ item.last_modified }}</li>
-    <li>Tags: {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}</li>
-</ul>
+<br>
+
+<div>
+    {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}
+</div>

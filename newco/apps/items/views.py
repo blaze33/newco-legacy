@@ -1,125 +1,132 @@
-from django.views.generic import View, DetailView, CreateView
+# Create your views here.
+from django.http import HttpResponseRedirect
+from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.views.generic.edit import ProcessFormView, FormMixin
+from items.models import Item, CannotManage
+from items.forms import QuestionForm, AnswerForm, ItemForm
 from django.db.models.loading import get_model
-
-from items.models import Item, Question
-from items.forms import QuestionForm, AnswerForm
+from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, permission_required
 
 app_name = 'items'
 
 
 class ContentView(View):
+
     def dispatch(self, request, *args, **kwargs):
-        self.model = get_model(app_name, kwargs['model_name'])
+        if 'model_name' in kwargs:
+            self.model = get_model(app_name, kwargs['model_name'])
+            form_class_name = kwargs['model_name'].title() + 'Form'
+            if form_class_name in globals():
+                self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 
-class ContentCreateView(ContentView, CreateView):
+class ContentFormMixin(object):
 
-    def form_valid(self, form):
-        model_name = self.model.__name__
-        self.object = form.save(commit=False)
+    object = None
 
-        if self.request.user.is_authenticated():
-            self.object.user = self.request.user
+    def get(self, request, *args, **kwargs):
+        if self.form_class:
+            form = self.form_class(**{'request': request})
+        else:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+        return self.render_to_response(self.get_context_data(form=form))
 
-        if model_name == "Question":
-            item_id = self.request.POST['item_id']
-            self.object.item = Item.objects.get(pk=item_id)
-        elif model_name == "Answer":
-            question_id = self.request.POST['question_id']
-            self.object.question = Question.objects.get(pk=question_id)
+    def post(self, request, *args, **kwargs):
+        if self.form_class:
+            form_kwargs = self.get_form_kwargs()
+            form_kwargs.update({'request': request})
+            form = self.form_class(**form_kwargs)
+        else:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-        return super(ContentCreateView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super(ContentCreateView, self).get_context_data(**kwargs)
+class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
-        if self.model.__name__ == "Answer" and "ans_form" in self.request.POST:
-            question_id = self.request.POST['question_id']
-            context['question'] = Question.objects.get(pk=question_id)
-            context['form'] = AnswerForm()
-
-        return context
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentCreateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
 
 
 class ContentUpdateView(ContentView, UpdateView):
 
-    def get_template_names(self):
-        model_name = self.model.__name__
-        if model_name == "Item":
-            return ("items/item_form.html")
-        elif model_name == "Question":
-            return ("items/question_form_edit.html")
-        elif model_name == "Answer":
-            return ("items/answer_form.html")
+#    @method_decorator(permission_required(app_name))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentUpdateView, self).dispatch(request,
+                                                       *args,
+                                                       **kwargs)
 
-    def get_success_url(self):
-        model_name = self.model.__name__
-        if model_name == "Item":
-            return self.object.get_absolute_url()
-        elif model_name == "Question":
-            return self.object.item.get_absolute_url()
-        elif model_name == "Answer":
-            return self.object.question.item.get_absolute_url()
-        else:
-            return super(ContentUpdateView, self).get_success_url(self)
+
+class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
-        context = super(ContentUpdateView, self).get_context_data(**kwargs)
-        model_name = self.model.__name__
-        if model_name == "Question":
-            context['item'] = self.object.item
-        elif model_name == "Answer":
-            context['question'] = self.object.question
-
+        context = super(ContentDetailView, self).get_context_data(**kwargs)
+        self.object = self.get_object()
+        if self.model == Item:
+            if self.request.POST:
+                f = QuestionForm(self.request.POST, request=self.request)
+            else:
+                f = QuestionForm(request=self.request)
+            context['form'] = f
+            context['item'] = self.object
         return context
+
+    def form_invalid(self, form):
+        self.object = self.get_object()
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form, request, **kwargs):
+        if form.cleaned_data:
+            self.object = form.save(**kwargs)
+            form.save_m2m()
+        return HttpResponseRedirect(self.get_object().get_absolute_url())
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        if 'question_ask' in request.POST:
+            form = QuestionForm(self.request.POST, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
+        else:
+            return self.form_invalid(form)
+
+
+class ContentListView(ContentView, ListView):
+    pass
 
 
 class ContentDeleteView(ContentView, DeleteView):
 
-    template_name = "items/item_confirm_delete.html"
+    def delete(self, request, *args, **kwargs):
+        if 'success_url' in request.REQUEST:
+            self.success_url = request.REQUEST['success_url']
+        self.object = self.get_object()
+        try:
+            if not self.object.user_can_manage_me(request.user):
+                raise CannotManage
+        except CannotManage:
+            # need to redirect to 403 - delete forbidden
+            return HttpResponseRedirect(self.get_success_url())
+        except AttributeError:
+            pass
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        model_name = self.model.__name__
-        if model_name == "Item":
+        if self.model.__name__ == 'Item':
             return reverse("item_index")
-        elif model_name == "Question":
-            return self.object.item.get_absolute_url()
-        elif model_name == "Answer":
-            return self.object.question.item.get_absolute_url()
-        else:
-            return reverse("item_index")
-
-    def get_object(self, queryset=None):
-        """ Hook to ensure object is owned by request.user. """
-        obj = super(ContentDeleteView, self).get_object()
-#        if obj.user and not obj.user == self.request.user:
-#            raise Http404
-        return obj
-
-    def get_context_data(self, **kwargs):
-        context = super(ContentDeleteView, self).get_context_data(**kwargs)
-        context['model_name'] = self.model.__name__
-
-        if context['model_name'] == "Item":
-            context['item'] = self.object
-        elif context['model_name'] == "Question":
-            context['item'] = self.object.item
-        elif context['model_name'] == "Answer":
-            context['item'] = self.object.question.item
-
-        return context
-
-
-class ItemDetailView(DetailView):
-
-    queryset = Item.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super(ItemDetailView, self).get_context_data(**kwargs)
-        if not self.request.POST:
-            context['question_form'] = QuestionForm()
-        return context
+        if self.success_url:
+            return self.success_url

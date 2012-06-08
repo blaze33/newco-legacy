@@ -1,7 +1,10 @@
-<div class="slide-out-div">
-    <a class="handle" href="http://www.newco-project.fr/">Accueil</a>
-
-    <form class="well form-horizontal" action="http://www.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
+<div class="modal fade hide" id="feedbackModal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Faites nous part de votre avis&nbsp;:</h3>
+    </div>
+    <form  action="http://www.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
+    <div class="modal-body form-horizontal">
         <div class="control-group">
             <label class="control-label" for="Name">Nom (optionnel) :</label>
             <div class="controls">
@@ -25,25 +28,20 @@
 
         
         <div class="hidden-phone">
-            <textarea id="input" name="Feedback_html" rows="12" cols="20">Ecrivez votre message ici !</textarea><br><br>
+            <textarea id="input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
         </div>
         
         <div class="visible-phone">
-            <textarea name="Feedback_simple" rows="12" cols="4" placeholder="Ecrivez votre message ici !"></textarea><br><br>
+            <textarea name="Feedback_simple" rows="8" cols="4" placeholder="Ecrivez votre message ici !"></textarea>
         </div>
-        
+    </div>
+    <div class="modal-footer">
+        Merci pour votre feedback :
         <button class="btn btn-primary" type="submit">
         	Envoyer !
         </button>
-        
+    </div>
     </form>
-    Merci pour votre feedback !
-
 </div>
 
-<!--
-<div class="tab-withoutSlider">
-	<a href="http://www.newco-project.fr/">Link to email ...</a>
-</div>
--->
-
+<div class="feedbackTab" data-toggle="modal" href="#feedbackModal"></div>
