@@ -8,36 +8,29 @@
 
 
 {% if item_list %}
+    <form action="." method="POST" class="well form-search">{% csrf_token %}
+        <div class="input-append">
+            <input name="item_name" type="text" placeholder="Chercher un article{% if tag %} ayant le tag {{ tag.name}}{% endif %}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
+        </div>
+    </form>
     {% if tag %}
-        <form action="." method="POST" class="well form-search">{% csrf_token %}
-            <div class="input-append">
-                <input name="item_name" type="text" placeholder="Chercher un article ayant le tag {{ tag.name}}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
-            </div>
-        </form>
-        <h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a> :</h3>
+        <h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a>:</h3>
     {% else %}
-        <form action="." method="POST" class="well form-search">{% csrf_token %}
-            <div class="input-append">
-                <input name="item_name" type="text" placeholder="Chercher un article" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
-            </div>
-        </form>
         <h1>List of items in database :</h1>
     {% endif %}
     </br>
 
-    <ul>
-        {% for item in item_list %}
-            <li>
-                <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a>
-                &nbsp;
-                <a href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i></a>
-            </li>
-        {% endfor %}
-    </ul>
+    <ul>{% for item in item_list %}
+        <li>
+            <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+            <a href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i></a>
+        </li>
+    {% endfor %}</ul>
 {% else %}
     <p>No products are available.</p>
 {% endif %}
-<br>
+
+</br>
 <p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> Add an entry</a></p>
 
 {% endblock %}
