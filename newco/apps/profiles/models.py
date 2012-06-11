@@ -35,15 +35,23 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        questions = Question.objects.filter(author=self.user)
-        votes = Vote.objects.get_scores_in_bulk(questions)
-        for vote in votes.values():
-            rep += vote['score']
+        PointsTable = {
+                Question._meta.module_name: {-1: -2, 1: 5},
+                Answer._meta.module_name: {-1: -2, 1: 10},
+        }
 
-        answers = Answer.objects.filter(author=self.user)
-        votes = Vote.objects.get_scores_in_bulk(answers)
-        for vote in votes.values():
-            rep += vote['score']
+        for cls in [Question, Answer]:
+            ctype = ContentType.objects.get(
+                                    app_label=cls._meta.app_label,
+                                    model=cls._meta.module_name
+                    )
+            queryset = cls.objects.filter(author=self.user)
+            obj_ids = [q._get_pk_val() for q in queryset]
+            votes = Vote.objects.filter(object_id__in=obj_ids,
+                                        content_type=ctype)
+
+            for vote in votes:
+                rep += PointsTable[cls._meta.module_name][vote.vote]
 
         return rep
 
