@@ -8,6 +8,7 @@ from idios.models import ProfileBase
 
 from voting.models import Vote
 from items.models import Question, Answer
+from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 import datetime
 
@@ -46,7 +47,11 @@ class Reputation(models.Model):
                                         content_type=ctype)
 
             for vote in votes:
-                rep += POINTSTABLE[cls._meta.module_name][vote.vote]
+                rep += POINTS_TABLE_RATED[cls._meta.module_name][vote.vote]
+
+        votes = Vote.objects.filter(user=self.user)
+        for vote in votes:
+            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
 
         return rep
 
