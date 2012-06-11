@@ -11,8 +11,11 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from taggit.models import Tag
+from voting.models import Vote
+from django.db.models import Sum, Count
+from generic_aggregation import generic_annotate
 
-from affiliation.models import AffiliationItemStore
+from affiliation.models import AffiliationItem
 
 app_name = 'items'
 
@@ -84,7 +87,17 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
-            context['affs'] = AffiliationItemStore.objects.filter(item=self.object)
+            context['affs'] = AffiliationItem.objects.filter(item=self.object)
+
+            questions = self.object.question_set.order_by('-pub_date')
+            q_ordered = list(generic_annotate(questions,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for q in questions:
+                if q not in q_ordered:
+                    q_ordered.append(q)
+
+            context['questions'] = q_ordered
         return context
 
     def form_invalid(self, form):

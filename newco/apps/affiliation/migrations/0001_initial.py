@@ -25,18 +25,18 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('affiliation', ['Store'])
 
-        # Adding model 'AffiliationItemStore'
-        db.create_table('affiliation_affiliationitemstore', (
+        # Adding model 'AffiliationItem'
+        db.create_table('affiliation_affiliationitem', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Item'])),
             ('store', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['affiliation.Store'])),
             ('url', self.gf('django.db.models.fields.CharField')(max_length=400)),
             ('price_currency', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['affiliation.Currency'])),
             ('price', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 8, 0, 0))),
+            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 11, 0, 0))),
             ('update_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
-        db.send_create_signal('affiliation', ['AffiliationItemStore'])
+        db.send_create_signal('affiliation', ['AffiliationItem'])
 
     def backwards(self, orm):
         # Deleting model 'Currency'
@@ -45,13 +45,13 @@ class Migration(SchemaMigration):
         # Deleting model 'Store'
         db.delete_table('affiliation_store')
 
-        # Deleting model 'AffiliationItemStore'
-        db.delete_table('affiliation_affiliationitemstore')
+        # Deleting model 'AffiliationItem'
+        db.delete_table('affiliation_affiliationitem')
 
     models = {
-        'affiliation.affiliationitemstore': {
-            'Meta': {'object_name': 'AffiliationItemStore'},
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 8, 0, 0)'}),
+        'affiliation.affiliationitem': {
+            'Meta': {'object_name': 'AffiliationItem'},
+            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 11, 0, 0)'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'item': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Item']"}),
             'price': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
@@ -115,7 +115,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 8, 0, 0)'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 11, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'taggit.tag': {

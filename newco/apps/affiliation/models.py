@@ -25,10 +25,10 @@ class Store(models.Model):
                                          verbose_name=_('Last modified'))
     def __unicode__(self):
         return u'%s' % (self.name)
-    
 
 
-class AffiliationItemStore(models.Model):
+
+class AffiliationItem(models.Model):
     item = models.ForeignKey(Item)
     store = models.ForeignKey(Store)
     url = models.CharField(max_length=400)

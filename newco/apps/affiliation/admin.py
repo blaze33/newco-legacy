@@ -1,6 +1,6 @@
-from affiliation.models import Currency, Store, AffiliationItemStore
+from affiliation.models import Currency, Store, AffiliationItem
 from django.contrib import admin
 
 admin.site.register(Currency)
 admin.site.register(Store)
-admin.site.register(AffiliationItemStore)
+admin.site.register(AffiliationItem)

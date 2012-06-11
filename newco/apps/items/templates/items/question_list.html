@@ -1,10 +1,10 @@
 {% load voting_tags %}
 {% load content_utils %}
 
-{% votes_by_user user on item.question_set.all as question_vote_dict %}
-{% scores_for_objects item.question_set.all as question_score_dict %}
+{% votes_by_user user on questions as question_vote_dict %}
+{% scores_for_objects questions as question_score_dict %}
 
-{% for question in item.question_set.all %}
+{% for question in questions %}
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
