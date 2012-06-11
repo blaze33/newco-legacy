@@ -29,6 +29,9 @@ class Reputation(models.Model):
     reputation_incremented = models.IntegerField(default=0)
     reputation_computed = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return u'%s\'s reputation' % (self.user)
+
     def compute_reputation(self):
         rep = 0
 
