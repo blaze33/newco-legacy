@@ -19,7 +19,7 @@
     {% if affs %}
         {% for aff in affs %}
             <p>
-                {% blocktrans %} Acheter <a href='{{ aff.url }}'>{{ aff.item }} chez {{ aff.store }}</a> pour {% endblocktrans %}{{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
+                {% blocktrans with aff.item as item and aff.store as store and aff.url as url  %} Acheter <a href='{{ url }}'>{{ item }} chez {{ store }}</a> pour {% endblocktrans %}{{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
                 &nbsp;
             </p>
         {% endfor %}
