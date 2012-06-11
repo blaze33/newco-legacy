@@ -5,6 +5,11 @@
 {% load staticfiles %}
 
 {% block extra_style %}
+<!--
+We may need to use font-awesome. Won't replace glyphicons for the moment
+due to bad pixel fitting of small icons.
+<link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+-->
 <link rel="icon" href="{% static "img/favicon.png" %}" type="image/png" />
 <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
 {% include "feedback/header.html" %}

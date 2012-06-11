@@ -1,21 +1,24 @@
 {% load voting_tags %}
 {% load content_utils %}
+{% load staticfiles %}
 
 {% votes_by_user user on item.question_set.all as question_vote_dict %}
 {% scores_for_objects item.question_set.all as question_score_dict %}
 
 {% for question in item.question_set.all %}
+<div class="row question">
+<div class="span7">
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
-    <div class="row">
-        <div class="span1" style="text-align: center;">
-            <form action='{% url object_voting "Question" question.id %}' method="POST">
+    <div class="row one_row">
+        <div class="span1">
+            <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
+            <form class="controls vote" action='{% url object_voting "Question" question.id %}' method="POST">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
-                <h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3>
-                <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == question.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
-            </form>
+                <input type="image" src="{% static "img/transparent.png" %}" class="icon-chevron-up" alt="Submit button" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></input><br>
+                    <input type="image" src="{% static "img/transparent.png" %}" class="icon-chevron-down" alt="Submit button" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+            </form></h3>
         </div>
         <div class="span4"><h3>
             {{ question.content }}
@@ -23,40 +26,40 @@
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2"><p><small>
+        <div class="span2 right"><p class="signature"><small>
             <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ question.author }}</a>
         </small></p></div>
     </div>
-
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
     {% for answer in question.answer_set.all %}
         {% dict_entry_for_item answer from answer_vote_dict as vote %}
         {% dict_entry_for_item answer from answer_score_dict as score %}
-        <div class="row">
-            <div class="span2" style="text-align: right;">
-                <form action='{% url object_voting "Answer" answer.id %}' method="POST">
+        <div class="row one_row" rel="popover">
+            <div class="span1">
+                <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
+                <form action='{% url object_voting "Answer" answer.id %}' class="controls vote" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
-                    {% if score %}{{ score.score }}{% else %}0{% endif %}
-                    <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == answer.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
-                </form>
+                    <input type="image" src="{% static "img/transparent.png" %}" class="icon-chevron-up" alt="Submit button" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></input><br>
+                    <input type="image" src="{% static "img/transparent.png" %}" class="icon-chevron-down" alt="Submit button" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+                </form></h3>
             </div>
 
-            <div class="span3"><p>
+            <div class="span4"><p>
                 {{ answer.content }}
                 {% if user.is_superuser or answer.author == request.user %}
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
-            <div class="span2"><p><small>
+            <div class="span2 right"><p class="signature"><small>
                 <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a>
             </small></p></div>
         </div>
     {% endfor %}
-    <p><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'>
+    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'>
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}Add a better answer{% else %}Answer this question{% endif %}
-    </a></p>
+    </a></div></div>
     <hr>
+</div></div>
 {% endfor %}
