@@ -1,4 +1,4 @@
-from items.models import *
+from items.models import Item, Question, Answer, Story
 from django.contrib import admin
 
 admin.site.register(Item)
