@@ -35,11 +35,6 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        PointsTable = {
-                Question._meta.module_name: {-1: -2, 1: 5},
-                Answer._meta.module_name: {-1: -2, 1: 10},
-        }
-
         for cls in [Question, Answer]:
             ctype = ContentType.objects.get(
                                     app_label=cls._meta.app_label,
@@ -51,7 +46,7 @@ class Reputation(models.Model):
                                         content_type=ctype)
 
             for vote in votes:
-                rep += PointsTable[cls._meta.module_name][vote.vote]
+                rep += POINTSTABLE[cls._meta.module_name][vote.vote]
 
         return rep
 
