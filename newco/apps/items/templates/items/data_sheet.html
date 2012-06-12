@@ -1,22 +1,14 @@
 {% load i18n %}
 <div class="row">
-    <div class="span7">
-        <h1>
-            {{ item }}
-            <a class="btn" href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i> Edit Item</a>
-            {% if user.is_superuser %}
-                <a class="btn" href='{% url item_delete "item" item.id %}'><i class="icon-trash"></i> Delete Item</a>
-            {% endif %}
-        </h1>
-    </div>
+    <div class="span7"><h1>{{ item }}</h1></div>
 </div>
-{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
-
-<p>{% trans "Author" %} : <a href='{% url profile_detail item.author %}'>{{ item.author }}</a></p>
-
+<br>
 <div>
-    <br>
+{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
+</div>
+<div>
     {% if affs %}
+        <br>
         {% for aff in affs %}
             <p>
                 {% blocktrans %} Acheter <a href='{{ aff.url }}'>{{ aff.item }} chez {{ aff.store }}</a> pour {% endblocktrans %}{{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.
@@ -24,6 +16,5 @@
             </p>
         {% endfor %}
     {% else %}
-        <p>{% trans "Il n'y a pas encore de lien d'affiliation disponible pour cet article. Seuls les membres seniors peuvent ajouter des liens d'affiliation." %}</p>
 	{% endif %}
 </div>
