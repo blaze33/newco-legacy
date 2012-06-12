@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save, post_save, post_delete
+from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 
@@ -66,35 +67,71 @@ def create_reputation(sender, instance=None, **kwargs):
 post_save.connect(create_reputation, sender=User)
 
 
-def decrement_reputation(sender, instance=None, **kwargs):
+def increment_reputation(sender, instance=None, **kwargs):
     if instance is None:
         return
-    content = instance.object
-    rep = Reputation.objects.get(user=content.author)
-    rep.reputation_incremented -= instance.vote
-    rep.save()
-post_delete.connect(decrement_reputation, sender=Vote)
+    vote = instance
 
-
-def amend_reputation(sender, instance=None, **kwargs):
-    if instance is None:
-        return
-    content = instance.object
-
+    # Update reputation for owner of rated content
     try:
-        vote = Vote.objects.get(pk=instance.pk)
-        rep = Reputation.objects.get(user=content.author)
-        rep.reputation_incremented -= vote.vote
-        rep.save()
+        rep_rated = Reputation.objects.get(user=vote.object.author)
+        rep_rated.reputation_incremented += \
+                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+        rep_rated.save()
     except:
         pass
 
-    rep = Reputation.objects.get(user=content.author)
-    rep.reputation_incremented += instance.vote
-    rep.save()
-pre_save.connect(amend_reputation, sender=Vote)
+    # Update reputation for rater
+    try:
+        rep_rating = Reputation.objects.get(user=vote.user)
+        rep_rating.reputation_incremented += \
+                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+        rep_rating.save()
+    except:
+        pass
 
 
+@receiver(post_delete, sender=Vote)
+def decrement_reputation(sender, instance=None, **kwargs):
+    if instance is None:
+        return
+    vote = instance
+
+    # Update reputation for owner of rated content
+    try:
+        rep_rated = Reputation.objects.get(user=vote.object.author)
+        rep_rated.reputation_incremented -= \
+                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+        rep_rated.save()
+    except:
+        pass
+
+    # Update reputation for rater
+    try:
+        rep_rating = Reputation.objects.get(user=vote.user)
+        rep_rating.reputation_incremented -= \
+                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+        rep_rating.save()
+    except:
+        pass
+
+
+@receiver(pre_save, sender=Vote)
+def amend_reputation(sender, instance=None, **kwargs):
+    if instance is None:
+        return
+
+    try:
+        vote = Vote.objects.get(pk=instance.pk)
+
+        decrement_reputation(sender, vote)
+    except:
+        pass
+
+    increment_reputation(sender, instance)
+
+
+@receiver(post_save, sender=Reputation)
 def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
@@ -109,4 +146,3 @@ def update_permissions(sender, instance=None, **kwargs):
         instance.user.user_permissions.add(permission)
     else:
         instance.user.user_permissions.remove(permission)
-post_save.connect(update_permissions, sender=Reputation)
