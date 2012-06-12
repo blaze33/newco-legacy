@@ -89,7 +89,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['form'] = f
             context['item'] = self.object
             context['affs'] = AffiliationItem.objects.filter(item=self.object)
-
+            
+            #ordering questions
             questions = self.object.question_set.order_by('-pub_date')
             q_ordered = list(generic_annotate(questions,
                                 Vote, Sum('votes__vote'),
@@ -99,6 +100,18 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     q_ordered.append(q)
 
             context['questions'] = q_ordered
+            
+            #ordering external links
+            extlinks = self.object.externallink_set.order_by('-pub_date')
+            e_ordered = list(generic_annotate(extlinks,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for e in extlinks:
+                if e not in e_ordered:
+                    e_ordered.append(e)
+                    
+            context['extlinks'] = e_ordered
+            
         return context
 
     def form_invalid(self, form):

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-{% for extlink in item.externallink_set.all %}
+{% for extlink in extlinks %}
     {% dict_entry_for_item extlink from extlink_vote_dict as vote %}
     {% dict_entry_for_item extlink from extlink_score_dict as score %}
     
