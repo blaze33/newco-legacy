@@ -10,10 +10,14 @@ from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 from taggit.models import Tag
 from voting.models import Vote
 from django.db.models import Sum
 from generic_aggregation import generic_annotate
+
+from pinax.apps.account.utils import user_display
+from django.utils.translation import ugettext
 
 from affiliation.models import AffiliationItem
 
@@ -115,6 +119,11 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
+                messages.add_message(request, messages.SUCCESS,
+                    ugettext(u"Thanks %(user)s, question successfully \
+                             submitted") % {"user": user_display(form.user)
+                    }
+                )
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
