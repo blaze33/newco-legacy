@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 01:28+0200\n"
+"POT-Creation-Date: 2012-06-13 01:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,16 +23,17 @@ msgid "date published"
 msgstr "date de publication"
 
 #: models.py:44
-msgid "Name"
-msgstr "Nom"
+msgid "name"
+msgstr "nom"
 
 #: models.py:45
-msgid "Slug"
-msgstr "Slug"
+msgid "slug"
+msgstr "slug"
 
 #: models.py:47
-msgid "Last modified"
-msgstr "Dernière modification"
+#, fuzzy
+msgid "last modified"
+msgstr "dernière modification"
 
 #: views.py:123
 #, fuzzy, python-format

@@ -41,10 +41,10 @@ class Content(models.Model):
 
 
 class Item(Content):
-    name = models.CharField(max_length=255, verbose_name=_('Name'))
-    slug = models.SlugField(verbose_name=_('Slug'), editable=False)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_('Last modified'))
+                                         verbose_name=_('last modified'))
     tags = TaggableManager()
 
     def save(self):
