@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from taggit.models import Tag
 from voting.models import Vote
-from django.db.models import Sum, Count
+from django.db.models import Sum
 from generic_aggregation import generic_annotate
 
 from affiliation.models import AffiliationItem
@@ -25,7 +25,7 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
-            form_class_name = kwargs['model_name'].title() + 'Form'
+            form_class_name = self.model._meta.object_name + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
