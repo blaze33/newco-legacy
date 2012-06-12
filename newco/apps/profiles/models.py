@@ -141,8 +141,9 @@ def update_permissions(sender, instance=None, **kwargs):
     permission, created = Permission.objects.get_or_create(codename='can_vote',
                                        name='Can vote on content',
                                        content_type=content_type)
+    instance.user.user_permissions.add(permission)
 
-    if instance.reputation_incremented >= 2:
-        instance.user.user_permissions.add(permission)
-    else:
-        instance.user.user_permissions.remove(permission)
+#    if instance.reputation_incremented >= 2:
+#        instance.user.user_permissions.add(permission)
+#    else:
+#        instance.user.user_permissions.remove(permission)
