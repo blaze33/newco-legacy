@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load staticfiles %}
 
 {% block extra_style %}
 {{ block.super }}
@@ -10,10 +11,6 @@
 {% block head_title %}{% trans item.name %}{% endblock %}
 
 {% block body %}
-
-<p><a class="btn" href="{% url item_index %}"><i class="icon-list"></i> Items list</a></p>
-
-<br>
 
 {% include "items/data_sheet.html" %}
 
@@ -33,4 +30,22 @@
 
 {% include "items/question_list.html" %}
 
+<div class="row">
+<div class="span7">
+<a class="btn" href="{% url item_index %}">
+    <i class="icon-list"></i> Items list</a>
+<a class="btn" href='{% url item_edit "item" item.id %}'>
+    <i class="icon-edit"></i> Edit Item</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url item_delete "item" item.id %}'>
+    <i class="icon-trash"></i> Delete Item</a>
+{% endif %}
+</div>
+</div>
+
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script src="{% static "js/content.js" %}"></script>
 {% endblock %}
