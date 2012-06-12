@@ -25,11 +25,11 @@
     <br<
     {% if user.is_authenticated %}
         {% url profile_detail user.username as profile_url %}
-        <p class="lead" style="line-height: 200%">{% blocktrans %}Youpiii ! Vous êtes loggé ! Que faire maintenant?<br>Vous pouvez <a href="/comment_contribuer.html" class="btn-large btn-primary">contribuer</a>, chercher des informations sur des <a href="/content/" class="btn-large btn-primary">produits</a>, ou peaufiner votre <a href="{{ profile_url }}" class="btn-large btn-primary">profil</a> !{% endblocktrans %}</p>
+        <p class="lead" style="line-height: 200%">{% blocktrans %}Youpiii ! Vous êtes loggé ! Que faire maintenant?<br>Vous pouvez <a href="{% url contribute %}" class="btn-large btn-primary">contribuer</a>, chercher des informations sur des <a href="/content/" class="btn-large btn-primary">produits</a>, ou peaufiner votre <a href="{{ profile_url }}" class="btn-large btn-primary">profil</a> !{% endblocktrans %}</p>
     {% else %}
         {% url acct_login as login_url %}
         {% url acct_signup as signup_url %}
-        <p class="lead" style="line-height: 200%">{% blocktrans %}Vous voulez découvrir NewCo?<br>Allez sur la page <a href="/content/" class="btn btn-primary">produits</a> pour explorer le site, sur la page <a href="/comment_contribuer.html" class="btn-large btn-primary">Comment contribuer?</a> pour passer à l'étape suivante, ou directement sur <a href="{{ signup_url }}" class="btn-large btn-primary">s'inscrire</a> pour débuter votre nouvelle carrière !{% endblocktrans %}</p>
+        <p class="lead" style="line-height: 200%">{% blocktrans %}Vous voulez découvrir NewCo?<br>Allez sur la page <a href="/content/" class="btn btn-primary">produits</a> pour explorer le site, sur la page <a href="{% url contribute %}" class="btn-large btn-primary">Comment contribuer?</a> pour passer à l'étape suivante, ou directement sur <a href="{{ signup_url }}" class="btn-large btn-primary">s'inscrire</a> pour débuter votre nouvelle carrière !{% endblocktrans %}</p>
     {% endif %}
     <br>
 
