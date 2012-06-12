@@ -100,3 +100,19 @@ class Story(models.Model):
     content = models.CharField(max_length=2000)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+
+class ExternalLink(Content):
+    text = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    def __unicode__(self):
+        return u'%s' % (self.text)
+    
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})

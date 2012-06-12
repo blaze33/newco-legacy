@@ -1,0 +1,18 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Lien externe" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% block form_header %}Ajouter un lien externe à "{% if form.item.name %}{{ form.item.name }}{% else %}{{ object.items.all.0.name }}{% endif %}":{% endblock %}</h1>
+<br />
+
+<form action="." method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="Submit"/>
+    <input type="hidden" name="item_id" value="{{ form.item.id }}"/>
+</form>
+
+{% endblock %}
