@@ -6,6 +6,7 @@ from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
@@ -22,7 +23,7 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
-            form_class_name = kwargs['model_name'].title() + 'Form'
+            form_class_name = self.model._meta.object_name + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
