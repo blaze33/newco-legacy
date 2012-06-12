@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
+from django.views.generic.simple import redirect_to
 
 from django.contrib import admin
 admin.autodiscover()
@@ -28,6 +29,10 @@ urlpatterns = patterns("",
     url(r"^votes/", include('votes.urls'))
 )
 
+urlpatterns += patterns("",
+    url(r"^Friends/(?P<path>.*)$", redirect_to, {'url': 'http://static.newco-project.fr/Friends/%(path)s', 'permanent': True}),
+    url(r"^static/(?P<path>.*)$", redirect_to, {'url': 'http://static.newco-project.fr/static/%(path)s', 'permanent': True}),
+)
 
 if settings.SERVE_MEDIA:
     urlpatterns += patterns("",
