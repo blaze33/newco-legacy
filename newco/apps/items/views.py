@@ -120,8 +120,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS,
-                    ugettext(u"Thanks %(user)s, question successfully \
-                             submitted") % {"user": user_display(form.user)
+                    ugettext(u"Thanks %(user)s, question successfully submitted") % {
+                        "user": user_display(request.user)
                     }
                 )
                 return self.form_valid(form, request, **kwargs)
