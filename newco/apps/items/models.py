@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
+from idios.models import ProfileBase
 
 
 class CannotManage(Exception):
@@ -47,6 +48,13 @@ class Item(Content):
                                          verbose_name=_('Last modified'))
     tags = TaggableManager()
 
+    def compute_tags(self, list_users):
+        li=[]
+        for user in list_users:
+            if user in self.tags.similar_objects():
+                li.append(user)
+        return li
+ 
     def save(self):
         self.slug = slugify(self.name)
         super(Item, self).save()

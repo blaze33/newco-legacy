@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
+from taggit.managers import TaggableManager
 
 from idios.models import ProfileBase
 
@@ -22,8 +23,9 @@ class Profile(ProfileBase):
     subscription_date = models.DateTimeField(default=datetime.datetime.today(),
                                     editable=False,
                                     verbose_name=_('subscription date'))
-
-
+    skills = TaggableManager(help_text="The list of your main product skills")
+       
+   
 class Reputation(models.Model):
     user = models.OneToOneField(User)
     reputation_incremented = models.IntegerField(default=0)

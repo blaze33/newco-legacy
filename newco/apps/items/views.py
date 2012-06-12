@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 
+from profiles.models import Profile
+
 app_name = 'items'
 
 
@@ -80,6 +82,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
+            context['list_users'] = self.object.compute_tags(Profile.objects.all())
         return context
 
     def form_invalid(self, form):

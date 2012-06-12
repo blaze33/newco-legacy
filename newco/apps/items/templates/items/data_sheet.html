@@ -14,6 +14,19 @@
 
 <br>
 
-<div>
+
+<div class="row">
+	
+    <div class="span4">
+
+    Tags Produits:
     {% for tag in item.tags.all %}<span class="label">{{ tag.name }}</span> {% endfor %}
+    </div>
+    
+    <div class="span4">
+    Tags Experts:
+    {% for user in list_users %}<span class="label">{{ user }}</span>{% endfor %}
+    </div>
+     
 </div>
+    
