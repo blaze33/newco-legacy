@@ -161,7 +161,7 @@ class ContentListView(ContentView, ListView, RedirectView):
             if item_list.count() > 0 :
                 return HttpResponseRedirect(item_list[0].get_absolute_url())
             else:
-                return HttpResponseRedirect(reverse('item_index'))
+                return HttpResponseRedirect(request.path) #reverse('item_index')
                 
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
