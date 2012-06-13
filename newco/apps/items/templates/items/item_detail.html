@@ -28,9 +28,22 @@
     </div>
 </div>
 
-{% include "items/question_list.html" %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#product" data-toggle="tab">Product</a>
+        <li><a href="#questions" data-toggle="tab">Questions</a></li>
+        <li><a href="#links" data-toggle="tab">Links</a></li>
+        <li><a href="#photos" data-toggle="tab">Photos</a></li>
+    </ul>
 
-{% include "items/ext_links_list.html" %}
+    <div class="tab-content">
+        <div id="product" class="tab-pane active">Fiche technique: <br><br><br></div>
+        <div id="questions" class="tab-pane">{% include "items/question_list.html" %}</div>
+        <div id="links" class="tab-pane">{% include "items/ext_links_list.html" %}</div>
+        <div id="photos" class="tab-pane">Photos a venir <br><br><br> </div>    
+    </div>
+</div>
+
 
 
 
