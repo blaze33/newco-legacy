@@ -47,15 +47,15 @@ class Item(Content):
                                          verbose_name=_('last modified'))
     tags = TaggableManager()
 
-    def save(self):
-        self.slug = slugify(self.name)
-        super(Item, self).save()
-
     class Meta:
-        pass
+        verbose_name = _('item')
 
     def __unicode__(self):
         return u'%s' % (self.name)
+
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Item, self).save()
 
     @permalink
     def get_absolute_url(self):
@@ -68,6 +68,9 @@ class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_('content'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('question')
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -83,6 +86,9 @@ class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_('content'))
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('answer')
 
     def __unicode__(self):
         return u'Answer %s on %s' % (self.id, self.question)

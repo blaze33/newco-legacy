@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 03:03+0200\n"
+"POT-Creation-Date: 2012-06-13 12:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,11 +41,28 @@ msgstr ""
 msgid "last modified"
 msgstr ""
 
-#: models.py:68 models.py:84
+#: models.py:51
+msgid "item"
+msgstr ""
+
+#: models.py:68 models.py:87
 msgid "content"
 msgstr ""
 
-#: views.py:123
+#: models.py:73
+msgid "question"
+msgstr ""
+
+#: models.py:91
+msgid "answer"
+msgstr ""
+
+#: views.py:74
+#, python-format
+msgid "Thanks %(user)s, %(object)s successfully created"
+msgstr ""
+
+#: views.py:132
 #, python-format
 msgid "Thanks %(user)s, question submitted"
 msgstr ""

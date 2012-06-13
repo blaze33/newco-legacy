@@ -69,6 +69,15 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                                                        *args,
                                                        **kwargs)
 
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS,
+            ugettext(u"Thanks %(user)s, %(object)s successfully created") % {
+                "user": user_display(self.request.user),
+                "object": self.object._meta.verbose_name
+            }
+        )
+        return super(ContentCreateView, self).get_success_url()
+
 
 class ContentUpdateView(ContentView, UpdateView):
 
