@@ -8,24 +8,24 @@ import datetime
 
 
 class Currency(models.Model):
-    name = models.CharField(max_length=15)
-    
+    name = models.CharField(max_length=15, verbose_name=_('last modified'))
+
     class Meta:
         verbose_name_plural = "currencies"
-    
+
     def __unicode__(self):
         return u'%s' % (self.name)
 
 
 class Store(models.Model):
-    name = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
-    slug = models.SlugField(verbose_name=_('Slug'), editable=False)
+    name = models.CharField(max_length=100, verbose_name=_('name'))
+    url = models.CharField(max_length=100, verbose_name=_('url'))
+    slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_('Last modified'))
+                                         verbose_name=_('last modified'))
+
     def __unicode__(self):
         return u'%s' % (self.name)
-
 
 
 class AffiliationItem(models.Model):
@@ -38,7 +38,7 @@ class AffiliationItem(models.Model):
                                     editable=False,
                                     verbose_name=_('date created'))
     update_date = models.DateTimeField(auto_now=True,
-                                    verbose_name=_('Last modified'))
-    
+                                    verbose_name=_('last modified'))
+
     def __unicode__(self):
         return u'%s @ %s' % (self.item, self.store)

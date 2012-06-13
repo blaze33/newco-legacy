@@ -233,6 +233,7 @@ EMAIL_DEBUG = DEBUG
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
 )
 
 DEBUG_TOOLBAR_CONFIG = {
