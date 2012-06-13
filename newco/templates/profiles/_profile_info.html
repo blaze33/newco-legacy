@@ -11,8 +11,5 @@
     {% for tag_pro in profile.skills.all %}<span class="label">{{ tag_pro.name }}</span> {% endfor %}
     {% endif %}
     </div>
-    {% if reputation %}
-        <p><b>{% trans "Reputation Computed" %}</b>: {{ reputation.reputation_computed }}</p>
-        <p><b>{% trans "Reputation Incremented" %}</b>: {{ reputation.reputation_incremented }}</p>
-    {% endif %}
+    {% if reputation %}<p><b>{% trans "Reputation" %}</b>: {{ reputation.reputation_incremented }}</p>{% endif %}
 </div>

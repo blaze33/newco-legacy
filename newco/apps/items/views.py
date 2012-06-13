@@ -2,13 +2,21 @@
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
+from taggit.models import Tag
+from voting.models import Vote
+from django.db.models import Sum, Count
+from generic_aggregation import generic_annotate
+
+from affiliation.models import AffiliationItem
 
 from profiles.models import Profile
 
@@ -20,7 +28,7 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
-            form_class_name = kwargs['model_name'].title() + 'Form'
+            form_class_name = self.model._meta.object_name + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
@@ -83,6 +91,30 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['form'] = f
             context['item'] = self.object
             context['list_users'] = self.object.compute_tags(Profile.objects.all())
+            context['affs'] = AffiliationItem.objects.filter(item=self.object)
+            
+            #ordering questions
+            questions = self.object.question_set.order_by('-pub_date')
+            q_ordered = list(generic_annotate(questions,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for q in questions:
+                if q not in q_ordered:
+                    q_ordered.append(q)
+
+            context['questions'] = q_ordered
+            
+            #ordering external links
+            extlinks = self.object.externallink_set.order_by('-pub_date')
+            e_ordered = list(generic_annotate(extlinks,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for e in extlinks:
+                if e not in e_ordered:
+                    e_ordered.append(e)
+                    
+            context['extlinks'] = e_ordered
+            
         return context
 
     def form_invalid(self, form):
@@ -107,8 +139,28 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             return self.form_invalid(form)
 
 
-class ContentListView(ContentView, ListView):
-    pass
+class ContentListView(ContentView, ListView, RedirectView):
+
+    def get_queryset(self):
+        if 'tag_slug' in self.kwargs:
+            tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
+            return Item.objects.filter(tags=tag)
+        else:
+            return super(ContentListView, self).get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentListView, self).get_context_data(**kwargs)
+        if 'tag_slug' in self.kwargs:
+            context['tag'] = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if 'item_name' in request.POST:
+            item_name = request.POST['item_name']
+            item = Item.objects.filter(name=item_name)[0]
+            return HttpResponseRedirect(item.get_absolute_url())
+        else:
+            return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ContentDeleteView(ContentView, DeleteView):

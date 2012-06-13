@@ -190,6 +190,7 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "votes",
+    "affiliation",
 ]
 
 FIXTURE_DIRS = [

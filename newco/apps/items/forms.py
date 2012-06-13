@@ -1,7 +1,8 @@
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
+from django.http import HttpResponseRedirect
 
-from items.models import Item, Question, Answer, Story
+from items.models import Item, Question, Answer, Story, ExternalLink
 
 
 class ItemForm(ModelForm):
@@ -95,3 +96,36 @@ class AnswerForm(ModelForm):
 class StoryForm(ModelForm):
     class Meta:
         model = Story
+
+
+class ExternalLinkForm(ModelForm):
+    create = False
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.item_id = self.request.REQUEST['item_id']
+            self.item = Item.objects.get(pk=self.item_id)
+            
+        return super(ExternalLinkForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = ExternalLink
+        exclude = ('author', 'items')
+        widgets = {
+            'text': Textarea(attrs={'class': 'span4',
+            'placeholder': 'Descriptif du lien', 'rows': 1}),
+        }
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            extlink = super(ExternalLinkForm, self).save(commit=False)
+            extlink.author = self.user
+            extlink.save()
+            extlink.items.add(self.item_id)
+            return extlink
+        else:
+            return super(ExternalLinkForm, self).save(commit)
+        

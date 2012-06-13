@@ -1,9 +1,12 @@
 {% load i18n %}
 
-<ul class="nav nav-tabs">{% spaceless %}
+<hr>
+<ul class="nav pull-right nav-tabs ">{% spaceless %}
     <li id="tab_faq"><a href="{% url faq %}">{% trans "FAQ" %}</a></li>
     <li id="tab_team"><a href="{% url team %}">{% trans "Team" %}</a></li>
+    <li id="tab_contribute"><a href="{% url contribute %}">{% trans "Comment contribuer ?" %}</a></li>
     {% endspaceless %}</ul>
+
 <div class="legal">
     {% trans "&copy; 2012 NewCo" %}
 </div>

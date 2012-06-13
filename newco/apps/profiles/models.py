@@ -9,6 +9,7 @@ from idios.models import ProfileBase
 
 from voting.models import Vote
 from items.models import Question, Answer
+from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 import datetime
 
@@ -31,18 +32,28 @@ class Reputation(models.Model):
     reputation_incremented = models.IntegerField(default=0)
     reputation_computed = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return u'%s\'s reputation' % (self.user)
+
     def compute_reputation(self):
         rep = 0
 
-        questions = Question.objects.filter(author=self.user)
-        votes = Vote.objects.get_scores_in_bulk(questions)
-        for vote in votes.values():
-            rep += vote['score']
+        for cls in [Question, Answer]:
+            ctype = ContentType.objects.get(
+                                    app_label=cls._meta.app_label,
+                                    model=cls._meta.module_name
+                    )
+            queryset = cls.objects.filter(author=self.user)
+            obj_ids = [q._get_pk_val() for q in queryset]
+            votes = Vote.objects.filter(object_id__in=obj_ids,
+                                        content_type=ctype)
 
-        answers = Answer.objects.filter(author=self.user)
-        votes = Vote.objects.get_scores_in_bulk(answers)
-        for vote in votes.values():
-            rep += vote['score']
+            for vote in votes:
+                rep += POINTS_TABLE_RATED[cls._meta.module_name][vote.vote]
+
+        votes = Vote.objects.filter(user=self.user)
+        for vote in votes:
+            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
 
         return rep
 
