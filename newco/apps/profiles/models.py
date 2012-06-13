@@ -31,6 +31,9 @@ class Reputation(models.Model):
     reputation_incremented = models.IntegerField(default=0)
     reputation_computed = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = _("reputation")
+
     def __unicode__(self):
         return u'%s\'s reputation' % (self.user)
 
