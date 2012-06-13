@@ -27,9 +27,9 @@
         {% for question in questions %}
             {% dict_entry_for_item question from question_score_dict as score %}
             <p>
-                <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> on
+                <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> {% trans "on" %}
                 <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a>
-                {% if score %}Score: {{ score.score }} on {{ score.num_votes }} vote{{ score.num_votes|pluralize }}{% endif %}
+                {% if score %}{% trans "Score:" %} {{ score.score }} {% trans "with" %} {{ score.num_votes }} {% trans "vote" %}{{ score.num_votes|pluralize }}{% endif %}
             </p>
         {% endfor %}
     {% endif %}
@@ -40,10 +40,10 @@
         {% for answer in answers %}
             {% dict_entry_for_item answer from answer_score_dict as score %}
             <p>
-                <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> on
+                <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> {% trans "on" %}
                 <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
                 (<a href="{{ answer.question.items.all.0.get_absolute_url }}">{{ answer.question.items.all.0 }}</a>)
-                {% if score %}Score: {{ score.score }} on {{ score.num_votes }} vote{{ score.num_votes|pluralize }}{% endif %}
+                {% if score %}{% trans "Score:" %} {{ score.score }} {% trans "with" %} {{ score.num_votes }} {% trans "vote" %}{{ score.num_votes|pluralize }}{% endif %}
             </p>
         {% endfor %}
     {% endif %}
