@@ -8,7 +8,7 @@ import datetime
 
 
 class Currency(models.Model):
-    name = models.CharField(max_length=15, verbose_name=_('last modified'))
+    name = models.CharField(max_length=15, verbose_name=_('name'))
 
     class Meta:
         verbose_name_plural = "currencies"

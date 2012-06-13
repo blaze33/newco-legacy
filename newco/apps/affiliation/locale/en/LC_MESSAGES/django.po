@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 11:22+0200\n"
+"POT-Creation-Date: 2012-06-13 16:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:11 models.py:25 models.py:41
-msgid "last modified"
-msgstr ""
-
-#: models.py:21
+#: models.py:11 models.py:21
 msgid "name"
 msgstr ""
 
@@ -31,6 +27,10 @@ msgstr ""
 
 #: models.py:23
 msgid "slug"
+msgstr ""
+
+#: models.py:25 models.py:41
+msgid "last modified"
 msgstr ""
 
 #: models.py:39
