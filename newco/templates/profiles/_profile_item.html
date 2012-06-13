@@ -12,7 +12,7 @@
         {% if profile.location and profile.website%}&bull;{% endif %}
         {% if profile.website %}<a href="{{ profile.website }}">{{ profile.website }}</a>{% endif %}
         {% if profile.website and profile.skills%}&bull;{% endif %}
-        {% if profile.skills %}{{ profile.skills }}{% endif %}
+        {% if profile.skills %}{% for tag_pro in profile.skills.all %}<span class="label">{{ tag_pro.name }}</span> {% endfor %}{% endif %}
     </div>
     <div class="clear"></div>
 </div>
