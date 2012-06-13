@@ -11,7 +11,8 @@ class Currency(models.Model):
     name = models.CharField(max_length=15, verbose_name=_('name'))
 
     class Meta:
-        verbose_name_plural = "currencies"
+        verbose_name = _("currency")
+        verbose_name_plural = _("currencies")
 
     def __unicode__(self):
         return u'%s' % (self.name)
@@ -23,6 +24,9 @@ class Store(models.Model):
     slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_('last modified'))
+
+    class Meta:
+        verbose_name = _("store")
 
     def __unicode__(self):
         return u'%s' % (self.name)
@@ -39,6 +43,9 @@ class AffiliationItem(models.Model):
                                     verbose_name=_('date created'))
     update_date = models.DateTimeField(auto_now=True,
                                     verbose_name=_('last modified'))
+
+    class Meta:
+        verbose_name = _("affiliation item")
 
     def __unicode__(self):
         return u'%s @ %s' % (self.item, self.store)

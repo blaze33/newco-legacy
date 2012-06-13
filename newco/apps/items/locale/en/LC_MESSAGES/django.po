@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 16:04+0200\n"
+"POT-Creation-Date: 2012-06-13 19:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,9 +85,7 @@ msgstr ""
 
 #: templates/items/data_sheet.html:12
 #, python-format
-msgid ""
-"Buy <a href='%(aff.url)s'>%(aff.item)s @ %(aff.store)s</a> for %(aff.price)s "
-"%(aff.price_currency)s%(aff.price|pluralize)s."
+msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
 msgstr ""
 
 #: templates/items/item_confirm_delete.html:8

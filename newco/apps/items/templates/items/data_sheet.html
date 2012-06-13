@@ -9,6 +9,7 @@
 
 <div>{% if affs %}<br>
     {% for aff in affs %}<p>
-        {% blocktrans %}Buy <a href='{{ aff.url }}'>{{ aff.item }} @ {{ aff.store }}</a> for {{ aff.price }} {{ aff.price_currency }}{{ aff.price|pluralize }}.{% endblocktrans %}
+        {% blocktrans with url=aff.url item=aff.item store=aff.store price=aff.price %}Buy <a href='{{ url }}'>{{ item }} @ {{ store }}</a> for {{ price }}{% endblocktrans %}
+        {{ aff.price_currency }}{{ aff.price|pluralize }}
     </p>{% endfor %}
 {% endif %}</div>

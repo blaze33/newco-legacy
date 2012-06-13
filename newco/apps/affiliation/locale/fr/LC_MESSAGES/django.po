@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 16:10+0200\n"
+"POT-Creation-Date: 2012-06-13 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,22 +18,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: models.py:11 models.py:21
+#: models.py:11 models.py:22
 msgid "name"
 msgstr "nom"
 
-#: models.py:22
+#: models.py:14
+msgid "currency"
+msgstr "devise"
+
+#: models.py:15
+msgid "currencies"
+msgstr "devises"
+
+#: models.py:23
 msgid "url"
 msgstr "url"
 
-#: models.py:23
+#: models.py:24
 msgid "slug"
 msgstr "slug"
 
-#: models.py:25 models.py:41
+#: models.py:26 models.py:45
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:39
+#: models.py:29
+msgid "store"
+msgstr "magasin"
+
+#: models.py:43
 msgid "date created"
 msgstr "date de création"
+
+#: models.py:48
+msgid "affiliation item"
+msgstr "lien d'affiliation"
