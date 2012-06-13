@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 19:18+0200\n"
+"POT-Creation-Date: 2012-06-13 19:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,12 +90,9 @@ msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
 msgstr "Acheter <a href='%(url)s'>%(item)s chez %(store)s</a> pour %(price)s"
 
 #: templates/items/item_confirm_delete.html:8
-msgid "The object"
-msgstr "L'objet"
-
-#: templates/items/item_confirm_delete.html:8
-msgid "will be deleted:"
-msgstr "sera supprimé :"
+#, python-format
+msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
+msgstr "L'object %(class)s <i>%(name)s</i> sera supprimé :"
 
 #: templates/items/item_confirm_delete.html:13
 msgid "Yes"
