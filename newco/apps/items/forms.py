@@ -46,8 +46,10 @@ class QuestionForm(ModelForm):
         model = Question
         exclude = ('author', 'items')
         widgets = {
-            'content': Textarea(attrs={'class': 'span4',
-            'placeholder': _('Ask something specific. Be concise.'), 'rows': 1}),
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Ask something specific. Be concise.'),
+                'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -78,8 +80,10 @@ class AnswerForm(ModelForm):
         model = Answer
         fields = ('content', )
         widgets = {
-            'content': Textarea(attrs={'class': 'span6',
-            'placeholder': _('Be concise and to the point.'), 'rows': 6}),
+            'content': Textarea(attrs={
+                'class': 'span6',
+                'placeholder': _('Be concise and to the point.'),
+                'rows': 6}),
         }
 
     def save(self, commit=True, **kwargs):

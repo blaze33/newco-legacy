@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 12:59+0200\n"
+"POT-Creation-Date: 2012-06-13 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:50
+#: forms.py:51
 msgid "Ask something specific. Be concise."
 msgstr ""
 
-#: forms.py:82
+#: forms.py:85
 msgid "Be concise and to the point."
 msgstr ""
 
@@ -39,6 +39,10 @@ msgstr ""
 
 #: models.py:47
 msgid "last modified"
+msgstr ""
+
+#: models.py:48
+msgid "A comma-separated list of tags"
 msgstr ""
 
 #: models.py:51
