@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
+from django.utils.translation import ugettext_lazy as _
 
 from items.models import Item, Question, Answer, Story
 
@@ -46,7 +47,7 @@ class QuestionForm(ModelForm):
         exclude = ('author', 'items')
         widgets = {
             'content': Textarea(attrs={'class': 'span4',
-            'placeholder': 'Ask something specific. Be concise.', 'rows': 1}),
+            'placeholder': _('Ask something specific. Be concise.'), 'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -78,7 +79,7 @@ class AnswerForm(ModelForm):
         fields = ('content', )
         widgets = {
             'content': Textarea(attrs={'class': 'span6',
-            'placeholder': 'Be concise and to the point.', 'rows': 6}),
+            'placeholder': _('Be concise and to the point.'), 'rows': 6}),
         }
 
     def save(self, commit=True, **kwargs):

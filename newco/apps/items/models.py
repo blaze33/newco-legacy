@@ -65,7 +65,7 @@ class Item(Content):
 
 
 class Question(Content):
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=200, verbose_name=_('content'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
@@ -81,7 +81,7 @@ class Question(Content):
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=1000)
+    content = models.CharField(max_length=1000, verbose_name=_('content'))
     votes = generic.GenericRelation(Vote)
 
     def __unicode__(self):

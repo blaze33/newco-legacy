@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load voting_tags %}
 {% load content_utils %}
 {% load staticfiles %}
@@ -27,7 +28,7 @@
             {% endif %}
         </h3></div>
         <div class="span2 right"><p class="signature"><small>
-            <b>{{ question.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail question.author %}'>{{ question.author }}</a>
+            <b>{{ question.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail question.author %}'>{{ question.author }}</a>
         </small></p></div>
     </div>
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
@@ -53,12 +54,12 @@
                 {% endif %}
             </p></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ answer.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a>
+                <b>{{ answer.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a>
             </small></p></div>
         </div>
     {% endfor %}
     <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'>
-        <i class="icon-share-alt"></i>{% if question.answer_set.all %}Add a better answer{% else %}Answer this question{% endif %}
+        <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
     </a></div></div>
     <hr>
 </div></div>

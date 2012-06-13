@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 01:43+0200\n"
+"POT-Creation-Date: 2012-06-13 03:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: forms.py:50
+msgid "Ask something specific. Be concise."
+msgstr "Demandez quelque chose de précis. Soyez concis."
+
+#: forms.py:82
+msgid "Be concise and to the point."
+msgstr "Soyez concis et direct."
 
 #: models.py:22
 msgid "date published"
@@ -31,20 +39,30 @@ msgid "slug"
 msgstr "slug"
 
 #: models.py:47
-#, fuzzy
 msgid "last modified"
 msgstr "dernière modification"
 
+#: models.py:68 models.py:84
+msgid "content"
+msgstr "contenu"
+
 #: views.py:123
-#, fuzzy, python-format
-msgid "Thanks %(user)s, question successfully submitted"
-msgstr "Merci %(user)s, la question a été soumise avec succès"
+msgid "Thanks %(user)s, question submitted"
+msgstr "Merci %(user)s, la question a été postée"
 
 #: templates/items/answer_form.html:5
 msgid "Answer"
 msgstr "Réponse"
 
-#: templates/items/data_sheet.html:11
+#: templates/items/answer_form.html:13
+msgid "Your answer:"
+msgstr "Votre réponse :"
+
+#: templates/items/answer_form.html:20 templates/items/item_form.html:15
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/items/data_sheet.html:12
 #, python-format
 msgid ""
 "Buy <a href='%(aff.url)s'>%(aff.item)s @ %(aff.store)s</a> for %(aff.price)s "
@@ -53,6 +71,74 @@ msgstr ""
 "Acheter <a href='%(aff.url)s'>%(aff.item)s chez %(aff.store)s</a> for "
 "%(aff.price)s %(aff.price_currency)s%(aff.price|pluralize)s."
 
-#: templates/items/item_form.html:5 templates/items/item_list.html:5
+#: templates/items/item_confirm_delete.html:8
+msgid "The object"
+msgstr "L'objet"
+
+#: templates/items/item_confirm_delete.html:8
+msgid "will be deleted:"
+msgstr "sera supprimé :"
+
+#: templates/items/item_confirm_delete.html:13
+msgid "Yes"
+msgstr "Oui"
+
+#: templates/items/item_confirm_delete.html:15
+msgid "No"
+msgstr "Non"
+
+#: templates/items/item_detail.html:36
+msgid "Items list"
+msgstr "Liste des Items"
+
+#: templates/items/item_detail.html:38
+msgid "Edit Item"
+msgstr "Editer l'Item"
+
+#: templates/items/item_detail.html:41
+msgid "Delete Item"
+msgstr "Supprimer l'Item"
+
+#: templates/items/item_form.html:5
+msgid "Item"
+msgstr "Item"
+
+#: templates/items/item_form.html:9
+msgid "Add something new to talk about:"
+msgstr "De quoi voulez-vous parler :"
+
+#: templates/items/item_list.html:5
 msgid "Products"
 msgstr "Produits"
+
+#: templates/items/item_list.html:16
+msgid "List of items with tag"
+msgstr "Liste des items avec le tag"
+
+#: templates/items/item_list.html:18
+msgid "List of items in database:"
+msgstr "Liste des items en base :"
+
+#: templates/items/item_list.html:29
+msgid "No products are available."
+msgstr "Pas de produits disponibles."
+
+#: templates/items/item_list.html:33
+msgid "Add an entry"
+msgstr "Ajouter un produit"
+
+#: templates/items/question_form.html:3
+msgid "Ask something:"
+msgstr "Demandez quelque chose :"
+
+#: templates/items/question_list.html:31 templates/items/question_list.html:57
+msgid "by"
+msgstr "par"
+
+#: templates/items/question_list.html:62
+msgid "Add a better answer"
+msgstr "Donner une meilleure réponse"
+
+#: templates/items/question_list.html:62
+msgid "Answer this question"
+msgstr "Répondre à cette question"
