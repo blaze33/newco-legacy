@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load account_tags %}
 <div class="row">
     <div class="span7"><h1>{{ item }}</h1></div>
 </div>
@@ -15,7 +16,7 @@
     
     <div class="span4">
     Tags Experts:
-    {% for user in list_users %}<span class="label">{{ user }}</span>{% endfor %}
+    {% for user in list_users %}<a href="{% url profile_detail user %}"><span class="label label-success">{{ user }}</span></a>{% endfor %}
     </div>
      
 </div>
