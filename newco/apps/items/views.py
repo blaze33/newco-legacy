@@ -5,7 +5,7 @@ from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from items.models import Item, CannotManage
-from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import QuestionForm, AnswerForm, ItemForm, FeatureForm
 from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
@@ -114,6 +114,17 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     e_ordered.append(e)
                     
             context['extlinks'] = e_ordered
+            
+            #ordering features
+            features = self.object.feature_set.order_by('-pub_date')
+            f_ordered = list(generic_annotate(features,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for f in features:
+                if f not in f_ordered:
+                    f_ordered.append(f)
+
+            context['features'] = f_ordered
             
         return context
 

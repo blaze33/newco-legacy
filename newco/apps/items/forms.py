@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.http import HttpResponseRedirect
 
-from items.models import Item, Question, Answer, Story, ExternalLink
+from items.models import Item, Question, Answer, Story, ExternalLink, Feature
 
 
 class ItemForm(ModelForm):
@@ -128,4 +128,35 @@ class ExternalLinkForm(ModelForm):
             return extlink
         else:
             return super(ExternalLinkForm, self).save(commit)
+
+class FeatureForm(ModelForm):
+
+    create = False
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.item_id = self.request.REQUEST['item_id']
+            self.item = Item.objects.get(pk=self.item_id)
+        return super(FeatureForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Feature
+        exclude = ('author', 'items')
+        widgets = {
+            'content': Textarea(attrs={'class': 'span4',
+            'placeholder': 'Please add a feature', 'rows': 1}),
+        }
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            feature = super(FeatureForm, self).save(commit=False)
+            feature.author = self.user
+            feature.save()
+            feature.items.add(self.item_id)
+            return feature
+        else:
+            return super(FeatureForm, self).save(commit)
         
