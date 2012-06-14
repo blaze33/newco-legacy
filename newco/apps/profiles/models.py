@@ -56,6 +56,11 @@ class Reputation(models.Model):
 
         return rep
 
+    class Meta:
+        permissions = (
+            ("can_vote", "Can vote on content"),
+        )
+
 
 @receiver(post_save, sender=User)
 def create_reputation(sender, instance=None, **kwargs):
@@ -136,10 +141,9 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Vote._meta.app_label,
-                                           model=Vote._meta.module_name)
-    permission, created = Permission.objects.get_or_create(codename='can_vote',
-                                       name='Can vote on content',
+    content_type = ContentType.objects.get(app_label=Reputation._meta.app_label,
+                                           model=Reputation._meta.module_name)
+    permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)
 
