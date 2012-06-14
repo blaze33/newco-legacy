@@ -71,6 +71,7 @@ class Question(Content):
 
     class Meta:
         verbose_name = _('question')
+        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)

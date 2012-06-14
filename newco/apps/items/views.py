@@ -102,13 +102,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['item'] = self.object
             context['affs'] = AffiliationItem.objects.filter(item=self.object)
 
-            questions = self.object.question_set.order_by('-pub_date')
-            q_ordered = list(generic_annotate(questions,
-                                Vote, Sum('votes__vote'),
-                                alias='score').order_by('-score', '-pub_date'))
-            for q in questions:
-                if q not in q_ordered:
-                    q_ordered.append(q)
+            questions = self.object.question_set.all()
+            q_ordered = sorted(list(questions), key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
 
             context['questions'] = q_ordered
         return context
