@@ -11,8 +11,6 @@ from voting.models import Vote
 from items.models import Question, Answer
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
-import datetime
-
 
 class Profile(ProfileBase):
     name = models.CharField(_("name"), max_length=50, null=True, blank=True)
@@ -21,9 +19,6 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
-    subscription_date = models.DateTimeField(default=datetime.datetime.today(),
-                                    editable=False,
-                                    verbose_name=_('subscription date'))
 
 
 class Reputation(models.Model):
