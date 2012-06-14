@@ -1,24 +1,20 @@
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
-from items.models import Item, CannotManage
-from items.forms import QuestionForm, AnswerForm, ItemForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib import messages
+from django.utils.translation import ugettext
+from pinax.apps.account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
-from django.db.models import Sum
-from generic_aggregation import generic_annotate
 
-from pinax.apps.account.utils import user_display
-from django.utils.translation import ugettext
-
+from items.models import Item, CannotManage
+from items.forms import QuestionForm, AnswerForm, ItemForm
 from affiliation.models import AffiliationItem
 
 app_name = 'items'
@@ -103,7 +99,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['affs'] = AffiliationItem.objects.filter(item=self.object)
 
             questions = self.object.question_set.all()
-            q_ordered = sorted(list(questions), key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
+            q_ordered = sorted(list(questions),
+                key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
 
             context['questions'] = q_ordered
         return context
