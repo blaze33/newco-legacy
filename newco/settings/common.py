@@ -116,10 +116,13 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "pinax.apps.account.middleware.LocaleMiddleware",
+    "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+
+    # Pinax
+    # "pinax.apps.account.middleware.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "newco.urls"
@@ -236,6 +239,8 @@ ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_EMAIL_CONFIRMATION_EMAIL = False
+ACCOUNT_CREATE_ON_SAVE = False
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
