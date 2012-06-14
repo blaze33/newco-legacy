@@ -57,6 +57,7 @@ class Reputation(models.Model):
         return rep
 
 
+@receiver(post_save, sender=User)
 def create_reputation(sender, instance=None, **kwargs):
     if instance is None:
         return
@@ -64,7 +65,6 @@ def create_reputation(sender, instance=None, **kwargs):
     rep.reputation_computed = rep.compute_reputation()
     rep.reputation_incremented = rep.reputation_computed
     rep.save()
-post_save.connect(create_reputation, sender=User)
 
 
 def increment_reputation(sender, instance=None, **kwargs):
