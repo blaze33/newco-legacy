@@ -1,0 +1,18 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Products" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% block form_header %}Add something new to talk about:{% endblock %}</h1>
+
+<br />
+
+<form action="." method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="Submit"/>
+</form>
+
+{% endblock %}

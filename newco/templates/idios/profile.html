@@ -1,0 +1,50 @@
+{% extends "idios/base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load voting_tags %}
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
+
+{% block body %}
+    {% user_display page_user as page_user_display %}
+    <header class="jumbotron subhead" id="overview">
+        <h1>{{ page_user_display }}</h1>
+    </header>
+
+    {% include "profiles/_profile_info.html" %}
+
+    {% if is_me %}
+        </br>
+        <p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>
+    {% endif %}
+
+    </br>
+
+    {% if questions %}
+        {% scores_for_objects questions as question_score_dict %}
+        <h3>Questions asked by {{ page_user_display }}</h3>
+        {% for question in questions %}
+            {% dict_entry_for_item question from question_score_dict as score %}
+            <p>
+                <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> on
+                <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a>
+                {% if score %}Score: {{ score.score }} on {{ score.num_votes }} vote{{ score.num_votes|pluralize }}{% endif %}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    {% if answers %}
+        {% scores_for_objects answers as answer_score_dict %}
+        <h3>Answers suggested by {{ page_user_display }}</h3>
+        {% for answer in answers %}
+            {% dict_entry_for_item answer from answer_score_dict as score %}
+            <p>
+                <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> on
+                <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
+                (<a href="{{ answer.question.items.all.0.get_absolute_url }}">{{ answer.question.items.all.0 }}</a>)
+                {% if score %}Score: {{ score.score }} on {{ score.num_votes }} vote{{ score.num_votes|pluralize }}{% endif %}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
