@@ -5,23 +5,62 @@
 {% load staticfiles %}
 
 {% block extra_style %}
+<!--
+We may need to use font-awesome. Won't replace glyphicons for the moment
+due to bad pixel fitting of small icons.
+<link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+-->
 <link rel="icon" href="{% static "img/favicon.png" %}" type="image/png" />
 <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+{% include "feedback/header.html" %}
+{% endblock %}
+
+{% block extra_head_base %}
+{{ block.super }}
+
+
+
+
+
+<!--Google Analytics-->
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-30326927-1']);
+_gaq.push(['_setDomainName', 'stark-stone-9868.herokuapp.com']);
+_gaq.push(['_setAllowLinker', true]);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<!--End of Google Analytics-->
 {% endblock %}
 
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">{% spaceless %}
             <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
+            {% comment %}
+            <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
+            {% endcomment %}
+            <li id="tab_index"><a href="{% url item_index %}">{% trans "Products index" %}</a></li>
         {% endspaceless %}</ul>
     {% endif %}
 {% endblock %}
 
 {% block footer %}
     {% include "_footer.html" %}
+
+    {{ block.super }}
 {% endblock %}
 
 {% block extra_body_base %}
     {% analytics %}
     {% block extra_body %}{% endblock %}
+    
+    {{ block.super }}
+    {% include "feedback/button.html" %}
+    
 {% endblock %}

@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<style type="text/css">
+    .feedbackTab {
+        position: fixed;
+        top: 150px;
+        right: 0px;
+        background: url({% static "img/Feedback_button.png" %}) no-repeat;
+        width: 29px;
+        height: 70px;
+    }
+    
+    div#feedbackModal textarea { 
+        width: 90%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        resize: vertical;
+    }
+    
+    div#feedbackModal div.visible-phone textarea { width: 100% }
+    
+    /* css rule to circumvent broken fade rendering on a phone
+       cf. open issue https://github.com/twitter/bootstrap/issues/2130 */
+    @media (max-width: 480px) { 
+        .modal.fade.in { top: 5%; }
+     }
+
+    
+</style>

@@ -1,0 +1,14 @@
+/* Homepage specific styling */
+#xkcd {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+#xkcd span{
+    text-align: right;
+}
+#xkcd > div{
+    display: inline-block;
+    background: #fff url(../img/xkcd/reviews-fr.png);
+    height:243px;
+}

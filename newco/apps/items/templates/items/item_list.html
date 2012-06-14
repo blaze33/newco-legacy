@@ -1,0 +1,35 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Products" %}{% endblock %}
+
+{% block body %}
+
+
+{% if item_list %}
+    <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
+        <input name="item_name" type="text" autocomplete="off" placeholder="Chercher un article{% if tag %} ayant le tag {{ tag.name}}{% endif %}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
+    </div></form>
+
+    {% if tag %}
+        <h3>{% trans "List of items with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a>:</h3>
+    {% else %}
+        <h1>{% trans "List of items in database:" %}</h1>
+    {% endif %}
+    </br>
+
+    <ul>{% for item in item_list %}
+        <li>
+            <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+            <a href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i></a>
+        </li>
+    {% endfor %}</ul>
+{% else %}
+    <p>{% trans "No products are available." %}</p>
+{% endif %}
+
+</br>
+<p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></p>
+
+{% endblock %}

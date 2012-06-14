@@ -1,0 +1,51 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extra_style %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/content.css">
+{% endblock %}
+
+{% block head_title %}{{ item.name }}{% endblock %}
+
+{% block body %}
+
+{% include "items/data_sheet.html" %}
+
+<br>
+
+<div class="row">
+    <div class="span7">
+        <form method="POST" action="" class="form-inline">
+            {% csrf_token %}
+            {{ form.errors }}
+            <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
+            </div>
+        </form>
+        <hr>
+    </div>
+</div>
+
+{% include "items/question_list.html" %}
+
+<div class="row">
+<div class="span7">
+<a class="btn" href="{% url item_index %}">
+    <i class="icon-list"></i> {% trans "Items list" %}</a>
+<a class="btn" href='{% url item_edit "item" item.id %}'>
+    <i class="icon-edit"></i> {% trans "Edit Item" %}</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url item_delete "item" item.id %}'>
+    <i class="icon-trash"></i> {% trans "Delete Item" %}</a>
+{% endif %}
+</div>
+</div>
+
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script src="{% static "js/content.js" %}"></script>
+{% endblock %}

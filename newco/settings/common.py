@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
-# Django settings for basic pinax project.
+### default.py
+### Django settings for basic pinax project.
 
+import sys
 import os.path
 import posixpath
 import socket
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+########## PATH CONFIGURATION
+# Absolute filesystem path to this Django project directory.
+PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+# Add all necessary filesystem paths to our system path so that we can use
+# python import statements.
+sys.path.append(os.path.normpath(os.path.join(PROJECT_ROOT, 'apps')))
+########## END PATH CONFIGURATION
+
+########## DEBUG CONFIGURATION
+# Disable debugging by default.
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+########## END DEBUG CONFIGURATION
 
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
@@ -27,34 +39,12 @@ ADMINS = [
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "djtest",                       # Or path to database file if using sqlite3 dev.db.
-        "USER": "djangouser",                             # Not used with sqlite3.
-        "PASSWORD": "password",                         # Not used with sqlite3.
-        "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
-        "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "dev-next.db",                       # Or path to database file if using sqlite3 dev.db.
-        "USER": "",                             # Not used with sqlite3.
-        "PASSWORD": "",                         # Not used with sqlite3.
-        "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
-        "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "US/Eastern"
+TIME_ZONE = "Europe/Paris"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -138,13 +128,13 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    
+
     "staticfiles.context_processors.static",
-    
+
     "pinax.core.context_processors.pinax_settings",
-    
+
     "pinax.apps.account.context_processors.account",
-    
+
     # "notification.context_processors.notification", # commented for django 1.4
     "announcements.context_processors.site_wide_announcements",
 ]
@@ -158,13 +148,14 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
-    
+
     "pinax.templatetags",
-    
+
     # theme
+    "django_forms_bootstrap",
     "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
-    
+
     # external
     # "notification", # must be first # commented for django 1.4
     "staticfiles",
@@ -173,26 +164,36 @@ INSTALLED_APPS = [
     "mailer",
     "django_openid",
     "timezones",
-    # "emailconfirmation",
+#    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
     "metron",
-    
+
     # Pinax
     # "pinax.apps.account",
     # "pinax.apps.signup_codes",
     "account",
     
     
-    # project
+    # Project
     "about",
     "profiles",
-    
-    #deployment
+
+    # Deployment
     "south",
     "gunicorn",
     "storages",
+
+    # Monitoring
+    "raven.contrib.django",
+
+    # our business
+    "items",
+    "taggit",
+    "voting",
+    "votes",
+    "affiliation",
 ]
 
 FIXTURE_DIRS = [
@@ -201,7 +202,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+#EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -210,43 +211,36 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = False
+ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
 ]
 
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
+LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
+LOGIN_REDIRECT_URL = "/about/what_next"
+
 LOGOUT_REDIRECT_URLNAME = "home"
+LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
+
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
+)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
-# S3 storage settings
-if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-
-    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-# local_settings.py can be used to override environment-specific settings
-# like database and email that differ between development and production.
-try:
-    from local_settings import *
-except ImportError:
-    pass
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
