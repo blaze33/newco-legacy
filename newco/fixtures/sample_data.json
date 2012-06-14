@@ -297,7 +297,6 @@
     "fields": {
       "website": "",
       "about": "",
-      "subscription_date": "2012-06-07 00:00:00",
       "name": "Max",
       "location": "",
       "user": 1
@@ -309,7 +308,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-11 18:28:36",
       "name": null,
       "location": null,
       "user": 2
@@ -321,7 +319,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 3
@@ -333,7 +330,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 4
@@ -345,7 +341,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 5
@@ -357,7 +352,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 6
@@ -369,7 +363,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 7
@@ -381,7 +374,6 @@
     "fields": {
       "website": null,
       "about": null,
-      "subscription_date": "2012-06-14 12:04:08",
       "name": null,
       "location": null,
       "user": 8
