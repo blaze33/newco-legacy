@@ -159,6 +159,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "account",
 
     "pinax.templatetags",
 
@@ -184,7 +185,6 @@ INSTALLED_APPS = [
     # Pinax
     # "pinax.apps.account",
     # "pinax.apps.signup_codes",
-    "account",
 
     # Project
     "about",
