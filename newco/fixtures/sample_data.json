@@ -1,0 +1,742 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "maxime",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-06-14 12:01:14",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$1ff98$a6ed35598a5703a5444901cf8c431d982fa40213",
+      "email": "rouyrre@gmail.com",
+      "date_joined": "2012-06-04 12:15:42"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "user1",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-06-12 12:32:32",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$5ccf3$b685c71b273a5a4ffd30762caa2bde0e822c6b2a",
+      "email": "",
+      "date_joined": "2012-06-11 19:26:50"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "username": "seb",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-06-14 12:04:40",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$9c7fe$2315a465603e1853004dfc531e2121d2a6a1d845",
+      "email": "",
+      "date_joined": "2012-06-14 12:04:40"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.user",
+    "fields": {
+      "username": "gas",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-06-14 12:05:15",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$5bec8$ddfdcbd92edb125a5322ba57d581ffa3489fc081",
+      "email": "",
+      "date_joined": "2012-06-14 12:05:15"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.user",
+    "fields": {
+      "username": "gk",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2012-06-14 12:05:43",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$6a767$5092d8d06e57d2f42f522c910beed21d8d26eeb4",
+      "email": "",
+      "date_joined": "2012-06-14 12:05:43"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.user",
+    "fields": {
+      "username": "user2",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-06-14 12:06:59",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$85c77$3e8d4553feb3d07dcedd9bd16c039d94e448106a",
+      "email": "",
+      "date_joined": "2012-06-14 12:06:59"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.user",
+    "fields": {
+      "username": "user3",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-06-14 12:08:03",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$023ec$39cdec515e0e35eb326b50dbaffa2b6180c207f0",
+      "email": "",
+      "date_joined": "2012-06-14 12:08:03"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "auth.user",
+    "fields": {
+      "username": "user4",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2012-06-14 12:08:30",
+      "groups": [],
+      "user_permissions": [
+        [
+          "can_vote",
+          "profiles",
+          "reputation"
+        ]
+      ],
+      "password": "sha1$490cb$3df94edb763fe39f04fcb731316fb2671e1d37f7",
+      "email": "",
+      "date_joined": "2012-06-14 12:08:30"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "sites.site",
+    "fields": {
+      "domain": "www.newco-project.fr",
+      "name": "NewCo"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "notification.noticetype",
+    "fields": {
+      "default": 2,
+      "description": "you have received an announcement",
+      "display": "Announcement",
+      "label": "announcement"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "emailconfirmation.emailaddress",
+    "fields": {
+      "verified": true,
+      "user": 1,
+      "primary": true,
+      "email": "rouyrre@gmail.com"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 1,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 2,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 3,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 4,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 5,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 6,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 7,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "account.account",
+    "fields": {
+      "timezone": "Europe/Paris",
+      "user": 8,
+      "language": "en-us"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "profiles.profile",
+    "fields": {
+      "website": "",
+      "about": "",
+      "name": "Max",
+      "location": "",
+      "user": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 4
+    }
+  },
+  {
+    "pk": 5,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 5
+    }
+  },
+  {
+    "pk": 6,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 6
+    }
+  },
+  {
+    "pk": 7,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 7
+    }
+  },
+  {
+    "pk": 8,
+    "model": "profiles.profile",
+    "fields": {
+      "website": null,
+      "about": null,
+      "name": null,
+      "location": null,
+      "user": 8
+    }
+  },
+  {
+    "pk": 1,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 30,
+      "user": 1,
+      "reputation_incremented": 56
+    }
+  },
+  {
+    "pk": 2,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 3,
+      "user": 2,
+      "reputation_incremented": 6
+    }
+  },
+  {
+    "pk": 3,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 3,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 4,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 4,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 5,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 5,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 6,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 6,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 7,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 7,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 8,
+    "model": "profiles.reputation",
+    "fields": {
+      "reputation_computed": 0,
+      "user": 8,
+      "reputation_incremented": 0
+    }
+  },
+  {
+    "pk": 1,
+    "model": "items.item",
+    "fields": {
+      "slug": "t2-ultralight-pro",
+      "last_modified": "2012-06-04 12:16:47",
+      "pub_date": "2012-06-04 12:16:23",
+      "name": "T2 Ultralight Pro",
+      "author": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "items.item",
+    "fields": {
+      "slug": "pizza-cannibale",
+      "last_modified": "2012-06-05 21:32:32",
+      "pub_date": "2012-06-05 11:15:29",
+      "name": "Pizza cannibale",
+      "author": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "items.question",
+    "fields": {
+      "content": "Poids ?",
+      "items": [
+        1
+      ],
+      "pub_date": "2012-06-04 12:16:23",
+      "author": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "items.question",
+    "fields": {
+      "content": "La viande est-elle humaine ?",
+      "items": [
+        2
+      ],
+      "pub_date": "2012-06-05 11:15:29",
+      "author": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "items.question",
+    "fields": {
+      "content": "Est-elle bien \u00e9tanche ?",
+      "items": [
+        1
+      ],
+      "pub_date": "2012-06-11 18:28:36",
+      "author": 1
+    }
+  },
+  {
+    "pk": 5,
+    "model": "items.question",
+    "fields": {
+      "content": "Les sardines sont-elles solides ?",
+      "items": [
+        1
+      ],
+      "pub_date": "2012-06-12 12:22:37",
+      "author": 2
+    }
+  },
+  {
+    "pk": 1,
+    "model": "items.answer",
+    "fields": {
+      "content": "1,9 kg",
+      "question": 1,
+      "pub_date": "2012-06-04 12:16:23",
+      "author": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "items.answer",
+    "fields": {
+      "content": "\u00c0 ton avis !!!! -1",
+      "question": 3,
+      "pub_date": "2012-06-05 11:15:29",
+      "author": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "items.answer",
+    "fields": {
+      "content": "pas mal",
+      "question": 1,
+      "pub_date": "2012-06-07 18:12:23",
+      "author": 1
+    }
+  },
+  {
+    "pk": 6,
+    "model": "items.answer",
+    "fields": {
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.",
+      "question": 1,
+      "pub_date": "2012-06-11 11:11:17",
+      "author": 1
+    }
+  },
+  {
+    "pk": 7,
+    "model": "items.answer",
+    "fields": {
+      "content": "Une nuit sous la pluie et pas de probl\u00e8mes.",
+      "question": 4,
+      "pub_date": "2012-06-11 18:28:36",
+      "author": 1
+    }
+  },
+  {
+    "pk": 8,
+    "model": "items.answer",
+    "fields": {
+      "content": "\u00c7a d\u00e9pend",
+      "question": 4,
+      "pub_date": "2012-06-12 12:22:37",
+      "author": 2
+    }
+  },
+  {
+    "pk": 1,
+    "model": "taggit.tag",
+    "fields": {
+      "name": "tente",
+      "slug": "tente"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "taggit.tag",
+    "fields": {
+      "name": "dormir",
+      "slug": "dormir"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "taggit.tag",
+    "fields": {
+      "name": "randonn\u00e9e",
+      "slug": "randonnee"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "taggit.tag",
+    "fields": {
+      "name": "nourriture",
+      "slug": "nourriture"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 1,
+      "content_type": [
+        "items",
+        "item"
+      ],
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 2,
+      "content_type": [
+        "items",
+        "item"
+      ],
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 3,
+      "content_type": [
+        "items",
+        "item"
+      ],
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 4,
+      "content_type": [
+        "items",
+        "item"
+      ],
+      "object_id": 2
+    }
+  },
+  {
+    "pk": 1,
+    "model": "voting.vote",
+    "fields": {
+      "vote": 1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "answer"
+      ],
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 5,
+    "model": "voting.vote",
+    "fields": {
+      "vote": 1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "question"
+      ],
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 6,
+    "model": "voting.vote",
+    "fields": {
+      "vote": 1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "question"
+      ],
+      "object_id": 3
+    }
+  },
+  {
+    "pk": 7,
+    "model": "voting.vote",
+    "fields": {
+      "vote": 1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "answer"
+      ],
+      "object_id": 3
+    }
+  },
+  {
+    "pk": 8,
+    "model": "voting.vote",
+    "fields": {
+      "vote": -1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "answer"
+      ],
+      "object_id": 8
+    }
+  },
+  {
+    "pk": 9,
+    "model": "voting.vote",
+    "fields": {
+      "vote": 1,
+      "user": 1,
+      "content_type": [
+        "items",
+        "question"
+      ],
+      "object_id": 5
+    }
+  }
+]

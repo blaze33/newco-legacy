@@ -11,8 +11,6 @@ from voting.models import Vote
 from items.models import Question, Answer
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
-import datetime
-
 
 class Profile(ProfileBase):
     name = models.CharField(_("name"), max_length=50, null=True, blank=True)
@@ -21,9 +19,6 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
-    subscription_date = models.DateTimeField(default=datetime.datetime.today(),
-                                    editable=False,
-                                    verbose_name=_('subscription date'))
 
 
 class Reputation(models.Model):
@@ -33,6 +28,9 @@ class Reputation(models.Model):
 
     class Meta:
         verbose_name = _("reputation")
+        permissions = (
+            ("can_vote", "Can vote on content"),
+        )
 
     def __unicode__(self):
         return u'%s\'s reputation' % (self.user)
@@ -139,10 +137,9 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Vote._meta.app_label,
-                                           model=Vote._meta.module_name)
-    permission, created = Permission.objects.get_or_create(codename='can_vote',
-                                       name='Can vote on content',
+    content_type = ContentType.objects.get(app_label=Reputation._meta.app_label,
+                                           model=Reputation._meta.module_name)
+    permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)
 
