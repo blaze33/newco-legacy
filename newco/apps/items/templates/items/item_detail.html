@@ -28,6 +28,59 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="span4">
+    <h3>Review positive la plus utile:</h3>	
+        
+    <p class="signature">
+    	<small>
+            <b>{{ "6 12 '12" }}</b> by <a href='{% url profile_detail user %}'>{{ user }}</a>
+        </small>
+    </p>
+    <p>Cet aspirateur m'a fait gagner un temps fou dans mes taches menageres quotidiennes.
+    <br>De plus c'est tres facile pour enlever la poussiere.
+    </p>
+    
+    </div>
+    
+    <div class="span4">
+    <h3>Review negative la plus utile:</h3>	
+    <p class="signature">
+    	<small>
+            <b>{{ "6 12 '12" }}</b> by <a href='{% url profile_detail user %}'>{{ user }}</a>
+        </small>
+    </p>
+    <p>Le gros probleme est qu'il faut penser a recharger la batterie assez souvent car il manque d'autonomie
+    <br>Sinon, rien a dire.
+    </p>
+    </div>
+    
+    <div class="span4">
+    <h3>Articles written by the community</h3>
+   <button class="btn btn-mini" data-toggle="collapse" data-target="#demo2">
+   <h4>Guide d'achat aspirateur sans fil</h4></button>
+   
+   <div id="demo2" class="collapse out">
+   	Quel aspirateur sans fil acheter.
+   	<br>Comment faire son choix entre le Dyson 200 et le Rowenta Super Turbo?
+   	<br>Cliquez <a href='{% url profile_detail user %}'>ici</a> pour en savoir plus.
+   </div>
+   
+    <button class="btn btn-mini" data-toggle="collapse" data-target="#demo3">
+   <h4>Par quoi remplacer mon Dyson 2000?</h4></button>
+   
+   <div id="demo3" class="collapse out">
+   	Vous voulez en savoir plus sur les nouveaux modeles d'aspirateur sans fil.
+   	<br>Quelles sont les nouvelles tendances pour l'ete 2012?
+   	<br>Cliquez <a href='{% url profile_detail user %}'>ici</a> pour en savoir plus.
+   </div>
+   </div> 
+</div>     	
+
+
+
+<br><br><br><br>
+
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#product" data-toggle="tab">Product</a>
@@ -37,7 +90,7 @@
     </ul>
 
     <div class="tab-content">
-        <div id="product" class="tab-pane active">Fiche technique: <br><br><br></div>
+        <div id="product" class="tab-pane active">{% include "items/feature_list.html" %} <br><br><br></div>
         <div id="questions" class="tab-pane">{% include "items/question_list.html" %}</div>
         <div id="links" class="tab-pane">{% include "items/ext_links_list.html" %}</div>
         <div id="photos" class="tab-pane">Photos a venir <br><br><br> </div>    
