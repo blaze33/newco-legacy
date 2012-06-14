@@ -133,7 +133,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "pinax.core.context_processors.pinax_settings",
 
-    "pinax.apps.account.context_processors.account",
+    "account.context_processors.account",
 
     # "notification.context_processors.notification", # commented for django 1.4
     "announcements.context_processors.site_wide_announcements",
@@ -202,7 +202,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-#EMAIL_BACKEND = "mailer.backend.DbBackend"
+EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -212,6 +212,7 @@ AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
