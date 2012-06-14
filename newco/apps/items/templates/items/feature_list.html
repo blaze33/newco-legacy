@@ -1,0 +1,87 @@
+{% load voting_tags %}
+{% load content_utils %}
+{% load staticfiles %}
+
+{% votes_by_user user on features as feature_vote_dict %}
+{% scores_for_objects features as feature_score_dict %}
+
+<h4>Caractéristiques Produit</h4>
+<br>
+<div class="row">
+	
+<div class="span4">
+<div style="text-align:center;"><h5>Les Pours</h5> </div>	
+<br>
+{% for feature in features %}
+
+
+    {% dict_entry_for_item feature from feature_vote_dict as vote %}
+    {% dict_entry_for_item feature from feature_score_dict as score %}
+
+    <div class="row one_row">
+        <div class="span1">
+            <h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
+            <form class="controls vote" action='{% url object_voting "Feature" feature.id %}' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
+                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+            </form></h5>
+        </div>
+        <div class="span2"><h5>
+            {{ feature.content }}
+            {% if user.is_superuser or feature.author == request.user %}
+                {% with name=feature|to_class_name %}{% edit name feature.id %}{% endwith %}
+            {% endif %}
+        </h5></div>
+        <div class="span1 right"><p class="signature"><small>
+            <b>{{ feature.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail feature.author %}'>{{ feature.author }}</a>
+        </small></p></div>
+    
+    </div>
+    <hr>
+{% endfor %}
+<p><a href='{% url item_create "Feature" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_feature'>
+    <i class="icon-share-alt"></i>Rajouter une caractéristique produit
+</a></p>
+</div>
+
+<div class="span4">
+<div style="text-align:center;"><h5>Les Contres</h5> </div>	
+
+<br>
+{% for feature in features %}
+
+
+    {% dict_entry_for_item feature from feature_vote_dict as vote %}
+    {% dict_entry_for_item feature from feature_score_dict as score %}
+
+    <div class="row one_row">
+        <div class="span2"><h5>
+            {{ feature.content }}
+            {% if user.is_superuser or feature.author == request.user %}
+                {% with name=feature|to_class_name %}{% edit name feature.id %}{% endwith %}
+            {% endif %}
+        </h5></div>
+        <div class="span1 right"><p class="signature"><small>
+            <b>{{ feature.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail feature.author %}'>{{ feature.author }}</a>
+        </small></p></div>
+        <div class="span1">
+            <h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
+            <form class="controls vote" action='{% url object_voting "Feature" feature.id %}' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
+                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+            </form></h5>
+        </div>
+    </div>
+    
+    <hr>
+{% endfor %}
+<p><a href='{% url item_create "Feature" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_feature'>
+    <i class="icon-share-alt"></i>Rajouter une caractéristique produit
+</a></p>
+
+
+</div>
+
+</div>
