@@ -5,6 +5,6 @@
     {% if profile.about %}<p><b>{% trans "About" %}</b>: {{ profile.about }}</p>{% endif %}
     {% if profile.location %}<p><b>{% trans "Location" %}</b>: {{ profile.location }}</p>{% endif %}
     {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
-    {% if profile.subscription_date %}<p><b>{% trans "Subscription date" %}</b>: {{ profile.subscription_date }}</p>{% endif %}
+    {% if profile.user.date_joined %}<p><b>{% trans "Subscription date" %}</b>: {{ profile.user.date_joined }}</p>{% endif %}
     {% if reputation %}<p><b>{% trans "Reputation" %}</b>: {{ reputation.reputation_incremented }}</p>{% endif %}
 </div>
