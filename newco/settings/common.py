@@ -48,13 +48,20 @@ TIME_ZONE = "Europe/Paris"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr"
 
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+
+# Where to look to compile translations
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -135,7 +142,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
 
-    # "notification.context_processors.notification", # commented for django 1.4
+    # commented for django 1.4
+    # "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
 ]
 
@@ -174,8 +182,7 @@ INSTALLED_APPS = [
     # "pinax.apps.account",
     # "pinax.apps.signup_codes",
     "account",
-    
-    
+
     # Project
     "about",
     "profiles",
@@ -211,18 +218,24 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+
+# Former conf form Pinax
+#ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+#AUTHENTICATION_BACKENDS = [
+#    "pinax.apps.account.auth_backends.AuthenticationBackend",
+#]
+
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
-]
+# django-user-accounts
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_CONTACT_EMAIL = False
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
@@ -233,12 +246,6 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-LOCALE_PATHS = (
-    PROJECT_ROOT + '/apps/items/locale',
-    PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
-)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
