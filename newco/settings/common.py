@@ -48,7 +48,7 @@ TIME_ZONE = "Europe/Paris"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr"
 
 SITE_ID = 1
 
@@ -190,7 +190,6 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "votes",
-    "affiliation",
 ]
 
 FIXTURE_DIRS = [
@@ -229,6 +228,12 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
+
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
+)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

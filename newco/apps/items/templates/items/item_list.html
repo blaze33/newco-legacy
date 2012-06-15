@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
 
@@ -14,23 +15,23 @@
         </div>
     </form>
     {% if tag %}
-        <h3>List of items with tag <a href=""><span class="label">{{ tag.name }}</span></a>:</h3>
+        <h3>{% trans "List of items with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a>:</h3>
     {% else %}
-        <h1>List of items in database :</h1>
+        <h1>{% trans "List of items in database:" %}</h1>
     {% endif %}
     </br>
 
     <ul>{% for item in item_list %}
         <li>
             <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-            <a href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i></a>
+            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
         </li>
     {% endfor %}</ul>
 {% else %}
-    <p>No products are available.</p>
+    <p>{% trans "No products are available." %}</p>
 {% endif %}
 
 </br>
-<p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> Add an entry</a></p>
+<p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></p>
 
 {% endblock %}

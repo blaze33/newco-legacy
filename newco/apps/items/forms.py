@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect
 
 from items.models import Item, Question, Answer, Story, ExternalLink, FeatureP, FeatureN
@@ -46,8 +47,10 @@ class QuestionForm(ModelForm):
         model = Question
         exclude = ('author', 'items')
         widgets = {
-            'content': Textarea(attrs={'class': 'span4',
-            'placeholder': 'Ask something specific. Be concise.', 'rows': 1}),
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Ask something specific. Be concise.'),
+                'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -78,8 +81,10 @@ class AnswerForm(ModelForm):
         model = Answer
         fields = ('content', )
         widgets = {
-            'content': Textarea(attrs={'class': 'span6',
-            'placeholder': 'Be concise and to the point.', 'rows': 6}),
+            'content': Textarea(attrs={
+                'class': 'span6',
+                'placeholder': _('Be concise and to the point.'),
+                'rows': 6}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -115,8 +120,10 @@ class ExternalLinkForm(ModelForm):
         model = ExternalLink
         exclude = ('author', 'items')
         widgets = {
-            'text': Textarea(attrs={'class': 'span4',
-            'placeholder': 'Descriptif du lien', 'rows': 1}),
+            'text': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Descriptif du lien'), 
+                'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -146,8 +153,10 @@ class FeaturePForm(ModelForm):
         model = FeatureP
         exclude = ('author', 'items')
         widgets = {
-            'content': Textarea(attrs={'class': 'span4',
-            'placeholder': 'Please add a feature', 'rows': 1}),
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Please add a feature'), 
+                'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):
@@ -178,8 +187,10 @@ class FeatureNForm(ModelForm):
         model = FeatureN
         exclude = ('author', 'items')
         widgets = {
-            'content': Textarea(attrs={'class': 'span4',
-            'placeholder': 'Please add a feature', 'rows': 1}),
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Please add a feature'), 
+                'rows': 1}),
         }
 
     def save(self, commit=True, **kwargs):

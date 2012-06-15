@@ -42,11 +42,17 @@ class Content(models.Model):
 
 
 class Item(Content):
-    name = models.CharField(max_length=255, verbose_name=_('Name'))
-    slug = models.SlugField(verbose_name=_('Slug'), editable=False)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_('Last modified'))
-    tags = TaggableManager()
+                                         verbose_name=_('last modified'))
+    tags = TaggableManager(help_text=_("A comma-separated list of tags"))
+
+    class Meta:
+        verbose_name = _('item')
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
 
     def compute_tags(self, list_users):
         li=[]
@@ -59,12 +65,6 @@ class Item(Content):
         self.slug = slugify(self.name)
         super(Item, self).save()
 
-    class Meta:
-        pass
-
-    def __unicode__(self):
-        return u'%s' % (self.name)
-
     @permalink
     def get_absolute_url(self):
         return ('item_detail', None, {"model_name": "item",
@@ -73,9 +73,13 @@ class Item(Content):
 
 
 class Question(Content):
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=200, verbose_name=_('content'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('question')
+        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -89,8 +93,11 @@ class Question(Content):
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=1000)
+    content = models.CharField(max_length=1000, verbose_name=_('content'))
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('answer')
 
     def __unicode__(self):
         return u'Answer %s on %s' % (self.id, self.question)
