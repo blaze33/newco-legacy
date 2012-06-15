@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load account_tags %}
 {% load voting_tags %}
+{% load follow_tags %}
 
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
 
@@ -17,9 +18,64 @@
     {% if is_me %}
         </br>
         <p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>
-    {% endif %}
 
-    </br>
+
+	    <br>
+	    <br>
+	    <hr>
+	    <div class="row">
+	    	<div class="well">
+	    		<h2><a href="{% url profile_detail request.user %}">{{ page_user_display }}</a> : mon newsfeed</h2><p><small>Contenu poste par les membres que je <a data-toggle="collapse" href="#followeds_list"><i>follow</i></a></small></p>
+				<div id="followeds_list" class="collapse">
+			    	<div class="row">
+				    	<div id="followeds_list" class="span3 offset4">
+				    		<table class="table condensed">
+				    			<tbody>
+				    				{% for followed in followeds %}
+				    				<tr><td>{% follow_form followed %}</td>
+				    					<td>{{ followed.username }}</td>
+				    				</tr>
+					    			{% endfor %}
+				    			</tbody>
+				    		</table>
+			    		</div>
+			    	</div>
+		    	</div>
+	    	</div>
+    		{% include "profiles/_profile_newsfeed.html" with content_newsfeed=content_nf %}
+    	    <hr>
+    	</div>
+    	<br>
+    	<br>
+	    <div class="row">
+	    	<div class="well">
+	    		<h2><a href="{% url profile_detail request.user %}">{{ page_user_display }}</a> : mon newsfeed "inverse"</h2><p><small>Contenu poste par les membres qui me <a data-toggle="collapse" href="#followers_list"><i>follow</i>ent</a></small></p>
+    			<div id="followers_list" class="collapse">
+			    	<div class="row">
+				    	<div id="followers_list" class="span3 offset4">
+				    		<table class="table condensed">
+				    			<tbody>
+				    				{% for follower in followers %}
+				    				<tr><td>{% follow_form follower %}</td>
+				    					<td>{{ follower.username }}</td>
+				    				</tr>
+					    			{% endfor %}
+				    			</tbody>
+				    		</table>
+			    		</div>
+			    	</div>
+		    	</div>
+    		</div>
+    		{% include "profiles/_profile_newsfeed.html" with content_newsfeed=content_nfi %}
+    	    <hr>
+    	</div>    	
+    	
+	    <br>
+	    <hr>
+	{% endif %}
+    
+    <br>
+    <br>
 
     {% if questions %}
         {% scores_for_objects questions as question_score_dict %}
@@ -47,4 +103,5 @@
             </p>
         {% endfor %}
     {% endif %}
+    
 {% endblock %}

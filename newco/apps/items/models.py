@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
+from idios.models import ProfileBase
 
 
 class CannotManage(Exception):
@@ -53,6 +54,13 @@ class Item(Content):
     def __unicode__(self):
         return u'%s' % (self.name)
 
+    def compute_tags(self, list_users):
+        li=[]
+        for user in list_users:
+            if user in self.tags.similar_objects():
+                li.append(user)
+        return li
+ 
     def save(self):
         self.slug = slugify(self.name)
         super(Item, self).save()
@@ -107,3 +115,48 @@ class Story(models.Model):
     content = models.CharField(max_length=2000)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+
+class ExternalLink(Content):
+    text = models.CharField(max_length=200)
+    url = models.URLField(max_length=200)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    def __unicode__(self):
+        return u'%s' % (self.text)
+    
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})
+        
+class FeatureP(Content):
+    content = models.CharField(max_length=80)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    def __unicode__(self):
+        return u'%s' % (self.content)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})
+ 
+class FeatureN(Content):
+    content = models.CharField(max_length=80)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    def __unicode__(self):
+        return u'%s' % (self.content)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})
+ 

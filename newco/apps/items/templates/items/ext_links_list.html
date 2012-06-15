@@ -1,0 +1,40 @@
+{% load voting_tags %}
+{% load content_utils %}
+
+{% votes_by_user user on item.externallink_set.all as extlink_vote_dict %}
+{% scores_for_objects item.externallink_set.all as extlink_score_dict %}
+
+
+<div class="row">
+    <div class="span7">
+    	<h3>Liens externes:</h3>
+    </div>
+</div>
+
+{% for extlink in extlinks %}
+    {% dict_entry_for_item extlink from extlink_vote_dict as vote %}
+    {% dict_entry_for_item extlink from extlink_score_dict as score %}
+    
+    <div class="row">
+        <div class="span1" style="text-align: center;">
+            <form action='{% url object_voting "ExternalLink" extlink.id %}' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-mini{% if vote.is_upvote %} btn-warning{% endif %}{% if user == extlink.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}"> <i class="icon-arrow-up"></i> </button>
+                <h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3>
+                <button type="submit" class="btn btn-mini{% if vote.is_downvote %} btn-warning{% endif %}{% if user == extlink.author %} disabled{% endif %}" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}"> <i class="icon-arrow-down"></i> </button>
+            </form>
+        </div>
+        <div class="span6"><p><small>
+            <b>{{ extlink.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail extlink.author %}'>{{ extlink.author }}</a>
+        </small></p><p>
+            {{ extlink.text }} : <a href="{{ extlink.url }}">{{ extlink.url }}</a>
+            {% if user.is_superuser or extlink.author == request.user %}
+                {% with name=extlink|to_class_name %}{% edit name extlink.id %}{% endwith %}
+            {% endif %}
+        </p></div>
+    </div>
+{% endfor %}
+
+<p><a href='{% url item_create "ExternalLink" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_extlink'>
+    <i class="icon-share-alt"></i>Publier un lien externe
+</a></p>

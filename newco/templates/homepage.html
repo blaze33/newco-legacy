@@ -15,51 +15,59 @@
 {% block banner %}
     <div style="text-align:center;">
         <h1>NewCo</h1>
-        <p><i>Buy smarter, Buy faster</i></p>
+        <p><i>Empowering people to buy better</i></p>
         <br />
         <p style="text-align:center;">NewCo vous aide à choisir en toute confiance<br />et à partager vos conseils entre utilisateurs.</p>
     </div>
     
-    <!--
+    <br>
+    <br>
+    <br>
     {% if user.is_authenticated %}
-        {% url what_next as what_next_url %}
-        <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}" class="btn primary large">What Next</a>?{% endblocktrans %}</p>
+        {% url profile_detail user.username as profile_url %}
+        {% url contribute as contribute_url %}
+        <p class="lead" style="line-height: 200%">{% blocktrans %}Youpiii ! Vous êtes loggé ! Que faire maintenant?<br>Vous pouvez <a href="{{ contribute_url }}" class="btn-large btn-primary">contribuer</a>, chercher des informations sur des <a href="/content/" class="btn-large btn-primary">produits</a>, ou peaufiner votre <a href="{{ profile_url }}" class="btn-large btn-primary">profil</a> !{% endblocktrans %}</p>
+    
     {% else %}
+    
         {% url acct_login as login_url %}
-        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
-            {% url acct_signup as signup_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
-        {% else %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-primary btn-large">Log In</a> to try out the site.{% endblocktrans %}</p>
-        {% endifsetting %}
-    {% endif %}
-    -->
-{% endblock %}
+        {% url acct_signup as signup_url %}
+        {% url contribute as contribute_url %}
+        <p class="lead" style="line-height: 200%">{% blocktrans %}Vous voulez découvrir NewCo?<br>Allez sur la page <a href="/content/" class="btn-large btn-primary">produits</a> pour explorer le site, sur la page <a href="{{ contribute_url }}" class="btn-large btn-primary">Comment contribuer?</a> pour passer à l'étape suivante, ou directement sur <a href="{{ signup_url }}" class="btn-large btn-primary">s'inscrire</a> pour débuter votre nouvelle carrière !{% endblocktrans %}</p>
+        
+  	{% endif %}
 
-{% block column-1 %}
-{% endblock %}
-{% block column-2 %}
-{% endblock %}
-{% block column-3 %}
-{% endblock %}
+	    
+	{% endblock %}
+	
+	{% block column-1 %}
+	{% endblock %}
+	{% block column-2 %}
+	{% endblock %}
+	{% block column-3 %}
+	{% endblock %}
 
-{% block row-1 %}
-<div class="span12">
-    <div style="text-align: left;">
-    <p style="font-size:130%"><i>Sur le Web, on trouve tout et surtout n’importe quoi...</i></p>
-    <br />
-    </div>
-    <div id="xkcd">
-        <div title="xkcd reviews part 1" style="width:166px; background-position: 0px 0px"></div>
-        <div title="xkcd reviews part 2" style="width:180px; background-position: -172px 0px"></div>
-        <div title="xkcd reviews part 3" style="width:180px; background-position: -358px 0px"></div>
-        <div title="xkcd reviews part 4" style="width:196px; background-position: -544px 0px"></div>
-        <br/><span><i>Crédit : <a href="http://xkcd.com/1036/">xkcd</a> - Texte original traduit de l'anglais sous <a href="http://creativecommons.org/licenses/by-nc/2.5/">licence CC BY-NC 2.5</a></i></span>
-    </div>
-    <div style="text-align: right;"><br />
-    <p style="font-size:130%"><i>...NewCo fait le choix de l'entraide.</i></p>
-  
-    </div>
-</div>
-{% endblock %}
-
+	{% block row-1 %}
+	
+	
+	{% if user.is_authenticated %}
+		{% comment %}{% include "profiles/_profile_newsfeed.html" %}{% endcomment %}
+	{% else %}
+		<div class="span12">
+		    <div style="text-align: left;">
+			    <p style="font-size:130%"><i>Sur le Web, on trouve tout et surtout n’importe quoi...</i></p>
+			    <br />
+		    </div>
+		    <div id="xkcd">
+		        <div title="xkcd reviews part 1" style="width:166px; background-position: 0px 0px"></div>
+		        <div title="xkcd reviews part 2" style="width:180px; background-position: -172px 0px"></div>
+		        <div title="xkcd reviews part 3" style="width:180px; background-position: -358px 0px"></div>
+		        <div title="xkcd reviews part 4" style="width:196px; background-position: -544px 0px"></div>
+		        <br/><span><i>Crédit : <a href="http://xkcd.com/1036/">xkcd</a> - Texte original traduit de l'anglais sous <a href="http://creativecommons.org/licenses/by-nc/2.5/">licence CC BY-NC 2.5</a></i></span>
+		    </div>
+		    <div style="text-align: right;"><br />
+		    	<p style="font-size:130%"><i>...NewCo fait le choix de l'entraide.</i></p>
+		    </div>
+		</div>
+	{% endif %}
+	{% endblock %}

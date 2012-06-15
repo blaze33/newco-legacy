@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load follow_tags %}
 
 <div class="profile_info">
     {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
@@ -6,5 +7,14 @@
     {% if profile.location %}<p><b>{% trans "Location" %}</b>: {{ profile.location }}</p>{% endif %}
     {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
     {% if profile.user.date_joined %}<p><b>{% trans "Subscription date" %}</b>: {{ profile.user.date_joined }}</p>{% endif %}
+    <div>
+        {% if profile.skills %}<p><b>{% trans "Skills" %}</b>:
+            {% for tag_pro in profile.skills.all %}<a href="{% url tagged_items tag_pro.slug %}"><span class="label">{{ tag_pro.name }}</span></a> {% endfor %}
+        {% endif %}
+    </div>
     {% if reputation %}<p><b>{% trans "Reputation" %}</b>: {{ reputation.reputation_incremented }}</p>{% endif %}
+    
+    {% if not is_me %}
+        {% follow_form profile.user %}
+    {% endif %}
 </div>
