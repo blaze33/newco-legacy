@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.http import HttpResponseRedirect
 
-from items.models import Item, Question, Answer, Story, ExternalLink, Feature
+from items.models import Item, Question, Answer, Story, ExternalLink, FeatureP, FeatureN
 
 
 class ItemForm(ModelForm):
@@ -129,7 +129,7 @@ class ExternalLinkForm(ModelForm):
         else:
             return super(ExternalLinkForm, self).save(commit)
 
-class FeatureForm(ModelForm):
+class FeaturePForm(ModelForm):
 
     create = False
 
@@ -140,10 +140,10 @@ class FeatureForm(ModelForm):
             self.user = self.request.user
             self.item_id = self.request.REQUEST['item_id']
             self.item = Item.objects.get(pk=self.item_id)
-        return super(FeatureForm, self).__init__(*args, **kwargs)
+        return super(FeaturePForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Feature
+        model = FeatureP
         exclude = ('author', 'items')
         widgets = {
             'content': Textarea(attrs={'class': 'span4',
@@ -152,11 +152,42 @@ class FeatureForm(ModelForm):
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
-            feature = super(FeatureForm, self).save(commit=False)
-            feature.author = self.user
-            feature.save()
-            feature.items.add(self.item_id)
-            return feature
+            featurep = super(FeaturePForm, self).save(commit=False)
+            featurep.author = self.user
+            featurep.save()
+            featurep.items.add(self.item_id)
+            return featurep
         else:
-            return super(FeatureForm, self).save(commit)
+            return super(FeaturePForm, self).save(commit)
         
+        
+class FeatureNForm(ModelForm):
+
+    create = False
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.item_id = self.request.REQUEST['item_id']
+            self.item = Item.objects.get(pk=self.item_id)
+        return super(FeatureNForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = FeatureN
+        exclude = ('author', 'items')
+        widgets = {
+            'content': Textarea(attrs={'class': 'span4',
+            'placeholder': 'Please add a feature', 'rows': 1}),
+        }
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            featuren = super(FeatureNForm, self).save(commit=False)
+            featuren.author = self.user
+            featuren.save()
+            featuren.items.add(self.item_id)
+            return featuren
+        else:
+            return super(FeatureNForm, self).save(commit)

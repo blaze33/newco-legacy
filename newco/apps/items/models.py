@@ -125,7 +125,7 @@ class ExternalLink(Content):
                                       "pk": self.items.all()[0].id,
                                       "slug": self.items.all()[0].slug})
         
-class Feature(Content):
+class FeatureP(Content):
     content = models.CharField(max_length=80)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
@@ -138,4 +138,18 @@ class Feature(Content):
         return ('item_detail', None, {"model_name": "item",
                                       "pk": self.items.all()[0].id,
                                       "slug": self.items.all()[0].slug})
+ 
+class FeatureN(Content):
+    content = models.CharField(max_length=80)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
 
+    def __unicode__(self):
+        return u'%s' % (self.content)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('item_detail', None, {"model_name": "item",
+                                      "pk": self.items.all()[0].id,
+                                      "slug": self.items.all()[0].slug})
+ 

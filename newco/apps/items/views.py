@@ -5,7 +5,7 @@ from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from items.models import Item, CannotManage
-from items.forms import QuestionForm, AnswerForm, ItemForm, FeatureForm
+from items.forms import QuestionForm, AnswerForm, ItemForm, FeaturePForm, FeatureNForm
 from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
@@ -115,16 +115,27 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     
             context['extlinks'] = e_ordered
             
-            #ordering features
-            features = self.object.feature_set.order_by('-pub_date')
-            f_ordered = list(generic_annotate(features,
+            #ordering features_pos
+            features_pos = self.object.featurep_set.order_by('-pub_date')
+            f_ordered_pos = list(generic_annotate(features_pos,
                                 Vote, Sum('votes__vote'),
                                 alias='score').order_by('-score', '-pub_date'))
-            for f in features:
-                if f not in f_ordered:
-                    f_ordered.append(f)
+            for f in features_pos:
+                if f not in f_ordered_pos:
+                    f_ordered_pos.append(f)
 
-            context['features'] = f_ordered
+            context['features_pos'] = f_ordered_pos
+            
+            #ordering features_neg
+            features_neg = self.object.featuren_set.order_by('-pub_date')
+            f_ordered_neg = list(generic_annotate(features_neg,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for f in features_neg:
+                if f not in f_ordered_neg:
+                    f_ordered_neg.append(f)
+
+            context['features_neg'] = f_ordered_neg
             
         return context
 

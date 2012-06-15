@@ -2,8 +2,10 @@
 {% load content_utils %}
 {% load staticfiles %}
 
-{% votes_by_user user on features as feature_vote_dict %}
-{% scores_for_objects features as feature_score_dict %}
+{% votes_by_user user on features_pos as featurep_vote_dict %}
+{% scores_for_objects features_pos as featurep_score_dict %}
+{% votes_by_user user on features_neg as featuren_vote_dict %}
+{% scores_for_objects features_neg as featuren_score_dict %}
 
 <h4>Caractéristiques Produit</h4>
 <br>
@@ -12,35 +14,35 @@
 <div class="span4">
 <div style="text-align:center;"><h5>Les Pours</h5> </div>	
 <br>
-{% for feature in features %}
+{% for featurep in features_pos %}
 
 
-    {% dict_entry_for_item feature from feature_vote_dict as vote %}
-    {% dict_entry_for_item feature from feature_score_dict as score %}
+    {% dict_entry_for_item featurep from featurep_vote_dict as vote %}
+    {% dict_entry_for_item featurep from featurep_score_dict as score %}
 
     <div class="row one_row">
         <div class="span1">
             <h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
-            <form class="controls vote" action='{% url object_voting "Feature" feature.id %}' method="POST">
+            <form class="controls vote" action='{% url object_voting "FeatureP" featurep.id %}' method="POST">
                 {% csrf_token %}
                 <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
                 <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
             </form></h5>
         </div>
         <div class="span2"><h5>
-            {{ feature.content }}
-            {% if user.is_superuser or feature.author == request.user %}
-                {% with name=feature|to_class_name %}{% edit name feature.id %}{% endwith %}
+            {{ featurep.content }}
+            {% if user.is_superuser or featurep.author == request.user %}
+                {% with name=featurep|to_class_name %}{% edit name featurep.id %}{% endwith %}
             {% endif %}
         </h5></div>
         <div class="span1 right"><p class="signature"><small>
-            <b>{{ feature.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail feature.author %}'>{{ feature.author }}</a>
+            <b>{{ featurep.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail featurep.author %}'>{{ featurep.author }}</a>
         </small></p></div>
     
     </div>
     <hr>
 {% endfor %}
-<p><a href='{% url item_create "Feature" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_feature'>
+<p><a href='{% url item_create "FeatureP" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_featurep'>
     <i class="icon-share-alt"></i>Rajouter une caractéristique produit
 </a></p>
 </div>
@@ -49,25 +51,25 @@
 <div style="text-align:center;"><h5>Les Contres</h5> </div>	
 
 <br>
-{% for feature in features %}
+{% for featuren in features_neg %}
 
 
-    {% dict_entry_for_item feature from feature_vote_dict as vote %}
-    {% dict_entry_for_item feature from feature_score_dict as score %}
+    {% dict_entry_for_item featuren from featuren_vote_dict as vote %}
+    {% dict_entry_for_item featuren from featuren_score_dict as score %}
 
     <div class="row one_row">
         <div class="span2"><h5>
-            {{ feature.content }}
-            {% if user.is_superuser or feature.author == request.user %}
-                {% with name=feature|to_class_name %}{% edit name feature.id %}{% endwith %}
+            {{ featuren.content }}
+            {% if user.is_superuser or featuren.author == request.user %}
+                {% with name=featuren|to_class_name %}{% edit name featuren.id %}{% endwith %}
             {% endif %}
         </h5></div>
         <div class="span1 right"><p class="signature"><small>
-            <b>{{ feature.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail feature.author %}'>{{ feature.author }}</a>
+            <b>{{ featuren.pub_date|date:"M j 'y" }}</b> by <a href='{% url profile_detail featuren.author %}'>{{ featuren.author }}</a>
         </small></p></div>
         <div class="span1">
             <h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
-            <form class="controls vote" action='{% url object_voting "Feature" feature.id %}' method="POST">
+            <form class="controls vote" action='{% url object_voting "FeatureN" featuren.id %}' method="POST">
                 {% csrf_token %}
                 <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
                 <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
@@ -77,7 +79,7 @@
     
     <hr>
 {% endfor %}
-<p><a href='{% url item_create "Feature" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_feature'>
+<p><a href='{% url item_create "FeatureN" %}?item_id={{ item.id }}' class="btn btn-mini" name='publish_featuren'>
     <i class="icon-share-alt"></i>Rajouter une caractéristique produit
 </a></p>
 
