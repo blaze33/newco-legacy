@@ -136,15 +136,15 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_queryset(self):
         if 'tag_slug' in self.kwargs:
-            tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
-            return Item.objects.filter(tags=tag)
+            self.tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
+            return Item.objects.filter(tags=self.tag)
         else:
             return super(ContentListView, self).get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if 'tag_slug' in self.kwargs:
-            context['tag'] = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        if self.tag:
+            context['tag'] = self.tag
         return context
 
     def post(self, request, *args, **kwargs):
