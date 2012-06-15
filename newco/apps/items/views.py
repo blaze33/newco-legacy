@@ -15,7 +15,6 @@ from voting.models import Vote
 
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from affiliation.models import AffiliationItem
 
 import json
 
@@ -98,7 +97,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
-            context['affs'] = AffiliationItem.objects.filter(item=self.object)
 
             questions = self.object.question_set.all()
             q_ordered = sorted(list(questions),
