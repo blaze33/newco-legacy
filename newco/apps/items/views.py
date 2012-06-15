@@ -8,7 +8,7 @@ from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from pinax.apps.account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
@@ -60,20 +60,43 @@ class ContentFormMixin(object):
 
 class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
+    messages = {
+        "object_created": {
+            "level": messages.SUCCESS,
+            "text": _("Thanks %(user)s, %(object)s successfully created.")
+        },
+        "creation_failed": {
+            "level": messages.ERROR,
+            "text": _("Warning %(user)s, %(object)s form is invalid.")
+        },
+    }
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
 
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS,
-            ugettext(u"Thanks %(user)s, %(object)s successfully created") % {
+    def form_valid(self, form):
+        self.object = form.save()
+        messages.add_message(
+            self.request, self.messages["object_created"]["level"],
+            self.messages["object_created"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": self.object._meta.verbose_name
             }
         )
-        return super(ContentCreateView, self).get_success_url()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        messages.add_message(
+            self.request, self.messages["creation_failed"]["level"],
+            self.messages["creation_failed"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": form._meta.model._meta.verbose_name
+            }
+        )
+        return super(ContentCreateView, self).form_invalid(form)
 
 
 class ContentUpdateView(ContentView, UpdateView):
@@ -86,6 +109,17 @@ class ContentUpdateView(ContentView, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
+
+    messages = {
+        "object_created": {
+            "level": messages.SUCCESS,
+            "text": _("Thanks %(user)s, %(object)s successfully created.")
+        },
+        "creation_failed": {
+            "level": messages.WARNING,
+            "text": _("Warning %(user)s, %(object)s form is invalid.")
+        },
+    }
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -107,12 +141,26 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def form_invalid(self, form):
         self.object = self.get_object()
+        messages.add_message(self.request,
+            self.messages["creation_failed"]["level"],
+            self.messages["creation_failed"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": form._meta.model._meta.verbose_name
+            }
+        )
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, request, **kwargs):
         if form.cleaned_data:
             self.object = form.save(**kwargs)
             form.save_m2m()
+            messages.add_message(self.request,
+                self.messages["object_created"]["level"],
+                self.messages["object_created"]["text"] % {
+                    "user": user_display(self.request.user),
+                    "object": self.object._meta.verbose_name
+                }
+            )
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
     @method_decorator(login_required)
@@ -120,11 +168,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
-                messages.add_message(request, messages.SUCCESS,
-                    ugettext(u"Thanks %(user)s, question submitted") % {
-                        "user": user_display(form.user)
-                    }
-                )
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)

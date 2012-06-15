@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 16:00+0200\n"
+"POT-Creation-Date: 2012-06-15 18:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,14 +61,14 @@ msgstr ""
 msgid "answer"
 msgstr ""
 
-#: views.py:72
+#: views.py:66 views.py:116
 #, python-format
-msgid "Thanks %(user)s, %(object)s successfully created"
+msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:126
+#: views.py:70 views.py:120
 #, python-format
-msgid "Thanks %(user)s, question submitted"
+msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
 #: templates/items/answer_form.html:6
@@ -81,11 +81,6 @@ msgstr ""
 
 #: templates/items/answer_form.html:21 templates/items/item_form.html:16
 msgid "Submit"
-msgstr ""
-
-#: templates/items/data_sheet.html:12
-#, python-format
-msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
 msgstr ""
 
 #: templates/items/item_confirm_delete.html:8
