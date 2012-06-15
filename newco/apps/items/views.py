@@ -149,7 +149,8 @@ class ContentListView(ContentView, ListView, RedirectView):
             context['tag'] = self.tag
         if 'item_list' in context:
             context.update({
-                "item_names": json.dumps([item.name for item in context['item_list']])
+                "item_names": json.dumps([item.name \
+                                          for item in context['item_list']])
             })
         return context
 
