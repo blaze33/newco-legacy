@@ -19,7 +19,7 @@ class Currency(models.Model):
 
 class Store(models.Model):
     name = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
+    url = models.URLField(max_length=200)
     slug = models.SlugField(verbose_name=_('Slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_('Last modified'))
@@ -27,11 +27,10 @@ class Store(models.Model):
         return u'%s' % (self.name)
 
 
-
 class AffiliationItem(models.Model):
     item = models.ForeignKey(Item)
     store = models.ForeignKey(Store)
-    url = models.CharField(max_length=400)
+    url = models.URLField(max_length=800)
     price_currency = models.ForeignKey(Currency)
     price = models.IntegerField(default=0)
     creation_date = models.DateTimeField(default=datetime.datetime.today(),

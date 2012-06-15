@@ -112,7 +112,7 @@ class Story(models.Model):
 
 class ExternalLink(Content):
     text = models.CharField(max_length=200)
-    url = models.CharField(max_length=200)
+    url = models.URLField(max_length=200)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 

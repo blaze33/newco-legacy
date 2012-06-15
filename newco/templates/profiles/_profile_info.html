@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load follow_tags %}
 
 <div class="profile_info">
     {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
@@ -12,4 +13,8 @@
     {% endif %}
     </div>
     {% if reputation %}<p><b>{% trans "Reputation" %}</b>: {{ reputation.reputation_incremented }}</p>{% endif %}
+    
+    {% if not is_me %}
+        {% follow_form profile.user %}
+    {% endif %}
 </div>

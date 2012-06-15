@@ -191,6 +191,7 @@ INSTALLED_APPS = [
     "voting",
     "votes",
     "affiliation",
+    "follow",
 ]
 
 FIXTURE_DIRS = [

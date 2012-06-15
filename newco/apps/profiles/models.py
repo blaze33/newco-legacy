@@ -13,6 +13,9 @@ from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 import datetime
 
+from follow import utils
+
+
 
 class Profile(ProfileBase):
     name = models.CharField(_("name"), max_length=50, null=True, blank=True)
@@ -25,7 +28,7 @@ class Profile(ProfileBase):
                                     editable=False,
                                     verbose_name=_('subscription date'))
     skills = TaggableManager(help_text="The list of your main product skills")
-       
+    
    
 class Reputation(models.Model):
     user = models.OneToOneField(User)
@@ -112,3 +115,6 @@ def update_permissions(sender, instance=None, **kwargs):
     else:
         instance.user.user_permissions.remove(permission)
 post_save.connect(update_permissions, sender=Reputation)
+
+
+utils.register(User)

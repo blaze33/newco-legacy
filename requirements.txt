@@ -62,6 +62,9 @@ django-voting==0.1
 ## queryset handling for generic relations
 django-generic-aggregation==0.3.1
 
+## Following application
+django-follow==0.6
+
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
 distribute==0.6.24
