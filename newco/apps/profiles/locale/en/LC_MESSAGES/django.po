@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 16:03+0200\n"
+"POT-Creation-Date: 2012-06-15 19:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,4 +35,28 @@ msgstr ""
 
 #: models.py:30
 msgid "reputation"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:4
+msgid "Name"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:5
+msgid "About"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:6
+msgid "Location"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:7
+msgid "Website"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:8
+msgid "Subscription date"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:9
+msgid "Reputation"
 msgstr ""
