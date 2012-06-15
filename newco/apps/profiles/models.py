@@ -26,6 +26,12 @@ class Reputation(models.Model):
     reputation_incremented = models.IntegerField(default=0)
     reputation_computed = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = _("reputation")
+        permissions = (
+            ("can_vote", "Can vote on content"),
+        )
+
     def __unicode__(self):
         return u'%s\'s reputation' % (self.user)
 
@@ -50,11 +56,6 @@ class Reputation(models.Model):
             rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
 
         return rep
-
-    class Meta:
-        permissions = (
-            ("can_vote", "Can vote on content"),
-        )
 
 
 @receiver(post_save, sender=User)

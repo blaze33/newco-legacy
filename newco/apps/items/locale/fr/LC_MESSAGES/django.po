@@ -1,0 +1,159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-13 19:23+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: forms.py:51
+msgid "Ask something specific. Be concise."
+msgstr "Demandez quelque chose de précis. Soyez concis."
+
+#: forms.py:85
+msgid "Be concise and to the point."
+msgstr "Soyez concis et direct."
+
+#: models.py:22
+msgid "date published"
+msgstr "date de publication"
+
+#: models.py:44
+msgid "name"
+msgstr "nom"
+
+#: models.py:45
+msgid "slug"
+msgstr "slug"
+
+#: models.py:47
+msgid "last modified"
+msgstr "dernière modification"
+
+#: models.py:48
+msgid "A comma-separated list of tags"
+msgstr "Une liste de tags séparés par des virgules"
+
+#: models.py:51
+msgid "item"
+msgstr "item"
+
+#: models.py:68 models.py:87
+msgid "content"
+msgstr "contenu"
+
+#: models.py:73
+msgid "question"
+msgstr "question"
+
+#: models.py:91
+msgid "answer"
+msgstr "réponse"
+
+#: views.py:74
+#, python-format
+msgid "Thanks %(user)s, %(object)s successfully created"
+msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès"
+
+#: views.py:132
+#, python-format
+msgid "Thanks %(user)s, question submitted"
+msgstr "Merci %(user)s, la question a été postée avec succès"
+
+#: templates/items/answer_form.html:5
+msgid "Answer"
+msgstr "Réponse"
+
+#: templates/items/answer_form.html:13
+msgid "Your answer:"
+msgstr "Votre réponse :"
+
+#: templates/items/answer_form.html:20 templates/items/item_form.html:15
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/items/data_sheet.html:12
+#, python-format
+msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
+msgstr "Acheter <a href='%(url)s'>%(item)s chez %(store)s</a> pour %(price)s"
+
+#: templates/items/item_confirm_delete.html:8
+#, python-format
+msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
+msgstr "L'object %(class)s <i>%(name)s</i> sera supprimé :"
+
+#: templates/items/item_confirm_delete.html:13
+msgid "Yes"
+msgstr "Oui"
+
+#: templates/items/item_confirm_delete.html:15
+msgid "No"
+msgstr "Non"
+
+#: templates/items/item_detail.html:36
+msgid "Items list"
+msgstr "Liste des Items"
+
+#: templates/items/item_detail.html:38
+msgid "Edit Item"
+msgstr "Editer l'Item"
+
+#: templates/items/item_detail.html:41
+msgid "Delete Item"
+msgstr "Supprimer l'Item"
+
+#: templates/items/item_form.html:5
+msgid "Item"
+msgstr "Item"
+
+#: templates/items/item_form.html:9
+msgid "Add something new to talk about:"
+msgstr "De quoi voulez-vous parler :"
+
+#: templates/items/item_list.html:5
+msgid "Products"
+msgstr "Produits"
+
+#: templates/items/item_list.html:16
+msgid "List of items with tag"
+msgstr "Liste des items avec le tag"
+
+#: templates/items/item_list.html:18
+msgid "List of items in database:"
+msgstr "Liste des items en base :"
+
+#: templates/items/item_list.html:29
+msgid "No products are available."
+msgstr "Pas de produits disponibles."
+
+#: templates/items/item_list.html:33
+msgid "Add an entry"
+msgstr "Ajouter un produit"
+
+#: templates/items/question_form.html:3
+msgid "Ask something:"
+msgstr "Demandez quelque chose :"
+
+#: templates/items/question_list.html:31 templates/items/question_list.html:57
+msgid "by"
+msgstr "par"
+
+#: templates/items/question_list.html:62
+msgid "Add a better answer"
+msgstr "Donner une meilleure réponse"
+
+#: templates/items/question_list.html:62
+msgid "Answer this question"
+msgstr "Répondre à cette question"
