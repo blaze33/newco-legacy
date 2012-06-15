@@ -4,12 +4,17 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
+from taggit.managers import TaggableManager
 
 from idios.models import ProfileBase
 
 from voting.models import Vote
 from items.models import Question, Answer
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
+
+
+from follow import utils
+
 
 
 class Profile(ProfileBase):
@@ -19,6 +24,7 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
+    skills = TaggableManager(help_text="The list of your main product skills")
 
 
 class Reputation(models.Model):
@@ -147,3 +153,5 @@ def update_permissions(sender, instance=None, **kwargs):
 #        instance.user.user_permissions.add(permission)
 #    else:
 #        instance.user.user_permissions.remove(permission)
+
+utils.register(User)

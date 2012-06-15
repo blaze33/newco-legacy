@@ -8,13 +8,19 @@ from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.translation import ugettext
 from pinax.apps.account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
+from django.db.models import Sum, Count
+from generic_aggregation import generic_annotate
 
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import ExternalLinkForm
+
+from profiles.models import Profile
 
 import json
 
@@ -97,12 +103,25 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
+            context['list_users'] = self.object.compute_tags(Profile.objects.all())
 
             questions = self.object.question_set.all()
             q_ordered = sorted(list(questions),
                 key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
 
             context['questions'] = q_ordered
+            
+            #ordering external links
+            extlinks = self.object.externallink_set.order_by('-pub_date')
+            e_ordered = list(generic_annotate(extlinks,
+                                Vote, Sum('votes__vote'),
+                                alias='score').order_by('-score', '-pub_date'))
+            for e in extlinks:
+                if e not in e_ordered:
+                    e_ordered.append(e)
+                    
+            context['extlinks'] = e_ordered
+            
         return context
 
     def form_invalid(self, form):
@@ -155,8 +174,12 @@ class ContentListView(ContentView, ListView, RedirectView):
     def post(self, request, *args, **kwargs):
         if 'item_name' in request.POST:
             item_name = request.POST['item_name']
-            item = Item.objects.filter(name=item_name)[0]
-            return HttpResponseRedirect(item.get_absolute_url())
+            item_list = Item.objects.filter(name=item_name)
+            if item_list.count() > 0 :
+                return HttpResponseRedirect(item_list[0].get_absolute_url())
+            else:
+                return HttpResponseRedirect(request.path) #reverse('item_index')
+                
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 

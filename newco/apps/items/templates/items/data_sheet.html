@@ -3,6 +3,19 @@
     <div class="span7"><h1>{{ item }}</h1></div>
 </div>
 <br>
-<div>
+
+
+<div class="row">
+	
+    <div class="span4">
+
+    Tags Produits:
     {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
+    </div>
+    
+    <div class="span4">
+    Tags Experts:
+    {% for user in list_users %}<span class="label">{{ user }}</span>{% endfor %}
+    </div>
+     
 </div>

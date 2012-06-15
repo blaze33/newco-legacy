@@ -10,5 +10,6 @@ urlpatterns = patterns("",
     url(r"^what_next/$", direct_to_template, {"template": "about/what_next.html"}, name="what_next"),
     url(r"^faq/$", direct_to_template, {"template": "about/faq.html"}, name="faq"),
     url(r"^team/$", direct_to_template, {"template": "about/team.html"}, name="team"),
+    url(r"^contribute/$", direct_to_template, {"template": "about/contribute.html"}, name="contribute"),
 )
 
