@@ -23,7 +23,7 @@
 
     {% if questions %}
         {% scores_for_objects questions as question_score_dict %}
-        <h3>Questions asked by {{ page_user_display }}</h3>
+        <h3>{% blocktrans %}Questions asked by {{ page_user_display }}{% endblocktrans %}</h3>
         {% for question in questions %}
             {% dict_entry_for_item question from question_score_dict as score %}
             <p>
@@ -36,7 +36,7 @@
 
     {% if answers %}
         {% scores_for_objects answers as answer_score_dict %}
-        <h3>Answers suggested by {{ page_user_display }}</h3>
+        <h3>{% blocktrans %}Answers suggested by {{ page_user_display }}{% endblocktrans %}</h3>
         {% for answer in answers %}
             {% dict_entry_for_item answer from answer_score_dict as score %}
             <p>

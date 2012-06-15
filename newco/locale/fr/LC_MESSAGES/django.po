@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 19:43+0200\n"
+"POT-Creation-Date: 2012-06-15 19:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,6 +99,11 @@ msgstr "Profil de %(page_user_display)s"
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
+#: templates/idios/profile.html:26
+#, python-format
+msgid "Questions asked by %(page_user_display)s"
+msgstr "Questions posées par %(page_user_display)s"
+
 #: templates/idios/profile.html:30 templates/idios/profile.html.py:43
 msgid "on"
 msgstr "sur"
@@ -114,6 +119,11 @@ msgstr "avec"
 #: templates/idios/profile.html:32 templates/idios/profile.html.py:46
 msgid "vote"
 msgstr "vote"
+
+#: templates/idios/profile.html:39
+#, python-format
+msgid "Answers suggested by %(page_user_display)s"
+msgstr "Réponses suggérées par %(page_user_display)s"
 
 #~ msgid "Name"
 #~ msgstr "Nom"
