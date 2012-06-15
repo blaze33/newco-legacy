@@ -201,16 +201,6 @@
   },
   {
     "pk": 1,
-    "model": "notification.noticetype",
-    "fields": {
-      "default": 2,
-      "description": "you have received an announcement",
-      "display": "Announcement",
-      "label": "announcement"
-    }
-  },
-  {
-    "pk": 1,
     "model": "emailconfirmation.emailaddress",
     "fields": {
       "verified": true,

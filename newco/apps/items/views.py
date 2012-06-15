@@ -1,10 +1,13 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
+from items.models import Item, CannotManage
+from items.forms import QuestionForm, AnswerForm, ItemForm, FeaturePForm, FeatureNForm
+from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
@@ -12,9 +15,10 @@ from django.utils.translation import ugettext_lazy as _
 from pinax.apps.account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
+from django.db.models import Sum, Count
+from generic_aggregation import generic_annotate
 
-from items.models import Item, CannotManage
-from items.forms import QuestionForm, AnswerForm, ItemForm
+from profiles.models import Profile
 
 import json
 
@@ -131,12 +135,36 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
-
+            context['list_users'] = self.object.compute_tags(Profile.objects.all())
+            
+            #ordering questions
             questions = self.object.question_set.all()
             q_ordered = sorted(list(questions),
                 key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
 
             context['questions'] = q_ordered
+            
+            #ordering external links
+            extlinks = self.object.externallink_set.all()
+            e_ordered = sorted(list(extlinks),
+                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
+                                                   
+            context['extlinks'] = e_ordered
+            
+            #ordering features_pos
+            features_pos = self.object.featurep_set.all()
+            f_ordered_pos = sorted(list(features_pos),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+
+            context['features_pos'] = f_ordered_pos
+            
+            #ordering features_neg
+            features_neg = self.object.featuren_set.all()
+            f_ordered_neg = sorted(list(features_neg),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+
+            context['features_neg'] = f_ordered_neg
+            
         return context
 
     def form_invalid(self, form):
