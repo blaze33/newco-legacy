@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 12:04+0200\n"
+"POT-Creation-Date: 2012-06-15 17:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,10 +65,6 @@ msgid "Profile"
 msgstr "Profil"
 
 #: templates/site_base.html:45
-msgid "Notices"
-msgstr "Notifications"
-
-#: templates/site_base.html:46
 msgid "Products index"
 msgstr "Liste des produits"
 
@@ -112,6 +108,10 @@ msgid "Score:"
 msgstr "Score :"
 
 #: templates/idios/profile.html:32 templates/idios/profile.html.py:46
+msgid "with"
+msgstr "avec"
+
+#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
 msgid "vote"
 msgstr "vote"
 
@@ -139,8 +139,8 @@ msgstr "Date d'inscription"
 msgid "Reputation"
 msgstr "Réputation"
 
-#~ msgid "with"
-#~ msgstr "avec"
+#~ msgid "Notices"
+#~ msgstr "Notifications"
 
 #, fuzzy
 #~ msgid "about"
