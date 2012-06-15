@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
         db.create_table('affiliation_store', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50)),
             ('last_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
@@ -30,10 +30,10 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Item'])),
             ('store', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['affiliation.Store'])),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=400)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=1000)),
             ('price_currency', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['affiliation.Currency'])),
             ('price', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 11, 0, 0))),
+            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 15, 0, 0))),
             ('update_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
         db.send_create_signal('affiliation', ['AffiliationItem'])
@@ -51,14 +51,14 @@ class Migration(SchemaMigration):
     models = {
         'affiliation.affiliationitem': {
             'Meta': {'object_name': 'AffiliationItem'},
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 11, 0, 0)'}),
+            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 15, 0, 0)'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'item': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Item']"}),
             'price': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'price_currency': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['affiliation.Currency']"}),
             'store': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['affiliation.Store']"}),
             'update_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '400'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '1000'})
         },
         'affiliation.currency': {
             'Meta': {'object_name': 'Currency'},
@@ -71,7 +71,7 @@ class Migration(SchemaMigration):
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -115,7 +115,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 11, 0, 0)'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 15, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'taggit.tag': {
