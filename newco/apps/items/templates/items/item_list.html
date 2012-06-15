@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
 
@@ -22,7 +23,7 @@
     <ul>{% for item in item_list %}
         <li>
             <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-            <a href='{% url item_edit "item" item.id %}'><i class="icon-edit"></i></a>
+            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
         </li>
     {% endfor %}</ul>
 {% else %}
