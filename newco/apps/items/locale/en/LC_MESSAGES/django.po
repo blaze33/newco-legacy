@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 19:23+0200\n"
+"POT-Creation-Date: 2012-06-15 16:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr ""
 msgid "item"
 msgstr ""
 
-#: models.py:68 models.py:87
+#: models.py:68 models.py:88
 msgid "content"
 msgstr ""
 
@@ -57,29 +57,29 @@ msgstr ""
 msgid "question"
 msgstr ""
 
-#: models.py:91
+#: models.py:92
 msgid "answer"
 msgstr ""
 
-#: views.py:74
+#: views.py:72
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created"
 msgstr ""
 
-#: views.py:132
+#: views.py:126
 #, python-format
 msgid "Thanks %(user)s, question submitted"
 msgstr ""
 
-#: templates/items/answer_form.html:5
+#: templates/items/answer_form.html:6
 msgid "Answer"
 msgstr ""
 
-#: templates/items/answer_form.html:13
+#: templates/items/answer_form.html:14
 msgid "Your answer:"
 msgstr ""
 
-#: templates/items/answer_form.html:20 templates/items/item_form.html:15
+#: templates/items/answer_form.html:21 templates/items/item_form.html:16
 msgid "Submit"
 msgstr ""
 
@@ -101,43 +101,43 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:36
+#: templates/items/item_detail.html:35
 msgid "Items list"
 msgstr ""
 
-#: templates/items/item_detail.html:38
+#: templates/items/item_detail.html:36
 msgid "Edit Item"
 msgstr ""
 
-#: templates/items/item_detail.html:41
+#: templates/items/item_detail.html:37
 msgid "Delete Item"
 msgstr ""
 
-#: templates/items/item_form.html:5
+#: templates/items/item_form.html:6
 msgid "Item"
 msgstr ""
 
-#: templates/items/item_form.html:9
+#: templates/items/item_form.html:10
 msgid "Add something new to talk about:"
 msgstr ""
 
-#: templates/items/item_list.html:5
+#: templates/items/item_list.html:6
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:16
+#: templates/items/item_list.html:17
 msgid "List of items with tag"
 msgstr ""
 
-#: templates/items/item_list.html:18
+#: templates/items/item_list.html:19
 msgid "List of items in database:"
 msgstr ""
 
-#: templates/items/item_list.html:29
+#: templates/items/item_list.html:30
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list.html:33
+#: templates/items/item_list.html:34
 msgid "Add an entry"
 msgstr ""
 

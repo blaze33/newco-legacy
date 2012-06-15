@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 19:23+0200\n"
+"POT-Creation-Date: 2012-06-15 16:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr "Une liste de tags séparés par des virgules"
 msgid "item"
 msgstr "item"
 
-#: models.py:68 models.py:87
+#: models.py:68 models.py:88
 msgid "content"
 msgstr "contenu"
 
@@ -58,29 +58,29 @@ msgstr "contenu"
 msgid "question"
 msgstr "question"
 
-#: models.py:91
+#: models.py:92
 msgid "answer"
 msgstr "réponse"
 
-#: views.py:74
+#: views.py:72
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created"
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès"
 
-#: views.py:132
+#: views.py:126
 #, python-format
 msgid "Thanks %(user)s, question submitted"
 msgstr "Merci %(user)s, la question a été postée avec succès"
 
-#: templates/items/answer_form.html:5
+#: templates/items/answer_form.html:6
 msgid "Answer"
 msgstr "Réponse"
 
-#: templates/items/answer_form.html:13
+#: templates/items/answer_form.html:14
 msgid "Your answer:"
 msgstr "Votre réponse :"
 
-#: templates/items/answer_form.html:20 templates/items/item_form.html:15
+#: templates/items/answer_form.html:21 templates/items/item_form.html:16
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -102,43 +102,43 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: templates/items/item_detail.html:36
+#: templates/items/item_detail.html:35
 msgid "Items list"
 msgstr "Liste des Items"
 
-#: templates/items/item_detail.html:38
+#: templates/items/item_detail.html:36
 msgid "Edit Item"
 msgstr "Editer l'Item"
 
-#: templates/items/item_detail.html:41
+#: templates/items/item_detail.html:37
 msgid "Delete Item"
 msgstr "Supprimer l'Item"
 
-#: templates/items/item_form.html:5
+#: templates/items/item_form.html:6
 msgid "Item"
 msgstr "Item"
 
-#: templates/items/item_form.html:9
+#: templates/items/item_form.html:10
 msgid "Add something new to talk about:"
 msgstr "De quoi voulez-vous parler :"
 
-#: templates/items/item_list.html:5
+#: templates/items/item_list.html:6
 msgid "Products"
 msgstr "Produits"
 
-#: templates/items/item_list.html:16
+#: templates/items/item_list.html:17
 msgid "List of items with tag"
 msgstr "Liste des items avec le tag"
 
-#: templates/items/item_list.html:18
+#: templates/items/item_list.html:19
 msgid "List of items in database:"
 msgstr "Liste des items en base :"
 
-#: templates/items/item_list.html:29
+#: templates/items/item_list.html:30
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list.html:33
+#: templates/items/item_list.html:34
 msgid "Add an entry"
 msgstr "Ajouter un produit"
 
