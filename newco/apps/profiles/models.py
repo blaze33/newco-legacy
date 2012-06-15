@@ -9,7 +9,7 @@ from taggit.managers import TaggableManager
 from idios.models import ProfileBase
 
 from voting.models import Vote
-from items.models import Question, Answer
+from items.models import Question, Answer, FeatureP, FeatureN
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 
@@ -59,7 +59,8 @@ class Reputation(models.Model):
 
         votes = Vote.objects.filter(user=self.user)
         for vote in votes:
-            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+            if vote.content_type.name in POINTS_TABLE_RATING:
+                rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
 
         return rep
 

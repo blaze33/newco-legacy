@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 16:01+0200\n"
+"POT-Creation-Date: 2012-06-15 18:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,15 +62,15 @@ msgstr "question"
 msgid "answer"
 msgstr "réponse"
 
-#: views.py:72
+#: views.py:66 views.py:116
 #, python-format
-msgid "Thanks %(user)s, %(object)s successfully created"
-msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès"
+msgid "Thanks %(user)s, %(object)s successfully created."
+msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:126
+#: views.py:70 views.py:120
 #, python-format
-msgid "Thanks %(user)s, question submitted"
-msgstr "Merci %(user)s, la question a été postée avec succès"
+msgid "Warning %(user)s, %(object)s form is invalid."
+msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
 #: templates/items/answer_form.html:6
 msgid "Answer"
@@ -83,11 +83,6 @@ msgstr "Votre réponse :"
 #: templates/items/answer_form.html:21 templates/items/item_form.html:16
 msgid "Submit"
 msgstr "Soumettre"
-
-#: templates/items/data_sheet.html:12
-#, python-format
-msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
-msgstr "Acheter <a href='%(url)s'>%(item)s chez %(store)s</a> pour %(price)s"
 
 #: templates/items/item_confirm_delete.html:8
 #, python-format
@@ -157,3 +152,10 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/question_list.html:62
 msgid "Answer this question"
 msgstr "Répondre à cette question"
+
+#~ msgid "Thanks %(user)s, question submitted"
+#~ msgstr "Merci %(user)s, la question a été postée avec succès"
+
+#~ msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
+#~ msgstr ""
+#~ "Acheter <a href='%(url)s'>%(item)s chez %(store)s</a> pour %(price)s"

@@ -1,25 +1,21 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
+from items.models import Item, CannotManage
+from items.forms import QuestionForm, AnswerForm, ItemForm, FeaturePForm, FeatureNForm
+from items.forms import ExternalLinkForm
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required, permission_required
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from pinax.apps.account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
 from django.db.models import Sum, Count
-from generic_aggregation import generic_annotate
-
-from items.models import Item, CannotManage
-from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import ExternalLinkForm
-
 from profiles.models import Profile
 
 import json
@@ -66,20 +62,43 @@ class ContentFormMixin(object):
 
 class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
+    messages = {
+        "object_created": {
+            "level": messages.SUCCESS,
+            "text": _("Thanks %(user)s, %(object)s successfully created.")
+        },
+        "creation_failed": {
+            "level": messages.ERROR,
+            "text": _("Warning %(user)s, %(object)s form is invalid.")
+        },
+    }
+
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
 
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS,
-            ugettext(u"Thanks %(user)s, %(object)s successfully created") % {
+    def form_valid(self, form):
+        self.object = form.save()
+        messages.add_message(
+            self.request, self.messages["object_created"]["level"],
+            self.messages["object_created"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": self.object._meta.verbose_name
             }
         )
-        return super(ContentCreateView, self).get_success_url()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        messages.add_message(
+            self.request, self.messages["creation_failed"]["level"],
+            self.messages["creation_failed"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": form._meta.model._meta.verbose_name
+            }
+        )
+        return super(ContentCreateView, self).form_invalid(form)
 
 
 class ContentUpdateView(ContentView, UpdateView):
@@ -93,6 +112,17 @@ class ContentUpdateView(ContentView, UpdateView):
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
+    messages = {
+        "object_created": {
+            "level": messages.SUCCESS,
+            "text": _("Thanks %(user)s, %(object)s successfully created.")
+        },
+        "creation_failed": {
+            "level": messages.WARNING,
+            "text": _("Warning %(user)s, %(object)s form is invalid.")
+        },
+    }
+
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         self.object = self.get_object()
@@ -104,7 +134,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['form'] = f
             context['item'] = self.object
             context['list_users'] = self.object.compute_tags(Profile.objects.all())
-
+            
+            #ordering questions
             questions = self.object.question_set.all()
             q_ordered = sorted(list(questions),
                 key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
@@ -112,26 +143,50 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['questions'] = q_ordered
             
             #ordering external links
-            extlinks = self.object.externallink_set.order_by('-pub_date')
-            e_ordered = list(generic_annotate(extlinks,
-                                Vote, Sum('votes__vote'),
-                                alias='score').order_by('-score', '-pub_date'))
-            for e in extlinks:
-                if e not in e_ordered:
-                    e_ordered.append(e)
-                    
+            extlinks = self.object.externallink_set.all()
+            e_ordered = sorted(list(extlinks),
+                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
+                                                   
             context['extlinks'] = e_ordered
+            
+            #ordering features_pos
+            features_pos = self.object.featurep_set.all()
+            f_ordered_pos = sorted(list(features_pos),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+
+            context['features_pos'] = f_ordered_pos
+            
+            #ordering features_neg
+            features_neg = self.object.featuren_set.all()
+            f_ordered_neg = sorted(list(features_neg),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+
+            context['features_neg'] = f_ordered_neg
             
         return context
 
     def form_invalid(self, form):
         self.object = self.get_object()
+        messages.add_message(self.request,
+            self.messages["creation_failed"]["level"],
+            self.messages["creation_failed"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": form._meta.model._meta.verbose_name
+            }
+        )
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, request, **kwargs):
         if form.cleaned_data:
             self.object = form.save(**kwargs)
             form.save_m2m()
+            messages.add_message(self.request,
+                self.messages["object_created"]["level"],
+                self.messages["object_created"]["text"] % {
+                    "user": user_display(self.request.user),
+                    "object": self.object._meta.verbose_name
+                }
+            )
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
     @method_decorator(login_required)
@@ -139,11 +194,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
-                messages.add_message(request, messages.SUCCESS,
-                    ugettext(u"Thanks %(user)s, question submitted") % {
-                        "user": user_display(form.user)
-                    }
-                )
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)

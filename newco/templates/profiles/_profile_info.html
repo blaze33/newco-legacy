@@ -9,7 +9,7 @@
     {% if profile.user.date_joined %}<p><b>{% trans "Subscription date" %}</b>: {{ profile.user.date_joined }}</p>{% endif %}
     <div>
         {% if profile.skills %}<p><b>{% trans "Skills" %}</b>:
-            {% for tag_pro in profile.skills.all %}<span class="label">{{ tag_pro.name }}</span> {% endfor %}
+            {% for tag_pro in profile.skills.all %}<a href="{% url tagged_items tag_pro.slug %}"><span class="label">{{ tag_pro.name }}</span></a> {% endfor %}
         {% endif %}
     </div>
     {% if reputation %}<p><b>{% trans "Reputation" %}</b>: {{ reputation.reputation_incremented }}</p>{% endif %}
