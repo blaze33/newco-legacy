@@ -9,7 +9,7 @@
 
 {% if item_list %}
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="item_name" type="text" autocomplete="off" placeholder="Chercher un article{% if tag %} ayant le tag {{ tag.name}}{% endif %}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="[{% for item in item_list %}&quot;{{ item.name }}&quot;,{% endfor %}&quot;&quot;]"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
+        <input name="item_name" type="text" autocomplete="off" placeholder="Chercher un article{% if tag %} ayant le tag {{ tag.name}}{% endif %}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="{{ item_names }}"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
     </div></form>
 
     {% if tag %}

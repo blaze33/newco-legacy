@@ -17,6 +17,8 @@ from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from affiliation.models import AffiliationItem
 
+import json
+
 app_name = 'items'
 
 
@@ -143,8 +145,12 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if self.tag:
+        if hasattr(self, 'tag'):
             context['tag'] = self.tag
+        if 'item_list' in context:
+            context.update({
+                "item_names": json.dumps([item.name for item in context['item_list']])
+            })
         return context
 
     def post(self, request, *args, **kwargs):
