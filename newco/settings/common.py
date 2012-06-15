@@ -44,11 +44,11 @@ MANAGERS = ADMINS
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "US/Eastern"
+TIME_ZONE = "Europe/Paris"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr"
 
 SITE_ID = 1
 
@@ -98,8 +98,8 @@ SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
-    "django.template.loaders.filesystem.load_template_source",
-    "django.template.loaders.app_directories.load_template_source",
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,13 +128,13 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    
+
     "staticfiles.context_processors.static",
-    
+
     "pinax.core.context_processors.pinax_settings",
-    
+
     "pinax.apps.account.context_processors.account",
-    
+
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
 ]
@@ -148,18 +148,19 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
-    
+
     "pinax.templatetags",
-    
+
     # theme
+    "django_forms_bootstrap",
     "pinax_theme_bootstrap",
-    
+
     # external
-    "notification", # must be first
+    "notification",  # must be first
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    "mailer",
+    #"mailer",
     "django_openid",
     "timezones",
     "emailconfirmation",
@@ -167,22 +168,29 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
-    
+
     # Pinax
     "pinax.apps.account",
     "pinax.apps.signup_codes",
-    
+
     # Project
     "about",
     "profiles",
-    
+
     # Deployment
     "south",
     "gunicorn",
     "storages",
-    
+
     # Monitoring
-    'raven.contrib.django',
+    "raven.contrib.django",
+
+    # our business
+    "items",
+    "taggit",
+    "voting",
+    "votes",
+    "affiliation",
 ]
 
 FIXTURE_DIRS = [
@@ -191,7 +199,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+#EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -200,18 +208,19 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = False
+ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
 ]
 
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
+LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
 LOGIN_REDIRECT_URL = "/about/what_next"
 
@@ -220,6 +229,12 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
+
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
+)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
