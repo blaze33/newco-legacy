@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 19:38+0200\n"
+"POT-Creation-Date: 2012-06-15 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: models.py:18
+#: models.py:16
 msgid "name"
 msgstr "nom"
 
-#: models.py:19
+#: models.py:17
 msgid "about"
 msgstr "à propos"
 
-#: models.py:20
+#: models.py:18
 msgid "location"
 msgstr "région"
 
-#: models.py:22
+#: models.py:20
 msgid "website"
 msgstr "site internet"
 
-#: models.py:26
-msgid "subscription date"
-msgstr "date d'inscription"
-
-#: models.py:35
+#: models.py:30
 msgid "reputation"
 msgstr "réputation"
+
+#~ msgid "subscription date"
+#~ msgstr "date d'inscription"
