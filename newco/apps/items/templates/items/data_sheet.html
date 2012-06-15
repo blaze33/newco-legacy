@@ -19,10 +19,12 @@
     <div class="span4">
     <button class="btn btn-success" data-toggle="collapse" data-target="#demo">
  
-   <h3>Comparer les prix</h3></button>
+    <h3>Comparer les prix</h3></button>
    
-   <div id="demo" class="collapse out">
-    {% if affs %}
+    <div id="demo" class="collapse out">
+    <p><a href='www.URL.com'>Magasin 1_demo</a> 832 Euros</p>
+    <p><a href='www.URL2.com'>Magasin 2_demo</a> 838 Euros</p>
+        {% if affs %}
         {% for aff in affs %}
                 {% blocktrans with aff.item as item and aff.store as store and aff.url as url and aff.price as price and aff.price_currency as price_currency and aff.price|pluralize as price|pluralize%} Acheter {{ item }} chez:
                 <p><a href='{{ url }}'>{{ store }}</a> {{ price }} {{ price_currency }}{{ price|pluralize }}</p> 
