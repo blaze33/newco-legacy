@@ -198,8 +198,12 @@ class ContentListView(ContentView, ListView, RedirectView):
     def post(self, request, *args, **kwargs):
         if 'item_name' in request.POST:
             item_name = request.POST['item_name']
-            item = Item.objects.filter(name=item_name)[0]
-            return HttpResponseRedirect(item.get_absolute_url())
+            item_list = Item.objects.filter(name=item_name)
+            if item_list.count() > 0 :
+                return HttpResponseRedirect(item_list[0].get_absolute_url())
+            else:
+                return HttpResponseRedirect(request.path)
+                
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 
