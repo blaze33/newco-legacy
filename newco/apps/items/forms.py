@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 
-from items.models import Item, Question, Answer, Story, ExternalLink
+from items.models import Item, Question, Answer, Story, ExternalLink, Feature
 
 
 class ItemForm(ModelForm):
@@ -120,7 +120,6 @@ class ExternalLinkForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-
         if 'instance' not in kwargs or kwargs['instance'] == None:
             self.create = True
             self.request = kwargs.pop('request')
@@ -134,10 +133,55 @@ class ExternalLinkForm(ModelForm):
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
-            extlink = super(ExternalLinkForm, self).save(commit=False)
-            extlink.author = self.user
-            extlink.save()
-            extlink.items.add(self.item_id)
-            return extlink
+            link = super(ExternalLinkForm, self).save(commit=False)
+            link.author = self.user
+            link.save()
+            link.items.add(self.item_id)
+            return link
         else:
             return super(ExternalLinkForm, self).save(commit)
+
+
+class FeatureForm(ModelForm):
+
+    create = False
+
+    class Meta:
+        model = Feature
+        fields = ('content', )
+        widgets = {
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('What feature do you or don\'t you like?'),
+                'rows': 1}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.positive = bool(self.request.REQUEST['positive']==True)
+            self.item_id = self.request.REQUEST['item_id']
+            self.item = Item.objects.get(pk=self.item_id)
+        else:
+            self.object = kwargs['instance']
+            self.positive = self.object.positive
+            self.item = self.object.items.select_related()[0]
+        if hasattr(self, "positive"):
+            if self.positive:
+                self.way = _("positive")
+            else:
+                self.way = _("negative")
+        return super(FeatureForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            feature = super(FeatureForm, self).save(commit=False)
+            feature.author = self.user
+            feature.positive = self.positive
+            feature.save()
+            feature.items.add(self.item_id)
+            return feature
+        else:
+            return super(FeatureForm, self).save(commit)

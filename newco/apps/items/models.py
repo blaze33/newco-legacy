@@ -47,7 +47,7 @@ class Item(Content):
                                          verbose_name=_('last modified'))
     tags = TaggableManager(
             verbose_name=_("tags"),
-            help_text=_("A comma-separated list of tags, describing the item."),
+            help_text=_("A comma-separated list of tags, describing the item.")
     )
 
     class Meta:
@@ -101,10 +101,15 @@ class Answer(Content):
 
 
 class Story(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.CharField(max_length=2000)
+    title = models.CharField(max_length=200, verbose_name=_('title'))
+    content = models.CharField(max_length=2000, verbose_name=_('content'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('story')
+        verbose_name_plural = _('stories')
+        ordering = ["-pub_date"]
 
 
 class ExternalLink(Content):
@@ -121,5 +126,23 @@ class ExternalLink(Content):
         return u'%s' % (self.content)
 
     def get_absolute_url(self, anchor_pattern="#l_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
+
+class Feature(Content):
+    content = models.CharField(max_length=80, verbose_name=_('content'))
+    positive = models.BooleanField()
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('feature')
+        ordering = ["-pub_date"]
+
+    def __unicode__(self):
+        return u'%s' % (self.content)
+
+    def get_absolute_url(self, anchor_pattern="#f_%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)

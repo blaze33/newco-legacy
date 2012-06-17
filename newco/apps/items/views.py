@@ -15,7 +15,8 @@ from voting.models import Vote
 
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import ExternalLinkForm
+from items.forms import ExternalLinkForm, FeatureForm
+from profiles.models import Profile
 
 import json
 
@@ -132,6 +133,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
+            # context['prof_list'] = Profile.objects.filter(
+            #     skills__id=self.object.tags.values_list('id', flat=True)
+            # )
 
             #ordering questions
             questions = self.object.question_set.all()
@@ -144,6 +148,22 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             l_ordered = sorted(list(links),
                 key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
             context['links'] = l_ordered
+            
+            #ordering positive features
+            features_pos = self.object.feature_set.filter(positive=True)
+            f_ordered_pos = sorted(list(features_pos),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+            context['feat_pos'] = f_ordered_pos
+
+            #ordering negative features
+            features_neg = self.object.feature_set.filter(positive=False)
+            f_ordered_neg = sorted(list(features_neg),
+                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
+            context['feat_neg'] = f_ordered_neg
+
+            context['feat_lists'] = [f_ordered_pos]
+            context['feat_lists'].append(f_ordered_neg)
+
         return context
 
     def form_invalid(self, form):

@@ -31,11 +31,13 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
         <li><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
+        <li><a href="#features" data-toggle="tab">{% trans "Links" %}</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="questions" class="tab-pane active">{% include "items/question_list.html" %}</div>
         <div id="links" class="tab-pane">{% include "items/link_list.html" %}</div>
+        <div id="features" class="tab-pane">{% include "items/feature_list.html" %}</div>
     </div>
 </div>
 
