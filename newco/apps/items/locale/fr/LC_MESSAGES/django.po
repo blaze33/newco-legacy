@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-17 21:32+0200\n"
+"POT-Creation-Date: 2012-06-17 21:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,31 +46,35 @@ msgstr "slug"
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:48
-msgid "A comma-separated list of tags"
-msgstr "Une liste de tags séparés par des virgules"
+#: models.py:49
+msgid "tags"
+msgstr "tags"
 
-#: models.py:51
+#: models.py:50
+msgid "A comma-separated list of tags describing the item"
+msgstr "Une liste de tags séparés par des virgules décrivant l'item"
+
+#: models.py:54
 msgid "item"
 msgstr "item"
 
-#: models.py:68 models.py:86 models.py:108
+#: models.py:71 models.py:89 models.py:111
 msgid "content"
 msgstr "contenu"
 
-#: models.py:73
+#: models.py:76
 msgid "question"
 msgstr "question"
 
-#: models.py:90
+#: models.py:93
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:109
+#: models.py:112
 msgid "URL"
 msgstr "URL"
 
-#: models.py:114
+#: models.py:117
 msgid "link"
 msgstr "lien"
 

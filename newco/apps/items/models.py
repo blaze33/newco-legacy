@@ -45,7 +45,10 @@ class Item(Content):
     slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_('last modified'))
-    tags = TaggableManager(help_text=_("A comma-separated list of tags"))
+    tags = TaggableManager(
+            verbose_name=_("tags"),
+            help_text=_("A comma-separated list of tags describing the item"),
+    )
 
     class Meta:
         verbose_name = _('item')
