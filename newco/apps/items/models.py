@@ -76,11 +76,9 @@ class Question(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
+    def get_absolute_url(self, anchor_pattern="#q_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Answer(Content):
@@ -94,12 +92,9 @@ class Answer(Content):
     def __unicode__(self):
         return u'Answer %s on %s' % (self.id, self.question)
 
-    @permalink
-    def get_absolute_url(self):
-        item = self.question.items.all()[0]
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": item.id,
-                                      "slug": item.slug})
+    def get_absolute_url(self, anchor_pattern="#a_%(id)s"):
+        item = self.question.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Story(models.Model):
@@ -122,8 +117,6 @@ class ExternalLink(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
+    def get_absolute_url(self, anchor_pattern="#l_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
