@@ -47,7 +47,7 @@ class Item(Content):
                                          verbose_name=_('last modified'))
     tags = TaggableManager(
             verbose_name=_("tags"),
-            help_text=_("A comma-separated list of tags describing the item"),
+            help_text=_("A comma-separated list of tags, describing the item."),
     )
 
     class Meta:

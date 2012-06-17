@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-17 21:46+0200\n"
+"POT-Creation-Date: 2012-06-17 22:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,8 +51,8 @@ msgid "tags"
 msgstr "tags"
 
 #: models.py:50
-msgid "A comma-separated list of tags describing the item"
-msgstr "Une liste de tags séparés par des virgules décrivant l'item"
+msgid "A comma-separated list of tags, describing the item."
+msgstr "Une liste de tags, séparés par des virgules, et décrivant l'item."
 
 #: models.py:54
 msgid "item"
