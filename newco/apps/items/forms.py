@@ -9,16 +9,16 @@ class ItemForm(ModelForm):
 
     create = False
 
+    class Meta:
+        model = Item
+        exclude = ('author')
+
     def __init__(self, *args, **kwargs):
         if 'instance' not in kwargs or kwargs['instance'] == None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
         return super(ItemForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = Item
-        exclude = ('author')
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -35,13 +35,6 @@ class QuestionForm(ModelForm):
 
     create = False
 
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-        return super(QuestionForm, self).__init__(*args, **kwargs)
-
     class Meta:
         model = Question
         exclude = ('author', 'items')
@@ -51,6 +44,13 @@ class QuestionForm(ModelForm):
                 'placeholder': _('Ask something specific. Be concise.'),
                 'rows': 1}),
         }
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+        return super(QuestionForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -67,15 +67,6 @@ class AnswerForm(ModelForm):
 
     create = False
 
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-            self.question_id = self.request.REQUEST['question_id']
-            self.question = Question.objects.get(pk=self.question_id)
-        return super(AnswerForm, self).__init__(*args, **kwargs)
-
     class Meta:
         model = Answer
         fields = ('content', )
@@ -85,6 +76,18 @@ class AnswerForm(ModelForm):
                 'placeholder': _('Be concise and to the point.'),
                 'rows': 6}),
         }
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.question_id = self.request.REQUEST['question_id']
+            self.question = Question.objects.get(pk=self.question_id)
+        else:
+            self.object = kwargs['instance']
+            self.question = self.object.question
+        return super(AnswerForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -106,16 +109,6 @@ class ExternalLinkForm(ModelForm):
 
     create = False
 
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-            self.item_id = self.request.REQUEST['item_id']
-            self.item = Item.objects.get(pk=self.item_id)
-
-        return super(ExternalLinkForm, self).__init__(*args, **kwargs)
-
     class Meta:
         model = ExternalLink
         exclude = ('author', 'items')
@@ -125,6 +118,19 @@ class ExternalLinkForm(ModelForm):
                 'placeholder': _('Link description'),
                 'rows': 1}),
         }
+
+    def __init__(self, *args, **kwargs):
+
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.item_id = self.request.REQUEST['item_id']
+            self.item = Item.objects.get(pk=self.item_id)
+        else:
+            self.object = kwargs['instance']
+            self.item = self.object.items.select_related()[0]
+        return super(ExternalLinkForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
