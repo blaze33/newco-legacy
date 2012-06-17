@@ -15,6 +15,7 @@ from voting.models import Vote
 
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import ExternalLinkForm
 
 import json
 
@@ -132,11 +133,17 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['form'] = f
             context['item'] = self.object
 
+            #ordering questions
             questions = self.object.question_set.all()
             q_ordered = sorted(list(questions),
                 key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
-
             context['questions'] = q_ordered
+
+            #ordering external links
+            links = self.object.externallink_set.all()
+            l_ordered = sorted(list(links),
+                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
+            context['links'] = l_ordered
         return context
 
     def form_invalid(self, form):
@@ -199,11 +206,10 @@ class ContentListView(ContentView, ListView, RedirectView):
         if 'item_name' in request.POST:
             item_name = request.POST['item_name']
             item_list = Item.objects.filter(name=item_name)
-            if item_list.count() > 0 :
+            if item_list.count() > 0:
                 return HttpResponseRedirect(item_list[0].get_absolute_url())
             else:
                 return HttpResponseRedirect(request.path)
-                
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 

@@ -17,19 +17,27 @@
 
 <br>
 
-<div class="row">
-    <div class="span7">
-        <form method="POST" action="" class="form-inline">
-            {% csrf_token %}
-            {{ form.errors }}
-            <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
-            </div>
-        </form>
-        <hr>
+<div class="row"><div class="span7">
+    <form method="POST" action="" class="form-inline">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_ask"><i class="icon-share-alt"></i></button>
+        </div>
+    </form>
+    <hr>
+</div></div>
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#questions" data-toggle="tab">Questions</a></li>
+        <li><a href="#links" data-toggle="tab">Links</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="questions" class="tab-pane active">{% include "items/question_list.html" %}</div>
+        <div id="links" class="tab-pane">{% include "items/link_list.html" %}</div>
     </div>
 </div>
-
-{% include "items/question_list.html" %}
 
 <div class="row"><div class="span7">
     <a class="btn" href="{% url item_index %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
