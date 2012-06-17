@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
             ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 17, 0, 0))),
-            ('text', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('content', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
         ))
         db.send_create_signal('items', ['ExternalLink'])
@@ -81,10 +81,10 @@ class Migration(SchemaMigration):
         'items.externallink': {
             'Meta': {'ordering': "['-pub_date']", 'object_name': 'ExternalLink'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
             'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 17, 0, 0)'}),
-            'text': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'items.item': {

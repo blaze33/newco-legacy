@@ -110,17 +110,17 @@ class Story(models.Model):
 
 
 class ExternalLink(Content):
-    text = models.CharField(max_length=200)
-    url = models.URLField(max_length=200)
+    content = models.CharField(max_length=200, verbose_name=_('content'))
+    url = models.URLField(max_length=200, verbose_name=_('URL'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
     class Meta:
-        verbose_name = _('external link')
+        verbose_name = _('link')
         ordering = ["-pub_date"]
 
     def __unicode__(self):
-        return u'%s' % (self.text)
+        return u'%s' % (self.content)
 
     @permalink
     def get_absolute_url(self):
