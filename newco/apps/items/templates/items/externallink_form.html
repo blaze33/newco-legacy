@@ -3,13 +3,11 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
-{% block head_title %}{% trans "External Link" %}{% endblock %}
+{% block head_title %}{% trans "Link" %}{% endblock %}
 
 {% block body %}
 
-<h1>{% block form_header %}
-    {% trans "Add an external link to" %} {% if form.item.name %}{{ form.item.name }}{% else %}{{ object.items.all.0.name }}{% endif %}
-{% endblock %}</h1>
+<h1>{% block form_header %}{% blocktrans with item=form.item.name %}Add an external link to <i>{{ item }}</i>:{% endblocktrans %}{% endblock %}</h1>
 
 </br>
 
