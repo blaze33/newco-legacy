@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 18:49+0200\n"
+"POT-Creation-Date: 2012-06-17 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: forms.py:51
+#: forms.py:44
 msgid "Ask something specific. Be concise."
 msgstr "Demandez quelque chose de précis. Soyez concis."
 
-#: forms.py:85
+#: forms.py:76
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
+
+#: forms.py:118
+msgid "Link description"
+msgstr "Description du lien"
 
 #: models.py:22
 msgid "date published"
@@ -50,7 +54,7 @@ msgstr "Une liste de tags séparés par des virgules"
 msgid "item"
 msgstr "item"
 
-#: models.py:68 models.py:88
+#: models.py:68 models.py:86 models.py:108
 msgid "content"
 msgstr "contenu"
 
@@ -58,16 +62,24 @@ msgstr "contenu"
 msgid "question"
 msgstr "question"
 
-#: models.py:92
+#: models.py:90
 msgid "answer"
 msgstr "réponse"
 
-#: views.py:66 views.py:116
+#: models.py:109
+msgid "URL"
+msgstr "URL"
+
+#: models.py:114
+msgid "link"
+msgstr "lien"
+
+#: views.py:67 views.py:117
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:70 views.py:120
+#: views.py:71 views.py:121
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
@@ -76,13 +88,24 @@ msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 msgid "Answer"
 msgstr "Réponse"
 
-#: templates/items/answer_form.html:14
-msgid "Your answer:"
-msgstr "Votre réponse :"
+#: templates/items/answer_form.html:10
+#, python-format
+msgid "Your answer to <i>%(question)s</i>:"
+msgstr "Votre réponse à <i>%(question)s</i>:"
 
-#: templates/items/answer_form.html:21 templates/items/item_form.html:16
+#: templates/items/answer_form.html:16
+#: templates/items/externallink_form.html:16 templates/items/item_form.html:16
 msgid "Submit"
 msgstr "Soumettre"
+
+#: templates/items/externallink_form.html:6
+msgid "Link"
+msgstr "Lien"
+
+#: templates/items/externallink_form.html:10
+#, python-format
+msgid "Add an external link to <i>%(item)s</i>:"
+msgstr "Ajouter un lien externe à <i>%(item)s</i> :"
 
 #: templates/items/item_confirm_delete.html:8
 #, python-format
@@ -97,15 +120,15 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: templates/items/item_detail.html:35
+#: templates/items/item_detail.html:43
 msgid "Items list"
 msgstr "Liste des Items"
 
-#: templates/items/item_detail.html:36
+#: templates/items/item_detail.html:44
 msgid "Edit Item"
 msgstr "Editer l'Item"
 
-#: templates/items/item_detail.html:37
+#: templates/items/item_detail.html:45
 msgid "Delete Item"
 msgstr "Supprimer l'Item"
 
@@ -137,13 +160,27 @@ msgstr "Pas de produits disponibles."
 msgid "Add an entry"
 msgstr "Ajouter un produit"
 
-#: templates/items/question_form.html:3
-msgid "Ask something:"
-msgstr "Demandez quelque chose :"
+#: templates/items/link_list.html:7
+msgid "Publish an external link"
+msgstr "Publier un lien externe"
 
-#: templates/items/question_list.html:31 templates/items/question_list.html:57
+#: templates/items/link_list.html:29
+#, python-format
+msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
+msgstr "%(content)s : <a href=\"%(link_url)s\" target=\"_blank\">ici</a>"
+
+#: templates/items/link_list.html:35 templates/items/question_list.html:31
+#: templates/items/question_list.html:57
 msgid "by"
 msgstr "par"
+
+#: templates/items/question_form.html:5
+msgid "Question"
+msgstr "Question"
+
+#: templates/items/question_form.html:7
+msgid "Ask something:"
+msgstr "Demandez quelque chose :"
 
 #: templates/items/question_list.html:62
 msgid "Add a better answer"
@@ -152,10 +189,3 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/question_list.html:62
 msgid "Answer this question"
 msgstr "Répondre à cette question"
-
-#~ msgid "Thanks %(user)s, question submitted"
-#~ msgstr "Merci %(user)s, la question a été postée avec succès"
-
-#~ msgid "Buy <a href='%(url)s'>%(item)s @ %(store)s</a> for %(price)s"
-#~ msgstr ""
-#~ "Acheter <a href='%(url)s'>%(item)s chez %(store)s</a> pour %(price)s"

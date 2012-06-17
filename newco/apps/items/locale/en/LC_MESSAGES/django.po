@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 18:49+0200\n"
+"POT-Creation-Date: 2012-06-17 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:51
+#: forms.py:44
 msgid "Ask something specific. Be concise."
 msgstr ""
 
-#: forms.py:85
+#: forms.py:76
 msgid "Be concise and to the point."
+msgstr ""
+
+#: forms.py:118
+msgid "Link description"
 msgstr ""
 
 #: models.py:22
@@ -49,7 +53,7 @@ msgstr ""
 msgid "item"
 msgstr ""
 
-#: models.py:68 models.py:88
+#: models.py:68 models.py:86 models.py:108
 msgid "content"
 msgstr ""
 
@@ -57,16 +61,24 @@ msgstr ""
 msgid "question"
 msgstr ""
 
-#: models.py:92
+#: models.py:90
 msgid "answer"
 msgstr ""
 
-#: views.py:66 views.py:116
+#: models.py:109
+msgid "URL"
+msgstr ""
+
+#: models.py:114
+msgid "link"
+msgstr ""
+
+#: views.py:67 views.py:117
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:70 views.py:120
+#: views.py:71 views.py:121
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -75,12 +87,23 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: templates/items/answer_form.html:14
-msgid "Your answer:"
+#: templates/items/answer_form.html:10
+#, python-format
+msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
-#: templates/items/answer_form.html:21 templates/items/item_form.html:16
+#: templates/items/answer_form.html:16
+#: templates/items/externallink_form.html:16 templates/items/item_form.html:16
 msgid "Submit"
+msgstr ""
+
+#: templates/items/externallink_form.html:6
+msgid "Link"
+msgstr ""
+
+#: templates/items/externallink_form.html:10
+#, python-format
+msgid "Add an external link to <i>%(item)s</i>:"
 msgstr ""
 
 #: templates/items/item_confirm_delete.html:8
@@ -96,15 +119,15 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:35
+#: templates/items/item_detail.html:43
 msgid "Items list"
 msgstr ""
 
-#: templates/items/item_detail.html:36
+#: templates/items/item_detail.html:44
 msgid "Edit Item"
 msgstr ""
 
-#: templates/items/item_detail.html:37
+#: templates/items/item_detail.html:45
 msgid "Delete Item"
 msgstr ""
 
@@ -136,12 +159,26 @@ msgstr ""
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/question_form.html:3
-msgid "Ask something:"
+#: templates/items/link_list.html:7
+msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/question_list.html:31 templates/items/question_list.html:57
+#: templates/items/link_list.html:29
+#, python-format
+msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
+msgstr ""
+
+#: templates/items/link_list.html:35 templates/items/question_list.html:31
+#: templates/items/question_list.html:57
 msgid "by"
+msgstr ""
+
+#: templates/items/question_form.html:5
+msgid "Question"
+msgstr ""
+
+#: templates/items/question_form.html:7
+msgid "Ask something:"
 msgstr ""
 
 #: templates/items/question_list.html:62
