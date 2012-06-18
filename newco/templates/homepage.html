@@ -22,18 +22,15 @@
     </div>
 {% endblock %}
 
-{% url acct_login as login_url %}
-{% url acct_signup as signup_url %}
-{% url item_index as index_url %}
-{% url contribute as contribute_url %}
-
 {% block column-1 %}
+    {% url item_index as index_url %}
     <div style="text-align:center;"><h3>
         {% blocktrans %}Go to the</br><a href="{{ index_url }}" class="btn btn-large btn-primary">Product index</a></br>to explore the website.{% endblocktrans %}
     </h3></div>
 {% endblock %}
 
 {% block column-2 %}
+    {% url contribute as contribute_url %}
     <div style="text-align:center;"><h3>
         {% blocktrans %}Go to</br><a href="{{ contribute_url }}" class="btn btn-large btn-primary">How to contribute?</a></br>to get ready for the next step.{% endblocktrans %}
     </h3></div>
@@ -41,6 +38,7 @@
 
 
 {% block column-3 %}
+    {% url acct_signup as signup_url %}
     <div style="text-align:center;"><h3>
         {% blocktrans %}Directly</br><a href="{{ signup_url }}" class="btn btn-large btn-primary">Sign up!</a></br>to start your new career.{% endblocktrans %}
     </h3></div>
