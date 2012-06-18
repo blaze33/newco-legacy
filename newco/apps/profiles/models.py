@@ -53,8 +53,7 @@ class Reputation(models.Model):
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name
                     )
-            queryset = cls.objects.filter(author=self.user)
-            obj_ids = [q._get_pk_val() for q in queryset]
+            obj_ids = cls.objects.filter(author=self.user).values_list('id', flat=True)
             votes = Vote.objects.filter(object_id__in=obj_ids,
                                         content_type=ctype)
 
@@ -63,7 +62,7 @@ class Reputation(models.Model):
 
         votes = Vote.objects.filter(user=self.user)
         for vote in votes:
-            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+            rep += POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
 
         return rep
 
@@ -87,7 +86,7 @@ def increment_reputation(sender, instance=None, **kwargs):
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
         rep_rated.reputation_incremented += \
-                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -96,7 +95,7 @@ def increment_reputation(sender, instance=None, **kwargs):
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
         rep_rating.reputation_incremented += \
-                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -112,7 +111,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
         rep_rated.reputation_incremented -= \
-                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -121,7 +120,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
         rep_rating.reputation_incremented -= \
-                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
         rep_rating.save()
     except:
         pass
