@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from idios.views import ProfileDetailView
 
-from items.models import Question, Answer
+from items.models import Question, Answer, ExternalLink, Feature
 from profiles.models import Reputation
 from follow.models import Follow
 
@@ -14,7 +14,10 @@ class MyProfileDetailView(ProfileDetailView):
 
         history = list(Question.objects.filter(author=self.object.user))
         history.extend(Answer.objects.filter(author=self.object.user))
-        context['history'] = sorted(history, key=lambda c: c.pub_date, reverse=True)
+        history.extend(ExternalLink.objects.filter(author=self.object.user))
+        history.extend(Feature.objects.filter(author=self.object.user))
+        context['history'] = sorted(history, key=lambda c: c.pub_date,
+                                                            reverse=True)
 
         fwers_ids = Follow.objects.get_follows(
                 self.object.user).values_list('user_id', flat=True)
@@ -27,6 +30,9 @@ class MyProfileDetailView(ProfileDetailView):
         #content ordering for newsfeed
         newsfeed = list(Question.objects.filter(author__in=fwees_ids))
         newsfeed.extend(Answer.objects.filter(author__in=fwees_ids))
-        context['newsfeed'] = sorted(newsfeed, key=lambda c: c.pub_date, reverse=True)
+        newsfeed.extend(ExternalLink.objects.filter(author__in=fwees_ids))
+        newsfeed.extend(Feature.objects.filter(author__in=fwees_ids))
+        context['newsfeed'] = sorted(newsfeed, key=lambda c: c.pub_date,
+                                                            reverse=True)
 
         return context
