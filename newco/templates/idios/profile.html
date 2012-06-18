@@ -18,90 +18,21 @@
     {% if is_me %}
         </br>
         <p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>
-
-
-	    <br>
-	    <br>
-	    <hr>
-	    <div class="row">
-	    	<div class="well">
-	    		<h2><a href="{% url profile_detail request.user %}">{{ page_user_display }}</a> : mon newsfeed</h2><p><small>Contenu poste par les membres que je <a data-toggle="collapse" href="#followeds_list"><i>follow</i></a></small></p>
-				<div id="followeds_list" class="collapse">
-			    	<div class="row">
-				    	<div id="followeds_list" class="span3 offset4">
-				    		<table class="table condensed">
-				    			<tbody>
-				    				{% for followed in followeds %}
-				    				<tr><td>{% follow_form followed %}</td>
-				    					<td>{{ followed.username }}</td>
-				    				</tr>
-					    			{% endfor %}
-				    			</tbody>
-				    		</table>
-			    		</div>
-			    	</div>
-		    	</div>
-	    	</div>
-    		{% include "profiles/_profile_newsfeed.html" with content_newsfeed=content_nf %}
-    	    <hr>
-    	</div>
-    	<br>
-    	<br>
-	    <div class="row">
-	    	<div class="well">
-	    		<h2><a href="{% url profile_detail request.user %}">{{ page_user_display }}</a> : mon newsfeed "inverse"</h2><p><small>Contenu poste par les membres qui me <a data-toggle="collapse" href="#followers_list"><i>follow</i>ent</a></small></p>
-    			<div id="followers_list" class="collapse">
-			    	<div class="row">
-				    	<div id="followers_list" class="span3 offset4">
-				    		<table class="table condensed">
-				    			<tbody>
-				    				{% for follower in followers %}
-				    				<tr><td>{% follow_form follower %}</td>
-				    					<td>{{ follower.username }}</td>
-				    				</tr>
-					    			{% endfor %}
-				    			</tbody>
-				    		</table>
-			    		</div>
-			    	</div>
-		    	</div>
-    		</div>
-    		{% include "profiles/_profile_newsfeed.html" with content_newsfeed=content_nfi %}
-    	    <hr>
-    	</div>    	
-    	
-	    <br>
-	    <hr>
-	{% endif %}
-    
-    <br>
-    <br>
-
-    {% if questions %}
-        {% scores_for_objects questions as question_score_dict %}
-        <h3>{% blocktrans %}Questions asked by {{ page_user_display }}{% endblocktrans %}</h3>
-        {% for question in questions %}
-            {% dict_entry_for_item question from question_score_dict as score %}
-            <p>
-                <a href="{{ question.get_absolute_url }}">{{ question.content }}</a> {% trans "on" %}
-                <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a>
-                {% if score %}{% trans "Score:" %} {{ score.score }} {% trans "with" %} {{ score.num_votes }} {% trans "vote" %}{{ score.num_votes|pluralize }}{% endif %}
-            </p>
-        {% endfor %}
     {% endif %}
 
-    {% if answers %}
-        {% scores_for_objects answers as answer_score_dict %}
-        <h3>{% blocktrans %}Answers suggested by {{ page_user_display }}{% endblocktrans %}</h3>
-        {% for answer in answers %}
-            {% dict_entry_for_item answer from answer_score_dict as score %}
-            <p>
-                <a href="{{ answer.get_absolute_url }}">{{ answer.content }}</a> {% trans "on" %}
-                <a href="{{ answer.question.get_absolute_url }}">{{ answer.question.content }}</a>
-                (<a href="{{ answer.question.items.all.0.get_absolute_url }}">{{ answer.question.items.all.0 }}</a>)
-                {% if score %}{% trans "Score:" %} {{ score.score }} {% trans "with" %} {{ score.num_votes }} {% trans "vote" %}{{ score.num_votes|pluralize }}{% endif %}
-            </p>
-        {% endfor %}
-    {% endif %}
-    
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
+            <li><a href="#newsfeed" data-toggle="tab">{% trans "Newsfeed" %}</a></li>
+            <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
+            <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
+            <div id="newsfeed" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=newsfeed %}</div>
+            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
+            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees %}</div>
+        </div>
+    </div>
 {% endblock %}

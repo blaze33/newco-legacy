@@ -8,29 +8,54 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'FeatureN'
-        db.create_table('items_featuren', (
+        # Adding model 'ExternalLink'
+        db.create_table('items_externallink', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
-            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 14, 0, 0))),
-            ('content', self.gf('django.db.models.fields.CharField')(max_length=80)),
+            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 18, 0, 0))),
+            ('content', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
         ))
-        db.send_create_signal('items', ['FeatureN'])
+        db.send_create_signal('items', ['ExternalLink'])
 
-        # Adding M2M table for field items on 'FeatureN'
-        db.create_table('items_featuren_items', (
+        # Adding M2M table for field items on 'ExternalLink'
+        db.create_table('items_externallink_items', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('featuren', models.ForeignKey(orm['items.featuren'], null=False)),
+            ('externallink', models.ForeignKey(orm['items.externallink'], null=False)),
             ('item', models.ForeignKey(orm['items.item'], null=False))
         ))
-        db.create_unique('items_featuren_items', ['featuren_id', 'item_id'])
+        db.create_unique('items_externallink_items', ['externallink_id', 'item_id'])
+
+        # Adding model 'Feature'
+        db.create_table('items_feature', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 6, 18, 0, 0))),
+            ('content', self.gf('django.db.models.fields.CharField')(max_length=80)),
+            ('positive', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal('items', ['Feature'])
+
+        # Adding M2M table for field items on 'Feature'
+        db.create_table('items_feature_items', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('feature', models.ForeignKey(orm['items.feature'], null=False)),
+            ('item', models.ForeignKey(orm['items.item'], null=False))
+        ))
+        db.create_unique('items_feature_items', ['feature_id', 'item_id'])
 
     def backwards(self, orm):
-        # Deleting model 'FeatureN'
-        db.delete_table('items_featuren')
+        # Deleting model 'ExternalLink'
+        db.delete_table('items_externallink')
 
-        # Removing M2M table for field items on 'FeatureN'
-        db.delete_table('items_featuren_items')
+        # Removing M2M table for field items on 'ExternalLink'
+        db.delete_table('items_externallink_items')
+
+        # Deleting model 'Feature'
+        db.delete_table('items_feature')
+
+        # Removing M2M table for field items on 'Feature'
+        db.delete_table('items_feature_items')
 
     models = {
         'auth.group': {
@@ -74,33 +99,26 @@ class Migration(SchemaMigration):
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'content': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 18, 0, 0)'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'})
         },
         'items.externallink': {
-            'Meta': {'object_name': 'ExternalLink'},
+            'Meta': {'ordering': "['-pub_date']", 'object_name': 'ExternalLink'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'}),
-            'text': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'url': ('django.db.models.fields.CharField', [], {'max_length': '200'})
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 18, 0, 0)'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
-        'items.featuren': {
-            'Meta': {'object_name': 'FeatureN'},
+        'items.feature': {
+            'Meta': {'ordering': "['-pub_date']", 'object_name': 'Feature'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'content': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'})
-        },
-        'items.featurep': {
-            'Meta': {'object_name': 'FeatureP'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
-            'content': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'})
+            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 18, 0, 0)'})
         },
         'items.item': {
             'Meta': {'object_name': 'Item'},
@@ -108,16 +126,16 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 18, 0, 0)'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'items.question': {
-            'Meta': {'object_name': 'Question'},
+            'Meta': {'ordering': "['-pub_date']", 'object_name': 'Question'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 14, 0, 0)'})
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 6, 18, 0, 0)'})
         },
         'items.story': {
             'Meta': {'object_name': 'Story'},

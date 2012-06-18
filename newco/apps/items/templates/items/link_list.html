@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load voting_tags %}
+{% load content_utils %}
+{% load staticfiles %}
+
+<div class="row one_row"><div class="span4"><a href='{% url item_create "externallink" %}?item_id={{ item.id }}' class="btn btn-mini" name='add_link'>
+    <i class="icon-share-alt"></i>{% trans "Publish an external link" %}
+</a></div></div>
+
+<br>
+
+{% votes_by_user user on links as link_vote_dict %}
+{% scores_for_objects links as link_score_dict %}
+
+{% for link in links %}<div class="row link"><div class="span7">
+    {% dict_entry_for_item link from link_vote_dict as vote %}
+    {% dict_entry_for_item link from link_score_dict as score %}
+
+    <div class="row one_row" id="l_{{ link.id }}">
+        <div class="span1">
+            <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
+            <form class="controls vote" action='{% url object_voting link|to_class_name link.id %}' method="POST">
+                {% csrf_token %}
+                <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
+                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+            </form></h3>
+        </div>
+        <div class="span4"><h3>
+            {% blocktrans with content=link.content link_url=link.url %}{{ content }}: <a href="{{ link_url }}" target="_blank">there</a>{% endblocktrans %}
+            {% if user.is_superuser or link.author == request.user %}
+                {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
+            {% endif %}
+        </h3></div>
+        <div class="span2 right"><p class="signature"><small>
+            <b>{{ link.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail link.author %}'>{{ link.author }}</a>
+        </small></p></div>
+    </div>
+    <hr>
+</div></div>{% endfor %}

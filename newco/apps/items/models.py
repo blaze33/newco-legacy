@@ -8,7 +8,6 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
-from idios.models import ProfileBase
 
 
 class CannotManage(Exception):
@@ -46,7 +45,10 @@ class Item(Content):
     slug = models.SlugField(verbose_name=_('slug'), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_('last modified'))
-    tags = TaggableManager(help_text=_("A comma-separated list of tags"))
+    tags = TaggableManager(
+            verbose_name=_("tags"),
+            help_text=_("A comma-separated list of tags, describing the item.")
+    )
 
     class Meta:
         verbose_name = _('item')
@@ -54,13 +56,6 @@ class Item(Content):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-    def compute_tags(self, list_users):
-        li=[]
-        for user in list_users:
-            if user in self.tags.similar_objects():
-                li.append(user)
-        return li
- 
     def save(self):
         self.slug = slugify(self.name)
         super(Item, self).save()
@@ -84,11 +79,9 @@ class Question(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
+    def get_absolute_url(self, anchor_pattern="#q_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Answer(Content):
@@ -102,61 +95,53 @@ class Answer(Content):
     def __unicode__(self):
         return u'Answer %s on %s' % (self.id, self.question)
 
-    @permalink
-    def get_absolute_url(self):
-        item = self.question.items.all()[0]
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": item.id,
-                                      "slug": item.slug})
+    def get_absolute_url(self, anchor_pattern="#a_%(id)s"):
+        item = self.question.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Story(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.CharField(max_length=2000)
+    title = models.CharField(max_length=200, verbose_name=_('title'))
+    content = models.CharField(max_length=2000, verbose_name=_('content'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('story')
+        verbose_name_plural = _('stories')
 
 
 class ExternalLink(Content):
-    text = models.CharField(max_length=200)
-    url = models.URLField(max_length=200)
+    content = models.CharField(max_length=200, verbose_name=_('content'))
+    url = models.URLField(max_length=200, verbose_name=_('URL'))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
-    def __unicode__(self):
-        return u'%s' % (self.text)
-    
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
-        
-class FeatureP(Content):
-    content = models.CharField(max_length=80)
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
+    class Meta:
+        verbose_name = _('link')
+        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
- 
-class FeatureN(Content):
-    content = models.CharField(max_length=80)
+    def get_absolute_url(self, anchor_pattern="#l_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
+
+class Feature(Content):
+    content = models.CharField(max_length=80, verbose_name=_('content'))
+    positive = models.BooleanField()
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _('feature')
+        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
-                                      "pk": self.items.all()[0].id,
-                                      "slug": self.items.all()[0].slug})
- 
+    def get_absolute_url(self, anchor_pattern="#f_%(id)s"):
+        item = self.items.select_related()[0]
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)

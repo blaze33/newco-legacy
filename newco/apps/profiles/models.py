@@ -9,12 +9,12 @@ from taggit.managers import TaggableManager
 from idios.models import ProfileBase
 
 from voting.models import Vote
-from items.models import Question, Answer, FeatureP, FeatureN
+from items.models import Question, Answer, ExternalLink, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
+from follow.utils import register
 
-from follow import utils
-
+register(User)
 
 
 class Profile(ProfileBase):
@@ -24,7 +24,11 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
-    skills = TaggableManager(help_text="The list of your main product skills")
+    skills = TaggableManager(
+        verbose_name=_("skills"),
+        help_text=_("The list of your main product skills"),
+        blank=True
+    )
 
 
 class Reputation(models.Model):
@@ -44,7 +48,7 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        for cls in [Question, Answer]:
+        for cls in [Question, Answer, ExternalLink, Feature]:
             ctype = ContentType.objects.get(
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name
@@ -59,8 +63,7 @@ class Reputation(models.Model):
 
         votes = Vote.objects.filter(user=self.user)
         for vote in votes:
-            if vote.content_type.name in POINTS_TABLE_RATING:
-                rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
 
         return rep
 
@@ -144,8 +147,10 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Reputation._meta.app_label,
-                                           model=Reputation._meta.module_name)
+    content_type = ContentType.objects.get(
+            app_label=Reputation._meta.app_label,
+            model=Reputation._meta.module_name
+    )
     permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)
@@ -154,5 +159,3 @@ def update_permissions(sender, instance=None, **kwargs):
 #        instance.user.user_permissions.add(permission)
 #    else:
 #        instance.user.user_permissions.remove(permission)
-
-utils.register(User)
