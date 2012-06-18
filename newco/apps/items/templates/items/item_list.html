@@ -27,7 +27,11 @@
         </li>
     {% endfor %}</ul>
 {% else %}
-    <p>{% trans "No products are available." %}</p>
+    {% if tag %}
+        <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>
+    {% else %}
+        <h2>{% trans "No products are available." %}</h2>
+    {% endif %}
 {% endif %}
 
 </br>
