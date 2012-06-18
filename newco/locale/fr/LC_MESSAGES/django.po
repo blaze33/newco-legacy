@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 18:20+0200\n"
+"POT-Creation-Date: 2012-06-18 18:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: templates/_footer.html:4 templates/about/faq.html:6
-#: templates/about/faq.html.py:10 templates/about/team.html:6
+#: templates/_footer.html:4
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -52,8 +51,8 @@ msgid ""
 "Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
 "\">Product index</a></br>to explore the website."
 msgstr ""
-"Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-large "
-"btn-primary\">L'index Produit</a></br>pour explorer le site."
+"Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
+"large btn-primary\">L'index Produit</a></br>pour explorer le site."
 
 #: templates/homepage.html:38
 #, python-format
@@ -81,28 +80,6 @@ msgstr "Profil"
 #: templates/site_base.html:45
 msgid "Products index"
 msgstr "Liste des produits"
-
-#: templates/about/team.html:10
-msgid "Who are we?"
-msgstr "Qui sommes nous ?"
-
-#: templates/about/what_next.html:6 templates/about/what_next.html.py:9
-msgid "What Next?"
-msgstr "Que faire maintenant ?"
-
-#: templates/about/what_next.html:35
-#, python-format
-msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
-"\"%(login_url)s\">logging in</a>."
-msgstr ""
-"Commencez par <a href=\"%(signup_url)s\">vous inscrire</a> et <a href="
-"\"%(login_url)s\">vous authentifier</a>."
-
-#: templates/about/what_next.html:37
-#, python-format
-msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
-msgstr "Commencez par <a href=\"%(login_url)s\">vous authentifier</a>."
 
 #: templates/idios/profile.html:8
 #, python-format
