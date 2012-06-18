@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 19:40+0200\n"
+"POT-Creation-Date: 2012-06-18 16:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,46 +18,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: models.py:16
+#: models.py:21
 msgid "name"
 msgstr "nom"
 
-#: models.py:17
+#: models.py:22
 msgid "about"
 msgstr "à propos"
 
-#: models.py:18
+#: models.py:23
 msgid "location"
 msgstr "région"
 
-#: models.py:20
+#: models.py:25
 msgid "website"
 msgstr "site internet"
 
-#: models.py:30
+#: models.py:28
+msgid "skills"
+msgstr "compétences"
+
+#: models.py:29
+msgid "The list of your main product skills"
+msgstr "La liste de vos principales compétences produit"
+
+#: models.py:40
 msgid "reputation"
 msgstr "réputation"
 
-#: templates/profiles/_profile_info.html:4
+#: templates/profiles/_profile_content_list.html:16
+msgid "answered a question about"
+msgstr "a répondu à une question à propos de"
+
+#: templates/profiles/_profile_content_list.html:20
+#: templates/profiles/_profile_content_list.html:43
+msgid "Q:"
+msgstr "Q :"
+
+#: templates/profiles/_profile_content_list.html:22
+#: templates/profiles/_profile_content_list.html:30
+#: templates/profiles/_profile_content_list.html:45
+msgid "by"
+msgstr "par"
+
+#: templates/profiles/_profile_content_list.html:27
+msgid "A:"
+msgstr "R :"
+
+#: templates/profiles/_profile_content_list.html:34
+msgid "Add an answer"
+msgstr "Ajouter une réponse"
+
+#: templates/profiles/_profile_content_list.html:40
+msgid "asked a question about"
+msgstr "a posé une quetion à propos de"
+
+#: templates/profiles/_profile_content_list.html:50
+msgid "Answer this question"
+msgstr "Répondre à cette question"
+
+#: templates/profiles/_profile_info.html:5
 msgid "Name"
 msgstr "Nom"
 
-#: templates/profiles/_profile_info.html:5
+#: templates/profiles/_profile_info.html:6
 msgid "About"
 msgstr "A propos"
 
-#: templates/profiles/_profile_info.html:6
+#: templates/profiles/_profile_info.html:7
 msgid "Location"
 msgstr "Région"
 
-#: templates/profiles/_profile_info.html:7
+#: templates/profiles/_profile_info.html:8
 msgid "Website"
 msgstr "Site internet"
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:9
 msgid "Subscription date"
 msgstr "Date d'inscription"
 
-#: templates/profiles/_profile_info.html:9
+#: templates/profiles/_profile_info.html:10
 msgid "Reputation"
 msgstr "Réputation"
+
+#: templates/profiles/_profile_info.html:12
+msgid "Skills"
+msgstr "Compétences"

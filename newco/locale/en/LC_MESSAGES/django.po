@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 19:46+0200\n"
+"POT-Creation-Date: 2012-06-18 16:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,37 +83,27 @@ msgstr ""
 msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
 msgstr ""
 
-#: templates/idios/profile.html:7
+#: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:19
+#: templates/idios/profile.html:20
 msgid "Update my profile"
 msgstr ""
 
+#: templates/idios/profile.html:25
+msgid "History"
+msgstr ""
+
 #: templates/idios/profile.html:26
-#, python-format
-msgid "Questions asked by %(page_user_display)s"
+msgid "Newsfeed"
 msgstr ""
 
-#: templates/idios/profile.html:30 templates/idios/profile.html.py:43
-msgid "on"
+#: templates/idios/profile.html:27
+msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "Score:"
-msgstr ""
-
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "with"
-msgstr ""
-
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "vote"
-msgstr ""
-
-#: templates/idios/profile.html:39
-#, python-format
-msgid "Answers suggested by %(page_user_display)s"
+#: templates/idios/profile.html:28
+msgid "Followees"
 msgstr ""

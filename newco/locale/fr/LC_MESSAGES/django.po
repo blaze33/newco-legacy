@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 19:46+0200\n"
+"POT-Creation-Date: 2012-06-18 16:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,40 +90,48 @@ msgstr ""
 msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
 msgstr "Commencez par <a href=\"%(login_url)s\">vous authentifier</a>."
 
-#: templates/idios/profile.html:7
+#: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:19
+#: templates/idios/profile.html:20
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
+#: templates/idios/profile.html:25
+msgid "History"
+msgstr "Historique"
+
 #: templates/idios/profile.html:26
-#, python-format
-msgid "Questions asked by %(page_user_display)s"
-msgstr "Questions posées par %(page_user_display)s"
+msgid "Newsfeed"
+msgstr "Flux"
 
-#: templates/idios/profile.html:30 templates/idios/profile.html.py:43
-msgid "on"
-msgstr "sur"
+#: templates/idios/profile.html:27
+msgid "Followers"
+msgstr "Abonnés"
 
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "Score:"
-msgstr "Score :"
+#: templates/idios/profile.html:28
+msgid "Followees"
+msgstr "Abonnements"
 
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "with"
-msgstr "avec"
+#~ msgid "Questions asked by %(page_user_display)s"
+#~ msgstr "Questions posées par %(page_user_display)s"
 
-#: templates/idios/profile.html:32 templates/idios/profile.html.py:46
-msgid "vote"
-msgstr "vote"
+#~ msgid "on"
+#~ msgstr "sur"
 
-#: templates/idios/profile.html:39
-#, python-format
-msgid "Answers suggested by %(page_user_display)s"
-msgstr "Réponses suggérées par %(page_user_display)s"
+#~ msgid "Score:"
+#~ msgstr "Score :"
+
+#~ msgid "with"
+#~ msgstr "avec"
+
+#~ msgid "vote"
+#~ msgstr "vote"
+
+#~ msgid "Answers suggested by %(page_user_display)s"
+#~ msgstr "Réponses suggérées par %(page_user_display)s"
 
 #~ msgid "Name"
 #~ msgstr "Nom"
