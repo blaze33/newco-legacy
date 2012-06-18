@@ -161,7 +161,7 @@ class FeatureForm(ModelForm):
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
-            self.positive = bool(self.request.REQUEST['positive'] == True)
+            self.positive = (self.request.REQUEST['positive'] == 'True')
             self.item_id = self.request.REQUEST['item_id']
             self.item = Item.objects.get(pk=self.item_id)
         else:
