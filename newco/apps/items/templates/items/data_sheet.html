@@ -1,7 +1,11 @@
 {% load i18n %}
+{% load account_tags %}
 
 <div class="row"><div class="span7"><h1>{{ item }}</h1></div></div>
 
 </br>
 
-<div>{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>
+<div class="row">
+    <div class="span4">{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>
+    <div class="span3 right">{% for prof in prof_list %}<a href="{% url profile_detail prof.user %}"><span class="label label-success">{% user_display user %}</span></a>{% endfor %}</div>
+</div>
