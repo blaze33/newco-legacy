@@ -1,0 +1,54 @@
+{% load i18n %}
+{% load voting_tags %}
+{% load content_utils %}
+
+{% scores_for_objects contents as score_dict %}
+
+{% for content in contents|slice:":20" %}{% with author=content.author pub_date=content.pub_date %}<div class="row content"><div class="span7">
+
+    {% dict_entry_for_item question from question_score_dict as score %}
+    <br><hr>
+
+    {% url profile_detail content.author as author_url %}
+
+    {% if content|to_class_name == "answer" %}{% with question=content.question %}
+        <div class="row one_row"><div class="span7">
+            <h4><a href="{{ author_url }}">{{ author }}</a> {% trans "answered a question about" %} <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a></h4>
+        </div></div>
+
+        <div class="row one_row">
+            <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a> {{ question.content }}</small></p></div>
+            <div class="span2 right"><p class="signature"><small>
+                <b>{{ pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href="{{ author_url }}">{{ author }}</a>
+            </small></p></div>
+        </div>
+
+        <div class="row one_row">
+            <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
+            <div class="span4"><p>{{ content.content }}</p></div>
+            <div class="span2 right"><p class="signature"><small>
+                <b>{{ pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href="{{ author_url }}">{{ author }}</a>
+            </small></p></div>
+        </div>
+        {% if user != author %}
+            <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i>{% trans "Add an answer" %}</a></div></div>
+        {% endif %}
+    {% endwith %}{% endif %}
+
+    {% if content|to_class_name == "question" %}
+        <div class="row one_row"><div class="span7">
+            <h4><a href="{{ author_url }}">{{ author }}</a> {% trans "asked a question about" %} <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></h4>
+        </div></div>
+        <div class="row one_row">
+            <div class="span5"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>
+            <div class="span2 right"><p class="signature"><small>
+                <b>{{ pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href="{{ author_url }}">{{ author }}</a>
+            </small></p></div>
+        </div>
+
+        {% if user != author %}
+            <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i>{% trans "Answer this question" %}</a></div></div>
+        {% endif %}
+    {% endif %}
+</div></div>{% endwith %}{% endfor %}
+

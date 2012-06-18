@@ -4,12 +4,17 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
+from taggit.managers import TaggableManager
 
 from idios.models import ProfileBase
 
 from voting.models import Vote
-from items.models import Question, Answer
+from items.models import Question, Answer, ExternalLink, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
+
+from follow.utils import register
+
+register(User)
 
 
 class Profile(ProfileBase):
@@ -19,6 +24,11 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
+    skills = TaggableManager(
+        verbose_name=_("skills"),
+        help_text=_("The list of your main product skills"),
+        blank=True
+    )
 
 
 class Reputation(models.Model):
@@ -38,7 +48,7 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        for cls in [Question, Answer]:
+        for cls in [Question, Answer, ExternalLink, Feature]:
             ctype = ContentType.objects.get(
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name
@@ -137,8 +147,10 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Reputation._meta.app_label,
-                                           model=Reputation._meta.module_name)
+    content_type = ContentType.objects.get(
+            app_label=Reputation._meta.app_label,
+            model=Reputation._meta.module_name
+    )
     permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)

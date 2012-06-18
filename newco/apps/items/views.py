@@ -133,9 +133,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
             context['form'] = f
             context['item'] = self.object
-            # context['prof_list'] = Profile.objects.filter(
-            #     skills__id=self.object.tags.values_list('id', flat=True)
-            # )
+            context['prof_list'] = Profile.objects.filter(
+                skills__id=self.object.tags.values_list('id', flat=True)
+            )
 
             #ordering questions
             questions = self.object.question_set.all()
@@ -148,7 +148,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             l_ordered = sorted(list(links),
                 key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
             context['links'] = l_ordered
-            
+
             #ordering positive features
             features_pos = self.object.feature_set.filter(positive=True)
             f_ordered_pos = sorted(list(features_pos),

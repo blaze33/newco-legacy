@@ -1,8 +1,7 @@
 {% load i18n %}
-<div class="row">
-    <div class="span7"><h1>{{ item }}</h1></div>
-</div>
-<br>
-<div>
-    {% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
-</div>
+
+<div class="row"><div class="span7"><h1>{{ item }}</h1></div></div>
+
+</br>
+
+<div>{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>

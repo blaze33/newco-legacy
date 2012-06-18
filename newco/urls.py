@@ -27,7 +27,8 @@ urlpatterns = patterns("",
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^profiles/", include("idios.urls")),
-    url(r"^votes/", include('votes.urls'))
+    url(r"^votes/", include('votes.urls')),
+    url(r"^follow/", include('follow.urls')),
 )
 
 urlpatterns += patterns("",
