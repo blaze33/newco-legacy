@@ -60,7 +60,7 @@ USE_I18N = True
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
+    PROJECT_ROOT + '/apps/about/locale',
 )
 
 # Absolute path to the directory that holds media.
@@ -252,13 +252,6 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-LOCALE_PATHS = (
-    PROJECT_ROOT + '/apps/items/locale',
-    PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
-    PROJECT_ROOT + '/apps/about/locale',
-)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

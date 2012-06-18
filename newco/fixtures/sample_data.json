@@ -201,16 +201,6 @@
   },
   {
     "pk": 1,
-    "model": "emailconfirmation.emailaddress",
-    "fields": {
-      "verified": true,
-      "user": 1,
-      "primary": true,
-      "email": "rouyrre@gmail.com"
-    }
-  },
-  {
-    "pk": 1,
     "model": "account.account",
     "fields": {
       "timezone": "Europe/Paris",
