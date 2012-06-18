@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 16:34+0200\n"
+"POT-Creation-Date: 2012-06-18 18:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,25 +34,35 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: templates/homepage.html:26
-#, python-format
-msgid ""
-"Wondering <a href=\"%(what_next_url)s\" class=\"btn primary large\">What "
-"Next</a>?"
+#: templates/homepage.html:18
+msgid "Empowering people to buy better"
 msgstr ""
 
-#: templates/homepage.html:31
-#, python-format
+#: templates/homepage.html:21
 msgid ""
-"You can <a href=\"%(login_url)s\" class=\"btn\">Log In</a> or <a href="
-"\"%(signup_url)s\" class=\"btn btn-primary\">Sign Up</a> to try out the site."
+"NewCo helps you choose with confidence</br>and share your advice between "
+"users."
 msgstr ""
 
-#: templates/homepage.html:33
+#: templates/homepage.html:32
 #, python-format
 msgid ""
-"You can <a href=\"%(login_url)s\" class=\"btn btn-primary btn-large\">Log "
-"In</a> to try out the site."
+"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
+"\">Product index</a></br>to explore the website."
+msgstr ""
+
+#: templates/homepage.html:38
+#, python-format
+msgid ""
+"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
+"\">How to contribute?</a></br>to get ready for the next step."
+msgstr ""
+
+#: templates/homepage.html:45
+#, python-format
+msgid ""
+"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
+"\">Sign up!</a></br>to start your new career."
 msgstr ""
 
 #: templates/site_base.html:44
