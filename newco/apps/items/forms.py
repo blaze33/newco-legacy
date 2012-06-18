@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 
 from items.models import Item, Question, Answer, Story, ExternalLink, Feature
 
@@ -152,7 +153,6 @@ class FeatureForm(ModelForm):
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',
-                'placeholder': _('What feature do you or don\'t you like?'),
                 'rows': 1}),
         }
 
@@ -161,7 +161,7 @@ class FeatureForm(ModelForm):
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
-            self.positive = bool(self.request.REQUEST['positive']==True)
+            self.positive = bool(self.request.REQUEST['positive'] == True)
             self.item_id = self.request.REQUEST['item_id']
             self.item = Item.objects.get(pk=self.item_id)
         else:
@@ -171,8 +171,14 @@ class FeatureForm(ModelForm):
         if hasattr(self, "positive"):
             if self.positive:
                 self.way = _("positive")
+                self._meta.widgets['content'].attrs['placeholder'] = ugettext(
+    'What feature do you like?'
+)
             else:
                 self.way = _("negative")
+                self._meta.widgets['content'].attrs['placeholder'] = ugettext(
+    'What feature do you dislike?'
+)
         return super(FeatureForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):

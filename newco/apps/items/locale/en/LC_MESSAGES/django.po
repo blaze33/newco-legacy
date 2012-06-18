@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-17 22:01+0200\n"
+"POT-Creation-Date: 2012-06-18 02:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:44
+#: forms.py:45
 msgid "Ask something specific. Be concise."
 msgstr ""
 
-#: forms.py:76
+#: forms.py:77
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:118
+#: forms.py:119
 msgid "Link description"
+msgstr ""
+
+#: forms.py:173
+msgid "positive"
+msgstr ""
+
+#: forms.py:175
+msgid "What feature do you like?"
+msgstr ""
+
+#: forms.py:178
+msgid "negative"
+msgstr ""
+
+#: forms.py:180
+msgid "What feature do you dislike?"
 msgstr ""
 
 #: models.py:22
@@ -57,7 +73,7 @@ msgstr ""
 msgid "item"
 msgstr ""
 
-#: models.py:71 models.py:89 models.py:111
+#: models.py:71 models.py:89 models.py:105 models.py:115 models.py:133
 msgid "content"
 msgstr ""
 
@@ -69,20 +85,36 @@ msgstr ""
 msgid "answer"
 msgstr ""
 
-#: models.py:112
+#: models.py:104
+msgid "title"
+msgstr ""
+
+#: models.py:110
+msgid "story"
+msgstr ""
+
+#: models.py:111
+msgid "stories"
+msgstr ""
+
+#: models.py:116
 msgid "URL"
 msgstr ""
 
-#: models.py:117
+#: models.py:121
 msgid "link"
 msgstr ""
 
-#: views.py:67 views.py:117
+#: models.py:139
+msgid "feature"
+msgstr ""
+
+#: views.py:68 views.py:118
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:71 views.py:121
+#: views.py:72 views.py:122
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -97,7 +129,8 @@ msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
 #: templates/items/answer_form.html:16
-#: templates/items/externallink_form.html:16 templates/items/item_form.html:16
+#: templates/items/externallink_form.html:16
+#: templates/items/feature_form.html:17 templates/items/item_form.html:16
 msgid "Submit"
 msgstr ""
 
@@ -108,6 +141,36 @@ msgstr ""
 #: templates/items/externallink_form.html:10
 #, python-format
 msgid "Add an external link to <i>%(item)s</i>:"
+msgstr ""
+
+#: templates/items/feature_form.html:6
+msgid "Feature"
+msgstr ""
+
+#: templates/items/feature_form.html:11
+#, python-format
+msgid "Add a %(way)s feature to <i>%(item)s</i>:"
+msgstr ""
+
+#: templates/items/feature_list.html:11
+msgid "Positive Features"
+msgstr ""
+
+#: templates/items/feature_list.html:11
+msgid "Negative Features"
+msgstr ""
+
+#: templates/items/feature_list.html:34 templates/items/link_list.html:35
+#: templates/items/question_list.html:31 templates/items/question_list.html:57
+msgid "by"
+msgstr ""
+
+#: templates/items/feature_list.html:40
+msgid "Add a positive feature"
+msgstr ""
+
+#: templates/items/feature_list.html:40
+msgid "Add a negative feature"
 msgstr ""
 
 #: templates/items/item_confirm_delete.html:8
@@ -131,15 +194,19 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
-#: templates/items/item_detail.html:43
-msgid "Items list"
-msgstr ""
-
-#: templates/items/item_detail.html:44
-msgid "Edit Item"
+#: templates/items/item_detail.html:34
+msgid "Features"
 msgstr ""
 
 #: templates/items/item_detail.html:45
+msgid "Items list"
+msgstr ""
+
+#: templates/items/item_detail.html:46
+msgid "Edit Item"
+msgstr ""
+
+#: templates/items/item_detail.html:47
 msgid "Delete Item"
 msgstr ""
 
@@ -178,11 +245,6 @@ msgstr ""
 #: templates/items/link_list.html:29
 #, python-format
 msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
-msgstr ""
-
-#: templates/items/link_list.html:35 templates/items/question_list.html:31
-#: templates/items/question_list.html:57
-msgid "by"
 msgstr ""
 
 #: templates/items/question_form.html:5

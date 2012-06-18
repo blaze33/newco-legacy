@@ -109,7 +109,6 @@ class Story(models.Model):
     class Meta:
         verbose_name = _('story')
         verbose_name_plural = _('stories')
-        ordering = ["-pub_date"]
 
 
 class ExternalLink(Content):
