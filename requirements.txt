@@ -41,7 +41,9 @@ django-pylibmc-sasl==0.2.4
 django-heroku-memcacheify==0.2
 
 ## production webserver
-gunicorn==0.14.2
+gunicorn==0.14.3
+gevent==0.13.7
+greenlet==0.3.4
 
 ## Database backends
 ## PostgreSQL adapter for Python
