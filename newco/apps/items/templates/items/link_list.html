@@ -26,7 +26,7 @@
             </form></h3>
         </div>
         <div class="span4"><h3>
-            {% blocktrans with content=link.content link_url=link.url %}{{ content }}: <a href="{{ link_url }}" target="_blank">there</a>{% endblocktrans %}
+            <a href="{{ link.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ link.content }}</a>
             {% if user.is_superuser or link.author == request.user %}
                 {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
             {% endif %}
