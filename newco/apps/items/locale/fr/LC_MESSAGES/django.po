@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 02:32+0200\n"
+"POT-Creation-Date: 2012-06-19 16:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: forms.py:45
-msgid "Ask something specific. Be concise."
-msgstr "Demandez quelque chose de précis. Soyez concis."
+msgid "Ask something specific."
+msgstr "Demandez quelque chose de précis."
 
 #: forms.py:77
 msgid "Be concise and to the point."
@@ -231,11 +231,15 @@ msgstr "Liste des items avec le tag"
 msgid "List of items in database:"
 msgstr "Liste des items en base :"
 
-#: templates/items/item_list.html:30
+#: templates/items/item_list.html:31
+msgid "No products are available with tag"
+msgstr "Pas de produits disponibles avec le tag"
+
+#: templates/items/item_list.html:33
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list.html:34
+#: templates/items/item_list.html:38
 msgid "Add an entry"
 msgstr "Ajouter un produit"
 
