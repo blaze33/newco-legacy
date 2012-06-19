@@ -173,10 +173,9 @@ INSTALLED_APPS = [
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    "mailer",
     "django_openid",
     "timezones",
-#    "emailconfirmation",
+    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
@@ -211,8 +210,6 @@ FIXTURE_DIRS = [
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
-
-EMAIL_BACKEND = "mailer.backend.DbBackend"
 
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
