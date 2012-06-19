@@ -13,12 +13,20 @@
         <h1>{{ page_user_display }}</h1>
     </header>
 
+    <div class="row one_row">
+        <div class="span5">
     {% include "profiles/_profile_info.html" %}
+        </div>
+        <div class="span2">
+            {% if is_me %}
+                <p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>
+            {% else %}
+                {% follow_form profile.user %}
+            {% endif %}
+        </div>
+    </div>
 
-    {% if is_me %}
-        </br>
-        <p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>
-    {% endif %}
+    </br>
 
     <div class="tabbable">
         <ul class="nav nav-tabs">

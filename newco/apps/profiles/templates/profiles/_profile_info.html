@@ -13,6 +13,4 @@
             {% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}"><span class="label">{{ skill.name }}</span></a> {% endfor %}
         {% endif %}
     </div>
-
-    {% if not is_me %}{% follow_form profile.user %}{% endif %}
 </div>
