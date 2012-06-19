@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 18:28+0200\n"
+"POT-Creation-Date: 2012-06-19 13:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 "NewCo vous aide à choisir en toute confiance</br>et à partager vos conseils "
 "entre utilisateurs."
 
-#: templates/homepage.html:32
+#: templates/homepage.html:28
 #, python-format
 msgid ""
 "Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
@@ -54,7 +54,7 @@ msgstr ""
 "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
 "large btn-primary\">L'index Produit</a></br>pour explorer le site."
 
-#: templates/homepage.html:38
+#: templates/homepage.html:35
 #, python-format
 msgid ""
 "Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
@@ -64,7 +64,7 @@ msgstr ""
 "btn-large btn-primary\">Comment contribuer ?</a></br>pour passer à l'étape "
 "suivante."
 
-#: templates/homepage.html:45
+#: templates/homepage.html:43
 #, python-format
 msgid ""
 "Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
@@ -81,12 +81,20 @@ msgstr "Profil"
 msgid "Products index"
 msgstr "Liste des produits"
 
+#: templates/follow/form.html:7
+msgid "Unfollow"
+msgstr "Abonné"
+
+#: templates/follow/form.html:9
+msgid "Follow"
+msgstr "Suivre"
+
 #: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:20
+#: templates/idios/profile.html:18
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 18:29+0200\n"
+"POT-Creation-Date: 2012-06-19 13:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,21 +43,21 @@ msgid ""
 "users."
 msgstr ""
 
-#: templates/homepage.html:32
+#: templates/homepage.html:28
 #, python-format
 msgid ""
 "Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
 "\">Product index</a></br>to explore the website."
 msgstr ""
 
-#: templates/homepage.html:38
+#: templates/homepage.html:35
 #, python-format
 msgid ""
 "Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
 "\">How to contribute?</a></br>to get ready for the next step."
 msgstr ""
 
-#: templates/homepage.html:45
+#: templates/homepage.html:43
 #, python-format
 msgid ""
 "Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
@@ -72,12 +72,20 @@ msgstr ""
 msgid "Products index"
 msgstr ""
 
+#: templates/follow/form.html:7
+msgid "Unfollow"
+msgstr ""
+
+#: templates/follow/form.html:9
+msgid "Follow"
+msgstr ""
+
 #: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:20
+#: templates/idios/profile.html:18
 msgid "Update my profile"
 msgstr ""
 

@@ -7,7 +7,7 @@
 {% for content in contents|slice:":20" %}{% with author=content.author pub_date=content.pub_date %}<div class="row content"><div class="span7">
 
     {% dict_entry_for_item question from question_score_dict as score %}
-    <hr>
+    {% if not forloop.first %}<hr>{% endif %}
 
     {% url profile_detail content.author as author_url %}
 
