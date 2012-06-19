@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 18:27+0200\n"
+"POT-Creation-Date: 2012-06-19 17:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: templates/about/faq.html:6 templates/about/faq.html.py:10
+#: templates/about/contribute.html:5 templates/about/contribute.html.py:8
+#: templates/about/faq.html:13
+msgid "How to contribute?"
+msgstr "Comment contribuer ?"
+
+#: templates/about/faq.html:6 templates/about/faq.html.py:9
 #: templates/about/team.html:6
 msgid "FAQ"
 msgstr "FAQ"
