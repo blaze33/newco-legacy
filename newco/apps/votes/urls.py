@@ -1,6 +1,6 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 
 
-urlpatterns = patterns('votes.views',
-    url(r"^(?P<model_name>[-\w]+)/(?P<object_id>\d+)/?$", 'rate_object', name='object_voting'),
+urlpatterns = patterns('',
+    url(r"^(?P<model_name>[-\w]+)/(?P<object_id>\d+)/?$", 'votes.views.rate_object', name='object_voting'),
 )
