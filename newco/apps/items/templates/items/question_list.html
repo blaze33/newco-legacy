@@ -18,7 +18,7 @@
             <form class="controls vote" action='{% url object_voting question|to_class_name question.id %}' method="POST">
                 {% csrf_token %}
                 <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
-                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></button>
             </form></h3>
         </div>
         <div class="span4"><h3>
@@ -43,7 +43,7 @@
                 <form action='{% url object_voting answer|to_class_name answer.id %}' class="controls vote" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
-                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
+                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></button>
                 </form></h3>
             </div>
 

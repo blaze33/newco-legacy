@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 16:25+0200\n"
+"POT-Creation-Date: 2012-06-19 18:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,6 +132,10 @@ msgstr ""
 #: templates/items/externallink_form.html:16
 #: templates/items/feature_form.html:17 templates/items/item_form.html:16
 msgid "Submit"
+msgstr ""
+
+#: templates/items/data_sheet.html:6
+msgid "Maybe they can help you?"
 msgstr ""
 
 #: templates/items/externallink_form.html:6
