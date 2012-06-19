@@ -134,8 +134,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context['form'] = f
             context['item'] = self.object
             context['prof_list'] = Profile.objects.filter(
-                skills__id=self.object.tags.values_list('id', flat=True)
-            )
+                skills__id__in=self.object.tags.values_list('id', flat=True)
+            ).distinct()
 
             #ordering questions
             questions = self.object.question_set.all()
