@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 16:13+0200\n"
+"POT-Creation-Date: 2012-06-19 14:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,13 +51,15 @@ msgid "answered a question about"
 msgstr "a répondu à une question à propos de"
 
 #: templates/profiles/_profile_content_list.html:20
-#: templates/profiles/_profile_content_list.html:43
+#: templates/profiles/_profile_content_list.html:44
 msgid "Q:"
 msgstr "Q :"
 
 #: templates/profiles/_profile_content_list.html:22
-#: templates/profiles/_profile_content_list.html:30
-#: templates/profiles/_profile_content_list.html:45
+#: templates/profiles/_profile_content_list.html:31
+#: templates/profiles/_profile_content_list.html:47
+#: templates/profiles/_profile_content_list.html:64
+#: templates/profiles/_profile_content_list.html:77
 msgid "by"
 msgstr "par"
 
@@ -65,17 +67,32 @@ msgstr "par"
 msgid "A:"
 msgstr "R :"
 
-#: templates/profiles/_profile_content_list.html:34
+#: templates/profiles/_profile_content_list.html:35
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
-#: templates/profiles/_profile_content_list.html:40
+#: templates/profiles/_profile_content_list.html:41
 msgid "asked a question about"
-msgstr "a posé une quetion à propos de"
+msgstr "a posé une question à propos de"
 
-#: templates/profiles/_profile_content_list.html:50
+#: templates/profiles/_profile_content_list.html:52
 msgid "Answer this question"
 msgstr "Répondre à cette question"
+
+#: templates/profiles/_profile_content_list.html:58
+msgid "posted a link about"
+msgstr "a posté un lien à propos de"
+
+#: templates/profiles/_profile_content_list.html:61
+#, python-format
+msgid ""
+"<a href=\"%(abs_url)s\">L:</a> %(content)s <a href=\"%(link_url)s\" target="
+"\"_blank\">there</a>"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:71
+msgid "suggested a feature on"
+msgstr "a suggéré une caractéristique sur"
 
 #: templates/profiles/_profile_info.html:5
 msgid "Name"
