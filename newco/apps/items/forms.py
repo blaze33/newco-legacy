@@ -42,7 +42,7 @@ class QuestionForm(ModelForm):
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',
-                'placeholder': _('Ask something specific. Be concise.'),
+                'placeholder': _('Ask something specific.'),
                 'rows': 1}),
         }
 

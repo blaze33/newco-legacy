@@ -24,15 +24,15 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
             <li><a href="#newsfeed" data-toggle="tab">{% trans "Newsfeed" %}</a></li>
-            <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
             <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
+            <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
         </ul>
 
         <div class="tab-content">
             <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
             <div id="newsfeed" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=newsfeed %}</div>
-            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees %}</div>
+            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
         </div>
     </div>
 {% endblock %}

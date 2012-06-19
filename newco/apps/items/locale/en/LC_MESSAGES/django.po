@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 02:32+0200\n"
+"POT-Creation-Date: 2012-06-19 16:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: forms.py:45
-msgid "Ask something specific. Be concise."
+msgid "Ask something specific."
 msgstr ""
 
 #: forms.py:77
@@ -230,11 +230,15 @@ msgstr ""
 msgid "List of items in database:"
 msgstr ""
 
-#: templates/items/item_list.html:30
+#: templates/items/item_list.html:31
+msgid "No products are available with tag"
+msgstr ""
+
+#: templates/items/item_list.html:33
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list.html:34
+#: templates/items/item_list.html:38
 msgid "Add an entry"
 msgstr ""
 
