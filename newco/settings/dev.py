@@ -20,6 +20,12 @@ DATABASES = {
     }
 }
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'newco.project.dev@gmail.com'
+EMAIL_HOST_PASSWORD = '!Password1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
     DATABASES = HEROKU_DATABASES

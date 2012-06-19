@@ -1,0 +1,11 @@
+{% load follow_tags %}
+{% load i18n %}
+
+<form action="{% follow_url object %}" method="POST">
+    {% csrf_token %}
+    {% if request.user|is_following:object %}
+        <input type="submit" class="btn btn-primary" value='{% trans "Unfollow" %}'/>
+    {% else %}
+        <input type="submit" class="btn" value='{% trans "Follow" %}'/>
+    {% endif %}
+</form>

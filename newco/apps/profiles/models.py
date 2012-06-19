@@ -4,12 +4,17 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
+from taggit.managers import TaggableManager
 
 from idios.models import ProfileBase
 
 from voting.models import Vote
-from items.models import Question, Answer
+from items.models import Question, Answer, ExternalLink, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
+
+from follow.utils import register
+
+register(User)
 
 
 class Profile(ProfileBase):
@@ -19,6 +24,11 @@ class Profile(ProfileBase):
                                                               blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
                                                        verify_exists=False)
+    skills = TaggableManager(
+        verbose_name=_("skills"),
+        help_text=_("The list of your main product skills"),
+        blank=True
+    )
 
 
 class Reputation(models.Model):
@@ -38,13 +48,12 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        for cls in [Question, Answer]:
+        for cls in [Question, Answer, ExternalLink, Feature]:
             ctype = ContentType.objects.get(
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name
                     )
-            queryset = cls.objects.filter(author=self.user)
-            obj_ids = [q._get_pk_val() for q in queryset]
+            obj_ids = cls.objects.filter(author=self.user).values_list('id', flat=True)
             votes = Vote.objects.filter(object_id__in=obj_ids,
                                         content_type=ctype)
 
@@ -53,7 +62,7 @@ class Reputation(models.Model):
 
         votes = Vote.objects.filter(user=self.user)
         for vote in votes:
-            rep += POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+            rep += POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
 
         return rep
 
@@ -77,7 +86,7 @@ def increment_reputation(sender, instance=None, **kwargs):
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
         rep_rated.reputation_incremented += \
-                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -86,7 +95,7 @@ def increment_reputation(sender, instance=None, **kwargs):
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
         rep_rating.reputation_incremented += \
-                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -102,7 +111,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
         rep_rated.reputation_incremented -= \
-                POINTS_TABLE_RATED[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -111,7 +120,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
         rep_rating.reputation_incremented -= \
-                POINTS_TABLE_RATING[vote.content_type.name][vote.vote]
+                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -137,8 +146,10 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(app_label=Reputation._meta.app_label,
-                                           model=Reputation._meta.module_name)
+    content_type = ContentType.objects.get(
+            app_label=Reputation._meta.app_label,
+            model=Reputation._meta.module_name
+    )
     permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)

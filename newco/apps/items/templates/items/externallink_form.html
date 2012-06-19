@@ -1,0 +1,20 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Link" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% block form_header %}{% blocktrans with item=form.item.name %}Add an external link to <i>{{ item }}</i>:{% endblocktrans %}{% endblock %}</h1>
+
+</br>
+
+<form action="." method="POST">{% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" name="add_link" class="btn" value='{% trans "Submit" %}'/>
+    <input type="hidden" name="item_id" value="{{ form.item.id }}"/>
+</form>
+
+{% endblock %}

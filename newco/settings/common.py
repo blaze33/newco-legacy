@@ -56,6 +56,13 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# Where to look to compile translations
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/about/locale',
+)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
@@ -135,7 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "pinax.apps.account.context_processors.account",
 
-    "notification.context_processors.notification",
+#    "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
 ]
 
@@ -156,7 +163,7 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # external
-    "notification",  # must be first
+#    "notification",  # must be first
     "staticfiles",
     "compressor",
     "debug_toolbar",
@@ -190,7 +197,7 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "votes",
-    "affiliation",
+    "follow",
 ]
 
 FIXTURE_DIRS = [
@@ -206,13 +213,13 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
-NOTIFICATION_LANGUAGE_MODULE = "account.Account"
+#NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
+ACCOUNT_EMAIL_AUTHENTICATION = True
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
@@ -221,20 +228,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGIN_REDIRECT_URL = "/about/what_next"
+LOGIN_REDIRECT_URLNAME = "contribute"
+LOGIN_REDIRECT_URL = "/about/contribute"
 
 LOGOUT_REDIRECT_URLNAME = "home"
 LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-LOCALE_PATHS = (
-    PROJECT_ROOT + '/apps/items/locale',
-    PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
-)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

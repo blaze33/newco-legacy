@@ -1,0 +1,39 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "How to contribute?" %}{% endblock %}
+
+{% block body %}
+    <div style="text-align:center;"><h1>{% trans "How to contribute?" %}</h1></div></br>
+
+    <div id="intro" style="text-align:center;"><h4>Bienvenue ! Vous venez d'arriver sur NewCo et vous vous demandez <i>comment ca marche</i> ? Voici quelques conseils pour vous aiguiller dans votre navigation sur le site.</h4></div></br>
+
+    <div id="presentation">
+        <h3>Présentation</h3>
+        <p>Il y a déjà à ce jour plusieurs manières de contribuer sur la plateforme et d'aider la communauté. Vous pouvez dès à présent créer des fiches produits, poser des questions et y répondre, raconter votre expérience utilisateur, et évaluer (voter) le contenu enfanté par d'autres contributeurs.</p>
+    </div>
+
+    <div>
+        <h3>Voici les principales étapes :</h3>
+        <ol>
+            <li><div id="signin"><h4>S'inscrire</h4><p>Apres vous être inscrits, vous pouvez commencer par mettre à jour votre profil en complétant vos données personnelles.</p></div></li></br>
+
+            <li><div id="info"><h4>S'informer</h4><ul>
+                <li>Une fois connecté, vous pouvez voir apparaitre dans la barre de navigation le bouton "Liste des Produits". S'affichera alors la liste.</li>
+                <li>Cliquez ensuite sur un produit qui vous intéresse pour voir s'afficher les différentes informations recueillies. Vous pouvez également ajouter un produit si vous souhaitez apporter des connaissances ou en demander.</li>
+                <li>Plusieurs nouvelles fonctionnalités ont été implémentées, comme par exemple le fait de pouvoir se consulter son flux de news personnalisé en s'abonnant à certains utilisateurs.</li>
+            </ul></div></li></br>
+
+            <li><div id="contribute"><h4>Contribuer en s'amusant</h4><ul>
+                <li>Vous pouvez commencer à contribuer au site en utilisant toutes les fonctionnalités offertes.</li>
+                <li>Vous avez ainsi la possibilité d'accumuler des points de réputation en apportant du contenu qui sera soumis aux votes des autres utlisateurs.</li>
+                <li>Vous pouvez pour l'instant voter dès l'inscription.</li>
+                <li><b>Let's get started!</b></li>
+            </ul></div></li></br>
+
+            <li><div id="feedback"><h4>Nous donner un feedback</h4><p>Dès votre premiere navigation sur le site, faites-nous partager vos impressions. Et n'hésitez pas à continuer à nous faire part de vos remarques une fois que vous aurez commencé à jouer avec la plateforme et gagné en réputation.</p></div></li>
+        </ol>
+    </div>
+{% endblock %}
+

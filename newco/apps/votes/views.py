@@ -9,7 +9,7 @@ APP_NAME = 'items'
 
 
 @login_required
-@permission_required('voting.can_vote')
+@permission_required('profiles.can_vote')
 def rate_object(request, model_name, object_id):
 
     model = get_model(APP_NAME, model_name)
