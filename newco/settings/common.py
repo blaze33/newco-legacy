@@ -56,6 +56,13 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# Where to look to compile translations
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/about/locale',
+)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
@@ -229,13 +236,6 @@ LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-LOCALE_PATHS = (
-    PROJECT_ROOT + '/apps/items/locale',
-    PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
-    PROJECT_ROOT + '/apps/about/locale',
-)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
