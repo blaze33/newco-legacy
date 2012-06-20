@@ -1,0 +1,80 @@
+## web framework
+Django==1.4
+
+## Pinax ecosystem (from pinax basic project requirements/base.txt)
+--extra-index-url=http://dist.pinaxproject.com/dev/
+--extra-index-url=http://dist.pinaxproject.com/alpha/
+Pinax==0.9b1.dev10
+
+## Pinax user account
+--extra-index-url=http://dist.pinaxproject.com/dev/ django-user-accounts
+django-user-accounts==1.0b1.dev5
+
+django-debug-toolbar==0.9.4
+django-staticfiles==1.2.1
+django_compressor==1.1.2
+
+django-mailer==0.2a1
+django-email-confirmation==0.2
+django-timezones==0.2
+pytz==2012c
+django-openid==0.3a1
+python-openid==2.2.5
+
+django-announcements==0.1.2
+django-pagination==1.0.7
+django-notification==0.2
+idios==0.2a1
+metron==0.1
+
+## upgraded pinax-theme-bootstrap
+## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
+pinax-theme-bootstrap==2.0.3
+git+git://github.com/pinax/pinax-theme-bootstrap-account.git@3224dd3ec5c31f7f0269634b369ba5f543235d59#egg=pinax_theme_bootstrap_account-dev
+
+## schema and data migrations
+South==0.7.4
+
+## AWS interface & storage backend
+boto==2.3.0
+django-storages==1.1.4
+
+## memcache interface
+pylibmc==1.2.2
+django-pylibmc-sasl==0.2.4
+## memcache configuration for heroku
+django-heroku-memcacheify==0.2
+
+## production webserver
+gunicorn==0.14.2
+
+## Database backends
+## PostgreSQL adapter for Python
+psycopg2==2.4.5
+## Database configuration for heroku
+django-heroku-postgresify==0.2
+
+## monitoring
+newrelic==1.2.1.265
+raven==1.7.5
+
+## tagging
+django-taggit==0.9.3
+
+## voting application
+django-voting==0.1
+
+## queryset handling for generic relations
+django-generic-aggregation==0.3.1
+
+## Following application
+django-follow==0.6
+
+## The following requirements were added by pip --freeze:
+argparse==1.2.1
+distribute==0.6.24
+django-appconf==0.5
+wsgiref==0.1.2
+simplejson==2.5.0
+dj-database-url==0.1.2
+django-forms-bootstrap==2.0.3.post1

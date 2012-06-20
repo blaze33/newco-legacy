@@ -8,112 +8,99 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-28 23:55+0200\n"
+"POT-Creation-Date: 2012-06-19 13:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: templates/_footer.html:4
+msgid "FAQ"
+msgstr ""
+
+#: templates/_footer.html:5
+msgid "Team"
+msgstr ""
+
+#: templates/_footer.html:8
+msgid "&copy; 2012 NewCo"
+msgstr ""
 
 #: templates/homepage.html:6
 msgid "Welcome"
 msgstr ""
 
-#: templates/homepage.html:12
-msgid "Welcome to Pinax"
+#: templates/homepage.html:18
+msgid "Empowering people to buy better"
 msgstr ""
 
-#: templates/homepage.html:15
+#: templates/homepage.html:21
 msgid ""
-"\n"
-"        <b>Pinax</b> is a <a href=\"http://djangoproject.com/\">Django</a>\n"
-"        project intended to provide a starting point for websites. By\n"
-"        integrating numerous reusable Django apps to take care of the\n"
-"        things that many sites have in common, it lets you focus on what\n"
-"        makes your site different.\n"
-"        "
+"NewCo helps you choose with confidence</br>and share your advice between "
+"users."
 msgstr ""
 
-#: templates/homepage.html:25
-msgid ""
-"\n"
-"        For more information about Pinax, see\n"
-"        <a href=\"http://pinaxproject.com/\">http://pinaxproject.com/</a>.\n"
-"        "
-msgstr ""
-
-#: templates/homepage.html:31
-msgid "About this project"
-msgstr ""
-
-#: templates/homepage.html:34
-msgid ""
-"\n"
-"        This project comes with the bare minimum set of applications and\n"
-"        templates to get you started. It includes no extra tabs, only the\n"
-"        profile and notices tabs are included by default. From here you can\n"
-"        add any extra functionality and applications that you would like.\n"
-"        "
-msgstr ""
-
-#: templates/homepage.html:45
-#, python-format
-msgid "Wondering <a href=\"%(what_next_url)s\">What Next</a>?"
-msgstr ""
-
-#: templates/homepage.html:50
+#: templates/homepage.html:28
 #, python-format
 msgid ""
-"You can <a href=\"%(signup_url)s\">Sign up</a> and <a href=\"%(login_url)s"
-"\">Log in</a> to try out the site."
+"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
+"\">Product index</a></br>to explore the website."
 msgstr ""
 
-#: templates/homepage.html:52
+#: templates/homepage.html:35
 #, python-format
-msgid "You can <a href=\"%(login_url)s\">Log in</a> to try out the site."
+msgid ""
+"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
+"\">How to contribute?</a></br>to get ready for the next step."
 msgstr ""
 
-#: templates/site_base.html:20
+#: templates/homepage.html:43
+#, python-format
+msgid ""
+"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
+"\">Sign up!</a></br>to start your new career."
+msgstr ""
+
+#: templates/site_base.html:44
 msgid "Profile"
 msgstr ""
 
-#: templates/site_base.html:21
-msgid "Notices"
+#: templates/site_base.html:45
+msgid "Products index"
 msgstr ""
 
-#: templates/site_base.html:28
-msgid "&copy; 2010 &lt;your company here&gt;"
+#: templates/follow/form.html:7
+msgid "Unfollow"
 msgstr ""
 
-#: templates/site_base.html:29
-msgid "About"
+#: templates/follow/form.html:9
+msgid "Follow"
 msgstr ""
 
-#: templates/site_base.html:30
-msgid "Terms of Service"
-msgstr ""
-
-#: templates/site_base.html:31
-msgid "Privacy Policy"
-msgstr ""
-
-#: templates/site_base.html:32
-msgid "DMCA Notice"
-msgstr ""
-
-#: templates/about/what_next.html:6 templates/about/what_next.html.py:9
-msgid "What Next?"
-msgstr ""
-
-#: templates/about/what_next.html:35
+#: templates/idios/profile.html:8
 #, python-format
-msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href=\"%(login_url)"
-"s\">logging in</a>."
+msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/about/what_next.html:37
-#, python-format
-msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
+#: templates/idios/profile.html:18
+msgid "Update my profile"
+msgstr ""
+
+#: templates/idios/profile.html:25
+msgid "History"
+msgstr ""
+
+#: templates/idios/profile.html:26
+msgid "Newsfeed"
+msgstr ""
+
+#: templates/idios/profile.html:27
+msgid "Followers"
+msgstr ""
+
+#: templates/idios/profile.html:28
+msgid "Followees"
 msgstr ""

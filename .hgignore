@@ -1,5 +1,22 @@
 # use glob syntax.
 syntax: glob
 
+#temp files
 *.pyc
 *~
+
+#dev file
+*.db
+
+#IDE files
+.settings/**
+
+#setup files
+build/
+
+#GIT setup
+.git/**
+.gitignore
+
+# MacOs - DS_Store ignore
+.DS_Store
