@@ -6,10 +6,10 @@ from profiles.models import Reputation
 from follow.models import Follow
 
 
-class MyProfileDetailView(ProfileDetailView):
+class ProfileDetailView(ProfileDetailView):
 
     def get_context_data(self, **kwargs):
-        context = super(MyProfileDetailView, self).get_context_data(**kwargs)
+        context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context['reputation'] = Reputation.objects.get(user=self.object.user)
 
         history = list(Question.objects.filter(author=self.object.user))
