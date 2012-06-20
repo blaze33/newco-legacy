@@ -175,10 +175,6 @@ INSTALLED_APPS = [
     "idios",
     "metron",
 
-    # Project
-    "about",
-    "profiles",
-
     # Deployment
     "south",
     "gunicorn",
@@ -187,12 +183,17 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # our business
-    "items",
+    # Foreign apps
     "taggit",
     "voting",
-    "votes",
     "follow",
+
+    # Project
+    "about",
+    "profiles",
+    "items",
+    "votes",
+    "custaccount",
 ]
 
 FIXTURE_DIRS = [
@@ -221,6 +222,8 @@ ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
+
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "contribute"
