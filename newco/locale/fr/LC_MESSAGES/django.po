@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-20 20:27+0200\n"
+"POT-Creation-Date: 2012-06-20 21:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,394 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: apps/about/templates/about/contribute.html:5
-#: apps/about/templates/about/contribute.html:8
-#: apps/about/templates/about/faq.html:13
-msgid "How to contribute?"
-msgstr ""
-
-#: apps/about/templates/about/faq.html:6 apps/about/templates/about/faq.html:9
-#: apps/about/templates/about/team.html:6 templates/_footer.html:4
+#: templates/_footer.html:4
 msgid "FAQ"
 msgstr "FAQ"
-
-#: apps/about/templates/about/team.html:10
-msgid "Who are we?"
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:6
-#: apps/about/templates/about/what_next.html:9
-msgid "What Next?"
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:35
-#, python-format
-msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
-"\"%(login_url)s\">logging in</a>."
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:37
-#, python-format
-msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
-msgstr ""
-
-#: apps/items/forms.py:45
-msgid "Ask something specific."
-msgstr ""
-
-#: apps/items/forms.py:77
-msgid "Be concise and to the point."
-msgstr ""
-
-#: apps/items/forms.py:119
-msgid "Link description"
-msgstr ""
-
-#: apps/items/forms.py:173
-msgid "positive"
-msgstr ""
-
-#: apps/items/forms.py:175
-msgid "What feature do you like?"
-msgstr ""
-
-#: apps/items/forms.py:178
-msgid "negative"
-msgstr ""
-
-#: apps/items/forms.py:180
-msgid "What feature do you dislike?"
-msgstr ""
-
-#: apps/items/models.py:22
-msgid "date published"
-msgstr ""
-
-#: apps/items/models.py:44 apps/profiles/models.py:21
-msgid "name"
-msgstr ""
-
-#: apps/items/models.py:45
-msgid "slug"
-msgstr ""
-
-#: apps/items/models.py:47
-msgid "last modified"
-msgstr ""
-
-#: apps/items/models.py:49
-msgid "tags"
-msgstr ""
-
-#: apps/items/models.py:50
-msgid "A comma-separated list of tags, describing the item."
-msgstr ""
-
-#: apps/items/models.py:54
-msgid "item"
-msgstr ""
-
-#: apps/items/models.py:71 apps/items/models.py:89 apps/items/models.py:105
-#: apps/items/models.py:115 apps/items/models.py:133
-msgid "content"
-msgstr ""
-
-#: apps/items/models.py:76
-msgid "question"
-msgstr ""
-
-#: apps/items/models.py:93
-msgid "answer"
-msgstr ""
-
-#: apps/items/models.py:104
-msgid "title"
-msgstr ""
-
-#: apps/items/models.py:110
-#, fuzzy
-msgid "story"
-msgstr "Historique"
-
-#: apps/items/models.py:111
-msgid "stories"
-msgstr ""
-
-#: apps/items/models.py:116
-msgid "URL"
-msgstr ""
-
-#: apps/items/models.py:121
-msgid "link"
-msgstr ""
-
-#: apps/items/models.py:139
-msgid "feature"
-msgstr ""
-
-#: apps/items/views.py:68 apps/items/views.py:118
-#, python-format
-msgid "Thanks %(user)s, %(object)s successfully created."
-msgstr ""
-
-#: apps/items/views.py:72 apps/items/views.py:122
-#, python-format
-msgid "Warning %(user)s, %(object)s form is invalid."
-msgstr ""
-
-#: apps/items/templates/items/answer_form.html:6
-msgid "Answer"
-msgstr ""
-
-#: apps/items/templates/items/answer_form.html:10
-#, python-format
-msgid "Your answer to <i>%(question)s</i>:"
-msgstr ""
-
-#: apps/items/templates/items/answer_form.html:16
-#: apps/items/templates/items/externallink_form.html:16
-#: apps/items/templates/items/feature_form.html:17
-#: apps/items/templates/items/item_form.html:16
-msgid "Submit"
-msgstr ""
-
-#: apps/items/templates/items/data_sheet.html:6
-msgid "Maybe they can help you?"
-msgstr ""
-
-#: apps/items/templates/items/externallink_form.html:6
-msgid "Link"
-msgstr ""
-
-#: apps/items/templates/items/externallink_form.html:10
-#, python-format
-msgid "Add an external link to <i>%(item)s</i>:"
-msgstr ""
-
-#: apps/items/templates/items/feature_form.html:6
-msgid "Feature"
-msgstr ""
-
-#: apps/items/templates/items/feature_form.html:11
-#, python-format
-msgid "Add a %(way)s feature to <i>%(item)s</i>:"
-msgstr ""
-
-#: apps/items/templates/items/feature_list.html:11
-msgid "Positive Features"
-msgstr ""
-
-#: apps/items/templates/items/feature_list.html:11
-msgid "Negative Features"
-msgstr ""
-
-#: apps/items/templates/items/feature_list.html:34
-#: apps/items/templates/items/link_list.html:35
-#: apps/items/templates/items/question_list.html:31
-#: apps/items/templates/items/question_list.html:57
-#: apps/profiles/templates/profiles/_profile_content_list.html:22
-#: apps/profiles/templates/profiles/_profile_content_list.html:31
-#: apps/profiles/templates/profiles/_profile_content_list.html:47
-#: apps/profiles/templates/profiles/_profile_content_list.html:64
-#: apps/profiles/templates/profiles/_profile_content_list.html:77
-msgid "by"
-msgstr ""
-
-#: apps/items/templates/items/feature_list.html:40
-msgid "Add a positive feature"
-msgstr ""
-
-#: apps/items/templates/items/feature_list.html:40
-msgid "Add a negative feature"
-msgstr ""
-
-#: apps/items/templates/items/item_confirm_delete.html:8
-#, python-format
-msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/templates/items/item_confirm_delete.html:13
-msgid "Yes"
-msgstr ""
-
-#: apps/items/templates/items/item_confirm_delete.html:15
-msgid "No"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:31
-msgid "Questions"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:32
-msgid "Links"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:33
-msgid "Features"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:34
-msgid "Stories"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:62
-msgid "Items list"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:63
-msgid "Edit Item"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:64
-msgid "Delete Item"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:6
-msgid "Item"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:10
-msgid "Add something new to talk about:"
-msgstr ""
-
-#: apps/items/templates/items/item_list.html:6
-#, fuzzy
-msgid "Products"
-msgstr "Liste des produits"
-
-#: apps/items/templates/items/item_list.html:17
-msgid "List of items with tag"
-msgstr ""
-
-#: apps/items/templates/items/item_list.html:19
-msgid "List of items in database:"
-msgstr ""
-
-#: apps/items/templates/items/item_list.html:31
-msgid "No products are available with tag"
-msgstr ""
-
-#: apps/items/templates/items/item_list.html:33
-msgid "No products are available."
-msgstr ""
-
-#: apps/items/templates/items/item_list.html:38
-msgid "Add an entry"
-msgstr ""
-
-#: apps/items/templates/items/link_list.html:7
-msgid "Publish an external link"
-msgstr ""
-
-#: apps/items/templates/items/question_form.html:5
-msgid "Question"
-msgstr ""
-
-#: apps/items/templates/items/question_form.html:7
-msgid "Ask something:"
-msgstr ""
-
-#: apps/items/templates/items/question_list.html:62
-msgid "Add a better answer"
-msgstr ""
-
-#: apps/items/templates/items/question_list.html:62
-#: apps/profiles/templates/profiles/_profile_content_list.html:52
-msgid "Answer this question"
-msgstr ""
-
-#: apps/profiles/models.py:22
-#, fuzzy
-msgid "about"
-msgstr "à propos"
-
-#: apps/profiles/models.py:23
-#, fuzzy
-msgid "location"
-msgstr "Région"
-
-#: apps/profiles/models.py:25
-#, fuzzy
-msgid "website"
-msgstr "Site internet"
-
-#: apps/profiles/models.py:28
-msgid "skills"
-msgstr ""
-
-#: apps/profiles/models.py:29
-msgid "The list of your main product skills"
-msgstr ""
-
-#: apps/profiles/models.py:40
-#, fuzzy
-msgid "reputation"
-msgstr "Réputation"
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:16
-msgid "answered a question about"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:20
-#: apps/profiles/templates/profiles/_profile_content_list.html:44
-msgid "Q:"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:27
-msgid "A:"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:35
-msgid "Add an answer"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:41
-msgid "asked a question about"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:58
-msgid "posted a link about"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:61
-#, python-format
-msgid ""
-"<a href=\"%(abs_url)s\">L:</a> %(content)s <a href=\"%(link_url)s\" target="
-"\"_blank\">there</a>"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_content_list.html:71
-msgid "suggested a feature on"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:5
-msgid "Name"
-msgstr "Nom"
-
-#: apps/profiles/templates/profiles/_profile_info.html:6
-msgid "About"
-msgstr "A propos"
-
-#: apps/profiles/templates/profiles/_profile_info.html:7
-msgid "Location"
-msgstr "Région"
-
-#: apps/profiles/templates/profiles/_profile_info.html:8
-msgid "Website"
-msgstr "Site internet"
-
-#: apps/profiles/templates/profiles/_profile_info.html:9
-msgid "Subscription date"
-msgstr "Date d'inscription"
-
-#: apps/profiles/templates/profiles/_profile_info.html:10
-msgid "Reputation"
-msgstr "Réputation"
-
-#: apps/profiles/templates/profiles/_profile_info.html:12
-msgid "Skills"
-msgstr ""
 
 #: templates/_footer.html:5
 msgid "Team"
@@ -502,6 +117,48 @@ msgstr "Abonnements"
 #: templates/idios/profile.html:28
 msgid "Followers"
 msgstr "Abonnés"
+
+#, fuzzy
+#~ msgid "story"
+#~ msgstr "Historique"
+
+#, fuzzy
+#~ msgid "Products"
+#~ msgstr "Liste des produits"
+
+#, fuzzy
+#~ msgid "about"
+#~ msgstr "à propos"
+
+#, fuzzy
+#~ msgid "location"
+#~ msgstr "Région"
+
+#, fuzzy
+#~ msgid "website"
+#~ msgstr "Site internet"
+
+#, fuzzy
+#~ msgid "reputation"
+#~ msgstr "Réputation"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "About"
+#~ msgstr "A propos"
+
+#~ msgid "Location"
+#~ msgstr "Région"
+
+#~ msgid "Website"
+#~ msgstr "Site internet"
+
+#~ msgid "Subscription date"
+#~ msgstr "Date d'inscription"
+
+#~ msgid "Reputation"
+#~ msgstr "Réputation"
 
 #~ msgid "Questions asked by %(page_user_display)s"
 #~ msgstr "Questions posées par %(page_user_display)s"
