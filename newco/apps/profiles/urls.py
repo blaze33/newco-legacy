@@ -8,4 +8,5 @@ urlpatterns = patterns('',
             ProfileDetailView.as_view(), name="profile_detail"),
     url(r"^(?P<profile_slug>[\w\._-]+)/profile/(?P<profile_pk>\d+)/$",
             ProfileDetailView.as_view(), name="profile_detail"),
+    url(r"^", include("idios.urls")),
 )

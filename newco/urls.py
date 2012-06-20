@@ -19,7 +19,6 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
-    url(r"^profiles/", include("idios.urls")),
     url(r"^votes/", include('votes.urls')),
     url(r"^follow/", include('follow.urls')),
 
