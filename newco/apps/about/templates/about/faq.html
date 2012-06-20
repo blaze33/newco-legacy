@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+
+{% block head_title %}{% trans "FAQ" %}{% endblock %}
+
+{% block body %}
+    <div style="text-align:center;"><h1>{% trans "FAQ" %}</h1></div></br>
+
+    <div id="partners"><h3>Quels sont les partenariats déjà en place ?</h3><p>Pour l'instant, nous avons négocié des partenariats d'affiliation avec Amazon, Décathlon, Virgin Mega, Woodbrass... Et bien plus à venir ! Vous pouvez nous contacter pour en savoir plus sur ces accords.</p></div></br>
+
+    <div id="contribute"><h3>Comment puis-je contribuer au site ?</h3><a href="{% url contribute %}" class="btn btn-primary">{% trans "How to contribute?" %}</a></div></br>
+
+    <div id="content"><h3>Comment vous assurez-vous d'avoir du contenu de qualité sur la plateforme ?</h3><p>La qualité du contenu est, avec l'expérience utilisateur, notre première préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en oeuvre pour :<ul><li>guider les contributeurs et les pousser à collaborer entre eux.</li><li>favoriser l'émergence du bon contenu via notre système d'intelligence collective.</li></ul></p></div></br>
+
+
+    <div id="reputation"><h3>Comment gagner des points de réputation ?</h3><p>Il vous est tres simple d'accumuler des points de réputation. Il suffit d'apporter une contribution (question/réponse, caractéristique, article). Si celle-ci est jugée positivement par la communauté, elle vous rapportera un certain nombre de points (dépendant du type de contribution) par vote favorable.</p></div></br>
+
+    <div id="tags"><h3>A quoi servent les tags ?</h3><p>Vous remarquerez qu'il y a 2 catégories différentes de tags : les tags produit et les tags utilisateur (compétences).<ul><li>Ils permettent de facilement naviguer sur le site, en favorisant le déplacement d'un produit ou d'une catégorie à l'autre.</li><li>Par la suite, ils nous permettrons d'introduire un système de cartographie intelligent des produits.</li><li>Enfin, on utilise aussi les tags pour associer chaque produit à un groupe d'experts.</li></ul></p></div>
+{% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 16:03+0200\n"
+"POT-Creation-Date: 2012-06-19 14:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,22 +17,106 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:16
+#: models.py:21
 msgid "name"
 msgstr ""
 
-#: models.py:17
+#: models.py:22
 msgid "about"
 msgstr ""
 
-#: models.py:18
+#: models.py:23
 msgid "location"
 msgstr ""
 
-#: models.py:20
+#: models.py:25
 msgid "website"
 msgstr ""
 
-#: models.py:30
+#: models.py:28
+msgid "skills"
+msgstr ""
+
+#: models.py:29
+msgid "The list of your main product skills"
+msgstr ""
+
+#: models.py:40
 msgid "reputation"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:16
+msgid "answered a question about"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:20
+#: templates/profiles/_profile_content_list.html:44
+msgid "Q:"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:22
+#: templates/profiles/_profile_content_list.html:31
+#: templates/profiles/_profile_content_list.html:47
+#: templates/profiles/_profile_content_list.html:64
+#: templates/profiles/_profile_content_list.html:77
+msgid "by"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:27
+msgid "A:"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:35
+msgid "Add an answer"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:41
+msgid "asked a question about"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:52
+msgid "Answer this question"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:58
+msgid "posted a link about"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:61
+#, python-format
+msgid ""
+"<a href=\"%(abs_url)s\">L:</a> %(content)s <a href=\"%(link_url)s\" target="
+"\"_blank\">there</a>"
+msgstr ""
+
+#: templates/profiles/_profile_content_list.html:71
+msgid "suggested a feature on"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:5
+msgid "Name"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:6
+msgid "About"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:7
+msgid "Location"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:8
+msgid "Website"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:9
+msgid "Subscription date"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:10
+msgid "Reputation"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:12
+msgid "Skills"
 msgstr ""

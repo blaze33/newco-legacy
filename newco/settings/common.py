@@ -56,6 +56,14 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# Where to look to compile translations
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/about/locale',
+    PROJECT_ROOT + '/apps/custaccount/locale',
+)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
@@ -109,7 +117,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "pinax.apps.account.middleware.LocaleMiddleware",
+    "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -133,9 +141,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "pinax.core.context_processors.pinax_settings",
 
-    "pinax.apps.account.context_processors.account",
+    "account.context_processors.account",
 
-    "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
 ]
 
@@ -148,34 +155,26 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "account",
 
     "pinax.templatetags",
 
     # theme
     "django_forms_bootstrap",
+    "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
 
     # external
-    "notification",  # must be first
+#    "notification",  # must be first
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    #"mailer",
     "django_openid",
     "timezones",
-    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
     "metron",
-
-    # Pinax
-    "pinax.apps.account",
-    "pinax.apps.signup_codes",
-
-    # Project
-    "about",
-    "profiles",
 
     # Deployment
     "south",
@@ -185,12 +184,17 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # our business
-    "items",
+    # Foreign apps
     "taggit",
     "voting",
+    "follow",
+
+    # Project
+    "about",
+    "profiles",
+    "items",
     "votes",
-    "affiliation",
+    "custaccount",
 ]
 
 FIXTURE_DIRS = [
@@ -199,42 +203,38 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-#EMAIL_BACKEND = "mailer.backend.DbBackend"
-
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
 
+AUTHENTICATION_BACKENDS = [
+    'account.auth_backends.EmailAuthenticationBackend',
+]
+
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
-]
+# django-user-accounts
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_CONTACT_EMAIL = False
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
+ACCOUNT_CREATE_ON_SAVE = False
+
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGIN_REDIRECT_URL = "/about/what_next"
+LOGIN_REDIRECT_URLNAME = "contribute"
+LOGIN_REDIRECT_URL = "/about/contribute"
 
 LOGOUT_REDIRECT_URLNAME = "home"
 LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-LOCALE_PATHS = (
-    PROJECT_ROOT + '/apps/items/locale',
-    PROJECT_ROOT + '/apps/profiles/locale',
-    PROJECT_ROOT + '/apps/affiliation/locale',
-)
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

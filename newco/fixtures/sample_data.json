@@ -67,7 +67,7 @@
         ]
       ],
       "password": "sha1$9c7fe$2315a465603e1853004dfc531e2121d2a6a1d845",
-      "email": "",
+      "email": "sebastien.worms@gmail.com",
       "date_joined": "2012-06-14 12:04:40"
     }
   },
@@ -90,8 +90,8 @@
           "reputation"
         ]
       ],
-      "password": "sha1$5bec8$ddfdcbd92edb125a5322ba57d581ffa3489fc081",
-      "email": "",
+      "password": "pbkdf2_sha256$10000$QFy7oQTHGt8t$a4MvNuAFw2E/e9O+31fjJBzCOqW1k9cGCCqT0Ldv+xE=",
+      "email": "guillaume.andreu.sabater@gmail.com",
       "date_joined": "2012-06-14 12:05:15"
     }
   },
@@ -115,7 +115,7 @@
         ]
       ],
       "password": "sha1$6a767$5092d8d06e57d2f42f522c910beed21d8d26eeb4",
-      "email": "",
+      "email": "guillaume.kalaydjian@gmail.com",
       "date_joined": "2012-06-14 12:05:43"
     }
   },
@@ -197,26 +197,6 @@
     "fields": {
       "domain": "www.newco-project.fr",
       "name": "NewCo"
-    }
-  },
-  {
-    "pk": 1,
-    "model": "notification.noticetype",
-    "fields": {
-      "default": 2,
-      "description": "you have received an announcement",
-      "display": "Announcement",
-      "label": "announcement"
-    }
-  },
-  {
-    "pk": 1,
-    "model": "emailconfirmation.emailaddress",
-    "fields": {
-      "verified": true,
-      "user": 1,
-      "primary": true,
-      "email": "rouyrre@gmail.com"
     }
   },
   {

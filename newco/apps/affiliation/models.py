@@ -11,6 +11,7 @@ class Currency(models.Model):
     name = models.CharField(max_length=15, verbose_name=_('name'))
 
     class Meta:
+        abstract = True
         verbose_name = _("currency")
         verbose_name_plural = _("currencies")
 
@@ -26,18 +27,24 @@ class Store(models.Model):
                                          verbose_name=_('last modified'))
 
     class Meta:
+        abstract = True
         verbose_name = _("store")
 
     def __unicode__(self):
         return u'%s' % (self.name)
 
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Store, self).save()
+
 
 class AffiliationItem(models.Model):
     item = models.ForeignKey(Item)
-    store = models.ForeignKey(Store)
+    store = models.ForeignKey(Store, verbose_name=_('store'))
     url = models.URLField(max_length=1000, verbose_name=_('url'))
-    price_currency = models.ForeignKey(Currency)
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0, verbose_name=_('price'))
+    currency = models.ForeignKey(Currency, verbose_name=_('currency'),
+                                           verbose_name_plural=_('currencies'))
     creation_date = models.DateTimeField(default=datetime.datetime.today(),
                                     editable=False,
                                     verbose_name=_('date created'))
@@ -45,6 +52,7 @@ class AffiliationItem(models.Model):
                                     verbose_name=_('last modified'))
 
     class Meta:
+        abstract = True
         verbose_name = _("affiliation item")
 
     def __unicode__(self):
