@@ -120,9 +120,6 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-
-    # Pinax
-    # "pinax.apps.account.middleware.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "newco.urls"
@@ -145,8 +142,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
 
-    # commented for django 1.4
-    # "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
 ]
 
@@ -175,15 +170,10 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_openid",
     "timezones",
-    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
     "metron",
-
-    # Pinax
-    # "pinax.apps.account",
-    # "pinax.apps.signup_codes",
 
     # Project
     "about",
@@ -225,7 +215,7 @@ ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
-ACCOUNT_EMAIL_CONFIRMATION_EMAIL = False
+ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
 
 LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
