@@ -188,7 +188,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     "object": self.object._meta.verbose_name
                 }
             )
-        return HttpResponseRedirect(self.get_object().get_absolute_url())
+        return HttpResponseRedirect(self.object.get_absolute_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
