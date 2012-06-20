@@ -205,6 +205,10 @@ ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
 
+AUTHENTICATION_BACKENDS = [
+    'account.auth_backends.EmailAuthenticationBackend',
+]
+
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
