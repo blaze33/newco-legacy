@@ -28,15 +28,15 @@
 
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
-        <li><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
-        <li><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
+        <li{% if '_' not in request.path or 'q_' in request.path or 'a_' in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+        <li{% if 'l_' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
+        <li{% if 'f_' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="questions" class="tab-pane active">{% include "items/question_list.html" %}</div>
-        <div id="links" class="tab-pane">{% include "items/link_list.html" %}</div>
-        <div id="features" class="tab-pane">{% include "items/feature_list.html" %}</div>
+        <div id="questions" class="tab-pane{% if '_' not in request.path or 'q_' in request.path or 'a_' in request.path %} active{% endif %}">{% include "items/question_list.html" %}</div>
+        <div id="links" class="tab-pane{% if 'l_' in request.path %} active{% endif %}">{% include "items/link_list.html" %}</div>
+        <div id="features" class="tab-pane{% if 'f_' in request.path %} active{% endif %}">{% include "items/feature_list.html" %}</div>
     </div>
 </div>
 
