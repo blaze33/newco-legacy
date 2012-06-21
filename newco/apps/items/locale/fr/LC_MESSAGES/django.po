@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 18:28+0200\n"
+"POT-Creation-Date: 2012-06-20 20:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,27 +191,31 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: templates/items/item_detail.html:32
+#: templates/items/item_detail.html:31
 msgid "Questions"
 msgstr "Questions"
 
-#: templates/items/item_detail.html:33
+#: templates/items/item_detail.html:32
 msgid "Links"
 msgstr "Liens"
 
-#: templates/items/item_detail.html:34
+#: templates/items/item_detail.html:33
 msgid "Features"
 msgstr "Caractéristiques"
 
-#: templates/items/item_detail.html:45
+#: templates/items/item_detail.html:34
+msgid "Stories"
+msgstr "Articles"
+
+#: templates/items/item_detail.html:62
 msgid "Items list"
 msgstr "Liste des Items"
 
-#: templates/items/item_detail.html:46
+#: templates/items/item_detail.html:63
 msgid "Edit Item"
 msgstr "Editer l'Item"
 
-#: templates/items/item_detail.html:47
+#: templates/items/item_detail.html:64
 msgid "Delete Item"
 msgstr "Supprimer l'Item"
 
@@ -251,11 +255,6 @@ msgstr "Ajouter un produit"
 msgid "Publish an external link"
 msgstr "Publier un lien externe"
 
-#: templates/items/link_list.html:29
-#, python-format
-msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
-msgstr "%(content)s : <a href=\"%(link_url)s\" target=\"_blank\">ici</a>"
-
 #: templates/items/question_form.html:5
 msgid "Question"
 msgstr "Question"
@@ -271,3 +270,6 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/question_list.html:62
 msgid "Answer this question"
 msgstr "Répondre à cette question"
+
+#~ msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
+#~ msgstr "%(content)s : <a href=\"%(link_url)s\" target=\"_blank\">ici</a>"

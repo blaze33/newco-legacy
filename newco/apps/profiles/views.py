@@ -1,4 +1,8 @@
+from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect, HttpResponseGone
 from django.contrib.auth.models import User
+from django.views.generic.base import RedirectView
+from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView
 
 from items.models import Question, Answer, ExternalLink, Feature
@@ -6,10 +10,28 @@ from profiles.models import Reputation
 from follow.models import Follow
 
 
-class MyProfileDetailView(ProfileDetailView):
+class ProfileRedirectView(RedirectView):
+
+    def get(self, request, *args, **kwargs):
+        if 'username' in kwargs:
+            username = kwargs['username']
+            profile = User.objects.get(username=username).get_profile()
+            url = reverse('profile_detail_full', kwargs={
+                'username': username, 'slug': profile.slug}
+            )
+        if url:
+            if self.permanent:
+                return HttpResponsePermanentRedirect(url)
+            else:
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponseGone()
+
+
+class ProfileDetailView(ProfileDetailView):
 
     def get_context_data(self, **kwargs):
-        context = super(MyProfileDetailView, self).get_context_data(**kwargs)
+        context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context['reputation'] = Reputation.objects.get(user=self.object.user)
 
         history = list(Question.objects.filter(author=self.object.user))
