@@ -143,7 +143,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
 
-    "announcements.context_processors.site_wide_announcements",
 ]
 
 INSTALLED_APPS = [
