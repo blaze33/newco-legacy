@@ -279,6 +279,7 @@
       "about": "",
       "name": "Max",
       "location": "",
+      "slug": "max",
       "user": 1
     }
   },
@@ -290,6 +291,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 2
     }
   },
@@ -301,6 +303,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 3
     }
   },
@@ -312,6 +315,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 4
     }
   },
@@ -323,6 +327,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 5
     }
   },
@@ -334,6 +339,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 6
     }
   },
@@ -345,6 +351,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "",
       "user": 7
     }
   },
@@ -356,6 +363,7 @@
       "about": null,
       "name": null,
       "location": null,
+      "slug": "max",
       "user": 8
     }
   },
