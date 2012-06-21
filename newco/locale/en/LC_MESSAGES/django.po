@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-20 21:20+0200\n"
+"POT-Creation-Date: 2012-06-21 12:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,14 +22,14 @@ msgid "FAQ"
 msgstr ""
 
 #: templates/_footer.html:5
-msgid "Team"
+msgid "How to contribute?"
 msgstr ""
 
 #: templates/_footer.html:6
-msgid "How to contribute"
+msgid "Team"
 msgstr ""
 
-#: templates/_footer.html:9
+#: templates/_footer.html:8
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
