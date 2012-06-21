@@ -21,9 +21,6 @@ urlpatterns = patterns("",
     url(r"^profiles/", include("profiles.urls")),
     url(r"^votes/", include('votes.urls')),
     url(r"^follow/", include('follow.urls')),
-
-    # commented for django 1.4
-    # url(r"^notices/", include("notification.urls")),
 )
 
 urlpatterns += patterns("",
