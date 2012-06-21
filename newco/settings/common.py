@@ -195,6 +195,9 @@ INSTALLED_APPS = [
     "items",
     "votes",
     "custaccount",
+
+    # Tests
+    "tests",
 ]
 
 FIXTURE_DIRS = [

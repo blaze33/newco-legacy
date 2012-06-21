@@ -6,7 +6,7 @@ Django==1.4
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
 
-## Pinax user account
+## Django user account
 --extra-index-url=http://dist.pinaxproject.com/dev/ django-user-accounts
 django-user-accounts==1.0b1.dev5
 
@@ -69,6 +69,9 @@ django-generic-aggregation==0.3.1
 
 ## Following application
 django-follow==0.6
+
+## tests
+selenium==2.24.0
 
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
