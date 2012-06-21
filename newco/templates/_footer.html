@@ -1,4 +1,9 @@
 {% load i18n %}
+
+<hr>
+<a href="{% url faq %}">{% trans "FAQ" %}</a>&nbsp;|&nbsp;
+<a href="{% url contribute %}">{% trans "How to contribute?" %}</a>&nbsp;|&nbsp;
+<a href="{% url team %}">{% trans "Team" %}</a>
 <div class="legal">
     {% trans "&copy; 2012 NewCo" %}
 </div>

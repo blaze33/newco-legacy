@@ -17,3 +17,6 @@ build/
 #GIT setup
 .git/**
 .gitignore
+
+# MacOs - DS_Store ignore
+.DS_Store

@@ -1,0 +1,20 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Answer" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% block form_header %}{% blocktrans with question=form.question.content %}Your answer to <i>{{ question }}</i>:{% endblocktrans %}{% endblock %}</h1>
+
+</br>
+
+<form action="." method="POST">{% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" name="add_answer" class="btn" value='{% trans "Submit" %}'/>
+    <input type="hidden" name="question_id" value="{{ form.question.id }}"/>
+</form>
+
+{% endblock %}

@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-21 12:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: forms.py:45
+msgid "Ask something specific."
+msgstr "Demandez quelque chose de précis."
+
+#: forms.py:77
+msgid "Be concise and to the point."
+msgstr "Soyez concis et direct."
+
+#: forms.py:119
+msgid "Link description"
+msgstr "Description du lien"
+
+#: forms.py:173
+msgid "positive"
+msgstr "positive"
+
+#: forms.py:175
+msgid "What feature do you like?"
+msgstr "Quelle caractéristique apprécies-tu ?"
+
+#: forms.py:178
+msgid "negative"
+msgstr "négative"
+
+#: forms.py:180
+msgid "What feature do you dislike?"
+msgstr "Quelle caractéristique te déplait ?"
+
+#: models.py:22
+msgid "date published"
+msgstr "date de publication"
+
+#: models.py:44
+msgid "name"
+msgstr "nom"
+
+#: models.py:45
+msgid "slug"
+msgstr "slug"
+
+#: models.py:47
+msgid "last modified"
+msgstr "dernière modification"
+
+#: models.py:49
+msgid "tags"
+msgstr "tags"
+
+#: models.py:50
+msgid "A comma-separated list of tags, describing the item."
+msgstr "Une liste de tags, séparés par des virgules, et décrivant l'item."
+
+#: models.py:54
+msgid "item"
+msgstr "item"
+
+#: models.py:71 models.py:89 models.py:105 models.py:115 models.py:133
+msgid "content"
+msgstr "contenu"
+
+#: models.py:76
+msgid "question"
+msgstr "question"
+
+#: models.py:93
+msgid "answer"
+msgstr "réponse"
+
+#: models.py:104
+msgid "title"
+msgstr "titre"
+
+#: models.py:110
+msgid "story"
+msgstr "article"
+
+#: models.py:111
+msgid "stories"
+msgstr "articles"
+
+#: models.py:116
+msgid "URL"
+msgstr "URL"
+
+#: models.py:121
+msgid "link"
+msgstr "lien"
+
+#: models.py:139
+msgid "feature"
+msgstr "caractéristique"
+
+#: views.py:68 views.py:118
+#, python-format
+msgid "Thanks %(user)s, %(object)s successfully created."
+msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
+
+#: views.py:72 views.py:122
+#, python-format
+msgid "Warning %(user)s, %(object)s form is invalid."
+msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
+
+#: templates/items/answer_form.html:6
+msgid "Answer"
+msgstr "Réponse"
+
+#: templates/items/answer_form.html:10
+#, python-format
+msgid "Your answer to <i>%(question)s</i>:"
+msgstr "Votre réponse à <i>%(question)s</i>:"
+
+#: templates/items/answer_form.html:16
+#: templates/items/externallink_form.html:16
+#: templates/items/feature_form.html:17 templates/items/item_form.html:16
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/items/data_sheet.html:6
+msgid "Maybe they can help you?"
+msgstr "Peut-être peuvent-ils vous aider ?"
+
+#: templates/items/externallink_form.html:6
+msgid "Link"
+msgstr "Lien"
+
+#: templates/items/externallink_form.html:10
+#, python-format
+msgid "Add an external link to <i>%(item)s</i>:"
+msgstr "Ajouter un lien externe à <i>%(item)s</i> :"
+
+#: templates/items/feature_form.html:6
+msgid "Feature"
+msgstr "Caractéristique"
+
+#: templates/items/feature_form.html:11
+#, python-format
+msgid "Add a %(way)s feature to <i>%(item)s</i>:"
+msgstr "Ajouter une caractéristique %(way)s à <i>%(item)s</i> :"
+
+#: templates/items/feature_list.html:11
+msgid "Positive Features"
+msgstr "Caractéristiques positives"
+
+#: templates/items/feature_list.html:11
+msgid "Negative Features"
+msgstr "Caractéristiques négatives"
+
+#: templates/items/feature_list.html:34 templates/items/link_list.html:35
+#: templates/items/question_list.html:31 templates/items/question_list.html:57
+msgid "by"
+msgstr "par"
+
+#: templates/items/feature_list.html:40
+msgid "Add a positive feature"
+msgstr "Ajouter une caractéristique positive"
+
+#: templates/items/feature_list.html:40
+msgid "Add a negative feature"
+msgstr "Ajouter une caractéristique négative"
+
+#: templates/items/item_confirm_delete.html:8
+#, python-format
+msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
+msgstr "L'object %(class)s <i>%(name)s</i> sera supprimé :"
+
+#: templates/items/item_confirm_delete.html:13
+msgid "Yes"
+msgstr "Oui"
+
+#: templates/items/item_confirm_delete.html:15
+msgid "No"
+msgstr "Non"
+
+#: templates/items/item_detail.html:31
+msgid "Questions"
+msgstr "Questions"
+
+#: templates/items/item_detail.html:32
+msgid "Links"
+msgstr "Liens"
+
+#: templates/items/item_detail.html:33
+msgid "Features"
+msgstr "Caractéristiques"
+
+#: templates/items/item_detail.html:34
+msgid "Stories"
+msgstr "Articles"
+
+#: templates/items/item_detail.html:62
+msgid "Items list"
+msgstr "Liste des Items"
+
+#: templates/items/item_detail.html:63
+msgid "Edit Item"
+msgstr "Editer l'Item"
+
+#: templates/items/item_detail.html:64
+msgid "Delete Item"
+msgstr "Supprimer l'Item"
+
+#: templates/items/item_form.html:6
+msgid "Item"
+msgstr "Item"
+
+#: templates/items/item_form.html:10
+msgid "Add something new to talk about:"
+msgstr "De quoi voulez-vous parler :"
+
+#: templates/items/item_list.html:6
+msgid "Products"
+msgstr "Produits"
+
+#: templates/items/item_list.html:17
+msgid "List of items with tag"
+msgstr "Liste des items avec le tag"
+
+#: templates/items/item_list.html:19
+msgid "List of items in database:"
+msgstr "Liste des items en base :"
+
+#: templates/items/item_list.html:31
+msgid "No products are available with tag"
+msgstr "Pas de produits disponibles avec le tag"
+
+#: templates/items/item_list.html:33
+msgid "No products are available."
+msgstr "Pas de produits disponibles."
+
+#: templates/items/item_list.html:38
+msgid "Add an entry"
+msgstr "Ajouter un produit"
+
+#: templates/items/link_list.html:7
+msgid "Publish an external link"
+msgstr "Publier un lien externe"
+
+#: templates/items/question_form.html:5
+msgid "Question"
+msgstr "Question"
+
+#: templates/items/question_form.html:7
+msgid "Ask something:"
+msgstr "Demandez quelque chose :"
+
+#: templates/items/question_list.html:62
+msgid "Add a better answer"
+msgstr "Donner une meilleure réponse"
+
+#: templates/items/question_list.html:62
+msgid "Answer this question"
+msgstr "Répondre à cette question"
+
+#~ msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
+#~ msgstr "%(content)s : <a href=\"%(link_url)s\" target=\"_blank\">ici</a>"

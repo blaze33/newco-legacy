@@ -19,20 +19,9 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('profiles', ['Profile'])
 
-        # Adding M2M table for field reviews on 'Profile'
-        db.create_table('profiles_profile_reviews', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('profile', models.ForeignKey(orm['profiles.profile'], null=False)),
-            ('review', models.ForeignKey(orm['reviews.review'], null=False))
-        ))
-        db.create_unique('profiles_profile_reviews', ['profile_id', 'review_id'])
-
     def backwards(self, orm):
         # Deleting model 'Profile'
         db.delete_table('profiles_profile')
-
-        # Removing M2M table for field reviews on 'Profile'
-        db.delete_table('profiles_profile_reviews')
 
     models = {
         'auth.group': {
@@ -77,24 +66,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'reviews': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['reviews.Review']", 'symmetrical': 'False'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
-        },
-        'reviews.review': {
-            'Meta': {'ordering': "('-creation_date',)", 'object_name': 'Review'},
-            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'comment': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'content_id': ('django.db.models.fields.PositiveIntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'content_type_set_for_review'", 'to': "orm['contenttypes.ContentType']"}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'ip_address': ('django.db.models.fields.IPAddressField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'score': ('django.db.models.fields.FloatField', [], {'default': '3.0'}),
-            'session_id': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'review_comments'", 'null': 'True', 'to': "orm['auth.User']"}),
-            'user_email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'user_name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'})
         }
     }
 

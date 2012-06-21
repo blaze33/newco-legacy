@@ -44,17 +44,25 @@ MANAGERS = ADMINS
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = "US/Eastern"
+TIME_ZONE = "Europe/Paris"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr"
 
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+
+# Where to look to compile translations
+LOCALE_PATHS = (
+    PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/profiles/locale',
+    PROJECT_ROOT + '/apps/about/locale',
+    PROJECT_ROOT + '/apps/custaccount/locale',
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -98,8 +106,8 @@ SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
-    "django.template.loaders.filesystem.load_template_source",
-    "django.template.loaders.app_directories.load_template_source",
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -109,7 +117,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "pinax.apps.account.middleware.LocaleMiddleware",
+    "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -128,20 +136,14 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    
+
     "staticfiles.context_processors.static",
-    
+
     "pinax.core.context_processors.pinax_settings",
-    
-    "pinax.apps.account.context_processors.account",
-    
-    "notification.context_processors.notification",
+
+    "account.context_processors.account",
+
     "announcements.context_processors.site_wide_announcements",
-    
-    # social_auth
-#    'social_auth.context_processors.social_auth_by_name_backends',
-#    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
 ]
 
 INSTALLED_APPS = [
@@ -153,50 +155,46 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
-    "django.contrib.comments",
-    
+    "account",
+
     "pinax.templatetags",
-    
+
     # theme
+    "django_forms_bootstrap",
+    "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
-    
+
     # external
-    "notification", # must be first
+#    "notification",  # must be first
     "staticfiles",
     "compressor",
     "debug_toolbar",
-    "mailer",
     "django_openid",
     "timezones",
-    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
     "metron",
-    "social_auth",
-    "configurableproduct",
-    "shop",
-    "voting",
-    
-    # Pinax
-    "pinax.apps.account",
-    "pinax.apps.signup_codes",
-    
-    # Project
-    "about",
-    "profiles",
-    "socauth",
-    "pp",
-    "reviews",
-    "vote_urls",
-    
+
     # Deployment
     "south",
     "gunicorn",
     "storages",
-    
+
     # Monitoring
-    'raven.contrib.django',
+    "raven.contrib.django",
+
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
+
+    # Project
+    "about",
+    "profiles",
+    "items",
+    "votes",
+    "custaccount",
 ]
 
 FIXTURE_DIRS = [
@@ -205,66 +203,38 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-EMAIL_BACKEND = "mailer.backend.DbBackend"
-
 ABSOLUTE_URL_OVERRIDES = {
     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
 }
 
+AUTHENTICATION_BACKENDS = [
+    'account.auth_backends.EmailAuthenticationBackend',
+]
+
 AUTH_PROFILE_MODULE = "profiles.Profile"
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-ACCOUNT_OPEN_SIGNUP = False
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
-    
-    # social_auth backends
-#    'social_auth.backends.twitter.TwitterBackend',
-#    'social_auth.backends.facebook.FacebookBackend',
-#    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-#    'social_auth.backends.yahoo.YahooBackend',
-#    'social_auth.backends.browserid.BrowserIDBackend',
-#    'social_auth.backends.contrib.linkedin.LinkedinBackend',
-#    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-#    'social_auth.backends.contrib.orkut.OrkutBackend',
-#    'social_auth.backends.contrib.foursquare.FoursquareBackend',    
-#    'social_auth.backends.contrib.github.GithubBackend',
-#    'social_auth.backends.contrib.dropbox.DropboxBackend',
-#    'social_auth.backends.contrib.flickr.FlickrBackend',
-#    'social_auth.backends.contrib.instagram.InstagramBackend',
-#    'social_auth.backends.OpenIDBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
+# django-user-accounts
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_CONTACT_EMAIL = False
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
+ACCOUNT_CREATE_ON_SAVE = False
 
-SOCIAL_AUTH_ENABLED_BACKENDS = [
-    'google',
-]
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGIN_REDIRECT_URL = "/about/what_next"
+LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
+LOGIN_REDIRECT_URLNAME = "contribute"
+LOGIN_REDIRECT_URL = "/about/contribute"
 
 LOGOUT_REDIRECT_URLNAME = "home"
 LOGIN_ERROR_URL = LOGIN_URL
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-
-ENABLE_CPRODUCT_ADMIN = True
-
-# reviews settings
-REVIEWS_SHOW_PREVIEW = True
-REVIEWS_IS_MODERATED = False
-REVIEWS_IS_EMAIL_REQUIRED = False
-REVIEWS_IS_NAME_REQUIRED = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
