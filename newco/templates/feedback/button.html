@@ -3,29 +3,28 @@
         <button class="close" data-dismiss="modal">×</button>
         <h3>Faites nous part de votre avis&nbsp;:</h3>
     </div>
-    <form  action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
+    <form action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
     <div class="modal-body form-horizontal">
         <div class="control-group">
             <label class="control-label" for="Name">Nom (optionnel) :</label>
             <div class="controls">
-                <input name="Name"class="input-large"/>
+                <input type="text" name="Name" class="input-large"/>
             </div>
         </div>
             
         <div class="control-group">
             <label class="control-label" for="email">Email (optionnel) :</label>
             <div class="controls">
-                <input name="email" class="input-large"/>
+                <input type="text" name="email" class="input-large"/>
             </div>
         </div>
         
         <div class="control-group">
             <label class="control-label" for="subject" >Sujet (optionnel) :</label>
             <div class="controls">
-                <input name="subject" class="input-large"/>
+                <input type="text" name="subject" class="input-large"/>
             </div>
         </div>
-
         
         <div class="hidden-phone">
             <textarea id="input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
