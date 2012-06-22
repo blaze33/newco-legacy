@@ -63,6 +63,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
 # Absolute path to the directory that holds media.
