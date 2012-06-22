@@ -10,7 +10,7 @@
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}
 
-    {% with author_url=content.author.get_absolute_url %}
+    {% with author_url=author.get_absolute_url %}
 
     {% if content|to_class_name == "answer" %}{% with question=content.question %}
         <div class="row one_row"><div class="span7">
@@ -79,6 +79,7 @@
             </small></p></div>
         </div>
     {% endif %}
+    {% endwith %}
 
 </div></div>{% endwith %}{% endfor %}
 
