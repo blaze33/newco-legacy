@@ -3,7 +3,7 @@
 <div class="profile-item">
     <div class="name">
         {% if profile.name %}
-            <h4><a href="{% url profile_detail profile.user.username %}">{{ profile.name }} ({% user_display profile.user %})</a></h4>
+            <h4><a href="{% url profile_detail profile.user.username %}">{% user_display profile.user %}</a></h4>
         {% else %}
             <h4><a href="{% url profile_detail profile.user.username %}">{% user_display profile.user %}</a></h4>
         {% endif %}
