@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from idios.views import ProfileUpdateView
 
 from profiles.views import ProfileRedirectView, ProfileDetailView
 
@@ -8,5 +9,6 @@ urlpatterns = patterns('',
             ProfileRedirectView.as_view(), name="profile_detail"),
     url(r"^profile/(?P<username>[\w\._-]+)/(?P<slug>[\w\._-]+)/$",
             ProfileDetailView.as_view(), name="profile_detail_full"),
+    url(r"^edit/$", ProfileUpdateView.as_view(), name="profile_edit"),
     url(r"^", include("idios.urls")),
 )
