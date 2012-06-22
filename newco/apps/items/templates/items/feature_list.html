@@ -2,6 +2,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 {% load staticfiles %}
+{% load account_tags %}
 
 <div class="row">{% for feat_list in feat_lists %}<div class="span4">
 
@@ -31,7 +32,7 @@
                 {% endif %}
             </div>
             <div class="span1 right"><p class="signature"><small>
-                <b>{{ feat.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail feat.author %}'>{{ feat.author }}</a>
+                <b>{{ feat.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail feat.author %}'>{% user_display feat.author %}</a>
             </small></p></div>
 
     </div><hr>{% endfor %}
