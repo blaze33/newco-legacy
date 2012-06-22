@@ -31,6 +31,9 @@ class Profile(ProfileBase):
         blank=True
     )
 
+    class Meta:
+        verbose_name = _("profile")
+
     def save(self, **kwargs):
         self.slug = slugify(self.name)
         super(Profile, self).save(**kwargs)
