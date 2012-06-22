@@ -10,7 +10,7 @@
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}
 
-    {% url profile_detail content.author as author_url %}
+    {% with author_url=content.author.get_absolute_url %}
 
     {% if content|to_class_name == "answer" %}{% with question=content.question %}
         <div class="row one_row"><div class="span7">
@@ -20,7 +20,7 @@
         <div class="row one_row">
             <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a> {{ question.content }}</small></p></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href="{% url profile_detail question.author %}">{% user_display question.author %}</a>
+                <b>{{ pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href="{{ question.author.get_absolute_url }}">{% user_display question.author %}</a>
             </small></p></div>
         </div>
 

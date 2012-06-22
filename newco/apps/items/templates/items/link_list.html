@@ -33,7 +33,7 @@
             {% endif %}
         </h3></div>
         <div class="span2 right"><p class="signature"><small>
-            <b>{{ link.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail link.author %}'>{% user_display link.author %}</a>
+            <b>{{ link.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{{ link.author.get_absolute_url }}'>{% user_display link.author %}</a>
         </small></p></div>
     </div>
     <hr>
