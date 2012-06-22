@@ -143,7 +143,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax.core.context_processors.pinax_settings",
 
     "account.context_processors.account",
-
+    "pinax_theme_bootstrap_account.context_processors.theme",
 ]
 
 INSTALLED_APPS = [
