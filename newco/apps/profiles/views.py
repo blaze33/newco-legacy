@@ -6,29 +6,19 @@ from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView
 
 from items.models import Question, Answer, ExternalLink, Feature
-from profiles.models import Reputation
+from profiles.models import Profile, Reputation
 from follow.models import Follow
 
 
-class ProfileRedirectView(RedirectView):
-
-    def get(self, request, *args, **kwargs):
-        if 'username' in kwargs:
-            username = kwargs['username']
-            profile = User.objects.get(username=username).get_profile()
-            url = reverse('profile_detail_full', kwargs={
-                'username': username, 'slug': profile.slug}
-            )
-        if url:
-            if self.permanent:
-                return HttpResponsePermanentRedirect(url)
-            else:
-                return HttpResponseRedirect(url)
-        else:
-            return HttpResponseGone()
-
-
 class ProfileDetailView(ProfileDetailView):
+
+    def dispatch(self, request, *args, **kwargs):
+        profile=Profile.objects.get(pk=kwargs.pop('pk'))
+        if profile.slug and kwargs['slug'] != profile.slug:
+            url=profile.get_absolute_url()
+            return HttpResponsePermanentRedirect(url)
+        kwargs['username']=profile.user
+        return super(ProfileDetailView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)

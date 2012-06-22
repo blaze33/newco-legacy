@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 from idios.models import ProfileBase
@@ -37,6 +38,10 @@ class Profile(ProfileBase):
     def save(self, **kwargs):
         self.slug = slugify(self.name)
         super(Profile, self).save(**kwargs)
+
+    def get_absolute_url(self):
+        kwargs = {'pk': self.pk, 'slug': self.slug}
+        return reverse('profile_detail', kwargs=kwargs)
 
 
 class Reputation(models.Model):

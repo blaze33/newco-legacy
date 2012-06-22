@@ -1,7 +1,9 @@
 {% load account_tags %}
 <div class="span7"><table class="table table-condensed"><tbody><tr><td>
 <div class="profile-item">
-    <div class="name"><h4><a href="{% url profile_detail profile.user.username %}">{% user_display profile.user %}</a></h4></div>
+    <div class="name">
+        <h4><a href="{% url profile_detail profile.id profile.slug %}">{% user_display profile.user %}</a></h4>
+    </div>
     <div class="details">
         {% if profile.location %}{{ profile.location }}{% endif %}
         {% if profile.location and profile.website%}&bull;{% endif %}
