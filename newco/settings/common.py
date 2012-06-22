@@ -6,6 +6,7 @@ import sys
 import os.path
 import posixpath
 import socket
+from django.utils.translation import get_language_info
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
@@ -226,6 +227,10 @@ ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
+ACCOUNT_LANGUAGES = [
+    (code, get_language_info(code).get("name_local"))
+    for code in ['fr', 'en']
+]
 
 ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 
