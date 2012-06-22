@@ -227,22 +227,12 @@ ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
+ACCOUNT_LOGIN_REDIRECT_URL = "contribute"
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
-
-ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
-
-LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "contribute"
-LOGIN_REDIRECT_URL = "/about/contribute"
-
-LOGOUT_REDIRECT_URLNAME = "home"
-LOGIN_ERROR_URL = LOGIN_URL
-
-EMAIL_CONFIRMATION_DAYS = 2
-EMAIL_DEBUG = DEBUG
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
