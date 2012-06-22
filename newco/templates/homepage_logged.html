@@ -10,7 +10,7 @@
 {% block body %}
     {% user_display page_user as page_user_display %}
     <header class="jumbotron subhead" id="overview">
-        <h1>{{ page_user_display }} - Homepage - to be edited</h1>
+        <h1>{{ page_user_display }}</h1>
     </header>
 
     <div class="row one_row">
@@ -22,8 +22,8 @@
 
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
-            <li><a href="#newsfeed" data-toggle="tab">{% trans "Newsfeed" %}</a></li>
+            <li class="active"><a href="#newsfeed" data-toggle="tab">{% trans "Newsfeed" %}</a></li>
+            <li><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
             <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
             <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
         </ul>
