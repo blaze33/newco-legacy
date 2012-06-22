@@ -7,7 +7,10 @@ from account.forms import SignupForm
 class SignupForm(SignupForm):
 
     profile_name = CharField(label=_("Profile name"), max_length=30,
-        help_text=_("Required. 30 characters or fewer."),
+        help_text=_(
+                "30 characters tops. Can be whatever you want. "
+                "And can be modified."
+        ),
         error_messages={'max_length': _("No more than 30 characters.")}
     )
 
