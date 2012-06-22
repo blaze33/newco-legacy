@@ -2,8 +2,6 @@ from django.http import HttpResponsePermanentRedirect
 from django.http import HttpResponseRedirect, HttpResponseGone
 from django.views.generic.base import RedirectView, TemplateView
 
-from profiles.views import ProfileDetailView
-
 
 class HomePageRedirectView(RedirectView, TemplateView):
 
