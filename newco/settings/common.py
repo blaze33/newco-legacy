@@ -211,6 +211,7 @@ ABSOLUTE_URL_OVERRIDES = {
 
 AUTHENTICATION_BACKENDS = [
     'account.auth_backends.EmailAuthenticationBackend',
+    'profiles.backends.ProfileBackend',
 ]
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
