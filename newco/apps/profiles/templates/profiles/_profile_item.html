@@ -6,8 +6,8 @@
         {% if profile.location %}{{ profile.location }}{% endif %}
         {% if profile.location and profile.website%}&bull;{% endif %}
         {% if profile.website %}<a href="{{ profile.website }}">{{ profile.website }}</a>{% endif %}
-        {% if profile.website and profile.skills%}&bull;{% endif %}
-        {% if profile.skills %}{% for tag_pro in profile.skills.all %}<a href="{% url tagged_items tag_pro.slug %}"><span class="label">{{ tag_pro.name }}</span></a> {% endfor %}{% endif %}
+        {% if profile.website and profile.skills %}&bull;{% endif %}
+        {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}"><span class="label">{{ skill.name }}</span></a> {% endfor %}{% endif %}
     </div>
     <div class="clear"></div>
 </div>
