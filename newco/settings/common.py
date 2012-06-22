@@ -221,6 +221,8 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
+LOGIN_URL = "/account/login"
+
 # django-user-accounts
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
