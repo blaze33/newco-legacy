@@ -13,7 +13,7 @@
 
     <hr>
 
-    {% for feat in feat_list %}<div class="row one_row" id="f_{{ feat.id }}">
+    {% for feat in feat_list %}<div class="row one_row" id="f-{{ feat.id }}">
         {% dict_entry_for_item feat from vote_dict as vote %}
         {% dict_entry_for_item feat from score_dict as score %}
 

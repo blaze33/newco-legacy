@@ -17,7 +17,7 @@
     {% dict_entry_for_item link from link_vote_dict as vote %}
     {% dict_entry_for_item link from link_score_dict as score %}
 
-    <div class="row one_row" id="l_{{ link.id }}">
+    <div class="row one_row" id="l-{{ link.id }}">
         <div class="span1">
             <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
             <form class="controls vote" action='{% url object_voting link|to_class_name link.id %}' method="POST">

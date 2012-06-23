@@ -13,7 +13,7 @@
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
-    <div class="row one_row" id="q_{{ question.id }}">
+    <div class="row one_row" id="q-{{ question.id }}">
         <div class="span1">
             <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
             <form class="controls vote" action='{% url object_voting question|to_class_name question.id %}' method="POST">
@@ -38,7 +38,7 @@
     {% for answer in question.answer_set.all %}
         {% dict_entry_for_item answer from answer_vote_dict as vote %}
         {% dict_entry_for_item answer from answer_score_dict as score %}
-        <div class="row one_row" id="a_{{ answer.id }}" rel="popover">
+        <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
             <div class="span1">
                 <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
                 <form action='{% url object_voting answer|to_class_name answer.id %}' class="controls vote" method="POST">
