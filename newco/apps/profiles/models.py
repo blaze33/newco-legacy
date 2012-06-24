@@ -68,8 +68,8 @@ class Reputation(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_reputation(sender, instance=None, **kwargs):
-    if instance is None:
+def create_reputation(sender, instance=None, raw=False, **kwargs):
+    if instance is None or raw == True:
         return
     rep, created = Reputation.objects.get_or_create(user=instance)
     rep.reputation_computed = rep.compute_reputation()
