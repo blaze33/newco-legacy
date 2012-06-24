@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 14:08+0200\n"
+"POT-Creation-Date: 2012-06-22 02:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,26 +22,34 @@ msgid "name"
 msgstr ""
 
 #: models.py:22
-msgid "about"
+msgid "slug"
 msgstr ""
 
 #: models.py:23
+msgid "about"
+msgstr ""
+
+#: models.py:24
 msgid "location"
 msgstr ""
 
-#: models.py:25
+#: models.py:26
 msgid "website"
 msgstr ""
 
-#: models.py:28
+#: models.py:29
 msgid "skills"
 msgstr ""
 
-#: models.py:29
+#: models.py:30
 msgid "The list of your main product skills"
 msgstr ""
 
-#: models.py:40
+#: models.py:35
+msgid "profile"
+msgstr ""
+
+#: models.py:48
 msgid "reputation"
 msgstr ""
 

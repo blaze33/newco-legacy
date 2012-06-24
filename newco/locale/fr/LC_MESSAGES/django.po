@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-20 21:19+0200\n"
+"POT-Creation-Date: 2012-06-21 12:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,14 +22,14 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #: templates/_footer.html:5
+msgid "How to contribute?"
+msgstr "Comment contribuer"
+
+#: templates/_footer.html:6
 msgid "Team"
 msgstr "L'équipe"
 
-#: templates/_footer.html:6
-msgid "How to contribute"
-msgstr "Comment contribuer"
-
-#: templates/_footer.html:9
+#: templates/_footer.html:8
 msgid "&copy; 2012 NewCo"
 msgstr "&copy; 2012 NewCo"
 
@@ -117,66 +117,6 @@ msgstr "Abonnements"
 #: templates/idios/profile.html:28
 msgid "Followers"
 msgstr "Abonnés"
-
-#, fuzzy
-#~ msgid "story"
-#~ msgstr "Historique"
-
-#, fuzzy
-#~ msgid "Products"
-#~ msgstr "Liste des produits"
-
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "à propos"
-
-#, fuzzy
-#~ msgid "location"
-#~ msgstr "Région"
-
-#, fuzzy
-#~ msgid "website"
-#~ msgstr "Site internet"
-
-#, fuzzy
-#~ msgid "reputation"
-#~ msgstr "Réputation"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "About"
-#~ msgstr "A propos"
-
-#~ msgid "Location"
-#~ msgstr "Région"
-
-#~ msgid "Website"
-#~ msgstr "Site internet"
-
-#~ msgid "Subscription date"
-#~ msgstr "Date d'inscription"
-
-#~ msgid "Reputation"
-#~ msgstr "Réputation"
-
-#~ msgid "Questions asked by %(page_user_display)s"
-#~ msgstr "Questions posées par %(page_user_display)s"
-
-#~ msgid "on"
-#~ msgstr "sur"
-
-#~ msgid "Score:"
-#~ msgstr "Score :"
-
-#~ msgid "with"
-#~ msgstr "avec"
-
-#~ msgid "vote"
-#~ msgstr "vote"
-
-#~ msgid "Answers suggested by %(page_user_display)s"
-#~ msgstr "Réponses suggérées par %(page_user_display)s"
 
 #~ msgid "Notices"
 #~ msgstr "Notifications"
