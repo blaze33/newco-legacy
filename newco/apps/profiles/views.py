@@ -15,7 +15,7 @@ class ProfileDetailView(ProfileDetailView):
     
     def get(self, request, *args, **kwargs): 
         
-        if 'username' in kwargs: #  url = profile => comme avant
+        if 'pk' in kwargs: #  url = profile => comme avant
             #return direct_to_template(request, "banner_base.html")
             return super(ProfileDetailView, self).get(self,
                                                     request,
@@ -35,12 +35,17 @@ class ProfileDetailView(ProfileDetailView):
         
 
     def dispatch(self, request, *args, **kwargs):
-        profile=Profile.objects.get(pk=kwargs.pop('pk'))
-        if profile.slug and kwargs['slug'] != profile.slug:
-            url=profile.get_absolute_url()
-            return HttpResponsePermanentRedirect(url)
-        kwargs['username']=profile.user
+        if 'pk' in kwargs:
+            profile=Profile.objects.get(pk=kwargs.pop('pk'))
+            if profile.slug and kwargs['slug'] != profile.slug:
+                url=profile.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+            kwargs['username']=profile.user
+            
+#        else:
+#            profile=Profile.objects.get(pk=request.user.id)
         return super(ProfileDetailView, self).dispatch(request, *args, **kwargs)
+
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
