@@ -15,35 +15,32 @@ class ProfileDetailView(ProfileDetailView):
     
     def get(self, request, *args, **kwargs): 
         
-        if 'pk' in kwargs: #  url = profile => comme avant
-            #return direct_to_template(request, "banner_base.html")
+        if 'username' in kwargs: # case: url = profiles/profile/##/slug 
             return super(ProfileDetailView, self).get(self,
                                                     request,
                                                     *args,
                                                     **kwargs)
         
-        elif request.user.is_authenticated(): #url = homepage => je recupere
+        elif request.user.is_authenticated(): # case url = homepage
             self.template_name = "homepage_logged.html"
             self.page_user = request.user
             self.object = self.page_user.get_profile()
             context = self.get_context_data()
+            context.update({'kwargs': kwargs})
             return self.render_to_response(context)
        
         else:
-           # template_name = "homepage.html"
             return direct_to_template(request, "homepage.html")
         
 
     def dispatch(self, request, *args, **kwargs):
-        if 'pk' in kwargs:
+        if 'pk' in kwargs: #only useful if user is in a "profile" view, not on homepage
             profile=Profile.objects.get(pk=kwargs.pop('pk'))
             if profile.slug and kwargs['slug'] != profile.slug:
                 url=profile.get_absolute_url()
                 return HttpResponsePermanentRedirect(url)
             kwargs['username']=profile.user
             
-#        else:
-#            profile=Profile.objects.get(pk=request.user.id)
         return super(ProfileDetailView, self).dispatch(request, *args, **kwargs)
 
 
