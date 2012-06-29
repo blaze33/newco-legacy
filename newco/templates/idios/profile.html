@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load account_tags %}
 {% load voting_tags %}
+{% load follow_tags %}
 
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
 
@@ -14,7 +15,7 @@
 
     <div class="row one_row">
         <div class="span5">{% include "profiles/_profile_info.html" %}</div>
-        <div class="span2">{% if is_me %}<p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>{% else %}{% include "follow/follow_form.html" with object=page_user %}{% endif %}</div>
+        <div class="span2">{% if is_me %}<p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>{% else %}{% follow_form page_user %}{% endif %}</div>
     </div>
 
     </br>
