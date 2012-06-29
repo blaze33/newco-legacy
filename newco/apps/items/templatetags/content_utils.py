@@ -4,6 +4,11 @@ register = template.Library()
 
 
 @register.filter
+def to_app_label(value):
+    return value._meta.app_label
+
+
+@register.filter
 def to_class_name(value):
     return value._meta.module_name
 
