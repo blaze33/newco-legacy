@@ -1,6 +1,9 @@
 from django.http import HttpResponsePermanentRedirect
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth.models import User
+from django.views.generic.base import RedirectView
+from django.views.generic.simple import direct_to_template
+from django.core.urlresolvers import reverse
 from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -15,12 +18,33 @@ from follow.utils import toggle
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
 
+    def get(self, request, *args, **kwargs): 
+        
+        if 'username' in kwargs: # case: url = profiles/profile/##/slug 
+            return super(ProfileDetailView, self).get(self,
+                                                    request,
+                                                    *args,
+                                                    **kwargs)
+        
+        elif request.user.is_authenticated(): # case url = homepage
+            self.template_name = "homepage_logged.html"
+            self.page_user = request.user
+            self.object = self.page_user.get_profile()
+            context = self.get_context_data()
+            context.update({'kwargs': kwargs})
+            return self.render_to_response(context)
+       
+        else:
+            return direct_to_template(request, "homepage.html")
+
     def dispatch(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=kwargs.pop('pk'))
-        if profile.slug and kwargs['slug'] != profile.slug:
-            url = profile.get_absolute_url()
-            return HttpResponsePermanentRedirect(url)
-        kwargs['username'] = profile.user
+        if 'pk' in kwargs: #only useful if user is in a "profile" view, not on homepage
+            profile = Profile.objects.get(pk=kwargs.pop('pk'))
+            if profile.slug and kwargs['slug'] != profile.slug:
+                url = profile.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+            kwargs['username'] = profile.user
+            
         return super(ProfileDetailView, self).dispatch(request,
                                                         *args, **kwargs)
 
