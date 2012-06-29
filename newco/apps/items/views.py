@@ -1,5 +1,3 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
@@ -8,8 +6,10 @@ from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-from pinax.apps.account.utils import user_display
+from account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
 
