@@ -2,6 +2,7 @@ from django.http import HttpResponsePermanentRedirect
 from django.http import HttpResponseRedirect, HttpResponseGone
 from django.contrib.auth.models import User
 from django.views.generic.base import RedirectView
+from django.views.generic.simple import direct_to_template
 from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView
 
@@ -11,6 +12,27 @@ from follow.models import Follow
 
 
 class ProfileDetailView(ProfileDetailView):
+    
+    def get(self, request, *args, **kwargs): 
+        
+        if 'username' in kwargs: #  url = profile => comme avant
+            #return direct_to_template(request, "banner_base.html")
+            return super(ProfileDetailView, self).get(self,
+                                                    request,
+                                                    *args,
+                                                    **kwargs)
+        
+        elif request.user.is_authenticated(): #url = homepage => je recupere
+            self.template_name = "homepage_logged.html"
+            self.page_user = request.user
+            self.object = self.page_user.get_profile()
+            context = self.get_context_data()
+            return self.render_to_response(context)
+       
+        else:
+           # template_name = "homepage.html"
+            return direct_to_template(request, "homepage.html")
+        
 
     def dispatch(self, request, *args, **kwargs):
         profile=Profile.objects.get(pk=kwargs.pop('pk'))
