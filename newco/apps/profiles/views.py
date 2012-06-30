@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from idios.views import ProfileDetailView
 from django.db.models.loading import get_model
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
 
 from items.models import Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
@@ -106,21 +108,30 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 message_txt_content += " \n\nThanks, The NewCo team. \n--- \nTo control which emails we send you, visit \n<url to your profile settings>"
                 #send_mail( message_subject, message_txt_content, 'auto-mailer@newco-test.com', [profile_followee.user.email], fail_silently=False)
                 
-                msg_html = "<html>\n<head>\n    <title>\n"
-                msg_html += message_subject
-                msg_html += "    </title>\n</head>\n<body>\n<strong>"
-                msg_html += profile_followee.name
-                msg_html += "</strong>,<br><br><a href='http://www.newco-project.fr"
-                msg_html += profile_follower.get_absolute_url()
-                msg_html += "'>"
-                msg_html += profile_follower.name
-                msg_html += "</a> vous suit maintenant sur NewCo !<br><br><hr><small>Cet email vous a ete envoye "
-                msg_html += "parce que cette option est activee dans votre profil. Pour changer votre configuration "
-                msg_html += "cliquez <a href='http://www.newco-project.fr"
-                msg_html += profile_followee.get_absolute_url()
-                msg_html += "' >ici</a>(option bientot disponible).<br>The NewCo Project team</small>"
-                msg_html += "</body></html>"
-
+#                msg_html = "<html>\n<head>\n    <title>\n"
+#                msg_html += message_subject
+#                msg_html += "    </title>\n</head>\n<body>\n<strong>"
+#                msg_html += profile_followee.name
+#                msg_html += "</strong>,<br><br><a href='http://www.newco-project.fr"
+#                msg_html += profile_follower.get_absolute_url()
+#                msg_html += "'>"
+#                msg_html += profile_follower.name
+#                msg_html += "</a> vous suit maintenant sur NewCo !<br><br><hr><small>Cet email vous a ete envoye "
+#                msg_html += "parce que cette option est activee dans votre profil. Pour changer votre configuration "
+#                msg_html += "cliquez <a href='http://www.newco-project.fr"
+#                msg_html += profile_followee.get_absolute_url()
+#                msg_html += "' >ici</a>(option bientot disponible).<br>The NewCo Project team</small>"
+#                msg_html += "</body></html>"
+                
+                html_template = get_template('follow/_follow_notification_email.html')
+                d = Context({ 'profile_followee_name': profile_followee.name,
+                             'message_subject' : message_subject,
+                             'profile_follower_url' : profile_follower.get_absolute_url(),
+                             'profile_follower_name' : profile_follower.name,
+                             'profile_followee_url' : profile_followee.get_absolute_url(),
+                             'follower_user' : request.user })
+                msg_html = html_template.render(d)
+                
                 from_email, to = 'auto-mailer@newco-project.fr', profile_followee.user.email
                 #text_content = 'This is an important message.'
                 #html_content = '<p>This is an <strong>important</strong> message.</p>'
