@@ -1,26 +1,37 @@
 from django.http import HttpResponseRedirect, HttpResponseServerError
 
-from follow.utils import toggle
+from voting.models import Vote
 
 from utils.tools import load_object
 
+VOTE_DIRECTIONS = (('up', 1), ('down', -1), ('clear', 0))
 
-def process_following(request):
+
+def process_voting(request):
     obj = load_object(request)
-    follow = toggle(request.user, obj)
+    direction = request.POST['vote_button']
 
     try:
-        # Might be something better to do
-        # than follow.target.get_absolute_url()
-        return HttpResponseRedirect(follow.target.get_absolute_url())
+        if obj.author != request.user:
+            try:
+                vote = dict(VOTE_DIRECTIONS)[direction]
+            except KeyError:
+                raise AttributeError(
+                    "'%s' is not a valid vote type." % direction
+                )
+
+            Vote.objects.record_vote(obj, request.user, vote)
+
+        return HttpResponseRedirect(obj.get_absolute_url())
+
     except (AttributeError, TypeError):
         if 'HTTP_REFERER' in request.META:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        elif follow:
+        elif obj:
             return HttpResponseServerError(
                         '"%s" object of type ``%s`` has no method ' + \
                         '``get_absolute_url()``.' % \
-                        (unicode(follow.target), follow.target.__class__)
+                        (unicode(obj), obj.__class__)
             )
         else:
             return HttpResponseServerError(

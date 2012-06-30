@@ -17,14 +17,7 @@
         {% dict_entry_for_item feat from vote_dict as vote %}
         {% dict_entry_for_item feat from score_dict as score %}
 
-            <div class="span1">
-                <h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
-                <form class="controls vote" action='{% url object_voting feat|to_class_name feat.id %}' method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
-                    <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></input>
-                </form></h5>
-            </div>
+            <div class="span1"><h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% voting_form feat vote %}</h5></div>
             <div class="span2">
                 {{ feat.content }}
                 {% if user.is_superuser or feat.author == request.user %}

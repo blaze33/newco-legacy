@@ -194,7 +194,6 @@ INSTALLED_APPS = [
     "about",
     "profiles",
     "items",
-    "votes",
     "custaccount",
 
     # Tests
