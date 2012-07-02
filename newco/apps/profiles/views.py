@@ -88,41 +88,24 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             obj = model._default_manager.get(pk=pk)
             follow = toggle(request.user, obj)
             
-            if 'follow' in request.POST:
+            if 'follow' in request.POST: # If "follow" send an email to followee
                 profile_followee= kwargs['username'].get_profile()
                 profile_follower=request.user.get_profile()
                 
                 message_subject = profile_followee.name
                 message_subject += ", "
                 message_subject += profile_follower.name
-                #message_subject += " is now following you on NewCo !"
                 message_subject += " vous suit maintenant sur NewCo !"
                 
                 message_txt_content = profile_followee.name
                 message_txt_content += ", "
                 message_txt_content += profile_follower.name
-                message_txt_content += " is now following you on NewCo !\n To view "
-                message_txt_content += profile_follower.name #changer en le nom du suiveur
-                message_txt_content += "'s profile, click here : \nhttp://www.newco-project.fr"
+                message_txt_content += " vous suit maintenant sur NewCo !\n Pour voir le profil de "
+                message_txt_content += profile_follower.name
+                message_txt_content += " , click here : \nhttp://www.newco-project.fr"
                 message_txt_content += profile_followee.get_absolute_url()
                 message_txt_content += " \n\nThanks, The NewCo team. \n--- \nTo control which emails we send you, visit \n<url to your profile settings>"
-                #send_mail( message_subject, message_txt_content, 'auto-mailer@newco-test.com', [profile_followee.user.email], fail_silently=False)
-                
-#                msg_html = "<html>\n<head>\n    <title>\n"
-#                msg_html += message_subject
-#                msg_html += "    </title>\n</head>\n<body>\n<strong>"
-#                msg_html += profile_followee.name
-#                msg_html += "</strong>,<br><br><a href='http://www.newco-project.fr"
-#                msg_html += profile_follower.get_absolute_url()
-#                msg_html += "'>"
-#                msg_html += profile_follower.name
-#                msg_html += "</a> vous suit maintenant sur NewCo !<br><br><hr><small>Cet email vous a ete envoye "
-#                msg_html += "parce que cette option est activee dans votre profil. Pour changer votre configuration "
-#                msg_html += "cliquez <a href='http://www.newco-project.fr"
-#                msg_html += profile_followee.get_absolute_url()
-#                msg_html += "' >ici</a>(option bientot disponible).<br>The NewCo Project team</small>"
-#                msg_html += "</body></html>"
-                
+
                 html_template = get_template('follow/_follow_notification_email.html')
                 d = Context({ 'profile_followee_name': profile_followee.name,
                              'message_subject' : message_subject,
@@ -133,8 +116,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 msg_html = html_template.render(d)
                 
                 from_email, to = 'auto-mailer@newco-project.fr', profile_followee.user.email
-                #text_content = 'This is an important message.'
-                #html_content = '<p>This is an <strong>important</strong> message.</p>'
+                
                 msg = EmailMultiAlternatives(message_subject, message_txt_content, from_email, [profile_followee.user.email])
                 msg.attach_alternative(msg_html, "text/html")
                 msg.send()
