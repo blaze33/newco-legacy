@@ -14,6 +14,7 @@ handler500 = "pinax.views.server_error"
 urlpatterns = patterns("",
     url(r"^$", HomePageRedirectView.as_view(), name="home"),
     url(r"^admin/", include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r"^about/", include("about.urls")),
     url(r"^account/", include("custaccount.urls")),
     url(r"^announcements/", include("announcements.urls")),
