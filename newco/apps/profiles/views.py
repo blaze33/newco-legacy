@@ -5,15 +5,11 @@ from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from idios.views import ProfileDetailView
-from django.db.models.loading import get_model
-from django.core.mail import send_mail, EmailMultiAlternatives
-from django.template.loader import get_template
-from django.template import Context
 
 from items.models import Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
 from follow.models import Follow
-from utils.followtools import process_following
+from utils.followtools import process_following, send_email_follow
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -84,27 +80,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 profile_fwee= kwargs['username'].get_profile()
                 profile_fwer=request.user.get_profile()
                 
-                message_subject = profile_fwee.name + ", " + profile_fwer.name
-                message_subject += " vous suit maintenant sur NewCo !"
-                                
-                txt_template = get_template('follow/_follow_notification_email.txt')
-                html_template = get_template('follow/_follow_notification_email.html')
-                
-                d = Context({ 'profile_followee_name': profile_fwee.name,
-                             'message_subject' : message_subject,
-                             'profile_follower_url' : profile_fwer.get_absolute_url(),
-                             'profile_follower_name' : profile_fwer.name,
-                             'profile_followee_url' : profile_fwee.get_absolute_url(),
-                             'follower_user' : request.user })
-                
-                msg_txt = txt_template.render(d)
-                msg_html = html_template.render(d)
-                
-                msg = EmailMultiAlternatives(message_subject, msg_txt, 
-                                             'auto-mailer@newco-project.fr', 
-                                             [profile_fwee.user.email])
-                msg.attach_alternative(msg_html, "text/html")
-                msg.send()
+                send_email_follow(profile_fwee, profile_fwer)
             
             return process_following(request)
 
