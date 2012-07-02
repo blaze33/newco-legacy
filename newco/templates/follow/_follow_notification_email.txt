@@ -1,0 +1,16 @@
+{% load i18n %}
+
+{{ profile_followee_name }} ,
+{{ profile_follower_name }} vous suit maintenant sur NewCo !
+
+Pour voir le profil de {{ profile_follower_name }}, suivez ce lien :
+http://www.newco-project.fr {{ profile_followee_url }}
+
+
+---
+Cet email vous a été envoyé parce que cette option est activée dans votre profil. 
+Pour changer votre configuration suivez ce lien : http://www.newco-project.fr{{ profile_followee_url }} (option bientôt disponible).
+
+---
+Merci !
+The NewCo Project team

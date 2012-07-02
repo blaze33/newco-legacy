@@ -74,42 +74,35 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         newsfeed.extend(Feature.objects.filter(author__in=fwees_ids))
         context['newsfeed'] = sorted(newsfeed, key=lambda c: c.pub_date,
                                                             reverse=True)
-
+        
         return context
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
             if 'follow' in request.POST: # If "follow" send an email to followee
-                profile_followee= kwargs['username'].get_profile()
-                profile_follower=request.user.get_profile()
+                profile_fwee= kwargs['username'].get_profile()
+                profile_fwer=request.user.get_profile()
                 
-                message_subject = profile_followee.name
-                message_subject += ", "
-                message_subject += profile_follower.name
+                message_subject = profile_fwee.name + ", " + profile_fwer.name
                 message_subject += " vous suit maintenant sur NewCo !"
-                
-                message_txt_content = profile_followee.name
-                message_txt_content += ", "
-                message_txt_content += profile_follower.name
-                message_txt_content += " vous suit maintenant sur NewCo !\n Pour voir le profil de "
-                message_txt_content += profile_follower.name
-                message_txt_content += " , click here : \nhttp://www.newco-project.fr"
-                message_txt_content += profile_followee.get_absolute_url()
-                message_txt_content += " \n\nThanks, The NewCo team. \n--- \nTo control which emails we send you, visit \n<url to your profile settings>"
-
+                                
+                txt_template = get_template('follow/_follow_notification_email.txt')
                 html_template = get_template('follow/_follow_notification_email.html')
-                d = Context({ 'profile_followee_name': profile_followee.name,
+                
+                d = Context({ 'profile_followee_name': profile_fwee.name,
                              'message_subject' : message_subject,
-                             'profile_follower_url' : profile_follower.get_absolute_url(),
-                             'profile_follower_name' : profile_follower.name,
-                             'profile_followee_url' : profile_followee.get_absolute_url(),
+                             'profile_follower_url' : profile_fwer.get_absolute_url(),
+                             'profile_follower_name' : profile_fwer.name,
+                             'profile_followee_url' : profile_fwee.get_absolute_url(),
                              'follower_user' : request.user })
+                
+                msg_txt = txt_template.render(d)
                 msg_html = html_template.render(d)
                 
-                from_email, to = 'auto-mailer@newco-project.fr', profile_followee.user.email
-                
-                msg = EmailMultiAlternatives(message_subject, message_txt_content, from_email, [profile_followee.user.email])
+                msg = EmailMultiAlternatives(message_subject, msg_txt, 
+                                             'auto-mailer@newco-project.fr', 
+                                             [profile_fwee.user.email])
                 msg.attach_alternative(msg_html, "text/html")
                 msg.send()
             
