@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from account.utils import user_display
-from taggit.models import Tag
+from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
 from items.models import Item, CannotManage
@@ -221,23 +221,31 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if hasattr(self, 'tag'):
-            context['tag'] = self.tag
         if 'item_list' in context:
-            context.update({
-                "item_names": json.dumps([item.name \
-                                          for item in context['item_list']])
-            })
+            ta_list = list(context['item_list'].values_list('name', flat=True))
+            if hasattr(self, 'tag'):
+                context['tag'] = self.tag
+            else:
+                ta_list.extend(
+                    TaggedItem.tags_for(Item).values_list('name', flat=True)
+                )
+            context.update({"data_source": json.dumps(ta_list)})
         return context
 
     def post(self, request, *args, **kwargs):
-        if 'item_name' in request.POST:
-            item_name = request.POST['item_name']
-            item_list = Item.objects.filter(name=item_name)
+        if 'ta_pick' in request.POST:
+            name = request.POST['ta_pick']
+            item_list = Item.objects.filter(name=name)
             if item_list.count() > 0:
-                return HttpResponseRedirect(item_list[0].get_absolute_url())
+                response = item_list[0].get_absolute_url()
             else:
-                return HttpResponseRedirect(request.path)
+                tag_list = Tag.objects.filter(name=name)
+                if tag_list.count() > 0:
+                    response = reverse("tagged_items",
+                                kwargs={'tag_slug': tag_list[0].slug})
+                else:
+                    response = request.path
+            return HttpResponseRedirect(response)
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 
