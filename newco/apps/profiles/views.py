@@ -1,34 +1,48 @@
 from django.http import HttpResponsePermanentRedirect
-from django.http import HttpResponseRedirect, HttpResponseGone
 from django.contrib.auth.models import User
-from django.views.generic.base import RedirectView
-from django.core.urlresolvers import reverse
+from django.views.generic.simple import direct_to_template
+from django.views.generic.edit import ProcessFormView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from idios.views import ProfileDetailView
 
 from items.models import Question, Answer, ExternalLink, Feature
-from profiles.models import Reputation
+from profiles.models import Profile, Reputation
 from follow.models import Follow
+from utils.followtools import process_following, send_email_follow
 
 
-class ProfileRedirectView(RedirectView):
+class ProfileDetailView(ProfileDetailView, ProcessFormView):
 
-    def get(self, request, *args, **kwargs):
-        if 'username' in kwargs:
-            username = kwargs['username']
-            profile = User.objects.get(username=username).get_profile()
-            url = reverse('profile_detail_full', kwargs={
-                'username': username, 'slug': profile.slug}
-            )
-        if url:
-            if self.permanent:
-                return HttpResponsePermanentRedirect(url)
-            else:
-                return HttpResponseRedirect(url)
+    def get(self, request, *args, **kwargs): 
+        
+        if 'username' in kwargs: # case: url = profiles/profile/##/slug 
+            return super(ProfileDetailView, self).get(self,
+                                                    request,
+                                                    *args,
+                                                    **kwargs)
+        
+        elif request.user.is_authenticated(): # case url = homepage
+            self.template_name = "homepage_logged.html"
+            self.page_user = request.user
+            self.object = self.page_user.get_profile()
+            context = self.get_context_data()
+            context.update({'kwargs': kwargs})
+            return self.render_to_response(context)
+       
         else:
-            return HttpResponseGone()
+            return direct_to_template(request, "homepage.html")
 
-
-class ProfileDetailView(ProfileDetailView):
+    def dispatch(self, request, *args, **kwargs):
+        if 'pk' in kwargs: #only useful if user is in a "profile" view, not on homepage
+            profile = Profile.objects.get(pk=kwargs.pop('pk'))
+            if profile.slug and kwargs['slug'] != profile.slug:
+                url = profile.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+            kwargs['username'] = profile.user
+            
+        return super(ProfileDetailView, self).dispatch(request,
+                                                        *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
@@ -56,5 +70,20 @@ class ProfileDetailView(ProfileDetailView):
         newsfeed.extend(Feature.objects.filter(author__in=fwees_ids))
         context['newsfeed'] = sorted(newsfeed, key=lambda c: c.pub_date,
                                                             reverse=True)
-
+        
         return context
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        if 'follow' in request.POST or 'unfollow' in request.POST:
+            if 'follow' in request.POST: # If "follow" send an email to followee
+                profile_fwee= kwargs['username'].get_profile()
+                profile_fwer=request.user.get_profile()
+                
+                send_email_follow(profile_fwee, profile_fwer)
+            
+            return process_following(request)
+
+        else:
+            return super(ProfileDetailView, self).post(request,
+                                                            *args, **kwargs)

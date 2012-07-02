@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<html>
+<head>
+    <title>
+        {{ message_subject }}
+    </title>
+</head>
+<body>
+	<strong>{{ profile_followee_name }} </strong>,<br><br>
+	<a href='http://www.newco-project.fr{{ profile_follower_url }}'>{{ profile_follower_name }}</a> vous suit maintenant sur NewCo !
+	<br><br><hr><small>Cet email vous a été envoyé parce que cette option est activée dans votre profil. 
+	Pour changer votre configuration cliquez <a href='http://www.newco-project.fr{{ profile_followee_url }}' >ici</a> (option bientôt disponible).
+	<br><br>The NewCo Project team</small>
+</body></html>

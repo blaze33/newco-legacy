@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 from idios.models import ProfileBase
@@ -37,6 +38,10 @@ class Profile(ProfileBase):
     def save(self, **kwargs):
         self.slug = slugify(self.name)
         super(Profile, self).save(**kwargs)
+
+    def get_absolute_url(self):
+        kwargs = {'pk': self.pk, 'slug': self.slug}
+        return reverse('profile_detail', kwargs=kwargs)
 
 
 class Reputation(models.Model):
@@ -77,8 +82,8 @@ class Reputation(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_reputation(sender, instance=None, **kwargs):
-    if instance is None:
+def create_reputation(sender, instance=None, raw=False, **kwargs):
+    if instance is None or raw == True:
         return
     rep, created = Reputation.objects.get_or_create(user=instance)
     rep.reputation_computed = rep.compute_reputation()

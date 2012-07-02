@@ -63,6 +63,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
 # Absolute path to the directory that holds media.
@@ -143,7 +144,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax.core.context_processors.pinax_settings",
 
     "account.context_processors.account",
-
+    "pinax_theme_bootstrap_account.context_processors.theme",
 ]
 
 INSTALLED_APPS = [
@@ -193,7 +194,6 @@ INSTALLED_APPS = [
     "about",
     "profiles",
     "items",
-    "votes",
     "custaccount",
 
     # Tests
@@ -207,7 +207,7 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
+    "auth.user": lambda o: "/profiles/profile/%d/%s" % (o.get_profile().pk, o.get_profile().slug),
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -220,6 +220,8 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
+LOGIN_URL = "/account/login"
+
 # django-user-accounts
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
@@ -227,22 +229,12 @@ ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
+ACCOUNT_LOGIN_REDIRECT_URL = "contribute"
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
-
-ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
-
-LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "contribute"
-LOGIN_REDIRECT_URL = "/about/contribute"
-
-LOGOUT_REDIRECT_URLNAME = "home"
-LOGIN_ERROR_URL = LOGIN_URL
-
-EMAIL_CONFIRMATION_DAYS = 2
-EMAIL_DEBUG = DEBUG
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

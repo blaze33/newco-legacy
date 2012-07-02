@@ -15,7 +15,7 @@
 </br></br></br></br>
 
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="item_name" type="text" autocomplete="off" placeholder="Que cherchez-vous{% if tag %} avec le tag {{ tag.name}}{% endif %}?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ item_names }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous{% if tag %} ayant le tag {{ tag.name}}{% endif %}?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
     </div>
     </br></br>
     {% if item_name in item_list %}

@@ -16,6 +16,7 @@
 {% include "items/data_sheet.html" %}
 
 </br>
+<h1>Les Ordinateurs</h1>
 
 <div class="row"><div class="span7">
     <form method="POST" action="" class="form-inline">
@@ -28,17 +29,17 @@
 
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
-        <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
-        <li{% if '/feature-' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
-        <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
+        <li{% if '_' not in request.path or 'q_' in request.path or 'a_' in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+        <li{% if 'l_' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
+        <li{% if 'f_' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
+        <li{% if 's_' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/question_list.html" %}</div>
-        <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/link_list.html" %}</div>
-        <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/feature_list.html" %}</div>
-        <div id="stories" class="tab-pane{% if '/story-' in request.path %} active{% endif %}">
+        <div id="questions" class="tab-pane{% if '_' not in request.path or 'q_' in request.path or 'a_' in request.path %} active{% endif %}">{% include "items/question_list.html" %}</div>
+        <div id="links" class="tab-pane{% if 'l_' in request.path %} active{% endif %}">{% include "items/link_list.html" %}</div>
+        <div id="features" class="tab-pane{% if 'f_' in request.path %} active{% endif %}">{% include "items/feature_list.html" %}</div>
+        <div id="stories" class="tab-pane{% if 's_' in request.path %} active{% endif %}">
         <div class="row"><div class="span7">
             <h3>Soon you'll be able to tell us a nice story about this product</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
