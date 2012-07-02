@@ -6,7 +6,7 @@ from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from account.utils import user_display
@@ -17,6 +17,7 @@ from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
+from utils.votingtools import process_voting as _process_voting
 
 import json
 
@@ -192,7 +193,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        if 'question_ask' in request.POST:
+        if 'vote_button' in request.POST:
+            return self.process_voting(request)
+        elif 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
@@ -200,6 +203,11 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         else:
             return self.form_invalid(form)
+
+    @method_decorator(permission_required('profiles.can_vote',
+                                          raise_exception=True))
+    def process_voting(self, request):
+        return _process_voting(request)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

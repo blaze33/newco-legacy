@@ -1,5 +1,4 @@
 from django.http import HttpResponsePermanentRedirect
-from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
@@ -14,7 +13,7 @@ from django.template import Context
 from items.models import Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
 from follow.models import Follow
-from follow.utils import toggle
+from utils.followtools import process_following
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -81,13 +80,6 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            app_label = request.POST['app_label']
-            object_name = request.POST['object_name']
-            pk = request.POST['pk']
-            model = get_model(app_label, object_name)
-            obj = model._default_manager.get(pk=pk)
-            follow = toggle(request.user, obj)
-            
             if 'follow' in request.POST: # If "follow" send an email to followee
                 profile_followee= kwargs['username'].get_profile()
                 profile_follower=request.user.get_profile()
@@ -121,24 +113,8 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 msg.attach_alternative(msg_html, "text/html")
                 msg.send()
             
-            try:
-                # Might be something better to do
-                # than follow.target.get_absolute_url()
-                return HttpResponseRedirect(follow.target.get_absolute_url())
-            except (AttributeError, TypeError):
-                if 'HTTP_REFERER' in request.META:
-                    return HttpResponseRedirect(
-                            request.META.get('HTTP_REFERER', '/')
-                    )
-                elif follow:
-                    return HttpResponseServerError(
-                            '"%s" object of type ``%s`` has no method ' + \
-                            '``get_absolute_url()``.' % \
-                            (unicode(follow.target), follow.target.__class__))
-                else:
-                    return HttpResponseServerError(
-                            'No follow object and `next` parameter found.'
-                )
+            return process_following(request)
+
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
