@@ -4,7 +4,7 @@
 
 <form action="" method="POST">{% csrf_token %}
     {% if request.user|is_following:object %}
-        <input type="submit" class="btn btn-primary" name="follow" value='{% trans "Unfollow" %}'/>
+        <input type="submit" class="btn btn-primary" name="unfollow" value='{% trans "Unfollow" %}'/>
     {% else %}
         <input type="submit" class="btn" name="follow" value='{% trans "Follow" %}'/>
     {% endif %}
