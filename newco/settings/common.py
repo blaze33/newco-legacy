@@ -56,6 +56,8 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+USE_TZ = True
+USE_L10N = True
 
 # Where to look to compile translations
 LOCALE_PATHS = (
@@ -136,6 +138,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
 
@@ -190,17 +193,17 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # Foreign apps
-    "taggit",
-    "voting",
-    "follow",
-
     # Project
     "about",
     "profiles",
     "items",
     "custaccount",
     "utils",
+
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
 
     # Tests
     "tests",
