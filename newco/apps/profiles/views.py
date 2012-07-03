@@ -4,9 +4,10 @@ from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from idios.views import ProfileDetailView
 
-from items.models import Question, Answer, ExternalLink, Feature
+from items.models import Question, Answer, ExternalLink, Feature, Item
 from profiles.models import Profile, Reputation
 from follow.models import Follow
 from utils.followtools import process_following, send_email_follow
@@ -62,12 +63,30 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         fwees_ids = Follow.objects.filter(
                 user=self.object.user).values_list('target_user_id', flat=True)
         context['fwees'] = User.objects.filter(pk__in=fwees_ids)
+        
+        fweds_ids = Follow.objects.filter(
+                user=self.object.user).values_list('target_item_id', flat=True)
+        context['fweds'] = Item.objects.filter(pk__in=fweds_ids)
 
+        
         #content ordering for newsfeed
-        newsfeed = list(Question.objects.filter(author__in=fwees_ids))
-        newsfeed.extend(Answer.objects.filter(author__in=fwees_ids))
-        newsfeed.extend(ExternalLink.objects.filter(author__in=fwees_ids))
-        newsfeed.extend(Feature.objects.filter(author__in=fwees_ids))
+        newsfeed = list(Question.objects.filter(
+                Q(author__in=fwees_ids)|
+                Q(items__in=fweds_ids)
+        ))
+        question_list = Question.objects.filter(items__in=fweds_ids) #Request to get answers from followed objects
+        newsfeed.extend(Answer.objects.filter(
+                Q(author__in=fwees_ids)|
+                Q(id__in=question_list.values_list('answer', flat=True))
+        ))
+        newsfeed.extend(ExternalLink.objects.filter(
+                Q(author__in=fwees_ids)|
+                Q(items__in=fweds_ids)
+        ))
+        newsfeed.extend(Feature.objects.filter(
+                Q(author__in=fwees_ids)|
+                Q(items__in=fweds_ids)
+        ))
         context['newsfeed'] = sorted(newsfeed, key=lambda c: c.pub_date,
                                                             reverse=True)
         

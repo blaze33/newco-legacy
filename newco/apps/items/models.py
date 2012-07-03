@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
+from follow.utils import register
 
 
 class CannotManage(Exception):
@@ -145,3 +146,5 @@ class Feature(Content):
     def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
+register(Item)

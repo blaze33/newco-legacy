@@ -18,6 +18,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
+from utils.followtools import process_following
 
 import json
 
@@ -201,6 +202,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
+        elif 'follow' in request.POST or 'unfollow' in request.POST:
+            #if 'follow' in request.POST: # If "follow" send an email to followee
+                #profile_fwee= kwargs['username'].get_profile()
+                #profile_fwer=request.user.get_profile()
+                
+                #send_email_follow(profile_fwee, profile_fwer)
+            
+            return process_following(request)
+        
         else:
             return self.form_invalid(form)
 
