@@ -8,6 +8,12 @@ DEBUG = True
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
+# add development applications
+INSTALLED_APPS += [
+    "django_extensions",
+    "debug_toolbar",
+    ]
+
 # Database settings will be overriden when deployed on Heroku
 DATABASES = {
     "default": {

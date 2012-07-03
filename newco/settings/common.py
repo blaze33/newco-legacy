@@ -169,7 +169,6 @@ INSTALLED_APPS = [
 #    "notification",  # must be first
     "staticfiles",
     "compressor",
-    "debug_toolbar",
     "django_openid",
     "timezones",
     "announcements",

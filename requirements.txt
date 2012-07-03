@@ -10,6 +10,7 @@ Pinax==0.9b1.dev10
 --extra-index-url=http://dist.pinaxproject.com/dev/ django-user-accounts
 django-user-accounts==1.0b1.dev5
 
+django-extensions==0.9
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django-compressor==1.2a1
