@@ -200,6 +200,7 @@ INSTALLED_APPS = [
     "profiles",
     "items",
     "custaccount",
+    "utils",
 
     # Tests
     "tests",
