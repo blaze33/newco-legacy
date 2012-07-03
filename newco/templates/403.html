@@ -1,0 +1,13 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block body %}
+
+{% if 'vote_button' in request.POST %}
+    <p>{% trans "You can't vote." %}</p>
+
+    <p><a href={{ request.META.HTTP_REFERER }} class="btn">{% trans "Go back" %}</a></p>
+{% endif %}
+
+{% endblock %}

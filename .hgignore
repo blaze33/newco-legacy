@@ -20,3 +20,9 @@ build/
 
 # MacOs - DS_Store ignore
 .DS_Store
+
+# Opendiff
+opendiff-w
+
+# Pydev
+.pydevproject

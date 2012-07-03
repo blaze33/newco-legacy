@@ -1,15 +1,19 @@
 {% load i18n %}
 {% load account_tags %}
 
+{% if users and items %}<h3>{% trans "Members:" %}</h3>{% endif %}
 {% for user in users %}<div class="row content"><div class="span7">
-
-    {% url profile_detail user as user_url %}
-
     <div class="row one_row"><div class="span7">
-        <h4><a href="{{ user_url }}">{% user_display user %}</a>
+        <h4><a href="{{ user.get_absolute_url }}">{% user_display user %}</a>
     </div></div>
+    {% if not forloop.last or items %}<hr>{% endif %}
+</div></div>{% endfor %}
 
-    <hr>
-
+{% if items %}<h3>{% trans "Products:" %}</h3>{% endif %}
+{% for item in items %}<div class="row content"><div class="span7">
+    <div class="row one_row"><div class="span7">
+        <h4><a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+    </div></div>
+    {% if not forloop.last %}<hr>{% endif %}
 </div></div>{% endfor %}
 

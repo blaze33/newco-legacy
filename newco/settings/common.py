@@ -6,6 +6,7 @@ import sys
 import os.path
 import posixpath
 import socket
+from django.utils.translation import get_language_info
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
@@ -55,12 +56,16 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+USE_TZ = True
+USE_L10N = True
 
 # Where to look to compile translations
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
+    PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
 # Absolute path to the directory that holds media.
@@ -116,7 +121,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "pinax.apps.account.middleware.LocaleMiddleware",
+    "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -133,6 +138,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
 
@@ -140,14 +146,17 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "pinax.core.context_processors.pinax_settings",
 
-    "pinax.apps.account.context_processors.account",
-
-#    "notification.context_processors.notification",
-    "announcements.context_processors.site_wide_announcements",
+    "account.context_processors.account",
+    "pinax_theme_bootstrap_account.context_processors.theme",
 ]
 
 INSTALLED_APPS = [
     # Django
+    "admintools_bootstrap",
+    "admin_tools",
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -155,34 +164,25 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "account",
 
     "pinax.templatetags",
 
     # theme
     "django_forms_bootstrap",
+    "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
 
     # external
 #    "notification",  # must be first
     "staticfiles",
     "compressor",
-    "debug_toolbar",
-    #"mailer",
     "django_openid",
     "timezones",
-    "emailconfirmation",
     "announcements",
     "pagination",
     "idios",
     "metron",
-
-    # Pinax
-    "pinax.apps.account",
-    "pinax.apps.signup_codes",
-
-    # Project
-    "about",
-    "profiles",
 
     # Deployment
     "south",
@@ -192,12 +192,20 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # our business
+    # Project
+    "about",
+    "profiles",
     "items",
+    "custaccount",
+    "utils",
+
+    # Foreign apps
     "taggit",
     "voting",
-    "votes",
     "follow",
+
+    # Tests
+    "tests",
 ]
 
 FIXTURE_DIRS = [
@@ -206,36 +214,35 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-#EMAIL_BACKEND = "mailer.backend.DbBackend"
-
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
+    "auth.user": lambda o: "/profiles/profile/%d/%s" % (o.get_profile().pk, o.get_profile().slug),
 }
 
-AUTH_PROFILE_MODULE = "profiles.Profile"
-#NOTIFICATION_LANGUAGE_MODULE = "account.Account"
-
-ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = True
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
-DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
-
 AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
+    'account.auth_backends.EmailAuthenticationBackend',
+    'profiles.backends.ProfileBackend',
 ]
 
-LOGIN_URL = "/account/login/"  # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "contribute"
-LOGIN_REDIRECT_URL = "/about/contribute"
+AUTH_PROFILE_MODULE = "profiles.Profile"
+NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
-LOGOUT_REDIRECT_URLNAME = "home"
-LOGIN_ERROR_URL = LOGIN_URL
+DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-EMAIL_CONFIRMATION_DAYS = 2
-EMAIL_DEBUG = DEBUG
+LOGIN_URL = "/account/login"
+
+# django-user-accounts
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_CONTACT_EMAIL = False
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
+ACCOUNT_CREATE_ON_SAVE = False
+ACCOUNT_LOGIN_REDIRECT_URL = "contribute"
+ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
+ACCOUNT_LANGUAGES = [
+    (code, get_language_info(code).get("name_local"))
+    for code in ['fr', 'en']
+]
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

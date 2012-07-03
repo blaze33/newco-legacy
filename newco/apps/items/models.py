@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
+from follow.utils import register
 
 
 class CannotManage(Exception):
@@ -65,6 +66,7 @@ class Item(Content):
         return ('item_detail', None, {"model_name": "item",
                                       "pk": self.id,
                                       "slug": self.slug})
+register(Item)
 
 
 class Question(Content):
@@ -79,7 +81,7 @@ class Question(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="q_%(id)s#q_%(id)s"):
+    def get_absolute_url(self, anchor_pattern="/question-%(id)s#q-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
@@ -95,7 +97,7 @@ class Answer(Content):
     def __unicode__(self):
         return u'Answer %s on %s' % (self.id, self.question)
 
-    def get_absolute_url(self, anchor_pattern="a_%(id)s#a_%(id)s"):
+    def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
         item = self.question.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
@@ -124,7 +126,7 @@ class ExternalLink(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="l_%(id)s#l_%(id)s"):
+    def get_absolute_url(self, anchor_pattern="/link-%(id)s#l-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
@@ -142,6 +144,6 @@ class Feature(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="f_%(id)s#f_%(id)s"):
+    def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)

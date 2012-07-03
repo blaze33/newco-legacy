@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 13:47+0200\n"
+"POT-Creation-Date: 2012-07-03 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
+#: templates/403.html:8
+msgid "You can't vote."
+msgstr "Vous ne pouvez pas voter."
+
+#: templates/403.html:10
+msgid "Go back"
+msgstr "Revenir en arrière"
+
 #: templates/_footer.html:4
 msgid "FAQ"
 msgstr "FAQ"
 
 #: templates/_footer.html:5
+msgid "How to contribute?"
+msgstr "Comment contribuer"
+
+#: templates/_footer.html:6
 msgid "Team"
 msgstr "L'équipe"
 
@@ -81,14 +93,6 @@ msgstr "Profil"
 msgid "Products index"
 msgstr "Liste des produits"
 
-#: templates/follow/form.html:7
-msgid "Unfollow"
-msgstr "Abonné"
-
-#: templates/follow/form.html:9
-msgid "Follow"
-msgstr "Suivre"
-
 #: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
@@ -107,55 +111,15 @@ msgid "Newsfeed"
 msgstr "Flux"
 
 #: templates/idios/profile.html:27
-msgid "Followers"
-msgstr "Abonnés"
-
-#: templates/idios/profile.html:28
 msgid "Followees"
 msgstr "Abonnements"
 
-#~ msgid "Questions asked by %(page_user_display)s"
-#~ msgstr "Questions posées par %(page_user_display)s"
-
-#~ msgid "on"
-#~ msgstr "sur"
-
-#~ msgid "Score:"
-#~ msgstr "Score :"
-
-#~ msgid "with"
-#~ msgstr "avec"
-
-#~ msgid "vote"
-#~ msgstr "vote"
-
-#~ msgid "Answers suggested by %(page_user_display)s"
-#~ msgstr "Réponses suggérées par %(page_user_display)s"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "About"
-#~ msgstr "A propos"
-
-#~ msgid "Location"
-#~ msgstr "Région"
-
-#~ msgid "Website"
-#~ msgstr "Site internet"
-
-#~ msgid "Subscription date"
-#~ msgstr "Date d'inscription"
-
-#~ msgid "Reputation"
-#~ msgstr "Réputation"
+#: templates/idios/profile.html:28
+msgid "Followers"
+msgstr "Abonnés"
 
 #~ msgid "Notices"
 #~ msgstr "Notifications"
-
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "à propos"
 
 #~ msgid "Welcome to Pinax"
 #~ msgstr "Bienvenue sur le site"

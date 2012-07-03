@@ -1,5 +1,3 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
@@ -8,15 +6,19 @@ from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-from pinax.apps.account.utils import user_display
-from taggit.models import Tag
+from account.utils import user_display
+from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
 from items.models import Item, CannotManage
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
+from utils.votingtools import process_voting as _process_voting
+from utils.followtools import process_following
 
 import json
 
@@ -192,14 +194,23 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        if 'question_ask' in request.POST:
+        if 'vote_button' in request.POST:
+            return self.process_voting(request)
+        elif 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
+        elif 'follow' in request.POST or 'unfollow' in request.POST:
+            return process_following(request)
         else:
             return self.form_invalid(form)
+
+    @method_decorator(permission_required('profiles.can_vote',
+                                          raise_exception=True))
+    def process_voting(self, request):
+        return _process_voting(request)
 
 
 class ContentListView(ContentView, ListView, RedirectView):
@@ -213,23 +224,31 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if hasattr(self, 'tag'):
-            context['tag'] = self.tag
         if 'item_list' in context:
-            context.update({
-                "item_names": json.dumps([item.name \
-                                          for item in context['item_list']])
-            })
+            ta_list = list(context['item_list'].values_list('name', flat=True))
+            if hasattr(self, 'tag'):
+                context['tag'] = self.tag
+            else:
+                ta_list.extend(
+                    TaggedItem.tags_for(Item).values_list('name', flat=True)
+                )
+            context.update({"data_source": json.dumps(ta_list)})
         return context
 
     def post(self, request, *args, **kwargs):
-        if 'item_name' in request.POST:
-            item_name = request.POST['item_name']
-            item_list = Item.objects.filter(name=item_name)
+        if 'ta_pick' in request.POST:
+            name = request.POST['ta_pick']
+            item_list = Item.objects.filter(name=name)
             if item_list.count() > 0:
-                return HttpResponseRedirect(item_list[0].get_absolute_url())
+                response = item_list[0].get_absolute_url()
             else:
-                return HttpResponseRedirect(request.path)
+                tag_list = Tag.objects.filter(name=name)
+                if tag_list.count() > 0:
+                    response = reverse("tagged_items",
+                                kwargs={'tag_slug': tag_list[0].slug})
+                else:
+                    response = request.path
+            return HttpResponseRedirect(response)
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 

@@ -15,7 +15,7 @@
 
     <div class="row one_row">
         <div class="span5">{% include "profiles/_profile_info.html" %}</div>
-        <div class="span2">{% if is_me %}<p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>{% else %}{% follow_form profile.user %}{% endif %}</div>
+        <div class="span2">{% if is_me %}<p><a href="{% url profile_edit %}" class="btn">{% trans "Update my profile" %}</a></p>{% else %}{% follow_form page_user %}{% endif %}</div>
     </div>
 
     </br>
@@ -31,7 +31,7 @@
         <div class="tab-content">
             <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
             <div id="newsfeed" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=newsfeed %}</div>
-            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees %}</div>
+            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
         </div>
     </div>

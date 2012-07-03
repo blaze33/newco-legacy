@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 13:47+0200\n"
+"POT-Creation-Date: 2012-07-03 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: templates/403.html:8
+msgid "You can't vote."
+msgstr ""
+
+#: templates/403.html:10
+msgid "Go back"
+msgstr ""
+
 #: templates/_footer.html:4
 msgid "FAQ"
 msgstr ""
 
 #: templates/_footer.html:5
+msgid "How to contribute?"
+msgstr ""
+
+#: templates/_footer.html:6
 msgid "Team"
 msgstr ""
 
@@ -72,14 +84,6 @@ msgstr ""
 msgid "Products index"
 msgstr ""
 
-#: templates/follow/form.html:7
-msgid "Unfollow"
-msgstr ""
-
-#: templates/follow/form.html:9
-msgid "Follow"
-msgstr ""
-
 #: templates/idios/profile.html:8
 #, python-format
 msgid "Profile for %(page_user_display)s"
@@ -98,9 +102,9 @@ msgid "Newsfeed"
 msgstr ""
 
 #: templates/idios/profile.html:27
-msgid "Followers"
+msgid "Followees"
 msgstr ""
 
 #: templates/idios/profile.html:28
-msgid "Followees"
+msgid "Followers"
 msgstr ""

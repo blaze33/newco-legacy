@@ -8,6 +8,12 @@ DEBUG = True
 # tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
+# add development applications
+INSTALLED_APPS += [
+    "django_extensions",
+    "debug_toolbar",
+]
+
 # Database settings will be overriden when deployed on Heroku
 DATABASES = {
     "default": {
@@ -17,6 +23,11 @@ DATABASES = {
         "PASSWORD": "",                         # Not used with sqlite3.
         "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
         "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
+    },
+    "slave": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db-dev.db",
+        "TEST_MIRROR": "default"
     }
 }
 

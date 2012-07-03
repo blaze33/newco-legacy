@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 18:28+0200\n"
+"POT-Creation-Date: 2012-06-21 12:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,27 +190,31 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:32
+#: templates/items/item_detail.html:31
 msgid "Questions"
 msgstr ""
 
-#: templates/items/item_detail.html:33
+#: templates/items/item_detail.html:32
 msgid "Links"
 msgstr ""
 
-#: templates/items/item_detail.html:34
+#: templates/items/item_detail.html:33
 msgid "Features"
 msgstr ""
 
-#: templates/items/item_detail.html:45
+#: templates/items/item_detail.html:34
+msgid "Stories"
+msgstr ""
+
+#: templates/items/item_detail.html:62
 msgid "Items list"
 msgstr ""
 
-#: templates/items/item_detail.html:46
+#: templates/items/item_detail.html:63
 msgid "Edit Item"
 msgstr ""
 
-#: templates/items/item_detail.html:47
+#: templates/items/item_detail.html:64
 msgid "Delete Item"
 msgstr ""
 
@@ -248,11 +252,6 @@ msgstr ""
 
 #: templates/items/link_list.html:7
 msgid "Publish an external link"
-msgstr ""
-
-#: templates/items/link_list.html:29
-#, python-format
-msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
 msgstr ""
 
 #: templates/items/question_form.html:5

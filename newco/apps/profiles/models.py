@@ -4,21 +4,23 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from taggit.managers import TaggableManager
+from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
+from taggit.managers import TaggableManager
 from idios.models import ProfileBase
+from follow.utils import register
 
 from voting.models import Vote
 from items.models import Question, Answer, ExternalLink, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
-from follow.utils import register
-
 register(User)
 
 
 class Profile(ProfileBase):
-    name = models.CharField(_("name"), max_length=50, null=True, blank=True)
+    name = models.CharField(_("name"), max_length=30, null=True, blank=True)
+    slug = models.SlugField(verbose_name=_('slug'), editable=False)
     about = models.TextField(_("about"), null=True, blank=True)
     location = models.CharField(_("location"), max_length=40, null=True,
                                                               blank=True)
@@ -29,6 +31,17 @@ class Profile(ProfileBase):
         help_text=_("The list of your main product skills"),
         blank=True
     )
+
+    class Meta:
+        verbose_name = _("profile")
+
+    def save(self, **kwargs):
+        self.slug = slugify(self.name)
+        super(Profile, self).save(**kwargs)
+
+    def get_absolute_url(self):
+        kwargs = {'pk': self.pk, 'slug': self.slug}
+        return reverse('profile_detail', kwargs=kwargs)
 
 
 class Reputation(models.Model):
@@ -53,7 +66,8 @@ class Reputation(models.Model):
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name
                     )
-            obj_ids = cls.objects.filter(author=self.user).values_list('id', flat=True)
+            obj_ids = cls.objects.filter(author=self.user).values_list('id',
+                                                                    flat=True)
             votes = Vote.objects.filter(object_id__in=obj_ids,
                                         content_type=ctype)
 
@@ -68,8 +82,8 @@ class Reputation(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_reputation(sender, instance=None, **kwargs):
-    if instance is None:
+def create_reputation(sender, instance=None, raw=False, **kwargs):
+    if instance is None or raw == True:
         return
     rep, created = Reputation.objects.get_or_create(user=instance)
     rep.reputation_computed = rep.compute_reputation()

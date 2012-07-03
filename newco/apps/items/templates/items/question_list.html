@@ -2,6 +2,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 {% load staticfiles %}
+{% load account_tags %}
 
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
@@ -12,15 +13,8 @@
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
-    <div class="row one_row" id="q_{{ question.id }}">
-        <div class="span1">
-            <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
-            <form class="controls vote" action='{% url object_voting question|to_class_name question.id %}' method="POST">
-                {% csrf_token %}
-                <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
-                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></button>
-            </form></h3>
-        </div>
+    <div class="row one_row" id="q-{{ question.id }}">
+        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h3></div>
         <div class="span4"><h3>
             {{ question.content }}
             {% if user.is_superuser or question.author == request.user %}
@@ -28,7 +22,7 @@
             {% endif %}
         </h3></div>
         <div class="span2 right"><p class="signature"><small>
-            <b>{{ question.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail question.author %}'>{{ question.author }}</a>
+            <b>{{ question.pub_date }}</b> {% trans "by" %} <a href='{{ question.author.get_absolute_url }}'>{% user_display question.author %}</a>
         </small></p></div>
     </div>
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
@@ -37,16 +31,8 @@
     {% for answer in question.answer_set.all %}
         {% dict_entry_for_item answer from answer_vote_dict as vote %}
         {% dict_entry_for_item answer from answer_score_dict as score %}
-        <div class="row one_row" id="a_{{ answer.id }}" rel="popover">
-            <div class="span1">
-                <h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}
-                <form action='{% url object_voting answer|to_class_name answer.id %}' class="controls vote" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
-                <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></button>
-                </form></h3>
-            </div>
-
+        <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
+            <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
             <div class="span4"><p>
                 {{ answer.content }}
                 {% if user.is_superuser or answer.author == request.user %}
@@ -54,7 +40,7 @@
                 {% endif %}
             </p></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ answer.pub_date|date:"M j 'y" }}</b> {% trans "by" %} <a href='{% url profile_detail answer.author %}'>{{ answer.author }}</a>
+                <b>{{ answer.pub_date }}</b> {% trans "by" %} <a href='{{ answer.author.get_absolute_url }}'>{% user_display answer.author %}</a>
             </small></p></div>
         </div>
     {% endfor %}
