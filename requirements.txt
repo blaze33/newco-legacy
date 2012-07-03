@@ -69,6 +69,9 @@ django-generic-aggregation==0.3.1
 ## Following application
 django-follow==0.6
 
+## Translation app
+django-rosetta==0.6.8
+
 ## tests
 selenium==2.24.0
 
