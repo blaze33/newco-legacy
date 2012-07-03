@@ -197,6 +197,7 @@ INSTALLED_APPS = [
     "custaccount",
 
     # Tests
+    "utils",
     "tests",
 ]
 
