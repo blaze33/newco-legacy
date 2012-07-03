@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 import datetime
 
 from voting.models import Vote
+from follow.utils import register
 
 
 class CannotManage(Exception):
@@ -65,6 +66,7 @@ class Item(Content):
         return ('item_detail', None, {"model_name": "item",
                                       "pk": self.id,
                                       "slug": self.slug})
+register(Item)
 
 
 class Question(Content):

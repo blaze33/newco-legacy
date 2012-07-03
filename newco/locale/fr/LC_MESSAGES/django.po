@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-21 12:45+0200\n"
+"POT-Creation-Date: 2012-07-03 20:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: templates/403.html:8
+msgid "You can't vote."
+msgstr "Vous ne pouvez pas voter."
+
+#: templates/403.html:10
+msgid "Go back"
+msgstr "Revenir en arrière"
 
 #: templates/_footer.html:4
 msgid "FAQ"
@@ -84,14 +92,6 @@ msgstr "Profil"
 #: templates/site_base.html:45
 msgid "Products index"
 msgstr "Liste des produits"
-
-#: templates/follow/form.html:7
-msgid "Unfollow"
-msgstr "Abonné"
-
-#: templates/follow/form.html:9
-msgid "Follow"
-msgstr "Suivre"
 
 #: templates/idios/profile.html:8
 #, python-format

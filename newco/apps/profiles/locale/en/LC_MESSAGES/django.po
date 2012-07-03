@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-22 02:23+0200\n"
+"POT-Creation-Date: 2012-07-03 20:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,114 +17,136 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:21
+#: models.py:22
 msgid "name"
 msgstr ""
 
-#: models.py:22
+#: models.py:23
 msgid "slug"
 msgstr ""
 
-#: models.py:23
+#: models.py:24
 msgid "about"
 msgstr ""
 
-#: models.py:24
+#: models.py:25
 msgid "location"
 msgstr ""
 
-#: models.py:26
+#: models.py:27
 msgid "website"
 msgstr ""
 
-#: models.py:29
+#: models.py:30
 msgid "skills"
 msgstr ""
 
-#: models.py:30
+#: models.py:31
 msgid "The list of your main product skills"
 msgstr ""
 
-#: models.py:35
+#: models.py:36
 msgid "profile"
 msgstr ""
 
-#: models.py:48
+#: models.py:53
 msgid "reputation"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:16
+#: templates/profiles/_profile_content_list.html:15
 msgid "answered a question about"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:20
-#: templates/profiles/_profile_content_list.html:44
+#: templates/profiles/_profile_content_list.html:19
+#: templates/profiles/_profile_content_list.html:43
 msgid "Q:"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:22
-#: templates/profiles/_profile_content_list.html:31
-#: templates/profiles/_profile_content_list.html:47
-#: templates/profiles/_profile_content_list.html:64
+#: templates/profiles/_profile_content_list.html:21
+#: templates/profiles/_profile_content_list.html:30
+#: templates/profiles/_profile_content_list.html:46
+#: templates/profiles/_profile_content_list.html:65
 #: templates/profiles/_profile_content_list.html:77
 msgid "by"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:27
+#: templates/profiles/_profile_content_list.html:26
 msgid "A:"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:35
+#: templates/profiles/_profile_content_list.html:34
 msgid "Add an answer"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:41
+#: templates/profiles/_profile_content_list.html:40
 msgid "asked a question about"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:52
+#: templates/profiles/_profile_content_list.html:51
 msgid "Answer this question"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:58
+#: templates/profiles/_profile_content_list.html:56
 msgid "posted a link about"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:61
-#, python-format
-msgid ""
-"<a href=\"%(abs_url)s\">L:</a> %(content)s <a href=\"%(link_url)s\" target="
-"\"_blank\">there</a>"
+#: templates/profiles/_profile_content_list.html:62
+msgid "L:"
 msgstr ""
 
 #: templates/profiles/_profile_content_list.html:71
 msgid "suggested a feature on"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:5
+#: templates/profiles/_profile_info.html:4
 msgid "Name"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:6
+#: templates/profiles/_profile_info.html:5
 msgid "About"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:7
+#: templates/profiles/_profile_info.html:6
 msgid "Location"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:7
 msgid "Website"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:9
+#: templates/profiles/_profile_info.html:8
 msgid "Subscription date"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:10
+#: templates/profiles/_profile_info.html:9
 msgid "Reputation"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:12
+#: templates/profiles/_profile_info.html:11
 msgid "Skills"
+msgstr ""
+
+#: templates/profiles/_profile_user_list.html:4
+msgid "Members:"
+msgstr ""
+
+#: templates/profiles/_profile_user_list.html:12
+msgid "Products:"
+msgstr ""
+
+#: templates/profiles/profile_homepage.html:8
+#, python-format
+msgid "Profile for %(page_user_display)s"
+msgstr ""
+
+#: templates/profiles/profile_homepage.html:21
+msgid "Newsfeed"
+msgstr ""
+
+#: templates/profiles/profile_homepage.html:22
+msgid "Followees"
+msgstr ""
+
+#: templates/profiles/profile_homepage.html:23
+msgid "Followers"
 msgstr ""
