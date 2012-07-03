@@ -5,22 +5,21 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
-from newco.views import HomePageRedirectView
+from profiles.views import ProfileDetailView
 
 
 handler500 = "pinax.views.server_error"
 
 
 urlpatterns = patterns("",
-    url(r"^$", HomePageRedirectView.as_view(), name="home"),
+    url(r"^$", ProfileDetailView.as_view(is_profile_page=False), name="home"),
     url(r"^admin/", include(admin.site.urls)),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r"^about/", include("about.urls")),
     url(r"^account/", include("custaccount.urls")),
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
-    url(r"^votes/", include('votes.urls')),
-    url(r"^follow/", include('follow.urls')),
 )
 
 urlpatterns += patterns("",

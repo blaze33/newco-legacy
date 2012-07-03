@@ -5,9 +5,6 @@ Django==1.4
 --extra-index-url=http://dist.pinaxproject.com/dev/
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
-
-## Django user account
---extra-index-url=http://dist.pinaxproject.com/dev/ django-user-accounts
 django-user-accounts==1.0b1.dev5
 
 django-extensions==0.9
@@ -26,10 +23,13 @@ django-notification==0.3a1.dev9
 idios==0.2a2.dev2
 metron==0.2.dev3
 
+django-admin-tools==0.4.1
+
 ## upgraded pinax-theme-bootstrap
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
 pinax-theme-bootstrap==2.0.4
 git+git://github.com/pinax/pinax-theme-bootstrap-account.git@8fc34ba4309fc1edd12e5836cc1398c3f9597e6d#egg=pinax-theme-bootstrap-account
+hg+ssh://hg@bitbucket.org/salvator/django-admintools-bootstrap@8d1d40334490#egg=django-admintools-bootstrap
 
 ## schema and data migrations
 South==0.7.5
@@ -74,6 +74,7 @@ selenium==2.24.0
 
 ## The following requirements were added by pip --freeze:
 argparse==1.2.1
+BeautifulSoup==3.2.1
 distribute==0.6.24
 dj-database-url==0.1.2
 django-appconf==0.5
@@ -83,4 +84,5 @@ django-mailer==0.2a1
 gevent==0.13.7
 greenlet==0.3.4
 simplejson==2.4.0
+versiontools==1.9.1
 wsgiref==0.1.2

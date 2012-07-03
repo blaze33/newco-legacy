@@ -12,7 +12,7 @@ SERVE_MEDIA = DEBUG
 INSTALLED_APPS += [
     "django_extensions",
     "debug_toolbar",
-    ]
+]
 
 # Database settings will be overriden when deployed on Heroku
 DATABASES = {
