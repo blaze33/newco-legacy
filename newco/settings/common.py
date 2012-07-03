@@ -149,6 +149,11 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 INSTALLED_APPS = [
     # Django
+    "admintools_bootstrap",
+    "admin_tools",
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -185,16 +190,17 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # Foreign apps
-    "taggit",
-    "voting",
-    "follow",
-
     # Project
     "about",
     "profiles",
     "items",
     "custaccount",
+    "utils",
+
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
 
     # Tests
     "tests",
