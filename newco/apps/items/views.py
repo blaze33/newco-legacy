@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
@@ -79,7 +80,13 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
-
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        if self.request.GET:
+            context['new_search'] = self.request.GET['initial']
+        return context
+        
+        
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
@@ -230,9 +237,22 @@ class ContentListView(ContentView, ListView, RedirectView):
                     TaggedItem.tags_for(Item).values_list('name', flat=True)
                 )
             context.update({"data_source": json.dumps(ta_list)})
+            
+        if 'sort_item' in self.request.POST:
+            if self.request.POST['sort_item'] == '1':
+                context['item_list'] = context['item_list'].order_by("-pub_date")
+            elif self.request.POST['sort_item'] == '2':
+                context['item_list'] = context['item_list'].order_by("pub_date")
+            elif self.request.POST['sort_item'] == '3':
+                context['item_list'] = context['item_list'].order_by("-author")
+            else:
+                context['item_list'] = context['item_list']
+
+
         return context
 
     def post(self, request, *args, **kwargs):
+        
         if 'ta_pick' in request.POST:
             name = request.POST['ta_pick']
             item_list = Item.objects.filter(name=name)
@@ -244,11 +264,18 @@ class ContentListView(ContentView, ListView, RedirectView):
                     response = reverse("tagged_items",
                                 kwargs={'tag_slug': tag_list[0].slug})
                 else:
-                    response = request.path
+                    response = "%s?initial=%s" % (reverse("item_create", None, 
+                                kwargs={'model_name': Item._meta.module_name}
+                            ),
+                            name,
+                    )
+                    #response = request.path
             return HttpResponseRedirect(response)
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
-
+        
+        
+    
 
 class ContentDeleteView(ContentView, DeleteView):
 
