@@ -195,7 +195,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'vote_button' in request.POST:
-            return self.process_voting(request, go_to_object=True)
+            return self.process_voting(request)
         elif 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
@@ -210,7 +210,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     @method_decorator(permission_required('profiles.can_vote',
                                           raise_exception=True))
     def process_voting(self, request):
-        return _process_voting(request)
+        return _process_voting(request, go_to_object=True)
 
 
 class ContentListView(ContentView, ListView, RedirectView):
