@@ -83,11 +83,12 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            if 'follow' in request.POST and request.POST['object_name'] == 'user':
+            if 'follow' in request.POST and \
+                    request.POST['object_name'] == 'user':
                 mail_followee(kwargs['username'].get_profile(),
                     request.user.get_profile(), request.META.get('HTTP_HOST')
                 )
-            return process_following(request)
+            return process_following(request, go_to_object=False)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)

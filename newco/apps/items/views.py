@@ -195,7 +195,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'vote_button' in request.POST:
-            return self.process_voting(request)
+            return self.process_voting(request, go_to_object=True)
         elif 'question_ask' in request.POST:
             form = QuestionForm(self.request.POST, request=request)
             if form.is_valid():
@@ -203,7 +203,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
-            return process_following(request)
+            return process_following(request, go_to_object=True)
         else:
             return self.form_invalid(form)
 
