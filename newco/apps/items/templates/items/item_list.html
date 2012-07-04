@@ -16,57 +16,7 @@
 
 
 {% if tag %}
- <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="ta_pick" type="text" autocomplete="off" placeholder="{{ tag.name}}"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
-    </div>
-    </form>
-
-</br></br>
-
-<div class="span7">
-Sort by
-</div>
-
-<div class="span7">
-<form method="POST" action=".">{% csrf_token %}
-<select name="sort_item" onchange="sort(this)">
-	<option>Something</option>
-    <option value="1">Newest to Oldest</option>
-    <option value="2">Oldest to Newest</option>
-    <option value="3">Price: low to high</option>
-</select>
-<input name= "s" type="submit">
-</form>
-
-<script>
-function sort(element)
-{
-    var idx=element.selectedIndex;
-    var val=element.options[idx].value;
-    var content=element.options[idx].innerHTML;
-    alert("value="+val + ", " + content);
- }
-</script>
-</div>
-
-
-{% for item in item_list %}
-<div class="span7"><table class="table table-condensed"><tbody><tr><td>
-
-        <ul>
-        <li>
-            <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
-            <br><i>petite description</i>
-        </li>
-        </ul>
-
-</td></tr></tbody></table></div>
-<div class="span4">
-    <h3><a href='{{ item.get_absolute_url }}'>{% user_display item.author %}</a></h3>
-</div>
-{% endfor %}
-
+{% include "items/item_list_tag.html" %}
 {% else %}
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
         <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous{% if tag %} ayant le tag {{ tag.name}}{% endif %}?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
