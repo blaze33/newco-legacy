@@ -2,6 +2,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 {% load account_tags %}
+{% load follow_tags %}
 {% load date_utils %}
 
 {% scores_for_objects contents as score_dict %}
@@ -13,7 +14,7 @@
 
     {% if content|to_class_name == "answer" %}{% with question=content.question %}
         <div class="row one_row"><div class="span7">
-            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "answered a question about" %} <a href="{{ question.items.all.0.get_absolute_url }}">{{ question.items.all.0 }}</a></h4>
+            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "answered a question about" %} <span class="myClassPopover" data-content="{% for tag in question.items.all.0.tags.all %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a> {% endfor %}" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ question.items.all.0 }}'></td><td align='right'>{% spaceless %}{% follow_form question.items.all.0 %}{% endspaceless %}</td></tr></table>"><a href="{{ question.items.all.0.get_absolute_url }}" >{{ question.items.all.0 }}</a></span></h4>
         </div></div>
 
         <div class="row one_row">
@@ -38,7 +39,7 @@
 
     {% elif content|to_class_name == "question" %}
         <div class="row one_row"><div class="span7">
-            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "asked a question about" %} <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></h4>
+            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "asked a question about" %} <span class="myClassPopover" data-content="{% for tag in content.items.all.0.tags.all %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a> {% endfor %}" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ content.items.all.0 }}'></td><td align='right'>{% spaceless %}{% follow_form content.items.all.0 %}{% endspaceless %}</td></tr></table>"><a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></span></h4>
         </div></div>
         <div class="row one_row">
             <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>
@@ -54,7 +55,7 @@
 
     {% elif content|to_class_name == "externallink" %}
         <div class="row one_row"><div class="span7">
-            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "posted a link about" %} <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></h4>
+            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "posted a link about" %} <span class="myClassPopover" data-content="{% for tag in content.items.all.0.tags.all %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a> {% endfor %}" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ question.items.all.0 }}'></td><td align='right'>{% spaceless %}{% follow_form content.items.all.0 %}{% endspaceless %}</td></tr></table>"><a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></span></h4>
         </div></div>
         <div class="row one_row">
 
@@ -69,7 +70,7 @@
 
     {% elif content|to_class_name == "feature" %}
         <div class="row one_row"><div class="span7">
-            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "suggested a feature on" %} <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></h4>
+            <h4><a href="{{ author_url }}">{% user_display author %}</a> {% trans "suggested a feature on" %} <span class="myClassPopover" data-content="{% for tag in content.items.all.0.tags.all %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a> {% endfor %}" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ question.items.all.0 }}'></td><td align='right'>{% spaceless %}{% follow_form content.items.all.0 %}{% endspaceless %}</td></tr></table>"><a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a></span></h4>
         </div></div>
         <div class="row one_row">
             <div class="span4"><a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;&nbsp;{{ content.content }}</p></div>

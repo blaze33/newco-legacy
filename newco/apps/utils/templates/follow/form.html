@@ -2,14 +2,13 @@
 {% load follow_tags %}
 {% load content_utils %}
 
-<form action="" method="POST">{% csrf_token %}
+<form action='' method='POST'>{% csrf_token %}
     {% if request.user|is_following:object %}
-        <input type="submit" class="btn btn-primary" name="unfollow" value='{% trans "Unfollow" %}'/>
+        <input type='submit' class='btn btn-primary' name='unfollow' value='{% trans "Unfollow" %}'/>
     {% else %}
-        <input type="submit" class="btn" name="follow" value='{% trans "Follow" %}'/>
+        <input type='submit' class='btn' name='follow' value='{% trans "Follow" %}'/>
     {% endif %}
-    <input type="hidden" name="app_label" value="{{ object|to_app_label }}"/>
-    <input type="hidden" name="object_name" value="{{ object|to_class_name }}"/>
-    <input type="hidden" name="id" value="{{ object.id }}"/>
+    <input type='hidden' name='app_label' value='{{ object|to_app_label }}'/>
+    <input type='hidden' name='object_name' value='{{ object|to_class_name }}'/>
+    <input type='hidden' name='id' value='{{ object.id }}'/>
 </form>
-
