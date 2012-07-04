@@ -56,6 +56,15 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+USE_TZ = True
+USE_L10N = True
+
+# Overrides full list for better perf
+gettext_noop = lambda s: s
+LANGUAGES = (
+    ('en', gettext_noop('English')),
+    ('fr', gettext_noop('French')),
+)
 
 # Where to look to compile translations
 LOCALE_PATHS = (
@@ -63,6 +72,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/apps/utils/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -136,6 +146,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
 
@@ -149,6 +160,11 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 INSTALLED_APPS = [
     # Django
+    "admintools_bootstrap",
+    "admin_tools",
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -169,7 +185,6 @@ INSTALLED_APPS = [
 #    "notification",  # must be first
     "staticfiles",
     "compressor",
-    "debug_toolbar",
     "django_openid",
     "timezones",
     "announcements",
@@ -185,16 +200,17 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
-    # Foreign apps
-    "taggit",
-    "voting",
-    "follow",
-
     # Project
     "about",
     "profiles",
     "items",
     "custaccount",
+    "utils",
+
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
 
     # Tests
     "tests",
@@ -235,6 +251,9 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+# Rosetta
+ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

@@ -8,29 +8,6 @@ from follow.utils import toggle
 from utils.tools import load_object
 
 
-def send_email_follow(profile_fwee, profile_fwer):
-    message_subject = profile_fwee.name + ", " + profile_fwer.name
-    message_subject += " vous suit maintenant sur NewCo !"
-                    
-    txt_template = get_template('follow/_follow_notification_email.txt')
-    html_template = get_template('follow/_follow_notification_email.html')
-    
-    d = Context({ 'profile_followee_name': profile_fwee.name,
-                 'message_subject' : message_subject,
-                 'profile_follower_url' : profile_fwer.get_absolute_url(),
-                 'profile_follower_name' : profile_fwer.name,
-                 'profile_followee_url' : profile_fwee.get_absolute_url()})
-    
-    msg_txt = txt_template.render(d)
-    msg_html = html_template.render(d)
-    
-    msg = EmailMultiAlternatives(message_subject, msg_txt, 
-                                 'auto-mailer@newco-project.fr', 
-                                 [profile_fwee.user.email])
-    msg.attach_alternative(msg_html, "text/html")
-    msg.send()
-
-
 def process_following(request):
     obj = load_object(request)
     follow = toggle(request.user, obj)
@@ -52,3 +29,26 @@ def process_following(request):
             return HttpResponseServerError(
                         'No follow object and `next` parameter found.'
             )
+
+
+def mail_followee(fwee, fwer, site):
+    message_subject = "%s, %s vous suit maintenant sur NewCo !" % \
+                            (fwee.name, fwer.name)
+
+    txt_template = get_template('follow/_follow_notification_email.txt')
+    html_template = get_template('follow/_follow_notification_email.html')
+
+    d = Context({'followee': fwee.name, 'follower': fwer.name,
+        'followee_url': "http://%s%s" % (site, fwee.get_absolute_url()),
+        'follower_url': "http://%s%s" % (site, fwer.get_absolute_url()),
+        'message_subject': message_subject
+    })
+
+    msg_txt = txt_template.render(d)
+    msg_html = html_template.render(d)
+
+    msg = EmailMultiAlternatives(message_subject, msg_txt,
+        'auto-mailer@newco-project.fr', [fwee.user.email]
+    )
+    msg.attach_alternative(msg_html, "text/html")
+    msg.send()
