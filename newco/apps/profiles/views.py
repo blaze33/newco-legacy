@@ -58,10 +58,10 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
 
         #content ordering for newsfeed
         newsfeed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
-            Q(id__in=Question.objects.filter(
-                items__in=items_fwed_ids).values_list('answer', flat=True)
-            )
-        ))
+                Q(id__in=Question.objects.filter(
+                    items__in=items_fwed_ids).values_list('answer', flat=True))
+            ).exclude(author=self.object.user)
+        )
         for model in [Question, ExternalLink, Feature]:
             newsfeed.extend(model.objects.filter(
                     Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
