@@ -3,8 +3,6 @@
 {% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
-{% load account_tags %}
-{% load date_utils %}
 
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
@@ -23,9 +21,7 @@
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right"><p class="signature"><small>
-            <b>{{ question.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ question.author.get_absolute_url }}'>{% user_display question.author %}</a>
-        </small></p></div>
+        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
     </div>
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
@@ -41,12 +37,10 @@
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
-            <div class="span2 right"><p class="signature"><small>
-                <b>{{ answer.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ answer.author.get_absolute_url }}'>{% user_display answer.author %}</a>
-            </small></p></div>
+            <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
         </div>
     {% endfor %}
-    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name='test'>
+    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
     </a></div></div>
     <hr>
