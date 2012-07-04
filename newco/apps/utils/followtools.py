@@ -29,6 +29,7 @@ def process_following(request, go_to_object=False):
     }
 
     obj = load_object(request)
+    username = user_display(request.user)
     if not request.user == obj:
         follow = toggle(request.user, obj)
 
@@ -46,16 +47,13 @@ def process_following(request, go_to_object=False):
         msg = "follow" if is_following else "unfollow"
         messages.add_message(request,
             msgs[msg]["level"],
-            msgs[msg]["text"] % {
-                "user": user_display(request.user),
-                "object": object_unicode
-            }
+            msgs[msg]["text"] % {"user": username, "object": object_unicode}
         )
     else:
         follow = None
         messages.add_message(request,
             msgs["warning"]["level"],
-            msgs["warning"]["text"] % {"user": user_display(request.user)}
+            msgs["warning"]["text"] % {"user": username}
         )
 
     try:
