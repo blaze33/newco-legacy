@@ -85,8 +85,12 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         if 'follow' in request.POST or 'unfollow' in request.POST:
             if 'follow' in request.POST and \
                     request.POST['object_name'] == 'user':
+                if not 'username' in self.kwargs:
+                    kwargs['username'] = User.objects.get(id=self.request.POST['id'])
+                
                 mail_followee(kwargs['username'].get_profile(),
-                    request.user.get_profile(), request.META.get('HTTP_HOST')
+                              request.user.get_profile(), 
+                              request.META.get('HTTP_HOST')
                 )
             return process_following(request, go_to_object=False)
         else:

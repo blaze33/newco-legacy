@@ -1,0 +1,13 @@
+{% spaceless%}
+{% load i18n %}
+{% load follow_tags %}
+{% load content_utils %}
+{% load account_tags %}
+
+<span class="myClassPopover"{% comment %} style="z-index:999" {% endcomment %} data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ user }}'></td><td align='right'>{% if not user == request.user %}{% follow_form user %}{% endif %}</td></tr></table>" 
+	    data-content="{% if reputation %}<p><a href='{% url faq %}#reputation' style=' color: #000000 '><b>{% trans "Reputation" %}</b></a>: {{ reputation.reputation_incremented }}</p>{% endif %}
+	    {% if profile.skills.count > 0 %}<p><b>{% trans "Skills" %}</b>:&nbsp;{% for skill in profile.skills.all %}<a href='{% url tagged_items skill.slug %}'><span class='label'>{{ skill.name }}</span></a>&nbsp; {% endfor %}{% endif %} ">
+	<a href="{{ user.get_absolute_url }}">{% user_display user %}</a> 
+</span>
+
+{% endspaceless %}
