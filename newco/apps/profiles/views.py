@@ -10,7 +10,7 @@ from idios.views import ProfileDetailView
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
 from follow.models import Follow
-from utils.followtools import process_following, mail_followee
+from utils.followtools import process_following
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -83,11 +83,6 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            if 'follow' in request.POST and \
-                    request.POST['object_name'] == 'user':
-                mail_followee(kwargs['username'].get_profile(),
-                    request.user.get_profile(), request.META.get('HTTP_HOST')
-                )
             return process_following(request, go_to_object=False)
         else:
             return super(ProfileDetailView, self).post(request,
