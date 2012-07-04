@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load follow_tags %}
+{% load account_tags %}
+
+{% spaceless%}
+
+<span class="myClassPopover"
+    data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form object %}</td></tr></table>"
+    data-content="{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp;{% endfor %}">
+        <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+</span>
+
+{% endspaceless %}
