@@ -4,22 +4,10 @@
 {% load content_utils %}
 {% load account_tags %}
 
-<span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% spaceless %}{% follow_form object %}{% endspaceless %}</td></tr></table>" 
+<span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form object %}</td></tr></table>" 
 	    data-content="{% for tag in object.tags.all %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp;
 	    {% endfor %}">
 	<a href="{{ object.get_absolute_url }}">{{ object }}</a> 
 </span>
 
-{% comment %}
-<form action='' method='POST'>{% csrf_token %}
-    {% if request.user|is_following:object %}
-        <input type='submit' class='btn btn-primary' name='unfollow' value='{% trans "Unfollow" %}'/>
-    {% else %}
-        <input type='submit' class='btn' name='follow' value='{% trans "Follow" %}'/>
-    {% endif %}
-    <input type='hidden' name='app_label' value='{{ object|to_app_label }}'/>
-    <input type='hidden' name='object_name' value='{{ object|to_class_name }}'/>
-    <input type='hidden' name='id' value='{{ object.id }}'/>
-</form>
-{% endcomment %}
 {% endspaceless %}

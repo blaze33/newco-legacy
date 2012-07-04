@@ -8,14 +8,16 @@ from follow.utils import toggle
 from utils.tools import load_object
 
 
-def process_following(request):
+def process_following(request, go_to_object=False):
     obj = load_object(request)
     follow = toggle(request.user, obj)
+    # TODO display message
 
     try:
-        # Might be something better to do
-        # than follow.target.get_absolute_url()
-        return HttpResponseRedirect(follow.target.get_absolute_url())
+        if go_to_object:
+            return HttpResponseRedirect(follow.target.get_absolute_url())
+        else:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except (AttributeError, TypeError):
         if 'HTTP_REFERER' in request.META:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
