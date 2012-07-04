@@ -3,6 +3,7 @@
 {% load content_utils %}
 {% load staticfiles %}
 {% load account_tags %}
+{% load date_utils %}
 
 <div class="row">{% for feat_list in feat_lists %}<div class="span4">
 
@@ -25,7 +26,7 @@
                 {% endif %}
             </div>
             <div class="span1 right"><p class="signature"><small>
-                <b>{{ feat.pub_date }}</b> {% trans "by" %} <a href='{{ feat.author.get_absolute_url }}'>{% user_display feat.author %}</a>
+                <b>{{ feat.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ feat.author.get_absolute_url }}'>{% user_display feat.author %}</a>
             </small></p></div>
 
     </div><hr>{% endfor %}

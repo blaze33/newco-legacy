@@ -72,6 +72,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/apps/utils/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -210,7 +211,6 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "follow",
-    "rosetta",
 
     # Tests
     "tests",

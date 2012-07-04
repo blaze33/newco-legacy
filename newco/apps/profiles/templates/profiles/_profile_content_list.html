@@ -2,6 +2,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 {% load account_tags %}
+{% load date_utils %}
 
 {% scores_for_objects contents as score_dict %}
 
@@ -18,7 +19,7 @@
         <div class="row one_row">
             <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a> {{ question.content }}</small></p></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date }}</b> {% trans "by" %} <a href="{{ question.author.get_absolute_url }}">{% user_display question.author %}</a>
+                <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href="{{ question.author.get_absolute_url }}">{% user_display question.author %}</a>
             </small></p></div>
         </div>
 
@@ -27,7 +28,7 @@
             <div class="span3"><p>{{ content.content }}</p></div>
             <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
+                <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
             </small></p></div>
         </div>
         {% if user != author %}
@@ -43,7 +44,7 @@
             <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>
             <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
+                <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
             </small></p></div>
         </div>
 
@@ -62,7 +63,7 @@
             <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "L:" %}</a> <a href="{{ content.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ content.content }}</a></p></div>
             <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
+                <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
             </small></p></div>
         </div>
 
@@ -74,7 +75,7 @@
             <div class="span4"><a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;&nbsp;{{ content.content }}</p></div>
             <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
             <div class="span2 right"><p class="signature"><small>
-                <b>{{ pub_date }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
+                <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href="{{ author_url }}">{% user_display author %}</a>
             </small></p></div>
         </div>
     {% endif %}

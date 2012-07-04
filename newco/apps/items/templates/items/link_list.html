@@ -3,6 +3,7 @@
 {% load content_utils %}
 {% load staticfiles %}
 {% load account_tags %}
+{% load date_utils %}
 
 <div class="row one_row"><div class="span4"><a href='{% url item_create "externallink" %}?item_id={{ item.id }}' class="btn btn-mini" name='add_link'>
     <i class="icon-share-alt"></i>{% trans "Publish an external link" %}
@@ -26,7 +27,7 @@
             {% endif %}
         </h3></div>
         <div class="span2 right"><p class="signature"><small>
-            <b>{{ link.pub_date }}</b> {% trans "by" %} <a href='{{ link.author.get_absolute_url }}'>{% user_display link.author %}</a>
+            <b>{{ link.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ link.author.get_absolute_url }}'>{% user_display link.author %}</a>
         </small></p></div>
     </div>
     <hr>
