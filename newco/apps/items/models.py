@@ -40,20 +40,20 @@ class Content(models.Model):
 
 
 class Item(Content):
-    name = models.CharField(max_length=255, verbose_name=_('name'))
-    slug = models.SlugField(verbose_name=_('slug'), editable=False)
+    name = models.CharField(max_length=255, verbose_name=_("name"))
+    slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_('last modified'))
+                                         verbose_name=_("last modified"))
     tags = TaggableManager(
             verbose_name=_("tags"),
             help_text=_("A comma-separated list of tags, describing the item.")
     )
 
     class Meta:
-        verbose_name = _('item')
+        verbose_name = _("item")
 
     def __unicode__(self):
-        return u'%s' % (self.name)
+        return u"%s" % (self.name)
 
     def save(self):
         self.slug = slugify(self.name)
@@ -68,16 +68,17 @@ register(Item)
 
 
 class Question(Content):
-    content = models.CharField(max_length=200, verbose_name=_('content'))
+    content = models.CharField(max_length=200, verbose_name=_("content"))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
     class Meta:
-        verbose_name = _('question')
+        verbose_name = _("question")
         ordering = ["-pub_date"]
 
     def __unicode__(self):
-        return u'%s' % (self.content)
+        q = self.content
+        return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
 
     def get_absolute_url(self, anchor_pattern="/question-%(id)s#q-%(id)s"):
         item = self.items.select_related()[0]
@@ -86,14 +87,15 @@ class Question(Content):
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=1000, verbose_name=_('content'))
+    content = models.CharField(max_length=1000, verbose_name=_("content"))
     votes = generic.GenericRelation(Vote)
 
     class Meta:
-        verbose_name = _('answer')
+        verbose_name = _("answer")
 
     def __unicode__(self):
-        return u'Answer %s on %s' % (self.id, self.question)
+        a = self.content
+        return u"%s" % (a if len(a) <= 50 else a[:50] + "...")
 
     def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
         item = self.question.items.select_related()[0]
@@ -101,28 +103,28 @@ class Answer(Content):
 
 
 class Story(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_('title'))
-    content = models.CharField(max_length=2000, verbose_name=_('content'))
+    title = models.CharField(max_length=200, verbose_name=_("title"))
+    content = models.CharField(max_length=2000, verbose_name=_("content"))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
     class Meta:
-        verbose_name = _('story')
-        verbose_name_plural = _('stories')
+        verbose_name = _("story")
+        verbose_name_plural = _("stories")
 
 
 class ExternalLink(Content):
-    content = models.CharField(max_length=200, verbose_name=_('content'))
-    url = models.URLField(max_length=200, verbose_name=_('URL'))
+    content = models.CharField(max_length=200, verbose_name=_("content"))
+    url = models.URLField(max_length=200, verbose_name=_("URL"))
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
     class Meta:
-        verbose_name = _('link')
+        verbose_name = _("link")
         ordering = ["-pub_date"]
 
     def __unicode__(self):
-        return u'%s' % (self.content)
+        return u"%s" % (self.content)
 
     def get_absolute_url(self, anchor_pattern="/link-%(id)s#l-%(id)s"):
         item = self.items.select_related()[0]

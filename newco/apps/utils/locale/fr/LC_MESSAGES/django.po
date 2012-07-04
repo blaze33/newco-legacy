@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-04 20:25+0200\n"
-"PO-Revision-Date: 2012-07-04 20:29\n"
+"PO-Revision-Date: 2012-07-04 21:22\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,12 +37,12 @@ msgstr "%(user)s, vous ne pouvez pas vous suivre !"
 #: votingtools.py:17
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote + sur %(object)s a été enregistré."
+msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
 
 #: votingtools.py:21
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote - sur %(object)s a été enregistré."
+msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
 
 #: votingtools.py:25
 #, python-format
