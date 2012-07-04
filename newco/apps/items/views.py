@@ -133,38 +133,31 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(self.request.POST, request=self.request)
             else:
                 f = QuestionForm(request=self.request)
-            context['form'] = f
-            context['item'] = self.object
-            context['prof_list'] = Profile.objects.filter(
-                skills__id__in=self.object.tags.values_list('id', flat=True)
-            ).distinct()
 
-            #ordering questions
-            questions = self.object.question_set.all()
-            q_ordered = sorted(list(questions),
-                key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
-            context['questions'] = q_ordered
+            context.update({
+                'form': f, 'item': self.object,
+                'prof_list': Profile.objects.filter(
+                        skills__id__in=self.object.tags.values_list('id',
+                        flat=True)).distinct()
+            })
 
-            #ordering external links
-            links = self.object.externallink_set.all()
-            l_ordered = sorted(list(links),
-                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
-            context['links'] = l_ordered
+            sets = {
+                    "questions": self.object.question_set.all(),
+                    "links": self.object.externallink_set.all(),
+                    "feat_pos": self.object.feature_set.filter(positive=True),
+                    "feat_neg": self.object.feature_set.filter(positive=False)
+            }
 
-            #ordering positive features
-            features_pos = self.object.feature_set.filter(positive=True)
-            f_ordered_pos = sorted(list(features_pos),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_pos'] = f_ordered_pos
+            for k in sets.keys():
+                sets.update({k: sorted(list(sets[k]), key=lambda c:
+                    Vote.objects.get_score(c)['score'], reverse=True)
+                })
 
-            #ordering negative features
-            features_neg = self.object.feature_set.filter(positive=False)
-            f_ordered_neg = sorted(list(features_neg),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_neg'] = f_ordered_neg
+            sets.update({"feat_lists": [sets["feat_pos"], sets["feat_neg"]]})
+            del sets["feat_pos"]
+            del sets["feat_neg"]
 
-            context['feat_lists'] = [f_ordered_pos]
-            context['feat_lists'].append(f_ordered_neg)
+            context.update(sets)
 
         return context
 
