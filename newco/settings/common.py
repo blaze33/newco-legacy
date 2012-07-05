@@ -258,7 +258,7 @@ ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
-#TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
+TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

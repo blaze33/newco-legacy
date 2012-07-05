@@ -11,9 +11,7 @@
 
 </br>
 
-<script type="text/javascript" src="/site_media/static/admin/js/jquery.min.js"></script>
-<script type="text/javascript" src="/site_media/static/admin/js/jquery.init.js"></script>
-<script type="text/javascript" src="/site_media/static/jquery-autosuggest/js/jquery.autoSuggest.minified.js"></script>
+{{ form.media }}
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
