@@ -208,6 +208,7 @@ INSTALLED_APPS = [
     "utils",
 
     # Foreign apps
+    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
@@ -254,6 +255,10 @@ ACCOUNT_LANGUAGES = [
 
 # Rosetta
 ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
+
+# Taggit autosuggest
+TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
+#TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

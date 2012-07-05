@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 
-from taggit.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 from idios.models import ProfileBase
 from follow.utils import register
 
