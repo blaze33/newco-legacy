@@ -83,7 +83,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                                                        **kwargs)
     def get_context_data(self, **kwargs):
         context = super(ContentCreateView, self).get_context_data(**kwargs)
-        if self.request.GET:
+        if 'initial' in self.request.GET:
             context['new_search'] = self.request.GET['initial']
         return context
         
