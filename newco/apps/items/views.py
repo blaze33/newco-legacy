@@ -135,7 +135,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm(request=self.request)
 
             context.update({
-                'form': f, 'item': self.object,
+                'form': f, 'item': context.pop('object'),
                 'prof_list': Profile.objects.filter(
                         skills__id__in=self.object.tags.values_list('id',
                         flat=True)).distinct()
