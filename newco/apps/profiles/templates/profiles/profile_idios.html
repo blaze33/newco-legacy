@@ -1,6 +1,7 @@
 
 {% load i18n %}
 {% load account_tags %}
+{% load content_utils %}
 {% load voting_tags %}
 {% load follow_tags %}
 
@@ -9,7 +10,7 @@
             <li>
         <form action="" method="POST" class="form-horizontal">{% csrf_token %}
         	<div class="input-append">
-	        	<input name="pf_pick" type="text" autocomplete="off" placeholder="Search " class="default" style="margin: 0 auto; height:18px; width:120px; font-size:16px; color: #333; margin-left:-5px; border-width: 3px; border-color: #333; border-radius: 15px; background:yellow;" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
+	        	<input name="pf_pick" type="text" autocomplete="off" placeholder="Search " class="input-xlarge" style="margin: 0 auto; height:18px; width:120px; font-size:16px; color: #333; margin-left:-5px; border-width: 3px; border-color: #333; border-radius: 15px; background:yellow;" data-provide="typeahead" data-items="6" data-source="{{data_source_profile}}">
 	        </div>
         </form>
         </li>

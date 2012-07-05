@@ -79,9 +79,9 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                                                             reverse=True)
         })
 
-        if 'list_profile' in context:
-            list_pf = list(context['list_profile'].values_list('name', flat=True))
-            context.update({"data_source_profile": json.dumps(list_pf)})
+
+        list_pf = list(Profile.objects.all().values_list('name', flat=True))
+        context.update({"data_source_profile": json.dumps(list_pf)})
 
 
         return context
@@ -91,9 +91,9 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         
         if 'pf_pick' in request.POST:
             name = request.POST['pf_pick']
-            list_profile = Profile.objects.filter(name=name)
-            if list_profile.count() > 0:
-                response = list_profile[0].get_absolute_url()
+            profile_list = Profile.objects.filter(name=name)
+            if profile_list.count() > 0:
+                response = profile_list[0].get_absolute_url()
             else:
                 response = request.path
             return HttpResponseRedirect(response)
