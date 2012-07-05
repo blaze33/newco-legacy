@@ -43,8 +43,6 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             return direct_to_template(request, "homepage.html")
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileDetailView, self).get_context_data(**kwargs)
-
         history = list()
         for model in [Question, Answer, ExternalLink, Feature]:
             history.extend(model.objects.filter(author=self.page_user))
@@ -56,25 +54,25 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
 
         #content ordering for newsfeed
-        newsfeed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
+        feed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
                 Q(id__in=Question.objects.filter(
                     items__in=items_fwed_ids).values_list('answer', flat=True))
             ).exclude(author=self.page_user)
         )
         for model in [Question, ExternalLink, Feature]:
-            newsfeed.extend(model.objects.filter(
+            feed.extend(model.objects.filter(
                     Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
                 ).exclude(author=self.page_user)
             )
 
+        context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             'reputation': self.page_user.reputation,
             'history': sorted(history, key=lambda c: c.pub_date, reverse=True),
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': sorted(newsfeed, key=lambda c: c.pub_date,
-                                                            reverse=True)
+            'newsfeed': sorted(feed, key=lambda c: c.pub_date, reverse=True)
         })
 
         return context
