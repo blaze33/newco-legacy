@@ -133,18 +133,20 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 f = QuestionForm(request=self.request)
 
+            item = context.pop('object')
+
             context.update({
-                'form': f, 'item': context.pop('object'),
+                'form': f, 'item': item,
                 'prof_list': Profile.objects.filter(
                         skills__id__in=self.object.tags.values_list('id',
                         flat=True)).distinct()
             })
 
             sets = {
-                    "questions": self.object.question_set.all(),
-                    "links": self.object.externallink_set.all(),
-                    "feat_pos": self.object.feature_set.filter(positive=True),
-                    "feat_neg": self.object.feature_set.filter(positive=False)
+                    "questions": item.question_set.all(),
+                    "links": item.externallink_set.all(),
+                    "feat_pos": item.feature_set.filter(positive=True),
+                    "feat_neg": item.feature_set.filter(positive=False)
             }
 
             for k in sets.keys():
