@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load content_utils %}
+        <div class="row one_row"><div class="span7">
+            <h4>{% popover_link content.author %} {% trans "asked a question about" %} {% popover_link content.items.all.0 %}</h4>
+        </div></div>
+        <div class="row one_row">
+            <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>
+            <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+        </div>
+
+        {% if user != author %}
+            <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>
+        {% endif %}

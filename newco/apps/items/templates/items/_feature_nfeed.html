@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load content_utils %}
+
+<div class="row one_row"><div class="span7">
+    <h4>{% popover_link content.author %} {% trans "suggested a feature on" %} {% popover_link content.items.all.0 %}</h4>
+</div></div>
+<div class="row one_row">
+    <div class="span4"><a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;&nbsp;{{ content.content }}</p></div>
+    <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+    <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+</div>
