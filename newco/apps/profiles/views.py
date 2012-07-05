@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.http import HttpResponsePermanentRedirect
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
@@ -12,9 +13,9 @@ from profiles.models import Profile, Reputation
 from follow.models import Follow
 from utils.followtools import process_following, mail_followee
 
+import json
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
-
     is_profile_page = True
 
     def get(self, request, *args, **kwargs):
@@ -78,10 +79,25 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                                                             reverse=True)
         })
 
+        if 'list_profile' in context:
+            list_pf = list(context['list_profile'].values_list('name', flat=True))
+            context.update({"data_source_profile": json.dumps(list_pf)})
+
+
         return context
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        
+        if 'pf_pick' in request.POST:
+            name = request.POST['pf_pick']
+            list_profile = Profile.objects.filter(name=name)
+            if list_profile.count() > 0:
+                response = list_profile[0].get_absolute_url()
+            else:
+                response = request.path
+            return HttpResponseRedirect(response)
+        
         if 'follow' in request.POST or 'unfollow' in request.POST:
             if 'follow' in request.POST and request.POST['object_name'] == 'user':
                 mail_followee(kwargs['username'].get_profile(),
