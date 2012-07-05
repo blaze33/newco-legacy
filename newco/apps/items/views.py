@@ -127,7 +127,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        self.object = self.get_object()
         if self.model == Item:
             if self.request.POST:
                 f = QuestionForm(self.request.POST, request=self.request)
