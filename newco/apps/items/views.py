@@ -136,10 +136,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             item = context.pop('object')
 
             context.update({
-                'form': f, 'item': item,
-                'prof_list': Profile.objects.filter(
-                        skills__id__in=self.object.tags.values_list('id',
-                        flat=True)).distinct()
+                'form': f, 'item': item, 'prof_list': Profile.objects.filter(
+                            skills__id__in=self.object.tags.values_list('id',
+                            flat=True)).distinct()
             })
 
             sets = {
