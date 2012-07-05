@@ -37,7 +37,8 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             self.template_name = "profiles/profile_homepage.html"
             self.page_user = request.user
             self.object = self.page_user.get_profile()
-            context = self.get_context_data().update({'kwargs': kwargs})
+            context = self.get_context_data()
+            context.update({'kwargs': kwargs})
             return self.render_to_response(context)
         else:
             return direct_to_template(request, "homepage.html")
