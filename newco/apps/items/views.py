@@ -19,7 +19,6 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
-from utils.publishtools import process_publish as _process_publish
 from utils.followtools import process_following
 
 import json

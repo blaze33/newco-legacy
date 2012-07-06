@@ -10,7 +10,6 @@ from idios.views import ProfileDetailView
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile
 from follow.models import Follow
-from utils.publishtools import process_publish as _process_publish
 from utils.followtools import process_following
 from utils.tools import load_object
 
