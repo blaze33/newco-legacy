@@ -23,7 +23,7 @@ def get_at_index(list, index):
     return list[index]
 
 
-@register.inclusion_tag('items/tag_edit.html')
+@register.inclusion_tag('items/_tag_edit.html')
 def edit(item_name, item_id):
     return {
         'item_name': item_name,

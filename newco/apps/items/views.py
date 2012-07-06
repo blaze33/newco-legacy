@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
@@ -13,7 +14,7 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item, CannotManage
+from items.models import Item
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
@@ -106,7 +107,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
 class ContentUpdateView(ContentView, UpdateView):
 
-#    @method_decorator(permission_required(app_name))
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
@@ -203,7 +204,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         else:
             return self.form_invalid(form)
 
-    @method_decorator(permission_required('profiles.can_vote',
+    @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
     def process_voting(self, request):
         return _process_voting(request, go_to_object=True)
@@ -255,22 +256,32 @@ class ContentListView(ContentView, ListView, RedirectView):
 class ContentDeleteView(ContentView, DeleteView):
 
     def delete(self, request, *args, **kwargs):
-        if 'success_url' in request.REQUEST:
-            self.success_url = request.REQUEST['success_url']
         self.object = self.get_object()
-        try:
-            if not self.object.user_can_manage_me(request.user):
-                raise CannotManage
-        except CannotManage:
-            # need to redirect to 403 - delete forbidden
-            return HttpResponseRedirect(self.get_success_url())
-        except AttributeError:
-            pass
+        if not request.user.has_perm("can_manage", self.object):
+            raise PermissionDenied
+        success_url = self.get_success_url(request)
         self.object.delete()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(success_url)
 
-    def get_success_url(self):
-        if self.model.__name__ == 'Item':
-            return reverse("item_index")
-        if self.success_url:
-            return self.success_url
+    def get_success_url(self, request):
+        if self.model.__name__ == "Item":
+            success_url = reverse("item_index")
+        elif "success_url" in request.GET:
+            success_url = request.GET.get("success_url")
+        else:
+            success_url = None
+
+        obj = self.object
+        if success_url != obj.get_absolute_url() and success_url is not None:
+            return success_url
+        else:
+            try:
+                return obj.items.all()[0].get_absolute_url()
+            except AttributeError:
+                try:
+                    return obj.question.items.all()[0].get_absolute_url()
+                except:
+                    pass
+            except:
+                pass
+        raise ImproperlyConfigured
