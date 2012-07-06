@@ -80,6 +80,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
+            
     def get_context_data(self, **kwargs):
         context = super(ContentCreateView, self).get_context_data(**kwargs)
         if 'initial' in self.request.GET:
@@ -233,6 +234,7 @@ class ContentListView(ContentView, ListView, RedirectView):
         if 'item_list' in context:
             ta_list = list(context['item_list'].values_list('name', flat=True))
             if hasattr(self, 'tag'):
+                #return HttpResponseRedirec(response)
                 context['tag'] = self.tag
             else:
                 ta_list.extend(
@@ -249,8 +251,20 @@ class ContentListView(ContentView, ListView, RedirectView):
                 context['item_list'] = context['item_list'].order_by("-author")
             else:
                 context['item_list'] = context['item_list']
+                
+                
+            
 
+        if 'ta_pick' in self.request.POST:
+            name = self.request.POST['ta_pick']   
+            context['place_holder'] = name
+            
 
+            tag_list = Tag.objects.filter(name=name)
+            if tag_list.count() > 0:
+                context['item_list_search'] = Item.objects.filter(tags=tag_list[0])    
+                context['tag_new'] = tag_list[0]     
+        
         return context
 
     def post(self, request, *args, **kwargs):
@@ -260,10 +274,11 @@ class ContentListView(ContentView, ListView, RedirectView):
             item_list = Item.objects.filter(name=name)
             if item_list.count() > 0:
                 response = item_list[0].get_absolute_url()
+                return HttpResponseRedirect(response)
             else:
                 tag_list = Tag.objects.filter(name=name)
                 if tag_list.count() > 0:
-                    response = reverse("tagged_items",
+                    response_old = reverse("tagged_items",
                                 kwargs={'tag_slug': tag_list[0].slug})
                 else:
                     response = "%s?initial=%s" % (reverse("item_create", None, 
@@ -271,8 +286,10 @@ class ContentListView(ContentView, ListView, RedirectView):
                             ),
                             name,
                     )
+                    return HttpResponseRedirect(response)
                     #response = request.path
-            return HttpResponseRedirect(response)
+            #return HttpResponseRedirect(response)
+            return super(ContentListView, self).post(request, *args, **kwargs)
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
         

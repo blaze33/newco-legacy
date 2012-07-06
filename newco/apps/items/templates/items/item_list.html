@@ -7,39 +7,118 @@
 {% block head_title %}{% trans "Products" %}{% endblock %}
 
 {% block body %}
-
+{% url item_index as index_url %}
 {% if item_list %}
+{% if tag %}
+</br></br>
+
+<div class="row">
+	<div class="span6">
+<h1>Find a product to buy.</h1>
+<i>Tested and reviewed by real people. </i>
+</br></br>
+    </div>
+    <div class="span4">
+    	<div class="alert alert-info">
+		<a class="close" data-dismiss="alert" href="{{ index_url }}">click</a>Vous voici sur la page TAG {{ tag.name }}. </br>Cliquez pour revenir a une page de recherche classique.</a>
+    	</div>
+    </div>
+    
+</div>
+
+
+</br></br>
+
+    <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
+        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}" value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+    </div>
+    </br></br>
+    </form>
+
+</br></br>
+{% for item in item_list %}
+
+<div class="span7"><table class="table table-condensed"><tbody><tr><td>
+
+        <ul>
+        <li>
+            <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
+            <br><i>petite description</i>
+        </li>
+        </ul>
+
+</td></tr></tbody></table></div>
+<div class="span4">
+    <h3><a href='{{ item.author.get_absolute_url }}'>{% user_display item.author %}</a></h3>
+</div>
+{% endfor %}
+
+
+{% else %}
 </br></br>
 <h1>Find a product to buy.</h1>
 <i>Tested and reviewed by real people. </i>
 </br></br></br></br>
 
 
-{% if tag %}
-{% include "items/item_list_tag.html" %}
-{% else %}
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous{% if tag %} ayant le tag {{ tag.name}}{% endif %}?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}" value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
     </div>
     </br></br>
-    {% if item_name in item_list %}
-    {% include "items/item_list_qcm_tennis.html" %}
-    {% else %}
-    {% include "items/item_list_qcm_aspirateur.html" %}
-    {% endif %}
+    
+    Sort by
+    <select name="sort_item" onchange="sort(this)">
+	<option value="0">Something</option>
+    <option value="1">Newest to Oldest</option>
+    <option value="2">Oldest to Newest</option>
+    <option value="3">Price: low to high</option>
+</select>
+<input name= "s" type="submit">
     </form>
     
-   
-   
-   </br></br></br></br>
-    {% if tag %}
-        <h4>{% trans "List of items with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a>:</h4>
-    {% else %}
-        <h4>{% trans "We display below the list of items currently in the database:" %}</h4>
-    {% endif %}
-    </br>
+<script>
+function sort(element)
+{
+    var idx=element.selectedIndex;
+    var val=element.options[idx].value;
+    var content=element.options[idx].innerHTML;
+ }
+</script>   
+      
+{% if item_list_search %}
+
+<div class="alert alert-info">
+  <a class="close" data-dismiss="alert" href="#">click</a>
+ Please see below the products for the field {{ tag_new.name }}.
+</div>
+</br>
+
+</br>
+
+{% for item in item_list %}
+{% if item in item_list_search %}
+
+<div class="span7"><table class="table table-condensed"><tbody><tr><td>
+
+        <ul>
+        <li>
+            <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
+            <br><i>petite description</i>
+        </li>
+        </ul>
+
+</td></tr></tbody></table></div>
+<div class="span4">
+    <h3><a href='{{ item.author.get_absolute_url }}'>{% user_display item.author %}</a></h3>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
 
 {% endif %}
+
 
 <div class="span7">
 <ul class="nav nav-pills">
