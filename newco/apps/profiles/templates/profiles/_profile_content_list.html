@@ -7,7 +7,9 @@
 
 {% scores_for_objects contents as score_dict %}
 
-{% for content in contents|slice:":20" %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html"%}<div class="row content"><div class="span7">
+{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+
+{% for content in contents|slice:":20" %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url %}<div class="row content"><div class="span7">
 
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}
@@ -71,4 +73,4 @@
             <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
         </div>
     {% endif %}
-</div></div>{% endwith %}{% endfor %}
+</div></div>{% endwith %}{% endfor %}{% endwith %}
