@@ -4,6 +4,8 @@
 
 {% spaceless%}
 
+{% with tag_list=object.get_profile.skills.all %}
+
 <span class="myClassPopover"
     data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% if not object == request.user %}{% follow_form object %}{% endif %}</td></tr></table>" 
     data-content="
@@ -11,5 +13,7 @@
         {% if tag_list.count > 0 %}<p><b>{% trans 'Skills' %}</b>:&nbsp;{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp; {% endfor %}{% endif %}">
         <a href="{{ object.get_absolute_url }}">{% user_display object %}</a> 
 </span>
+
+{% endwith %}
 
 {% endspaceless %}
