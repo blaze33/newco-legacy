@@ -18,6 +18,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
+from utils.publishtools import process_publish as _process_publish
 from utils.followtools import process_following
 
 import json
@@ -133,7 +134,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 f = QuestionForm(request=self.request)
 
-            item = context.pop('object')
+            item = context['item']
 
             context.update({
                 'form': f, 'item': item, 'prof_list': Profile.objects.filter(
@@ -197,6 +198,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=True)
+#        elif 'publish' in request.POST:
+#            return self.process_publish(request)
         else:
             return self.form_invalid(form)
 
@@ -204,6 +207,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                                           raise_exception=True))
     def process_voting(self, request):
         return _process_voting(request, go_to_object=True)
+
+    def process_publish(self,request):
+        return _process_publish(request, go_to_object=True)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

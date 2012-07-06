@@ -34,7 +34,7 @@
         <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content" style="overflow: visible;">
         <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/question_list.html" %}</div>
         <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/link_list.html" %}</div>
         <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/feature_list.html" %}</div>

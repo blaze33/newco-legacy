@@ -38,7 +38,7 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        exclude = ('author', 'items')
+        exclude = ('author', 'items', 'status')
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',

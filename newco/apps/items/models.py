@@ -30,7 +30,7 @@ class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
-    status = models.ForeignKey(Status, default=0, null=True)
+    status = models.ForeignKey(Status, null=True)
 
 
     class Meta:

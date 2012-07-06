@@ -1,4 +1,4 @@
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
@@ -10,7 +10,9 @@ from idios.views import ProfileDetailView
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile
 from follow.models import Follow
+from utils.publishtools import process_publish as _process_publish
 from utils.followtools import process_following
+from utils.tools import load_object
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -82,6 +84,18 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
+        elif 'publish' in request.POST:
+            obj = load_object(request)
+            obj.status_id = self.request.POST['status']
+            obj.save()
+            return HttpResponseRedirect('')
+            #return self.process_publish(request)
+            #return super(ProfileDetailView,self).as_view()
+            #return super(ProfileDetailView, self).post(request,
+            #                                                *args, **kwargs)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
+
+    def process_publish(self,request):
+        return _process_publish(request, go_to_object=True)
