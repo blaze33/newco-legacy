@@ -11,10 +11,6 @@ from voting.models import Vote
 from follow.utils import register
 
 
-class CannotManage(Exception):
-    pass
-
-
 class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
@@ -22,14 +18,6 @@ class Content(models.Model):
 
     class Meta:
         abstract = True
-
-    def user_can_manage_me(self, user):
-        try:
-            if user == self.author:
-                return user == self.author or user.is_superuser
-        except AttributeError:
-            pass
-        return user.is_superuser
 
     def delete(self):
         try:
