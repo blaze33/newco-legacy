@@ -5,7 +5,7 @@
 
 {% scores_for_objects contents as score_dict %}
 
-{% for content in contents|slice:":20" %}{% if content.status.id != 1 or user == content.author %}{% if content|to_class_name != "answer" or content.question.status.id != 1 %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url %}<div class="row content"><div class="span9">
+{% for content in contents|slice:":20" %}{% if content.status.id != 1 or user == content.author %}{% if content|to_class_name != "answer" or content.question.status.id != 1 %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html"%}<div class="row content"><div class="span9">
 
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}

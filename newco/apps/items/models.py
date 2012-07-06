@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from taggit.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
@@ -57,10 +57,7 @@ class Item(Content):
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
-    tags = TaggableManager(
-            verbose_name=_("tags"),
-            help_text=_("A comma-separated list of tags, describing the item.")
-    )
+    tags = TaggableManager()
 
     class Meta:
         verbose_name = _("item")

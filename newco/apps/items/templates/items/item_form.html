@@ -11,6 +11,8 @@
 
 </br>
 
+{{ form.media }}
+
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
