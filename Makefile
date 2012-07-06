@@ -43,7 +43,7 @@ sync:
 heroku_bash:
 	heroku run bash --app $(APP)
 
-migrate_pinax_1: maintain_on push heroku_bash
+migrate_pinax_1: maintain_on push
 	heroku run python newco/apps/utils/scripts/migrate-pinax-accounts.py --app $(APP)
 
 migrate_pinax: migrate_pinax_1 sync maintain_off
