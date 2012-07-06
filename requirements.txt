@@ -36,6 +36,8 @@ South==0.7.5
 ## AWS interface & storage backend
 boto==2.5.1
 django-storages==1.1.4
+## dateutil needed to only upload updated files
+python-dateutil==1.5
 
 ## memcache interface
 pylibmc==1.2.3
