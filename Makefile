@@ -14,7 +14,7 @@ APP = $(shell echo $(REMOTE_URL)|cut -d":" -f2|cut -d"." -f1)
 SYNCDB = django-admin.py syncdb --noinput
 MIGRATE = django-admin.py migrate
 COLLECTSTATIC = django-admin.py collectstatic --noinput
-SQLDIFFALL = django-admin.py sqldiffall
+SQLDIFFALL = django-admin.py sqldiffall --settings=newco.settings.dev
 
 define SYNC_CMD
 $(SYNCDB) && \
