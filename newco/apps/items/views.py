@@ -106,7 +106,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
 class ContentUpdateView(ContentView, UpdateView):
 
-#    @method_decorator(permission_required(app_name))
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
@@ -201,7 +201,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         else:
             return self.form_invalid(form)
 
-    @method_decorator(permission_required('profiles.can_vote',
+    @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
     def process_voting(self, request):
         return _process_voting(request, go_to_object=True)
