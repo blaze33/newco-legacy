@@ -15,7 +15,8 @@
     <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
     <div class="span3"><p>{{ content.content }}</p></div>
     <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-    <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+    <div class="span4 right">{% include "items/_author.html" with object=content %}<br>
+	{% if user == author %}{% include "items/_status_form.html" %}{% endif %}</div>
 </div>
 {% if user != author %}
     <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
