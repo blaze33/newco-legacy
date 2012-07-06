@@ -73,6 +73,9 @@ django-follow==0.6
 ## Translation app
 django-rosetta==0.6.8
 
+## template loader
+hg+https://hg@bitbucket.org/wojas/django-apptemplates@ce738ccb3f02#egg=django_apptemplates
+
 ## tests
 selenium==2.24.0
 
