@@ -253,9 +253,6 @@ ACCOUNT_LANGUAGES = [
     for code in ['fr', 'en']
 ]
 
-# Rosetta
-ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
-
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
 TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
