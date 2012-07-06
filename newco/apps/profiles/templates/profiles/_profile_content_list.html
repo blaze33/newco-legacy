@@ -8,7 +8,6 @@
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
 {% for content in contents|slice:":20" %}{% if content.status.id != 1 or user == content.author %}{% if content|to_class_name != "answer" or content.question.status.id != 1 %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url%}<div class="row content"><div class="span9">
 
-
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}
 
@@ -21,4 +20,4 @@
     {% elif content|to_class_name == "feature" %}{% include "items/_feature_nfeed.html" %}
 
     {% endif %}
-</div></div>{% endwith %}{% endif %}{% endif %}{% endfor %}
+</div></div>{% endwith %}{% endif %}{% endif %}{% endfor %}{% endwith %}
