@@ -1,15 +1,15 @@
 {% load i18n %}
 {% load content_utils %}
 
-<div class="row one_row"><div class="span7">
-    <h4>{% popover_link content.author %}{% trans "posted a link about" %} {% popover_link content.items.all.0 %}</h4>
-</div></div>
+<div class="row one_row"><div class="span5">
+    <h4>{% include p_link_tpl with object=author %}{% trans "posted a link about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
+</div>{% if user == author %}{% include "items/_status_form.html" %}{% endif %}
+</div>
 <div class="row one_row">
 
     <a href="{{ link.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ link.content }}</a>
 
     <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "L:" %}</a> <a href="{{ content.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ content.content }}</a></p></div>
     <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-    <div class="span2 right">{% include "items/_author.html" with object=content %}<br>
-	{% if user == author %}{% include "items/_status_form.html" %}{% endif %}</div>
+    <div class="span3 right">{% include "items/_author.html" with object=content %}</div>
 </div>

@@ -11,7 +11,7 @@
 {% if question.status.id != 1 or user == question.author %}
 {% if question.status.id == 1 %}<div class="well">{% endif %}
 <div class="row question {% comment %}ajouter une classe "private" par la suite? - au lieu d'ajouter une class well? {% endcomment %}" >
-<div class="span9">
+<div class="span10">
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
@@ -23,8 +23,8 @@
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span4 right">{% include "items/_author.html" with object=question %}<br>
-	{% if user == question.author %}AAAAAAA{% include "items/_status_form.html" with content=question %}{% endif %}</div>
+        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+		{% if user == question.author %}{% include "items/_status_form.html" with content=question %}{% endif %}
     </div>
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}

@@ -4,10 +4,14 @@
 
 {% spaceless%}
 
+{% with tag_list=object.tags.all %}
+
 <span class="myClassPopover"
     data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form object %}</td></tr></table>"
     data-content="{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp; {% comment %}Seb: <- here There NEEDS to be a 'space' & &nbsp; , so that the navigator goes to new line if necessary (if not tags are displayed on ONE line... even out of the popover) {% endcomment %}{% endfor %}">
         <a href="{{ object.get_absolute_url }}">{{ object }}</a>
 </span>
+
+{% endwith %}
 
 {% endspaceless %}
