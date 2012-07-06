@@ -3,6 +3,8 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
+{% block extra_head_base %}{{ block.super }}{{ form.media }}{% endblock %}
+
 {% block head_title %}{% trans "Item" %}{% endblock %}
 
 {% block body %}
@@ -10,8 +12,6 @@
 <h1>{% block form_header %}{% trans "Add something new to talk about:" %}{% endblock %}</h1>
 
 </br>
-
-{{ form.media }}
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
