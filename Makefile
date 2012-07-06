@@ -8,7 +8,7 @@ clean:
 	find . -name "*~" -delete
 
 BRANCH = $(shell hg prompt {branch})
-REMOTE_URL = $(shell git config --get remote.staging.url)
+REMOTE_URL = $(shell git config --get remote.$(BRANCH).url)
 APP = $(shell echo $(REMOTE_URL)|cut -d":" -f2|cut -d"." -f1)
 
 SYNCDB = django-admin.py syncdb --noinput

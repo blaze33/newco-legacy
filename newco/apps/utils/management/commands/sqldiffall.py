@@ -31,6 +31,7 @@ class Command(BaseCommand):
         failed_msg = defaultdict(list)
         sql = ''
         nothing_to_do = False
+        no_diff_msg = 'no SQL output\n'
 
         for appname in settings.INSTALLED_APPS:
             if '.' in appname:
