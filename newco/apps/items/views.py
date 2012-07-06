@@ -134,44 +134,37 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        self.object = self.get_object()
         if self.model == Item:
             if self.request.POST:
                 f = QuestionForm(self.request.POST, request=self.request)
             else:
                 f = QuestionForm(request=self.request)
-            context['form'] = f
-            context['item'] = self.object
-            context['prof_list'] = Profile.objects.filter(
-                skills__id__in=self.object.tags.values_list('id', flat=True)
-            ).distinct()
 
-            #ordering questions
-            questions = self.object.question_set.all()
-            q_ordered = sorted(list(questions),
-                key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
-            context['questions'] = q_ordered
+            item = context.pop('object')
 
-            #ordering external links
-            links = self.object.externallink_set.all()
-            l_ordered = sorted(list(links),
-                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
-            context['links'] = l_ordered
+            context.update({
+                'form': f, 'item': item, 'prof_list': Profile.objects.filter(
+                            skills__id__in=self.object.tags.values_list('id',
+                            flat=True)).distinct()
+            })
 
-            #ordering positive features
-            features_pos = self.object.feature_set.filter(positive=True)
-            f_ordered_pos = sorted(list(features_pos),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_pos'] = f_ordered_pos
+            sets = {
+                    "questions": item.question_set.all(),
+                    "links": item.externallink_set.all(),
+                    "feat_pos": item.feature_set.filter(positive=True),
+                    "feat_neg": item.feature_set.filter(positive=False)
+            }
 
-            #ordering negative features
-            features_neg = self.object.feature_set.filter(positive=False)
-            f_ordered_neg = sorted(list(features_neg),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_neg'] = f_ordered_neg
+            for k in sets.keys():
+                sets.update({k: sorted(list(sets[k]), key=lambda c:
+                    Vote.objects.get_score(c)['score'], reverse=True)
+                })
 
-            context['feat_lists'] = [f_ordered_pos]
-            context['feat_lists'].append(f_ordered_neg)
+            sets.update({"feat_lists": [sets["feat_pos"], sets["feat_neg"]]})
+            del sets["feat_pos"]
+            del sets["feat_neg"]
+
+            context.update(sets)
 
         return context
 
@@ -210,14 +203,14 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
-            return process_following(request)
+            return process_following(request, go_to_object=True)
         else:
             return self.form_invalid(form)
 
     @method_decorator(permission_required('profiles.can_vote',
                                           raise_exception=True))
     def process_voting(self, request):
-        return _process_voting(request)
+        return _process_voting(request, go_to_object=True)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

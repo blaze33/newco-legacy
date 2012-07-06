@@ -9,14 +9,24 @@ from django.db.models import Q
 from idios.views import ProfileDetailView
 
 from items.models import Item, Question, Answer, ExternalLink, Feature
-from profiles.models import Profile, Reputation
+from profiles.models import Profile
 from follow.models import Follow
-from utils.followtools import process_following, mail_followee
+from utils.followtools import process_following
 
 import json
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
     is_profile_page = True
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.is_profile_page:
+            profile = Profile.objects.get(pk=kwargs.pop('pk'))
+            if profile.slug and kwargs['slug'] != profile.slug:
+                url = profile.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+            kwargs['username'] = profile.user.username
+        return super(ProfileDetailView, self).dispatch(request,
+                                                        *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         if self.is_profile_page:
@@ -34,49 +44,37 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         else:
             return direct_to_template(request, "homepage.html")
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.is_profile_page:
-            profile = Profile.objects.get(pk=kwargs.pop('pk'))
-            if profile.slug and kwargs['slug'] != profile.slug:
-                url = profile.get_absolute_url()
-                return HttpResponsePermanentRedirect(url)
-            kwargs['username'] = profile.user
-        return super(ProfileDetailView, self).dispatch(request,
-                                                        *args, **kwargs)
-
     def get_context_data(self, **kwargs):
-        context = super(ProfileDetailView, self).get_context_data(**kwargs)
-
         history = list()
         for model in [Question, Answer, ExternalLink, Feature]:
-            history.extend(model.objects.filter(author=self.object.user))
+            history.extend(model.objects.filter(author=self.page_user))
 
         fwers_ids = Follow.objects.get_follows(
-                self.object.user).values_list('user_id', flat=True)
-        obj_fwed = Follow.objects.filter(user=self.object.user)
+                self.page_user).values_list('user_id', flat=True)
+        obj_fwed = Follow.objects.filter(user=self.page_user)
         fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
         items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
 
         #content ordering for newsfeed
-        newsfeed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
-            Q(id__in=Question.objects.filter(
-                items__in=items_fwed_ids).values_list('answer', flat=True)
-            )
-        ))
+        feed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
+                Q(id__in=Question.objects.filter(
+                    items__in=items_fwed_ids).values_list('answer', flat=True))
+            ).exclude(author=self.page_user)
+        )
         for model in [Question, ExternalLink, Feature]:
-            newsfeed.extend(model.objects.filter(
+            feed.extend(model.objects.filter(
                     Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
-                ).exclude(author=self.object.user)
+                ).exclude(author=self.page_user)
             )
 
+        context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
-            'reputation': Reputation.objects.get(user=self.object.user),
+            'reputation': self.page_user.reputation,
             'history': sorted(history, key=lambda c: c.pub_date, reverse=True),
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': sorted(newsfeed, key=lambda c: c.pub_date,
-                                                            reverse=True)
+            'newsfeed': sorted(feed, key=lambda c: c.pub_date, reverse=True)
         })
 
 
@@ -99,11 +97,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             return HttpResponseRedirect(response)
         
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            if 'follow' in request.POST and request.POST['object_name'] == 'user':
-                mail_followee(kwargs['username'].get_profile(),
-                    request.user.get_profile(), request.META.get('HTTP_HOST')
-                )
-            return process_following(request)
+            return process_following(request, go_to_object=False)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)

@@ -32,29 +32,38 @@ def edit(item_name, item_id):
 
 
 @register.tag
-def vote_form(parser, token):
+def popover_link(parser, token):
     """
-    Renders the vote form.
+    Renders the item link with its popover.
 
     Usage::
 
-        {% vote_form object vote %}
+        {% item_link object template %}
 
     """
     bits = token.split_contents()
-    return VoteFormNode(*bits[1:])
+    return PopoverLinkNode(*bits[1:])
 
 
-class VoteFormNode(template.Node):
-    def __init__(self, obj, vote):
+class PopoverLinkNode(template.Node):
+    def __init__(self, obj, tpl=None):
         self.obj = template.Variable(obj)
-        self.vote = template.Variable(vote)
-        self.template = 'voting/form.html'
+        self.template = tpl[1:-1] if tpl else None
 
     def render(self, context):
+        obj = self.obj.resolve(context)
+        if obj._meta.module_name == "item":
+            tag_list = obj.tags.all()
+            if not self.template:
+                self.template = "items/_popover_link.html"
+        elif obj._meta.module_name == "user":
+            tag_list = obj.get_profile().skills.all()
+            if not self.template:
+                self.template = "profiles/_popover_link.html"
+
         ctx = {
             'object': self.obj.resolve(context),
-            'vote': self.vote.resolve(context)
+            'tag_list': tag_list
         }
         return template.loader.render_to_string(self.template, ctx,
             context_instance=context)

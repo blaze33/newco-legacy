@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-04 13:19+0200\n"
-"PO-Revision-Date: 2012-07-04 13:31\n"
+"POT-Creation-Date: 2012-07-04 20:25+0200\n"
+"PO-Revision-Date: 2012-07-04 21:22\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,41 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
+
+#: followtools.py:19
+#, python-format
+msgid "%(user)s, you are now following %(object)s."
+msgstr "%(user)s, vous suivez désormais %(object)s."
+
+#: followtools.py:23
+#, python-format
+msgid "%(user)s, you are not following %(object)s anymore."
+msgstr "%(user)s, vous ne suivez plus %(object)s."
+
+#: followtools.py:27
+#, python-format
+msgid "%(user)s, you can't follow yourself!"
+msgstr "%(user)s, vous ne pouvez pas vous suivre !"
+
+#: votingtools.py:17
+#, python-format
+msgid "%(user)s, your up vote on %(object)s has been recorded."
+msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
+
+#: votingtools.py:21
+#, python-format
+msgid "%(user)s, your down vote on %(object)s has been recorded."
+msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
+
+#: votingtools.py:25
+#, python-format
+msgid "%(user)s, your vote on %(object)s has been cancelled."
+msgstr "%(user)s, votre vote sur %(object)s a été annulé."
+
+#: votingtools.py:29
+#, python-format
+msgid "%(user)s, you can't vote on your own contribution!"
+msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
 
 #: templates/follow/form.html:7
 msgid "Unfollow"

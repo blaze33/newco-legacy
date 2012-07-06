@@ -120,6 +120,7 @@ SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
 TEMPLATE_LOADERS = [
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
+    'apptemplates.Loader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -160,7 +161,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 INSTALLED_APPS = [
     # Django
-    "admintools_bootstrap",
     "admin_tools",
     'admin_tools.theming',
     'admin_tools.menu',
@@ -208,6 +208,7 @@ INSTALLED_APPS = [
     "utils",
 
     # Foreign apps
+    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
@@ -252,8 +253,9 @@ ACCOUNT_LANGUAGES = [
     for code in ['fr', 'en']
 ]
 
-# Rosetta
-ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
+# Taggit autosuggest
+TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
+TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

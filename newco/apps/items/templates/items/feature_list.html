@@ -1,9 +1,8 @@
 {% load i18n %}
 {% load voting_tags %}
+{% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
-{% load account_tags %}
-{% load date_utils %}
 
 <div class="row">{% for feat_list in feat_lists %}<div class="span4">
 
@@ -25,9 +24,7 @@
                     {% with name=feat|to_class_name %}{% edit name feat.id %}{% endwith %}
                 {% endif %}
             </div>
-            <div class="span1 right"><p class="signature"><small>
-                <b>{{ feat.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ feat.author.get_absolute_url }}'>{% user_display feat.author %}</a>
-            </small></p></div>
+            <div class="span1 right">{% include "items/_author.html" with object=feat %}</div>
 
     </div><hr>{% endfor %}
 

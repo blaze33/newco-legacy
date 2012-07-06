@@ -19,7 +19,7 @@ INSTALLED_APPS += [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "db-dev.db",                       # Or path to database file if using sqlite3 dev.db.
+        "NAME": "db-dev.db",                    # Or path to database file if using sqlite3 dev.db.
         "USER": "",                             # Not used with sqlite3.
         "PASSWORD": "",                         # Not used with sqlite3.
         "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
@@ -46,6 +46,7 @@ EMAIL_USE_TLS = True
 ROSETTA_WSGI_AUTO_RELOAD = True
 ROSETTA_UWSGI_AUTO_RELOAD = True
 ROSETTA_MESSAGES_PER_PAGE = 50
+ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
 
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:

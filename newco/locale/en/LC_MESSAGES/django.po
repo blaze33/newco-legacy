@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-03 20:29+0200\n"
+"POT-Creation-Date: 2012-07-06 12:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: settings/common.py:65
+msgid "English"
+msgstr ""
+
+#: settings/common.py:66
+msgid "French"
+msgstr ""
 
 #: templates/403.html:8
 msgid "You can't vote."
@@ -76,11 +84,11 @@ msgid ""
 "\">Sign up!</a></br>to start your new career."
 msgstr ""
 
-#: templates/site_base.html:44
+#: templates/site_base.html:43
 msgid "Profile"
 msgstr ""
 
-#: templates/site_base.html:45
+#: templates/site_base.html:44
 msgid "Products index"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-04 13:19+0200\n"
+"POT-Creation-Date: 2012-07-04 20:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,41 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: followtools.py:19
+#, python-format
+msgid "%(user)s, you are now following %(object)s."
+msgstr ""
+
+#: followtools.py:23
+#, python-format
+msgid "%(user)s, you are not following %(object)s anymore."
+msgstr ""
+
+#: followtools.py:27
+#, python-format
+msgid "%(user)s, you can't follow yourself!"
+msgstr ""
+
+#: votingtools.py:17
+#, python-format
+msgid "%(user)s, your up vote on %(object)s has been recorded."
+msgstr ""
+
+#: votingtools.py:21
+#, python-format
+msgid "%(user)s, your down vote on %(object)s has been recorded."
+msgstr ""
+
+#: votingtools.py:25
+#, python-format
+msgid "%(user)s, your vote on %(object)s has been cancelled."
+msgstr ""
+
+#: votingtools.py:29
+#, python-format
+msgid "%(user)s, you can't vote on your own contribution!"
+msgstr ""
 
 #: templates/follow/form.html:7
 msgid "Unfollow"

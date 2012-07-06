@@ -3,31 +3,30 @@ from django import template
 register = template.Library()
 
 
-
 @register.tag
-def item_link(parser, token):
+def vote_form(parser, token):
     """
-    Renders the item link with its popover.
+    Renders the vote form.
 
     Usage::
 
-        {% item_link object xxx %}
+        {% vote_form object vote %}
 
     """
     bits = token.split_contents()
-    return ItemLinkNode(*bits[1:])
+    return VoteFormNode(*bits[1:])
 
 
-class ItemLinkNode(template.Node):
-    def __init__(self, obj):
+class VoteFormNode(template.Node):
+    def __init__(self, obj, vote):
         self.obj = template.Variable(obj)
-        ##self.xxx = template.Variable(xxx)
-        self.template = 'items/item_link.html'
+        self.vote = template.Variable(vote)
+        self.template = 'voting/form.html'
 
     def render(self, context):
         ctx = {
             'object': self.obj.resolve(context),
-            ##'xxx': self.xxx.resolve(context)
+            'vote': self.vote.resolve(context)
         }
         return template.loader.render_to_string(self.template, ctx,
             context_instance=context)
