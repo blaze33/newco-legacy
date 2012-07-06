@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load content_utils %}
+
+<div class="span3 right">
+	{% if content.status.id == 1 %}
+	    <div class="btn-group"><p style="text-align: right"><a href="#" class='btn btn-mini btn-success' rel="tooltip" data-original-title="{% trans "Make this content public" %}">{% trans "Go Public" %}</a><a href="#" rel="tooltip" class='btn btn-mini btn-inverse disabled' data-original-title="{% trans "This content is already private" %}">{% trans "Private" %}</a></p></div><input type="hidden" name='go_private' value='{% trans "Private" %}'>
+	{% elif content.status.id == 2 %}
+		<div class="btn-group"><p style="text-align: right"><a href="#" class='btn btn-mini btn-success disabled' rel="tooltip" data-original-title="{% trans "This content is already public" %}">{% trans "Public" %}</a><a href="#" rel="tooltip" class='btn btn-mini btn-inverse' data-original-title="{% trans "Make this content private" %}">{% trans "Go Private" %}</a></p></div><input type="hidden" name='go_public' value='{% trans "Public" %}'>
+	{% else %}
+		<div class="btn-group"><p style="text-align: right"><a class='btn btn-mini btn-success' href="#" rel="tooltip" data-original-title="{% trans "Make this content public" %}">{% trans "Go Public" %}</a><a class='btn btn-mini btn-inverse' href="#" rel="tooltip" data-original-title="{% trans "Make this content private" %}">{% trans "Go Private" %}</a></p></div>
+		{% comment %}WHY THE HELL THIS BUTTON DOESN'T WANT TO MERGE !<div class="right"><div class="btn-group right"><a class='btn btn-mini btn-success' href="#" rel="tooltip" data-original-title="{% trans "Make this content public" %}">{% trans "Go Public" %}</a><a class='btn btn-mini btn-inverse' href="#" rel="tooltip" data-original-title="{% trans "Make this content private" %}">{% trans "Go Private" %}</a></div></div>
+		{% endcomment %}
+	{% endif %}
+	
+</div>

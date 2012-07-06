@@ -1,76 +1,24 @@
 {% load i18n %}
 {% load voting_tags %}
 {% load content_utils %}
-{% load account_tags %}
-{% load follow_tags %}
 
 
 {% scores_for_objects contents as score_dict %}
 
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+{% for content in contents|slice:":20" %}{% if content.status.id != 1 or user == content.author %}{% if content|to_class_name != "answer" or content.question.status.id != 1 %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url%}<div class="row content"><div class="span9">
 
-{% for content in contents|slice:":20" %}{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url %}<div class="row content"><div class="span7">
 
     {% dict_entry_for_item content from score_dict as score %}
     {% if not forloop.first %}<hr>{% endif %}
 
-    {% if content|to_class_name == "answer" %}{% with question=content.question %}
-        <div class="row one_row"><div class="span7">
-            <h4>{% include p_link_tpl with object=author %} {% trans "answered a question about" %} {% include i_link_tpl with object=question.items.all.0 %}</h4>
-        </div></div>
+    {% if content|to_class_name == "answer" %}{% include "items/_answer_nfeed.html" %}
 
-        <div class="row one_row">
-            <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a> {{ question.content }}</small></p></div>
-            <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
-        </div>
+    {% elif content|to_class_name == "question" %}{% include "items/_question_nfeed.html" %}
 
-        <div class="row one_row">
-            <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
-            <div class="span3"><p>{{ content.content }}</p></div>
-            <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
-        </div>
-        {% if user != author %}
-            <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
-        {% endif %}
-        {% endwith %}
+    {% elif content|to_class_name == "externallink" %}{% include "items/_externallink_nfeed.html" %}
 
-    {% elif content|to_class_name == "question" %}
-        <div class="row one_row"><div class="span7">
-            <h4>{% include p_link_tpl with object=author %} {% trans "asked a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
-        </div></div>
-        <div class="row one_row">
-            <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>
-            <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
-        </div>
+    {% elif content|to_class_name == "feature" %}{% include "items/_feature_nfeed.html" %}
 
-        {% if user != author %}
-            <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>
-        {% endif %}
-
-    {% elif content|to_class_name == "externallink" %}
-        <div class="row one_row"><div class="span7">
-            <h4>{% include p_link_tpl with object=author %} {% trans "posted a link about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
-        </div></div>
-        <div class="row one_row">
-
-            <a href="{{ link.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ link.content }}</a>
-
-            <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "L:" %}</a> <a href="{{ content.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ content.content }}</a></p></div>
-            <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
-        </div>
-
-    {% elif content|to_class_name == "feature" %}
-        <div class="row one_row"><div class="span7">
-            <h4>{% include p_link_tpl with object=author %} {% trans "suggested a feature on" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
-        </div></div>
-
-        <div class="row one_row">
-            <div class="span4"><a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;&nbsp;{{ content.content }}</p></div>
-            <div class="span1" style="text-align:right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
-        </div>
     {% endif %}
-</div></div>{% endwith %}{% endfor %}{% endwith %}
+</div></div>{% endwith %}{% endif %}{% endif %}{% endfor %}

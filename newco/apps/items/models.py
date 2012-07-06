@@ -15,10 +15,23 @@ class CannotManage(Exception):
     pass
 
 
+class Status(models.Model):
+    name = models.CharField(max_length=25, verbose_name=_("status name"))
+    
+    class Meta:
+        verbose_name = _("Status")
+        verbose_name_plural = _("Statuses")
+
+    def __unicode__(self):
+        return u"%s" % (self.name)
+
+
 class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
+    status = models.ForeignKey(Status, default=0, null=True)
+
 
     class Meta:
         abstract = True

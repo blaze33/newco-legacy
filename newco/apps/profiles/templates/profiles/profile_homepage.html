@@ -16,17 +16,17 @@
 
     </br>
 
-    <div class="tabbable">
+    {% comment %}<div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#newsfeed" data-toggle="tab">{% trans "Newsfeed" %}</a></li>
             <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
             <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
         </ul>
 
-        <div class="tab-content">
+        <div class="tab-content">{% endcomment %}
             <div id="newsfeed" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=newsfeed %}</div>
-            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
+          {% comment %}  <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
-        </div>
+        </div>{% endcomment %}
     </div>
 {% endblock %}
