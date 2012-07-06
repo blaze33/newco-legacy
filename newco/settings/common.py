@@ -161,7 +161,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 INSTALLED_APPS = [
     # Django
-    "admintools_bootstrap",
     "admin_tools",
     'admin_tools.theming',
     'admin_tools.menu',

@@ -29,7 +29,6 @@ django-admin-tools==0.4.1
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
 pinax-theme-bootstrap==2.0.4
 git+git://github.com/pinax/pinax-theme-bootstrap-account.git@8fc34ba4309fc1edd12e5836cc1398c3f9597e6d#egg=pinax-theme-bootstrap-account
-hg+https://hg@bitbucket.org/salvator/django-admintools-bootstrap@8d1d40334490#egg=django-admintools-bootstrap
 
 ## schema and data migrations
 South==0.7.5
