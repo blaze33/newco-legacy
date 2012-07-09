@@ -34,6 +34,7 @@ class Profile(ProfileBase):
 
     class Meta:
         verbose_name = _("profile")
+        ordering = ["-user__reputation__reputation_incremented"]
 
     def save(self, **kwargs):
         self.slug = slugify(self.name)

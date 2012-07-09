@@ -1,6 +1,11 @@
 .profile-item img {
-    float: left;
-    margin-right: 3px;
+    float: right;
+    margin-left: 5px;
+    width: 64px;
+    height: 64px;
 }
 
-.profile-item { min-height:65px; }
+.profile-item { line-height: 18px; position:relative }
+/*.profile-item .details { padding-left: 65px; }*/
+.profile-item .details h4 { display: run-in; }
+.profile-item .details p { margin: 0; }

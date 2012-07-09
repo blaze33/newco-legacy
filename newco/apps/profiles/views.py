@@ -5,7 +5,7 @@ from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from idios.views import ProfileDetailView
+from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
@@ -92,3 +92,21 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
+
+class ProfileListView(ProfileListView):
+    def get_queryset(self):
+        profiles = self.get_model_class().objects.select_related()
+        
+        search_terms = self.request.GET.get("search", "")
+        order = self.request.GET.get("order", "")
+
+        if search_terms:
+            profiles = profiles.filter(user__username__icontains=search_terms)
+        if order == "date":
+            profiles = profiles.order_by("-user__date_joined")
+        elif order == "name":
+            profiles = profiles.order_by("user__username")
+        
+        return profiles
+
+

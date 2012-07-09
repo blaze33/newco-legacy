@@ -1,17 +1,19 @@
 {% load account_tags %}
 {% load gravatar %}
-<div class="span3 profile-item">
+<li class="span3 profile-item thumbnail">
+    <a href="{{ profile.get_absolute_url }}">
     <div class="name">
-        <h4><a href="{{ profile.get_absolute_url }}">
-        {% gravatar_img_for_user profile.user 50 %}
-        {% user_display profile.user %}</a></h4>
-    </div>
+        <h4>
+        {% gravatar_img_for_user profile.user 64 %}
+        {% user_display profile.user %}<span class="pull-right"></h4>
+    </div></a>
     <div class="details">
-        {% if profile.location %}{{ profile.location }}{% endif %}
-        {% if profile.location and profile.website%}<br>{% endif %}
-        {% if profile.website %}<a href="{{ profile.website }}">{{ profile.website }}</a>{% endif %}
-        {% if profile.website and profile.skills %}<br>{% endif %}
-        {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}"><span class="label">{{ skill.name }}</span></a> {% endfor %}{% endif %}
+        <h4>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h4><p>
+        {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
+        {% if profile.website %}<a href="{{ profile.website }}"
+        {% if profile.user.reputation.reputation_incremented < 20 %}rel="nofollow"{% endif %}><i class="icon-globe"></i></a>{% endif %}
+        <br>
+        {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}" class="label">{{ skill.name }}</a> {% endfor %}{% endif %}</p>
     </div>
-    <div class="clear"></div>
-</div>
+
+</li>
