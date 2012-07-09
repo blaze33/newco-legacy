@@ -1,6 +1,6 @@
 {% load account_tags %}
 {% load gravatar %}
-<div class="span2 profile-item">
+<div class="span3 profile-item">
     <div class="name">
         <h4><a href="{{ profile.get_absolute_url }}">
         {% gravatar_img_for_user profile.user 50 %}
@@ -8,9 +8,9 @@
     </div>
     <div class="details">
         {% if profile.location %}{{ profile.location }}{% endif %}
-        {% if profile.location and profile.website%}&bull;{% endif %}
+        {% if profile.location and profile.website%}<br>{% endif %}
         {% if profile.website %}<a href="{{ profile.website }}">{{ profile.website }}</a>{% endif %}
-        {% if profile.website and profile.skills %}&bull;{% endif %}
+        {% if profile.website and profile.skills %}<br>{% endif %}
         {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}"><span class="label">{{ skill.name }}</span></a> {% endfor %}{% endif %}
     </div>
     <div class="clear"></div>
