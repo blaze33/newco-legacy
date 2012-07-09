@@ -10,7 +10,7 @@
 {% for question in questions %}
 {% if question.status.id != 1 or user == question.author %}
 {% if question.status.id == 1 %}<div class="well">{% endif %}
-<div class="row question {% comment %}ajouter une classe "private" par la suite? - au lieu d'ajouter une class well? {% endcomment %}" >
+<div class="row question" >
 <div class="span10">
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
@@ -48,6 +48,6 @@
     </a></div></div>
     <hr>
 </div></div>
-{% endif %}
 {% if question.status.id == 1 %}</div>{% endif %}
+{% endif %}
 {% endfor %}

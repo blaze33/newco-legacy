@@ -3,8 +3,9 @@
 
 {% if content.status.id == 1 %}<div class="well">{% endif %}
 <div class="row one_row"><div class="span5">
-    <h4>{% include p_link_tpl with object=author %} {% trans "asked a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
-</div>{% if user == author %}{% include "items/_status_form.html" %}{% endif %}
+    	<h4>{% include p_link_tpl with object=author %} {% trans "asked a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
+	</div>
+	{% if user == author %}<div class="span3">{% include "items/_status_form.html" %}</div>{% endif %}
 </div>
 <div class="row one_row">
     <div class="span4"><p><a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a> {{ content.content }}</p></div>

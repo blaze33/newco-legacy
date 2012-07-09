@@ -13,19 +13,27 @@
 {% votes_by_user user on links as link_vote_dict %}
 {% scores_for_objects links as link_score_dict %}
 
-{% for link in links %}<div class="row link"><div class="span7">
-    {% dict_entry_for_item link from link_vote_dict as vote %}
-    {% dict_entry_for_item link from link_score_dict as score %}
-
-    <div class="row one_row" id="l-{{ link.id }}">
-        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form link vote %}</h3></div>
-        <div class="span4"><h3>
-            <a href="{{ link.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ link.content }}</a>
-            {% if user.is_superuser or link.author == request.user %}
-                {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
-            {% endif %}
-        </h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=link %}</div>
-    </div>
-    <hr>
-</div></div>{% endfor %}
+{% for link in links %}
+	{% if link.status.id != 1 or user == link.author %}
+	{% if link.status.id == 1 %}<div class="well">{% endif %}
+	<div class="row link"><div class="span10">
+	    {% dict_entry_for_item link from link_vote_dict as vote %}
+	    {% dict_entry_for_item link from link_score_dict as score %}
+	
+	    <div class="row one_row" id="l-{{ link.id }}">
+	        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form link vote %}</h3></div>
+	        <div class="span4"><h3>
+	            <a href="{{ link.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ link.content }}</a>
+	            {% if user.is_superuser or link.author == request.user %}
+	                {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
+	            {% endif %}
+	        </h3></div>
+	        <div class="span2 right">{% if user == link.author %}{% include "items/_status_form.html" with content=link %}{% endif %}
+	        	{% include "items/_author.html" with object=link %}
+	        </div>
+	    </div>
+	    <hr>
+	</div></div>
+	{% if link.status.id == 1 %}</div>{% endif %}
+	{% endif %}
+{% endfor %}

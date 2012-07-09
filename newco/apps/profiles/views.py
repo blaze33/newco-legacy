@@ -5,6 +5,7 @@ from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 from idios.views import ProfileDetailView
 
 from items.models import Item, Question, Answer, ExternalLink, Feature
@@ -12,6 +13,7 @@ from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
 from utils.tools import load_object
+from account.utils import user_display
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -87,14 +89,38 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             obj = load_object(request)
             obj.status_id = self.request.POST['status']
             obj.save()
+            
+            
+#            msgs = {
+#                "up": {
+#                    "level": messages.INFO,
+#                    "text": _("%(user)s, your up vote on %(object)s has been recorded.")
+#                },
+#                "down": {
+#                    "level": messages.INFO,
+#                    "text": _("%(user)s, your down vote on %(object)s has been recorded.")
+#                },
+#                "clear": {
+#                    "level": messages.INFO,
+#                    "text": _("%(user)s, your vote on %(object)s has been cancelled.")
+#                },
+#                "warning": {
+#                    "level": messages.WARNING,
+#                    "text": _("%(user)s, you can't vote on your own contribution!")
+#                },
+#            }
+            
+            messages.add_message(request,
+                                 messages.INFO,
+                                 "Publication status taken into account, %(user)s" % {"user" : user_display(request.user)}
+#            msgs["warning"]["level"],
+#            msgs["warning"]["text"] % {"user": username}
+            )
+            
             return HttpResponseRedirect('')
-            #return self.process_publish(request)
-            #return super(ProfileDetailView,self).as_view()
-            #return super(ProfileDetailView, self).post(request,
-            #                                                *args, **kwargs)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
 
-    def process_publish(self,request):
-        return _process_publish(request, go_to_object=True)
+#    def process_publish(self,request):
+#        return _process_publish(request, go_to_object=True)
