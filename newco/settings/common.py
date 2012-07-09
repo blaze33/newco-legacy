@@ -212,6 +212,7 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "follow",
+    "gravatar",
 
     # Tests
     "tests",
@@ -253,6 +254,9 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+#Profile pictures
+GRAVATAR_DEFAULT_IMAGE = 'identicon'
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
