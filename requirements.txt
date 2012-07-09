@@ -26,6 +26,12 @@ metron==0.2.dev3
 django-admin-tools==0.4.1
 django-gravatar==0.1.0
 
+# Amazon
+python-amazon-product-api==0.2.5
+
+# lxml required by amazon api
+lxml==2.3.4
+
 ## upgraded pinax-theme-bootstrap
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
 pinax-theme-bootstrap==2.0.4

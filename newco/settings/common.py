@@ -213,6 +213,7 @@ INSTALLED_APPS = [
     "voting",
     "follow",
     "gravatar",
+    "amazonproduct",
 
     # Tests
     "tests",
@@ -254,6 +255,10 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+# AWS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
