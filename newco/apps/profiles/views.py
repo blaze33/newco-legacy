@@ -90,32 +90,28 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             obj.status_id = self.request.POST['status']
             obj.save()
             
+            msgs = {
+                "published": {
+                    "level": messages.SUCCESS,
+                    "text": "Your %(object)s has been published, %(user)s" % {"object" : obj._meta.module_name, "user" : user_display(request.user)}
+                },
+                "un-published": {
+                    "level": messages.WARNING,
+                    "text": "Your %(object)s has been un-published, %(user)s" % {"object" : obj._meta.module_name, "user" : user_display(request.user)}
+                }
+            }
             
-#            msgs = {
-#                "up": {
-#                    "level": messages.INFO,
-#                    "text": _("%(user)s, your up vote on %(object)s has been recorded.")
-#                },
-#                "down": {
-#                    "level": messages.INFO,
-#                    "text": _("%(user)s, your down vote on %(object)s has been recorded.")
-#                },
-#                "clear": {
-#                    "level": messages.INFO,
-#                    "text": _("%(user)s, your vote on %(object)s has been cancelled.")
-#                },
-#                "warning": {
-#                    "level": messages.WARNING,
-#                    "text": _("%(user)s, you can't vote on your own contribution!")
-#                },
-#            }
+            if obj.status_id == '1': #1 = private
+                messages.add_message(request,
+                                     msgs["un-published"]["level"],
+                                     msgs["un-published"]["text"]
+                )
+            else:
+                messages.add_message(request,
+                                     msgs["published"]["level"],
+                                     msgs["published"]["text"]
+                )
             
-            messages.add_message(request,
-                                 messages.INFO,
-                                 "Publication status taken into account, %(user)s" % {"user" : user_display(request.user)}
-#            msgs["warning"]["level"],
-#            msgs["warning"]["text"] % {"user": username}
-            )
             
             return HttpResponseRedirect('')
         else:
