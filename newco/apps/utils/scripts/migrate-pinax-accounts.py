@@ -20,6 +20,8 @@ ALTER TABLE "account_emailconfirmation" ALTER COLUMN "key" TYPE varchar(64);
 ALTER TABLE "account_emailconfirmation"	ADD UNIQUE ("key");
 ALTER TABLE account_emailconfirmation ADD COLUMN created timestamp with time zone;
 UPDATE account_emailconfirmation SET created = sent;
+"""
+sql2="""
 ALTER TABLE account_emailconfirmation ALTER COLUMN created SET NOT NULL;
 ALTER TABLE account_emailconfirmation ALTER COLUMN sent DROP NOT NULL;
 ALTER TABLE "account_emailaddress" ADD CONSTRAINT "account_emailaddress_email_key" UNIQUE ("email");
@@ -29,6 +31,12 @@ print sql
 
 db.start_transaction()
 db.execute_many(sql)
+db.commit_transaction()
+
+print sql2
+
+db.start_transaction()
+db.execute_many(sql2)
 db.commit_transaction()
 
 print "Done."

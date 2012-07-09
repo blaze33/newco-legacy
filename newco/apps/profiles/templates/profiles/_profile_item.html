@@ -1,8 +1,11 @@
 {% load account_tags %}
-<div class="span7"><table class="table table-condensed"><tbody><tr><td>
-<div class="profile-item">
+{% load gravatar %}
+
+<div class="span2 profile-item">
     <div class="name">
-        <h4><a href="{{ profile.get_absolute_url }}">{% user_display profile.user %}</a></h4>
+        <h4><a href="{{ profile.get_absolute_url }}">
+        {% gravatar_img_for_user profile.user 50 %}
+        {% user_display profile.user %}</a></h4>
     </div>
     <div class="details">
         {% if profile.location %}{{ profile.location }}{% endif %}
@@ -13,4 +16,3 @@
     </div>
     <div class="clear"></div>
 </div>
-</td></tr></tbody></table></div>

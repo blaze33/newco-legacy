@@ -5,7 +5,7 @@ Django==1.4
 --extra-index-url=http://dist.pinaxproject.com/dev/
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
-django-user-accounts==1.0b1.dev5
+django-user-accounts==1.0b1.dev7
 
 django-extensions==0.9
 django-debug-toolbar==0.9.4
@@ -24,6 +24,7 @@ idios==0.2a2.dev2
 metron==0.2.dev3
 
 django-admin-tools==0.4.1
+django-gravatar==0.1.0
 
 ## upgraded pinax-theme-bootstrap
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
@@ -36,6 +37,8 @@ South==0.7.5
 ## AWS interface & storage backend
 boto==2.5.1
 django-storages==1.1.4
+## dateutil needed to only upload updated files
+python-dateutil==1.5
 
 ## memcache interface
 pylibmc==1.2.3
