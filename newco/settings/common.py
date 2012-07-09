@@ -59,12 +59,20 @@ USE_I18N = True
 USE_TZ = True
 USE_L10N = True
 
+# Overrides full list for better perf
+gettext_noop = lambda s: s
+LANGUAGES = (
+    ('en', gettext_noop('English')),
+    ('fr', gettext_noop('French')),
+)
+
 # Where to look to compile translations
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
+    PROJECT_ROOT + '/apps/utils/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -242,6 +250,9 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+# Rosetta
+ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

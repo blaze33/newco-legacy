@@ -270,6 +270,3 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/question_list.html:62
 msgid "Answer this question"
 msgstr "Répondre à cette question"
-
-#~ msgid "%(content)s: <a href=\"%(link_url)s\" target=\"_blank\">there</a>"
-#~ msgstr "%(content)s : <a href=\"%(link_url)s\" target=\"_blank\">ici</a>"

@@ -72,6 +72,12 @@ django-generic-aggregation==0.3.1
 ## Following application
 django-follow==0.6
 
+## Translation app
+django-rosetta==0.6.8
+
+## tests
+selenium==2.24.0
+
 ## The following requirements were added by pip --freeze:
 BeautifulSoup==3.2.1
 argparse==1.2.1

@@ -12,6 +12,7 @@ SERVE_MEDIA = DEBUG
 INSTALLED_APPS += [
     "django_extensions",
     "debug_toolbar",
+    "rosetta",
 ]
 
 # Database settings will be overriden when deployed on Heroku
@@ -36,6 +37,15 @@ EMAIL_HOST_USER = 'newco.project.dev@gmail.com'
 EMAIL_HOST_PASSWORD = '!Password1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# When running WSGI daemon mode, using mod_wsgi 2.0c5 or later, this setting
+# controls whether the contents of the gettext catalog files should be
+# automatically reloaded by the WSGI processes each time they are modified.
+# For performance reasons, this setting should be disabled in production
+# environments.
+ROSETTA_WSGI_AUTO_RELOAD = True
+ROSETTA_UWSGI_AUTO_RELOAD = True
+ROSETTA_MESSAGES_PER_PAGE = 50
 
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
