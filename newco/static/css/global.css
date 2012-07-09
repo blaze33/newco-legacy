@@ -1,0 +1,6 @@
+.profile-item img {
+    float: left;
+    margin-right: 3px;
+}
+
+.profile-item { min-height:65px; }
