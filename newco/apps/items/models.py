@@ -11,25 +11,12 @@ from voting.models import Vote
 from follow.utils import register
 
 
-class Content(models.Model):
+class Item(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_("name"))
+    slug = models.SlugField(verbose_name=_("slug"), editable=False)
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
-
-    class Meta:
-        abstract = True
-
-    def delete(self):
-        try:
-            self.votes.all().delete()
-        except:
-            pass
-        super(Content, self).delete()
-
-
-class Item(Content):
-    name = models.CharField(max_length=255, verbose_name=_("name"))
-    slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
     tags = TaggableManager()
@@ -50,6 +37,22 @@ class Item(Content):
                                       "pk": self.id,
                                       "slug": self.slug})
 register(Item)
+
+
+class Content(models.Model):
+    author = models.ForeignKey(User, null=True)
+    pub_date = models.DateTimeField(default=datetime.now, editable=False,
+                                            verbose_name=_('date published'))
+
+    class Meta:
+        abstract = True
+
+    def delete(self):
+        try:
+            self.votes.all().delete()
+        except:
+            pass
+        super(Content, self).delete()
 
 
 class Question(Content):
