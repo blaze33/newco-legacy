@@ -3,7 +3,6 @@ from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
-from django.db.models import Q
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
@@ -138,14 +137,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             item = context['item']
 
             sets = {
-                    "questions": item.question_set.filter(Q(status=2) | Q(author=self.request.user)),
-                    "links": item.externallink_set.filter(Q(status=2) | Q(author=self.request.user)),
-                    "feat_pos": item.feature_set.filter(Q(positive=True) & \
-                                    (Q(status=2) | Q(author=self.request.user))
-                                ),
-                    "feat_neg": item.feature_set.filter(Q(positive=False) & \
-                                    (Q(status=2) | Q(author=self.request.user))
-                                ),
+                    "questions": item.question_set.all(),
+                    "links": item.externallink_set.all(),
+                    "feat_pos": item.feature_set.filter(positive=True),
+                    "feat_neg": item.feature_set.filter(positive=False)
             }
 
             for k in sets.keys():
