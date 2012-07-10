@@ -1,9 +1,9 @@
 {% load account_tags %}
-{% load gravatar %}
+{% load content_utils %}
 <div class="profile-item thumbnail">
     <div class="name">
         <a href="{{ profile.get_absolute_url }}"><h4>
-        {% gravatar_img_for_user profile.user 64 %}
+        {% profile_pic profile.user 64 %}
         {% user_display profile.user %}</h4></a>
     </div>
     <div class="details">
