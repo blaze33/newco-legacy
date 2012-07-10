@@ -1,12 +1,11 @@
 {% load account_tags %}
 {% load gravatar %}
-<li class="span3 profile-item thumbnail">
-    <a href="{{ profile.get_absolute_url }}">
+<div class="profile-item thumbnail">
     <div class="name">
-        <h4>
+        <a href="{{ profile.get_absolute_url }}"><h4>
         {% gravatar_img_for_user profile.user 64 %}
-        {% user_display profile.user %}<span class="pull-right"></h4>
-    </div></a>
+        {% user_display profile.user %}</h4></a>
+    </div>
     <div class="details">
         <h4>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h4><p>
         {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
@@ -15,5 +14,4 @@
         <br>
         {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}" class="label">{{ skill.name }}</a> {% endfor %}{% endif %}</p>
     </div>
-
-</li>
+</div>

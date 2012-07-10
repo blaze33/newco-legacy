@@ -13,12 +13,11 @@
     </header>
     
     {% autopaginate profiles %}
-    <div class="row">
-    <ul class="thumbnails" id="profiles_list1">
+    <div class="row" id="profiles_list1">
     {% for profile in profiles %}
         {% include "profiles/_profile_item.html" %}
     {% endfor %}
-    </ul></div>
+    </div>
     {% paginate %}
     
 {% endblock %}

@@ -3,7 +3,8 @@ $(function(){
 //    $container.imagesLoaded( function(){
         $container.masonry({
             itemSelector : '.profile-item',
-            isAnimated: true
+            isAnimated: true,
+            isFitWidth: true,
         });
 //    });
 });
