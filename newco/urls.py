@@ -20,11 +20,15 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
-    url(r"^rosetta/", include("rosetta.urls")),
 )
 
+if settings.DEBUG:
+    urlpatterns += patterns("",
+        url(r"^rosetta/", include("rosetta.urls")),
+    )
+
 urlpatterns += patterns("",
-    url(r"^Friends/(?P<path>.*)$", redirect_to, {
+    url(r"^(.)riends/(?P<path>.*)$", redirect_to, {
             'url': 'http://static.newco-project.fr/Friends/%(path)s',
             'permanent': True
         }
