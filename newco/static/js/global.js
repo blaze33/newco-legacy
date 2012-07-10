@@ -7,4 +7,8 @@ $(function(){
             isFitWidth: true,
         });
 //    });
+    $('#profile-pic').tooltip({
+        'trigger': 'hover',
+        'placement': 'right',
+    })
 });
