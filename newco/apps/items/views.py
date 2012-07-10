@@ -165,7 +165,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             del sets["feat_neg"]
 
             context.update(sets)
-
+            
         return context
 
     def form_invalid(self, form):
@@ -206,7 +206,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             return process_following(request, go_to_object=True)
         else:
             return self.form_invalid(form)
-
+        
     @method_decorator(permission_required('profiles.can_vote',
                                           raise_exception=True))
     def process_voting(self, request):
@@ -221,6 +221,12 @@ class ContentListView(ContentView, ListView, RedirectView):
             return Item.objects.filter(tags=self.tag)
         else:
             return super(ContentListView, self).get_queryset()
+        
+        #items = Item.objects.select_related()
+        #search_terms = self.request.GET.get("search", "")
+        #if search_terms:
+            #items = items.filter(user__username__icontains=search_terms)
+        #return items
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
@@ -242,11 +248,11 @@ class ContentListView(ContentView, ListView, RedirectView):
                 context['item_list'] = context['item_list'].order_by("pub_date")
             elif self.request.POST['sort_item'] == '3':
                 context['item_list'] = context['item_list'].order_by("-author")
+            elif self.request.POST['sort_item'] == '4':
+                context['item_list'] = context['item_list'].order_by("-weight")
             else:
                 context['item_list'] = context['item_list']
                 
-                
-            
 
         if 'ta_pick' in self.request.POST:
             name = self.request.POST['ta_pick']   
@@ -257,7 +263,16 @@ class ContentListView(ContentView, ListView, RedirectView):
             if tag_list.count() > 0:
                 context['item_list_search'] = Item.objects.filter(tags=tag_list[0])    
                 context['tag_new'] = tag_list[0]     
-        
+       
+        items = Item.objects.select_related()
+        if 'search' in self.request.GET:
+            search_terms = self.request.GET.get("search", "")
+            context['search_terms'] = search_terms
+            if search_terms:
+                items = items.filter(name__icontains=search_terms)
+                context['search_list'] = items
+                if items.count() > 0:
+                    context['no_empty_list']=items
         return context
 
     def post(self, request, *args, **kwargs):
@@ -274,11 +289,18 @@ class ContentListView(ContentView, ListView, RedirectView):
                     response_old = reverse("tagged_items",
                                 kwargs={'tag_slug': tag_list[0].slug})
                 else:
-                    response = "%s?initial=%s" % (reverse("item_create", None, 
-                                kwargs={'model_name': Item._meta.module_name}
+                    response= "%s?search=%s" % (reverse("item_index"
+                                                        #, None, 
+                                #kwargs={'model_name': Item._meta.module_name}
                             ),
                             name,
                     )
+                    
+                    #response = "%s?initial=%s" % (reverse("item_create", None, 
+                                #kwargs={'model_name': Item._meta.module_name}
+                            #),
+                            #name,
+                    #)
                     return HttpResponseRedirect(response)
                     #response = request.path
             #return HttpResponseRedirect(response)

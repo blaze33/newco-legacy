@@ -28,14 +28,15 @@
 
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+        <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path and '/technic-' not in request.path%} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
         <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
         <li{% if '/feature-' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
         <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
+        <li{% if '/technic-' in request.path %} class="active"{% endif %}><a href="#technics" data-toggle="tab">{% trans "Fiche technique" %}</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/question_list.html" %}</div>
+        <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path and '/technic-' not in request.path%} active{% endif %}">{% include "items/question_list.html" %}</div>
         <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/link_list.html" %}</div>
         <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/feature_list.html" %}</div>
         <div id="stories" class="tab-pane{% if '/story-' in request.path %} active{% endif %}">
@@ -54,6 +55,35 @@
             </p>
             <hr>
         </div></div>
+        </div>
+        <div id="technics" class="tab-pane{% if '/technic-' in request.path %} active{% endif %}">
+        	<div class="row">
+	<div class="span7">
+		<table class="table table-condensed"><tbody><tr><td>
+
+        <ul>
+        <li>
+            <i><b>Caracteristiques</b></i>
+	</br>Poids: {{ item.weight }}g
+    </br>Taille: {{ item.height }}cm
+    </br>Equilibre: 32cm
+    </br>Rigidite: 60Rahmen (rigidite moyenne)
+        </li>
+        </ul>
+        <ul>
+        <li>
+        	<i><b>Avantages</b></i>
+	</br>Solidite: Raquette solide grace a une composition en Karophite Black.
+    </br>Puissance:Cadre puissant grace a une meilleure rigidite.
+    </br>Controle: Bon grace a la technologie Karophite Black.
+    </br>Precision: Cadre tolerant grace a son grand tamis.
+        </li>
+        </ul>
+
+</td></tr></tbody></table>
+		
+	</div>
+</div>
         </div>
     </div>
 </div>

@@ -8,7 +8,13 @@
 
 {% block body %}
 {% url item_index as index_url %}
+
+{% if search_terms %}
+{% include "items/search_list.html" %}
+{% else %}
+
 {% if item_list %}
+
 {% if tag %}
 </br></br>
 
@@ -30,7 +36,7 @@
 </br></br>
 
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}" value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source= "{{data_source}}" value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
     </div>
     </br></br>
     </form>
@@ -44,7 +50,7 @@
         <li>
             <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
             <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
-            <br><i>petite description</i>
+            <br><i>{{ item.description }}</i>
         </li>
         </ul>
 
@@ -63,7 +69,7 @@
 
 
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{ data_source }}" value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+        <input name="ta_pick" type="text" autocomplete="off" placeholder="Que cherchez-vous ?"class="input-xlarge" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold; color: #333; " data-provide="typeahead" data-items="6" data-source="{{data_source}}"  value="{{ place_holder }}"><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
     </div>
     </br></br>
     
@@ -73,6 +79,7 @@
     <option value="1">Newest to Oldest</option>
     <option value="2">Oldest to Newest</option>
     <option value="3">Price: low to high</option>
+    <option value="4">Weight: high to low</option>
 </select>
 <input name= "s" type="submit">
     </form>
@@ -105,7 +112,7 @@ function sort(element)
         <li>
             <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
             <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
-            <br><i>petite description</i>
+            <br><i>{{ item.description }}</i>
         </li>
         </ul>
 
@@ -139,6 +146,9 @@ function sort(element)
 </ul>
 </div>
 
+
+
+
 {% else %}
     {% if tag %}
         <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>
@@ -146,7 +156,7 @@ function sort(element)
         <h2>{% trans "No products are available." %}</h2>
     {% endif %}
 {% endif %}
-
+{% endif %}
 </br></br></br></br>
 
 <div class="span7">
