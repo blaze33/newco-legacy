@@ -18,9 +18,7 @@ SQLDIFFALL = django-admin.py sqldiffall --settings=newco.settings.dev
 
 define SYNC_CMD
 $(SYNCDB) && \
-$(MIGRATE) && \
-$(COLLECTSTATIC) && \
-$(SQLDIFFALL)
+$(MIGRATE)
 endef
 
 echo: clean
@@ -39,6 +37,12 @@ push:
 
 sync:
 	heroku run '$(SYNC_CMD)' --app $(APP)
+
+sqldiffall:
+	heroku run '$(SQLDIFFALL)' --app $(APP)
+
+collectstatic:
+	heroku run '$(COLLECTSTATIC) --app $(APP)
 
 heroku_bash:
 	heroku run bash --app $(APP)
