@@ -1,0 +1,10 @@
+.profile-item img {
+    float: right;
+    margin-left: 5px;
+    width: 64px;
+    height: 64px;
+}
+
+.profile-item { line-height: 18px; width: 165px; margin: 9px }
+.profile-item .details h4 { display: run-in; }
+.profile-item .details p { margin: 0; }

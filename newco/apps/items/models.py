@@ -5,7 +5,7 @@ from taggit.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
-import datetime
+from datetime import datetime
 
 from voting.models import Vote
 from follow.utils import register
@@ -16,11 +16,9 @@ class CannotManage(Exception):
 
 
 class Content(models.Model):
-
     author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=datetime.datetime.today(),
-                                    editable=False,
-                                    verbose_name=_('date published'))
+    pub_date = models.DateTimeField(default=datetime.now, editable=False,
+                                            verbose_name=_('date published'))
 
     class Meta:
         abstract = True

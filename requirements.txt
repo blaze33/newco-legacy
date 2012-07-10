@@ -24,6 +24,7 @@ idios==0.2a2.dev2
 metron==0.2.dev3
 
 django-admin-tools==0.4.1
+git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66746c408b4#egg=django-gravatar
 
 ## upgraded pinax-theme-bootstrap
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap

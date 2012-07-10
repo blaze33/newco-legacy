@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load voting_tags %}
+{% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
-{% load account_tags %}
 
 <div class="row one_row"><div class="span4"><a href='{% url item_create "externallink" %}?item_id={{ item.id }}' class="btn btn-mini" name='add_link'>
     <i class="icon-share-alt"></i>{% trans "Publish an external link" %}
@@ -25,9 +25,7 @@
                 {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right"><p class="signature"><small>
-            <b>{{ link.pub_date }}</b> {% trans "by" %} <a href='{{ link.author.get_absolute_url }}'>{% user_display link.author %}</a>
-        </small></p></div>
+        <div class="span2 right">{% include "items/_author.html" with object=link %}</div>
     </div>
     <hr>
 </div></div>{% endfor %}

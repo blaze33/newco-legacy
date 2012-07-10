@@ -5,7 +5,7 @@ from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from idios.views import ProfileDetailView
+from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile, Reputation
@@ -83,11 +83,30 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            if 'follow' in request.POST:
+            if 'follow' in request.POST and \
+                    request.POST['object_name'] == 'user':
                 mail_followee(kwargs['username'].get_profile(),
                     request.user.get_profile(), request.META.get('HTTP_HOST')
                 )
-            return process_following(request)
+            return process_following(request, go_to_object=False)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
+
+class ProfileListView(ProfileListView):
+    def get_queryset(self):
+        profiles = self.get_model_class().objects.select_related()
+        
+        search_terms = self.request.GET.get("search", "")
+        order = self.request.GET.get("order", "")
+
+        if search_terms:
+            profiles = profiles.filter(name__icontains=search_terms)
+        if order == "date":
+            profiles = profiles.order_by("-user__date_joined")
+        elif order == "name":
+            profiles = profiles.order_by("user__username")
+        
+        return profiles
+
+

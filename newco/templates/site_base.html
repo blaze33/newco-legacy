@@ -5,6 +5,7 @@
 {% load staticfiles %}
 
 {% block extra_style %}
+<link href="{% static "css/global.css" %}" rel="stylesheet">
 <!--
 We may need to use font-awesome. Won't replace glyphicons for the moment
 due to bad pixel fitting of small icons.
@@ -52,6 +53,11 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     {% include "_footer.html" %}
 
     {{ block.super }}
+{% endblock %}
+
+{% block extra_script %}
+<script src="{% static "js/jquery.masonry.min.js" %}"></script>
+<script src="{% static "js/global.js" %}"></script>
 {% endblock %}
 
 {% block extra_body_base %}
