@@ -10,11 +10,20 @@ from datetime import datetime
 from voting.models import Vote
 from follow.utils import register
 
+gettext_noop = lambda s: s
+STATUSES = (
+    (0, gettext_noop('Private')),
+    (1, gettext_noop('Sandbox')),
+    (2, gettext_noop('Public')),
+)
+
 
 class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
+    status = models.SmallIntegerField(choices=STATUSES,
+                                            verbose_name=_("status"))
 
     class Meta:
         abstract = True
@@ -25,6 +34,15 @@ class Content(models.Model):
         except:
             pass
         super(Content, self).delete()
+
+    def is_private(self):
+        return self.status == 0
+
+    def is_sandbox(self):
+        return self.status == 1
+
+    def is_public(self):
+        return self.status == 2
 
 
 class Item(Content):
