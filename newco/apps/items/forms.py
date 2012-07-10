@@ -38,7 +38,7 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        exclude = ('author', 'items')
+        exclude = ('author', 'items', 'status')
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',
@@ -57,6 +57,7 @@ class QuestionForm(ModelForm):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
+            question.status = 2
             question.save()
             question.items.add(kwargs.pop('pk'))
             return question
@@ -70,7 +71,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ('content', )
+        fields = ('content', 'status')
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span6',
@@ -149,7 +150,7 @@ class FeatureForm(ModelForm):
 
     class Meta:
         model = Feature
-        fields = ('content', )
+        fields = ('content', 'status')
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',
