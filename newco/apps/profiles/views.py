@@ -101,7 +101,7 @@ class ProfileListView(ProfileListView):
         order = self.request.GET.get("order", "")
 
         if search_terms:
-            profiles = profiles.filter(user__username__icontains=search_terms)
+            profiles = profiles.filter(name__icontains=search_terms)
         if order == "date":
             profiles = profiles.order_by("-user__date_joined")
         elif order == "name":
