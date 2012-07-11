@@ -22,16 +22,17 @@ class Migration(DataMigration):
                     obj.save()
                     ct.items = obj.question.items.all()
 
-        # Then switch votes from object to content
-        ct_content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model="content")
+        # Then switch votes object_id to future one in two steps to avoid collision
         for vote in orm['voting.Vote'].objects.all():
             if vote.content_type.model in ["question", "answer", "externallink", "feature"]:
                 model = orm['items.' + vote.content_type.model.capitalize()]
                 obj = model.objects.get(pk=vote.object_id)
-                ct = orm['items.Content'].objects.get(pk=obj.content_ptr)
-                vote.content_type = ct_content_type
-                vote.object_id = ct.id
+                vote.object_id = obj.content_ptr + 500000
                 vote.save()
+
+        for vote in orm['voting.Vote'].objects.all():
+            vote.object_id -= 500000
+            vote.save()
 
     def backwards(self, orm):
         # Rebuild unique ids + author + pub_date + m2m
