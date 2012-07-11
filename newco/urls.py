@@ -20,6 +20,7 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
+    url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
 )
 
 if settings.DEBUG:

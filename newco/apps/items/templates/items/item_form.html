@@ -3,6 +3,8 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
+{% block extra_head_base %}{{ block.super }}{{ form.media }}{% endblock %}
+
 {% block head_title %}{% trans "Item" %}{% endblock %}
 
 {% block body %}

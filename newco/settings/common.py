@@ -120,6 +120,7 @@ SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
 TEMPLATE_LOADERS = [
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
+    'apptemplates.Loader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -207,10 +208,12 @@ INSTALLED_APPS = [
     "utils",
 
     # Foreign apps
+    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
     "gravatar",
+    "amazonproduct",
 
     # Tests
     "tests",
@@ -229,6 +232,7 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTHENTICATION_BACKENDS = [
     'account.auth_backends.EmailAuthenticationBackend',
     'profiles.backends.ProfileBackend',
+    'items.backends.ItemBackend',
 ]
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
@@ -252,11 +256,16 @@ ACCOUNT_LANGUAGES = [
     for code in ['fr', 'en']
 ]
 
+# AWS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
 
-# Rosetta
-ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
+# Taggit autosuggest
+TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
+TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

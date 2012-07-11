@@ -1,7 +1,7 @@
 {% load i18n %}
-{% load account_tags %}
 {% load date_utils %}
+{% load account_tags %}
 
 <p class="signature"><small>
-            <b>{{ object.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ object.author.get_absolute_url }}'>{% user_display object.author %}</a>
+    <b>{{ object.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <a href='{{ object.author.get_absolute_url }}'>{% user_display object.author %}</a>
 </small></p>

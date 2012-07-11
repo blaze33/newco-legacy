@@ -2,12 +2,18 @@
 
 {% load i18n %}
 
+{% block head_title %}{% trans "Error 403" %}{% endblock %}
+
 {% block body %}
 
 {% if 'vote_button' in request.POST %}
     <p>{% trans "You can't vote." %}</p>
 
     <p><a href={{ request.META.HTTP_REFERER }} class="btn">{% trans "Go back" %}</a></p>
+{% elif "delete_content" in request.POST %}
+    <p>{% trans "You can't delete this content." %}</p>
+
+    <p><a href={{ request.POST.success_url }} class="btn">{% trans "Go back" %}</a></p>
 {% endif %}
 
 {% endblock %}

@@ -2,83 +2,88 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-21 12:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-07-11 18:59+0200\n"
+"PO-Revision-Date: 2012-07-11 19:02\n"
+"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Translated-Using: django-rosetta 0.6.8\n"
 
 #: forms.py:45
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:77
+#: forms.py:78
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:119
+#: forms.py:121
 msgid "Link description"
 msgstr "Description du lien"
 
-#: forms.py:173
+#: forms.py:175
 msgid "positive"
 msgstr "positive"
 
-#: forms.py:175
+#: forms.py:177
 msgid "What feature do you like?"
 msgstr "Quelle caractéristique apprécies-tu ?"
 
-#: forms.py:178
+#: forms.py:180
 msgid "negative"
 msgstr "négative"
 
-#: forms.py:180
+#: forms.py:182
 msgid "What feature do you dislike?"
 msgstr "Quelle caractéristique te déplait ?"
 
-#: models.py:22
-msgid "date published"
-msgstr "date de publication"
-
-#: models.py:44
+#: models.py:17
 msgid "name"
 msgstr "nom"
 
-#: models.py:45
+#: models.py:18
 msgid "slug"
 msgstr "slug"
 
-#: models.py:47
+#: models.py:21 models.py:53
+msgid "date published"
+msgstr "date de publication"
+
+#: models.py:23
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:49
-msgid "tags"
-msgstr "tags"
-
-#: models.py:50
-msgid "A comma-separated list of tags, describing the item."
-msgstr "Une liste de tags, séparés par des virgules, et décrivant l'item."
-
-#: models.py:54
+#: models.py:27
 msgid "item"
 msgstr "item"
 
-#: models.py:71 models.py:89 models.py:105 models.py:115 models.py:133
+#: models.py:46
+msgid "private"
+msgstr "privé"
+
+#: models.py:47
+msgid "sandbox"
+msgstr "bac à sable"
+
+#: models.py:48
+msgid "public"
+msgstr "public"
+
+#: models.py:74 models.py:90 models.py:105 models.py:120 models.py:136
 msgid "content"
 msgstr "contenu"
 
-#: models.py:76
+#: models.py:77
 msgid "question"
 msgstr "question"
 
@@ -86,39 +91,75 @@ msgstr "question"
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:104
-msgid "title"
-msgstr "titre"
-
-#: models.py:110
-msgid "story"
-msgstr "article"
-
-#: models.py:111
-msgid "stories"
-msgstr "articles"
-
-#: models.py:116
+#: models.py:106
 msgid "URL"
 msgstr "URL"
 
-#: models.py:121
+#: models.py:109
 msgid "link"
 msgstr "lien"
 
-#: models.py:139
+#: models.py:124
 msgid "feature"
 msgstr "caractéristique"
 
-#: views.py:68 views.py:118
+#: models.py:135
+msgid "title"
+msgstr "titre"
+
+#: models.py:141
+msgid "story"
+msgstr "article"
+
+#: models.py:142
+msgid "stories"
+msgstr "articles"
+
+#: views.py:71 views.py:121
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:72 views.py:122
+#: views.py:75 views.py:125
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
+
+#: templates/items/_author.html:6
+msgid "by"
+msgstr "par"
+
+#: templates/items/_data_sheet.html:10
+msgid "Maybe they can help you?"
+msgstr "Peut-être peuvent-ils vous aider ?"
+
+#: templates/items/_feature_list.html:12
+msgid "Positive Features"
+msgstr "Caractéristiques positives"
+
+#: templates/items/_feature_list.html:12
+msgid "Negative Features"
+msgstr "Caractéristiques négatives"
+
+#: templates/items/_feature_list.html:32
+msgid "Add a positive feature"
+msgstr "Ajouter une caractéristique positive"
+
+#: templates/items/_feature_list.html:32
+msgid "Add a negative feature"
+msgstr "Ajouter une caractéristique négative"
+
+#: templates/items/_link_list.html:8
+msgid "Publish an external link"
+msgstr "Publier un lien externe"
+
+#: templates/items/_question_list.html:44
+msgid "Add a better answer"
+msgstr "Donner une meilleure réponse"
+
+#: templates/items/_question_list.html:44
+msgid "Answer this question"
+msgstr "Répondre à cette question"
 
 #: templates/items/answer_form.html:6
 msgid "Answer"
@@ -127,17 +168,13 @@ msgstr "Réponse"
 #: templates/items/answer_form.html:10
 #, python-format
 msgid "Your answer to <i>%(question)s</i>:"
-msgstr "Votre réponse à <i>%(question)s</i>:"
+msgstr "Votre réponse à <i>%(question)s</i> :"
 
 #: templates/items/answer_form.html:16
 #: templates/items/externallink_form.html:16
-#: templates/items/feature_form.html:17 templates/items/item_form.html:16
+#: templates/items/feature_form.html:17 templates/items/item_form.html:18
 msgid "Submit"
 msgstr "Soumettre"
-
-#: templates/items/data_sheet.html:6
-msgid "Maybe they can help you?"
-msgstr "Peut-être peuvent-ils vous aider ?"
 
 #: templates/items/externallink_form.html:6
 msgid "Link"
@@ -157,37 +194,20 @@ msgstr "Caractéristique"
 msgid "Add a %(way)s feature to <i>%(item)s</i>:"
 msgstr "Ajouter une caractéristique %(way)s à <i>%(item)s</i> :"
 
-#: templates/items/feature_list.html:11
-msgid "Positive Features"
-msgstr "Caractéristiques positives"
+#: templates/items/item_confirm_delete.html:6
+msgid "Delete"
+msgstr "Supprimer"
 
-#: templates/items/feature_list.html:11
-msgid "Negative Features"
-msgstr "Caractéristiques négatives"
-
-#: templates/items/feature_list.html:34 templates/items/link_list.html:35
-#: templates/items/question_list.html:31 templates/items/question_list.html:57
-msgid "by"
-msgstr "par"
-
-#: templates/items/feature_list.html:40
-msgid "Add a positive feature"
-msgstr "Ajouter une caractéristique positive"
-
-#: templates/items/feature_list.html:40
-msgid "Add a negative feature"
-msgstr "Ajouter une caractéristique négative"
-
-#: templates/items/item_confirm_delete.html:8
+#: templates/items/item_confirm_delete.html:10
 #, python-format
 msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
 msgstr "L'object %(class)s <i>%(name)s</i> sera supprimé :"
 
-#: templates/items/item_confirm_delete.html:13
+#: templates/items/item_confirm_delete.html:15
 msgid "Yes"
 msgstr "Oui"
 
-#: templates/items/item_confirm_delete.html:15
+#: templates/items/item_confirm_delete.html:17
 msgid "No"
 msgstr "Non"
 
@@ -219,11 +239,11 @@ msgstr "Editer l'Item"
 msgid "Delete Item"
 msgstr "Supprimer l'Item"
 
-#: templates/items/item_form.html:6
+#: templates/items/item_form.html:8
 msgid "Item"
 msgstr "Item"
 
-#: templates/items/item_form.html:10
+#: templates/items/item_form.html:12
 msgid "Add something new to talk about:"
 msgstr "De quoi voulez-vous parler :"
 
@@ -251,10 +271,6 @@ msgstr "Pas de produits disponibles."
 msgid "Add an entry"
 msgstr "Ajouter un produit"
 
-#: templates/items/link_list.html:7
-msgid "Publish an external link"
-msgstr "Publier un lien externe"
-
 #: templates/items/question_form.html:5
 msgid "Question"
 msgstr "Question"
@@ -263,10 +279,8 @@ msgstr "Question"
 msgid "Ask something:"
 msgstr "Demandez quelque chose :"
 
-#: templates/items/question_list.html:62
-msgid "Add a better answer"
-msgstr "Donner une meilleure réponse"
+#~ msgid "tags"
+#~ msgstr "tags"
 
-#: templates/items/question_list.html:62
-msgid "Answer this question"
-msgstr "Répondre à cette question"
+#~ msgid "A comma-separated list of tags, describing the item."
+#~ msgstr "Une liste de tags, séparés par des virgules, et décrivant l'item."
