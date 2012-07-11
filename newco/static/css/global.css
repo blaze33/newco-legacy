@@ -23,3 +23,8 @@
 }
 
 .black { color: #333 }
+
+.selector-item img {
+    min-height: 128px;
+    max-height: 128px
+}
