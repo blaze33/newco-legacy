@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{{ followee }} ,
+{{ followee }},
 {{ follower }} vous suit maintenant sur NewCo !
 
 Pour voir le profil de {{ follower }}, suivez ce lien :

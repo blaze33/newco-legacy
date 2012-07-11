@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
@@ -13,7 +14,7 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item, CannotManage
+from items.models import Item, Question, ExternalLink, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
@@ -105,7 +106,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
 class ContentUpdateView(ContentView, UpdateView):
 
-#    @method_decorator(permission_required(app_name))
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
@@ -127,44 +128,39 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        self.object = self.get_object()
         if self.model == Item:
             if self.request.POST:
                 f = QuestionForm(self.request.POST, request=self.request)
             else:
                 f = QuestionForm(request=self.request)
-            context['form'] = f
-            context['item'] = self.object
-            context['prof_list'] = Profile.objects.filter(
-                skills__id__in=self.object.tags.values_list('id', flat=True)
-            ).distinct()
 
-            #ordering questions
-            questions = self.object.question_set.all()
-            q_ordered = sorted(list(questions),
-                key=lambda q: Vote.objects.get_score(q)['score'], reverse=True)
-            context['questions'] = q_ordered
+            item = context['item']
 
-            #ordering external links
-            links = self.object.externallink_set.all()
-            l_ordered = sorted(list(links),
-                key=lambda e: Vote.objects.get_score(e)['score'], reverse=True)
-            context['links'] = l_ordered
+            feats = Feature.objects.filter(items__id=item.id)
 
-            #ordering positive features
-            features_pos = self.object.feature_set.filter(positive=True)
-            f_ordered_pos = sorted(list(features_pos),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_pos'] = f_ordered_pos
+            sets = {
+                    "questions": Question.objects.filter(items__id=item.id),
+                    "links": ExternalLink.objects.filter(items__id=item.id),
+                    "feat_pos": feats.filter(positive=True),
+                    "feat_neg": feats.filter(positive=False)
+            }
 
-            #ordering negative features
-            features_neg = self.object.feature_set.filter(positive=False)
-            f_ordered_neg = sorted(list(features_neg),
-                key=lambda f: Vote.objects.get_score(f)['score'], reverse=True)
-            context['feat_neg'] = f_ordered_neg
+            for k in sets.keys():
+                sets.update({k: sorted(list(sets[k]), key=lambda c:
+                    Vote.objects.get_score(c)['score'], reverse=True)
+                })
 
-            context['feat_lists'] = [f_ordered_pos]
-            context['feat_lists'].append(f_ordered_neg)
+            sets.update({"feat_lists": [sets["feat_pos"], sets["feat_neg"]]})
+            del sets["feat_pos"]
+            del sets["feat_neg"]
+
+            context.update({
+                'form': f, 'prof_list': Profile.objects.filter(
+                            skills__id__in=self.object.tags.values_list('id',
+                            flat=True)).distinct()
+            })
+
+            context.update(sets)
 
         return context
 
@@ -207,7 +203,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         else:
             return self.form_invalid(form)
 
-    @method_decorator(permission_required('profiles.can_vote',
+    @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
     def process_voting(self, request):
         return _process_voting(request, go_to_object=True)
@@ -256,22 +252,32 @@ class ContentListView(ContentView, ListView, RedirectView):
 class ContentDeleteView(ContentView, DeleteView):
 
     def delete(self, request, *args, **kwargs):
-        if 'success_url' in request.REQUEST:
-            self.success_url = request.REQUEST['success_url']
         self.object = self.get_object()
-        try:
-            if not self.object.user_can_manage_me(request.user):
-                raise CannotManage
-        except CannotManage:
-            # need to redirect to 403 - delete forbidden
-            return HttpResponseRedirect(self.get_success_url())
-        except AttributeError:
-            pass
+        if not request.user.has_perm("can_manage", self.object):
+            raise PermissionDenied
+        success_url = self.get_success_url(request)
         self.object.delete()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(success_url)
 
-    def get_success_url(self):
-        if self.model.__name__ == 'Item':
-            return reverse("item_index")
-        if self.success_url:
-            return self.success_url
+    def get_success_url(self, request):
+        if self.model.__name__ == "Item":
+            success_url = reverse("item_index")
+        elif "success_url" in request.GET:
+            success_url = request.GET.get("success_url")
+        else:
+            success_url = None
+
+        obj = self.object
+        if success_url != obj.get_absolute_url() and success_url is not None:
+            return success_url
+        else:
+            try:
+                return obj.items.all()[0].get_absolute_url()
+            except AttributeError:
+                try:
+                    return obj.question.items.all()[0].get_absolute_url()
+                except:
+                    pass
+            except:
+                pass
+        raise ImproperlyConfigured
