@@ -60,7 +60,7 @@ class Content(models.Model):
     objects = InheritanceManager()
 
     class Meta:
-        pass
+        ordering = ["-pub_date"]
 
     def delete(self):
         try:

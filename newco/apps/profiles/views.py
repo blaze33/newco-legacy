@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from idios.views import ProfileDetailView, ProfileListView
 
-from items.models import Item, Question, Answer, ExternalLink, Feature
+from items.models import Item, Content, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
@@ -44,9 +44,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             return direct_to_template(request, "homepage.html")
 
     def get_context_data(self, **kwargs):
-        history = list()
-        for model in [Question, Answer, ExternalLink, Feature]:
-            history.extend(model.objects.filter(author=self.page_user))
+        history = Content.objects.filter(author=self.page_user)
 
         fwers_ids = Follow.objects.get_follows(
                 self.page_user).values_list('user_id', flat=True)
@@ -54,26 +52,18 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
         items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
 
-        #content ordering for newsfeed
-        feed = list(Answer.objects.filter(Q(author__in=fwees_ids) |
-                Q(id__in=Question.objects.filter(
-                    items__in=items_fwed_ids).values_list('answer', flat=True))
+        feed = Content.objects.filter(
+                Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
             ).exclude(author=self.page_user)
-        )
-        for model in [Question, ExternalLink, Feature]:
-            feed.extend(model.objects.filter(
-                    Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
-                ).exclude(author=self.page_user)
-            )
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             'reputation': self.page_user.reputation,
-            'history': sorted(history, key=lambda c: c.pub_date, reverse=True),
+            'history': history.select_subclasses(),
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': sorted(feed, key=lambda c: c.pub_date, reverse=True)
+            'newsfeed': feed.select_subclasses()
         })
 
         return context
@@ -86,10 +76,12 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
 
+
 class ProfileListView(ProfileListView):
+
     def get_queryset(self):
         profiles = self.get_model_class().objects.select_related()
-        
+
         search_terms = self.request.GET.get("search", "")
         order = self.request.GET.get("order", "")
 
@@ -99,7 +91,5 @@ class ProfileListView(ProfileListView):
             profiles = profiles.order_by("-user__date_joined")
         elif order == "name":
             profiles = profiles.order_by("user__username")
-        
+
         return profiles
-
-
