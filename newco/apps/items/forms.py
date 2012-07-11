@@ -71,7 +71,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ('content', )
+        fields = ('content', 'status', )
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span6',
@@ -151,7 +151,7 @@ class FeatureForm(ModelForm):
 
     class Meta:
         model = Feature
-        fields = ('content', )
+        fields = ('content', 'status', )
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span4',

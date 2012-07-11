@@ -51,11 +51,11 @@ class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
-    status = models.SmallIntegerField(choices=STATUS, default=STATUS.private)
+    status = models.SmallIntegerField(choices=STATUS, default=STATUS.public)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
-    public = QueryManager(published=True).order_by('-pub_date')
+    public = QueryManager(status=STATUS.public)
 
     objects = InheritanceManager()
 
