@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib import messages
 from idios.views import ProfileDetailView
 
-from items.models import Item, Question, Answer, ExternalLink, Feature
+from items.models import Content, Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile
 from follow.models import Follow
 from utils.publishtools import process_publishing
@@ -50,7 +50,11 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     def get_context_data(self, **kwargs):
         history = list()
         for model in [Question, Answer, ExternalLink, Feature]:
-            history.extend(model.objects.filter(author=self.page_user))
+            history.extend(model.objects.filter(author=self.page_user).filter(status=Content.STATUS.published))
+            
+        drafts = list()
+        for model in [Question, Answer, ExternalLink, Feature]:
+            drafts.extend(model.objects.filter(author=self.page_user).filter(status=Content.STATUS.draft))
 
         fwers_ids = Follow.objects.get_follows(
                 self.page_user).values_list('user_id', flat=True)
@@ -74,6 +78,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         context.update({
             'reputation': self.page_user.reputation,
             'history': sorted(history, key=lambda c: c.pub_date, reverse=True),
+            'drafts': sorted(drafts, key=lambda c: c.pub_date, reverse=True),
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),

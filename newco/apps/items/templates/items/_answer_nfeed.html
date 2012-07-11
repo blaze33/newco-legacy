@@ -10,7 +10,7 @@
 
 <div class="row one_row">
     <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a> {{ question.content }}</small></p></div>
-    <div class="span3 right">{% include "items/_author.html" with object=question %}</div>
+    <div class="span3 right">{% include "items/_author.html" with object=question %}{% if not question.is_published %}<p><small>{% trans "This question has been un-published by its author, your answer will thus not be visible by others than you" %}</p></small>{% endif %}</div>
 </div>
 
 <div class="row one_row">

@@ -30,6 +30,9 @@
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
     {% for answer in question.answer_set.all %}
+    	{% if answer.is_published or user == answer.author %}
+		{% if not answer.is_published %}<div class="well">{% endif %}
+        
         {% dict_entry_for_item answer from answer_vote_dict as vote %}
         {% dict_entry_for_item answer from answer_score_dict as score %}
         <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
@@ -41,7 +44,10 @@
                 {% endif %}
             </p></div>
             <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+            {% if user == answer.author %}{% include "items/_status_form.html" with content=answer %}{% endif %}
         </div>
+        {% if not answer.is_published %}</div>{% endif %}
+        {% endif %}
     {% endfor %}
     <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
