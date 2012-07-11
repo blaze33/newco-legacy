@@ -20,6 +20,7 @@ from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.publishtools import process_publishing
 from utils.tools import load_object
 
 import json
@@ -199,10 +200,11 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=True)
-        elif 'publish' in request.POST: # the same thing happen as in profile.views : should we create a process ? ex: "publish_process" 
-            obj = load_object(request)
-            obj.status_id = self.request.POST['status']
-            obj.save()
+        elif 'publish' in request.POST:
+            return process_publishing(self, request)
+#            obj = load_object(request)
+#            obj.status = self.request.POST['status']
+#            obj.save()
             return HttpResponseRedirect('')
         else:
             return self.form_invalid(form)
@@ -211,9 +213,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                                           raise_exception=True))
     def process_voting(self, request):
         return _process_voting(request, go_to_object=True)
-
-    def process_publish(self,request):
-        return _process_publish(request, go_to_object=True)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

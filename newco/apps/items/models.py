@@ -1,34 +1,27 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_noop, ugettext_lazy as _
 from django.contrib.auth.models import User
 from taggit_autosuggest.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
 from datetime import datetime
+from model_utils import Choices
 
 from voting.models import Vote
 from follow.utils import register
 
-
-
-class Status(models.Model):
-    name = models.CharField(max_length=25, verbose_name=_("status name"))
-    
-    class Meta:
-        verbose_name = _("Status")
-        verbose_name_plural = _("Statuses")
-
-    def __unicode__(self):
-        return u"%s" % (self.name)
-
+#("draft": (1, 'draft', _('draft')),
+#                     "published": (2, 'published', _('published')), 
+#                     "sandbox": (3, 'sandbox', _('sandbox')))
 
 class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
-    status = models.ForeignKey(Status, null=True)
-
+    STATUS = Choices((1, 'draft', _('draft')), (2, 'published', _('published')), (3, 'sandbox', _('sandbox'))) #STATUSES["draft"], STATUSES["published"], STATUSES["sandbox"]
+    status = models.SmallIntegerField(choices=STATUS, default=STATUS.published)
+    
     class Meta:
         abstract = True
 
@@ -38,7 +31,12 @@ class Content(models.Model):
         except:
             pass
         super(Content, self).delete()
+        
+    def is_published(self):
+        return self.status == self.STATUS.published
 
+    def is_draft(self):
+        return self.status == self.STATUS.draft
 
 class Item(Content):
     name = models.CharField(max_length=255, verbose_name=_("name"))

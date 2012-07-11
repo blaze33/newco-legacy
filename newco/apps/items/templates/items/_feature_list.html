@@ -14,8 +14,8 @@
     <hr>
 
     {% for feat in feat_list %}
-    	{% if feat.status.id != 1 or user == feat.author %}
-    	{% if feat.status.id == 1 %}<div class="well">{% endif %}
+    	{% if feat.is_published or user == feat.author %}
+    	{% if not feat.is_published %}<div class="well">{% endif %}
     	<div class="row one_row" id="f-{{ feat.id }}">
         {% dict_entry_for_item feat from vote_dict as vote %}
         {% dict_entry_for_item feat from score_dict as score %}
@@ -33,7 +33,7 @@
             </div>
 
     	</div><hr>
-    	{% if feat.status.id == 1 %}</div>{% endif %}
+    	{% if not feat.is_published %}</div>{% endif %}
     	{% endif %}
     {% endfor %}
 

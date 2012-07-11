@@ -11,6 +11,7 @@ from idios.views import ProfileDetailView
 from items.models import Item, Question, Answer, ExternalLink, Feature
 from profiles.models import Profile
 from follow.models import Follow
+from utils.publishtools import process_publishing
 from utils.followtools import process_following
 from utils.tools import load_object
 from account.utils import user_display
@@ -86,34 +87,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
         if 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
         elif 'publish' in request.POST:
-            obj = load_object(request)
-            obj.status_id = self.request.POST['status']
-            obj.save()
-            
-            msgs = {
-                "published": {
-                    "level": messages.SUCCESS,
-                    "text": "Your %(object)s has been published, %(user)s" % {"object" : obj._meta.module_name, "user" : user_display(request.user)}
-                },
-                "un-published": {
-                    "level": messages.WARNING,
-                    "text": "Your %(object)s has been un-published, %(user)s" % {"object" : obj._meta.module_name, "user" : user_display(request.user)}
-                }
-            }
-            
-            if obj.status_id == '1': #1 = private
-                messages.add_message(request,
-                                     msgs["un-published"]["level"],
-                                     msgs["un-published"]["text"]
-                )
-            else:
-                messages.add_message(request,
-                                     msgs["published"]["level"],
-                                     msgs["published"]["text"]
-                )
-            
-            
-            return HttpResponseRedirect('')
+            return process_publishing(self, request)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)

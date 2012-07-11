@@ -14,8 +14,8 @@
 {% scores_for_objects links as link_score_dict %}
 
 {% for link in links %}
-	{% if link.status.id != 1 or user == link.author %}
-	{% if link.status.id == 1 %}<div class="well">{% endif %}
+	{% if link.is_published or user == link.author %}
+	{% if not link.is_published %}<div class="well">{% endif %}
 	<div class="row link"><div class="span10">
 	    {% dict_entry_for_item link from link_vote_dict as vote %}
 	    {% dict_entry_for_item link from link_score_dict as score %}
@@ -34,6 +34,6 @@
 	    </div>
 	    <hr>
 	</div></div>
-	{% if link.status.id == 1 %}</div>{% endif %}
+	{% if not link.is_published %}</div>{% endif %}
 	{% endif %}
 {% endfor %}

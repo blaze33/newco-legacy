@@ -8,8 +8,8 @@
 {% scores_for_objects questions as question_score_dict %}
 
 {% for question in questions %}
-{% if question.status.id != 1 or user == question.author %}
-{% if question.status.id == 1 %}<div class="well">{% endif %}
+{% if question.is_published or user == question.author %}
+{% if not question.is_published %}<div class="well">{% endif %}
 <div class="row question" >
 <div class="span10">
     {% dict_entry_for_item question from question_vote_dict as vote %}
@@ -48,6 +48,6 @@
     </a></div></div>
     <hr>
 </div></div>
-{% if question.status.id == 1 %}</div>{% endif %}
+{% if not question.is_published %}</div>{% endif %}
 {% endif %}
 {% endfor %}
