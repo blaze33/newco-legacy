@@ -7,6 +7,8 @@ from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
 from datetime import datetime
 
+from model_utils import Choices
+from model_utils.managers import InheritanceManager, QueryManager
 from voting.models import Vote
 from follow.utils import register
 
@@ -40,12 +42,25 @@ register(Item)
 
 
 class Content(models.Model):
+    STATUS = Choices(
+        (0, "private", _("private")),
+        (1, "sandbox", _("sandbox")),
+        (2, "public", _("public"))
+    )
+
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
+    status = models.SmallIntegerField(choices=STATUS, default=STATUS.private)
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    public = QueryManager(published=True).order_by('-pub_date')
+
+    objects = InheritanceManager()
 
     class Meta:
-        abstract = True
+        pass
 
     def delete(self):
         try:
@@ -57,12 +72,9 @@ class Content(models.Model):
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("question")
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         q = self.content
@@ -76,7 +88,6 @@ class Question(Content):
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_("content"))
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("answer")
@@ -104,12 +115,9 @@ class Story(models.Model):
 class ExternalLink(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("link")
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u"%s" % (self.content)
@@ -122,12 +130,9 @@ class ExternalLink(Content):
 class Feature(Content):
     content = models.CharField(max_length=80, verbose_name=_('content'))
     positive = models.BooleanField()
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _('feature')
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)

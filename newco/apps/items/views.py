@@ -14,7 +14,7 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item
+from items.models import Item, Question, ExternalLink, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import ExternalLinkForm, FeatureForm
 from profiles.models import Profile
@@ -136,11 +136,13 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
             item = context['item']
 
+            feats = Feature.objects.filter(items__id=item.id)
+
             sets = {
-                    "questions": item.question_set.all(),
-                    "links": item.externallink_set.all(),
-                    "feat_pos": item.feature_set.filter(positive=True),
-                    "feat_neg": item.feature_set.filter(positive=False)
+                    "questions": Question.objects.filter(items__id=item.id),
+                    "links": ExternalLink.objects.filter(items__id=item.id),
+                    "feat_pos": feats.filter(positive=True),
+                    "feat_neg": feats.filter(positive=False)
             }
 
             for k in sets.keys():
