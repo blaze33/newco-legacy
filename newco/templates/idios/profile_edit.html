@@ -5,14 +5,3 @@
 
     {{ profile_form.media }}
 {% endblock %}
-
-{% block subnav %}
-{% url profile_detail user.username as profile_detail_url %}
-{% url profile_list as profile_list_url %}
-    {% if user.is_authenticated %}
-{% include "profiles/profile_idios.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-    
-{% endblock %}
