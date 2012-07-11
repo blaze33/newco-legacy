@@ -14,9 +14,9 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item, Question, ExternalLink, Feature
+from items.models import Item, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import ExternalLinkForm, FeatureForm
+from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
@@ -140,7 +140,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
             sets = {
                     "questions": Question.objects.filter(items__id=item.id),
-                    "links": ExternalLink.objects.filter(items__id=item.id),
+                    "links": Link.objects.filter(items__id=item.id),
                     "feat_pos": feats.filter(positive=True),
                     "feat_neg": feats.filter(positive=False)
             }

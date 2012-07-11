@@ -3,7 +3,7 @@ from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from items.models import Item, Question, Answer, Story, ExternalLink, Feature
+from items.models import Item, Question, Answer, Story, Link, Feature
 
 
 class ItemForm(ModelForm):
@@ -108,12 +108,12 @@ class StoryForm(ModelForm):
         model = Story
 
 
-class ExternalLinkForm(ModelForm):
+class LinkForm(ModelForm):
 
     create = False
 
     class Meta:
-        model = ExternalLink
+        model = Link
         exclude = ('author', 'items')
         widgets = {
             'text': Textarea(attrs={
@@ -132,17 +132,17 @@ class ExternalLinkForm(ModelForm):
         else:
             self.object = kwargs['instance']
             self.item = self.object.items.select_related()[0]
-        return super(ExternalLinkForm, self).__init__(*args, **kwargs)
+        return super(LinkForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
-            link = super(ExternalLinkForm, self).save(commit=False)
+            link = super(LinkForm, self).save(commit=False)
             link.author = self.user
             link.save()
             link.items.add(self.item_id)
             return link
         else:
-            return super(ExternalLinkForm, self).save(commit)
+            return super(LinkForm, self).save(commit)
 
 
 class FeatureForm(ModelForm):

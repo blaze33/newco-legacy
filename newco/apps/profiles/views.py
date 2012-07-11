@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from idios.views import ProfileDetailView, ProfileListView
 
-from items.models import Item, Content, Question, Answer, ExternalLink, Feature
+from items.models import Item, Content
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following

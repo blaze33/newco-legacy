@@ -49,7 +49,7 @@
             <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>
         {% endif %}
 
-    {% elif content|to_class_name == "externallink" %}
+    {% elif content|to_class_name == "link" %}
         <div class="row one_row"><div class="span7">
             <h4>{% include p_link_tpl with object=author %} {% trans "posted a link about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
         </div></div>

@@ -101,7 +101,7 @@ class Answer(Content):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
-class ExternalLink(Content):
+class Link(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
 

@@ -4,7 +4,7 @@
 {% load content_utils %}
 {% load staticfiles %}
 
-<div class="row one_row"><div class="span4"><a href='{% url item_create "externallink" %}?item_id={{ item.id }}' class="btn btn-mini" name='add_link'>
+<div class="row one_row"><div class="span4"><a href='{% url item_create "link" %}?item_id={{ item.id }}' class="btn btn-mini" name='add_link'>
     <i class="icon-share-alt"></i>{% trans "Publish an external link" %}
 </a></div></div>
 
