@@ -48,21 +48,21 @@ class Migration(DataMigration):
                     obj.save()
                 if hasattr(obj,"items"):
                     if obj.items.count() == 0:
-                        for item in ct.items.all():
-                            obj.items.add(item)
+                        obj.items = ct.items.all()
+                elif model==orm['items.Answer']:
+                    obj.question = orm['items.Question'].objects.filter(content_ptr=obj.question_id_store)[0]
 
         # Back-switch vote from content to object
         for vote in orm['voting.Vote'].objects.all():
-            if vote.content_type.model == "content":
-                ct = orm["items.Content"].objects.get(pk=vote.object_id)
-                for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-                    if model.objects.filter(content_ptr=ct.id).count() == 1:
-                        obj = model.objects.filter(content_ptr=ct.id)[0]
-                        content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model=model.__name__.lower())
-                        vote.content_type = content_type
-                        vote.object_id = obj.id
-                        vote.save()
-                        break
+            if vote.content_type.model in ["question", "answer", "externallink", "feature"]:
+                model = orm['items.' + vote.content_type.model.capitalize()]
+                obj = model.objects.filter(content_ptr=vote.object_id)[0]
+                vote.object_id = obj.id + 500000
+                vote.save()
+
+        for vote in orm['voting.Vote'].objects.all():
+            vote.object_id -= 500000
+            vote.save()
 
     models = {
         'auth.group': {
