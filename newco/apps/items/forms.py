@@ -97,6 +97,7 @@ class AnswerForm(ModelForm):
             answer.author = self.user
             answer.question = self.question
             answer.save()
+            answer.items = answer.question.items.all()
             return answer
         else:
             return super(AnswerForm, self).save(commit)
