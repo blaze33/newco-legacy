@@ -213,6 +213,7 @@ INSTALLED_APPS = [
     "voting",
     "follow",
     "gravatar",
+    "tastypie",
     "amazonproduct",
 
     # Tests
