@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-06 19:25+0200\n"
+"POT-Creation-Date: 2012-07-11 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,84 +21,96 @@ msgstr ""
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:77
+#: forms.py:78
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:119
+#: forms.py:121
 msgid "Link description"
 msgstr ""
 
-#: forms.py:173
+#: forms.py:175
 msgid "positive"
 msgstr ""
 
-#: forms.py:175
+#: forms.py:177
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:178
+#: forms.py:180
 msgid "negative"
 msgstr ""
 
-#: forms.py:180
+#: forms.py:182
 msgid "What feature do you dislike?"
 msgstr ""
 
 #: models.py:17
-msgid "date published"
-msgstr ""
-
-#: models.py:31
 msgid "name"
 msgstr ""
 
-#: models.py:32
+#: models.py:18
 msgid "slug"
 msgstr ""
 
-#: models.py:34
+#: models.py:21 models.py:53
+msgid "date published"
+msgstr ""
+
+#: models.py:23
 msgid "last modified"
 msgstr ""
 
-#: models.py:38
+#: models.py:27
 msgid "item"
 msgstr ""
 
-#: models.py:56 models.py:75 models.py:92 models.py:102 models.py:120
+#: models.py:46
+msgid "private"
+msgstr ""
+
+#: models.py:47
+msgid "sandbox"
+msgstr ""
+
+#: models.py:48
+msgid "public"
+msgstr ""
+
+#: models.py:74 models.py:90 models.py:105 models.py:120 models.py:136
 msgid "content"
 msgstr ""
 
-#: models.py:61
+#: models.py:77
 msgid "question"
 msgstr ""
 
-#: models.py:79
+#: models.py:93
 msgid "answer"
 msgstr ""
 
-#: models.py:91
-msgid "title"
-msgstr ""
-
-#: models.py:97
-msgid "story"
-msgstr ""
-
-#: models.py:98
-msgid "stories"
-msgstr ""
-
-#: models.py:103
+#: models.py:106
 msgid "URL"
 msgstr ""
 
-#: models.py:108
+#: models.py:109
 msgid "link"
 msgstr ""
 
-#: models.py:126
+#: models.py:124
 msgid "feature"
+msgstr ""
+
+#: models.py:135
+msgid "title"
+msgstr ""
+
+#: models.py:141
+msgid "story"
+msgstr ""
+
+#: models.py:142
+msgid "stories"
 msgstr ""
 
 #: views.py:71 views.py:121
@@ -115,6 +127,38 @@ msgstr ""
 msgid "by"
 msgstr ""
 
+#: templates/items/_data_sheet.html:10
+msgid "Maybe they can help you?"
+msgstr ""
+
+#: templates/items/_feature_list.html:12
+msgid "Positive Features"
+msgstr ""
+
+#: templates/items/_feature_list.html:12
+msgid "Negative Features"
+msgstr ""
+
+#: templates/items/_feature_list.html:32
+msgid "Add a positive feature"
+msgstr ""
+
+#: templates/items/_feature_list.html:32
+msgid "Add a negative feature"
+msgstr ""
+
+#: templates/items/_link_list.html:8
+msgid "Publish an external link"
+msgstr ""
+
+#: templates/items/_question_list.html:44
+msgid "Add a better answer"
+msgstr ""
+
+#: templates/items/_question_list.html:44
+msgid "Answer this question"
+msgstr ""
+
 #: templates/items/answer_form.html:6
 msgid "Answer"
 msgstr ""
@@ -128,10 +172,6 @@ msgstr ""
 #: templates/items/externallink_form.html:16
 #: templates/items/feature_form.html:17 templates/items/item_form.html:18
 msgid "Submit"
-msgstr ""
-
-#: templates/items/data_sheet.html:10
-msgid "Maybe they can help you?"
 msgstr ""
 
 #: templates/items/externallink_form.html:6
@@ -150,22 +190,6 @@ msgstr ""
 #: templates/items/feature_form.html:11
 #, python-format
 msgid "Add a %(way)s feature to <i>%(item)s</i>:"
-msgstr ""
-
-#: templates/items/feature_list.html:12
-msgid "Positive Features"
-msgstr ""
-
-#: templates/items/feature_list.html:12
-msgid "Negative Features"
-msgstr ""
-
-#: templates/items/feature_list.html:32
-msgid "Add a positive feature"
-msgstr ""
-
-#: templates/items/feature_list.html:32
-msgid "Add a negative feature"
 msgstr ""
 
 #: templates/items/item_confirm_delete.html:6
@@ -245,22 +269,10 @@ msgstr ""
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/link_list.html:8
-msgid "Publish an external link"
-msgstr ""
-
 #: templates/items/question_form.html:5
 msgid "Question"
 msgstr ""
 
 #: templates/items/question_form.html:7
 msgid "Ask something:"
-msgstr ""
-
-#: templates/items/question_list.html:44
-msgid "Add a better answer"
-msgstr ""
-
-#: templates/items/question_list.html:44
-msgid "Answer this question"
 msgstr ""

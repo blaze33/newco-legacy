@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-03 20:28+0200\n"
+"POT-Creation-Date: 2012-07-11 19:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,28 +50,20 @@ msgstr "La liste de vos principales compétences produit"
 msgid "profile"
 msgstr "profil"
 
-#: models.py:53
+#: models.py:54
 msgid "reputation"
 msgstr "réputation"
 
-#: templates/profiles/_profile_content_list.html:15
+#: templates/profiles/_profile_content_list.html:19
 msgid "answered a question about"
 msgstr "a répondu à une question à propos de"
 
-#: templates/profiles/_profile_content_list.html:19
+#: templates/profiles/_profile_content_list.html:23
 #: templates/profiles/_profile_content_list.html:43
 msgid "Q:"
 msgstr "Q :"
 
-#: templates/profiles/_profile_content_list.html:21
-#: templates/profiles/_profile_content_list.html:30
-#: templates/profiles/_profile_content_list.html:46
-#: templates/profiles/_profile_content_list.html:65
-#: templates/profiles/_profile_content_list.html:77
-msgid "by"
-msgstr "par"
-
-#: templates/profiles/_profile_content_list.html:26
+#: templates/profiles/_profile_content_list.html:28
 msgid "A:"
 msgstr "R :"
 
@@ -83,47 +75,43 @@ msgstr "Ajouter une réponse"
 msgid "asked a question about"
 msgstr "a posé une question à propos de"
 
-#: templates/profiles/_profile_content_list.html:51
+#: templates/profiles/_profile_content_list.html:49
 msgid "Answer this question"
 msgstr "Répondre à cette question"
 
-#: templates/profiles/_profile_content_list.html:56
+#: templates/profiles/_profile_content_list.html:54
 msgid "posted a link about"
 msgstr "a posté un lien à propos de"
 
-#: templates/profiles/_profile_content_list.html:62
+#: templates/profiles/_profile_content_list.html:60
 msgid "L:"
 msgstr "L :"
 
-#: templates/profiles/_profile_content_list.html:71
+#: templates/profiles/_profile_content_list.html:67
 msgid "suggested a feature on"
 msgstr "a suggéré une caractéristique sur"
 
-#: templates/profiles/_profile_info.html:4
-msgid "Name"
-msgstr "Nom"
-
-#: templates/profiles/_profile_info.html:5
+#: templates/profiles/_profile_info.html:6
 msgid "About"
 msgstr "A propos"
 
-#: templates/profiles/_profile_info.html:6
+#: templates/profiles/_profile_info.html:10
 msgid "Location"
 msgstr "Région"
 
-#: templates/profiles/_profile_info.html:7
+#: templates/profiles/_profile_info.html:14
 msgid "Website"
 msgstr "Site internet"
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:18
 msgid "Subscription date"
 msgstr "Date d'inscription"
 
-#: templates/profiles/_profile_info.html:9
+#: templates/profiles/_profile_info.html:22
 msgid "Reputation"
 msgstr "Réputation"
 
-#: templates/profiles/_profile_info.html:11
+#: templates/profiles/_profile_info.html:26
 msgid "Skills"
 msgstr "Compétences"
 
@@ -151,3 +139,9 @@ msgstr "Abonnements"
 #: templates/profiles/profile_homepage.html:23
 msgid "Followers"
 msgstr "Abonnés"
+
+#~ msgid "by"
+#~ msgstr "par"
+
+#~ msgid "Name"
+#~ msgstr "Nom"

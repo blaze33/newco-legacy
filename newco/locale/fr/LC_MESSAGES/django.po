@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-06 19:25+0200\n"
-"PO-Revision-Date: 2012-07-06 19:27\n"
+"POT-Creation-Date: 2012-07-11 19:07+0200\n"
+"PO-Revision-Date: 2012-07-11 19:08\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,30 @@ msgstr "Revenir en arrière"
 #: templates/403.html:14
 msgid "You can't delete this content."
 msgstr "Vous n'avez pas la permission pour supprimer ce contenu."
+
+#: templates/_account_bar.html:18
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/_account_bar.html:20
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/_account_bar.html:23
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: templates/_account_bar.html:27
+msgid "Log in"
+msgstr "Se connecter"
+
+#: templates/_account_bar.html:29
+msgid "or"
+msgstr "ou"
+
+#: templates/_account_bar.html:30
+msgid "Sign up"
+msgstr "S'enregistrer"
 
 #: templates/_footer.html:4
 msgid "FAQ"
@@ -102,35 +126,51 @@ msgstr ""
 "Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
 "\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
 
-#: templates/site_base.html:43
+#: templates/site_base.html:44
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/site_base.html:44
+#: templates/site_base.html:45
 msgid "Products index"
 msgstr "Liste des produits"
 
-#: templates/idios/profile.html:8
+#: templates/idios/profile.html:9
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:18
+#: templates/idios/profile.html:21
+msgid ""
+"Your profile picture is provided by Gravatar, sign up to this service to "
+"change it!"
+msgstr ""
+"Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
+"service pour pouvoir la modifier !"
+
+#: templates/idios/profile.html:32
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:25
+#: templates/idios/profile.html:44
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:26
+#: templates/idios/profile.html:45
 msgid "Newsfeed"
 msgstr "Flux"
 
-#: templates/idios/profile.html:27
+#: templates/idios/profile.html:46
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:28
+#: templates/idios/profile.html:47
 msgid "Followers"
 msgstr "Abonnés"
+
+#: templates/idios/profiles.html:7 templates/idios/profiles.html.py:11
+msgid "All Users"
+msgstr "Tous les utilisateurs"
+
+#: templates/idios/profiles.html:12
+msgid "Here is the awesome community building NewCo."
+msgstr "Voici l'incroyable communauté qui alimente NewCo."
