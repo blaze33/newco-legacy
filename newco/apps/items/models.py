@@ -101,17 +101,6 @@ class Answer(Content):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
-class Story(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_("title"))
-    content = models.CharField(max_length=2000, verbose_name=_("content"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
-
-    class Meta:
-        verbose_name = _("story")
-        verbose_name_plural = _("stories")
-
-
 class ExternalLink(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
@@ -140,3 +129,14 @@ class Feature(Content):
     def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
+
+class Story(models.Model):
+    title = models.CharField(max_length=200, verbose_name=_("title"))
+    content = models.CharField(max_length=2000, verbose_name=_("content"))
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _("story")
+        verbose_name_plural = _("stories")

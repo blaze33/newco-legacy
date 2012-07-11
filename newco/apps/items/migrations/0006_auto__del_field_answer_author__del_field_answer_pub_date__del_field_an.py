@@ -269,7 +269,8 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Answer', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
             'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
-            'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'})
+            'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'}),
+            'question_id_store': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
         'items.content': {
             'Meta': {'object_name': 'Content'},

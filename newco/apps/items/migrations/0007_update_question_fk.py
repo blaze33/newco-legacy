@@ -7,61 +7,12 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        # Create content object with author and pub date and pasting its id into specially created parent_id attribute
-        ct_model = orm['items.Content']
-        for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-            for obj in model.objects.all():
-                ct = ct_model(author=obj.author, pub_date=obj.pub_date)
-                ct.save()
-                obj.content_ptr = ct.id
-                obj.save()
-                if hasattr(obj, "items"):
-                    ct.items = obj.items.all()
-                elif model==orm['items.Answer']:
-                    obj.question_id_store = orm['items.Question'].objects.get(id=obj.question.id).content_ptr
-                    obj.save()
-                    ct.items = obj.question.items.all()
-
-        # Then switch votes from object to content
-        ct_content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model="content")
-        for vote in orm['voting.Vote'].objects.all():
-            if vote.content_type.model in ["question", "answer", "externallink", "feature"]:
-                model = orm['items.' + vote.content_type.model.capitalize()]
-                obj = model.objects.get(pk=vote.object_id)
-                ct = orm['items.Content'].objects.get(pk=obj.content_ptr)
-                vote.content_type = ct_content_type
-                vote.object_id = ct.id
-                vote.save()
+        for answer in orm['items.Answer'].objects.all():
+            answer.question = orm['items.Question'].objects.get(id=answer.question_id_store)
+            answer.save()
 
     def backwards(self, orm):
-        # Rebuild unique ids + author + pub_date + m2m
-        for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-            for obj in model.objects.all():
-                if obj.id == 0:
-                    obj.id = obj.content_ptr
-                    obj.save()
-                if not obj.author:
-                    ct = orm["items.Content"].object.get(pk=obj.content_ptr)
-                    obj.author = ct.author
-                    obj.pub_date = ct.pub_date
-                    obj.save()
-                if hasattr(obj,"items"):
-                    if obj.items.count() == 0:
-                        for item in ct.items.all():
-                            obj.items.add(item)
-
-        # Back-switch vote from content to object
-        for vote in orm['voting.Vote'].objects.all():
-            if vote.content_type.model == "content":
-                ct = orm["items.Content"].objects.get(pk=vote.object_id)
-                for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-                    if model.objects.filter(content_ptr=ct.id).count() == 1:
-                        obj = model.objects.filter(content_ptr=ct.id)[0]
-                        content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model=model.__name__.lower())
-                        vote.content_type = content_type
-                        vote.object_id = obj.id
-                        vote.save()
-                        break
+        "Write your backwards methods here."
 
     models = {
         'auth.group': {
@@ -101,12 +52,9 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'items.answer': {
-            'Meta': {'object_name': 'Answer'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Answer', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'}),
             'question_id_store': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
@@ -119,24 +67,16 @@ class Migration(DataMigration):
             'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'})
         },
         'items.externallink': {
-            'Meta': {'object_name': 'ExternalLink'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'ExternalLink', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'items.feature': {
-            'Meta': {'object_name': 'Feature'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Feature', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
+            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'items.item': {
             'Meta': {'object_name': 'Item'},
@@ -148,13 +88,9 @@ class Migration(DataMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'items.question': {
-            'Meta': {'object_name': 'Question'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Question', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'})
         },
         'items.story': {
             'Meta': {'object_name': 'Story'},

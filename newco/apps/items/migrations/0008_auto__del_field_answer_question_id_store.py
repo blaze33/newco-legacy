@@ -8,62 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Content'
-        db.create_table('items_content', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
-            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('status', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
-        ))
-        db.send_create_signal('items', ['Content'])
-
-        # Adding M2M table for field items on 'Content'
-        db.create_table('items_content_items', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('content', models.ForeignKey(orm['items.content'], null=False)),
-            ('item', models.ForeignKey(orm['items.item'], null=False))
-        ))
-        db.create_unique('items_content_items', ['content_id', 'item_id'])
-
-        # Adding field 'Answer.content_ptr'
-        db.add_column('items_answer', 'content_ptr',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
-
-        # Adding field 'Question.content_ptr'
-        db.add_column('items_question', 'content_ptr',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
-
-        # Adding field 'ExternalLink.content_ptr'
-        db.add_column('items_externallink', 'content_ptr',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
-
-        # Adding field 'Feature.content_ptr'
-        db.add_column('items_feature', 'content_ptr',
-                      self.gf('django.db.models.fields.IntegerField')(default=0),
-                      keep_default=False)
+        # Deleting field 'Answer.question_id_store'
+        db.delete_column('items_answer', 'question_id_store')
 
 
     def backwards(self, orm):
-        # Deleting model 'Content'
-        db.delete_table('items_content')
-
-        # Removing M2M table for field items on 'Content'
-        db.delete_table('items_content_items')
-
-        # Deleting field 'Answer.content_ptr'
-        db.delete_column('items_answer', 'content_ptr')
-
-        # Deleting field 'Question.content_ptr'
-        db.delete_column('items_question', 'content_ptr')
-
-        # Deleting field 'ExternalLink.content_ptr'
-        db.delete_column('items_externallink', 'content_ptr')
-
-        # Deleting field 'Feature.content_ptr'
-        db.delete_column('items_feature', 'content_ptr')
+        # Adding field 'Answer.question_id_store'
+        db.add_column('items_answer', 'question_id_store',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
 
 
     models = {
@@ -104,12 +57,9 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'items.answer': {
-            'Meta': {'object_name': 'Answer'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Answer', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
             'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'})
         },
         'items.content': {
@@ -121,24 +71,16 @@ class Migration(SchemaMigration):
             'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'})
         },
         'items.externallink': {
-            'Meta': {'object_name': 'ExternalLink'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'ExternalLink', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'items.feature': {
-            'Meta': {'object_name': 'Feature'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Feature', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
+            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'items.item': {
             'Meta': {'object_name': 'Item'},
@@ -150,13 +92,9 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'items.question': {
-            'Meta': {'object_name': 'Question'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Question', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'content_ptr': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'})
         },
         'items.story': {
             'Meta': {'object_name': 'Story'},

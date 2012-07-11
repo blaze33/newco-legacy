@@ -1,67 +1,78 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
 
-class Migration(DataMigration):
+
+class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Create content object with author and pub date and pasting its id into specially created parent_id attribute
-        ct_model = orm['items.Content']
-        for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-            for obj in model.objects.all():
-                ct = ct_model(author=obj.author, pub_date=obj.pub_date)
-                ct.save()
-                obj.content_ptr = ct.id
-                obj.save()
-                if hasattr(obj, "items"):
-                    ct.items = obj.items.all()
-                elif model==orm['items.Answer']:
-                    obj.question_id_store = orm['items.Question'].objects.get(id=obj.question.id).content_ptr
-                    obj.save()
-                    ct.items = obj.question.items.all()
+        # Adding model 'Content'
+        db.create_table('items_content', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('status', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
+        ))
+        db.send_create_signal('items', ['Content'])
 
-        # Then switch votes from object to content
-        ct_content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model="content")
-        for vote in orm['voting.Vote'].objects.all():
-            if vote.content_type.model in ["question", "answer", "externallink", "feature"]:
-                model = orm['items.' + vote.content_type.model.capitalize()]
-                obj = model.objects.get(pk=vote.object_id)
-                ct = orm['items.Content'].objects.get(pk=obj.content_ptr)
-                vote.content_type = ct_content_type
-                vote.object_id = ct.id
-                vote.save()
+        # Adding M2M table for field items on 'Content'
+        db.create_table('items_content_items', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('content', models.ForeignKey(orm['items.content'], null=False)),
+            ('item', models.ForeignKey(orm['items.item'], null=False))
+        ))
+        db.create_unique('items_content_items', ['content_id', 'item_id'])
+
+        # Adding field 'Answer.question_id_store'
+        db.add_column('items_answer', 'question_id_store',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Answer.content_ptr'
+        db.add_column('items_answer', 'content_ptr',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Question.content_ptr'
+        db.add_column('items_question', 'content_ptr',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'ExternalLink.content_ptr'
+        db.add_column('items_externallink', 'content_ptr',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
+        # Adding field 'Feature.content_ptr'
+        db.add_column('items_feature', 'content_ptr',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
+
 
     def backwards(self, orm):
-        # Rebuild unique ids + author + pub_date + m2m
-        for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-            for obj in model.objects.all():
-                if obj.id == 0:
-                    obj.id = obj.content_ptr
-                    obj.save()
-                if not obj.author:
-                    ct = orm["items.Content"].object.get(pk=obj.content_ptr)
-                    obj.author = ct.author
-                    obj.pub_date = ct.pub_date
-                    obj.save()
-                if hasattr(obj,"items"):
-                    if obj.items.count() == 0:
-                        for item in ct.items.all():
-                            obj.items.add(item)
+        # Deleting model 'Content'
+        db.delete_table('items_content')
 
-        # Back-switch vote from content to object
-        for vote in orm['voting.Vote'].objects.all():
-            if vote.content_type.model == "content":
-                ct = orm["items.Content"].objects.get(pk=vote.object_id)
-                for model in [orm['items.Question'], orm['items.Answer'], orm['items.ExternalLink'], orm['items.Feature']]:
-                    if model.objects.filter(content_ptr=ct.id).count() == 1:
-                        obj = model.objects.filter(content_ptr=ct.id)[0]
-                        content_type = orm['contenttypes.ContentType'].objects.get(app_label="items", model=model.__name__.lower())
-                        vote.content_type = content_type
-                        vote.object_id = obj.id
-                        vote.save()
-                        break
+        # Removing M2M table for field items on 'Content'
+        db.delete_table('items_content_items')
+
+        # Deleting field 'Answer.question_id_store'
+        db.delete_column('items_answer', 'question_id_store')
+
+        # Deleting field 'Answer.content_ptr'
+        db.delete_column('items_answer', 'content_ptr')
+
+        # Deleting field 'Question.content_ptr'
+        db.delete_column('items_question', 'content_ptr')
+
+        # Deleting field 'ExternalLink.content_ptr'
+        db.delete_column('items_externallink', 'content_ptr')
+
+        # Deleting field 'Feature.content_ptr'
+        db.delete_column('items_feature', 'content_ptr')
+
 
     models = {
         'auth.group': {
@@ -187,4 +198,3 @@ class Migration(DataMigration):
     }
 
     complete_apps = ['items']
-    symmetrical = True
