@@ -15,7 +15,13 @@
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
+    <div class="row"><div class="span12">
+    <ul class="thumbnails" id="img-selector">
+    </ul></div></div>
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
 </form>
 
 {% endblock %}
+
+
+

@@ -256,12 +256,16 @@ ACCOUNT_LANGUAGES = [
     for code in ['fr', 'en']
 ]
 
+#Profile pictures
+GRAVATAR_DEFAULT_IMAGE = 'identicon'
+
 # AWS
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
-#Profile pictures
-GRAVATAR_DEFAULT_IMAGE = 'identicon'
+# API services
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20

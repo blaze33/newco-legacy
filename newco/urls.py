@@ -6,7 +6,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 from profiles.views import ProfileDetailView
+from items.api import ItemResource
 
+item_resource = ItemResource()
 
 handler500 = "pinax.views.server_error"
 
@@ -19,6 +21,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("custaccount.urls")),
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
+    url(r'^api/', include(item_resource.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
 )
