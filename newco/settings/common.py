@@ -211,6 +211,7 @@ INSTALLED_APPS = [
     "voting",
     "follow",
     "gravatar",
+    "tastypie",
 
     # Tests
     "tests",
@@ -254,6 +255,10 @@ ACCOUNT_LANGUAGES = [
 
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
+
+# API services
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
 # Rosetta
 ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
