@@ -5,7 +5,7 @@ from taggit_autosuggest.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
-from datetime import datetime
+from django.utils import timezone
 
 from model_utils import Choices
 from model_utils.managers import InheritanceManager, QueryManager
@@ -17,7 +17,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=datetime.now, editable=False,
+    pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                             verbose_name=_('date published'))
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
@@ -49,7 +49,7 @@ class Content(models.Model):
     )
 
     author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=datetime.now, editable=False,
+    pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                             verbose_name=_('date published'))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public)
     items = models.ManyToManyField(Item)
