@@ -5,12 +5,15 @@ from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Content
 from profiles.models import Profile
 from follow.models import Follow
+from utils.publishtools import process_publishing
 from utils.followtools import process_following
+from account.utils import user_display
 
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
@@ -44,7 +47,9 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             return direct_to_template(request, "homepage.html")
 
     def get_context_data(self, **kwargs):
-        history = Content.objects.filter(author=self.page_user)
+        history = Content.objects.filter(author=self.page_user).filter(status=Content.STATUS.published)
+
+        drafts =  Content.objects.filter(author=self.page_user).exclude(status=Content.STATUS.published)
 
         fwers_ids = Follow.objects.get_follows(
                 self.page_user).values_list('user_id', flat=True)
@@ -54,12 +59,13 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
 
         feed = Content.objects.filter(
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)
-            ).exclude(author=self.page_user)
+            ).exclude(author=self.page_user).filter(status=Content.STATUS.published)
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             'reputation': self.page_user.reputation,
             'history': history.select_subclasses(),
+            'drafts': drafts.select_subclasses(),
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
@@ -72,6 +78,8 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
+        elif 'publish' in request.POST:
+            return process_publishing(self, request)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)

@@ -43,19 +43,20 @@ register(Item)
 
 class Content(models.Model):
     STATUS = Choices(
-        (0, "private", _("private")),
-        (1, "sandbox", _("sandbox")),
-        (2, "public", _("public"))
+        (0, "draft", _("Draft")),
+        (1, "published", _("Published")),
+        #(2, "sandbox", _("sandbox")),
+
     )
 
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                             verbose_name=_('date published'))
-    status = models.SmallIntegerField(choices=STATUS, default=STATUS.public)
+    status = models.SmallIntegerField(choices=STATUS, default=STATUS.published)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
-    public = QueryManager(status=STATUS.public)
+    published = QueryManager(status=STATUS.published)
 
     objects = InheritanceManager()
 
@@ -68,6 +69,12 @@ class Content(models.Model):
         except:
             pass
         super(Content, self).delete()
+
+    def is_published(self):
+        return self.status == self.STATUS.published
+
+    def is_draft(self):
+        return self.status == self.STATUS.draft
 
 
 class Question(Content):

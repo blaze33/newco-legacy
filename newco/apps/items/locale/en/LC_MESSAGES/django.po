@@ -118,9 +118,26 @@ msgstr ""
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:75 views.py:125
+#: views.py:77 views.py:127
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
+msgstr ""
+
+#: templates/items/_answer_nfeed.html:7
+msgid "answered a question about"
+msgstr ""
+
+#: templates/items/_answer_nfeed.html:12
+#: templates/items/_question_nfeed.html:11
+msgid "Q:"
+msgstr ""
+
+#: templates/items/_answer_nfeed.html:17
+msgid "A:"
+msgstr ""
+
+#: templates/items/_answer_nfeed.html:23
+msgid "Add an answer"
 msgstr ""
 
 #: templates/items/_author.html:6

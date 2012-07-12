@@ -120,10 +120,29 @@ msgstr "articles"
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:75 views.py:125
+#: views.py:77 views.py:127
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
+
+#: templates/items/_answer_nfeed.html:7
+#, fuzzy
+msgid "answered a question about"
+msgstr "Répondre à cette question"
+
+#: templates/items/_answer_nfeed.html:12
+#: templates/items/_question_nfeed.html:11
+msgid "Q:"
+msgstr "Q :"
+
+#: templates/items/_answer_nfeed.html:17
+msgid "A:"
+msgstr "R :"
+
+#: templates/items/_answer_nfeed.html:23
+#, fuzzy
+msgid "Add an answer"
+msgstr "Donner une meilleure réponse"
 
 #: templates/items/_author.html:6
 msgid "by"
