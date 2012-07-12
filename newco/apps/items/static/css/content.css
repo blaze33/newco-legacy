@@ -19,25 +19,25 @@
         line-height: 14px;
         margin: 0 0;
         opacity: 0;
-        -webkit-transition: opacity 0.9s;
-        -moz-transition: opacity 0.9s;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
     }
     .one_row:hover .controls {
         opacity: 1;
-        -webkit-transition: opacity 5s;
-        -moz-transition: opacity 5s;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
     }
     
     .row .block_controls {
         padding-top: 3px;
         opacity: 0;
-        -webkit-transition: opacity 0.9s;
-        -moz-transition: opacity 0.9s;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
     }
     .row:hover .block_controls {
         opacity: 1;
-        -webkit-transition: opacity 5s;
-        -moz-transition: opacity 5s;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
     }
     
     .question hr {
