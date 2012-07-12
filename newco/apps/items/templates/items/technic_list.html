@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load content_utils %}
+{% load staticfiles %}
+
+<div class="row">{% for feat_list in feat_lists %}<div class="span4">
+
+    {% votes_by_user user on feat_list as vote_dict %}
+    {% scores_for_objects feat_list as score_dict %}
+
+    <div style="text-align:center;"><h5>{% if forloop.first %}{% trans "Positive Features" %}{% else %}{% trans "Negative Features" %}{% endif %}</h5></div>
+
+    <hr>
+
+    {% for feat in feat_list %}<div class="row one_row" id="f-{{ feat.id }}">
+        {% dict_entry_for_item feat from vote_dict as vote %}
+        {% dict_entry_for_item feat from score_dict as score %}
+
+            <div class="span1"><h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form feat vote %}</h5></div>
+            <div class="span2">
+                {{ feat.content }}
+                {% if user.is_superuser or feat.author == request.user %}
+                    {% with name=feat|to_class_name %}{% edit name feat.id %}{% endwith %}
+                {% endif %}
+            </div>
+            <div class="span1 right">{% include "items/_author.html" with object=feat %}</div>
+
+    </div><hr>{% endfor %}
+
+    <div class="row one_row"><div class="span4" style="text-align:center;"><a href='{% url item_create "feature" %}?item_id={{ item.id }}&positive={{ forloop.first }}' class="btn btn-mini" name='add_feature'>
+        <i class="icon-share-alt"></i>{% if forloop.first %}{% trans "Add a positive feature" %}{% else %}{% trans "Add a negative feature" %}{% endif %}</a></div></div>
+
+</br>
+
+</div>{% endfor %}</div>

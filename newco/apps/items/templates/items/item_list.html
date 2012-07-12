@@ -1,31 +1,68 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load account_tags %}
 {% load content_utils %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
 
 {% block body %}
+{% url item_index as index_url %}
 
+{% if search_terms %}
+{% include "items/search_list.html" %}
+{% else %}
 
 {% if item_list %}
+
+{% if tag %}
+{% include "items/item_list_tag.html" %}
+{% else %}
+</br></br>
+<h1>Find a product to buy.</h1>
+<i>Tested and reviewed by real people. </i>
+</br></br>
+
+    </br></br>
     <form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-        <input name="ta_pick" type="text" autocomplete="off" placeholder="Chercher un article{% if tag %} ayant le tag {{ tag.name}}{% endif %}" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-items="6" data-source="{{ data_source }}"><button class="btn" type="submit"><i class="icon-share-alt"></i></button>
-    </div></form>
+       
+    <input type="text" name="q" id="main_autocomplete" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold;" /><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
+    </div>
+    </br></br>
+    
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 
-    {% if tag %}
-        <h3>{% trans "List of items with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a>:</h3>
-    {% else %}
-        <h1>{% trans "List of items in database:" %}</h1>
-    {% endif %}
-    </br>
 
-    <ul>{% for item in item_list %}
-        <li>
-            <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
-        </li>
-    {% endfor %}</ul>
+    </form>
+      
+
+
+{% endif %}
+
+
+<div class="span7">
+<ul class="nav nav-pills">
+  <li class="dropdown" id="menu1">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+      Liste des produits
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+    {% for item in item_list %}
+    
+     <li>
+     <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+     </li>
+    {% endfor %}
+    </ul>
+  </li>
+</ul>
+</div>
+
+
+
+
 {% else %}
     {% if tag %}
         <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>
@@ -33,8 +70,24 @@
         <h2>{% trans "No products are available." %}</h2>
     {% endif %}
 {% endif %}
+{% endif %}
+</br></br></br></br>
 
-</br>
+<div class="span7">
 <p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></p>
-
+</div>
+</br></br></br></br></br></br>
+ 
+<script type="text/javascript">
+$(document).ready(function() {
+    $('input#main_autocomplete').yourlabsAutocomplete({
+        url: '{% url project_autocomplete %}',
+        zindex: 99999,
+        id: 'main_autocomplete',
+        iterablesSelector: 'li:has(a)',
+        defaultValue: "{% trans 'Search : an item, a tag, a user...' %}",
+        placeholder : 'Que cherchez-vous ?',
+    });
+});
+</script>
 {% endblock %}

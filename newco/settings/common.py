@@ -206,6 +206,7 @@ INSTALLED_APPS = [
     "items",
     "custaccount",
     "utils",
+    "affi",
 
     # Foreign apps
     "taggit_autosuggest",
@@ -214,6 +215,7 @@ INSTALLED_APPS = [
     "follow",
     "gravatar",
     "amazonproduct",
+    "autocomplete_light",
 
     # Tests
     "tests",
