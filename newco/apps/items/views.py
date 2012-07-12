@@ -194,7 +194,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             return self.process_voting(request)
         elif 'question_ask' in request.POST:
             post_values = request.POST.copy()
-            post_values.update({'status': Content.STATUS.public})
+            post_values.update(
+                {'status': Content._meta.get_field('status').default}
+            )
             form = QuestionForm(post_values, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
