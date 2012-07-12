@@ -14,7 +14,7 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item, Question, Link, Feature
+from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
@@ -193,7 +193,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if 'vote_button' in request.POST:
             return self.process_voting(request)
         elif 'question_ask' in request.POST:
-            form = QuestionForm(self.request.POST, request=request)
+            post_values = request.POST.copy()
+            post_values.update({'status': Content.STATUS.public})
+            form = QuestionForm(post_values, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
