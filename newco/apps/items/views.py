@@ -273,11 +273,6 @@ class ContentDeleteView(ContentView, DeleteView):
         else:
             try:
                 return obj.items.all()[0].get_absolute_url()
-            except AttributeError:
-                try:
-                    return obj.question.items.all()[0].get_absolute_url()
-                except:
-                    pass
             except:
                 pass
         raise ImproperlyConfigured
