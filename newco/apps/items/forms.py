@@ -57,7 +57,6 @@ class QuestionForm(ModelForm):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
-            question.status = Question.STATUS.public
             question.save()
             question.items.add(kwargs.pop('pk'))
             return question
