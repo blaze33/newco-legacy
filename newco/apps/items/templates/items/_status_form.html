@@ -10,15 +10,15 @@
 	{% if content.is_draft %} 
 	    <input type="hidden" name="status" value="published"/>
 	    <div class="row"><div class="right"><div class="btn-group">
-	    	<input type='submit' class='btn btn-mini btn-success' name='publish' rel="tooltip" data-original-title="{% trans "Make this content public" %}" value='{% trans "Go Public" %}'/><input type='submit' class='btn btn-mini btn-danger disabled' name='publish' rel="tooltip" data-original-title="{% trans "This content is already private" %}" value='{% trans "Private" %}'/>
+	    	<input type='submit' class='btn btn-mini btn-success' name='publish' rel="tooltip" data-original-title="{% trans "Make this content published" %}" value='{% trans "Go Published" %}'/><input type='submit' class='btn btn-mini btn-danger disabled' name='publish' rel="tooltip" data-original-title="{% trans "This content is already private" %}" value='{% trans "Private" %}'/>
 	    </div></div></div>
 	{% elif content.is_published %}
 		<input type="hidden" name="status" value="draft"/>
-		<div class="btn-group"><input type='submit' class='btn btn-mini btn-success disabled' name='publish' rel="tooltip" data-original-title="{% trans "This content is already public" %}" value='{% trans "Public" %}'/><input type='submit' class='btn btn-mini btn-danger' name='publish' rel="tooltip" data-original-title="{% trans "Make this content private" %}" value='{% trans "Go Private" %}'/>
+		<div class="btn-group"><input type='submit' class='btn btn-mini btn-success disabled' name='publish' rel="tooltip" data-original-title="{% trans "This content is already published" %}" value='{% trans "Published" %}'/><input type='submit' class='btn btn-mini btn-danger' name='publish' rel="tooltip" data-original-title="{% trans "Make this content private" %}" value='{% trans "Go Private" %}'/>
 		</div>
 	{% else %}
 	    <input type="hidden" name="status" value="published"/>
-		<input type='submit' class='btn btn-mini btn-success' name='publish' rel="tooltip" data-original-title="{% trans "Make this content public" %}" value='{% trans "Go Public" %}'/>
+		<input type='submit' class='btn btn-mini btn-success' name='publish' rel="tooltip" data-original-title="{% trans "Make this content published" %}" value='{% trans "Go Published" %}'/>
 		</form><form action='' method='POST'>{% csrf_token %}
 	    <input type="hidden" name="publish" value="{{ content|to_app_label }}"/>
 	    <input type="hidden" name="app_label" value="{{ content|to_app_label }}"/>

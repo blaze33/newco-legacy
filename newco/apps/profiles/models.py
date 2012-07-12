@@ -12,7 +12,7 @@ from idios.models import ProfileBase
 from follow.utils import register
 
 from voting.models import Vote
-from items.models import Question, Answer, ExternalLink, Feature
+from items.models import Question, Answer, Link, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 register(User)
@@ -34,6 +34,7 @@ class Profile(ProfileBase):
 
     class Meta:
         verbose_name = _("profile")
+        ordering = ["-user__reputation__reputation_incremented"]
 
     def save(self, **kwargs):
         self.slug = slugify(self.name)
@@ -61,7 +62,7 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        for cls in [Question, Answer, ExternalLink, Feature]:
+        for cls in [Question, Answer, Link, Feature]:
             ctype = ContentType.objects.get(
                                     app_label=cls._meta.app_label,
                                     model=cls._meta.module_name

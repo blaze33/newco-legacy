@@ -8,47 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Answer.status'
-        db.add_column('items_answer', 'status',
-                      self.gf('django.db.models.fields.SmallIntegerField')(default=3),
-                      keep_default=False)
-
-        # Adding field 'Item.status'
-        db.add_column('items_item', 'status',
-                      self.gf('django.db.models.fields.SmallIntegerField')(default=3),
-                      keep_default=False)
-
-        # Adding field 'Question.status'
-        db.add_column('items_question', 'status',
-                      self.gf('django.db.models.fields.SmallIntegerField')(default=3),
-                      keep_default=False)
-
-        # Adding field 'ExternalLink.status'
-        db.add_column('items_externallink', 'status',
-                      self.gf('django.db.models.fields.SmallIntegerField')(default=3),
-                      keep_default=False)
-
-        # Adding field 'Feature.status'
-        db.add_column('items_feature', 'status',
-                      self.gf('django.db.models.fields.SmallIntegerField')(default=3),
-                      keep_default=False)
+        # Deleting field 'Answer.question_id_store'
+        db.delete_column('items_answer', 'question_id_store')
 
 
     def backwards(self, orm):
-        # Deleting field 'Answer.status'
-        db.delete_column('items_answer', 'status')
-
-        # Deleting field 'Item.status'
-        db.delete_column('items_item', 'status')
-
-        # Deleting field 'Question.status'
-        db.delete_column('items_question', 'status')
-
-        # Deleting field 'ExternalLink.status'
-        db.delete_column('items_externallink', 'status')
-
-        # Deleting field 'Feature.status'
-        db.delete_column('items_feature', 'status')
+        # Adding field 'Answer.question_id_store'
+        db.add_column('items_answer', 'question_id_store',
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
+                      keep_default=False)
 
 
     models = {
@@ -89,33 +57,30 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'items.answer': {
-            'Meta': {'object_name': 'Answer'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Answer', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
+            'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Question']", 'null': 'True'})
         },
-        'items.externallink': {
-            'Meta': {'ordering': "['-pub_date']", 'object_name': 'ExternalLink'},
+        'items.content': {
+            'Meta': {'object_name': 'Content'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
-            'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
             'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {}),
+            'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'})
+        },
+        'items.externallink': {
+            'Meta': {'object_name': 'ExternalLink', '_ormbases': ['items.Content']},
+            'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
         'items.feature': {
-            'Meta': {'ordering': "['-pub_date']", 'object_name': 'Feature'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Feature', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'}),
+            'positive': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'items.item': {
             'Meta': {'object_name': 'Item'},
@@ -124,17 +89,12 @@ class Migration(SchemaMigration):
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {})
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'items.question': {
-            'Meta': {'ordering': "['-pub_date']", 'object_name': 'Question'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'Meta': {'object_name': 'Question', '_ormbases': ['items.Content']},
             'content': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['items.Item']", 'symmetrical': 'False'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'status': ('django.db.models.fields.SmallIntegerField', [], {})
+            'content_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['items.Content']", 'unique': 'True', 'primary_key': 'True'})
         },
         'items.story': {
             'Meta': {'object_name': 'Story'},

@@ -6,7 +6,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 from profiles.views import ProfileDetailView
+from items.api import ItemResource
 
+item_resource = ItemResource()
 
 handler500 = "pinax.views.server_error"
 
@@ -19,13 +21,18 @@ urlpatterns = patterns("",
     url(r"^account/", include("custaccount.urls")),
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
+    url(r'^api/', include(item_resource.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
-    url(r"^rosetta/", include("rosetta.urls")),
 )
 
+if settings.DEBUG:
+    urlpatterns += patterns("",
+        url(r"^rosetta/", include("rosetta.urls")),
+    )
+
 urlpatterns += patterns("",
-    url(r"^Friends/(?P<path>.*)$", redirect_to, {
+    url(r"^(.)riends/(?P<path>.*)$", redirect_to, {
             'url': 'http://static.newco-project.fr/Friends/%(path)s',
             'permanent': True
         }

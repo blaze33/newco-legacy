@@ -14,9 +14,9 @@ from account.utils import user_display
 from taggit.models import Tag, TaggedItem
 from voting.models import Vote
 
-from items.models import Item
+from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import ExternalLinkForm, FeatureForm
+from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
@@ -138,17 +138,13 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
             item = context['item']
 
-            context.update({
-                'form': f, 'item': item, 'prof_list': Profile.objects.filter(
-                            skills__id__in=self.object.tags.values_list('id',
-                            flat=True)).distinct()
-            })
+            feats = Feature.objects.filter(items__id=item.id)
 
             sets = {
-                    "questions": item.question_set.all(),
-                    "links": item.externallink_set.all(),
-                    "feat_pos": item.feature_set.filter(positive=True),
-                    "feat_neg": item.feature_set.filter(positive=False)
+                    "questions": Question.objects.filter(items__id=item.id),
+                    "links": Link.objects.filter(items__id=item.id),
+                    "feat_pos": feats.filter(positive=True),
+                    "feat_neg": feats.filter(positive=False)
             }
 
             for k in sets.keys():
@@ -159,6 +155,12 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             sets.update({"feat_lists": [sets["feat_pos"], sets["feat_neg"]]})
             del sets["feat_pos"]
             del sets["feat_neg"]
+
+            context.update({
+                'form': f, 'prof_list': Profile.objects.filter(
+                            skills__id__in=self.object.tags.values_list('id',
+                            flat=True)).distinct()
+            })
 
             context.update(sets)
 
@@ -193,7 +195,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if 'vote_button' in request.POST:
             return self.process_voting(request)
         elif 'question_ask' in request.POST:
-            form = QuestionForm(self.request.POST, request=request)
+            post_values = request.POST.copy()
+            post_values.update({'status': Content.STATUS.published})
+            form = QuestionForm(post_values, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
@@ -275,11 +279,6 @@ class ContentDeleteView(ContentView, DeleteView):
         else:
             try:
                 return obj.items.all()[0].get_absolute_url()
-            except AttributeError:
-                try:
-                    return obj.question.items.all()[0].get_absolute_url()
-                except:
-                    pass
             except:
                 pass
         raise ImproperlyConfigured

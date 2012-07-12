@@ -1,15 +1,32 @@
 {% load i18n %}
 
 <div class="profile_info">
-    {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
-    {% if profile.about %}<p><b>{% trans "About" %}</b>: {{ profile.about }}</p>{% endif %}
-    {% if profile.location %}<p><b>{% trans "Location" %}</b>: {{ profile.location }}</p>{% endif %}
-    {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
-    {% if profile.user.date_joined %}<p><b>{% trans "Subscription date" %}</b>: {{ profile.user.date_joined }}</p>{% endif %}
-    {% if reputation %}<p><a href="{% url faq %}#reputation" style=" color: #000000 "><b>{% trans "Reputation" %}</b></a>: {{ reputation.reputation_incremented }}</p>{% endif %}
-    <div>
-        {% if profile.skills.count > 0 %}<p><b>{% trans "Skills" %}</b>:
-            {% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}"><span class="label">{{ skill.name }}</span></a> {% endfor %}
-        {% endif %}
-    </div>
+<dl class="dl-horizontal">
+    {% if profile.about %}
+        <dt>{% trans "About" %}</dt>
+        <dd>{{ profile.about }}</dd>
+    {% endif %}
+    {% if profile.location %}
+        <dt>{% trans "Location" %}</dt>
+        <dd>{{ profile.location }}</dd>
+    {% endif %}
+    {% if profile.website %}
+        <dt>{% trans "Website" %}</dt>
+        <dd><a href="{{ profile.website }}">{{ profile.website }}</a></dd>
+    {% endif %}
+    {% if profile.user.date_joined %}
+        <dt>{% trans "Subscription date" %}</dt>
+        <dd>{{ profile.user.date_joined }}</dd>
+    {% endif %}
+    {% if reputation %}
+        <dt><a href="{% url faq %}#reputation" class="black">{% trans "Reputation" %}</a></dt>
+        <dd>{{ reputation.reputation_incremented }}</dd>
+    {% endif %}
+    {% if profile.skills.count > 0 %}
+        <dt>{% trans "Skills" %}</dt>
+        <dd>{% for skill in profile.skills.all %}
+                <a href="{% url tagged_items skill.slug %}">
+                <span class="label">{{ skill.name }}</span></a>
+            {% endfor %}</dd>
+    {% endif %}
 </div>

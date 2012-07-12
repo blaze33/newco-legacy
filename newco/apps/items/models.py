@@ -1,46 +1,24 @@
 from django.db import models
-from django.utils.translation import gettext_noop, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from taggit_autosuggest.managers import TaggableManager
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import generic
-from datetime import datetime
-from model_utils import Choices
+from django.utils import timezone
 
+from model_utils import Choices
+from model_utils.managers import InheritanceManager, QueryManager
 from voting.models import Vote
 from follow.utils import register
 
-#("draft": (1, 'draft', _('draft')),
-#                     "published": (2, 'published', _('published')), 
-#                     "sandbox": (3, 'sandbox', _('sandbox')))
 
-class Content(models.Model):
-    author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=datetime.now, editable=False,
-                                            verbose_name=_('date published'))
-    STATUS = Choices((1, 'draft', _('Draft')), (2, 'published', _('Published')), ) #(3, 'sandbox', _('sandbox'))
-    status = models.SmallIntegerField(choices=STATUS, default=STATUS.published)
-    
-    class Meta:
-        abstract = True
-
-    def delete(self):
-        try:
-            self.votes.all().delete()
-        except:
-            pass
-        super(Content, self).delete()
-        
-    def is_published(self):
-        return self.status == self.STATUS.published
-
-    def is_draft(self):
-        return self.status == self.STATUS.draft
-
-class Item(Content):
+class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
+    author = models.ForeignKey(User, null=True)
+    pub_date = models.DateTimeField(default=timezone.now, editable=False,
+                                            verbose_name=_('date published'))
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
     tags = TaggableManager()
@@ -63,14 +41,47 @@ class Item(Content):
 register(Item)
 
 
-class Question(Content):
-    content = models.CharField(max_length=200, verbose_name=_("content"))
+class Content(models.Model):
+    STATUS = Choices(
+        (0, "draft", _("Draft")),
+        (1, "published", _("Published")),
+        #(2, "sandbox", _("sandbox")),
+
+    )
+
+    author = models.ForeignKey(User, null=True)
+    pub_date = models.DateTimeField(default=timezone.now, editable=False,
+                                            verbose_name=_('date published'))
+    status = models.SmallIntegerField(choices=STATUS, default=STATUS.published)
     items = models.ManyToManyField(Item)
     votes = generic.GenericRelation(Vote)
 
+    published = QueryManager(status=STATUS.published)
+
+    objects = InheritanceManager()
+
+    class Meta:
+        ordering = ["-pub_date"]
+
+    def delete(self):
+        try:
+            self.votes.all().delete()
+        except:
+            pass
+        super(Content, self).delete()
+
+    def is_published(self):
+        return self.status == self.STATUS.published
+
+    def is_draft(self):
+        return self.status == self.STATUS.draft
+
+
+class Question(Content):
+    content = models.CharField(max_length=200, verbose_name=_("content"))
+
     class Meta:
         verbose_name = _("question")
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         q = self.content
@@ -84,7 +95,6 @@ class Question(Content):
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_("content"))
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("answer")
@@ -98,26 +108,12 @@ class Answer(Content):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
-class Story(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_("title"))
-    content = models.CharField(max_length=2000, verbose_name=_("content"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
-
-    class Meta:
-        verbose_name = _("story")
-        verbose_name_plural = _("stories")
-
-
-class ExternalLink(Content):
+class Link(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("link")
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u"%s" % (self.content)
@@ -130,12 +126,9 @@ class ExternalLink(Content):
 class Feature(Content):
     content = models.CharField(max_length=80, verbose_name=_('content'))
     positive = models.BooleanField()
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _('feature')
-        ordering = ["-pub_date"]
 
     def __unicode__(self):
         return u'%s' % (self.content)
@@ -143,3 +136,14 @@ class Feature(Content):
     def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
+
+class Story(models.Model):
+    title = models.CharField(max_length=200, verbose_name=_("title"))
+    content = models.CharField(max_length=2000, verbose_name=_("content"))
+    items = models.ManyToManyField(Item)
+    votes = generic.GenericRelation(Vote)
+
+    class Meta:
+        verbose_name = _("story")
+        verbose_name_plural = _("stories")

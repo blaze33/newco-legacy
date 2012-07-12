@@ -1,0 +1,30 @@
+.run-in {
+    display: run-in
+}
+
+.centered-text {
+    text-align:center
+}
+
+.profile-item img {
+    float: right;
+    margin-left: 5px;
+    width: 64px;
+    height: 64px;
+}
+
+.profile-item { line-height: 18px; width: 165px; margin: 9px }
+.profile-item .details h4 { display: run-in; }
+.profile-item .details p { margin: 0; }
+
+#profile-follow {
+    display: block;
+    padding-left: 130px;
+}
+
+.black { color: #333 }
+
+.selector-item img {
+    min-height: 128px;
+    max-height: 128px
+}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 17:21+0200\n"
+"POT-Creation-Date: 2012-07-11 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,99 +21,99 @@ msgstr ""
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:77
+#: forms.py:78
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:119
+#: forms.py:121
 msgid "Link description"
 msgstr ""
 
-#: forms.py:173
+#: forms.py:175
 msgid "positive"
 msgstr ""
 
-#: forms.py:175
+#: forms.py:177
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:178
+#: forms.py:180
 msgid "negative"
 msgstr ""
 
-#: forms.py:180
+#: forms.py:182
 msgid "What feature do you dislike?"
 msgstr ""
 
-#: models.py:21
-msgid "date published"
-msgstr ""
-
-#: models.py:22
-msgid "draft"
-msgstr ""
-
-#: models.py:22
-msgid "published"
-msgstr ""
-
-#: models.py:22
-msgid "sandbox"
-msgstr ""
-
-#: models.py:42
+#: models.py:17
 msgid "name"
 msgstr ""
 
-#: models.py:43
+#: models.py:18
 msgid "slug"
 msgstr ""
 
-#: models.py:45
+#: models.py:21 models.py:53
+msgid "date published"
+msgstr ""
+
+#: models.py:23
 msgid "last modified"
 msgstr ""
 
-#: models.py:49
+#: models.py:27
 msgid "item"
 msgstr ""
 
-#: models.py:67 models.py:86 models.py:103 models.py:113 models.py:131
+#: models.py:46
+msgid "private"
+msgstr ""
+
+#: models.py:47
+msgid "sandbox"
+msgstr ""
+
+#: models.py:48
+msgid "public"
+msgstr ""
+
+#: models.py:74 models.py:90 models.py:105 models.py:120 models.py:136
 msgid "content"
 msgstr ""
 
-#: models.py:72
+#: models.py:77
 msgid "question"
 msgstr ""
 
-#: models.py:90
+#: models.py:93
 msgid "answer"
 msgstr ""
 
-#: models.py:102
-msgid "title"
-msgstr ""
-
-#: models.py:108
-msgid "story"
-msgstr ""
-
-#: models.py:109
-msgid "stories"
-msgstr ""
-
-#: models.py:114
+#: models.py:106
 msgid "URL"
 msgstr ""
 
-#: models.py:119
+#: models.py:109
 msgid "link"
 msgstr ""
 
-#: models.py:137
+#: models.py:124
 msgid "feature"
 msgstr ""
 
-#: views.py:73 views.py:123
+#: models.py:135
+msgid "title"
+msgstr ""
+
+#: models.py:141
+msgid "story"
+msgstr ""
+
+#: models.py:142
+msgid "stories"
+msgstr ""
+
+#: views.py:71 views.py:121
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
@@ -148,14 +148,6 @@ msgstr ""
 msgid "Maybe they can help you?"
 msgstr ""
 
-#: templates/items/_externallink_nfeed.html:6
-msgid "posted a link about"
-msgstr ""
-
-#: templates/items/_externallink_nfeed.html:13
-msgid "L:"
-msgstr ""
-
 #: templates/items/_feature_list.html:12
 msgid "Positive Features"
 msgstr ""
@@ -164,65 +156,24 @@ msgstr ""
 msgid "Negative Features"
 msgstr ""
 
-#: templates/items/_feature_list.html:41
+#: templates/items/_feature_list.html:32
 msgid "Add a positive feature"
 msgstr ""
 
-#: templates/items/_feature_list.html:41
+#: templates/items/_feature_list.html:32
 msgid "Add a negative feature"
-msgstr ""
-
-#: templates/items/_feature_nfeed.html:6
-msgid "suggested a feature on"
 msgstr ""
 
 #: templates/items/_link_list.html:8
 msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/_question_list.html:47
+#: templates/items/_question_list.html:44
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/_question_list.html:47
-#: templates/items/_question_nfeed.html:17
+#: templates/items/_question_list.html:44
 msgid "Answer this question"
-msgstr ""
-
-#: templates/items/_question_nfeed.html:6
-msgid "asked a question about"
-msgstr ""
-
-#: templates/items/_status_form.html:13 templates/items/_status_form.html:21
-msgid "Make this content public"
-msgstr ""
-
-#: templates/items/_status_form.html:13 templates/items/_status_form.html:21
-msgid "Go Public"
-msgstr ""
-
-#: templates/items/_status_form.html:13
-msgid "This content is already private"
-msgstr ""
-
-#: templates/items/_status_form.html:13
-msgid "Private"
-msgstr ""
-
-#: templates/items/_status_form.html:17
-msgid "This content is already public"
-msgstr ""
-
-#: templates/items/_status_form.html:17
-msgid "Public"
-msgstr ""
-
-#: templates/items/_status_form.html:17 templates/items/_status_form.html:28
-msgid "Make this content private"
-msgstr ""
-
-#: templates/items/_status_form.html:17 templates/items/_status_form.html:28
-msgid "Go Private"
 msgstr ""
 
 #: templates/items/answer_form.html:6

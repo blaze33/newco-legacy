@@ -212,6 +212,9 @@ INSTALLED_APPS = [
     "taggit",
     "voting",
     "follow",
+    "gravatar",
+    "tastypie",
+    "amazonproduct",
 
     # Tests
     "tests",
@@ -253,6 +256,17 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+#Profile pictures
+GRAVATAR_DEFAULT_IMAGE = 'identicon'
+
+# AWS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+# API services
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20

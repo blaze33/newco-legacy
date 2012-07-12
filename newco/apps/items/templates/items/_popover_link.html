@@ -4,6 +4,8 @@
 
 {% spaceless%}
 
+{% comment %}
+
 {% with tag_list=object.tags.all %}
 
 <span class="myClassPopover"
@@ -13,5 +15,9 @@
 </span>
 
 {% endwith %}
+
+{% endcomment %}
+
+<a href="{{ object.get_absolute_url }}">{{ object }}</a>
 
 {% endspaceless %}
