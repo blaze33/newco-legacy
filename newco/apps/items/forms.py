@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.forms.widgets import Textarea
+from django.forms.widgets import Textarea, Select
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
@@ -57,6 +57,7 @@ class QuestionForm(ModelForm):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
+            #question.status = Question.STATUS.published
             question.save()
             question.items.add(kwargs.pop('pk'))
             return question
@@ -70,7 +71,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ('content', )
+        fields = ('status', 'content', )
         widgets = {
             'content': Textarea(attrs={
                 'class': 'span6',

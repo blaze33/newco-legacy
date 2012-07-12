@@ -202,10 +202,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             return process_following(request, go_to_object=True)
         elif 'publish' in request.POST:
             return process_publishing(self, request)
-#            obj = load_object(request)
-#            obj.status = self.request.POST['status']
-#            obj.save()
-            return HttpResponseRedirect('')
         else:
             return self.form_invalid(form)
 

@@ -19,7 +19,7 @@ class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=datetime.now, editable=False,
                                             verbose_name=_('date published'))
-    STATUS = Choices((1, 'draft', _('draft')), (2, 'published', _('published')), (3, 'sandbox', _('sandbox'))) #STATUSES["draft"], STATUSES["published"], STATUSES["sandbox"]
+    STATUS = Choices((1, 'draft', _('Draft')), (2, 'published', _('Published')), ) #(3, 'sandbox', _('sandbox'))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.published)
     
     class Meta:

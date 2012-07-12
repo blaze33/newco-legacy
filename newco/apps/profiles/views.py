@@ -54,7 +54,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             
         drafts = list()
         for model in [Question, Answer, ExternalLink, Feature]:
-            drafts.extend(model.objects.filter(author=self.page_user).filter(status=Content.STATUS.draft))
+            drafts.extend(model.objects.filter(author=self.page_user).exclude(status=Content.STATUS.published)) # match drafts and others, so that no content become "un-findable"
 
         fwers_ids = Follow.objects.get_follows(
                 self.page_user).values_list('user_id', flat=True)
