@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.http import HttpResponsePermanentRedirect
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
@@ -12,9 +13,9 @@ from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
 
+import json
 
 class ProfileDetailView(ProfileDetailView, ProcessFormView):
-
     is_profile_page = True
 
     def dispatch(self, request, *args, **kwargs):
@@ -66,10 +67,25 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             'newsfeed': feed.select_subclasses()
         })
 
+
+        list_pf = list(Profile.objects.all().values_list('name', flat=True))
+        context.update({"data_source_profile": json.dumps(list_pf)})
+
+
         return context
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        
+        if 'pf_pick' in request.POST:
+            name = request.POST['pf_pick']
+            profile_list = Profile.objects.filter(name=name)
+            if profile_list.count() > 0:
+                response = profile_list[0].get_absolute_url()
+            else:
+                response = request.path
+            return HttpResponseRedirect(response)
+        
         if 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
         else:

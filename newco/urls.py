@@ -3,6 +3,10 @@ from django.conf.urls import patterns, include, url
 from django.views.generic.simple import redirect_to
 
 from django.contrib import admin
+
+import autocomplete_light
+
+autocomplete_light.autodiscover()
 admin.autodiscover()
 
 from profiles.views import ProfileDetailView
@@ -21,6 +25,7 @@ urlpatterns = patterns("",
     url(r"^content/", include("items.urls")),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
+    url(r"^autocomplete/", include("autocomplete_light.urls")),
 )
 
 if settings.DEBUG:
