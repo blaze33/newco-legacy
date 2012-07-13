@@ -2,6 +2,9 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.views.generic.simple import redirect_to
 
+import autocomplete_light
+autocomplete_light.autodiscover()
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -24,6 +27,8 @@ urlpatterns = patterns("",
     url(r'^api/', include(item_resource.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
+    url(r"^autocomplete/", include("autocomplete_light.urls")),
+    url(r"^utils/", include("utils.urls")),
 )
 
 if settings.DEBUG:

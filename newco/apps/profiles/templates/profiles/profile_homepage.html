@@ -1,15 +1,7 @@
-{% extends "idios/base.html" %}
+{% extends "idios/profile.html" %}
 
 {% load i18n %}
 {% load account_tags %}
-{% load voting_tags %}
-{% load follow_tags %}
-
-{% block extra_style %}
-    {{ block.super }}
-
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
-{% endblock %}
 
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Home: {{ page_user_display }}{% endblocktrans %}{% endblock %}
 

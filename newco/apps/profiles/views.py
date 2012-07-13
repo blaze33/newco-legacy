@@ -1,4 +1,4 @@
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from idios.views import ProfileDetailView, ProfileListView
+import json
 
 from items.models import Item, Content
 from profiles.models import Profile
@@ -63,6 +64,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
+        list_pf = list(Profile.objects.all().values_list('name', flat=True))
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
@@ -72,14 +74,23 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': feed.select_subclasses()
+            'newsfeed': feed.select_subclasses(),
+            'data_source_profile': json.dumps(list_pf)
         })
 
         return context
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        if 'follow' in request.POST or 'unfollow' in request.POST:
+        if 'pf_pick' in request.POST:
+            name = request.POST['pf_pick']
+            profile_list = Profile.objects.filter(name=name)
+            if profile_list.count() > 0:
+                response = profile_list[0].get_absolute_url()
+            else:
+                response = request.path
+            return HttpResponseRedirect(response)
+        elif 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
         else:
             return super(ProfileDetailView, self).post(request,
