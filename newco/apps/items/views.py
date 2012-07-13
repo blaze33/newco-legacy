@@ -216,89 +216,56 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 class ContentListView(ContentView, ListView, RedirectView):
 
     def get_queryset(self):
-        if 'tag_slug' in self.kwargs:
-            self.tag = Tag.objects.get(slug=self.kwargs['tag_slug'])
+        if "tag_slug" in self.kwargs:
+            self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             return Item.objects.filter(tags=self.tag)
         else:
             return super(ContentListView, self).get_queryset()
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if 'item_list' in context:
-            ta_list = list(context['item_list'].values_list('name', flat=True))
-            if hasattr(self, 'tag'):
-                context['tag'] = self.tag
+        if "item_list" in context:
+            ta_list = list(context["item_list"].values_list("name", flat=True))
+            if hasattr(self, "tag"):
+                context["tag"] = self.tag
             else:
                 ta_list.extend(
-                    TaggedItem.tags_for(Item).values_list('name', flat=True)
+                    TaggedItem.tags_for(Item).values_list("name", flat=True)
                 )
             context.update({"data_source": json.dumps(ta_list)})
 
-        if 'sort_item_tag' in self.request.POST:
-            
-            if self.request.POST['sort_item_tag'] == '1':
-                context['item_list'] = context['item_list'].order_by("-pub_date")
-            elif self.request.POST['sort_item_tag'] == '2':
-                context['item_list'] = context['item_list'].order_by("pub_date")
-            elif self.request.POST['sort_item_tag'] == '3':
-                context['item_list'] = context['item_list'].order_by("-author")
-            elif self.request.POST['sort_item_tag'] == '4':
-                context['item_list'] = context['item_list'].order_by("-weight")
-            else:
-                context['item_list'] = context['item_list']
-                
+        if "sort_items" in self.request.POST:
+            if self.request.POST["sort_items"] == "1":
+                context["item_list"] = context["item_list"].order_by("-pub_date")
+            elif self.request.POST['sort_items'] == "2":
+                context["item_list"] = context["item_list"].order_by("pub_date")
 
-        #if 'ta_pick' in self.request.POST:
-            #name = self.request.POST['ta_pick']   
-            #context['place_holder'] = name
-            
-
-            #tag_list = Tag.objects.filter(name=name)
-            #if tag_list.count() > 0:
-                #context['item_list_search'] = Item.objects.filter(tags=tag_list[0])    
-                #context['tag_new'] = tag_list[0]     
-       
-        items = Item.objects.select_related()
-        if 'search' in self.request.GET:
+        if "search" in self.request.GET:
             search_terms = self.request.GET.get("search", "")
-            context['search_terms'] = search_terms
+            context["search_terms"] = search_terms
             if search_terms:
-                items = items.filter(name__icontains=search_terms)
-                context['search_list'] = items
-                if items.count() > 0:
-                    context['no_empty_list']=items
+                self.template_name = "items/item_search.html"
+                context["search_list"] = Item.objects.filter(
+                                                name__icontains=search_terms
+                )
+
         return context
 
     def post(self, request, *args, **kwargs):
-        
-        if 'q' in request.POST:
-            name = request.POST['q']
-            item_list = Item.objects.filter(name=name)
+        if "item_search" in request.POST:
+            search = request.POST["item_search"]
+            item_list = Item.objects.filter(name=search)
             if item_list.count() > 0:
                 response = item_list[0].get_absolute_url()
-                return HttpResponseRedirect(response)
             else:
-                tag_list = Tag.objects.filter(name=name)
+                tag_list = Tag.objects.filter(name=search)
                 if tag_list.count() > 0:
-                   
                     response = reverse("tagged_items",
-                                kwargs={'tag_slug': tag_list[0].slug})
-                    return HttpResponseRedirect(response)
-                else:
-                    response= "%s?search=%s" % (reverse("item_index" 
-                            ),
-                            name,
+                                        kwargs={'tag_slug': tag_list[0].slug}
                     )
-                    
-                    #response = "%s?initial=%s" % (reverse("item_create", None, 
-                                #kwargs={'model_name': Item._meta.module_name}
-                            #),
-                            #name,
-                    #)
-                    return HttpResponseRedirect(response)
-                    #response = request.path
-            #return HttpResponseRedirect(response)
-            return super(ContentListView, self).post(request, *args, **kwargs)
+                else:
+                    response = "%s?search=%s" % (reverse("item_index"), search)
+            return HttpResponseRedirect(response)
         else:
             return super(ContentListView, self).post(request, *args, **kwargs)
 

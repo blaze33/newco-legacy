@@ -5,7 +5,10 @@ from items.views import ContentCreateView, ContentUpdateView, ContentDeleteView
 
 urlpatterns = patterns('',
     url(r"^$", ContentListView.as_view(model=Item), name="item_index"),
-    url(r"^tag/(?P<tag_slug>[-\w]+)/$", ContentListView.as_view(model=Item), name="tagged_items"),
+    url(r"^tag/(?P<tag_slug>[-\w]+)/$", ContentListView.as_view(
+                        model=Item, template_name="items/item_list_tag.html"
+        ), name="tagged_items"
+    ),
     url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]+)",
         ContentDetailView.as_view(),
         name="item_detail"),

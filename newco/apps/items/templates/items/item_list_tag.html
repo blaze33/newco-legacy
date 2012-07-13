@@ -1,72 +1,54 @@
+{% extends "items/item_list.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load content_utils %}
 
-</br></br>
-
-<div class="row">
-	<div class="span6">
-<h1>Find a product to buy.</h1>
-<i>Tested and reviewed by real people. </i>
-</br></br>
-<h3>Page {{tag.name}}</h3>
+{% block header %}
+    <div class="row">
+        <div class="span4">
+            <h3>Page {{tag.name}}</h3>
+        </div>
+        <div class="offset1 span2">
+            <div class="alert alert-info">
+                <a class="close" data-dismiss="alert" href="{% url item_index %}"><i class="icon-remove"></i></a>{{ tag.name }}</a>
+            </div>
+        </div>
     </div>
-    <div class="span4">
-    	<div class="alert alert-info">
-		<a class="close" data-dismiss="alert" href="{{ index_url }}">click</a>Vous voici sur la page TAG {{ tag.name }}. </br>Cliquez pour revenir a une page de recherche globale.</a>
-    	</div>
-    </div>
-    
-</div>
+{% endblock %}
 
-</br></br>
-<form action="." method="POST" class="well form-search">{% csrf_token %}<div class="input-append">
-       
-    <input type="text" name="q" id="main_autocomplete" style="margin: 0 auto; height:26px; font-size:16px; font-weight:bold;" /><button class="btn-success" type="submit"><h3>Search <i class="icon-search"></i></h3></button>
-    </div>
-    </br></br>
+{% block itemlist %}
+    {% if item_list %}
+        <div class="span7">
+            <form action="." method="POST">{% csrf_token %}
+                <select name="sort_items">
+                    <option value="0">Sort by</option>
+                    <option value="1">Newest to Oldest</option>
+                    <option value="2">Oldest to Newest</option>
+                </select>
+                <input name= "s" type="submit">
+            </form>
+        </div>
 
-</form>
+        <script>
+        function sort(element)
+        {
+            var idx=element.selectedIndex;
+            var val=element.options[idx].value;
+            var content=element.options[idx].innerHTML;
+         }
+        </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-
-<form action="." method="POST">{% csrf_token %}
-    Sort by
-    <select name="sort_item_tag" onchange="sort(this)">
-	<option value="0">Something</option>
-    <option value="1">Newest to Oldest</option>
-    <option value="2">Oldest to Newest</option>
-    <option value="3">Price: low to high</option>
-    <option value="4">Weight: high to low</option>
-</select>
-<input name= "s" type="submit">
-</form>
-<script>
-function sort(element)
-{
-    var idx=element.selectedIndex;
-    var val=element.options[idx].value;
-    var content=element.options[idx].innerHTML;
- }
-</script> 
-
-</br></br>
-{% for item in item_list %}
-
-<div class="span7"><table class="table table-condensed"><tbody><tr><td>
-
-        <ul>
-        <li>
-            <h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h3>
-            <br><i>{{ item.description }}</i>
-        </li>
-        </ul>
-
-</td></tr></tbody></table></div>
-<div class="span4">
-    <h3><a href='{{ item.author.get_absolute_url }}'>{% user_display item.author %}</a></h3>
-</div>
-{% endfor %}
-
+        {% for item in item_list %}
+            <div class="row"><div class="span7">
+                <h3>
+                    <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+                    <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
+                </h3>
+                {% if not forloop.last %}<hr>{% endif %}
+            </div></div>
+        {% endfor %}
+    {% else %}
+        <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>
+    {% endif %}
+{% endblock %}
