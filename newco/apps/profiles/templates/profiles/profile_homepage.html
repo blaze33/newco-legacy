@@ -7,10 +7,11 @@
 
 {% block extra_style %}
     {{ block.super }}
+
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
 {% endblock %}
 
-{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Home - {{ page_user_display }}{% endblocktrans %}{% endblock %}
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Home: {{ page_user_display }}{% endblocktrans %}{% endblock %}
 
 {% block body %}
     {% user_display page_user as page_user_display %}

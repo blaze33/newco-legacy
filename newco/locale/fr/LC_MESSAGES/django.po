@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 19:07+0200\n"
-"PO-Revision-Date: 2012-07-11 19:08\n"
+"POT-Creation-Date: 2012-07-13 02:46+0200\n"
+"PO-Revision-Date: 2012-07-13 02:46\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,12 +134,12 @@ msgstr "Profil"
 msgid "Products index"
 msgstr "Liste des produits"
 
-#: templates/idios/profile.html:9
+#: templates/idios/profile.html:15
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:21
+#: templates/idios/profile.html:27
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -147,25 +147,29 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:32
+#: templates/idios/profile.html:38
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:44
+#: templates/idios/profile.html:50
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:45
+#: templates/idios/profile.html:51
 msgid "Newsfeed"
 msgstr "Flux"
 
-#: templates/idios/profile.html:46
+#: templates/idios/profile.html:52
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:47
+#: templates/idios/profile.html:53
 msgid "Followers"
 msgstr "Abonnés"
+
+#: templates/idios/profile.html:54
+msgid "Drafts"
+msgstr "Brouillons"
 
 #: templates/idios/profiles.html:7 templates/idios/profiles.html.py:11
 msgid "All Users"

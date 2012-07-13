@@ -2,24 +2,23 @@
 {% load voting_tags %}
 {% load content_utils %}
 
-
 {% scores_for_objects contents as score_dict %}
 
-{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
-{% for content in contents|slice:":20" %}
-		{% if content|to_class_name != "answer" or content.question.is_published or user == content.author %}
-			{% with author=content.author pub_date=content.pub_date author_url=author.get_absolute_url%}<div class="row content"><div class="span9">
+{# TODO: handle redirection after content edition #}
 
-		    {% dict_entry_for_item content from score_dict as score %}
-		    {% if not forloop.first %}<hr>{% endif %}
-		
-		    {% if content|to_class_name == "answer" %}{% include "items/_answer_nfeed.html" %}
-		
-		    {% elif content|to_class_name == "question" %}{% include "items/_question_nfeed.html" %}
-		
-		    {% elif content|to_class_name == "externallink" %}PROBLEME ICI{% include "items/_externallink_nfeed.html" %}
-		
-		    {% elif content|to_class_name == "feature" %}{% include "items/_feature_nfeed.html" %}
-		
-		    {% endif %}
-</div></div>{% endwith %}{% endif %}{% endfor %}{% endwith %}
+{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+
+{% for content in contents|slice:":20" %}{% with class_name=content|to_class_name %}
+    {% if not forloop.first %}<hr>{% endif %}
+    <div class="row content"><div class="span7">
+
+        {% dict_entry_for_item content from score_dict as score %}
+
+        {% with tpl="profiles/content_display/_"|add:class_name|add:".html" %}
+            {% include tpl with content=content author=content.author score=score p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl %}
+        {% endwith %}
+
+    </div></div>
+{% endwith %}{% endfor %}
+
+{% endwith %}

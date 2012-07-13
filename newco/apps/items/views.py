@@ -20,7 +20,6 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
-from utils.publishtools import process_publishing
 
 import json
 
@@ -205,8 +204,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=True)
-        elif 'publish' in request.POST:
-            return process_publishing(self, request)
         else:
             return self.form_invalid(form)
 

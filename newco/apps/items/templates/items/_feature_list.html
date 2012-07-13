@@ -4,7 +4,7 @@
 {% load content_utils %}
 {% load staticfiles %}
 
-<div class="row">{% for feat_list in feat_lists %}<div class="span5">
+<div class="row">{% for feat_list in feat_lists %}<div class="{% if forloop.last %}offset1 {% endif %}span3">
 
     {% votes_by_user user on feat_list as vote_dict %}
     {% scores_for_objects feat_list as score_dict %}
@@ -13,31 +13,22 @@
 
     <hr>
 
-    {% for feat in feat_list %}
-    	{% if feat.is_published or user == feat.author %}
-    	{% if not feat.is_published %}<div class="well">{% endif %}
-    	<div class="row one_row" id="f-{{ feat.id }}">
+    {% for feat in feat_list %}<div class="row one_row" id="f-{{ feat.id }}">
         {% dict_entry_for_item feat from vote_dict as vote %}
         {% dict_entry_for_item feat from score_dict as score %}
 
-            <div class="span1"><h5 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form feat vote %}</h5></div>
             <div class="span2">
+                <b>{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form feat vote %}</b>
                 {{ feat.content }}
                 {% if user.is_superuser or feat.author == request.user %}
                     {% with name=feat|to_class_name %}{% edit name feat.id %}{% endwith %}
                 {% endif %}
             </div>
-            <div class="span1 right">
-            	{% if user == feat.author %}{% include "items/_status_form.html" with content=feat span='span1' %}{% endif %}
-            	{% include "items/_author.html" with object=feat %}
-            </div>
+            <div class="span1 right">{% include "items/_author.html" with object=feat %}</div>
 
-    	</div><hr>
-    	{% if not feat.is_published %}</div>{% endif %}
-    	{% endif %}
-    {% endfor %}
+    </div><hr>{% endfor %}
 
-    <div class="row one_row"><div class="span4" style="text-align:center;"><a href='{% url item_create "feature" %}?item_id={{ item.id }}&positive={{ forloop.first }}' class="btn btn-mini" name='add_feature'>
+    <div class="row one_row"><div class="span3" style="text-align:center;"><a href="{% url item_create 'feature' %}?item_id={{ item.id }}&positive={{ forloop.first }}" class="btn btn-mini" name="add_feature">
         <i class="icon-share-alt"></i>{% if forloop.first %}{% trans "Add a positive feature" %}{% else %}{% trans "Add a negative feature" %}{% endif %}</a></div></div>
 
 </br>

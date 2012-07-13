@@ -6,12 +6,12 @@ selenium==2.24.0
 
 ## better python console
 ## cf. http://ipython.org/
-#ipython==0.13
+ipython==0.13
 
 ## ipython notebook dependencies
 ## requires libzmq-dev
-#pyzmq==2.2.0
-#tornado==2.3
+pyzmq==2.2.0
+tornado==2.3
 
 
 ## Werkzeug is needed to run django-admin.py runserver_plus (useful to debug)
