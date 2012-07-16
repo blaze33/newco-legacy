@@ -17,8 +17,6 @@
 
     {% endblock %}
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-
     {% block itemlist %}
         {% if item_list %}
             <ul class="nav nav-pills">
@@ -41,19 +39,23 @@
     {% block createitem %}
         <p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></p>
     {% endblock %}
-
-    {% block js %}
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $('input#main_autocomplete').yourlabsAutocomplete({
-                url: '{% url autocomplete %}',
-                zindex: 99999,
-                id: 'main_autocomplete',
-                iterablesSelector: 'li:has(a)',
-                defaultValue: "{% trans 'Search an item, a tag...' %}",
-                placeholder : "{% trans 'What are you looking for?' %}",
-            });
-        });
-        </script>
-    {% endblock %}
 </div>{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+
+    {% include 'autocomplete_light/static.html' %}
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('input#main_autocomplete').yourlabsAutocomplete({
+            url: '{% url autocomplete %}',
+            zindex: 99999,
+            id: 'main_autocomplete',
+            iterablesSelector: 'li:has(a)',
+            defaultValue: "{% trans 'Search an item, a tag...' %}",
+            placeholder : "{% trans 'What are you looking for?' %}",
+        });
+    });
+    </script>
+{% endblock %}
