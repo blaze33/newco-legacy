@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load content_utils %}
 
-<div class="row one_row"><div class="span7">
+<div class="row"><div class="span7">
     <h4>{% include p_link_tpl with object=author %} {% trans "asked a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
 </div></div>
 
 <div class="row one_row">
     <div class="span4"><p>
         <a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ content.content }}
-        {% if user.is_superuser or content.author == request.user %}
+        {% if user.is_superuser or author == user %}
             {% with name=content|to_class_name %}{% edit name content.id %}{% endwith %}
         {% endif %}
     </p></div>
@@ -17,5 +17,5 @@
 </div>
 
 {% if user != author %}
-    <div class="row one_row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>
+    <div class="row"><div class="span4 offset3 block_controls"><a href='{% url item_create "answer" %}?question_id={{ content.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>
 {% endif %}
