@@ -1,11 +1,18 @@
-{% extends "idios/profile.html" %}
+{% extends "site_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 
+{% block extra_style %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+{% endblock %}
+
+
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Home: {{ page_user_display }}{% endblocktrans %}{% endblock %}
 
-{% block body %}
+{% block body %}<div class="span 10">
     {% user_display page_user as page_user_display %}
     <header class="jumbotron subhead" id="overview">
         <h1>{{ page_user_display }}</h1>
@@ -14,5 +21,5 @@
     </br>
 
     {% include "profiles/_profile_content_list.html" with contents=newsfeed %}
-{% endblock %}
+</div>{% endblock %}
 
