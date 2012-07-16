@@ -29,7 +29,7 @@
     </header>
 
     <div class="row">
-        <hr>
+        <div class="span10"><hr></div>
         <div class="span thumbnail">
             {% if is_me %}
                 <a href="https://fr.gravatar.com/site/signup" rel="tooltip" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" id="profile-pic">
@@ -40,7 +40,7 @@
         </div>
         <div class="span5">
             {% include "profiles/_profile_info.html" %}
-            <span id='profile-follow'>
+            <span id="profile-follow">
                 {% if is_me %}
                     <a href="{% url profile_edit %}" class="btn">
                     {% trans "Update my profile" %}</a>
