@@ -5,19 +5,17 @@
 {% load content_utils %}
 
 {% block itemlist %}
-    <div class="span7">
-        {% if search_list %}
-            <h3>Results for <i>"{{ search_terms }}":</i></h3>
-            <ul>
-                {% for item in search_list %}
-                    <li>
-                        <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a>&nbsp;
-                        <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <h4><p>No results for <i>"{{ search_terms }}"</i>.</p></h4>
-        {% endif %}
-    </div>
+    {% if search_list %}
+        <h3>{%trans "Search results for" %} <i>"{{ search_terms }}":</i></h3>
+        <ul>
+            {% for item in search_list %}
+                <li>
+                    <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a>&nbsp;
+                    <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>{% trans "No search results for" %} <i>"{{ search_terms }}"</i>.</h3>
+    {% endif %}
 {% endblock %}

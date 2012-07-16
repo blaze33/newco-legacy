@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:45+0200\n"
-"PO-Revision-Date: 2012-07-13 02:53\n"
+"POT-Creation-Date: 2012-07-16 11:32+0200\n"
+"PO-Revision-Date: 2012-07-16 11:29\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -87,26 +87,18 @@ msgstr "Membres :"
 msgid "Products:"
 msgstr "Produits :"
 
-#: templates/profiles/profile_homepage.html:14
+#: templates/profiles/_profiles_subnav.html:6
+msgid "Profiles"
+msgstr "Profils"
+
+#: templates/profiles/_profiles_subnav.html:7
+msgid "All Profiles"
+msgstr "Tous les profils"
+
+#: templates/profiles/profile_homepage.html:6
 #, python-format
 msgid "Home: %(page_user_display)s"
 msgstr "Accueil : %(page_user_display)s"
-
-#: templates/profiles/profile_homepage.html:27
-msgid "Newsfeed"
-msgstr "Flux"
-
-#: templates/profiles/profile_homepage.html:28
-msgid "Followees"
-msgstr "Abonnements"
-
-#: templates/profiles/profile_homepage.html:29
-msgid "Followers"
-msgstr "Abonnés"
-
-#: templates/profiles/profile_homepage.html:30
-msgid "Drafts"
-msgstr ""
 
 #: templates/profiles/content_display/_answer.html:6
 msgid "answered a question about"
@@ -144,6 +136,15 @@ msgstr "a posé une question à propos de"
 #: templates/profiles/content_display/_question.html:20
 msgid "Answer this question"
 msgstr "Répondre à cette question"
+
+#~ msgid "Newsfeed"
+#~ msgstr "Flux"
+
+#~ msgid "Followees"
+#~ msgstr "Abonnements"
+
+#~ msgid "Followers"
+#~ msgstr "Abonnés"
 
 #~ msgid "by"
 #~ msgstr "par"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:50+0200\n"
+"POT-Creation-Date: 2012-07-16 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,28 +235,55 @@ msgstr ""
 msgid "Add something new to talk about:"
 msgstr ""
 
-#: templates/items/item_list.html:6
+#: templates/items/item_list.html:7
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:17
-msgid "List of items with tag"
-msgstr ""
-
-#: templates/items/item_list.html:19
-msgid "List of items in database:"
-msgstr ""
-
-#: templates/items/item_list.html:31
-msgid "No products are available with tag"
-msgstr ""
-
-#: templates/items/item_list.html:33
+#: templates/items/item_list.html:35
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list.html:38
+#: templates/items/item_list.html:42
 msgid "Add an entry"
+msgstr ""
+
+#: templates/items/item_list.html:53
+msgid "Search an item, a tag..."
+msgstr ""
+
+#: templates/items/item_list.html:54
+msgid "What are you looking for?"
+msgstr ""
+
+#: templates/items/item_list_tag.html:10
+#, python-format
+msgid ""
+"Products with tag <a href=\"%(tag_url)s\"><span class=\"label\">"
+"%(tag_name)s</span></a>"
+msgstr ""
+
+#: templates/items/item_list_tag.html:19
+msgid ""
+"\n"
+"                <select name=\"sort_items\">\n"
+"                    <option value=\"0\">Choose</option>\n"
+"                    <option value=\"1\">Newest to Oldest</option>\n"
+"                    <option value=\"2\">Oldest to Newest</option>\n"
+"                </select><button type=\"submit\" class=\"btn\">Sort</"
+"button>\n"
+"                "
+msgstr ""
+
+#: templates/items/item_list_tag.html:49
+msgid "No products are available with tag"
+msgstr ""
+
+#: templates/items/item_search.html:9
+msgid "Search results for"
+msgstr ""
+
+#: templates/items/item_search.html:19
+msgid "No search results for"
 msgstr ""
 
 #: templates/items/link_form.html:6

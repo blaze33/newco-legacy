@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:49+0200\n"
-"PO-Revision-Date: 2012-07-13 02:52\n"
+"POT-Creation-Date: 2012-07-16 15:36+0200\n"
+"PO-Revision-Date: 2012-07-16 15:37\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -237,29 +237,63 @@ msgstr "Item"
 msgid "Add something new to talk about:"
 msgstr "De quoi voulez-vous parler :"
 
-#: templates/items/item_list.html:6
+#: templates/items/item_list.html:7
 msgid "Products"
 msgstr "Produits"
 
-#: templates/items/item_list.html:17
-msgid "List of items with tag"
-msgstr "Liste des items avec le tag"
-
-#: templates/items/item_list.html:19
-msgid "List of items in database:"
-msgstr "Liste des items en base :"
-
-#: templates/items/item_list.html:31
-msgid "No products are available with tag"
-msgstr "Pas de produits disponibles avec le tag"
-
-#: templates/items/item_list.html:33
+#: templates/items/item_list.html:35
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list.html:38
+#: templates/items/item_list.html:42
 msgid "Add an entry"
 msgstr "Ajouter un produit"
+
+#: templates/items/item_list.html:53
+msgid "Search an item, a tag..."
+msgstr "Chercher un produit, un tag..."
+
+#: templates/items/item_list.html:54
+msgid "What are you looking for?"
+msgstr "Que cherchez-vous ?"
+
+#: templates/items/item_list_tag.html:10
+#, python-format
+msgid ""
+"Products with tag <a href=\"%(tag_url)s\"><span "
+"class=\"label\">%(tag_name)s</span></a>"
+msgstr ""
+"Produits avec le tag <a href=\"%(tag_url)s\"><span "
+"class=\"label\">%(tag_name)s</span></a>"
+
+#: templates/items/item_list_tag.html:19
+msgid ""
+"\n"
+"                <select name=\"sort_items\">\n"
+"                    <option value=\"0\">Choose</option>\n"
+"                    <option value=\"1\">Newest to Oldest</option>\n"
+"                    <option value=\"2\">Oldest to Newest</option>\n"
+"                </select><button type=\"submit\" class=\"btn\">Sort</button>\n"
+"                "
+msgstr ""
+"\n"
+"<select name=\"sort_items\">\n"
+"<option value=\"0\">Choisir</option>\n"
+"<option value=\"1\">Du plus récent au plus ancien</option>\n"
+"<option value=\"2\">Du plus ancien au plus récent</option>\n"
+"</select><button type=\"submit\" class=\"btn\">Trier</button>"
+
+#: templates/items/item_list_tag.html:49
+msgid "No products are available with tag"
+msgstr "Pas de produits disponibles avec le tag"
+
+#: templates/items/item_search.html:9
+msgid "Search results for"
+msgstr "Résultats de la recherche pour"
+
+#: templates/items/item_search.html:19
+msgid "No search results for"
+msgstr "Pas  de résultats pour la recherche"
 
 #: templates/items/link_form.html:6
 msgid "Link"
@@ -277,6 +311,12 @@ msgstr "Question"
 #: templates/items/question_form.html:7
 msgid "Ask something:"
 msgstr "Demandez quelque chose :"
+
+#~ msgid "List of items with tag"
+#~ msgstr "Liste des items avec le tag"
+
+#~ msgid "List of items in database:"
+#~ msgstr "Liste des items en base :"
 
 #~ msgid "Published"
 #~ msgstr "date de publication"

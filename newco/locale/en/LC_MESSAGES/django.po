@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:46+0200\n"
+"POT-Creation-Date: 2012-07-16 11:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,33 +129,29 @@ msgstr ""
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:27
+#: templates/idios/profile.html:35
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
 msgstr ""
 
-#: templates/idios/profile.html:38
+#: templates/idios/profile.html:46
 msgid "Update my profile"
 msgstr ""
 
-#: templates/idios/profile.html:50
+#: templates/idios/profile.html:58
 msgid "History"
 msgstr ""
 
-#: templates/idios/profile.html:51
-msgid "Newsfeed"
-msgstr ""
-
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:59
 msgid "Followees"
 msgstr ""
 
-#: templates/idios/profile.html:53
+#: templates/idios/profile.html:60
 msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile.html:54
+#: templates/idios/profile.html:61
 msgid "Drafts"
 msgstr ""
 

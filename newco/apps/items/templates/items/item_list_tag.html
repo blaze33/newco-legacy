@@ -5,30 +5,26 @@
 {% load content_utils %}
 
 {% block header %}
+    {% url tagged_items tag.slug as tag_url%}
     <div class="row">
-        <div class="span4">
-            <h3>Page {{tag.name}}</h3>
-        </div>
-        <div class="offset1 span2">
-            <div class="alert alert-info">
-                <a class="close" data-dismiss="alert" href="{% url item_index %}"><i class="icon-remove"></i></a>{{ tag.name }}</a>
-            </div>
-        </div>
+        <div class="span4"><h3>{% blocktrans with tag_name=tag.name %}Products with tag <a href="{{ tag_url }}"><span class="label">{{ tag_name }}</span></a>{% endblocktrans %}</h3></div>
+        <div class="offset1 span2"><div class="alert alert-info"><a class="close" data-dismiss="alert" href="{% url item_index %}"><i class="icon-remove"></i></a>{{ tag.name }}</div></div>
     </div>
 {% endblock %}
 
 {% block itemlist %}
     {% if item_list %}
-        <div class="span7">
-            <form action="." method="POST">{% csrf_token %}
+        <div class="row"><div class="span3">
+            <form class="input-append" action="." method="POST">{% csrf_token %}
+                {% blocktrans %}
                 <select name="sort_items">
-                    <option value="0">Sort by</option>
+                    <option value="0">Choose</option>
                     <option value="1">Newest to Oldest</option>
                     <option value="2">Oldest to Newest</option>
-                </select>
-                <input name= "s" type="submit">
+                </select><button type="submit" class="btn">Sort</button>
+                {% endblocktrans %}
             </form>
-        </div>
+        </div></div>
 
         <script>
         function sort(element)
@@ -39,14 +35,15 @@
          }
         </script>
 
+        </br>
+
         {% for item in item_list %}
-            <div class="row"><div class="span7">
-                <h3>
-                    <a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
-                    <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a>
-                </h3>
-                {% if not forloop.last %}<hr>{% endif %}
-            </div></div>
+            <div class="row">
+                {% if not forloop.first %}<hr>{% endif %}
+                <div class="span3"><h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a></h3></div>
+                <div class="span3">{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>
+                <div class="span1"><a href="{% url item_edit item|to_class_name item.id %}"><i class="icon-edit"></i></a></div>
+            </div>
         {% endfor %}
     {% else %}
         <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>

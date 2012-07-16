@@ -2,19 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:46+0200\n"
+"POT-Creation-Date: 2012-07-16 11:30+0200\n"
 "PO-Revision-Date: 2012-07-13 02:46\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -101,8 +101,8 @@ msgstr ""
 #: templates/homepage.html:28
 #, python-format
 msgid ""
-"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-"
-"primary\">Product index</a></br>to explore the website."
+"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
+"\">Product index</a></br>to explore the website."
 msgstr ""
 "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
 "large btn-primary\">L'index Produit</a></br>pour explorer le site."
@@ -110,8 +110,8 @@ msgstr ""
 #: templates/homepage.html:35
 #, python-format
 msgid ""
-"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-"
-"primary\">How to contribute?</a></br>to get ready for the next step."
+"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
+"\">How to contribute?</a></br>to get ready for the next step."
 msgstr ""
 "Les doigts vous démangent ?</br><a href=\"%(contribute_url)s\" class=\"btn "
 "btn-large btn-primary\">Comment contribuer ?</a></br>pour passer à l'étape "
@@ -120,8 +120,8 @@ msgstr ""
 #: templates/homepage.html:43
 #, python-format
 msgid ""
-"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-"
-"primary\">Sign up!</a></br>to start your new career."
+"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
+"\">Sign up!</a></br>to start your new career."
 msgstr ""
 "Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
 "\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
@@ -139,7 +139,7 @@ msgstr "Liste des produits"
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:27
+#: templates/idios/profile.html:35
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -147,27 +147,23 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:38
+#: templates/idios/profile.html:46
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:50
+#: templates/idios/profile.html:58
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:51
-msgid "Newsfeed"
-msgstr "Flux"
-
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:59
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:53
+#: templates/idios/profile.html:60
 msgid "Followers"
 msgstr "Abonnés"
 
-#: templates/idios/profile.html:54
+#: templates/idios/profile.html:61
 msgid "Drafts"
 msgstr "Brouillons"
 
@@ -178,3 +174,6 @@ msgstr "Tous les utilisateurs"
 #: templates/idios/profiles.html:12
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui alimente NewCo."
+
+#~ msgid "Newsfeed"
+#~ msgstr "Flux"
