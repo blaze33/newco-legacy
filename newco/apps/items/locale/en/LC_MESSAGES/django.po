@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 15:36+0200\n"
+"POT-Creation-Date: 2012-07-16 17:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -239,19 +239,23 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:35
+#: templates/items/item_list.html:12
+msgid "Search"
+msgstr ""
+
+#: templates/items/item_list.html:33
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list.html:42
+#: templates/items/item_list.html:40
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/item_list.html:53
+#: templates/items/item_list.html:56
 msgid "Search an item, a tag..."
 msgstr ""
 
-#: templates/items/item_list.html:54
+#: templates/items/item_list.html:57
 msgid "What are you looking for?"
 msgstr ""
 

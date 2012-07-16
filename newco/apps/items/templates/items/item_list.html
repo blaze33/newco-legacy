@@ -9,7 +9,7 @@
 {% block body %}<div class="span7">
     {% block search %}
         <form action="." method="POST" class="well">{% csrf_token %}
-            <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn-success" type="submit" style="height:40px; "><h3>Search <i class="icon-search"></i></h3></button></div>
+            <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" class="input-xlarge" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn" type="submit" style="height:40px; "><h3><i class="icon-search"></i> {% trans "Search" %}</h3></button></div>
         </form>
     {% endblock%}
 
