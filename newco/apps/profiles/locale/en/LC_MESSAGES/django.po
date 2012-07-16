@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 11:32+0200\n"
+"POT-Creation-Date: 2012-07-16 17:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,6 +91,10 @@ msgstr ""
 
 #: templates/profiles/_profiles_subnav.html:7
 msgid "All Profiles"
+msgstr ""
+
+#: templates/profiles/_profiles_subnav.html:10
+msgid "Search user"
 msgstr ""
 
 #: templates/profiles/profile_homepage.html:6

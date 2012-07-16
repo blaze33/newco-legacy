@@ -2,12 +2,14 @@
 
 {% url profile_list as profile_list_url %}
 
-<ul class="nav nav-list">
-    <li class="nav-header">{% trans "Profiles" %}</li>
-    <li><a href="{{ profile_list_url }}">{% trans "All Profiles" %}</a></li>
-    <li>
-        <form action="" method="POST" class="form-horizontal">{% csrf_token %}
-            <input name="pf_pick" type="text" autocomplete="off" placeholder="Search user" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
-        </form>
-    </li>
-</ul>
+<div class="row">
+    <ul class="nav nav-list">
+        <li class="nav-header">{% trans "Profiles" %}</li>
+        <li><a href="{{ profile_list_url }}">{% trans "All Profiles" %}</a></li>
+        <li>
+            <form action="" method="POST" class="form-horizontal">{% csrf_token %}
+                <input name="pf_pick" type="text" autocomplete="off" placeholder="{% trans 'Search user' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
+            </form>
+        </li>
+    </ul>
+</div>
