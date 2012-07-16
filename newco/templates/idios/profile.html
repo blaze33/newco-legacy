@@ -22,7 +22,7 @@
     {% endif %}
 {% endblock %}
 
-{% block body %}
+{% block body %}<div class="span7">
     {% user_display page_user as page_user_display %}
     <header class="jumbotron subhead" id="overview">
         <h1>{{ page_user_display }}</h1>
@@ -68,4 +68,4 @@
             {% if is_me %}<div id="draft" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=drafts %}</div>{% endif %}
         </div>
     </div>
-{% endblock %}
+</div>{% endblock %}
