@@ -1,7 +1,12 @@
 {% extends "pinax_theme_bootstrap:idios/profile_edit.html" %}
 
+{% load staticfiles %}
+
 {% block extra_head_base %}
     {{ block.super }}
 
-    {{ profile_form.media }}
+    <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+
+    {{ form.media }}
 {% endblock %}

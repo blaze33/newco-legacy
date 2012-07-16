@@ -60,9 +60,11 @@ due to bad pixel fitting of small icons.
 {% endblock %}
 
 {% block extra_body_base %}
+    {{ block.super }}
+
     {% analytics %}
+
     {% block extra_body %}{% endblock %}
 
-    {{ block.super }}
     {% include "feedback/button.html" %}
 {% endblock %}
