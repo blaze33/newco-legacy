@@ -12,6 +12,6 @@
             {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
         {% endif %}
     </p></div>
-    <div class="span1 right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+    <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
     <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
 </div>
