@@ -5,13 +5,13 @@
     <h4>{% include p_link_tpl with object=author %} {% trans "posted a link about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
 </div></div>
 
-<div class="row {% if content.ispublic %}one_row{% elif content.is_draft %}draft{% endif %}">
+<div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
     <div class="span4"><p>
         <a href="{{ content.get_absolute_url }}">{% trans "L:" %}</a>&nbsp;<a href="{{ content.url }}" target="_blank" {% if score.score < 2 %}rel="nofollow"{% endif %}>{{ content.content }}</a>
         {% if user.is_superuser or author == user %}
-            {% with name=content|to_class_name %}{% edit name content.id %}{% endwith %}
+            {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
         {% endif %}
     </p></div>
-    <div class="span1 right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+    <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
     <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
 </div>

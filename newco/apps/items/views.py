@@ -111,6 +111,21 @@ class ContentUpdateView(ContentView, UpdateView):
                                                        *args,
                                                        **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+
+        kwargs = {"form": form}
+        if "next" in request.GET:
+            kwargs.update({"next": request.GET.get("next")})
+        return self.render_to_response(self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):
+        if "next" in request.POST:
+            self.success_url = request.POST.get("next")
+        return super(ContentUpdateView, self).post(request, *args, **kwargs)
+
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
@@ -229,6 +244,10 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+
+        if "item_list" in context:
+            if hasattr(self, "tag"):
+                context.update({"tag": self.tag})
 
         if "sort_items" in self.request.POST:
             sort = "-pub_date"

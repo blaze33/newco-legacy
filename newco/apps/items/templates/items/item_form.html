@@ -39,6 +39,7 @@
     </table>
     </div>
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
 {% endblock %}

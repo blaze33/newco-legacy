@@ -1,7 +1,20 @@
-{% extends "items/item_form.html" %}
+{% extends "site_base.html" %}
 
 {% load i18n %}
+{% load bootstrap_tags %}
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
-{% block form_header %}{% trans "Ask something:" %}{% endblock %}
+{% block body %}
+
+<h1>{% block form_header %}{% trans "Ask something:" %}{% endblock %}</h1>
+
+</br>
+
+<form action="." method="POST">{% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" name="add_question" class="btn" value='{% trans "Submit" %}'/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</form>
+
+{% endblock %}
