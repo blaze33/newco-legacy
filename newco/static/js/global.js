@@ -1,4 +1,4 @@
-pics = ['https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcSy4FJAXUIPTAPOOI_90LKada48k-jG_weoFEQg9x1vJiZSpcZuvtnecTU',
+var pics = ['https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcSy4FJAXUIPTAPOOI_90LKada48k-jG_weoFEQg9x1vJiZSpcZuvtnecTU',
  'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcTsoWm0SV9eZC_X1SkCU-dZXzJj1qATXulz95JKFEjcgfaUpRGIJqfQBQ',
  'https://encrypted-tbn1.google.com/images?q=tbn:ANd9GcSqzp08TAr9rmg2CQC50cHbPMGnGrYo4ijy7ZZxBLG0taGQhQf-UiXWMe0S',
  'https://encrypted-tbn1.google.com/images?q=tbn:ANd9GcSdQDXsY7SGEa_AtB2qihOmceL6OWXGjbIEDvoz-8GOYz1AEx3292jOf6C7',
@@ -7,7 +7,32 @@ pics = ['https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcSy4FJAXUIPTAPOOI_9
  'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcQHIVb9s077jlYS-uydqU32PnU0ewXnM3NnWJDeKJDU2bpd46yBd2lK8gk',
  'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcTtduBhXw6EoxIFJeUEDtuw_iVkzp22w5ioMTxrwJ-ALRtP19JC0BwMm7M',
  'https://encrypted-tbn0.google.com/images?q=tbn:ANd9GcSgF9w7qAA4dHl-q8nPAP-3tRWvN6c18H5gLj4nUPucHt9rwHT4e9LqXYQ',
- 'https://encrypted-tbn3.google.com/images?q=tbn:ANd9GcRp9kQpfyASqNzZOnIUrtxB8tu6zOM33mv6f5JPkVDOGeHIidNPbReB0Is']
+ 'https://encrypted-tbn3.google.com/images?q=tbn:ANd9GcRp9kQpfyASqNzZOnIUrtxB8tu6zOM33mv6f5JPkVDOGeHIidNPbReB0Is'];
+pics=[];
+
+function moveAnimate(element, newParent){
+        var height = element.height();
+        var width = element.width();
+        var oldOffset = element.offset();
+        element.appendTo(newParent);
+        var newOffset = element.offset();
+
+        var temp = element.clone().appendTo('body');
+        temp    .css('position', 'absolute')
+                .css('left', oldOffset.left)
+                .css('top', oldOffset.top)
+                .css('zIndex', 1000)
+                .css('width', width)
+                .css('height', height);
+        element.hide();
+        temp.animate( { 'top': newOffset.top,
+                        'left':newOffset.left,
+                        'width':element.width(),
+                        'height':element.height()}, 'slow', function(){
+           element.show();
+           temp.remove();
+        });
+    }
 
 $(function(){
     var $container = $('#profiles_list1');
@@ -20,18 +45,46 @@ $(function(){
 //    });
     $('#profile-pic').tooltip({
         'trigger': 'hover',
-        'placement': 'right',
-    })
-    if ($("#img-selector").length > 0){
-    $.each(pics, function(index, value) {
-        $('#img-selector').append(
-            $(document.createElement("li"))
-                .addClass("selector-item")
-                .append(
-            $(document.createElement("img"))
-                .attr({ src: value, title: 'image ' + index })
-                .addClass("thumbnail")
-                )
-            )
-        })};
+        'placement': 'right'
+    });
+    if ( pics.length == 0 ) { $("#img-selector-1").css('display','none') }
+    if ( $("#img-selector-1").length > 0 ){
+        $.each(pics, function(index, value) {
+            $('#selected-list').append(
+                $(document.createElement("li"))
+                    .addClass("selector-item")
+                    .append(
+                $(document.createElement("img"))
+                    .attr({ src: value, title: 'image ' + index })
+                    .addClass("thumbnail")
+                    )
+                    .append(
+                $(document.createElement("div"))
+                    .addClass("img-controls")
+                    .html("<i class='icon-remove'></i>")
+                    )
+                );
+            });
+        $( "#selected-list, #trash-1" ).sortable({
+                placeholder: 'ui-sortable-placeholder',
+                forcePlaceholderSize: true,
+                items: 'li',
+                connectWith: ".connectedSortable",
+                revert: true,
+                containment: '#img-selector-1',
+                distance: 10,
+                activate: function(event, ui) {
+                    $("#trash-1").addClass("dropzone")
+                },
+                deactivate: function(event, ui) {
+                    $("#trash-1").removeClass("dropzone")
+                },
+            }).disableSelection();
+        $( ".img-controls" ).click(function() {
+            var source = $(this).parents('.connectedSortable');
+            if (source.attr('id') == 'selected-list') { var target = '#trash-1'}
+            else { var target = '#selected-list'};
+            moveAnimate($(this).parent('.selector-item'), target)
+        });
+    }
 });

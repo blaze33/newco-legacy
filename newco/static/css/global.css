@@ -1,3 +1,5 @@
+/* ↓ css defs for profile page */
+
 .run-in {
     display: run-in
 }
@@ -11,6 +13,7 @@
     margin-left: 5px;
     width: 64px;
     height: 64px;
+    border-radius: 4px;
 }
 
 .profile-item { line-height: 18px; width: 165px; margin: 9px }
@@ -24,7 +27,98 @@
 
 .black { color: #333 }
 
-.selector-item img {
+/* ↓ css defs for image selection/sort */
+
+.selector-item {
+    position: relative;
+    list-style: none;
+}
+
+.selected-list img {
+    min-width: 100px;
     min-height: 128px;
-    max-height: 128px
+    max-height: 128px;
+}
+
+.selected-list {
+    margin-right: 13px;
+}
+
+.img-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 16px;
+    border-radius: 3px;
+    opacity: 0;
+    background-color: #BBB;
+    -webkit-transition: opacity 0.6s;
+    -moz-transition: opacity 0.6s;
+    cursor: pointer;
+}
+
+img:hover + .img-controls,
+.img-controls:hover {
+    opacity: 1;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+}
+
+.img-selector {
+    border-collapse: initial;
+}
+
+.trash {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+    width: 140px;
+    padding-top: 18px;
+}
+
+.trash-list {
+    width: 100%;
+    min-height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.trash .selector-item {
+    margin-left:20px;
+}
+
+.trash img {
+    width: 30px;
+    height: 30px;
+}
+
+.dropzone {
+    border: 1px dashed #ddd;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    border-color: #0088cc;
+    -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
+     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.ui-sortable-placeholder {
+    min-width: 124px;
+    height: 136px;
+    border: 1px dashed #ddd;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    border-color: #0088cc;
+    -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
+     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.trash .ui-sortable-placeholder {
+    visibility: hidden;
+    min-width: 38px;
+    height: 38px;
+    width: 38px;
 }

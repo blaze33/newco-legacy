@@ -13,13 +13,22 @@
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
-    <div class="row"><div class="span12">
-    <ul class="thumbnails" id="img-selector">
-    </ul></div></div>
+    <div class="row">
+    <table class="img-selector span12" id="img-selector-1">
+        <tbody>
+        <tr>
+          <td>
+            <ul class="thumbnails connectedSortable selected-list" id="selected-list">
+            </ul>
+          </td>
+          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+            <p>Trash <i class="icon-trash"></i></p>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
 </form>
 
 {% endblock %}
-
-
-
