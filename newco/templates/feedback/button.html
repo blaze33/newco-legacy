@@ -44,6 +44,21 @@
 </div>
 
 <div class="feedbackTab" data-toggle="modal" href="#feedbackModal"></div>
+{% comment %} # Add information about the user's config in the feedback ? 
+like : (django documentation)
+# GOOD (VERSION 1)
+def ua_display_good1(request):
+    try:
+        ua = request.META['HTTP_USER_AGENT']
+    except KeyError:
+        ua = 'unknown'
+    return HttpResponse("Your browser is %s" % ua)
+
+# GOOD (VERSION 2)
+def ua_display_good2(request):
+    ua = request.META.get('HTTP_USER_AGENT', 'unknown')
+    return HttpResponse("Your browser is %s" % ua) # %}
+{% endcomment %}
 
 {% comment %} Script qui charge le popover... mis dans feedback/button.html pour chopper un "include" en bas de page {% endcomment %}
 <script>
@@ -54,6 +69,12 @@ $(function(){
   	animate: true,
   	delay: 500,
 	//template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-});
+  });
+  $('[rel="tooltip"]').tooltip({
+  	trigger: 'hover',
+  	placement: 'bottom',
+  	animate: true,
+  	//delay: 500,
+  });
 });  
 </script>

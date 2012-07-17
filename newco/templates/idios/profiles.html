@@ -6,6 +6,14 @@
 
 {% block head_title %}{% trans "All Users" %}{% endblock %}
 
+{% block subnav %}
+    {% if user.is_authenticated %}
+        {% include "profiles/_profiles_subnav.html" %}
+    {% else %}
+        &nbsp;
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <header class="jumbotron subhead" id="overview">
         <h1>{% trans "All Users" %}</h1>
@@ -19,5 +27,4 @@
     {% endfor %}
     </div>
     {% paginate %}
-    
 {% endblock %}

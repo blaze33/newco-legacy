@@ -2,6 +2,16 @@
 
 {% load i18n %}
 {% load bootstrap_tags %}
+{% load staticfiles %}
+
+{% block extra_head_base %}
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+
+    {{ form.media }}
+{% endblock %}
 
 {% block head_title %}{% trans "Item" %}{% endblock %}
 
@@ -13,7 +23,23 @@
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
+    <div class="row">
+    <table class="img-selector span12" id="img-selector-1">
+        <tbody>
+        <tr>
+          <td>
+            <ul class="thumbnails connectedSortable selected-list" id="selected-list">
+            </ul>
+          </td>
+          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+            <p>Trash <i class="icon-trash"></i></p>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-03 20:28+0200\n"
+"POT-Creation-Date: 2012-07-16 17:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,80 +49,31 @@ msgstr ""
 msgid "profile"
 msgstr ""
 
-#: models.py:53
+#: models.py:54
 msgid "reputation"
 msgstr ""
 
-#: templates/profiles/_profile_content_list.html:15
-msgid "answered a question about"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:19
-#: templates/profiles/_profile_content_list.html:43
-msgid "Q:"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:21
-#: templates/profiles/_profile_content_list.html:30
-#: templates/profiles/_profile_content_list.html:46
-#: templates/profiles/_profile_content_list.html:65
-#: templates/profiles/_profile_content_list.html:77
-msgid "by"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:26
-msgid "A:"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:34
-msgid "Add an answer"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:40
-msgid "asked a question about"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:51
-msgid "Answer this question"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:56
-msgid "posted a link about"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:62
-msgid "L:"
-msgstr ""
-
-#: templates/profiles/_profile_content_list.html:71
-msgid "suggested a feature on"
-msgstr ""
-
-#: templates/profiles/_profile_info.html:4
-msgid "Name"
-msgstr ""
-
-#: templates/profiles/_profile_info.html:5
+#: templates/profiles/_profile_info.html:6
 msgid "About"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:6
+#: templates/profiles/_profile_info.html:10
 msgid "Location"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:7
+#: templates/profiles/_profile_info.html:14
 msgid "Website"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:18
 msgid "Subscription date"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:9
+#: templates/profiles/_profile_info.html:22
 msgid "Reputation"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:11
+#: templates/profiles/_profile_info.html:26
 msgid "Skills"
 msgstr ""
 
@@ -134,19 +85,56 @@ msgstr ""
 msgid "Products:"
 msgstr ""
 
-#: templates/profiles/profile_homepage.html:8
+#: templates/profiles/_profiles_subnav.html:6
+msgid "Profiles"
+msgstr ""
+
+#: templates/profiles/_profiles_subnav.html:7
+msgid "All Profiles"
+msgstr ""
+
+#: templates/profiles/_profiles_subnav.html:10
+msgid "Search user"
+msgstr ""
+
+#: templates/profiles/profile_homepage.html:6
 #, python-format
-msgid "Profile for %(page_user_display)s"
+msgid "Home: %(page_user_display)s"
 msgstr ""
 
-#: templates/profiles/profile_homepage.html:21
-msgid "Newsfeed"
+#: templates/profiles/content_display/_answer.html:6
+msgid "answered a question about"
 msgstr ""
 
-#: templates/profiles/profile_homepage.html:22
-msgid "Followees"
+#: templates/profiles/content_display/_answer.html:10
+#: templates/profiles/content_display/_question.html:10
+msgid "Q:"
 msgstr ""
 
-#: templates/profiles/profile_homepage.html:23
-msgid "Followers"
+#: templates/profiles/content_display/_answer.html:15
+msgid "A:"
+msgstr ""
+
+#: templates/profiles/content_display/_answer.html:26
+msgid "Add an answer"
+msgstr ""
+
+#: templates/profiles/content_display/_feature.html:5
+msgid "suggested a feature on"
+msgstr ""
+
+#: templates/profiles/content_display/_link.html:5
+msgid "posted a link about"
+msgstr ""
+
+#: templates/profiles/content_display/_link.html:13
+msgid "L:"
+msgstr ""
+
+#: templates/profiles/content_display/_question.html:5
+msgid "asked a question about"
+msgstr ""
+
+#: templates/profiles/content_display/_question.html:20
+msgid "Answer this question"
 msgstr ""
