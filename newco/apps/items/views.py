@@ -4,6 +4,7 @@ from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
 from django.db.models.loading import get_model
+from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.utils.decorators import method_decorator
@@ -11,7 +12,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from account.utils import user_display
-from taggit.models import Tag, TaggedItem
+from taggit.models import Tag
 from voting.models import Vote
 
 from items.models import Item, Content, Question, Link, Feature
@@ -20,8 +21,6 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
-
-import json
 
 app_name = 'items'
 
@@ -136,11 +135,17 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
             item = context['item']
 
-            feats = Feature.objects.filter(items__id=item.id)
+            feats = Feature.objects.filter(
+                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
+            )
 
             sets = {
-                    "questions": Question.objects.filter(items__id=item.id),
-                    "links": Link.objects.filter(items__id=item.id),
+                    "questions": Question.objects.filter(
+                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
+                    ),
+                    "links": Link.objects.filter(
+                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
+                    ),
                     "feat_pos": feats.filter(positive=True),
                     "feat_neg": feats.filter(positive=False)
             }
@@ -224,21 +229,14 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        if "item_list" in context:
-            ta_list = list(context["item_list"].values_list("name", flat=True))
-            if hasattr(self, "tag"):
-                context["tag"] = self.tag
-            else:
-                ta_list.extend(
-                    TaggedItem.tags_for(Item).values_list("name", flat=True)
-                )
-            context.update({"data_source": json.dumps(ta_list)})
 
         if "sort_items" in self.request.POST:
+            sort = "-pub_date"
             if self.request.POST["sort_items"] == "1":
-                context["item_list"] = context["item_list"].order_by("-pub_date")
+                pass
             elif self.request.POST['sort_items'] == "2":
-                context["item_list"] = context["item_list"].order_by("pub_date")
+                sort = "pub_date"
+            context["item_list"] = context["item_list"].order_by(sort)
 
         if "search" in self.request.GET:
             search_terms = self.request.GET.get("search", "")

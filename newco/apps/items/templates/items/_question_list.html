@@ -26,7 +26,7 @@
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-    {% for answer in question.answer_set.all %}
+    {% for answer in question.answer_set.all %}{% if answer.is_public %}
         {% dict_entry_for_item answer from answer_vote_dict as vote %}
         {% dict_entry_for_item answer from answer_score_dict as score %}
         <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
@@ -39,7 +39,7 @@
             </p></div>
             <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
         </div>
-    {% endfor %}
+    {% endif %}{% endfor %}
     <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
     </a></div></div>
