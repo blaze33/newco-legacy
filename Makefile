@@ -52,6 +52,21 @@ migrate_pinax_1: maintain_on push
 
 migrate_pinax: migrate_pinax_1 sync maintain_off
 
+simple_deploy:
+	@echo 'Check for uncommited changes:'
+	hg summary | grep -q 'commit: (clean)'
+	@echo 'Check for unapplied migrations:'
+	# TODO: need to check against remote db...
+	python newco/apps/utils/scripts/new-migrations.py
+	hg up -C staging
+	hg merge -r default
+	hg commit -m "Merge with default"
+	make push
+	hg up -C production
+	hg merge -r staging
+	hg commit -m "Merge with staging"
+	make push
+
 # TODO: add additional commands to manage stuff.
 # Static stuff
 
