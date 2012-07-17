@@ -1,19 +1,19 @@
     h3 [class^="icon-"],[class*=" icon-"] {
-         vertical-align: baseline;
+        vertical-align: baseline;
     }
-    
+
     .one_row {
         border-radius: 5px 5px 5px 5px;
         -webkit-transition: background-color 0.9s;
         -moz-transition: background-color 0.9s;
     }
-    
+
     .one_row:hover {
         background-color: #F8F8F8;
         -webkit-transition: background-color 5s;
         -moz-transition: background-color 5s;
     }
-    
+
     .controls {
         display: inline-block;
         line-height: 14px;
@@ -27,7 +27,7 @@
         -webkit-transition: opacity 1s;
         -moz-transition: opacity 1s;
     }
-    
+
     .row .block_controls {
         padding-top: 3px;
         opacity: 0;
@@ -39,7 +39,7 @@
         -webkit-transition: opacity 1s;
         -moz-transition: opacity 1s;
     }
-    
+
     .question hr {
         margin: 8px 0 15px;
     }
@@ -47,13 +47,13 @@
     .right { 
         text-align: right;
      }
-     
+
      .right .signature { padding-right: 5px; }
-    
+
     .controls.vote {
         vertical-align: -6px;
     }
-    
+
     button[type="submit"][class*="icon-"] {
         height: 14px;
         width: 21px;
@@ -75,5 +75,3 @@
     .controls .icon-chevron-down {
         background-position: -309px -119px;
     }
-    
-

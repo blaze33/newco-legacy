@@ -1,0 +1,87 @@
+    h3 [class^="icon-"],[class*=" icon-"] {
+        vertical-align: baseline;
+    }
+
+    .one_row {
+        border-radius: 5px 5px 5px 5px;
+        -webkit-transition: background-color 0.9s;
+        -moz-transition: background-color 0.9s;
+    }
+
+    .one_row:hover {
+        background-color: #F8F8F8;
+        -webkit-transition: background-color 5s;
+        -moz-transition: background-color 5s;
+    }
+
+    .controls {
+        display: inline-block;
+        line-height: 14px;
+        margin: 0 0;
+        opacity: 0;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
+    }
+    .one_row:hover .controls {
+        opacity: 1;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
+    }
+
+    .row .block_controls {
+        padding-top: 3px;
+        opacity: 0;
+        -webkit-transition: opacity 0.9s;
+        -moz-transition: opacity 0.9s;
+    }
+    .row:hover .block_controls {
+        opacity: 1;
+        -webkit-transition: opacity 5s;
+        -moz-transition: opacity 5s;
+    }
+
+    .question hr {
+        margin: 8px 0 15px;
+    }
+
+    .right {
+        text-align: right;
+     }
+
+    .right .signature { padding-right: 5px; }
+
+    .controls.vote {
+        vertical-align: -6px;
+    }
+
+    button[type="submit"][class*="icon-"] {
+        height: 14px;
+        width: 21px;
+        line-height: 14px;
+        border: none;
+        margin: 0 0;
+        background-color: transparent;
+        border-radius: 5px;
+    }
+
+    button[type="submit"][class*="icon-"][data-vote="True"] {
+        background-color: #f89406;
+    }
+
+    .controls .icon-chevron-up {
+        background-position: -284px -120px;
+    }
+
+    .controls .icon-chevron-down {
+        background-position: -309px -119px;
+    }
+
+    .draft {
+        background-color: #e5e5e5;
+        border-radius: 5px 5px 5px 5px;
+    }
+    .draft:hover .controls {
+        opacity: 1;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
+    }

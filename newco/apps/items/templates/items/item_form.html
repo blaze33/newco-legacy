@@ -2,6 +2,16 @@
 
 {% load i18n %}
 {% load bootstrap_tags %}
+{% load staticfiles %}
+
+{% block extra_head_base %}
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+
+    {{ form.media }}
+{% endblock %}
 
 {% block head_title %}{% trans "Item" %}{% endblock %}
 
