@@ -51,7 +51,7 @@ class ProfileDetailView(ProfileDetailView, ProcessFormView):
                 Q(author=self.page_user) & Q(status=Content.STATUS.public)
         )
         drafts = Content.objects.filter(
-                Q(author=self.page_user) & ~Q(status=Content.STATUS.public)
+                Q(author=self.page_user) & Q(status=Content.STATUS.draft)
         )
 
         fwers_ids = Follow.objects.get_follows(
