@@ -19,13 +19,13 @@
         line-height: 14px;
         margin: 0 0;
         opacity: 0;
-        -webkit-transition: opacity 0.9s;
-        -moz-transition: opacity 0.9s;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
     }
     .one_row:hover .controls {
         opacity: 1;
-        -webkit-transition: opacity 5s;
-        -moz-transition: opacity 5s;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
     }
 
     .row .block_controls {
@@ -79,4 +79,9 @@
     .draft {
         background-color: #e5e5e5;
         border-radius: 5px 5px 5px 5px;
+    }
+    .draft:hover .controls {
+        opacity: 1;
+        -webkit-transition: opacity 1s;
+        -moz-transition: opacity 1s;
     }
