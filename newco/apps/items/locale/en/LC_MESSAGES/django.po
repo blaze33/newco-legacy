@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 17:02+0200\n"
+"POT-Creation-Date: 2012-07-17 14:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,56 +69,56 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: models.py:47
-msgid "Sandbox"
-msgstr ""
-
 #: models.py:48
 msgid "Public"
 msgstr ""
 
-#: models.py:80 models.py:96 models.py:111 models.py:126 models.py:142
+#: models.py:55
+msgid "status"
+msgstr ""
+
+#: models.py:81 models.py:97 models.py:112 models.py:127 models.py:143
 msgid "content"
 msgstr ""
 
-#: models.py:83
+#: models.py:84
 msgid "question"
 msgstr ""
 
-#: models.py:99
+#: models.py:100
 msgid "answer"
 msgstr ""
 
-#: models.py:112
+#: models.py:113
 msgid "URL"
 msgstr ""
 
-#: models.py:115
+#: models.py:116
 msgid "link"
 msgstr ""
 
-#: models.py:130
+#: models.py:131
 msgid "feature"
 msgstr ""
 
-#: models.py:141
+#: models.py:142
 msgid "title"
 msgstr ""
 
-#: models.py:147
+#: models.py:148
 msgid "story"
 msgstr ""
 
-#: models.py:148
+#: models.py:149
 msgid "stories"
 msgstr ""
 
-#: views.py:71 views.py:121
+#: views.py:70 views.py:120
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:75 views.py:125
+#: views.py:74 views.py:124
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -169,7 +169,7 @@ msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
 #: templates/items/answer_form.html:16 templates/items/feature_form.html:17
-#: templates/items/item_form.html:21 templates/items/link_form.html:16
+#: templates/items/item_form.html:29 templates/items/link_form.html:16
 msgid "Submit"
 msgstr ""
 
@@ -227,35 +227,35 @@ msgstr ""
 msgid "Delete Item"
 msgstr ""
 
-#: templates/items/item_form.html:8
+#: templates/items/item_form.html:16
 msgid "Item"
 msgstr ""
 
-#: templates/items/item_form.html:12
+#: templates/items/item_form.html:20
 msgid "Add something new to talk about:"
 msgstr ""
 
-#: templates/items/item_list.html:7
+#: templates/items/item_list.html:9
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:12
+#: templates/items/item_list.html:14
 msgid "Search"
 msgstr ""
 
-#: templates/items/item_list.html:33
+#: templates/items/item_list.html:30
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list.html:40
+#: templates/items/item_list.html:37
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/item_list.html:56
+#: templates/items/item_list.html:53
 msgid "Search an item, a tag..."
 msgstr ""
 
-#: templates/items/item_list.html:57
+#: templates/items/item_list.html:54
 msgid "What are you looking for?"
 msgstr ""
 
