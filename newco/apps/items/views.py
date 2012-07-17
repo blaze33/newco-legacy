@@ -245,6 +245,10 @@ class ContentListView(ContentView, ListView, RedirectView):
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
 
+        if "item_list" in context:
+            if hasattr(self, "tag"):
+                context.update({"tag": self.tag})
+
         if "sort_items" in self.request.POST:
             sort = "-pub_date"
             if self.request.POST["sort_items"] == "1":
