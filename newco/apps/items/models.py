@@ -44,7 +44,7 @@ register(Item)
 class Content(models.Model):
     STATUS = Choices(
         (0, "draft", _("Draft")),
-        (1, "sandbox", _("Sandbox")),
+#        (1, "sandbox", _("Sandbox")),
         (2, "public", _("Public"))
     )
 
