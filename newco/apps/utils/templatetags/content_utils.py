@@ -25,10 +25,11 @@ def get_at_index(list, index):
 
 
 @register.inclusion_tag('items/_tag_edit.html')
-def edit(item_name, item_id):
+def edit(item_name, item_id, edit_next=None):
     return {
         'item_name': item_name,
         'item_id': item_id,
+        'edit_next': edit_next,
     }
 
 

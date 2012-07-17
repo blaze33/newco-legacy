@@ -15,6 +15,7 @@
     {{ form|as_bootstrap }}
     <input type="submit" name="add_link" class="btn" value='{% trans "Submit" %}'/>
     <input type="hidden" name="item_id" value="{{ form.item.id }}"/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
 {% endblock %}

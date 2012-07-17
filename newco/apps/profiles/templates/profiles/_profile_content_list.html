@@ -15,7 +15,7 @@
         {% dict_entry_for_item content from score_dict as score %}
 
         {% with tpl="profiles/content_display/_"|add:class_name|add:".html" %}
-            {% include tpl with content=content author=content.author score=score user=request.user p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
+            {% include tpl with content=content author=content.author score=score user=request.user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
         {% endwith %}
 
     </div></div>

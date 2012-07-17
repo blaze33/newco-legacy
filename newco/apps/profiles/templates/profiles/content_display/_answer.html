@@ -6,17 +6,17 @@
         <h4>{% include p_link_tpl with object=author %} {% trans "answered a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
     </div></div>
 
-    <div class="row {% if question.ispublic %}one_row{% elif question.is_draft %}draft{% endif %}">
+    <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">
         <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
         <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
     </div>
 
-    <div class="row {% if content.ispublic %}one_row{% elif content.is_draft %}draft{% endif %}">
+    <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
         <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
         <div class="span3"><p>
             {{ content.content }}
             {% if user.is_superuser or author == user %}
-                {% with name=content|to_class_name %}{% edit name content.id %}{% endwith %}
+                {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
             {% endif %}
         </p></div>
         <div class="span1 right;"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
