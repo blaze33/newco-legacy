@@ -210,7 +210,7 @@ class BrowseNodeExplorer(gtk.Window):
         gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
 
         self.set_title("BrowseNode Explorer")
-        self.set_size_request(400, 200)
+        self.set_size_request(800, 600)
         self.connect("delete_event", self.on_delete)
 
         self.locale = locale
