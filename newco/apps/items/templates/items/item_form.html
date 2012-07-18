@@ -17,9 +17,33 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% trans "Add something new to talk about:" %}{% endblock %}</h1>
+{% if new_search %}
+
+<h4>{% block form_header_search %}{% trans "The product page does not exist. Are you ready to contribute? </br></br><i><h5> Please enter the name, as well as the tags, then submit.</h5></i>" %}{% endblock %}</h4>
 
 </br>
+<form action="." method="POST">{% csrf_token %}
+    {{ form|as_bootstrap }}
+    <input type="submit" class="btn" value='{% trans "Submit" %}'/>
+</form>
+
+<div id="tags"><h3><a href="#" id="example" class="btn btn-primary" rel="popover" data-content="Les tags produit permettent une navigation plus aisee et plus intuitive sur le site. <br><br>Ils nous permettent d'introduire un systeme de cartographie intelligent. On associe egalement chaque produit a un groupe d'experts dedie." data-original-title="How to handle the tags correctly ?">How to handle the tags correctly ?</a></h3></div>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-tooltip.js"></script>  
+<script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-popover.js"></script>  
+<script>  
+$(function ()  
+{ $("#example").popover();  
+});  
+</script>
+
+
+{% else %}
+
+<h2>{% block form_header %}{% trans "Add something new to talk about. </br></br><i><h4> Please enter the name, as well as the tags, then submit.</h4></i>" %}{% endblock %}</h2>
+</br> <a href="{% url faq %}" class="btn btn-primary">How to handle the tags correctly?</a>
+</br></br>
 
 <form action="." method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
@@ -41,5 +65,7 @@
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
+
+{% endif %}
 
 {% endblock %}

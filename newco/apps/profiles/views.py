@@ -1,38 +1,21 @@
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from django.contrib.auth.models import User
 from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView, ProfileListView
-import json
 
 from items.models import Item, Content
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
 
+import json
 
-class ProfileProcessFormView(ProcessFormView):
-
-    def post(self, request, *args, **kwargs):
-        if 'pf_pick' in request.POST:
-            name = request.POST['pf_pick']
-            profile_list = Profile.objects.filter(name=name)
-            if profile_list.count() == 1:
-                response = profile_list[0].get_absolute_url()
-            else:
-                response = reverse("profile_list") + "?search=" + name
-            return HttpResponseRedirect(response)
-        else:
-            return super(ProfileProcessFormView, self).post(request,
-                                                            *args, **kwargs)
-
-
-class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
-
+class ProfileDetailView(ProfileDetailView, ProcessFormView):
     is_profile_page = True
 
     def dispatch(self, request, *args, **kwargs):
@@ -68,7 +51,7 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author=self.page_user) & Q(status=Content.STATUS.public)
         )
         drafts = Content.objects.filter(
-                Q(author=self.page_user) & Q(status=Content.STATUS.draft)
+                Q(author=self.page_user) & ~Q(status=Content.STATUS.public)
         )
 
         fwers_ids = Follow.objects.get_follows(
@@ -81,7 +64,6 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
-        list_pf = list(Profile.objects.all().values_list('name', flat=True))
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
@@ -91,14 +73,28 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': feed.select_subclasses(),
-            'data_source_profile': json.dumps(list_pf)
+            'newsfeed': feed.select_subclasses()
         })
+
+
+        list_pf = list(Profile.objects.all().values_list('name', flat=True))
+        context.update({"data_source_profile": json.dumps(list_pf)})
+
 
         return context
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        
+        if 'pf_pick' in request.POST:
+            name = request.POST['pf_pick']
+            profile_list = Profile.objects.filter(name=name)
+            if profile_list.count() > 0:
+                response = profile_list[0].get_absolute_url()
+            else:
+                response = request.path
+            return HttpResponseRedirect(response)
+        
         if 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=False)
         else:
@@ -106,7 +102,7 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                                                             *args, **kwargs)
 
 
-class ProfileListView(ProfileListView, ProfileProcessFormView):
+class ProfileListView(ProfileListView):
 
     def get_queryset(self):
         profiles = self.get_model_class().objects.select_related()
@@ -122,10 +118,3 @@ class ProfileListView(ProfileListView, ProfileProcessFormView):
             profiles = profiles.order_by("user__username")
 
         return profiles
-
-    def get_context_data(self, **kwargs):
-        list_pf = list(Profile.objects.all().values_list('name', flat=True))
-
-        context = super(ProfileListView, self).get_context_data(**kwargs)
-        context.update({'data_source_profile': json.dumps(list_pf)})
-        return context

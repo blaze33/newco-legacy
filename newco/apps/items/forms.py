@@ -19,8 +19,14 @@ class ItemForm(ModelForm):
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
-        return super(ItemForm, self).__init__(*args, **kwargs)
-
+            
+            super(ItemForm, self).__init__(*args, **kwargs)
+            self.fields['name'].widget.attrs.update({
+                'placeholder': _('name'),
+            })
+        else:
+            return super(ItemForm, self).__init__(*args, **kwargs)
+            
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             item = super(ItemForm, self).save(commit=False)

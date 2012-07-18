@@ -1,0 +1,31 @@
+{% load i18n %}
+
+{% load url from future %}
+{% load humanize %}
+
+<ul class="nav nav-list">
+{% if items %}
+    <li class="nav-header"><em>{% trans 'Items' %}</em></li>
+    {% for item in items %}
+        <li class="item">
+            <a href="{{ item.get_absolute_url }}">
+            
+                {{ item }}
+            </a>
+        </li>
+    {% endfor %}
+{% endif %}
+{% if tags %}
+    <li class="nav-header"><em>{% trans 'Tags' %}</em></li>
+    {% for tag in tags %}
+        <li class="tag">
+          <a href="/content/tag/{{ tag.slug }}">{{tag}}</a>
+        </li>
+    {% endfor %}
+{% endif %}
+
+{% if not options %}
+    <li><em>{% trans 'No options' %}</em></li>
+{% endif %}
+
+</ul>
