@@ -87,7 +87,9 @@ def create_reputation(sender, instance=None, raw=False, **kwargs):
     if instance is None or raw == True:
         return
     rep, created = Reputation.objects.get_or_create(user=instance)
-    rep.reputation_computed = rep.compute_reputation()
+    #rep.reputation_computed = rep.compute_reputation()
+    rep.reputation_computed = 0
+    
     rep.reputation_incremented = rep.reputation_computed
     rep.save()
 

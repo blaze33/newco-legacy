@@ -22,6 +22,9 @@ class Item(models.Model):
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
     tags = TaggableManager()
+    weight = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
+    description = models.CharField(max_length=500, verbose_name=_("description"), default="petite description")
 
     class Meta:
         verbose_name = _("item")

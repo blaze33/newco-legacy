@@ -1,0 +1,28 @@
+
+{% load i18n %}
+{% load account_tags %}
+{% load content_utils %}
+
+{% if no_empty_list %}
+<h3>Results for <i>"{{ search_terms }}":</i></h3>
+</br></br>
+{% for item in search_list %}
+<div class="span7"><table class="table table-condensed"><tbody><tr><td>
+
+        <ul>
+        <li>
+            <h5><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a> &nbsp;
+            <a href='{% url item_edit item|to_class_name item.id %}'><i class="icon-edit"></i></a></h5>
+            <br><i>{{ item.description }}</i>
+        </li>
+        </ul>
+
+</td></tr></tbody></table></div>
+<div class="span4">
+    <h5><a href='{{ item.author.get_absolute_url }}'>{% user_display item.author %}</a></h5>
+</div>
+{% endfor %}
+{% else %}
+<h4>Poor you, no results for <i>"{{ search_terms }}"</i>. 
+</br></br>Please click below to create a product page.</h4>
+{% endif %}

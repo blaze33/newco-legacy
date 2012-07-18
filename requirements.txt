@@ -32,7 +32,7 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 python-amazon-product-api==0.2.5
 
 # lxml required by amazon api
-lxml==2.3.4
+#lxml==2.3.4
 
 ## upgraded pinax-theme-bootstrap
 ## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
@@ -49,14 +49,14 @@ django-storages==1.1.4
 python-dateutil==1.5
 
 ## memcache interface
-pylibmc==1.2.3
-django-pylibmc-sasl==0.2.4
+#pylibmc==1.2.3
+#django-pylibmc-sasl==0.2.4
 ## memcache configuration for heroku
-django-heroku-memcacheify==0.2
+#django-heroku-memcacheify==0.2
 
 ## production webserver
 gunicorn==0.14.3
-gevent==0.13.7
+#gevent==0.13.7
 greenlet==0.3.4
 
 ## Database backends
@@ -81,6 +81,9 @@ django-generic-aggregation==0.3.1
 
 ## Following application
 django-follow==0.6
+
+## Autocomplete app
+django-autocomplete-light==1.0.1
 
 ## template loader
 hg+https://hg@bitbucket.org/wojas/django-apptemplates@ce738ccb3f02#egg=django_apptemplates
