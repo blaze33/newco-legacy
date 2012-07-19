@@ -11,8 +11,12 @@ sys.path.append("/usr/lib/python2.7/dist-packages")
 sys.path.append("/usr/lib/python2.7/dist-packages/gtk-2.0")
 
 import gtk
-from django.conf import settings
 from amazonproduct.api import API
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
+AWS_LOCALE = os.environ.get('AWS_LOCALE')
 
 #: a list of root nodes retrieved from
 #: http://docs.amazonwebservices.com/AWSECommerceService/2009-11-01/DG/index.html?BrowseNodeIDs.html
@@ -215,8 +219,7 @@ class BrowseNodeExplorer(gtk.Window):
 
         self.locale = locale
 
-        self.api = API(settings.AWS_ACCESS_KEY_ID,
-                                settings.AWS_SECRET_ACCESS_KEY, self.locale)
+        self.api = API(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, self.locale)
 
         # create a TreeStore with one string column to use as the model
         self.treestore = gtk.TreeStore(int, str)
@@ -280,30 +283,17 @@ class BrowseNodeExplorer(gtk.Window):
         row = self._find_row(node_id)
 
         # fetch Amazon data
-        node = self.api.browse_node_lookup(node_id, AssociateTag="newco06-21").BrowseNodes.BrowseNode
+        node = self.api.browse_node_lookup(node_id, AssociateTag=AWS_ASSOCIATE_TAG).BrowseNodes.BrowseNode
         id = node.BrowseNodeId.pyval
         name = node.Name.pyval
         is_root = hasattr(node, 'IsCategoryRoot') and \
                                     node.IsCategoryRoot.pyval == 1
 
-        #~ from lxml import etree
-        #~ print etree.tostring(node, pretty_print=True)
-
-        #try:
-        #    parents = dict((parent.BrowseNodeId.pyval, parent.Name.pyval)
-        #                for parent in node.Ancestors.BrowseNode)
-        #except AttributeError:
-        #    parents = {}
-
-        #piter = None
-        #for parent_id, parent_name in parents.items():
-        #    piter = self.treestore.append(None, [parent_id, parent_name])
-        #
-        #iter = self.treestore.append(piter, [id, name])
-
         # replace node name
         if is_root:
             row[1] = node.Ancestors.BrowseNode.Name.text
+        else:
+            row[1] = name
 
         try:
             children = dict((child.BrowseNodeId.pyval, child.Name.pyval)
@@ -321,6 +311,5 @@ class BrowseNodeExplorer(gtk.Window):
         gtk.main()
 
 if __name__ == "__main__":
-    locale = os.environ.get('LOCALE', None)
-    explorer = BrowseNodeExplorer(locale=locale)
+    explorer = BrowseNodeExplorer(locale=AWS_LOCALE)
     explorer.main()
