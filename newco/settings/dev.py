@@ -51,3 +51,5 @@ ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
     DATABASES = HEROKU_DATABASES
+    DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
+
