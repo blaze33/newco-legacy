@@ -57,18 +57,16 @@ class AffiliationItem(models.Model):
         if source is not None and item is not None:
             if source == "amazon":
                 self = _amazon_init(self, item)
+        super(AffiliationItem, self).__init__()
 
     def __unicode__(self):
         return u"%s @ %s" % (self.item, self.store)
 
-    def save(self):
-        amazon = Store.objects.get(url="amazon.fr")
-        self.store = amazon
-        self.item = Item.objects.get(pk=1)
-        super(AffiliationItem, self).save()
-
 
 def _amazon_init(aff_item, amazon_item):
+    amazon = Store.objects.get(url="amazon.fr")
+    aff_item.store = amazon
+
     aff_item.object_id = amazon_item.ASIN
     aff_item.url = amazon_item.DetailPageURL
 
@@ -89,5 +87,7 @@ def _amazon_init(aff_item, amazon_item):
 
         price_str = Price.FormattedPrice.pyval
         aff_item.price = Decimal(price_str.split(" ")[1].replace(",", "."))
+
+    aff_item.item = Item.objects.get(pk=1)
 
     return aff_item
