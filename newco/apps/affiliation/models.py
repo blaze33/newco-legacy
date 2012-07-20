@@ -11,10 +11,12 @@ from items.models import Item
 
 class Store(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("name"))
-    url = models.URLField(max_length=200, verbose_name=_("url"))
+    url = models.URLField(max_length=200, verbose_name=_("url_website"))
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
+    url_catalog = models.URLField(max_length=200, verbose_name=_("url_catalog"))
+    
 
     class Meta:
         verbose_name = _("store")
@@ -35,11 +37,15 @@ class AffiliationItem(models.Model):
     )
 
     item = models.ForeignKey(Item)
+    name_at_store = models.CharField(max_length=100, verbose_name=_("name at store"))
+    ref_catalog = models.IntegerField(default=0, verbose_name=_("ref_catalog"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(max_length=30,
                                         verbose_name=_("store object id"))
-    url = models.URLField(max_length=1000, verbose_name=_("url"))
-    price = models.DecimalField(default=0, max_digits=14, decimal_places=2,
+    url = models.URLField(max_length=600, verbose_name=_("url"))
+    url_img = models.URLField(max_length=200, verbose_name=_("url img"))
+    ean = models.IntegerField(default=0, verbose_name=_("ref_catalog"))
+    price = models.DecimalField(default=0, max_digits=16, decimal_places=2,
                                         verbose_name=_("price"))
     currency = models.SmallIntegerField(choices=CURRENCIES,
                                         default=CURRENCIES.euro,
