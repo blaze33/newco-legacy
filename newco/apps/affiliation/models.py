@@ -35,7 +35,8 @@ class AffiliationItem(models.Model):
 
     item = models.ForeignKey(Item)
     store = models.ForeignKey(Store, verbose_name=_("store"))
-    store_id = models.CharField(max_length=30, verbose_name=_("store object id"))
+    object_id = models.CharField(max_length=30,
+                                        verbose_name=_("store object id"))
     url = models.URLField(max_length=1000, verbose_name=_("url"))
     price = models.DecimalField(default=0, max_digits=14, decimal_places=2,
                                         verbose_name=_("price"))
@@ -49,6 +50,7 @@ class AffiliationItem(models.Model):
 
     class Meta:
         verbose_name = _("affiliation item")
+        unique_together = (('store', 'object_id'),)
 
     def __unicode__(self):
         return u"%s @ %s" % (self.item, self.store)
