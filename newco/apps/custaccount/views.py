@@ -18,11 +18,11 @@ class SignupView(SignupView):
         username = unicode(User.objects.count() + 1)
         return username
 
-    def after_signup(self, user, form):
-        self.create_profile(user, form)
-        super(SignupView, self).after_signup(user, form)
+    def create_account(self, new_user, form):
+        self.update_profile(new_user, form)
+        return super(SignupView, self).create_account(new_user, form)
 
-    def create_profile(self, user, form):
+    def update_profile(self, user, form):
         profile = user.get_profile()
         profile.name = form.cleaned_data["profile_name"]
         profile.save()
