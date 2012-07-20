@@ -17,6 +17,12 @@ class Attribute(models.Model):
     name  = models.CharField(max_length=200, verbose_name=_("name"))
     description = models.CharField(max_length=1000, verbose_name=_("description"))
 
+    class Meta:
+        verbose_name = _("Attribute")
+
+    def __unicode__(self):
+        return self.name
+
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("name"))
@@ -84,7 +90,7 @@ class Content(models.Model):
 class Measure(Content):
     attribute = models.ForeignKey(Attribute)
     data = hstore.DictionaryField(db_index=True)
-    objects = hstore.Manager()
+    objects = hstore.HStoreManager()
     
     class Meta:
         verbose_name = _("measure")

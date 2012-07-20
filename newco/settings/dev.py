@@ -52,4 +52,5 @@ HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
     DATABASES = HEROKU_DATABASES
     DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
+    SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
 
