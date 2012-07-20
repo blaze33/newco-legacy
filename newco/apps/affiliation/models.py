@@ -36,7 +36,9 @@ class AffiliationItem(models.Model):
     store = models.ForeignKey(Store, verbose_name=_('store'))
     url = models.URLField(max_length=600, verbose_name=_('url'))
     url_img = models.URLField(max_length=200, verbose_name=_('url img'))
+    ean = models.IntegerField(default=0, verbose_name=_('ref_catalog'))
     price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=_('price'))
+    
     CURRENCIES = Choices(
         (0, "euro", _("Euro")),
         (1, "dollar", _("Dollar"))
