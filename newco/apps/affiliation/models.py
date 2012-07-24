@@ -40,11 +40,11 @@ class AffiliationItem(models.Model):
     name_at_store = models.CharField(max_length=100, verbose_name=_("name at store"))
     ref_catalog = models.IntegerField(default=0, verbose_name=_("ref_catalog"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
-    object_id = models.CharField(max_length=30,
-                                        verbose_name=_("store object id"))
+    object_ref = models.CharField(max_length=30,
+                                        verbose_name=_("store object ref"))
     url = models.URLField(max_length=600, verbose_name=_("url"))
     url_img = models.URLField(max_length=200, verbose_name=_("url img"))
-    ean = models.IntegerField(default=0, verbose_name=_("ref_catalog"))
+    ean = models.IntegerField(default=0, verbose_name=_("EAN"))
     price = models.DecimalField(default=0, max_digits=16, decimal_places=2,
                                         verbose_name=_("price"))
     currency = models.SmallIntegerField(choices=CURRENCIES,
@@ -57,21 +57,22 @@ class AffiliationItem(models.Model):
 
     class Meta:
         verbose_name = _("affiliation item")
-        unique_together = (('store', 'object_id'),)
+        unique_together = (('store', 'object_ref'),)
 
-    def __init__(self, source=None, item=None):
-        if source is not None and item is not None:
-            if source == "amazon":
-                self = _amazon_init(self, item)
+#    def __init__(self, source=None, item=None, *args, **kwargs):
+#        if source is not None and item is not None:
+#            if source == "amazon":
+#                self = _amazon_init(self, item)
+#        super(AffiliationItem, self).__init__()
 
     def __unicode__(self):
         return u"%s @ %s" % (self.item, self.store)
 
-    def save(self):
-        amazon = Store.objects.get(url="amazon.fr")
-        self.store = amazon
-        self.item = Item.objects.get(pk=1)
-        super(AffiliationItem, self).save()
+   # def save(self):
+   #     amazon = Store.objects.get(url="amazon.fr")
+   #     self.store = amazon
+   #     self.item = Item.objects.get(pk=1)
+   #     super(AffiliationItem, self).save()
 
 
 def _amazon_init(aff_item, amazon_item):
