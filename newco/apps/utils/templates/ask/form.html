@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+
+<form action='' method='POST'>{% csrf_token %}
+    
+    <input type='submit' class='btn' name='ask_design' value='Ask'/>
+    <input type='hidden' class='btn' name='ask' value='{% user_display prof.user %}'/>
+    <input type='hidden' name='app_label' value='{{ object|to_app_label }}'/>
+    <input type='hidden' name='object_name' value='{{ object|to_class_name }}'/>
+    <input type='hidden' name='id' value='{{ object.id }}'/>
+</form>

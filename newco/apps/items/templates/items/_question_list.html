@@ -2,7 +2,10 @@
 {% load voting_tags %}
 {% load voting_utils %}
 {% load content_utils %}
+{% load ask_utils %}
 {% load staticfiles %}
+{% load account_tags %}
+{% load follow_tags %}
 
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
@@ -40,9 +43,47 @@
             <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
         </div>
     {% endif %}{% endfor %}
-    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
+    <div class="row"><div class="span2 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
-    </a></div></div>
+    </a></div>
+        <div class="span2 offset1 block_controls">
+        <button data-toggle="modal" data-target="#demo">
+        <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
+        </button>
+	    
+	    </div>
+	    
+	    <div id="demo" class="modal fade hide">
+			    <div class="modal-header">
+		        	<button class="close" data-dismiss="modal">×</button>
+		        	<h3>Ask them to answer&nbsp;:</h3>
+	    		</div>
+	    		<div class="modal-body form-horizontal">
+			    	{% if prof_list.count > 0 %}
+			    	{% for prof in prof_list %}
+	    			<br>
+	    <div class="row">
+		    <div class="span1 left">
+		    	<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %} </span></a> 
+		    </div>
+		    <div class="span1">
+			    {% ask_form question %}
+	        </div>
+        </div>
+	    	{% endfor %}
+	    	{% else %}We're sorry, no one can help you for now. Please wait or edit the product tags.<br> Thank you!.{% endif %}
+	    	</div>
+	    	<div class="modal-footer">
+        You could also push your question in Homepage for 50 points :
+        <button class="btn btn-primary" type="submit">
+        	Push !
+        </button>
+    </div>
+	    </div>
+    
+    
+    </div>
     <hr>
 </div></div>
 {% endfor %}
+
