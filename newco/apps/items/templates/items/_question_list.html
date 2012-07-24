@@ -47,38 +47,38 @@
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
     </a></div>
         <div class="span2 offset1 block_controls">
-        <button data-toggle="modal" data-target="#demo">
+        <button data-toggle="modal" data-target="#ask{{ question.id }}">
         <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
         </button>
 	    
 	    </div>
 	    
-	    <div id="demo" class="modal fade hide">
-			    <div class="modal-header">
-		        	<button class="close" data-dismiss="modal">×</button>
-		        	<h3>Ask them to answer&nbsp;:</h3>
-	    		</div>
-	    		<div class="modal-body form-horizontal">
-			    	{% if prof_list.count > 0 %}
-			    	{% for prof in prof_list %}
-	    			<br>
-	    <div class="row">
-		    <div class="span1 left">
-		    	<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %} </span></a> 
-		    </div>
-		    <div class="span1">
-			    {% ask_form question %}
-	        </div>
-        </div>
-	    	{% endfor %}
-	    	{% else %}We're sorry, no one can help you for now. Please wait or edit the product tags.<br> Thank you!.{% endif %}
+	    <div id="ask{{ question.id }}" class="modal fade hide">
+		    <div class="modal-header">
+	        	<button class="close" data-dismiss="modal">×</button>
+	        	<h3>Ask them to answer (10 points each)&nbsp;:</h3>
+    		</div>
+    		<div class="modal-body form-horizontal">
+		    	{% if prof_list.count > 0 %}
+		    	{% for prof in prof_list %}
+    			<br>
+			   	<div class="row">
+				    <div class="span1 left">
+				    	<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %} </span></a> 
+				    </div>
+				    <div class="span1">
+					    {% ask_form question %}
+			        </div>
+		        </div>
+		    	{% endfor %}
+		    	{% else %}We're sorry, no one can help you for now. Please wait or edit the product tags.<br> Thank you!.{% endif %}
 	    	</div>
 	    	<div class="modal-footer">
-        You could also push your question in Homepage for 50 points :
-        <button class="btn btn-primary" type="submit">
-        	Push !
-        </button>
-    </div>
+	        	You could also push your question in Homepage for 50 points :
+		        <button class="btn btn-primary" type="submit">
+		        	Push !
+		        </button>
+    		</div>
 	    </div>
     
     
