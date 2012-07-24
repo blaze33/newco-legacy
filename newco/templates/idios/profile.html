@@ -57,7 +57,7 @@
             <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
             <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
             <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
-            {% if is_me %}<li><a href="#draft" data-toggle="tab">{% trans "Drafts" %}</a></li>{% endif %}
+            {% if is_me %}<li><a href="#draft" data-toggle="tab" rel="tooltip" title="{% trans "'Drafts' contains your un-published contributions" %}">{% trans "Drafts" %}</a></li>{% endif %}
         </ul>
 
         <div class="tab-content" style="overflow: visible;">

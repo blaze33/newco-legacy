@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-20 14:35+0200\n"
-"PO-Revision-Date: 2012-07-20 14:36\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-07-24 17:45+0200\n"
+"PO-Revision-Date: 2012-07-24 17:49\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -184,6 +184,10 @@ msgid "Followers"
 msgstr "Abonnés"
 
 #: templates/idios/profile.html:60
+msgid "'Drafts' contains your un-published contributions"
+msgstr "'Brouillons' contient vos contributions non-publiées"
+
+#: templates/idios/profile.html:60
 msgid "Drafts"
 msgstr "Brouillons"
 
@@ -194,6 +198,39 @@ msgstr "Tous les utilisateurs"
 #: templates/idios/profiles.html:20
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui alimente NewCo."
+
+#~ msgid "store"
+#~ msgstr "Historique"
+
+#~ msgid "Profile name"
+#~ msgstr "Profil"
+
+#~ msgid "Draft"
+#~ msgstr "Brouillons"
+
+#~ msgid "story"
+#~ msgstr "Historique"
+
+#~ msgid "Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "profile"
+#~ msgstr "Profil"
+
+#~ msgid "Products:"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "All Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "Home: %(page_user_display)s"
+#~ msgstr "Profil de %(page_user_display)s"
+
+#~ msgid "Follow"
+#~ msgstr "Abonnements"
 
 #~ msgid "Newsfeed"
 #~ msgstr "Flux"
