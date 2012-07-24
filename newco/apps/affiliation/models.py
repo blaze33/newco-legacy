@@ -11,7 +11,7 @@ from items.models import Item
 
 class Store(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("name"))
-    url = models.URLField(max_length=200, verbose_name=_("url_website"))
+    url = models.URLField(max_length=200, verbose_name=_("url_webapp"))
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
@@ -59,7 +59,7 @@ class AffiliationItem(models.Model):
         verbose_name = _("affiliation item")
         unique_together = (('store', 'object_ref'),)
 
-#    def __init__(self, source=None, item=None, *args, **kwargs):
+#    def __init__(self, source=None, item=None):
 #        if source is not None and item is not None:
 #            if source == "amazon":
 #                self = _amazon_init(self, item)
@@ -68,15 +68,12 @@ class AffiliationItem(models.Model):
     def __unicode__(self):
         return u"%s @ %s" % (self.item, self.store)
 
-   # def save(self):
-   #     amazon = Store.objects.get(url="amazon.fr")
-   #     self.store = amazon
-   #     self.item = Item.objects.get(pk=1)
-   #     super(AffiliationItem, self).save()
-
 
 def _amazon_init(aff_item, amazon_item):
-    aff_item.object_id = amazon_item.ASIN
+    amazon = Store.objects.get(url="amazon.fr")
+    aff_item.store = amazon
+
+    aff_item.object_ref = amazon_item.ASIN
     aff_item.url = amazon_item.DetailPageURL
 
     # Look for amazon then foreign new, then foreign used prices
@@ -96,5 +93,7 @@ def _amazon_init(aff_item, amazon_item):
 
         price_str = Price.FormattedPrice.pyval
         aff_item.price = Decimal(price_str.split(" ")[1].replace(",", "."))
+
+    aff_item.item = Item.objects.get(pk=1)
 
     return aff_item

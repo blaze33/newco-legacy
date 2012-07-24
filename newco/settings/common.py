@@ -230,7 +230,8 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%d/%s" % (o.get_profile().pk, o.get_profile().slug),
+    "auth.user": lambda o: "/profiles/profile/%d/%s" % \
+                                    (o.get_profile().pk, o.get_profile().slug),
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -266,6 +267,8 @@ GRAVATAR_DEFAULT_IMAGE = 'identicon'
 # AWS
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
+AWS_LOCALE = os.environ.get('AWS_LOCALE')
 
 # API services
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
