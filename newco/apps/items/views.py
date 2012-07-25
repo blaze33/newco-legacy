@@ -21,6 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from affiliation.catalogs_import import get_aff_items
 
 app_name = 'items'
 
@@ -74,6 +75,34 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
             "text": _("Warning %(user)s, %(object)s form is invalid.")
         },
     }
+
+    def post(self, request, *args, **kwargs):
+        if 'update' in request.POST:
+            #messages.add_message(
+            #    self.request, self.messages["object_created"]["level"],
+            #    "post() has been triggered"
+            #)
+            
+            context = self.get_context_data()
+
+            name = request.POST['name']
+            list_items = get_aff_items(name)
+            kwargs.update({"list_items": list_items})
+                        
+            if self.form_class:
+                #print "\n\nIn self.form_class -----\n\n"
+                form_kwargs = self.get_form_kwargs()
+                form_kwargs.update({'request': request})
+                form = self.form_class(**form_kwargs)
+            else:
+                #print "\n\n--- In not self.form_class ---\n\n"
+                form_class = self.get_form_class()
+                form = self.get_form(form_class)
+            
+            #Seb: TODO trouver comment les form fields peuvent ne pas etre verifies lorsqu'on fait "update" ... je trouve pas !
+            return self.render_to_response(self.get_context_data(form=form, **kwargs))
+        
+        return super(ContentCreateView, self).post(request, *args, **kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

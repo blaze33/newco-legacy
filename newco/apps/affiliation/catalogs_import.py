@@ -5,17 +5,18 @@ from urllib2 import urlopen
 from items.models import Item
 from affiliation.models import AffiliationItem, Store
 
-def get_aff_items(query): # a vocation a etre une fonction appelee dans views pour chercher parmi les differents catalogues; tres simple puisque juste Decathlon ici, mais a vocation a se sofistiquer
+def get_aff_items(query): # a vocation a etre une fonction appelee dans views pour chercher parmi les differents catalogues; ds un premier temps tres simple puisque juste Decathlon ici
     entries = AffiliationItem.objects.filter(name_at_store__icontains=query)
     
     return entries
 
 
-def load_decat(address):
+def load_decat():
     print "\n---\nEnter in load_decat\n---\n" 
-    csvfile = urlopen(address)
+    address_decat = "http://flux.netaffiliation.com/catalogue.php?maff=A6AB58DCS569B4B545AF92191v3"
+    csvfile = urlopen(address_decat)
     csvdialect = csv.Sniffer().sniff(csvfile.read(1024), delimiters=';')
-    csvfile = urlopen(address) ## Seb: I reopen the file because urlopen doesn't provide a way to position the "cursor" like ".seek()" , it's not performant, but as a quickfix it works.
+    csvfile = urlopen(address_decat) ## Seb: I reopen the file because urlopen doesn't provide a way to position the "cursor" like ".seek()" , it's not performant, but as a quickfix it works.
     
     return csv.DictReader(csvfile,
                           dialect=csvdialect)
@@ -69,6 +70,8 @@ def load_entry(row):
             entry.url = value
         elif key == "Url image grande":
             entry.url_img = value
+        elif key == "Url image petite":
+            entry.url_img_s = value
         elif key == "EAN":
             entry.ean = int(value)
         elif key == "Nom":
@@ -80,8 +83,7 @@ def load_entry(row):
 
 
 def main():
-    address = "http://flux.netaffiliation.com/catalogue.php?maff=A6AB58DCS569B4B545AF92191v3"
-    decat_catalog = load_decat(address)
+    decat_catalog = load_decat()
 
     ean_in_db = list(AffiliationItem.objects.all().values_list('ean', flat=True))
     

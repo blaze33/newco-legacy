@@ -22,7 +22,39 @@
 </br>
 
 <form action="." method="POST">{% csrf_token %}
-    {{ form|as_bootstrap }}
+    <div class="row">
+    	<div class="span4">
+    		{{ form|as_bootstrap }}
+    	</div>
+    	<div class="span7">
+    		<br>
+	    	<input type="submit" class="btn" name="update" value="{% trans "Update affiliation items list" %}">
+	    	<br>
+		    {% if list_items %}
+		    	<br><h4>List of AffiliationItems that may correspond to this product:</h4>
+		    	<p><small>
+		    		La recherche n'est pas encore très 'intelligente': le champs 'nom' doit correspondre exactement à une partie du nom que nous avons en base...
+		    		<br>
+		    		... Nous améliorerons cette fonction sous peu ;) !</small></p>
+		    	<br>
+		    	<br>
+		    	{% for item in list_items %}
+		    		<div class="row">
+		    			<div class="span1">
+		    				<input type="checkbox" name="checkbox_item_affiliation" value="item_number{{ item.pk }}">
+		    			</div>
+		    			<div class="span6">
+		    				<img src="{{ item.url_img_s }}" width="20px" height="20px" >{% comment %} un script JS cache les image... trouver d'ou ca vient {% endcomment %}
+		    				{{ item.name_at_store }}
+		    				<br>
+		    				<br>
+		    			</div>
+		    		</div>
+		    	{% endfor %}
+		    	<br>
+		    {% endif %}
+		</div>
+	</div>
     <div class="row">
     <table class="img-selector span12" id="img-selector-1">
         <tbody>

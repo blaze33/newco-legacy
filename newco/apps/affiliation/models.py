@@ -44,6 +44,7 @@ class AffiliationItem(models.Model):
                                         verbose_name=_("store object ref"))
     url = models.URLField(max_length=600, verbose_name=_("url"))
     url_img = models.URLField(max_length=200, verbose_name=_("url img"))
+    url_img_s = models.URLField(max_length=200, verbose_name=_("url img small"))
     ean = models.IntegerField(default=0, verbose_name=_("EAN"))
     price = models.DecimalField(default=0, max_digits=16, decimal_places=2,
                                         verbose_name=_("price"))
