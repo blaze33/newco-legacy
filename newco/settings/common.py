@@ -206,6 +206,7 @@ INSTALLED_APPS = [
     "items",
     "custaccount",
     "utils",
+    "content",
 
     # Foreign apps
     "taggit_autosuggest",
