@@ -40,8 +40,6 @@ class AffiliationItem(models.Model):
     name_at_store = models.CharField(max_length=100, verbose_name=_("name at store"))
     ref_catalog = models.IntegerField(default=0, verbose_name=_("ref_catalog"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
-    object_ref = models.CharField(max_length=30,
-                                        verbose_name=_("store object ref"))
     url = models.URLField(max_length=600, verbose_name=_("url"))
     url_img = models.URLField(max_length=200, verbose_name=_("url img"))
     url_img_s = models.URLField(max_length=200, verbose_name=_("url img small"))
@@ -58,7 +56,7 @@ class AffiliationItem(models.Model):
 
     class Meta:
         verbose_name = _("affiliation item")
-        unique_together = (('store', 'object_ref'),)
+        unique_together = (('store', 'ref_catalog'),) #TO GAS: changed object_ref to ean because Decathlon have some items with same ref and different ean ... ean should be really unique
 
 #    def __init__(self, source=None, item=None):
 #        if source is not None and item is not None:

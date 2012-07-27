@@ -21,7 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
-from affiliation.catalogs_import import get_aff_items
+from affiliation.affiliation_tools import get_aff_items, process_update_affi
 
 app_name = 'items'
 
@@ -64,7 +64,7 @@ class ContentFormMixin(object):
 
 
 class ContentCreateView(ContentView, ContentFormMixin, CreateView):
-
+    
     messages = {
         "object_created": {
             "level": messages.SUCCESS,
@@ -77,30 +77,8 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
     }
 
     def post(self, request, *args, **kwargs):
-        if 'update' in request.POST:
-            #messages.add_message(
-            #    self.request, self.messages["object_created"]["level"],
-            #    "post() has been triggered"
-            #)
-            
-            context = self.get_context_data()
-
-            name = request.POST['name']
-            list_items = get_aff_items(name)
-            kwargs.update({"list_items": list_items})
-                        
-            if self.form_class:
-                #print "\n\nIn self.form_class -----\n\n"
-                form_kwargs = self.get_form_kwargs()
-                form_kwargs.update({'request': request})
-                form = self.form_class(**form_kwargs)
-            else:
-                #print "\n\n--- In not self.form_class ---\n\n"
-                form_class = self.get_form_class()
-                form = self.get_form(form_class)
-            
-            #Seb: TODO trouver comment les form fields peuvent ne pas etre verifies lorsqu'on fait "update" ... je trouve pas !
-            return self.render_to_response(self.get_context_data(form=form, **kwargs))
+        if "update_affi" in request.POST:
+            return process_update_affi(self, request, *args, **kwargs)
         
         return super(ContentCreateView, self).post(request, *args, **kwargs)
 
@@ -133,6 +111,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
 
 
 class ContentUpdateView(ContentView, UpdateView):
+    object = None # Seb to GAS: I'm not sure of what this does ... I think it just creates by default an empty 'object' attribute, hence allowing me to process_update_affi on "edit item" page ... Can you delete this comment if I don't do a BAD THING ?
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -153,6 +132,9 @@ class ContentUpdateView(ContentView, UpdateView):
     def post(self, request, *args, **kwargs):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
+        elif "update_affi" in request.POST:
+            return process_update_affi(self, request, *args, **kwargs)
+        
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
 
 

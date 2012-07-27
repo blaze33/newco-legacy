@@ -28,14 +28,14 @@
     	</div>
     	<div class="span7">
     		<br>
-	    	<input type="submit" class="btn" name="update" value="{% trans "Update affiliation items list" %}">
+	    	<input type="submit" class="btn" name="update_affi" value="{% trans "Search stores selling this product" %}">
 	    	<br>
 		    {% if list_items %}
-		    	<br><h4>List of AffiliationItems that may correspond to this product:</h4>
-		    	<p><small>
-		    		La recherche n'est pas encore très 'intelligente': le champs 'nom' doit correspondre exactement à une partie du nom que nous avons en base...
+		    	<br><h4>{% trans "List of products in store that may correspond:" %}</h4>
+		    	<p><small>{% blocktrans %}
+		    		La recherche n'est pas encore très "intelligente": le champs "nom" doit correspondre exactement à une partie du nom que nous avons en base...
 		    		<br>
-		    		... Nous améliorerons cette fonction sous peu ;) !</small></p>
+		    		... Nous améliorerons cette fonction sous peu ;) ! {% endblocktrans %}</small></p>
 		    	<br>
 		    	<br>
 		    	{% for item in list_items %}
@@ -44,7 +44,7 @@
 		    				<input type="checkbox" name="checkbox_item_affiliation" value="item_number{{ item.pk }}">
 		    			</div>
 		    			<div class="span6">
-		    				<img src="{{ item.url_img_s }}" width="20px" height="20px" >{% comment %} un script JS cache les image... trouver d'ou ca vient {% endcomment %}
+		    				<img src="{{ item.url_img_s }}" width="20px" height="20px" >{% comment %}Seb: un script JS cache les image... trouver d'ou ca vient... ? (c pas les scripts du typehead ?) {% endcomment %}
 		    				{{ item.name_at_store }}
 		    				<br>
 		    				<br>
@@ -70,7 +70,7 @@
         </tbody>
     </table>
     </div>
-    <input type="submit" class="btn" value='{% trans "Submit" %}'/>
+    <input type="submit" class="btn" value='{% if '/add' in request.path %}{% trans "Submit new product" %}{% elif '/edit' in request.path %}{% trans "Submit update" %}{% endif %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
