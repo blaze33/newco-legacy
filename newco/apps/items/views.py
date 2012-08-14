@@ -21,6 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from affiliation.amazon.utils import amazon_item_search
 
 app_name = 'items'
 
@@ -48,7 +49,7 @@ class ContentFormMixin(object):
             form = self.get_form(form_class)
         return self.render_to_response(self.get_context_data(form=form))
 
-    def post(self, request, *args, **kwargs):
+    def load_form(self, request):
         if self.form_class:
             form_kwargs = self.get_form_kwargs()
             form_kwargs.update({'request': request})
@@ -56,6 +57,10 @@ class ContentFormMixin(object):
         else:
             form_class = self.get_form_class()
             form = self.get_form(form_class)
+        return form
+
+    def post(self, request, *args, **kwargs):
+        form = self.load_form(request)
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -80,6 +85,20 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if self.model == Item and "amazon_search" in request.POST:
+            form = self.load_form(request)
+            request_name = form.data["name"]
+            if request_name != "":
+                item_list = amazon_item_search(request_name)
+                print(item_list)
+                #TODO: Display search results
+            form.errors.clear()
+            return self.render_to_response(self.get_context_data(form=form))
+        else:
+            return super(ContentCreateView, self).post(request, *args,
+                                                                **kwargs)
 
     def form_valid(self, form):
         self.object = form.save()
@@ -155,14 +174,14 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             )
 
             sets = {
-                    "questions": Question.objects.filter(
-                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
-                    ),
-                    "links": Link.objects.filter(
-                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
-                    ),
-                    "feat_pos": feats.filter(positive=True),
-                    "feat_neg": feats.filter(positive=False)
+                "questions": Question.objects.filter(
+                    Q(items__id=item.id) & Q(status=Content.STATUS.public)
+                ),
+                "links": Link.objects.filter(
+                    Q(items__id=item.id) & Q(status=Content.STATUS.public)
+                ),
+                "feat_pos": feats.filter(positive=True),
+                "feat_neg": feats.filter(positive=False)
             }
 
             for k in sets.keys():

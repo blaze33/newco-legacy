@@ -1,18 +1,14 @@
-import os
-
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
-AWS_LOCALE = os.environ.get('AWS_LOCALE')
-
+from django.conf import settings
 from amazonproduct import API
 
 
 def amazon_item_search(keyword, search_index="All"):
 
-    api = API(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_LOCALE)
+    api = API(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY,
+                                                        settings.AWS_LOCALE)
     node = api.item_search(search_index, Keywords=keyword,
-                        ResponseGroup="Large", AssociateTag=AWS_ASSOCIATE_TAG)
+                                    ResponseGroup="Large",
+                                    AssociateTag=settings.AWS_ASSOCIATE_TAG)
 
     item_list = []
 
