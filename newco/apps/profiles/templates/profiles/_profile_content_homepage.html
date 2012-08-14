@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load voting_tags %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% scores_for_objects contents as score_dict %}
+
+{# TODO: handle redirection after content edition #}
+
+{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+
+{% autopaginate contents %}
+<div class="row" id="contents_list1">
+{% for content in contents|slice:"6" %}
+    <div class="content-item thumbnail">
+    <div class="name">
+        {% profile_pic content.author 64 %}
+        
+        {% if content|to_class_name == "answer" %}
+	        <a href="{{ content.author.get_absolute_url }}"><h4>
+	        {% user_display content.author %}</h4></a> answered a question about <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a>
+        {% else %}
+	        <a href="{{ content.author.get_absolute_url }}"><h4>
+	        {% user_display content.author %}</h4></a> asked a question about <a href="{{ content.items.all.0.get_absolute_url }}">{{ content.items.all.0 }}</a>
+        {% endif %}
+    </div>
+    <div class="details">
+    <i>"{{ content.content }}"</i>
+     <br>{% if content.items.all.0.tags %}{% for tag in content.items.all.0.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}</p>
+    </div>
+    </div>
+
+{% endfor %}
+</div>
+{% paginate %}
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+{% for content in contents|slice:":20" %}{% with class_name=content|to_class_name %}
+    {% if not forloop.first %}<hr>{% endif %}
+    <div class="row content"><div class="span7">
+
+        {% dict_entry_for_item content from score_dict as score %}
+
+        {% with tpl="profiles/content_display/_"|add:class_name|add:".html" %}
+            {% include tpl with content=content author=content.author score=score user=request.user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
+        {% endwith %}
+
+    </div></div>
+{% endwith %}{% endfor %}
+
+{% endwith %}

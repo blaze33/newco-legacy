@@ -88,3 +88,59 @@ $(function(){
         });
     }
 });
+
+$(function(){
+    var $container = $('#contents_list1');
+//    $container.imagesLoaded( function(){
+        $container.masonry({
+            itemSelector : '.content-item',
+            isAnimated: true,
+            isFitWidth: true,
+        });
+//    });
+    $('#profile-pic').tooltip({
+        'trigger': 'hover',
+        'placement': 'right'
+    });
+    if ( pics.length == 0 ) { $("#img-selector-1").css('display','none') }
+    if ( $("#img-selector-1").length > 0 ){
+        $.each(pics, function(index, value) {
+            $('#selected-list').append(
+                $(document.createElement("li"))
+                    .addClass("selector-item")
+                    .append(
+                $(document.createElement("img"))
+                    .attr({ src: value, title: 'image ' + index })
+                    .addClass("thumbnail")
+                    )
+                    .append(
+                $(document.createElement("div"))
+                    .addClass("img-controls")
+                    .html("<i class='icon-remove'></i>")
+                    )
+                );
+            });
+        $( "#selected-list, #trash-1" ).sortable({
+                placeholder: 'ui-sortable-placeholder',
+                forcePlaceholderSize: true,
+                items: 'li',
+                connectWith: ".connectedSortable",
+                revert: true,
+                containment: '#img-selector-1',
+                distance: 10,
+                activate: function(event, ui) {
+                    $("#trash-1").addClass("dropzone")
+                },
+                deactivate: function(event, ui) {
+                    $("#trash-1").removeClass("dropzone")
+                },
+            }).disableSelection();
+        $( ".img-controls" ).click(function() {
+            var source = $(this).parents('.connectedSortable');
+            if (source.attr('id') == 'selected-list') { var target = '#trash-1'}
+            else { var target = '#selected-list'};
+            moveAnimate($(this).parent('.selector-item'), target)
+        });
+    }
+});
+

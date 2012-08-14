@@ -83,6 +83,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         )
         list_pf = list(Profile.objects.all().values_list('name', flat=True))
 
+        profile_sorted = Profile.objects.filter(name__icontains="s")
+        #content_sorted=Content.objects.filter
+
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             'reputation': self.page_user.reputation,
@@ -92,7 +95,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
             'newsfeed': feed.select_subclasses(),
-            'data_source_profile': json.dumps(list_pf)
+            'data_source_profile': json.dumps(list_pf),
+            'profile_list_sorted': profile_sorted,
+            #'content_list_sorted': feed
         })
 
         return context
@@ -104,6 +109,23 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
+            
+        if "item_search" in request.POST:
+            search = request.POST["item_search"]
+            item_list = Item.objects.filter(name=search)
+            if item_list.count() > 0:
+                response = item_list[0].get_absolute_url()
+            else:
+                tag_list = Tag.objects.filter(name=search)
+                if tag_list.count() > 0:
+                    response = reverse("tagged_items",
+                                        kwargs={'tag_slug': tag_list[0].slug}
+                    )
+                else:
+                    response = "%s?search=%s" % (reverse("item_index"), search)
+            return HttpResponseRedirect(response)
+        else:
+            return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ProfileListView(ProfileListView, ProfileProcessFormView):
