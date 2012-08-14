@@ -83,7 +83,8 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         )
         list_pf = list(Profile.objects.all().values_list('name', flat=True))
 
-        profile_sorted = Profile.objects.filter(name__icontains="s")
+        #profile_sorted = Profile.objects.filter(name__icontains="s")
+        profile_sorted = Profile.objects.all().order_by("?")[:3]
         #content_sorted=Content.objects.filter
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
