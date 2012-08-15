@@ -19,7 +19,7 @@
     <div class="row one_row" id="q-{{ question.id }}">
         <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h3></div>
         <div class="span4"><h3>
-            {{ question.content }}
+            <a href="{% url item_detail "question" question.id "lalala" %}">{{ question.content }}</a>
             {% if user.is_superuser or question.author == request.user %}
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}

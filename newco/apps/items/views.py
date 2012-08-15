@@ -182,6 +182,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             })
 
             context.update(sets)
+            
+        if self.model == Question:
+            question=context['question']
+            item=question.items.all()[0]
+            context.update({
+                'prof_list_question': Profile.objects.filter(
+                            skills__id__in=item.tags.values_list('id',
+                            flat=True)).distinct()
+            })
 
         return context
 
