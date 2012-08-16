@@ -21,7 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
-from affiliation.amazon.utils import amazon_item_search
+from affiliation.utils import stores_item_search
 
 app_name = 'items'
 
@@ -87,16 +87,20 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                                                        **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if self.model == Item and "amazon_search" in request.POST:
+        if self.model == Item and "store_search" in request.POST:
             form = self.load_form(request)
-            request_name = form.data["name"]
-            if request_name != "":
-                item_list = amazon_item_search(request_name)
-                print(item_list)
-                #TODO: Display search results
+            keyword = form.data["name"]
             form.errors.clear()
-            return self.render_to_response(self.get_context_data(form=form))
+            return self.render_to_response(self.get_context_data(form=form,
+                item_list_by_store=stores_item_search(keyword)
+            ))
         else:
+            if self.model == Item and "create" in request.POST:
+                # TODO: pass the id_list to form_valid in order to get
+                #       the newly created item's id
+                if "linked_affiliation" in request.POST:
+                    id_list = request.POST["linked_affiliation"]
+
             return super(ContentCreateView, self).post(request, *args,
                                                                 **kwargs)
 

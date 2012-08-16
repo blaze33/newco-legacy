@@ -22,7 +22,22 @@
 </br>
 
 <form action="." method="POST">{% csrf_token %}
-    {{ form|as_bootstrap }}
+    <div class="row">
+        <div class="span4">{{ form|as_bootstrap }}</div>
+        <div class="span8">
+            <button type="submit" class="btn" name="store_search"><i class="icon-eye-open"></i> {% trans "Stores Search" %}</button>
+            {% if item_list_by_store %}<div class="row">{% for store, item_list in item_list_by_store.items %}
+                {% if item_list %}<h3>{{ store }}</h3>{% endif %}
+                {% for item in item_list %}<div class="row">
+                    <div class="span1"><input type="checkbox" name="linked_affiliation" value="{{ item.id }}"></div>
+                    <div class="span6">
+                        <img src="{{ item.img_small }}" width="40px" height="40px">
+                        {{ item.name }}
+                    </div>
+                </div>{% endfor %}
+            {% endfor %}</div>{% endif %}
+        </div>
+    </div>
     <div class="row">
     <table class="img-selector span12" id="img-selector-1">
         <tbody>
@@ -31,15 +46,12 @@
             <ul class="thumbnails connectedSortable selected-list" id="selected-list">
             </ul>
           </td>
-          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
-            <p>Trash <i class="icon-trash"></i></p>
-          </td>
+          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1"><p>Trash <i class="icon-trash"></i></p></td>
         </tr>
         </tbody>
     </table>
     </div>
-    <input type="submit" class="btn" value='{% trans "Submit" %}'/>
-    <button type="submit" class="btn" name="amazon_search"><i class="icon-eye-open"></i> {% trans "Amazon Search" %}</button>
+    <input type="submit" class="btn" name="create" value='{% trans "Submit" %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 

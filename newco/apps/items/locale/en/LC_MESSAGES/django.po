@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-17 14:55+0200\n"
+"POT-Creation-Date: 2012-08-16 00:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,12 +113,12 @@ msgstr ""
 msgid "stories"
 msgstr ""
 
-#: views.py:70 views.py:120
+#: views.py:75 views.py:152
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:74 views.py:124
+#: views.py:79 views.py:156
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -169,7 +169,8 @@ msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
 #: templates/items/answer_form.html:16 templates/items/feature_form.html:17
-#: templates/items/item_form.html:29 templates/items/link_form.html:16
+#: templates/items/item_form.html:62 templates/items/link_form.html:16
+#: templates/items/question_form.html:16
 msgid "Submit"
 msgstr ""
 
@@ -233,6 +234,10 @@ msgstr ""
 
 #: templates/items/item_form.html:20
 msgid "Add something new to talk about:"
+msgstr ""
+
+#: templates/items/item_form.html:29
+msgid "Stores Search"
 msgstr ""
 
 #: templates/items/item_list.html:9
@@ -299,10 +304,10 @@ msgstr ""
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr ""
 
-#: templates/items/question_form.html:5
+#: templates/items/question_form.html:6
 msgid "Question"
 msgstr ""
 
-#: templates/items/question_form.html:7
+#: templates/items/question_form.html:10
 msgid "Ask something:"
 msgstr ""
