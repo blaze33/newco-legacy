@@ -192,3 +192,34 @@ class FeatureForm(ModelForm):
             return feature
         else:
             return super(FeatureForm, self).save(commit)
+
+class QuestionForm_new(ModelForm):
+
+    create = False
+
+    class Meta:
+        model = Question
+        exclude = ('author', 'items')
+        widgets = {
+            'content': Textarea(attrs={
+                'class': 'span4',
+                'placeholder': _('Add a context to the question.'),
+                'rows': 2}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+        return super(QuestionForm_new, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            question = super(QuestionForm_new, self).save(commit=False)
+            question.author = self.user
+            question.save()
+            question.items.add(kwargs.pop('pk'))
+            return question
+        else:
+            return super(QuestionForm_new, self).save(commit)

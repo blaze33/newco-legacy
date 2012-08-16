@@ -79,6 +79,7 @@ class Content(models.Model):
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
+    #q_context = models.CharField(max_length=500, verbose_name=_("q_context"))
 
     class Meta:
         verbose_name = _("question")

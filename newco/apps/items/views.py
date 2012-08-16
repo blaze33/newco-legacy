@@ -16,7 +16,7 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from items.models import Item, Content, Question, Link, Feature
-from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import QuestionForm, AnswerForm, ItemForm, QuestionForm_new
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
@@ -187,9 +187,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             
         if self.model == Question:
             if self.request.POST:
-                f = QuestionForm(self.request.POST, request=self.request)
+                f = QuestionForm_new(self.request.POST, request=self.request)
             else:
-                f = QuestionForm(request=self.request)
+                f = QuestionForm_new(request=self.request)
             question=context['question']
             item=question.items.all()[0]
             context.update({
@@ -250,6 +250,16 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 {'status': Content._meta.get_field('status').default}
             )
             form = QuestionForm(post_values, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
+        elif 'question_context' in request.POST:
+            post_values = request.POST.copy()
+            post_values.update(
+                {'status': Content._meta.get_field('status').default}
+            )
+            form = QuestionForm_new(post_values, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
