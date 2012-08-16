@@ -49,15 +49,15 @@ django-storages==1.1.4
 python-dateutil==1.5
 
 ## memcache interface
-#pylibmc==1.2.3
-#django-pylibmc-sasl==0.2.4
+pylibmc==1.2.3
+django-pylibmc-sasl==0.2.4
 ## memcache configuration for heroku
-#django-heroku-memcacheify==0.2
+django-heroku-memcacheify==0.2
 
 ## production webserver
-#gunicorn==0.14.3
-#gevent==0.13.7
-#greenlet==0.3.4
+gunicorn==0.14.3
+gevent==0.13.7
+greenlet==0.3.4
 
 ## Database backends
 ## PostgreSQL adapter for Python
