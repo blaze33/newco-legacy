@@ -23,7 +23,7 @@
 		<br>
 		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;">
 		{% for item in question.items.all %}
-		<h3><a href="{% url item_detail "item" item.id item.slug %}">{{item.name}}</a></h3>
+		<br><h4><a href="{% url item_detail "item" item.id item.slug %}">{{item.name}}</a></h4>
 		{% endfor %}
 		</div>
     </div>
@@ -42,9 +42,31 @@
 	            {% if user.is_superuser or question.author == request.user %}
 	                {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
 	            {% endif %}</h2>
-	            <br><h4>Add question details / Add a context</h4>
+	            
+	            <button class="btn btn-info" data-toggle="collapse" data-target="#demo">
+				Add question details
+				</button>
+				<br><br>
+				<div id="demo" class="collapse out">
+					<form method="POST" action="" class="form-horizontal">
+				        {% csrf_token %}
+				        <div class="input-prepend input-append"><span class="add-on"><i class="icon-pencil"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_context"><i class="icon-share-alt"></i></button>
+				        </div>
+				    </form>	
+			    </div>
+				
 	        </div>
-	        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+	        <div class="span4">
+		        <h5>Add this question to an other item</h5>
+				<ul class="nav nav-list">
+				        <li>
+				            <form action="" method="POST" class="form-horizontal">{% csrf_token %}
+				                <input name="item_pick" type="text" autocomplete="off" placeholder="{% trans 'Choose an item' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_items }}">
+				                <button class="btn" type="submit" style="height:25px; "><h4> {% trans "Add" %}</h4></button>
+				            </form>
+				        </li>
+			    </ul>
+			</div>  
 	    </div>
 		<br><br>
 		{% votes_by_user user on question.answer_set.all as answer_vote_dict %}

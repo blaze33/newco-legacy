@@ -23,6 +23,8 @@ from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
 from utils.asktools import process_asking
 
+import json
+
 app_name = 'items'
 
 
@@ -184,14 +186,23 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context.update(sets)
             
         if self.model == Question:
+            if self.request.POST:
+                f = QuestionForm(self.request.POST, request=self.request)
+            else:
+                f = QuestionForm(request=self.request)
             question=context['question']
             item=question.items.all()[0]
             context.update({
-                'prof_list_question': Profile.objects.filter(
+                'form': f,'prof_list_question': Profile.objects.filter(
                             skills__id__in=item.tags.values_list('id',
                             flat=True)).distinct()
             })
-
+            
+            list_items = list(Item.objects.all().values_list('name', flat=True))
+            context.update({
+                'data_source_items': json.dumps(list_items)
+            })
+            
         return context
 
     def form_invalid(self, form):
@@ -220,6 +231,17 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        if 'item_pick' in request.POST:
+            name = request.POST['item_pick']
+            item_list = Item.objects.filter(name=name)
+            item=item_list[0]
+            question_list=Question.objects.filter(pk=kwargs['pk'])
+            question=question_list[0]
+            question.items.add(item)
+            
+            response = item.get_absolute_url()
+            return HttpResponseRedirect(response)
+            
         if 'vote_button' in request.POST:
             return self.process_voting(request)
         elif 'question_ask' in request.POST:
