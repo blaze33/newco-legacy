@@ -116,6 +116,7 @@ def _amazon_init(aff_item, amazon_item):
 
     aff_item.name = amazon_item.ItemAttributes.Title.pyval
     aff_item.object_id = unicode(amazon_item.ASIN)
+    aff_item.ean = unicode(getattr(amazon_item.ItemAttributes, "EAN", ""))
     aff_item.url = unicode(amazon_item.DetailPageURL)
 
     # Look for amazon then foreign new, then foreign used prices
@@ -138,9 +139,12 @@ def _amazon_init(aff_item, amazon_item):
         aff_item.price = Decimal(
             price_str.split(" ")[1].replace(",", ".")).quantize(Decimal('.01'))
 
-    aff_item.img_small = unicode(amazon_item.SmallImage.URL)
-    aff_item.img_medium = unicode(amazon_item.MediumImage.URL)
-    aff_item.img_large = unicode(amazon_item.LargeImage.URL)
+    if hasattr(amazon_item, "SmallImage"):
+        aff_item.img_small = unicode(amazon_item.SmallImage.URL)
+    if hasattr(amazon_item, "MediumImage"):
+        aff_item.img_medium = unicode(amazon_item.MediumImage.URL)
+    if hasattr(amazon_item, "LargeImage"):
+        aff_item.img_large = unicode(amazon_item.LargeImage.URL)
 
     return aff_item
 
