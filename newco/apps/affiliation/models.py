@@ -92,6 +92,21 @@ class AffiliationItemCatalog(AffiliationItemBase):
 class AffiliationItem(AffiliationItemBase):
     item = models.ForeignKey(Item)
 
+    def copy_from_affcatalog(self, other):
+        self.name = other.name
+        self.store = other.store
+        self.object_id = other.object_id
+        self.ean = other.ean
+        self.url = other.url
+        self.price = other.price
+        self.currency = other.currency
+        self.img_small = other.img_small
+        self.img_medium = other.img_medium
+        self.img_large = other.img_large
+
+    class Meta:
+        unique_together = (("item", "store", "object_id"),)
+
 
 def _amazon_init(aff_item, amazon_item):
     amazon, created = Store.objects.get_or_create(
