@@ -25,14 +25,12 @@ def amazon_item_search(keyword, search_index="All", nb_items=10):
     item_list = []
 
     for root in node:
-        total_results = root.Items.TotalResults.pyval
-        total_pages = root.Items.TotalPages.pyval
+#        total_results = root.Items.TotalResults.pyval
+#        total_pages = root.Items.TotalPages.pyval
         try:
             current_page = root.Items.Request.ItemSearchRequest.ItemPage.pyval
         except AttributeError:
             current_page = 1
-
-        print 'page %d of %d' % (current_page, total_pages)
 
         nspace = root.nsmap.get(None, '')
         items = root.xpath('//aws:Items/aws:Item', namespaces={'aws': nspace})
