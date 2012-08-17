@@ -42,7 +42,7 @@ def amazon_item_search(keyword, search_index="All", nb_items=10):
         if current_page >= nb_pages:
             break
 
-    item_list = item_list[:(nb_items - 1)]
+    item_list = item_list[:nb_items]
     aff_item_list = list()
     for item in item_list:
         entry, created = AffiliationItemCatalog.objects.get_or_create(
