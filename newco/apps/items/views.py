@@ -21,7 +21,6 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
-from affiliation.utils import stores_item_search
 
 app_name = 'items'
 
@@ -50,9 +49,10 @@ class ContentFormMixin(object):
         return self.render_to_response(self.get_context_data(form=form))
 
     def load_form(self, request):
-        if self.form_class:
+        if self.form_class and (
+                    self.__class__ == ContentCreateView or self.model == Item):
             form_kwargs = self.get_form_kwargs()
-            form_kwargs.update({'request': request})
+            form_kwargs.update({"request": request})
             form = self.form_class(**form_kwargs)
         else:
             form_class = self.get_form_class()
@@ -61,7 +61,12 @@ class ContentFormMixin(object):
 
     def post(self, request, *args, **kwargs):
         form = self.load_form(request)
-        if form.is_valid():
+        if "next" in request.POST:
+            self.success_url = request.POST.get("next")
+        if self.model == Item and "store_search" in request.POST:
+            form.stores_search()
+            return self.render_to_response(self.get_context_data(form=form))
+        elif form.is_valid():
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -86,24 +91,6 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                                                        *args,
                                                        **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        if self.model == Item and "store_search" in request.POST:
-            form = self.load_form(request)
-            keyword = form.data["name"]
-            form.errors.clear()
-            return self.render_to_response(self.get_context_data(form=form,
-                item_list_by_store=stores_item_search(keyword)
-            ))
-        else:
-            if self.model == Item and "create" in request.POST:
-                # TODO: pass the id_list to form_valid in order to get
-                #       the newly created item's id
-                if "linked_affiliation" in request.POST:
-                    id_list = request.POST["linked_affiliation"]
-
-            return super(ContentCreateView, self).post(request, *args,
-                                                                **kwargs)
-
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
@@ -126,7 +113,7 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
         return super(ContentCreateView, self).form_invalid(form)
 
 
-class ContentUpdateView(ContentView, UpdateView):
+class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -145,8 +132,7 @@ class ContentUpdateView(ContentView, UpdateView):
         return self.render_to_response(self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
-        if "next" in request.POST:
-            self.success_url = request.POST.get("next")
+        self.object = self.get_object()
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
 
 

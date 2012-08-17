@@ -26,10 +26,11 @@
         <div class="span4">{{ form|as_bootstrap }}</div>
         <div class="span8">
             <button type="submit" class="btn" name="store_search"><i class="icon-eye-open"></i> {% trans "Stores Search" %}</button>
-            {% if item_list_by_store %}<div class="row">{% for store, item_list in item_list_by_store.items %}
+            {% if form.item_list_by_store %}<div class="row">{% for store, item_list in form.item_list_by_store.items %}
                 {% if item_list %}<h3>{{ store }}</h3>{% endif %}
                 {% for item in item_list %}<div class="row">
-                    <div class="span1"><input type="checkbox" name="linked_affiliation" value="{{ item.id }}"></div>
+                    <input type="hidden" name="current_search_{{ store }}" value="{{ item.id }}" />
+                    <div class="span1"><input type="checkbox" name="link_aff" value="{{ item.id }}"></div>
                     <div class="span6">
                         <img src="{{ item.img_small }}" width="40px" height="40px">
                         {{ item.name }}
