@@ -4,19 +4,19 @@ from items.models import Content
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
-class Genus(models.Model):
+class Genre(models.Model):
     name  = models.CharField(max_length=200, verbose_name=_("name"))
     description = models.CharField(max_length=1000, verbose_name=_("description"))
 
     class Meta:
-        verbose_name = _("genus")
+        verbose_name = _("genre")
 
     def __unicode__(self):
         return self.name
 
 
 class Item(Content):
-    genus = models.ForeignKey("genus")
+    genre = models.ForeignKey("genre")
     data = hstore.DictionaryField(db_index=True)
     objects = hstore.HStoreManager()
     context = models.ManyToManyField('self', through='Relationship',
@@ -27,7 +27,7 @@ class Item(Content):
         verbose_name = _("item")
 
     def __unicode__(self):
-        return self.genus.name
+        return self.genre.name
 
 
 class Relationship(models.Model):
