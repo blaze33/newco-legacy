@@ -223,3 +223,42 @@ class QuestionForm_new(ModelForm):
             return question
         else:
             return super(QuestionForm_new, self).save(commit)
+        
+class AnswerForm_new(ModelForm):
+
+    create = False
+
+    class Meta:
+        model = Answer
+        fields = ('content', 'status', )
+        widgets = {
+            'content': Textarea(attrs={
+                'class': 'span3',
+                'placeholder': _('Be concise and to the point.'),
+                'rows': 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        
+        if 'instance' not in kwargs or kwargs['instance'] == None:
+            
+            self.create = True
+            self.request = kwargs.pop('request')
+            self.user = self.request.user
+            self.question_id = self.request.POST['question_id']
+            self.question = Question.objects.get(pk=self.question_id)
+        else:
+            self.object = kwargs['instance']
+            self.question = self.object.question
+        return super(AnswerForm_new, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True, **kwargs):
+        if commit and self.create:
+            answer = super(AnswerForm_new, self).save(commit=False)
+            answer.author = self.user
+            answer.question = self.question
+            answer.save()
+            answer.items = answer.question.items.all()
+            return answer
+        else:
+            return super(AnswerForm_new, self).save(commit)
