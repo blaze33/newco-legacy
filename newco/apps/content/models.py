@@ -1,3 +1,4 @@
+from django.db import models
 from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
 from django.utils.translation import ugettext_lazy as _
