@@ -68,7 +68,7 @@ class AffiliationItemBase(models.Model):
         if source is not None and item is not None:
             if source == "amazon":
                 self = _amazon_init(self, item)
-            elif source == "decatlon":
+            elif source == "decathlon":
                 self = _decathlon_init(self, item)
 
     def identical(self, other):
