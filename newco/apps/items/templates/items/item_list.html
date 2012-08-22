@@ -4,15 +4,102 @@
 {% load account_tags %}
 {% load content_utils %}
 
+{% block extra_style %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/elephant.css">
+{% endblock %}
+
 {% block body_class %}index{% endblock %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
 
-{% block body %}<div class="span7">
+{% block body %}
+
+<div class="container">
+	<header class="jumbotron subhead" id="overview">
+<div class="subnav subnav-fixed">	
+<ul class="nav nav-pills">
+	<li style="padding:10px"><b>NewCo empowers people to buy better</b></li>
+  <li class="dropdown" id="menu1">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+      Categories
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#">Categories</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </li>
+   <li class="dropdown" id="menu2">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
+      Popular
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#">Popular</a></li>
+    </ul>
+  </li>
+   <li class="dropdown" id="menu3">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu3">
+      Last contributions
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#">Last Contributions</a></li>
+    </ul>
+  </li>
+</ul>
+
+</div></header>
+</div>
+<br><br>
+
+
+	<div id="elephant">
+        <div title="le gros elephant" style="width:80px; background-position: 0px 0px"></div>
+        <br/>
+        <h2>{{ tag.name }}</h2>
+    </div>
+
+<br><br>
+
+
+<div class="row">
+	<div class="span3">
+		<div class="row"style="background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #74888F),color-stop(1, white)); border-radius: 5px;">	
+			<h3>Select what's important to personalize your Best match</h3>
+			<h4>
+			<br><br>Popularity
+			<br><br>Price
+			<br><br>New Product
+			</h4>
+			
+			<br><br>
+			 
+			 <select name="sort_items">
+                    <option value="0">Sort by</option>
+                    <option value="1">Newest to Oldest</option>
+                    <option value="2">Oldest to Newest</option>
+            </select>
+		</div>
+		<br><br><br><br>
+		
+		<div class="row"style="background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,white), color-stop(100%,#E6EAF3)); border-radius: 5px;">
+			<h4>Other products in same category you may be interested are</h4>
+			<div style="color: #74888F">
+				<br>Sac de couchage
+				<br>GPS
+				<br>Chaussures de marche
+			</div>
+		</div>
+	</div>
+	<div class="span7">
+ 
+ 
+ 
     {% block search %}
-        <form action="." method="POST" class="well">{% csrf_token %}
-            <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" class="input-xlarge" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn" type="submit" style="height:40px; "><h3><i class="icon-search"></i> {% trans "Search" %}</h3></button></div>
-        </form>
+
     {% endblock%}
 
     {% block header %}
@@ -36,7 +123,10 @@
     {% block createitem %}
         <p><a class="btn" href="{% url item_create "item" %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></p>
     {% endblock %}
-</div>{% endblock %}
+
+	</div>
+</div>
+{% endblock %}
 
 {% block extra_script %}
     {{ block.super }}

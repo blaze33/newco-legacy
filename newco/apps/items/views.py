@@ -192,8 +192,16 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 f = QuestionForm_new(request=self.request)
             question=context['question']
             item=question.items.all()[0]
+            #Build Related Questions List
+            question_list=list()
+            for item_it in question.items.all():
+                question_list_it=list(Question.objects.filter(items=item_it))
+                question_list_it.remove(question)
+                if question_list_it:
+                    question_list.append(question_list_it[0])
+
             context.update({
-                'form': f,'prof_list_question': Profile.objects.filter(
+                'question_list': question_list,'form': f,'prof_list_question': Profile.objects.filter(
                             skills__id__in=item.tags.values_list('id',
                             flat=True)).distinct()
             })
@@ -232,6 +240,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'item_pick' in request.POST:
+            #Add a question to an other item
             name = request.POST['item_pick']
             item_list = Item.objects.filter(name=name)
             item=item_list[0]
