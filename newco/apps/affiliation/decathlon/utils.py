@@ -44,7 +44,7 @@ def decathlon_db_processing(output_file=None):
     for i, row in enumerate(rows):
         output.write("ENTRY %d --- " % (i + 1))
         entry = storing_class()
-        entry.store_init("decatlon", row)
+        entry.store_init("decathlon", row)
 
         if entry.object_id in d4_object_ids:
             try:
