@@ -64,7 +64,7 @@
 			    </div>
 		        </div>    
 			    <div class="span2 offset1 block_controls">
-			        <button data-toggle="modal" data-target="#ask{{ question.id }}">
+			        <button data-toggle="modal" data-target="#ask{{ question.id }}" class="btn btn-mini">
 			        <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
 			        </button>
 				</div>
@@ -103,7 +103,7 @@
         <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</a>
     	</div>
         <div class="span2 offset1 block_controls">
-        <button data-toggle="modal" data-target="#ask">
+        <button data-toggle="modal" data-target="#ask" class="btn btn-mini">
         <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
         </button>
 	    
