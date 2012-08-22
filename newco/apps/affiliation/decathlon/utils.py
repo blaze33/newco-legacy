@@ -12,7 +12,7 @@ def decathlon_item_search(keyword, nb_items=10):
     )
 
     return AffiliationItemCatalog.objects.filter(store=decathlon,
-                                    name__icontains=keyword)[:(nb_items - 1)]
+                                    name__icontains=keyword)[:nb_items]
 
 
 @transaction.commit_manually
