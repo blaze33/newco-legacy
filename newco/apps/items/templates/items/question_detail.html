@@ -1,3 +1,5 @@
+{% extends "site_base.html" %}
+
 {% load i18n %}
 {% load voting_tags %}
 {% load voting_utils %}
@@ -5,23 +7,29 @@
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
-{% votes_by_user user on questions as question_vote_dict %}
-{% scores_for_objects questions as question_score_dict %}
+{% block extra_style %}
+    {{ block.super }}
 
-{% for question in questions %}
-<div class="row question">
-<div class="span7">
-    {% dict_entry_for_item question from question_vote_dict as vote %}
-    {% dict_entry_for_item question from question_score_dict as score %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+{% endblock %}
+
+{% block head_title %}{{ question.content }}{% endblock %}
+
+{% block body %}
+
+{% vote_by_user user on question as vote %}
+{% score_for_object question as score %}
+
+<div class="row"><div class="span7">
 
     <div class="row one_row" id="q-{{ question.id }}">
-        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h3></div>
-        <div class="span4"><h3>
-            <a href="{% url item_detail 'question' question.id 'ROOO' %}">{{ question.content }}</a>
+        <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
+        <div class="span4"><h2>
+            {{ question.content }}
             {% if user.is_superuser or question.author == request.user %}
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
-        </h3></div>
+        </h2></div>
         <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
     </div>
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
@@ -52,6 +60,6 @@
             <input type="hidden" name="question_id" value="{{ question.id }}"/>
         </form></div>
     </div></div>
-    <hr>
+
 </div></div>
-{% endfor %}
+{% endblock %}

@@ -152,7 +152,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         if self.model == Item:
-            item = context['item']
+            item = context["item"]
 
             feats = Feature.objects.filter(
                         Q(items__id=item.id) & Q(status=Content.STATUS.public)
@@ -197,17 +197,20 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             sets.update({"feat_lists": [sets["feat_pos"], sets["feat_neg"]]})
             del sets["feat_pos"]
             del sets["feat_neg"]
+            context.update(sets)
 
             prof_list = Profile.objects.filter(
                 skills__id__in=self.object.tags.values_list('id', flat=True)
             ).distinct()
-
-            context.update({
-                'q_form': q_form, 'prof_list': prof_list
-            })
-
-            context.update(sets)
-
+            context.update({"q_form": q_form, "prof_list": prof_list})
+        elif self.model == Question:
+            question = context.pop("question")
+            if "answer" in self.request.POST:
+                question.answer_form = AnswerForm(self.request.POST,
+                                                        request=self.request)
+            else:
+                question.answer_form = AnswerForm(request=self.request)
+            context.update({"question": question})
         return context
 
     def form_invalid(self, form):
