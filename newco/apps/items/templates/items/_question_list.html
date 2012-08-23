@@ -3,6 +3,7 @@
 {% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
+{% load bootstrap_tags %}
 
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
@@ -40,9 +41,21 @@
             <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
         </div>
     {% endif %}{% endfor %}
-    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
-        <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
-    </a></div></div>
+
+    <div class="row">
+        <div class="span6 offset1">
+            <div class="block_controls"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button></div>
+            <br />
+            <div id="answer_form_{{ question.id }}" class="collapse out">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {{ question.answer_form|as_bootstrap }}
+                    <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+                    <input type="hidden" name="question_id" value="{{ question.id }}"/>
+                </form>
+            </div>
+        </div>
+    </div>
     <hr>
 </div></div>
 {% endfor %}

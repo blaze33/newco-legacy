@@ -120,23 +120,24 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ('content', 'status', )
+        fields = ("content", "status", )
         widgets = {
-            'content': Textarea(attrs={
-                'class': 'span6',
-                'placeholder': _('Be concise and to the point.'),
-                'rows': 6}),
+            "content": Textarea(attrs={
+                "class": "span6",
+                "placeholder": _("Be concise and to the point."),
+                "rows": 6}),
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
+        if "instance" not in kwargs or kwargs["instance"] == None:
             self.create = True
-            self.request = kwargs.pop('request')
+            self.request = kwargs.pop("request")
             self.user = self.request.user
-            self.question_id = self.request.REQUEST['question_id']
-            self.question = Question.objects.get(pk=self.question_id)
+            if "question_id" in self.request.REQUEST:
+                self.question_id = self.request.REQUEST["question_id"]
+                self.question = Question.objects.get(pk=self.question_id)
         else:
-            self.object = kwargs['instance']
+            self.object = kwargs["instance"]
             self.question = self.object.question
         return super(AnswerForm, self).__init__(*args, **kwargs)
 

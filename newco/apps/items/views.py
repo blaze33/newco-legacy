@@ -152,21 +152,36 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         if self.model == Item:
-            if self.request.POST:
-                f = QuestionForm(self.request.POST, request=self.request)
-            else:
-                f = QuestionForm(request=self.request)
-
             item = context['item']
 
             feats = Feature.objects.filter(
                         Q(items__id=item.id) & Q(status=Content.STATUS.public)
             )
 
+            questions = Question.objects.filter(
+                Q(items__id=item.id) & Q(status=Content.STATUS.public)
+            )
+
+            POST_dict = self.request.POST.copy()
+
+            if "question" in POST_dict:
+                q_form = QuestionForm(POST_dict, request=self.request)
+            else:
+                q_form = QuestionForm(request=self.request)
+
+            if "answer" in POST_dict and "question_id" in POST_dict:
+                for q in questions:
+                    if q.id != int(POST_dict["question_id"]):
+                        q.answer_form = AnswerForm(request=self.request)
+                    else:
+                        q.answer_form = AnswerForm(POST_dict,
+                                                        request=self.request)
+            else:
+                for q in questions:
+                    q.answer_form = AnswerForm(request=self.request)
+
             sets = {
-                "questions": Question.objects.filter(
-                    Q(items__id=item.id) & Q(status=Content.STATUS.public)
-                ),
+                "questions": questions,
                 "links": Link.objects.filter(
                     Q(items__id=item.id) & Q(status=Content.STATUS.public)
                 ),
@@ -183,10 +198,12 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             del sets["feat_pos"]
             del sets["feat_neg"]
 
+            prof_list = Profile.objects.filter(
+                skills__id__in=self.object.tags.values_list('id', flat=True)
+            ).distinct()
+
             context.update({
-                'form': f, 'prof_list': Profile.objects.filter(
-                            skills__id__in=self.object.tags.values_list('id',
-                            flat=True)).distinct()
+                'q_form': q_form, 'prof_list': prof_list
             })
 
             context.update(sets)
@@ -219,22 +236,28 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        if 'vote_button' in request.POST:
+        if "vote_button" in request.POST:
             return self.process_voting(request)
-        elif 'question_ask' in request.POST:
-            post_values = request.POST.copy()
-            post_values.update(
+        elif "question" in request.POST:
+            POST_dict = request.POST.copy()
+            POST_dict.update(
                 {'status': Content._meta.get_field('status').default}
             )
-            form = QuestionForm(post_values, request=request)
+            form = QuestionForm(POST_dict, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
-        elif 'follow' in request.POST or 'unfollow' in request.POST:
+        elif "answer" in request.POST:
+            form = AnswerForm(request.POST, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
+        elif "follow" in request.POST or "unfollow" in request.POST:
             return process_following(request, go_to_object=True)
         else:
-            return self.form_invalid(form)
+            return HttpResponseRedirect(request.path)
 
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
