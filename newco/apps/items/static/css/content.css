@@ -2,6 +2,10 @@
         vertical-align: baseline;
     }
 
+    h2 [class^="icon-"],[class*=" icon-"] {
+        vertical-align: baseline;
+    }
+
     .one_row {
         border-radius: 5px 5px 5px 5px;
         -webkit-transition: background-color 0.9s;
