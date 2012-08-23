@@ -22,6 +22,7 @@ from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
 from utils.asktools import process_asking
+from utils.answertools import process_answering
 
 import json
 
@@ -243,7 +244,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     "object": self.object._meta.verbose_name
                 }
             )
-        return HttpResponseRedirect(self.object.get_absolute_url())
+        if 'question_answer' in request.POST:
+                return process_answering(request)
+        else:   
+            return HttpResponseRedirect(self.object.get_absolute_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
