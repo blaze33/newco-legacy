@@ -35,7 +35,7 @@ class Item(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('item_detail', None, {"model_name": "item",
+        return ("item_detail", None, {"model_name": self._meta.module_name,
                                       "pk": self.id,
                                       "slug": self.slug})
 register(Item)
@@ -87,9 +87,10 @@ class Question(Content):
         q = self.content
         return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
 
+    @permalink
     def get_absolute_url(self, anchor_pattern="/question-%(id)s#q-%(id)s"):
-        item = self.items.select_related()[0]
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+        return ("item_detail", None, {"model_name": self._meta.module_name,
+                        "pk": self.id, "slug": slugify(self.__unicode__())})
 
 
 class Answer(Content):
@@ -104,8 +105,8 @@ class Answer(Content):
         return u"%s" % (a if len(a) <= 50 else a[:50] + "...")
 
     def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
-        item = self.question.items.select_related()[0]
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+        return self.question.get_absolute_url() + \
+                                            (anchor_pattern % self.__dict__)
 
 
 class Link(Content):
