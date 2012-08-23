@@ -183,6 +183,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                             flat=True)).distinct()
             })
 
+            list_profiles = list(Profile.objects.all().values_list('name', flat=True))
+            context.update({
+                'data_source_profiles': json.dumps(list_profiles)
+            })
             context.update(sets)
             
         if self.model == Question:
@@ -277,9 +281,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         elif 'follow' in request.POST or 'unfollow' in request.POST:
             return process_following(request, go_to_object=True)
-        elif 'ask' in request.POST:
+        elif 'ask' or 'ask_prof_pick' in request.POST:
             return process_asking(request)
-        
         else:
             return self.form_invalid(form)
 

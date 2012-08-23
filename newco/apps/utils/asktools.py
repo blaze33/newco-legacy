@@ -25,12 +25,22 @@ def process_asking(request, go_to_object=False):
             "text": _("%(user)s, your message has not been sent, you can't asking yourself !")
         },
     }
-
+    
     obj = load_object(request)
-    ask_profile = request.POST["ask"]
-    profile_list= Profile.objects.filter(name=ask_profile)
-    profile=profile_list[0]
-    username = user_display(request.user)
+    if 'ask' in request.POST:
+        ask_profile = request.POST["ask"]
+        profile_list= Profile.objects.filter(name=ask_profile)
+        profile=profile_list[0]
+
+    elif 'ask_prof_pick' in request.POST:
+        ask_profile_search = request.POST["ask_prof_pick"]
+        profile_list = Profile.objects.filter(name=ask_profile_search)
+        if profile_list.count() > 0:
+            profile = profile_list[0]     
+        else:
+            pass
+
+        username = user_display(request.user)
 
     if profile != request.user.get_profile():
         try:        
