@@ -107,8 +107,8 @@
 
     {% block itemlist %}
         {% if item_list %}
-            <ul class="nav nav-pills"><li class="dropdown" id="menu1">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">Liste des produits<b class="caret"></b></a>
+            <ul class="nav nav-pills"><li class="dropdown" id="list_prod">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#list_prod">Liste des produits<b class="caret"></b></a>
                 <ul class="dropdown-menu">{% for item in item_list %}
                     <li><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a></li>
                 {% endfor %}</ul>
