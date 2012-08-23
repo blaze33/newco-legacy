@@ -214,6 +214,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             context.update({
                 'data_source_items': json.dumps(list_items)
             })
+            list_profiles = list(Profile.objects.all().values_list('name', flat=True))
+            context.update({
+                'data_source_profiles': json.dumps(list_profiles)
+            })
             
         return context
 

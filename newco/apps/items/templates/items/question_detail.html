@@ -120,19 +120,18 @@
 			    </div>
 	        </div> 
 	        <div class="span2 offset1 block_controls">
-		        <button data-toggle="modal" data-target="#ask{{ question.id }}">
+		        <button data-toggle="modal" data-target="#ask" class="btn btn-mini">
 		        <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
 		        </button>
-		    
 		    </div>
-		    
-		    <div id="ask{{ question.id }}" class="modal fade hide">
+		    <div id="ask" class="modal fade hide">
 			    <div class="modal-header">
 		        	<button class="close" data-dismiss="modal">×</button>
-		        	<h3>Ask them to answer (10 points each)&nbsp;:</h3>
+		        	<h3>Ask them to answer&nbsp;:</h3>
 	    		</div>
 	    		<div class="modal-body form-horizontal">
 			    	{% if prof_list_question.count > 0 %}
+			    	<h4>Ask an Expert</h4>
 			    	{% for prof in prof_list_question %}
 	    			<br>
 				   	<div class="row">
@@ -140,11 +139,26 @@
 					    	<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %} </span></a> 
 					    </div>
 					    <div class="span1">
-						    {% ask_form question %}
+						    <form action='' method='POST'>{% csrf_token %}
+							    <input type='submit' class='btn' name='ask_design' value='Ask'/>
+							    <input type='hidden' name='ask' value='{% user_display prof.user %}'/>
+							    <input type='hidden' name='app_label' value='{{ question|to_app_label }}'/>
+							    <input type='hidden' name='object_name' value='{{ question|to_class_name }}'/>
+							    <input type='hidden' name='id' value='{{ question.id }}'/>
+							</form>
 				        </div>
 			        </div>
 			    	{% endfor %}
 			    	{% else %}We're sorry, no one can help you for now. Please wait or edit the product tags.<br> Thank you!.{% endif %}
+			    	<br><br><h4>Or Ask someone else</h4>
+			    	<form action="" method="POST" class="form-horizontal">{% csrf_token %}
+		                <input name="ask_prof_pick" type="text" autocomplete="off" placeholder="{% trans 'Choose someone' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profiles }}">
+					    <input type='submit' class='btn' name='ask_design' value='Ask'/>
+					    <input type='hidden' name='app_label' value='{{ question|to_app_label }}'/>
+					    <input type='hidden' name='object_name' value='{{ question|to_class_name }}'/>
+					    <input type='hidden' name='id' value='{{ question.id }}'/>
+		            </form>
+			    	
 		    	</div>
 		    	<div class="modal-footer">
 		        	You could also push your question in Homepage for 50 points :
@@ -153,9 +167,9 @@
 			        </button>
 	    		</div>
 		    </div>
+		    
 	     </div>
+	     
 	     <hr>
-	
-	
 </div></div>
 {% endblock %}
