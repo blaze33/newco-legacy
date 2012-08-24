@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<html>
+<head><title>{{ message_subject }}</title></head>
+
+<body>
+    <strong>{{ answeree }}</strong>,<br>
+    <h4><a href="{{ answerer_url }}">{{ answerer }}</a> a repondu a votre question <a href="{{ question_url }}">"{{ question_object }}"</a>.</h4>
+    <br>{{ answer_object }}
+    <br><br><hr><small>Cet email vous a ete envoye parce que cette option est activee dans votre profil.
+    Pour changer votre configuration cliquez <a href="{{ answeree_url }}" >ici</a> (option bientot disponible).
+    <br><br>The NewCo Project team</small>
+</body></html>

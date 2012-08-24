@@ -1,0 +1,48 @@
+/* Homepage specific styling */
+#elephant {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+#elephant span{
+    text-align: right;
+}
+#elephant > div{
+    display: inline-block;
+    background: #fff url(../img/elephant.png);
+    height:80px;
+}
+
+
+<h1 style="float: left; margin-bottom: 0; background: url(/img/elephant.png) 
+no-repeat left top; padding-left: 95px; font-size: 28px; padding-top: 8px; min-height: 75px">
+	Send large files for free<span style="font-size: 15px; display: block; letter-spacing: 0; font-weight: normal">
+	Securely send files that are too large to email.</span></h1>
+	
+{% block header %}
+    {% url tagged_items tag.slug as tag_url%}
+    <div class="row">
+        <div class="span5">{% blocktrans with tag_name=tag.name %} <a href="{{ tag_url }}"><span class="label">{{ tag_name }}</span></a>{% endblocktrans %}</div>
+        <div class="span2"><div class="alert alert-info"><a class="close" href="{% url item_index %}" data-dismiss="alert">&times;</a>{{ tag.name }}</div></div>
+    </div>
+{% endblock %}
+
+ 
+{% block search %}
+        <form action="." method="POST" class="well">{% csrf_token %}
+            <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" class="input-xlarge" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn" type="submit" style="height:40px; "><h3><i class="icon-search"></i> {% trans "Search" %}</h3></button></div>
+        </form>
+{% endblock%}
+
+<div class="row"><div class="span7">
+            <form class="input-append" action="." method="POST">{% csrf_token %}
+                {% blocktrans %}
+                <select name="sort_items">
+                    <option value="0">Choose</option>
+                    <option value="1">Newest to Oldest</option>
+                    <option value="2">Oldest to Newest</option>
+                </select><button type="submit" class="btn">Sort</button>
+                {% endblocktrans %}
+            </form>
+        </div></div>
+

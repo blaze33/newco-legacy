@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{{ answeree }},
+{{ answerer }} a repondu a votre question "{{ question_object }}".
+{{ answer_object }}
+
+Pour voir le profil de {{ answerer }}, suivez ce lien :
+{{ answerer_url }}
+
+Pour voir la {{ question }}, suivez ce lien :
+{{ question_url }}
+
+---
+Cet email vous a ete envoye parce que cette option est activee dans votre profil.
+Pour changer votre configuration suivez ce lien : {{ answeree_url }} (option bientot disponible).
+
+---
+Merci !
+The NewCo Project team

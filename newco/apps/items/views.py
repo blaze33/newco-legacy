@@ -21,6 +21,10 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.asktools import process_asking
+from utils.answertools import process_answering
+
+import json
 
 app_name = 'items'
 
@@ -204,13 +208,43 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             ).distinct()
             context.update({"q_form": q_form, "prof_list": prof_list})
         elif self.model == Question:
+            question = context["question"]
+            question_list=list()
+            #Build Related Questions List
+            for item_it in question.items.all():
+                question_list_it=list(Question.objects.filter(items=item_it))
+                question_list_it.remove(question)
+                if question_list_it:
+                    question_list.append(question_list_it[0])
+            context.update({
+                'question_list': question_list
+            })
+            list_items = list(Item.objects.all().values_list('name', flat=True))
+            item=question.items.all()[0]
+            context.update({
+                'prof_list_question': Profile.objects.filter(
+                            skills__id__in=item.tags.values_list('id',
+                            flat=True)).distinct()
+            })                
+            
             question = context.pop("question")
+
+                    
             if "answer" in self.request.POST:
                 question.answer_form = AnswerForm(self.request.POST,
                                                         request=self.request)
             else:
                 question.answer_form = AnswerForm(request=self.request)
             context.update({"question": question})
+            
+            context.update({
+                'data_source_items': json.dumps(list_items)
+            })
+            list_profiles = list(Profile.objects.all().values_list('name', flat=True))
+            context.update({
+                'data_source_profiles': json.dumps(list_profiles)
+            })
+
         return context
 
     def form_invalid(self, form):
@@ -235,12 +269,26 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     "object": self.object._meta.verbose_name
                 }
             )
-        return HttpResponseRedirect(self.object.get_absolute_url())
+        if 'answer' in request.POST:
+                return process_answering(request)
+        else:   
+            return HttpResponseRedirect(self.object.get_absolute_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if "vote_button" in request.POST:
             return self.process_voting(request)
+#		elif "item_pick" in request.POST:
+#            #Add a question to an other item
+#            name = request.POST['item_pick']
+#            item_list = Item.objects.filter(name=name)
+#            item=item_list[0]
+#            question_list=Question.objects.filter(pk=kwargs['pk'])
+#            question=question_list[0]
+#            question.items.add(item)
+            
+            response = item.get_absolute_url()
+            return HttpResponseRedirect(response)
         elif "question" in request.POST:
             POST_dict = request.POST.copy()
             POST_dict.update(
@@ -251,6 +299,12 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
+#		elif 'question_context' in request.POST:
+#            form = QuestionForm_new(request.POST, request=request)
+#            if form.is_valid():
+#                return self.form_valid(form, request, **kwargs)
+#            else:
+#                return self.form_invalid(form)
         elif "answer" in request.POST:
             form = AnswerForm(request.POST, request=request)
             if form.is_valid():
@@ -259,6 +313,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.form_invalid(form)
         elif "follow" in request.POST or "unfollow" in request.POST:
             return process_following(request, go_to_object=True)
+        elif 'ask' or 'ask_prof_pick' in request.POST:
+            return process_asking(request)
         else:
             return HttpResponseRedirect(request.path)
 

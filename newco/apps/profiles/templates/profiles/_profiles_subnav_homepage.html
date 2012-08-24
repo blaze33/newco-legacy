@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load pagination_tags %}
+
+
+<div class="row">
+    <ul class="nav nav-list">
+        <li>
+            <form action="" method="POST" class="form-horizontal">{% csrf_token %}
+                <input name="pf_pick" type="text" autocomplete="off" placeholder="{% trans 'Search user' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
+            </form>
+        </li>
+    </ul>
+</div>
