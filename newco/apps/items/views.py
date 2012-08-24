@@ -225,42 +225,53 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, request, **kwargs):
-        if form.cleaned_data:
-            self.object = form.save(**kwargs)
-            form.save_m2m()
-            messages.add_message(self.request,
-                self.messages["object_created"]["level"],
-                self.messages["object_created"]["text"] % {
-                    "user": user_display(self.request.user),
-                    "object": self.object._meta.verbose_name
-                }
-            )
-        return HttpResponseRedirect(self.object.get_absolute_url())
+        self.object = form.save(**kwargs)
+        form.save_m2m()
+        messages.add_message(self.request,
+            self.messages["object_created"]["level"],
+            self.messages["object_created"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": self.object._meta.verbose_name
+            }
+        )
+        return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        if "next" in request.POST:
+            self.success_url = request.POST.get("next")
         if "vote_button" in request.POST:
             return self.process_voting(request)
-        elif "question" in request.POST:
-            POST_dict = request.POST.copy()
-            POST_dict.update(
-                {'status': Content._meta.get_field('status').default}
-            )
-            form = QuestionForm(POST_dict, request=request)
-            if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
-            else:
-                return self.form_invalid(form)
-        elif "answer" in request.POST:
-            form = AnswerForm(request.POST, request=request)
-            if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
-            else:
-                return self.form_invalid(form)
         elif "follow" in request.POST or "unfollow" in request.POST:
             return process_following(request, go_to_object=True)
+        elif "question" in request.POST or "answer" in request.POST:
+            if "question" in request.POST:
+                POST_dict = request.POST.copy()
+                POST_dict.update(
+                    {'status': Content._meta.get_field('status').default}
+                )
+                form = QuestionForm(POST_dict, request=request)
+            else:
+                form = AnswerForm(request.POST, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
         else:
             return HttpResponseRedirect(request.path)
+
+    def get_success_url(self):
+        if self.success_url:
+            url = self.success_url % self.object.__dict__
+        else:
+            try:
+                url = self.object.get_absolute_url()
+            except AttributeError:
+                raise ImproperlyConfigured(
+                    "No URL to redirect to. Either provide a url or define"
+                    " a get_absolute_url method on the Model."
+                )
+        return url
 
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))

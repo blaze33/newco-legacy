@@ -26,6 +26,7 @@
             {% include "bootstrap/_field_errors.html" %}
             {% include "bootstrap/_field_help_text.html" %}
         </div></div>{% endwith %}
+        <input type="hidden" name="next" value="{{ item.get_absolute_url }}"/>
     </form>
 </div></div>
 
