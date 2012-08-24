@@ -202,7 +202,7 @@ INSTALLED_APPS = [
     "raven.contrib.django",
 
     # Project-external
-    #"newco_bw_editor",
+    "newco_bw_editor",
     
     # Project
     "about",

@@ -33,7 +33,7 @@
         <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
             <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
             <div class="span4"><p>
-                {{ answer.content }}
+                {% autoescape off %}{{ answer.content }}{% endautoescape %}
                 {% if user.is_superuser or answer.author == request.user %}
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
@@ -50,6 +50,7 @@
             {{ question.answer_form|as_bootstrap }}
             <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
             <input type="hidden" name="question_id" value="{{ question.id }}"/>
+            
         </form></div>
     </div></div>
     <hr>

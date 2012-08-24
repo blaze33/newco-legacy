@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from items.models import Item, Question, Answer, Story, Link, Feature
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.utils import stores_item_search
-
+from newco_bw_editor.widgets import BW_small_Widget, BW_large_Widget
 
 class ItemForm(ModelForm):
 
@@ -122,10 +122,12 @@ class AnswerForm(ModelForm):
         model = Answer
         fields = ("content", "status", )
         widgets = {
-            "content": Textarea(attrs={
-                "class": "span6",
-                "placeholder": _("Be concise and to the point."),
-                "rows": 6}),
+            'content': BW_small_Widget(attrs={ 
+                'class': 'span4',
+                'rows': 6,
+                'placeholder': _('Be concise and to the point.'), 
+                'rel': "bw_editor_small",
+                }),
         }
 
     def __init__(self, *args, **kwargs):
