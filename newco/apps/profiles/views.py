@@ -52,7 +52,10 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                                                     *args,
                                                     **kwargs)
         elif request.user.is_authenticated():
-            self.template_name = "profiles/profile_homepage.html"
+            if 'category_name' in kwargs:
+                self.template_name = "profiles/profile_homepage_filtered.html"
+            else:
+                self.template_name = "profiles/profile_homepage.html"
             self.page_user = request.user
             self.object = self.page_user.get_profile()
             context = self.get_context_data()
@@ -81,6 +84,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
+        feed_all = Content.objects.filter(
+               status=Content.STATUS.public
+        )
         list_pf = list(Profile.objects.all().values_list('name', flat=True))
 
         #profile_sorted = Profile.objects.filter(name__icontains="s")
@@ -95,7 +101,8 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed': feed.select_subclasses(),
+            'newsfeed_filtered': feed.select_subclasses(),
+            'newsfeed_all': feed_all.select_subclasses(),
             'data_source_profile': json.dumps(list_pf),
             'profile_list_sorted': profile_sorted,
             #'content_list_sorted': feed

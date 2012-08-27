@@ -29,6 +29,7 @@ urlpatterns = patterns("",
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
     url(r"^autocomplete/", include("autocomplete_light.urls")),
     url(r"^utils/", include("utils.urls")),
+    url(r"^(?P<category_name>[-\w]+)/$", ProfileDetailView.as_view(is_profile_page=False), name="home_category"),
 )
 
 if settings.DEBUG:
