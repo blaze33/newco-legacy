@@ -183,6 +183,8 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # external
+    "newco_bw_editor",
+    
 #    "notification",  # must be first
     "staticfiles",
     "compressor",

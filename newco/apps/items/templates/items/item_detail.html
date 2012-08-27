@@ -7,6 +7,7 @@
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    {% if questions %}{{ questions.0.answer_form.media.css }}{% endif %}
 {% endblock %}
 
 {% block head_title %}{{ item.name }}{% endblock %}
@@ -72,4 +73,5 @@
 {% block extra_body_base %}
     {{ block.super }}
     <script src="{% static "js/content.js" %}"></script>
+    {% if questions %}{{ questions.0.answer_form.media.js }}{% endif %}
 {% endblock %}

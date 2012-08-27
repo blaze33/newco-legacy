@@ -3,6 +3,11 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
+{% block extra_style %}
+    {{ block.super }}
+    {{ form.media.css }}
+{% endblock %}
+
 {% block head_title %}{% trans "Answer" %}{% endblock %}
 
 {% block body %}
@@ -18,4 +23,9 @@
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    {{ form.media.js }}
 {% endblock %}
