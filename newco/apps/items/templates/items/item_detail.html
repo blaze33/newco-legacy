@@ -70,12 +70,12 @@
     </div>
 </div>
 
-<div class="span4">
+<div class="span4">{% if item.affiliationitem_set.all %}
     <h4>{% trans "Buy" %}</h4>
     <div id="profiles_list1">
                 {% for link in item.affiliationitem_set.all %}{% include "affiliation/_affiliation_item.html" with item=link %}{% endfor %}
     </div>
-</div>
+{% endif %}</div>
 {% endblock %}
 
 {% block extra_body_base %}
