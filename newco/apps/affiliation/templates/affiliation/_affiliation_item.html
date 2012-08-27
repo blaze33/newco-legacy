@@ -1,0 +1,11 @@
+<div class="profile-item thumbnail">
+    <div class="name">
+        <a href="{{ item.url }}" target="_blank">
+            <img src="{{ item.img_small }}" width="40px" heigth="40px">
+            {{ item.name|truncatechars:30 }}
+        </a>
+    </div>
+    <div class="details">
+        <a class="black" href="{{ item.store.url }}" target="_blank">{{ item.store }}</a>
+    </div>
+</div>
