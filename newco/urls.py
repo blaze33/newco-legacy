@@ -9,7 +9,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from profiles.views import ProfileDetailView
-from items.api import ItemResource
+from content.api import ItemResource
 
 item_resource = ItemResource()
 
