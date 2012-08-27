@@ -1,0 +1,50 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% block head_title %}{% trans item.name %}{% endblock %}
+
+{% block body %}
+
+<h1>{{ item }}</h1>
+<br />
+<ul>
+    <li>Name: {{ item.data.name }}</li>
+    <li>ID: {{ item.id }}</li>
+    <li>Created: {{ item.created }}</li>
+    <li>Last modified: {{ item.modified }}</li>
+    <li>Data: {{ item.data }}</li>
+</ul>
+<hr>
+Context:    {{  item.context  }}<br>
+{% for relation in item.context.all %}
+    {{  relation.data  }} {{  relation.to_item  }}
+{% endfor %}<br>
+<hr>
+related_to: {{  item.related_to  }}<br>
+{% for relation in item.context.all %}
+    {{  relation.data  }} {{  relation.to_item  }}
+{% endfor %}
+<br><hr>
+{{  item.get_items  }}
+<br><hr>
+{{  item.get_relations  }}<br>
+{% for relation in item.get_relations %}
+    {{  relation.from_item  }} {{  relation.data.relationship  }} {{  relation.to_item  }}<br>
+{% endfor %}
+<br><hr>
+{{  item.get_related_items  }}
+<br><hr>
+{{  item.get_related_relations  }}
+<hr>
+<p>
+<a class="btn" href="{% url content_index %}">
+    <i class="icon-list"></i> Items list</a>
+<a class="btn" href='{% url content_edit "item" item.id %}'>
+    <i class="icon-edit"></i> Edit Item</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url content_delete "item" item.id %}'>
+    <i class="icon-trash"></i> Delete Item</a>
+{% endif %}
+</p>
+
+{% endblock %}

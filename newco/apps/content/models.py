@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import permalink
 from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
 from django.utils.translation import ugettext_lazy as _
@@ -20,7 +21,7 @@ class BaseModel(TimeStampedModel):
             self.votes.all().delete()
         except:
             pass
-        super(Content, self).delete()
+        super(BaseModel, self).delete()
 
 
 class Item(BaseModel):
@@ -43,8 +44,27 @@ class Item(BaseModel):
         except:
             return None
 
+    def get_items(self):
+        return self.context.filter(
+            to_item__from_item=self)
+    def get_relations(self):
+        return Relation.objects.filter(
+            from_item=self)
+
+    def get_related_items(self):
+        return self.related_to.filter(
+            from_item__to_item=self)
+    def get_related_relations(self):
+        return Relation.objects.filter(
+            to_item=self)
+
     def __unicode__(self):
         return self.get('name')
+
+    @permalink
+    def get_absolute_url(self):
+        slug = self.get('slug')
+        return ('content_detail', None, {"model_name":"item","pk": self.id,"slug": slug} )
 
 
 class Relation(BaseModel):
