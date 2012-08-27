@@ -43,7 +43,10 @@
     {% endif %}{% endfor %}
 
     <div class="row"><div class="span6 offset1">
-        <div class="block_controls"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button></div>
+        <div class="block_controls">
+            <div class="span3"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button></div>
+            <div class="span2 right"><button data-toggle="modal" data-target="#ask" class="btn btn-mini"><i class="icon-user"></i>{% trans "Ask someone to answer" %}</button></div>
+        </div>
         <br />
         <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
             {% csrf_token %}
@@ -52,6 +55,9 @@
             <input type="hidden" name="question_id" value="{{ question.id }}"/>
         </form></div>
     </div></div>
+
+    {% include "items/_ask_modal.html" %}
+
     <hr>
 </div></div>
 {% endfor %}

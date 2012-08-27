@@ -21,6 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.asktools import process_asking
 from utils.tools import load_object
 
 app_name = 'items'
@@ -241,16 +242,18 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     def post(self, request, *args, **kwargs):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
-        if "vote_button" in request.POST:
-            print self.model
-            self.object = self.get_object()
-            obj_voted = load_object(request)
+        if "vote_button" in request.POST or "ask" in request.POST or \
+                                            "ask_prof_pick" in request.POST:
+            obj = load_object(request)
             if self.model == Item:
                 item = self.get_object()
-                success_url = obj_voted.get_product_related_url(item)
+                success_url = obj.get_product_related_url(item)
             else:
-                success_url = obj_voted.get_absolute_url()
-            return self.process_voting(request, obj_voted, success_url)
+                success_url = obj.get_absolute_url()
+            if "vote_button" in request.POST:
+                return self.process_voting(request, obj, success_url)
+            else:
+                return process_asking(request, obj, success_url)
         elif "follow" in request.POST or "unfollow" in request.POST:
             obj_followed = load_object(request)
             success_url = obj_followed.get_absolute_url()
