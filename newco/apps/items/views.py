@@ -21,6 +21,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.tools import load_object
 
 app_name = 'items'
 
@@ -241,9 +242,19 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         if "vote_button" in request.POST:
-            return self.process_voting(request)
+            print self.model
+            self.object = self.get_object()
+            obj_voted = load_object(request)
+            if self.model == Item:
+                item = self.get_object()
+                success_url = obj_voted.get_product_related_url(item)
+            else:
+                success_url = obj_voted.get_absolute_url()
+            return self.process_voting(request, obj_voted, success_url)
         elif "follow" in request.POST or "unfollow" in request.POST:
-            return process_following(request, go_to_object=True)
+            obj_followed = load_object(request)
+            success_url = obj_followed.get_absolute_url()
+            return process_following(request, obj_followed, success_url)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
@@ -275,8 +286,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
-    def process_voting(self, request):
-        return _process_voting(request, go_to_object=True)
+    def process_voting(self, request, obj, success_url):
+        return _process_voting(request, obj, success_url)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

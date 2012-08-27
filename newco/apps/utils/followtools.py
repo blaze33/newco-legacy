@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponseRedirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
@@ -12,7 +12,7 @@ from follow.models import Follow
 from utils.tools import load_object
 
 
-def process_following(request, go_to_object=False):
+def process_following(request, obj, success_url):
     msgs = {
         "follow": {
             "level": messages.INFO,
@@ -56,24 +56,7 @@ def process_following(request, go_to_object=False):
             msgs["warning"]["text"] % {"user": username}
         )
 
-    try:
-        if go_to_object:
-            return HttpResponseRedirect(follow.target.get_absolute_url())
-        else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    except (AttributeError, TypeError):
-        if 'HTTP_REFERER' in request.META:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        elif follow:
-            return HttpResponseServerError(
-                        '"%s" object of type ``%s`` has no method ' + \
-                        '``get_absolute_url()``.' % \
-                        (unicode(follow.target), follow.target.__class__)
-            )
-        else:
-            return HttpResponseServerError(
-                        'No follow object and `next` parameter found.'
-            )
+    return HttpResponseRedirect(success_url)
 
 
 def mail_followee(fwee, fwer, site):
