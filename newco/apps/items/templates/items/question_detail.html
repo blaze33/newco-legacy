@@ -13,6 +13,7 @@
     {{ block.super }}
 
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
 
 {% block head_title %}{{ question.content }}{% endblock %}
@@ -94,7 +95,7 @@
         <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
             <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
             <div class="span4"><p>
-                {{ answer.content }}
+                {% autoescape off %}{{ answer.content }}{% endautoescape %}
                 {% if user.is_superuser or answer.author == request.user %}
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
@@ -103,16 +104,18 @@
         </div>
     {% endif %}{% endfor %}
 
-    <div class="row"><div class="span3 offset1">
-        <div class="block_controls"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button></div>
+    <div class="row"><div class="span4 offset1">
+        <div class="block_controls"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form"><i class="icon-share-alt" id="icons"></i><span id ="text_to_change">{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
         <br />
-        <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
+        <div id="answer_form" class="collapse out"><form method="POST" action="">
             {% csrf_token %}
             {{ question.answer_form|as_bootstrap }}
             <button type="submit" class="btn btn-mini" name="answer" value="{{ answer.content }}"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
             <input type="hidden" name="question_id" value="{{ question.id }}"/>
         </form></div>
     </div>
+   
+    
 	<div class="span2 offset1 block_controls">
 		        <button data-toggle="modal" data-target="#ask" class="btn btn-mini">
 		        <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
@@ -165,4 +168,11 @@
 	</div>
 
 </div></div>
+{% endblock %}
+
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script src="{% static "js/content.js" %}"></script>
+    {% if question %}{{ question.answer_form.media.js }}{% endif %}
 {% endblock %}
