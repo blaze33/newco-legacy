@@ -10,6 +10,7 @@
 
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
 
+
 {% autopaginate contents %}
 <div class="row" id="contents_list1">
 {% for content in contents|slice:"6" %}
@@ -26,7 +27,7 @@
         {% endif %}
     </div>
     <div class="details">
-    <i>"{{ content.content }}"</i>
+    {% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}
      <br>{% if content.items.all.0.tags %}{% for tag in content.items.all.0.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}</p>
     </div>
     </div>
