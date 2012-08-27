@@ -9,8 +9,6 @@ from account.utils import user_display
 from follow.utils import toggle
 from follow.models import Follow
 
-from utils.tools import load_object
-
 
 def process_following(request, obj, success_url):
     msgs = {
@@ -28,7 +26,6 @@ def process_following(request, obj, success_url):
         },
     }
 
-    obj = load_object(request)
     username = user_display(request.user)
     if not request.user == obj:
         follow = toggle(request.user, obj)
