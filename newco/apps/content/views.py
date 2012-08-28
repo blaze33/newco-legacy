@@ -26,6 +26,10 @@ class ContentView(View):
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 class ContentFormMixin(object):
+    """ ContentFormMixin
+    Pass request to the form constructor.
+    Especially useful to get request.user.
+    """
 
     template_name = 'content/item_form.html'
     object = None
