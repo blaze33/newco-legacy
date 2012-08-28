@@ -19,7 +19,7 @@
             &nbsp;
         </td>
         <td style="width:500px; padding: 5px 0 10px 10px; vertical-align: top;background-color: #f2f2f2">
-	    <br><div style="font-family:verdana,serif;">{{ answer_object }}</div>
+	    <br><div style="font-family:verdana,serif;">{% autoescape off %}{{ answer_object }}{% endautoescape %}</div>
 	    <br><br>Thanks.<br>The NewCo Project team
 	    </td>
     </tr>
