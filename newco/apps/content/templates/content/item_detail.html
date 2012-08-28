@@ -15,26 +15,26 @@
     <li>Data: {{ item.data }}</li>
 </ul>
 <hr>
-Context:    {{  item.context  }}<br>
-{% for relation in item.context.all %}
-    {{  relation.data  }} {{  relation.to_item  }}
-{% endfor %}<br>
-<hr>
-related_to: {{  item.related_to  }}<br>
-{% for relation in item.context.all %}
-    {{  relation.data  }} {{  relation.to_item  }}
+{{  item.get_items  }}<br>
+{% for item in item.get_items %}
+    {{  item.id  }} {{  item.data.name  }} {{  item.data  }}<br>
 {% endfor %}
-<br><hr>
-{{  item.get_items  }}
 <br><hr>
 {{  item.get_relations  }}<br>
 {% for relation in item.get_relations %}
-    {{  relation.from_item  }} {{  relation.data.relationship  }} {{  relation.to_item  }}<br>
+    {{  relation.from_item  }} {{  relation.data.relationship  }} 
+    <a href="{{  relation.to_item.get_absolute_url  }}">{{  relation.to_item  }}</a><br>
 {% endfor %}
 <br><hr>
-{{  item.get_related_items  }}
+{{  item.get_related_items  }}<br>
+{% for item in item.get_related_items %}
+    {{  item.id  }} {{  item.data.name  }} {{  item.data  }}<br>
+{% endfor %}
 <br><hr>
-{{  item.get_related_relations  }}
+{{  item.get_related_relations  }}<br>
+{% for relation in item.get_related_relations %}
+    <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a> {{  relation.data.relationship  }} {{  relation.to_item  }}<br>
+{% endfor %}
 <hr>
 <p>
 <a class="btn" href="{% url content_index %}">
