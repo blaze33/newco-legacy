@@ -58,7 +58,7 @@ class JsonPairInputs(AdminTextareaWidget):
         attrs (dict) -- automatically passed in by django (unused in this function)
         """
         
-        ret = ''
+        ret = '<div class="control-group" id="form_data">'
         if value and len(value) > 0: 
             for k,v in value.items(): 
                 ctx = {'key':k,
@@ -67,6 +67,7 @@ class JsonPairInputs(AdminTextareaWidget):
                        'key_attrs': flatatt(self.key_attrs),
                        'val_attrs': flatatt(self.val_attrs) }
                 ret += '<input type="text" name="json_key[%(fieldname)s]" value="%(key)s" %(key_attrs)s> <input type="text" name="json_value[%(fieldname)s]" value="%(value)s" %(val_attrs)s><br />' % ctx
+        ret += '</div>'
         return mark_safe(ret)
 
     def value_from_datadict(self, data, files, name):

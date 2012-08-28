@@ -10,14 +10,16 @@ from django.core.urlresolvers import resolve, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import permission_required
 from django.forms.models import formset_factory
-from content.forms import ItemForm
+from content.forms import ItemForm, RelationForm
 
+app_name = 'content'
 
 class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
-            self.model = Item
+            self.model = get_model(app_name, kwargs['model_name'])
             form_class_name = kwargs['model_name'].title()+'Form'
+            # form_class_name = 'ContentForm'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
             print self.form_class
@@ -25,6 +27,7 @@ class ContentView(View):
 
 class ContentFormMixin(object):
 
+    template_name = 'content/item_form.html'
     object = None
 
     def get(self, request, *args, **kwargs):

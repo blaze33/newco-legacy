@@ -6,7 +6,8 @@ function addField(selector) {
 
 $(function(){
 	$("#add_field").click(function() {
-		addField("#form_data p");
+		addField("#form_data");
 		return false;
-	})
+	});
+	addField("#form_data");
 });

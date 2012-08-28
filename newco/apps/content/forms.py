@@ -15,7 +15,7 @@ except ImportError:
         return json.dumps(value, sort_keys=True, indent=2)
 
 from django.forms import ModelForm, Field, CharField
-from content.models import Item
+from content.models import Item, Relation
 from content.widgets import JsonPairInputs
 
 class DictionaryField(Field):
@@ -45,3 +45,7 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         exclude = ('context')
+
+class RelationForm(ItemForm):
+    class Meta:
+        model = Relation
