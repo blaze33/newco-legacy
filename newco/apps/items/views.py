@@ -201,10 +201,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             del sets["feat_neg"]
             context.update(sets)
 
-            prof_list = Profile.objects.filter(
-                skills__id__in=self.object.tags.values_list('id', flat=True)
-            ).distinct()
-            context.update({"q_form": q_form, "prof_list": prof_list})
+            tag_ids = self.object.tags.values_list('id', flat=True)
+            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            context.update({"q_form": q_form, "prof_list": p_list})
         elif self.model == Question:
             question = context.pop("question")
             if "answer" in self.request.POST:
@@ -212,7 +211,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                                                         request=self.request)
             else:
                 question.answer_form = AnswerForm(request=self.request)
-            context.update({"question": question})
+
+            tag_ids = question.items.all().values_list("tags__id", flat=True)
+            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            context.update({"question": question, "prof_list": p_list})
         return context
 
     def form_invalid(self, form):
