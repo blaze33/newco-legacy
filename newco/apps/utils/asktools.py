@@ -41,19 +41,19 @@ def process_asking(request, question, success_url, item=None):
 #        else:
 #            pass
 
-    if requested_user != request.user or True:
-        mail_askee(requested_profile, user_profile, site, question, item)
-        messages.add_message(request, msgs["ask"]["level"],
-            msgs["ask"]["text"] % {
-                "user": username, "ask_profile": requested_profile
-            }
-        )
-    else:
-        messages.add_message(request, msgs["warning"]["level"],
-            msgs["warning"]["text"] % {"user": username}
-        )
-        if item:
-            success_url = item.get_absolute_url()
+        if requested_user != request.user:
+            mail_askee(requested_profile, user_profile, site, question, item)
+            messages.add_message(request, msgs["ask"]["level"],
+                msgs["ask"]["text"] % {
+                    "user": username, "ask_profile": requested_profile
+                }
+            )
+        else:
+            messages.add_message(request, msgs["warning"]["level"],
+                msgs["warning"]["text"] % {"user": username}
+            )
+            if item:
+                success_url = item.get_absolute_url()
 
     return HttpResponseRedirect(success_url)
 
@@ -96,7 +96,7 @@ def mail_askee(askee, asker, site, question, item):
         "asker_url": "http://%s%s" % (site, asker.get_absolute_url()),
         "message_subject": message_subject,
         "txt_request": txt_req,
-        "settings_url": reverse("account_settings")
+        "settings_url": "http://%s%s" % (site, reverse("account_settings"))
     })
 
     msg_txt = txt_template.render(d)
