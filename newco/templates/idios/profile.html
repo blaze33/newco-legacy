@@ -5,6 +5,8 @@
 {% load follow_tags %}
 {% load content_utils %}
 
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
 {% block extra_style %}
     {{ block.super }}
 
