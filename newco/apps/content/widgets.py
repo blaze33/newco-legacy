@@ -89,3 +89,9 @@ class JsonPairInputs(AdminTextareaWidget):
                     datadict[key]=value
             print datadict
         return _to_text(datadict)
+
+    class Media:
+        # css = {
+        #          'all': ('/css/pretty.css',),
+        #     }
+        js = ('js/widget.js',)

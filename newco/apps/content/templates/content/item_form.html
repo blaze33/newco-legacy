@@ -13,8 +13,16 @@
 <br />
 
 <form action="." method="post">{% csrf_token %}
+	 <div class="control-group" id="form_data">
 {{ form.as_p }}
-<input type="submit" value="Submit" />
+	</div>
+<button class="btn" id="add_field"><icon class="icon-plus"></icon> Add a field</button>
+<input class="btn" type="submit" value="Submit" />
 </form>
 
+{% endblock %}
+
+{% block extra_script %}
+    {{  block.super  }}
+    {{  form.media  }}
 {% endblock %}
