@@ -5,6 +5,28 @@
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
+
+
+<div class="row"><div class="span7">
+    <i rel="add_icon" class="icon-plus" style="opacity: 0.1 ; cursor: pointer; cursor: hand; z-index: -1 ; position: relative; left: 20px; top: -13px;"></i>
+    <span class="nc_transition_add" style="position: relative; left: -5px; top: -15px;">
+        <button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i></button>
+        {% if questions %}<h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2>{% endif %}
+    </span>{% if not questions %}<h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2>{% endif %}
+    
+    <div id="question_form" class="collapse out" style="position: relative; left: 65px; top: -40px;">
+        <form method="POST" action="" class="form-inline">{% if not questions %}<br><br><br>{% endif %}
+            {% csrf_token %}
+            {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+                <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
+                </div>
+                {% include "bootstrap/_field_errors.html" %}
+                {% include "bootstrap/_field_help_text.html" %}
+            </div></div>{% endwith %}
+        </form>
+    </div>
+</div></div>
+
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
 
