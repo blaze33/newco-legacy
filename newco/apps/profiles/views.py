@@ -82,7 +82,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
-        list_pf = list(Profile.objects.all().values_list('name', flat=True))
+
+        profiles = Profile.objects.order_by("name").distinct("name")
+        list_pf = list(profiles.values_list('name', flat=True))
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
