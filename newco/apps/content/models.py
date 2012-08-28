@@ -59,7 +59,7 @@ class Item(BaseModel):
             to_item=self)
 
     def __unicode__(self):
-        return self.get('name')
+        return unicode(self.get('name'))
 
     @permalink
     def get_absolute_url(self):
