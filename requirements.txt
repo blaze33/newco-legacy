@@ -85,6 +85,10 @@ django-follow==0.6
 ## Autocomplete app
 django-autocomplete-light==1.0.11
 
+## Redis + complete
+redis==2.6.2
+redis-completion==0.3.1
+
 ## template loader
 hg+https://hg@bitbucket.org/wojas/django-apptemplates@ce738ccb3f02#egg=django_apptemplates
 

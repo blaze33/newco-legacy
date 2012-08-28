@@ -275,6 +275,9 @@ AWS_LOCALE = os.environ.get('AWS_LOCALE')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
+# Redis database ## redis://username:password@localhost:6379/0
+REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
+
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
 TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
