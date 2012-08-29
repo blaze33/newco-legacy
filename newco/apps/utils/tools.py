@@ -1,4 +1,10 @@
+from django.conf import settings
+from django.contrib.auth.signals import user_logged_in
 from django.db.models.loading import get_model
+from django.dispatch import receiver
+
+import urlparse
+from redis_completion import RedisEngine
 
 
 def load_object(request):
@@ -14,3 +20,15 @@ def load_object(request):
     except ObjectDoesNotExist:
         raise AttributeError('No %s for %s.' % (model._meta.app_label,
                                                 lookup_kwargs))
+
+
+def load_redis_engine():
+    redis_url = urlparse.urlparse(settings.REDISTOGO_URL)
+    if redis_url.scheme == "redis":
+        return RedisEngine(host=redis_url.hostname, port=redis_url.port,
+                                                password=redis_url.password)
+
+
+@receiver(user_logged_in)
+def update_redis(sender, request, user, **kwargs):
+    pass
