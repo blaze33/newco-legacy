@@ -14,7 +14,9 @@ from content.forms import ItemForm, RelationForm
 
 app_name = 'content'
 
+
 class ContentView(View):
+
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
@@ -25,9 +27,15 @@ class ContentView(View):
             print self.form_class
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
+    def get_template_names(self):
+        names = []
+        if self.template_name_suffix:
+            names.append("%s/%s%s.html" % (app_name, app_name,self.template_name_suffix))
+            return names
+        return super(ContentView, self).get_template_names()
+
 class ContentFormMixin(object):
 
-    template_name = 'content/item_form.html'
     object = None
 
     def get(self, request, *args, **kwargs):
@@ -58,18 +66,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        self.object = self.get_object()
-        if self.model == Item:
-#            QuestionFormSet = formset_factory(QuestionForm)
-#             if self.request.POST:
-#                 f = QuestionForm(self.request.POST, request=self.request)
-# #                fs = QuestionFormSet(self.request.POST, prefix='questions')
-#             else:
-#                 f = QuestionForm(request=self.request)
-# #                fs = QuestionFormSet(prefix='questions')
-# #            context['formset'] = fs
-#             context['form'] = f
-            context['item'] = self.object
+        context['item'] = self.get_object()
         return context
 
     def form_invalid(self, form):
