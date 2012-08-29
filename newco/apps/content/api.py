@@ -17,12 +17,15 @@ class ApiKeyPlusWebAuthentication(ApiKeyAuthentication):
         else:
             return super(ApiKeyPlusWebAuthentication, self).get_identifier(request)
 
+
 class ItemResource(ModelResource):
     class Meta:
         queryset = Item.objects.all()
         resource_name = 'item'
         authorization = DjangoAuthorization()
         authentication = ApiKeyPlusWebAuthentication()
+        include_absolute_url = True
+
 
 class RelationResource(ModelResource):
     from_item = fields.ToOneField( ItemResource, 'from_item')
@@ -33,3 +36,4 @@ class RelationResource(ModelResource):
         resource_name = 'relation'
         authorization = DjangoAuthorization()
         authentication = ApiKeyPlusWebAuthentication()
+        include_absolute_url = True
