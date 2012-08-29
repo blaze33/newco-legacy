@@ -16,6 +16,8 @@
         <dt> {{ key }} </dt> <dd> {{ value }} </dd>
     {% endfor %}
 </dl>
+
+{%  if model == 'item'  %}
 <h2>Relations:</h2>
 {{  item.get_items  }}<br>
 {% for item in item.get_items %}
@@ -24,7 +26,8 @@
 <br><hr>
 {{  item.get_relations  }}<br>
 {% for relation in item.get_relations %}
-    {{  relation.from_item  }} {{  relation.data.relationship  }} 
+    {{  relation.from_item  }}
+    <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     <a href="{{  relation.to_item.get_absolute_url  }}">{{  relation.to_item  }}</a><br>
 {% endfor %}
 <br><hr>
@@ -35,17 +38,30 @@
 <br><hr>
 {{  item.get_related_relations  }}<br>
 {% for relation in item.get_related_relations %}
-    <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a> {{  relation.data.relationship  }} {{  relation.to_item  }}<br>
+    <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a>
+    <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
+    {{  relation.to_item  }}<br>
 {% endfor %}
+
+{%  elif model == 'relation'  %}
+
+<h2>Items:</h2>
+
+<dl class="dl-horizontal">
+    <dt> From </dt> <dd> <a href="{{  item.from_item.get_absolute_url  }}">{{ item.from_item }}</a> </dd>
+    <dt> To </dt> <dd> <a href="{{  item.to_item.get_absolute_url  }}">{{ item.to_item }}</a> </dd>
+</dl>
+
+{%  endif  %}
 <hr>
 <p>
 <a class="btn" href="{% url model_index model %}">
-    <i class="icon-list"></i> Items list</a>
+    <i class="icon-list"></i> {{  model|capfirst  }}s list</a>
 <a class="btn" href='{% url content_edit model item.id %}'>
-    <i class="icon-edit"></i> Edit Item</a>
+    <i class="icon-edit"></i> Edit {{  model|capfirst  }}</a>
 {% if user.is_superuser %}
 <a class="btn" href='{% url content_delete model item.id %}'>
-    <i class="icon-trash"></i> Delete Item</a>
+    <i class="icon-trash"></i> Delete {{  model|capfirst  }}</a>
 {% endif %}
 </p>
 
