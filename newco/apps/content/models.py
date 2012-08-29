@@ -83,3 +83,6 @@ class Relation(BaseModel):
     """
     from_item = models.ForeignKey(Item, related_name='from_item')
     to_item = models.ForeignKey(Item, related_name='to_item')
+
+    def __unicode__(self):
+        return "%s %s %s" % (self.from_item.get('name'), self.get('relationship'), self.to_item.get('name'))
