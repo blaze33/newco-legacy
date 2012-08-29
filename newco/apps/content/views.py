@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import View, FormView, ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -27,6 +27,19 @@ class ContentView(View):
                 self.form_class = globals()[form_class_name]
             print self.form_class
         return super(ContentView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        """ Redirect to the correct slug if needed.
+        """
+        try:
+            self.object = self.get_object()
+            slug = self.object.get('slug')
+            if slug and kwargs['slug'] != slug:
+                url = self.object.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+        except:
+            pass #no get_object method, we're not accessing a single object.
+        return super(ContentView, self).get(request, *args, **kwargs)
 
     def get_template_names(self):
         names = []
@@ -77,6 +90,7 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         context['item'] = self.get_object()
+        context['relation_form'] = RelationForm(request=self.request)
         return context
 
     def form_invalid(self, form):
@@ -89,10 +103,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         return HttpResponseRedirect(self.get_object().get_absolute_url())
 
     def post(self, request, *args, **kwargs):
-        if 'question_ask' in request.POST:
-            form = QuestionForm(self.request.POST, request=request)
-            if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
+        form = self.form_class(self.request.POST, request=request)
+        if form.is_valid():
+            return self.form_valid(form, request, **kwargs)
         else:
             return self.form_invalid(form)
 
