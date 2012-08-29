@@ -1,14 +1,19 @@
+from django.db import models
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
+from django.contrib.auth.models import User
 from django.template import Context
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from account.utils import user_display
+from django.utils import timezone
+from datetime import datetime, timedelta
 
 from follow.utils import toggle
 from follow.models import Follow
 from profiles.models import Profile
+from about.models import LastMail
 from items.models import Question
 
 from utils.tools import load_object
@@ -61,4 +66,17 @@ def mail_answeree(answeree, answerer, site, object, answer):
         'auto-mailer@newco-project.fr', [answeree.user.email]
     )
     msg.attach_alternative(msg_html, "text/html")
-    msg.send()
+    
+    waiting_time=timedelta(minutes=10)
+    last_modif=LastMail.objects.filter(user=answerer.user)
+    if last_modif:
+        last_mail = last_modif[0]
+        diff=timezone.now()-last_mail.modified
+        print diff
+        if diff > waiting_time:
+            msg.send()
+            last_mail.save()
+    else:
+        last_mail = LastMail.objects.get_or_create(user=answerer.user)[0]
+        msg.send()
+        last_mail.save()
