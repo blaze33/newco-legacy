@@ -11,14 +11,13 @@
 
 <h1>Make your choice !</h1>
 <br />
-
-{% if item_list %}
+{% if object_list %}
     <ul>
-        {% for item in item_list %}
+        {% for item in object_list %}
             <li>
                 <a href='{{ item.get_absolute_url  }}'>{{ item }}</a>
                 &nbsp;
-                <a href='{% url content_edit "item" item.id %}'>
+                <a href='{% url content_edit model item.id %}'>
                     <i class="icon-edit"></i>
                 </a>
             </li>
@@ -28,6 +27,6 @@
     <p>No products are available.</p>
 {% endif %}
 <p>
-<a class="btn" href="{% url content_create "item" %}"><i class="icon-plus-sign"></i> Add an entry</a>
+<a class="btn" href="{% url content_create model %}"><i class="icon-plus-sign"></i> Add an entry</a>
 </p>
 {% endblock %}

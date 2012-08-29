@@ -6,9 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
 from voting.models import Vote
 
-
-class BaseModel(TimeStampedModel):
-    """ BaseModel
+class VoteModel(TimeStampedModel):
+    """ VoteModel
     An abstract base class with timestamps and votes.
     """
     votes = generic.GenericRelation(Vote)
@@ -22,27 +21,43 @@ class BaseModel(TimeStampedModel):
         except:
             pass
         super(BaseModel, self).delete()
+        
 
-
-class Item(BaseModel):
-    """ Item
-    A generic class to store any kind of object with an HStore to store data.
-    context list the related items.
+class BaseModel(VoteModel):
+    """ BaseModel
+    An abstract base class with timestamps and votes.
+    Stores data with HStore.
     """
     data = hstore.DictionaryField(db_index=True)
     objects = hstore.HStoreManager()
-    context = models.ManyToManyField('self', through='Relation',
-                                     symmetrical=False,
-                                     related_name='related_to')
 
     class Meta:
-        verbose_name = _("item")
+        abstract = True
 
     def get(self, key):
         try:
             return self.data[key]
         except:
             return None
+
+    @permalink
+    def get_absolute_url(self):
+        slug = self.get('slug')
+        return ('content_detail', None, {
+            "model_name":self.__class__.__name__,
+            "pk": self.id,"slug": slug} )
+
+
+class Item(BaseModel):
+    """ Item
+    A generic class to store any kind of object.
+    """
+    context = models.ManyToManyField('self', through='Relation',
+                                     symmetrical=False,
+                                     related_name='related_to')
+
+    class Meta:
+        verbose_name = _("item")
 
     def get_items(self):
         return self.context.filter(
@@ -61,11 +76,6 @@ class Item(BaseModel):
     def __unicode__(self):
         return unicode(self.get('name'))
 
-    @permalink
-    def get_absolute_url(self):
-        slug = self.get('slug')
-        return ('content_detail', None, {"model_name":"item","pk": self.id,"slug": slug} )
-
 
 class Relation(BaseModel):
     """ Relation
@@ -73,6 +83,3 @@ class Relation(BaseModel):
     """
     from_item = models.ForeignKey(Item, related_name='from_item')
     to_item = models.ForeignKey(Item, related_name='to_item')
-
-    data = hstore.DictionaryField(db_index=True)
-    objects = hstore.HStoreManager()

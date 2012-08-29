@@ -19,7 +19,8 @@ class ContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
-            self.model = get_model(app_name, kwargs['model_name'])
+            self.model_name = kwargs['model_name']
+            self.model = get_model(app_name, self.model_name)
             form_class_name = kwargs['model_name'].title()+'Form'
             # form_class_name = 'ContentForm'
             if form_class_name in globals():
@@ -33,6 +34,11 @@ class ContentView(View):
             names.append("%s/%s%s.html" % (app_name, app_name,self.template_name_suffix))
             return names
         return super(ContentView, self).get_template_names()
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentView, self).get_context_data(**kwargs)
+        context['model'] = self.model_name.lower()
+        return context
 
 class ContentFormMixin(object):
     """ ContentFormMixin
