@@ -5,7 +5,7 @@ from content.views import ContentCreateView, ContentUpdateView, ContentDeleteVie
 
 urlpatterns = patterns('',
     url(r"^$", ContentListView.as_view(model=Item), name="content_index"),
-    url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]+)",
+    url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]*)",
         ContentDetailView.as_view(),
         name="content_detail"),
     url(r"^(?P<model_name>[-\w]+)/$", ContentListView.as_view(), name="model_index"),
