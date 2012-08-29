@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.contrib.auth.signals import user_logged_in
 from django.db.models.loading import get_model
