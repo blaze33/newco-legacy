@@ -3,6 +3,9 @@
 {% load url from future %}
 {% load content_utils %}
 
+
+{# Original version #}
+
 <div class="pull-right">
     {% if request.user.is_authenticated %}
         <p class="navbar-text pull-left"></p>
@@ -32,3 +35,62 @@
         {% endif %}
     </ul>
 </div>
+
+{# End of original version #}
+
+
+
+<div class="pull-right btn-group">
+        {% if request.user.is_authenticated %}
+        <a href="{{ user.get_absolute_url }}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
+                <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                
+                <ul class="dropdown-menu">
+                    <li><a href="{{ user.get_absolute_url }}" > Dashboard </a></li>
+                    <li><a href="/profiles/profile2/9/seb" > Dashboard demo </a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url "account_settings" %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+                    {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
+                        <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                    {% endif %}
+                    <li class="divider"></li>
+                    <li><a href="{% url "account_logout" %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+                </ul>
+        {% endif %}
+</div>
+
+
+
+
+
+
+<div class="pull-right btn-group">
+        {% if request.user.is_authenticated %}
+                <a href="{{ user.get_absolute_url }}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
+                <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                
+                <ul class="dropdown-menu">
+                    <li><a href="{% url "account_settings" %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+                    {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
+                        <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                    {% endif %}
+                    <li class="divider"></li>
+                    <li><a href="{% url "account_logout" %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+                </ul>
+        {% endif %}
+</div>
+
+<div class="pull-right">
+    <ul class="nav pull-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %} </a>
+            <ul class="dropdown-menu">
+                <li> <a href="{% url "item_create" "item" %}"><i class="icon-tag"></i> <i class="icon-picture"></i> <i class="icon-list-alt"></i> {% trans "Add a product" %}</a> </li>
+                <li> <a href="#"><i class="icon-question-sign"></i> {% trans "Add a question" %}</a> </li>
+                <li> <a href="#"><i class="icon-file"></i> {% trans "Add a story" %}</a> </li>
+
+            </ul>
+        </li>
+    </ul>
+</div>
+

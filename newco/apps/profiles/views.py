@@ -35,6 +35,7 @@ class ProfileProcessFormView(ProcessFormView):
 class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
 
     is_profile_page = True
+    demo_dashboard = False ## For demo only line to be deleted ##
 
     def dispatch(self, request, *args, **kwargs):
         if self.is_profile_page:
@@ -48,6 +49,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
 
     def get(self, request, *args, **kwargs):
         if self.is_profile_page:
+            if self.demo_dashboard:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo.html"  ## For demo only line to be deleted ##
+                
             return super(ProfileDetailView, self).get(self,
                                                     request,
                                                     *args,
