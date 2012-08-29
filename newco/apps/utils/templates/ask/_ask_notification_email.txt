@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{{ askee }},
+{{ asker }} {{ txt_request }}
+
+{% blocktrans %}
+    To see {{ asker }}'s profile, go there:
+    {{ asker_url }}
+{% endblocktrans %}
+
+
+---
+This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: {{ settings_url }} (available soon).
+
+---
+Thanks,
+The NewCo team

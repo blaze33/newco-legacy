@@ -88,9 +88,13 @@ class Question(Content):
         return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
 
     @permalink
-    def get_absolute_url(self, anchor_pattern="/question-%(id)s#q-%(id)s"):
+    def get_absolute_url(self):
         return ("item_detail", None, {"model_name": self._meta.module_name,
                         "pk": self.id, "slug": slugify(self.__unicode__())})
+
+    def get_product_related_url(self, item,
+                                anchor_pattern="/question-%(id)s#q-%(id)s"):
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Answer(Content):
@@ -107,6 +111,10 @@ class Answer(Content):
     def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
                                             (anchor_pattern % self.__dict__)
+
+    def get_product_related_url(self, item,
+                                anchor_pattern="/answer-%(id)s#a-%(id)s"):
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Link(Content):
