@@ -60,6 +60,8 @@ class JsonPairInputs(AdminTextareaWidget):
         
         ret = '<div class="control-group" id="form_data">'
         if value and len(value) > 0: 
+            if type(value) == type(''): value = _to_python(value)
+            print value.__class__, value
             for k,v in value.items(): 
                 ctx = {'key':k,
                        'value':v,
@@ -81,6 +83,7 @@ class JsonPairInputs(AdminTextareaWidget):
         name  (str)   -- the name of the field associated with this widget
 
         """
+        datadict = "null"
         if data.has_key('json_key[%s]' % name) and data.has_key('json_value[%s]' % name): 
             keys     = data.getlist("json_key[%s]" % name) 
             values   = data.getlist("json_value[%s]" % name) 
@@ -88,7 +91,6 @@ class JsonPairInputs(AdminTextareaWidget):
             for key, value in zip(keys, values): 
                 if len(key) > 0:
                     datadict[key]=value
-            print datadict
         return _to_text(datadict)
 
     class Media:
