@@ -18,30 +18,46 @@
 </dl>
 
 {%  if model == 'item'  %}
-<h2>Relations:</h2>
-{{  item.get_items  }}<br>
+<div class="row"><div class="span6">
+<h2>Linked to :</h2>
 {% for item in item.get_items %}
-    {{  item.id  }} {{  item.data.name  }} {{  item.data  }}<br>
+    <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
-<br><hr>
-{{  item.get_relations  }}<br>
+</div><div class="span6">
+<h2>Relations :</h2>
 {% for relation in item.get_relations %}
     {{  relation.from_item  }}
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     <a href="{{  relation.to_item.get_absolute_url  }}">{{  relation.to_item  }}</a><br>
 {% endfor %}
-<br><hr>
-{{  item.get_related_items  }}<br>
+</div></div>
+
+<hr>
+<div class="row"><div class="span6">
+<h2>Linked by:</h2>
 {% for item in item.get_related_items %}
-    {{  item.id  }} {{  item.data.name  }} {{  item.data  }}<br>
+    <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
-<br><hr>
-{{  item.get_related_relations  }}<br>
+</div><div class="span6">
+<h2>Backlinks:</h2>
 {% for relation in item.get_related_relations %}
     <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a>
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     {{  relation.to_item  }}<br>
 {% endfor %}
+</div></div>
+<hr>
+
+<h2>Create a new link:</h2>
+<form action="/content2/add/relation/" method="post">{% csrf_token %}
+<div class="input-append">
+This {{  model  }}
+<input type="hidden" name="json_key[data]" value="relationship">
+<input type="text" name="json_value[data]" value="">
+<input type="hidden" name="from_item" id="id_from_item" value="{{  object.id  }}">
+{{  relation_form.to_item  }}
+<input class="btn" type="submit" value="Submit"></div>
+</form>
 
 {%  elif model == 'relation'  %}
 
