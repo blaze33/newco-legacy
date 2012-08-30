@@ -20,7 +20,7 @@ class VoteModel(TimeStampedModel):
             self.votes.all().delete()
         except:
             pass
-        super(BaseModel, self).delete()
+        super(VoteModel, self).delete()
         
 
 class BaseModel(VoteModel):
