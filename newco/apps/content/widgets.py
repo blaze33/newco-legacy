@@ -20,6 +20,7 @@ from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.forms.widgets import flatatt
 from django.contrib.admin.widgets import AdminTextareaWidget
+from django.utils.html import escape
 
 class JsonPairInputs(AdminTextareaWidget):
     """A widget that displays JSON Key Value Pairs
@@ -63,8 +64,8 @@ class JsonPairInputs(AdminTextareaWidget):
             if type(value) == type(''): value = _to_python(value)
             print value.__class__, value
             for k,v in value.items(): 
-                ctx = {'key':k,
-                       'value':v,
+                ctx = {'key':escape(k),
+                       'value':escape(v),
                        'fieldname':name,
                        'key_attrs': flatatt(self.key_attrs),
                        'val_attrs': flatatt(self.val_attrs) }
