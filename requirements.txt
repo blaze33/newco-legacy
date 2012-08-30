@@ -13,7 +13,7 @@ django-staticfiles==1.2.1
 django-compressor==1.2a1
 
 django-timezones==0.2
-pytz==2012c
+pytz==2012d
 django-openid==0.3a1
 python-openid==2.2.5
 
