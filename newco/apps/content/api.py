@@ -2,6 +2,7 @@ from tastypie.resources import ModelResource
 from tastypie.authentication import ApiKeyAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie import fields
+from tastypie.fields import ApiField
 from content.models import Item, Relation
 
 class ApiKeyPlusWebAuthentication(ApiKeyAuthentication):
@@ -17,8 +18,13 @@ class ApiKeyPlusWebAuthentication(ApiKeyAuthentication):
         else:
             return super(ApiKeyPlusWebAuthentication, self).get_identifier(request)
 
+class BaseResource(ModelResource):
+    data = fields.DictField(attribute='data')
 
-class ItemResource(ModelResource):
+    class Meta:
+        abstract = True
+
+class ItemResource(BaseResource):
     class Meta:
         queryset = Item.objects.all()
         resource_name = 'item'
@@ -27,7 +33,7 @@ class ItemResource(ModelResource):
         include_absolute_url = True
 
 
-class RelationResource(ModelResource):
+class RelationResource(BaseResource):
     from_item = fields.ToOneField( ItemResource, 'from_item')
     to_item = fields.ToOneField( ItemResource, 'to_item')
 
