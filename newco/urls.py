@@ -9,10 +9,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 from profiles.views import ProfileDetailView
+from tastypie.api import Api
 from content.api import ItemResource, RelationResource
 
-item_resource = ItemResource()
-relation_resource = RelationResource()
+v1_api = Api(api_name='v1')
+v1_api.register(ItemResource())
+v1_api.register(RelationResource())
 
 handler500 = "pinax.views.server_error"
 
@@ -26,8 +28,7 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r"^content/", include("items.urls")),
     url(r"^content2/", include("content.urls")),
-    url(r'^api/', include(item_resource.urls)),
-    url(r'^api/', include(relation_resource.urls)),
+    url(r'^api/', include(v1_api.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
     url(r"^autocomplete/", include("autocomplete_light.urls")),
