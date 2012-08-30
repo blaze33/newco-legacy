@@ -31,7 +31,7 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 # Amazon
 python-amazon-product-api==0.2.5
 
-# lxml required by amazon api
+# lxml required by amazon api (3.0 alpha 2 released)
 lxml==2.3.4
 
 ## pinax-theme-bootstrap
@@ -39,7 +39,7 @@ pinax-theme-bootstrap==2.0.4
 pinax-theme-bootstrap-account==1.0b2
 
 ## schema and data migrations
-South==0.7.5
+South==0.7.6
 
 ## AWS interface & storage backend
 boto==2.5.1
