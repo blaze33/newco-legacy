@@ -122,19 +122,13 @@ class ContentDeleteView(ContentView, DeleteView):
         return HttpResponseRedirect(success_url)
 
     def get_success_url(self, request):
-        if self.model.__name__ == "Item":
-            success_url = reverse("content_index")
-        elif "success_url" in request.GET:
+        if "success_url" in request.GET:
             success_url = request.GET.get("success_url")
+        elif self.model == Relation:
+            success_url = self.object.from_item.get_absolute_url()
         else:
-            success_url = None
+            success_url = reverse("content_index")
 
-        obj = self.object
-        if success_url != obj.get_absolute_url() and success_url is not None:
+        if success_url != self.object.get_absolute_url() and success_url is not None:
             return success_url
-        else:
-            try:
-                return obj.items.all()[0].get_absolute_url()
-            except:
-                pass
         raise ImproperlyConfigured
