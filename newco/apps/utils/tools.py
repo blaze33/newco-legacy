@@ -3,14 +3,31 @@ from django.conf import settings
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.loading import get_model
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 from taggit.models import Tag
 from items.models import Item
 from profiles.models import Profile
 
+import unicodedata
 import urlparse
 from redis_completion import RedisEngine
+
+PARAMS = {
+    Item._meta.module_name: {
+        "class": Item, "pk": "id", "title_field": "name",
+        "recorded_fields": ["name", "slug", "author", "pub_date"]
+    },
+    Profile._meta.module_name: {
+        "class": Profile, "pk": "id", "title_field": "name",
+        "recorded_fields": ["name", "slug"]
+    },
+    Tag._meta.module_name: {
+        "class": Tag, "pk": "id", "title_field": "name",
+        "recorded_fields": ["name", "slug"]
+    },
+}
 
 
 def load_object(request):
@@ -36,34 +53,50 @@ def load_redis_engine():
 
 
 @receiver(user_logged_in)
-def update_redis(sender, request, user, **kwargs):
+def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
-    print "Bonjour"
 
-    params = {
-        Item._meta.module_name: {
-            "class": Item, "pk": "id", "title_field": "name",
-            "recorded_fields": ["name", "slug", "author", "pub_date"]
-        },
-        Profile._meta.module_name: {
-            "class": Profile, "pk": "id", "title_field": "name",
-            "recorded_fields": ["name", "slug"]
-        },
-        Tag._meta.module_name: {
-            "class": Tag, "pk": "id", "title_field": "name",
-            "recorded_fields": ["name", "slug"]
-        },
-    }
-
-    for key, value in params.iteritems():
+    for key, value in PARAMS.iteritems():
         cls = value["class"]
         ctype = ContentType.objects.get(app_label=cls._meta.app_label,
                                             model=cls._meta.module_name)
-        obj_ids = cls.objects.values_list(value["pk"], flat=True)
-        for obj_id in obj_ids:
-            obj = cls.objects.get(id=obj_id)
-            title = unicode(obj.__getattribute__(value["title_field"]))
+        for obj in cls.objects.all():
+            obj_id = obj.__getattribute__(value["pk"])
+            title = obj.__getattribute__(value["title_field"])
+            title = unicodedata.normalize('NFKD', title).encode('utf-8',
+                                                                'ignore')
             data = {"class": key, "title": title}
             for field in value["recorded_fields"]:
                 data.update({field: unicode(obj.__getattribute__(field))})
             engine.store_json(obj_id, title, data, ctype.id)
+
+
+@receiver(post_save)
+def redis_post_save(sender, instance=None, raw=False, **kwargs):
+    mod_name = instance._meta.module_name
+    if mod_name in PARAMS:
+        engine = load_redis_engine()
+        value = PARAMS[mod_name]
+
+        obj_id = instance.__getattribute__(value["pk"])
+        title = instance.__getattribute__(value["title_field"])
+        title = unicodedata.normalize('NFKD', title).encode('utf-8', 'ignore')
+        data = {"class": mod_name, "title": title}
+        for field in value["recorded_fields"]:
+            data.update({field: unicode(instance.__getattribute__(field))})
+        ctype = ContentType.objects.get(app_label=instance._meta.app_label,
+                                        model=mod_name)
+        engine.store_json(obj_id, title, data, ctype.id)
+
+
+@receiver(post_delete)
+def redis_post_delete(sender, instance=None, **kwargs):
+    mod_name = instance._meta.module_name
+    if mod_name in PARAMS:
+        engine = load_redis_engine()
+        value = PARAMS[mod_name]
+
+        obj_id = instance.__getattribute__(value["pk"])
+        ctype = ContentType.objects.get(app_label=instance._meta.app_label,
+                                        model=mod_name)
+        engine.remove(obj_id, ctype.id)
