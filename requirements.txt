@@ -42,7 +42,7 @@ pinax-theme-bootstrap-account==1.0b2
 South==0.7.6
 
 ## AWS interface & storage backend
-boto==2.5.1
+boto==2.5.2
 django-storages==1.1.4
 ## dateutil needed to only upload updated files
 python-dateutil==1.5
