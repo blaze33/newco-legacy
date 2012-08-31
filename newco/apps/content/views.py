@@ -18,6 +18,8 @@ app_name = 'content'
 class ContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
+        if self.model:
+            self.model_name = self.model._meta.module_name
         if 'model_name' in kwargs:
             self.model_name = kwargs['model_name']
             self.model = get_model(app_name, self.model_name)
