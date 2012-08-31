@@ -50,6 +50,29 @@
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
 
+.content-item-mini { line-height: 1px; width: 25px; margin: 3px }
+.content-item-mini img {
+    float: left;
+    margin-left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right:5px;
+    margin-top: 2px;
+    margin-bottom: 40px;
+}
+
+.content-item-products { line-height: 1px; width: 25px; margin: 3px }
+.content-item-products img {
+    float: left;
+    margin-left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right:5px;
+    margin-top: 2px;
+}
+
 
 /* ↓ css defs for image selection/sort */
 

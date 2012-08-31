@@ -8,7 +8,7 @@ autocomplete_light.autodiscover()
 from django.contrib import admin
 admin.autodiscover()
 
-from profiles.views import ProfileDetailView
+from views import DetailView
 from items.api import ItemResource
 
 item_resource = ItemResource()
@@ -17,7 +17,7 @@ handler500 = "pinax.views.server_error"
 
 
 urlpatterns = patterns("",
-    url(r"^$", ProfileDetailView.as_view(is_profile_page=False), name="home"),
+    url(r"^$", DetailView.as_view(is_profile_page=False), name="home"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^admin_tools/", include("admin_tools.urls")),
     url(r"^about/", include("about.urls")),
@@ -29,7 +29,7 @@ urlpatterns = patterns("",
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
     url(r"^autocomplete/", include("autocomplete_light.urls")),
     url(r"^utils/", include("utils.urls")),
-    url(r"^(?P<category_name>[-\w]+)/$", ProfileDetailView.as_view(is_profile_page=False), name="home_category"),
+    url(r"^(?P<category_name>[-\w]+)/$", DetailView.as_view(is_profile_page=False), name="home_category"),
 )
 
 if settings.DEBUG:

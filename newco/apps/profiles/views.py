@@ -9,10 +9,11 @@ from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView, ProfileListView
 import json
 
-from items.models import Item, Content
+from items.models import Item, Content, Question
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
+import operator
 
 
 class ProfileProcessFormView(ProcessFormView):
@@ -51,18 +52,6 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                                                     request,
                                                     *args,
                                                     **kwargs)
-        elif request.user.is_authenticated():
-            if 'category_name' in kwargs:
-                self.template_name = "profiles/profile_homepage_filtered.html"
-            else:
-                self.template_name = "profiles/profile_homepage.html"
-            self.page_user = request.user
-            self.object = self.page_user.get_profile()
-            context = self.get_context_data()
-            context.update({'kwargs': kwargs})
-            return self.render_to_response(context)
-        else:
-            return direct_to_template(request, "homepage.html")
 
     def get_context_data(self, **kwargs):
         #TODO: better handling of QueryManager
@@ -87,8 +76,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         feed_all = Content.objects.filter(
                status=Content.STATUS.public
         )
+        
+                    
         list_pf = list(Profile.objects.all().values_list('name', flat=True))
-
         #profile_sorted = Profile.objects.filter(name__icontains="s")
         profile_sorted = Profile.objects.all().order_by("?")[:3]
         #content_sorted=Content.objects.filter
@@ -101,8 +91,6 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'fwers': User.objects.filter(pk__in=fwers_ids),
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
-            'newsfeed_filtered': feed.select_subclasses(),
-            'newsfeed_all': feed_all.select_subclasses(),
             'data_source_profile': json.dumps(list_pf),
             'profile_list_sorted': profile_sorted,
             #'content_list_sorted': feed

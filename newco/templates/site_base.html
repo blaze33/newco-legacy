@@ -60,10 +60,27 @@ due to bad pixel fitting of small icons.
 {% block extra_script %}
     <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+  // simple example, using all default options unless overridden globally
+	  $('div.expandable p').expander( 
+		  {afterExpand:function() {
+		  $('#contents_list1').masonry({
+		  	itemSelector : '.content-item',
+            isAnimated: true,
+            isFitWidth: true,
+		  });
+	  }
+	  });
+	  
+    });
+    </script>
     <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-    <script type="text/javascript">
+   
+   <script type="text/javascript">
     $(document).ready(function() {
         $('input#main_autocomplete').yourlabsAutocomplete({
             url: '{% url autocomplete %}',
@@ -75,6 +92,7 @@ due to bad pixel fitting of small icons.
         });
     });
     </script>
+   
     <script type="text/javascript">
 	$(document).ready( function() {
 		var form = $('#answer_form');
