@@ -35,8 +35,17 @@ class ProfileProcessFormView(ProcessFormView):
 class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
 
     is_profile_page = True
+    
     demo_dashboard = False ## For demo only line to be deleted ##
 
+    demo_feed = False ## For demo only line to be deleted ##
+    demo_dashboard_contrib = False ## For demo only line to be deleted ##
+    demo_collaboration = False ## For demo only line to be deleted ##
+    demo_draft = False ## For demo only line to be deleted ##
+    demo_allcontrib = False ## For demo only line to be deleted ##
+    demo_shopping_notes = False ## For demo only line to be deleted ##
+    demo_purchase_history = False ## For demo only line to be deleted ##
+    
     def dispatch(self, request, *args, **kwargs):
         if self.is_profile_page:
             profile = Profile.objects.get(pk=kwargs.pop('pk'))
@@ -49,8 +58,24 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
 
     def get(self, request, *args, **kwargs):
         if self.is_profile_page:
-            if self.demo_dashboard:  ## For demo only line to be deleted ##
+            if self.demo_feed:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_feed.html"  ## For demo only line to be deleted ##
+            elif self.demo_dashboard_contrib:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_dashboard_contrib.html"  ## For demo only line to be deleted ##
+            elif self.demo_collaboration:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_collaboration.html"  ## For demo only line to be deleted ##
+            elif self.demo_draft:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_draft.html"  ## For demo only line to be deleted ##
+            elif self.demo_allcontrib:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_allcontrib.html"  ## For demo only line to be deleted ## 
+            elif self.demo_shopping_notes:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_shopping_notes.html"  ## For demo only line to be deleted ##                
+            elif self.demo_purchase_history:  ## For demo only line to be deleted ##
+                self.template_name = "idios/profile_demo_purchase_history.html"  ## For demo only line to be deleted ##                
+
+            elif self.demo_dashboard:  ## For demo only line to be deleted ##
                 self.template_name = "idios/profile_demo.html"  ## For demo only line to be deleted ##
+               
                 
             return super(ProfileDetailView, self).get(self,
                                                     request,
@@ -100,6 +125,22 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
             'newsfeed': feed.select_subclasses(),
             'data_source_profile': json.dumps(list_pf)
+        })
+        
+        allcontrib_feed = Content.objects.filter( ## For demo only line to be deleted ##
+                Q(author=self.page_user) ## For demo only line to be deleted ##
+        ) ## For demo only line to be deleted ##
+        
+        context.update({ ## For demo only line to be deleted ##
+
+            'demo_feed': self.demo_feed, ## For demo only line to be deleted ##
+            'demo_dashboard_contrib': self.demo_dashboard_contrib, ## For demo only line to be deleted ##
+            'demo_draft': self.demo_draft, ## For demo only line to be deleted ##
+            'demo_allcontrib': self.demo_allcontrib, ## For demo only line to be deleted ##
+            'demo_shopping_notes': self.demo_shopping_notes, ## For demo only line to be deleted ##
+            'demo_purchase_history': self.demo_purchase_history, ## For demo only line to be deleted ##
+            'demo_dashboard': self.demo_dashboard, ## For demo only line to be deleted ##
+            'allcontrib_feed': allcontrib_feed.select_subclasses()  ## For demo only line to be deleted ##
         })
 
         return context

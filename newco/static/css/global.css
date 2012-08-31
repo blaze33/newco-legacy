@@ -122,3 +122,10 @@ img:hover + .img-controls,
     height: 38px;
     width: 38px;
 }
+
+    .myClassPopover{ 
+        position: relative;
+    }
+    .myClassPopoverProfile{ 
+        position: relative;
+    }

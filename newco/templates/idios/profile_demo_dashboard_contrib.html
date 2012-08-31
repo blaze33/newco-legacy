@@ -1,0 +1,88 @@
+{% extends "idios/base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
+{% block extra_style %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+{% endblock %}
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
+
+{% block subnav %}
+
+    {% if user.is_authenticated %}
+        {% include "profiles/_profiles_subnav_demo.html" %}
+    {% else %}
+        &nbsp;
+    {% endif %}
+
+{% endblock %}
+
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
+<div class="span 10">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{% trans "Dashboard contributions" %}<br><small>On veut inciter a contribuer ici !</small></h1>
+        <small>La page pourrait aussi s'appeler : "Contribuer"</small>
+    </header>
+    <p><small>Est ce que c'est ici qu'on met les outils pour aider un "super user" a jouer son role ?</small></p>
+    <br>
+    <br>
+    <div class="row">
+        <div class="span9 well">
+            <h3>Find where to contribute:</h3>
+            <p>Liste des choses "qu'il se passe sur le site" qui correspondent à notre séniorité (petite choses au début, grosse contributions plus tard), et qui sont dans notre sphère de compétences (=tags de compétences)</p>
+            <p><em>On veut donner à manger à ceux qui ont envie de contribuer, de gagner des points ! "Je veux contribuer, dites moi où !"</em></p>
+            <blockquote>
+                <p><small>"You may be able to help :" list of questions and articles that are in you <b>scope of competencies...</b></small></p>
+                <p><small> ... where you are <b>moderator</b> / where you have <b>super-user</b> rights</small></p>
+            </blockquote>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="span9 well">
+            <h3>Maybe you could ... <small>Proposition de sujets proche de tes "tags de competence" ou tu pourrais contribuer</small></h3>
+            <p>On veut inciter a contribuer surtout !</p>
+            <p><em>On veut donner à manger à ceux qui ont envie de contribuer, de gagner des points mais ne savent pas par où commencer.</em></p>
+            <blockquote>
+                <p><small>"You may be able to help :" list of questions and articles that are in you <b>scope of competencies...</b></small></p>
+                <p><small> ... where you are <b>moderator</b> / where you have <b>super-user</b> rights</small></p>
+            </blockquote>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="span4 well">
+            <h3>Last reputation points earned: <small>xxx</small></h3>
+            <p>Tableau de bord de tes points gagnes</p>
+            <blockquote>
+                <p><small>StackOverflow fait ca tres bien !</small></p>
+                <p><small>Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret</small></p>
+                <p><small>Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret</small></p>
+            </blockquote>
+        </div>
+        <div class="span4 well pull-right">
+            <p class="lead">Badges earned</p>
+            XXXX
+        </div>
+    </div>
+    <br>
+
+
+    <hr>
+    <h3>Last public contributions :</h3>
+    <p>Or... "last contributions" (all)</p>
+
+    {% include "profiles/_profile_content_list.html" with contents=newsfeed %}
+</div>
+{% endif %}{% endblock %}

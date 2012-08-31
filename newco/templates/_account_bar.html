@@ -59,26 +59,32 @@
         {% endif %}
 </div>
 
+{#  Add the responsive capability  #}
 
-
-
-
-
-<div class="pull-right btn-group">
+<div class="pull-right">
         {% if request.user.is_authenticated %}
-                <a href="{{ user.get_absolute_url }}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
-                <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-                
-                <ul class="dropdown-menu">
-                    <li><a href="{% url "account_settings" %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
-                    {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
-                        <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
-                    {% endif %}
-                    <li class="divider"></li>
-                    <li><a href="{% url "account_logout" %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
-                </ul>
+        
+            <ul class="nav pull-right">
+                <li><a href="{{ user.get_absolute_url }}">{% profile_pic request.user 18 %} {% user_display request.user %}</a></li>
+                {#<li class="divider-vertical"></li>#}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                    
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url "account_settings" %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+                        {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
+                            <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                        {% endif %}
+                        <li class="divider"></li>
+                        <li><a href="{% url "account_logout" %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+                    </ul>
+                </li>
+             </ul>
         {% endif %}
 </div>
+
+
+
 
 <div class="pull-right">
     <ul class="nav pull-right">
