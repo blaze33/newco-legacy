@@ -23,22 +23,38 @@
 
 <form action="." method="POST">{% csrf_token %}
     <div class="row">
-        <div class="span3">{{ form|as_bootstrap }}</div>
-        <div class="span3">{% if item %}<div id="profiles_list1">
-                {% for link in item.affiliationitem_set.all %}{% include "affiliation/_affiliation_item.html" with item=link %}{% endfor %}
-        </div>{% endif %}</div>
-        <div class="span6">
+        <div class="span3">
+            {{ form|as_bootstrap }}
+            <div class="form-actions">
+                <button type="submit" class="btn" name="create">{% trans "Submit" %}</button>
+            </div>
+
+            {% if item %}{% if item.affiliationitem_set.all %}
+                <h3>{% trans "Linked Products" %}</h3>
+                <button type="submit" class="btn" name="remove_links"><i class="icon-remove-sign"></i> {% trans "Remove unselected" %}</button>
+                {% for i in item.affiliationitem_set.all %}
+                    <div class="row"><div >
+                        <div class="span2">{% include "affiliation/_affiliation_item.html" with item=i %}</div>
+                        <div class="span1"><span style="vertical-align:-30px"><input type="checkbox" name="linked_aff" value="{{ i.id }}" checked></span></div>
+                    </div></div>
+                {% endfor %}
+            {% endif %}{% endif %}
+        </div>
+        <div class="offset1 span6">
             <button type="submit" class="btn" name="store_search"><i class="icon-eye-open"></i> {% trans "Stores Search" %}</button>
-            {% if form.item_list_by_store %}<div class="row">{% for store, item_list in form.item_list_by_store.items %}
-                {% if item_list %}<h3>{{ store }}</h3>{% endif %}
-                {% for item_cat in item_list %}<div class="row">
-                    <input type="hidden" name="current_search_{{ store }}" value="{{ item_cat.id }}" />
-                    <div class="span1"><input type="checkbox" name="link_aff" value="{{ item_cat.id }}"></div>
-                    <div class="span5"><img src="{{ item_cat.img_small }}" width="40px" height="40px">{{ item_cat.name|truncatechars:60 }}</div>
-                </div>{% endfor %}
+            {% if form.item_list_by_store %}<br /><br /><div class="row">{% for store, item_list in form.item_list_by_store.items %}
+                {% if item_list %}<div class="well">
+                    <h3>{{ store }}</h3>
+                    {% for i in item_list %}<div class="row">
+                        <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
+                        <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
+                        <div class="span4">{{ i.name }}</div>
+                    </div>{% endfor %}
+                </div>{% endif %}
             {% endfor %}</div>{% endif %}
         </div>
     </div>
+
     <div class="row">
     <table class="img-selector span12" id="img-selector-1">
         <tbody>
@@ -52,7 +68,6 @@
         </tbody>
     </table>
     </div>
-    <input type="submit" class="btn" name="create" value='{% trans "Submit" %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
