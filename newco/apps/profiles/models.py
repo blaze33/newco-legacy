@@ -63,10 +63,7 @@ class Reputation(models.Model):
         rep = 0
 
         for cls in [Question, Answer, Link, Feature]:
-            ctype = ContentType.objects.get(
-                                    app_label=cls._meta.app_label,
-                                    model=cls._meta.module_name
-                    )
+            ctype = ContentType.objects.get_for_model(cls)
             obj_ids = cls.objects.filter(author=self.user).values_list('id',
                                                                     flat=True)
             votes = Vote.objects.filter(object_id__in=obj_ids,
@@ -161,10 +158,7 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(
-            app_label=Reputation._meta.app_label,
-            model=Reputation._meta.module_name
-    )
+    content_type = ContentType.objects.get_for_model(Reputation)
     permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)

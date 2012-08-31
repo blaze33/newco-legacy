@@ -55,7 +55,11 @@ def load_redis_engine():
                                                 password=redis_url.password)
         try:
             info = engine.client.info()
-            print "Conn. Redis server, %s keys stored." % info["db0"]["keys"]
+            if "db0" in info:
+                nb_keys = info["db0"]["keys"]
+            else:
+                nb_keys = 0
+            print "Conn. Redis server, %s keys stored." % nb_keys
             return engine
         except ConnectionError:
             if settings.DEBUG:
@@ -76,8 +80,7 @@ def update_redis_db(sender, request, user, **kwargs):
     if engine:
         for key, value in PARAMS.iteritems():
             cls = value["class"]
-            ctype = ContentType.objects.get(app_label=cls._meta.app_label,
-                                                model=cls._meta.module_name)
+            ctype = ContentType.objects.get_for_model(cls)
             for obj in cls.objects.all():
                 obj_id = obj.__getattribute__(value["pk"])
                 title = obj.__getattribute__(value["title_field"])
@@ -104,8 +107,7 @@ def redis_post_save(sender, instance=None, raw=False, **kwargs):
             data = {"class": mod_name, "title": title}
             for field in value["recorded_fields"]:
                 data.update({field: unicode(instance.__getattribute__(field))})
-            ctype = ContentType.objects.get(app_label=instance._meta.app_label,
-                                            model=mod_name)
+            ctype = ContentType.objects.get_for_model(instance)
             engine.store_json(obj_id, title, data, ctype.id)
 
 
@@ -118,6 +120,5 @@ def redis_post_delete(sender, instance=None, **kwargs):
             value = PARAMS[mod_name]
 
             obj_id = instance.__getattribute__(value["pk"])
-            ctype = ContentType.objects.get(app_label=instance._meta.app_label,
-                                            model=mod_name)
+            ctype = ContentType.objects.get_for_model(instance)
             engine.remove(obj_id, ctype.id)
