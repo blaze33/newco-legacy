@@ -63,7 +63,7 @@ class DetailView(ProfileDetailView):
                status=Content.STATUS.public
         )
         
-        item_pop_dict={'item':-1}
+        item_pop_dict={}
         for item in Item.objects.all():
             questions = Question.objects.filter(
                     Q(items__id=item.id) & Q(status=Content.STATUS.public)
