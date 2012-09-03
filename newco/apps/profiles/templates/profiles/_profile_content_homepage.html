@@ -32,10 +32,10 @@
 	    	</span>
 		<i>{% if content|to_class_name == "answer" %}
 		        <a href="{{ content.author.get_absolute_url }}"style="color:#222222">
-		        {% user_display content.author %}</h4></a> answered a question about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
+		        {% user_display content.author %}</h4></a> answered a <a href="{{ content.question.get_absolute_url }}"style="color:#222222">question</a> about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
 	    	{% else %}
 		        <a href="{{ content.author.get_absolute_url }}"style="color:#222222">
-		        {% user_display content.author %}</h4></a> asked a question about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
+		        {% user_display content.author %}</h4></a> asked a <a href="{{ content.get_absolute_url }}"style="color:#222222">question</a> about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
 	    	{% endif %}</i>
 	        <br><br>
 	        <div class="expandable"><p>{% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}</p></div>
