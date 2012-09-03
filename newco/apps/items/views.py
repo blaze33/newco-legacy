@@ -211,7 +211,12 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             question = context["question"]
             question_list=list()
             #Build Related Questions List
-            for item_it in question.items.all():
+            item=question.items.all()[0]
+            question_list=list(Question.objects.filter(items=item))
+            question_list.remove(question)
+            list_quest=list(question.items.all())
+            list_quest.remove(item)  
+            for item_it in list_quest:
                 question_list_it=list(Question.objects.filter(items=item_it))
                 question_list_it.remove(question)
                 if question_list_it:
