@@ -38,8 +38,17 @@
         </tbody>
     </table>
     </div>
+    <input type="hidden" name="img_list" id="img_data">
     <input type="submit" class="btn" value='{% trans "Submit" %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
+{% endblock %}
+
+{% block extra_script %}
+    {{  block.super  }}
+    <script type="text/javascript">
+        results = {{  img_search|safe  }};
+        pics = results['items'];
+    </script>
 {% endblock %}

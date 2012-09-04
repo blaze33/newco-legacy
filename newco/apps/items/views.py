@@ -21,6 +21,8 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.apiservices import search_images
+import json
 
 app_name = 'items'
 
@@ -125,6 +127,13 @@ class ContentUpdateView(ContentView, UpdateView):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentUpdateView, self).get_context_data(**kwargs)
+        if self.model == Item:
+            images = search_images(self.object.name)
+            context.update({'img_search': json.dumps(images.json)})
+        return context
 
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
