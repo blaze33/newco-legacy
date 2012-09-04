@@ -1,16 +1,18 @@
+from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.db.models.loading import get_model
+from django.db.models import Q, Min
 from django.http import HttpResponseRedirect
+from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import ProcessFormView, FormMixin
-from django.db.models.loading import get_model
-from django.db.models import Q
-from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
-from django.utils.decorators import method_decorator
+
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+
 from account.utils import user_display
 from taggit.models import Tag
 from voting.models import Vote
@@ -19,9 +21,9 @@ from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
-from utils.votingtools import process_voting as _process_voting
-from utils.followtools import process_following
 from utils.asktools import process_asking
+from utils.followtools import process_following
+from utils.votingtools import process_voting as _process_voting
 from utils.tools import load_object
 
 app_name = 'items'
