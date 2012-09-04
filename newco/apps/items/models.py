@@ -11,7 +11,7 @@ from model_utils import Choices
 from model_utils.managers import InheritanceManager, QueryManager
 from voting.models import Vote
 from follow.utils import register
-from content.models import Item as Item2
+from django_hstore import hstore
 
 
 class Item(models.Model):
@@ -31,13 +31,6 @@ class Item(models.Model):
         return u"%s" % (self.name)
 
     def save(self):
-        ## duplicate product in content app
-        content, created = Item2.objects.get_or_create(
-            data__contains={'legacy_id': unicode(self.id), 'class': 'product'})
-        content.data['legacy_id'] = unicode(self.id)
-        content.data['class'] = 'product'
-        content.data['name'] = self.name
-        content.save()
         self.slug = slugify(self.name)
         super(Item, self).save()
 
