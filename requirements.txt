@@ -16,6 +16,7 @@ django-timezones==0.2
 pytz==2012d
 django-openid==0.3a1
 python-openid==2.2.5
+Babel==0.9.6
 
 django-announcements==0.2.1
 django-pagination==1.0.7
