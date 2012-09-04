@@ -2,10 +2,10 @@
 #elephant {
 	width: 100%;
 	margin: auto;
-	text-align: center;
+	text-align: left;
 }
 #elephant span{
-    text-align: right;
+    text-align: left;
 }
 #elephant > div{
     display: inline-block;

@@ -341,9 +341,16 @@ class ContentListView(ContentView, ListView, RedirectView):
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
 
+        item=context["item_list"][0]
+        questions = Question.objects.filter(
+                        Q(items__id=item.id) & Q(status=Content.STATUS.public)
+                    )
+        context["question_list"]=questions
+
         if "item_list" in context:
             if hasattr(self, "tag"):
                 context.update({"tag": self.tag})
+                context["first_item"] = context["item_list"][0]
 
         if "sort_items" in self.request.POST:
             sort = "-pub_date"
@@ -352,6 +359,14 @@ class ContentListView(ContentView, ListView, RedirectView):
             elif self.request.POST['sort_items'] == "2":
                 sort = "pub_date"
             context["item_list"] = context["item_list"].order_by(sort)
+            context["first_item"] = context["item_list"].order_by(sort)[0]
+
+        if "template_choice" in self.request.POST:
+            if self.request.POST["template_choice"] == "1":
+                context["template_choice"] = 1
+            else:
+                context["template_choice"] = 2
+
 
         if "search" in self.request.GET:
             search_terms = self.request.GET.get("search", "")

@@ -4,19 +4,11 @@
 {% load account_tags %}
 {% load content_utils %}
 
-{% block itemlist %}
+{% block itemlist2 %}
     {% if item_list %}
         
-        <script>
-        function sort(element)
-        {
-            var idx=element.selectedIndex;
-            var val=element.options[idx].value;
-            var content=element.options[idx].innerHTML;
-         }
-        </script>
 
-        </br>
+    <br><br>
 
         {% for item in item_list %}
             <div class="row">
