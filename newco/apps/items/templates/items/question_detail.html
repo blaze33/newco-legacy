@@ -29,7 +29,7 @@
 		<br>
 		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;">
 		{% for item in question.items.all %}
-		<br><h4><a href="{% url item_detail "item" item.id item.slug %}">{{ item.name }}</a></h4>
+		<br><h4><a href="{% url item_detail "item" item.id item.slug %}" style="color:#222222">{{ item.name }}</a></h4>
 		{% endfor %}
 		</div>
 		
@@ -38,7 +38,7 @@
 		<h3><i>Related Questions</i></h3>
 		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;font-size:12px;">
 		{% for question_rel in question_list %}
-		<br><br><a href="{% url item_detail "question" question_rel.id "lalala" %}">{{ question_rel }}</a>
+		<br><br><a href="{% url item_detail "question" question_rel.id "lalala" %}" style="color:#999999">{{ question_rel }}</a>
 		{% endfor %}
 		</div>
     </div>
