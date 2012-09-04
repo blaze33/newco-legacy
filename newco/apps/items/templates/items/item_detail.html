@@ -1,7 +1,9 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load url from future %}
 {% load content_utils %}
+{% load format_utils %}
 {% load staticfiles %}
 
 {% block extra_style %}
@@ -31,7 +33,7 @@
         </form>
     </div>
 
-    <div class="tabbable">
+    <div class="row tabbable">
         <ul class="nav nav-tabs">
             <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
             <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
@@ -48,13 +50,13 @@
                     <h3>Soon you'll be able to tell us a nice story about this product</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
                     <ul class="thumbnails">
-                    <li class="span3"><a href="#" class="thumbnail">
-                      <img src="http://lorempixel.com/g/260/180" alt="">
-                    </a></li>
-                    <li class="span3"><a href="#" class="thumbnail">
-                      <img src="http://lorempixel.com/g/260/180/technics" alt="">
-                    </a>
-                    </li></ul>
+                        <li class="span3"><a href="#" class="thumbnail">
+                          <img src="http://lorempixel.com/g/260/180" alt="">
+                        </a></li>
+                        <li class="span3"><a href="#" class="thumbnail">
+                          <img src="http://lorempixel.com/g/260/180/technics" alt="">
+                        </a></li>
+                    </ul>
                     Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor.
                     </p>
                     <hr>
@@ -63,22 +65,59 @@
         </div>
     </div>
 
+    {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
+        <h3>{% trans "Prices" %}</h3>
+        <div class="row">
+            {% if nb_ean != 1 %}<div class="span1"><h4>{% trans "EAN" %}</h4></div>{% endif %}
+            <div class="span2"><h4>{% trans "Store" %}</h4></div>
+            <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}"><h4>{% trans "Name" %}</h4></div>
+            <div class="span1"><h4>{% trans "Price" %}</h4></div>
+        </div>
+        {% for ean, prod_list in store_prods_by_ean.items %}
+            {% for prod in prod_list %}
+                <hr>
+                <div class="row">
+                    {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
+                    <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
+                    <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
+                    <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <hr>
+    </div>{% endwith %}{% endif %}
+
     <div class="row">
-        <a class="btn" href="{% url item_index %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
-        <a class="btn" href="{% url item_edit item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
-        {% if user.is_superuser %}<a class="btn" href="{% url item_delete item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
+        <a class="btn" href="{% url 'item_index' %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
+        <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
+        {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
     </div>
 </div>
 
-<div class="span4">{% if item.affiliationitem_set.all %}
+
+<div class="span3">{% if store_prods_by_ean %}
+    <div class="btn-group"><div class="pull-right">
+        <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">{% trans "From" %} <b>{% price min_price currency=0 language_code=LANGUAGE_CODE %}</b><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
+                {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
+            {% endfor %}<li class="divider"></li>{% endfor %}
+            <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
+        </ul>
+    </div></div>
+
+    <hr>
+
     <h4>{% trans "Buy" %}</h4>
-    <div id="profiles_list1">
-                {% for link in item.affiliationitem_set.all %}{% include "affiliation/_affiliation_item.html" with item=link %}{% endfor %}
-    </div>
+    <div>{% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
+        {% include "affiliation/_affiliation_item.html" with prod=prod %}
+    {% endfor %}{% endfor %}</div>
+
 {% endif %}</div>
+
 {% endblock %}
 
 {% block extra_body_base %}
     {{ block.super }}
-    <script src="{% static "js/content.js" %}"></script>
+    <script src="{% static 'js/content.js' %}"></script>
 {% endblock %}
