@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes import generic
 from voting.models import Vote
 
+
 class VoteModel(TimeStampedModel):
     """ VoteModel
     An abstract base class with timestamps and votes.
@@ -21,7 +22,7 @@ class VoteModel(TimeStampedModel):
         except:
             pass
         super(VoteModel, self).delete()
-        
+
 
 class BaseModel(VoteModel):
     """ BaseModel
@@ -44,8 +45,8 @@ class BaseModel(VoteModel):
     def get_absolute_url(self):
         slug = self.get('slug')
         return ('content_detail', None, {
-            "model_name":self.__class__.__name__,
-            "pk": self.id,"slug": slug} )
+            "model_name": self.__class__.__name__,
+            "pk": self.id, "slug": slug})
 
 
 class Item(BaseModel):
@@ -62,6 +63,7 @@ class Item(BaseModel):
     def get_items(self):
         return self.context.filter(
             to_item__from_item=self)
+
     def get_relations(self):
         return Relation.objects.filter(
             from_item=self)
@@ -69,6 +71,7 @@ class Item(BaseModel):
     def get_related_items(self):
         return self.related_to.filter(
             from_item__to_item=self)
+
     def get_related_relations(self):
         return Relation.objects.filter(
             to_item=self)
@@ -85,4 +88,6 @@ class Relation(BaseModel):
     to_item = models.ForeignKey(Item, related_name='to_item')
 
     def __unicode__(self):
-        return "%s %s %s" % (self.from_item.get('name'), self.get('relationship'), self.to_item.get('name'))
+        return "%s %s %s" % (self.from_item.get('name'),
+                             self.get('relationship'),
+                             self.to_item.get('name'))
