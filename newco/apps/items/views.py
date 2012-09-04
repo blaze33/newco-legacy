@@ -214,6 +214,19 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             tag_ids = self.object.tags.values_list('id', flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
             context.update({"q_form": q_form, "prof_list": p_list})
+
+            # Linked affiliated products
+            store_prods = item.affiliationitem_set.select_related()
+            store_prods = store_prods.order_by("price")
+            min_price = store_prods.aggregate(Min('price')).get("price__min")
+            ean_set = set(store_prods.values_list("ean", flat=True))
+            store_prods_by_ean = dict()
+            for ean in ean_set:
+                store_prods_by_ean.update({ean: store_prods.filter(ean=ean)})
+            context.update({
+                "store_prods_by_ean": store_prods_by_ean,
+                "min_price": min_price
+            })
         elif self.model == Question:
             question = context.pop("question")
             if "answer" in self.request.POST:
