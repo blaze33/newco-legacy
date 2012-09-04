@@ -16,14 +16,10 @@ class PriceNode(Node):
         self.asvar = asvar
 
     def render(self, context):
+        value = self.value.resolve(context)
         args = [arg.resolve(context) for arg in self.args]
         kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
                        for k, v in self.kwargs.items()])
-
-        value = self.value.resolve(context)
-
-        print args
-        print kwargs
 
         currency = kwargs.get("currency")
         language_code = kwargs.get("language_code")
