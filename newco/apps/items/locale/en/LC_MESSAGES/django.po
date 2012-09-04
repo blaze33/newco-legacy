@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-27 23:58+0200\n"
+"POT-Creation-Date: 2012-09-05 01:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,12 +113,12 @@ msgstr ""
 msgid "stories"
 msgstr ""
 
-#: views.py:82 views.py:146
+#: views.py:92 views.py:156
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:86 views.py:150
+#: views.py:96 views.py:160
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -131,12 +131,8 @@ msgstr ""
 msgid "...an expert:"
 msgstr ""
 
-#: templates/items/_ask_modal.html:18
+#: templates/items/_ask_modal.html:16
 msgid "Ask"
-msgstr ""
-
-#: templates/items/_ask_modal.html:27
-msgid "...or someone you may know:"
 msgstr ""
 
 #: templates/items/_author.html:6
@@ -168,21 +164,22 @@ msgid "Publish an external link"
 msgstr ""
 
 #: templates/items/_question_list.html:47
-#: templates/items/question_detail.html:54
+#: templates/items/question_detail.html:55
 msgid "Add a better answer"
 msgstr ""
 
 #: templates/items/_question_list.html:47
-#: templates/items/question_detail.html:54
+#: templates/items/question_detail.html:55
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/_question_list.html:48
+#: templates/items/_question_list.html:49
+#: templates/items/question_detail.html:57
 msgid "Ask someone to answer"
 msgstr ""
 
-#: templates/items/_question_list.html:54 templates/items/answer_form.html:6
-#: templates/items/question_detail.html:59
+#: templates/items/_question_list.html:55 templates/items/answer_form.html:6
+#: templates/items/question_detail.html:63
 msgid "Answer"
 msgstr ""
 
@@ -192,7 +189,7 @@ msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
 #: templates/items/answer_form.html:16 templates/items/feature_form.html:17
-#: templates/items/item_form.html:55 templates/items/link_form.html:16
+#: templates/items/item_form.html:29 templates/items/link_form.html:16
 #: templates/items/question_form.html:16
 msgid "Submit"
 msgstr ""
@@ -223,35 +220,63 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:36
+#: templates/items/item_detail.html:38
 msgid "Questions"
 msgstr ""
 
-#: templates/items/item_detail.html:37
+#: templates/items/item_detail.html:39
 msgid "Links"
 msgstr ""
 
-#: templates/items/item_detail.html:38
+#: templates/items/item_detail.html:40
 msgid "Features"
 msgstr ""
 
-#: templates/items/item_detail.html:39
+#: templates/items/item_detail.html:41
 msgid "Stories"
 msgstr ""
 
-#: templates/items/item_detail.html:67
-msgid "Items list"
-msgstr ""
-
-#: templates/items/item_detail.html:68
-msgid "Edit Item"
-msgstr ""
-
 #: templates/items/item_detail.html:69
-msgid "Delete Item"
+msgid "Prices"
+msgstr ""
+
+#: templates/items/item_detail.html:71
+msgid "EAN"
+msgstr ""
+
+#: templates/items/item_detail.html:72
+msgid "Store"
+msgstr ""
+
+#: templates/items/item_detail.html:73
+msgid "Name"
 msgstr ""
 
 #: templates/items/item_detail.html:74
+msgid "Price"
+msgstr ""
+
+#: templates/items/item_detail.html:91
+msgid "Items list"
+msgstr ""
+
+#: templates/items/item_detail.html:92
+msgid "Edit Item"
+msgstr ""
+
+#: templates/items/item_detail.html:93
+msgid "Delete Item"
+msgstr ""
+
+#: templates/items/item_detail.html:100
+msgid "From"
+msgstr ""
+
+#: templates/items/item_detail.html:105
+msgid "See the detailed offers"
+msgstr ""
+
+#: templates/items/item_detail.html:111
 msgid "Buy"
 msgstr ""
 
@@ -263,7 +288,15 @@ msgstr ""
 msgid "Add something new to talk about:"
 msgstr ""
 
-#: templates/items/item_form.html:31
+#: templates/items/item_form.html:32
+msgid "Linked Products"
+msgstr ""
+
+#: templates/items/item_form.html:34
+msgid "Remove unselected"
+msgstr ""
+
+#: templates/items/item_form.html:45
 msgid "Stores Search"
 msgstr ""
 
@@ -331,7 +364,7 @@ msgstr ""
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr ""
 
-#: templates/items/question_detail.html:66
+#: templates/items/question_detail.html:71
 msgid "Related Products"
 msgstr ""
 
