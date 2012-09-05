@@ -60,9 +60,9 @@ class Item(BaseModel):
     class Meta:
         verbose_name = _("item")
 
-    def get_items(self):
+    def get_items(self, **data):
         return self.context.filter(
-            to_item__from_item=self)
+            to_item__from_item=self, data__contains=data)
 
     def get_relations(self):
         return Relation.objects.filter(
@@ -78,6 +78,13 @@ class Item(BaseModel):
 
     def __unicode__(self):
         return unicode(self.get('name'))
+
+    def link(self, item, data):
+        relation, created = Relation.objects.get_or_create(
+            from_item=self,
+            to_item=item,
+            data=data)
+        return relation
 
 
 class Relation(BaseModel):
