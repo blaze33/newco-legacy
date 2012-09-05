@@ -24,6 +24,26 @@ function moveAnimate(element, newParent){
         });
     }
 
+function addImages(container, pics){
+    $.each(pics, function(index, value) {
+        container.append(
+            $(document.createElement("li"))
+                .addClass("selector-item")
+                .attr({id: 'image_'+index})
+                .append(
+            $(document.createElement("img"))
+                .attr({ src: value['thumbnailLink'], title: 'image ' + index })
+                .addClass("thumbnail")
+                )
+                .append(
+            $(document.createElement("div"))
+                .addClass("img-controls")
+                .html("<i class='icon-remove'></i>")
+                )
+            );
+    });
+}
+
 $(function(){
     var $container = $('#profiles_list1');
 //    $container.imagesLoaded( function(){
@@ -39,23 +59,7 @@ $(function(){
     });
     if ( pics.length == 0 ) { $("#img-selector-1").css('display','none') }
     if ( $("#img-selector-1").length > 0 ){
-        $.each(pics, function(index, value) {
-            $('#selected-list').append(
-                $(document.createElement("li"))
-                    .addClass("selector-item")
-                    .attr({id: 'image_'+index})
-                    .append(
-                $(document.createElement("img"))
-                    .attr({ src: value['thumbnailLink'], title: 'image ' + index })
-                    .addClass("thumbnail")
-                    )
-                    .append(
-                $(document.createElement("div"))
-                    .addClass("img-controls")
-                    .html("<i class='icon-remove'></i>")
-                    )
-                );
-            });
+        addImages($('#selected-list'), pics);
         $( "#selected-list, #trash-1" ).sortable({
                 placeholder: 'ui-sortable-placeholder',
                 forcePlaceholderSize: true,
@@ -81,5 +85,9 @@ $(function(){
             $('#img_data').val($('#selected-list').sortable( "serialize" ));
             return true;
         });
+        // $("#add_images").click(function() {
+        //     addImages($('#selected-list'), results);
+        //     return false;
+        // });
     }
 });
