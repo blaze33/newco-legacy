@@ -34,6 +34,7 @@ def add_images(request, **kwargs):
 
     r = search_images(product.data['name'])
     images = r.json['items']
+    id_order = []
     for x in img_order:
         i = images[x]
         image, created = Item.objects.get_or_create(data__contains={
@@ -47,3 +48,6 @@ def add_images(request, **kwargs):
         image.save()
         album.link(image, {'relationship': 'contains',
             'order': unicode(img_order.index(x))})
+        id_order.append(image.id)
+    album.data['id_order']=unicode(id_order)
+    album.save()
