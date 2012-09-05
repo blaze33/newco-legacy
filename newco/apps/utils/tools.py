@@ -14,7 +14,6 @@ from taggit.models import Tag
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 
-from affiliation.models import AffiliationItemCatalog
 from items.models import Item
 from profiles.models import Profile
 
