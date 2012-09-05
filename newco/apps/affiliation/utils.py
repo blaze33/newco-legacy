@@ -1,5 +1,5 @@
 from affiliation.amazon.utils import amazon_item_search
-from affiliation.decathlon.utils import decathlon_item_search
+from affiliation.decathlon.tools import decathlon_item_search
 
 
 def stores_item_search(keyword, nb_items=5):

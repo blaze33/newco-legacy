@@ -7,7 +7,7 @@ def main():
         pass
 
     try:
-        from affiliation.decathlon.utils import decathlon_db_processing
+        from affiliation.decathlon.tools import decathlon_db_processing
     except ImportError:
         sys.stdout.write("Decathlon function import failed.\n")
     else:
