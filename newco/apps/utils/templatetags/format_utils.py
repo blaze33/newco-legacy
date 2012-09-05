@@ -98,14 +98,18 @@ def price(parser, token):
         bits = bits[:-2]
 
     if len(bits):
-        for bit in bits:
-            match = kwarg_re.match(bit)
-            if not match:
-                raise TemplateSyntaxError("Malformed arguments to price tag")
-            name, val = match.groups()
-            if name:
-                kwargs[name] = parser.compile_filter(val)
-            else:
-                args.append(parser.compile_filter(val))
-
+        if len(bits) <= 2:
+            for bit in bits:
+                match = kwarg_re.match(bit)
+                if not match:
+                    raise TemplateSyntaxError("Malformed arguments in 'price'")
+                name, val = match.groups()
+                if name:
+                    kwargs[name] = parser.compile_filter(val)
+                else:
+                    args.append(parser.compile_filter(val))
+        else:
+            raise TemplateSyntaxError("'price' tag takes at most three"
+                                    " arguments (price value, currency, and"
+                                    " language_code).")
     return PriceNode(value, args, kwargs, asvar)
