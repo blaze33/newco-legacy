@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 12:04+0200\n"
+"POT-Creation-Date: 2012-09-05 14:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,12 +113,12 @@ msgstr ""
 msgid "stories"
 msgstr ""
 
-#: views.py:92 views.py:156
+#: views.py:94 views.py:158
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:96 views.py:160
+#: views.py:98 views.py:162
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
@@ -298,6 +298,10 @@ msgstr ""
 
 #: templates/items/item_form.html:45
 msgid "Stores Search"
+msgstr ""
+
+#: templates/items/item_form.html:46
+msgid "Add selected"
 msgstr ""
 
 #: templates/items/item_list.html:9

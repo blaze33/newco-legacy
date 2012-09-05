@@ -43,16 +43,15 @@
         </div>
         <div class="span6">
             <button type="submit" class="btn" name="store_search"><i class="icon-eye-open"></i> {% trans "Stores Search" %}</button>
-            {% if form.item_list_by_store %}<br><br><div class="row">{% for store, item_list in form.item_list_by_store.items %}
-                {% if item_list %}<div class="well well-small">
-                    <h3>{{ store }}</h3>
-                    {% for i in item_list %}<div class="row">
-                        <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
-                        <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
-                        <div class="span5">{{ i.name }}</div>
-                    </div>{% endfor %}
-                </div>{% endif %}
-            {% endfor %}</div>{% endif %}
+            {% if form.item_list_by_store and item %}<button type="submit" class="btn" name="add_links"><i class="icon-plus-sign"></i> {% trans "Add selected" %}</button>{% endif %}
+            {% if form.item_list_by_store %}<br><br><div class="row">{% for store, item_list in form.item_list_by_store.items %}{% if item_list %}<div class="well well-small">
+                <h3><a href="{{ item_list.0.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:item_list.0.store.url as icon_url %}<img src="{{ icon_url }}" height="24px" width="24px">&nbsp;{{ item_list.0.store }}{% endwith %}</a></h3>
+                {% for i in item_list %}<div class="row">
+                    <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
+                    <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
+                    <div class="span5">{{ i.name }}</div>
+                </div>{% endfor %}
+            </div>{% endif %}{% endfor %}</div>{% endif %}
         </div>
     </div>
 
