@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models.loading import get_model
-from django.db.models import Q, Min
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -217,16 +217,19 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
             # Linked affiliated products
             store_prods = item.affiliationitem_set.select_related()
-            store_prods = store_prods.order_by("price")
-            min_price = store_prods.aggregate(Min('price')).get("price__min")
-            ean_set = set(store_prods.values_list("ean", flat=True))
-            store_prods_by_ean = dict()
-            for ean in ean_set:
-                store_prods_by_ean.update({ean: store_prods.filter(ean=ean)})
-            context.update({
-                "store_prods_by_ean": store_prods_by_ean,
-                "min_price": min_price
-            })
+            if store_prods:
+                store_prods = store_prods.order_by("price")
+                cheapest_prod = store_prods[0]
+                ean_set = set(store_prods.values_list("ean", flat=True))
+                store_prods_by_ean = dict()
+                for ean in ean_set:
+                    store_prods_by_ean.update({
+                        ean: store_prods.filter(ean=ean)
+                    })
+                context.update({
+                    "store_prods_by_ean": store_prods_by_ean,
+                    "cheapest_prod": cheapest_prod
+                })
         elif self.model == Question:
             question = context.pop("question")
             if "answer" in self.request.POST:
