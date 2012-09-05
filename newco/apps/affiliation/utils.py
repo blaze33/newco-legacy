@@ -1,4 +1,4 @@
-from affiliation.amazon.utils import amazon_item_search
+from affiliation.amazon.tools import amazon_item_search
 from affiliation.decathlon.tools import decathlon_item_search
 
 
