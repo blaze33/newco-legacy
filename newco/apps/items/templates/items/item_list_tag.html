@@ -8,7 +8,7 @@
     {% url tagged_items tag.slug as tag_url%}
     <div class="row">
         <div class="span5"><h3>{% blocktrans with tag_name=tag.name %}Products with tag <a href="{{ tag_url }}"><span class="label">{{ tag_name }}</span></a>{% endblocktrans %}</h3></div>
-        <div class="span2"><div class="alert alert-info"><a class="close" data-dismiss="alert" href="{% url item_index %}"><i class="icon-remove"></i></a>{{ tag.name }}</div></div>
+        <div class="span2"><div class="alert alert-info"><a class="close" href="{% url item_index %}" data-dismiss="alert">&times;</a>{{ tag.name }}</div></div>
     </div>
 {% endblock %}
 

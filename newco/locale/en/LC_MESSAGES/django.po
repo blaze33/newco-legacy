@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 11:30+0200\n"
+"POT-Creation-Date: 2012-08-16 00:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Team"
 msgstr ""
 
-#: templates/_footer.html:8
+#: templates/_footer.html:7
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
@@ -116,49 +116,69 @@ msgid ""
 "\">Sign up!</a></br>to start your new career."
 msgstr ""
 
-#: templates/site_base.html:44
+#: templates/site_base.html:42
 msgid "Profile"
 msgstr ""
 
-#: templates/site_base.html:45
+#: templates/site_base.html:43
 msgid "Products index"
 msgstr ""
 
-#: templates/idios/profile.html:15
+#: templates/account/email/email_confirmation_message.txt:6
+#, python-format
+msgid ""
+"\n"
+"\n"
+"User %(profile_name)s at %(site_name)s has given this as an email address.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s.\n"
+"\n"
+msgstr ""
+
+#: templates/account/email/email_confirmation_subject.txt:3
+#, python-format
+msgid "Confirm email address for %(site_name)s"
+msgstr ""
+
+#: templates/idios/profile.html:14
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:35
+#: templates/idios/profile.html:34
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
 msgstr ""
 
-#: templates/idios/profile.html:46
+#: templates/idios/profile.html:45
 msgid "Update my profile"
 msgstr ""
 
-#: templates/idios/profile.html:58
+#: templates/idios/profile.html:57
 msgid "History"
 msgstr ""
 
-#: templates/idios/profile.html:59
+#: templates/idios/profile.html:58
 msgid "Followees"
 msgstr ""
 
-#: templates/idios/profile.html:60
+#: templates/idios/profile.html:59
 msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile.html:61
+#: templates/idios/profile.html:60
+msgid "'Drafts' contains your un-published contributions"
+msgstr ""
+
+#: templates/idios/profile.html:60
 msgid "Drafts"
 msgstr ""
 
-#: templates/idios/profiles.html:7 templates/idios/profiles.html.py:11
+#: templates/idios/profiles.html:7 templates/idios/profiles.html.py:19
 msgid "All Users"
 msgstr ""
 
-#: templates/idios/profiles.html:12
+#: templates/idios/profiles.html:20
 msgid "Here is the awesome community building NewCo."
 msgstr ""

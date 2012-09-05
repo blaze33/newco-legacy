@@ -69,6 +69,7 @@ LANGUAGES = (
 # Where to look to compile translations
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
@@ -136,6 +137,8 @@ MIDDLEWARE_CLASSES = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
 ROOT_URLCONF = "newco.urls"
 
 TEMPLATE_DIRS = [
@@ -168,7 +171,6 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
@@ -202,6 +204,7 @@ INSTALLED_APPS = [
 
     # Project
     "about",
+    "affiliation",
     "profiles",
     "items",
     "custaccount",
@@ -228,7 +231,8 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%d/%s" % (o.get_profile().pk, o.get_profile().slug),
+    "auth.user": lambda o: "/profiles/profile/%d/%s" % \
+                                    (o.get_profile().pk, o.get_profile().slug),
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -264,10 +268,15 @@ GRAVATAR_DEFAULT_IMAGE = 'identicon'
 # AWS
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
+AWS_LOCALE = os.environ.get('AWS_LOCALE')
 
 # API services
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
+
+# Redis database ## redis://username:password@localhost:6379/0
+REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20

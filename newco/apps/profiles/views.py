@@ -13,6 +13,7 @@ from items.models import Item, Content
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
+from utils.tools import load_object
 
 
 class ProfileProcessFormView(ProcessFormView):
@@ -81,7 +82,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
-        list_pf = list(Profile.objects.all().values_list('name', flat=True))
+
+        profiles = Profile.objects.order_by("name").distinct("name")
+        list_pf = list(profiles.values_list('name', flat=True))
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
@@ -100,7 +103,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            return process_following(request, go_to_object=False)
+            obj = load_object(request)
+            success_url = request.path
+            return process_following(request, obj, success_url)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)

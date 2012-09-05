@@ -3,20 +3,19 @@
 {% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
+{% load bootstrap_tags %}
 
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
 
-{% for question in questions %}
-<div class="row question">
-<div class="span7">
+{% for question in questions %}<div class="row question"><div class="span7">
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
     <div class="row one_row" id="q-{{ question.id }}">
         <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h3></div>
         <div class="span4"><h3>
-            {{ question.content }}
+            <a href="{% url item_detail 'question' question.id 'ROOO' %}">{{ question.content }}</a>
             {% if user.is_superuser or question.author == request.user %}
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
@@ -40,9 +39,23 @@
             <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
         </div>
     {% endif %}{% endfor %}
-    <div class="row"><div class="span4 offset1 block_controls"><a href='{% url item_create "answer" %}?question_id={{ question.id }}' class="btn btn-mini" name="add_answer">
-        <i class="icon-share-alt"></i>{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}
-    </a></div></div>
+
+    <div class="row"><div class="span6 offset1">
+        <div class="block_controls">
+            <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
+        </div>
+        <br />
+        <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
+            {% csrf_token %}
+            {{ question.answer_form|as_bootstrap }}
+            <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+            <input type="hidden" name="question_id" value="{{ question.id }}"/>
+        </form></div>
+    </div></div>
+
+    {% include "items/_ask_modal.html" %}
+
     <hr>
-</div></div>
-{% endfor %}
+</div></div>{% endfor %}

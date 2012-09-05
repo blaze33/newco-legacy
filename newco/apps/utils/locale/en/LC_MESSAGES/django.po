@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 02:46+0200\n"
+"POT-Creation-Date: 2012-09-05 01:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,101 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: followtools.py:19
+#: asktools.py:18
+#, python-format
+msgid "%(user)s, your request has been sent to %(ask_profile)s!"
+msgstr ""
+
+#: asktools.py:23
+#, python-format
+msgid "%(user)s, you can't ask yourself to answer a question!"
+msgstr ""
+
+#: asktools.py:64
+#, python-format
+msgid "%(askee)s, %(asker)s needs you help!"
+msgstr ""
+
+#: asktools.py:70
+#, python-format
+msgid "would like you to answer this question \"%(question)s\""
+msgstr ""
+
+#: asktools.py:73 asktools.py:79
+#, python-format
+msgid "about the product %(product)s."
+msgstr ""
+
+#: asktools.py:83
+msgid "on"
+msgstr ""
+
+#: followtools.py:17
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr ""
 
-#: followtools.py:23
+#: followtools.py:21
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr ""
 
-#: followtools.py:27
+#: followtools.py:25
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
 msgstr ""
 
-#: votingtools.py:17
+#: votingtools.py:15
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
 msgstr ""
 
-#: votingtools.py:21
+#: votingtools.py:19
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
 msgstr ""
 
-#: votingtools.py:25
+#: votingtools.py:23
 #, python-format
 msgid "%(user)s, your vote on %(object)s has been cancelled."
 msgstr ""
 
-#: votingtools.py:29
+#: votingtools.py:27
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
+msgstr ""
+
+#: templates/ask/_ask_notification_email.html:11
+#, python-format
+msgid ""
+"\n"
+"            This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
+"\" >here</a> (available soon).\n"
+"            <br><br>\n"
+"            Thanks,\n"
+"            The NewCo team\n"
+"        "
+msgstr ""
+
+#: templates/ask/_ask_notification_email.txt:6
+#, python-format
+msgid ""
+"\n"
+"    To see %(asker)s's profile, go there:\n"
+"    %(asker_url)s\n"
+msgstr ""
+
+#: templates/autocomplete/autocomplete.html:7
+msgid "Items"
+msgstr ""
+
+#: templates/autocomplete/autocomplete.html:11
+msgid "Tags"
+msgstr ""
+
+#: templates/autocomplete/autocomplete.html:16
+msgid "No options"
 msgstr ""
 
 #: templates/follow/form.html:7

@@ -2,6 +2,10 @@
         vertical-align: baseline;
     }
 
+    h2 [class^="icon-"],[class*=" icon-"] {
+        vertical-align: baseline;
+    }
+
     .one_row {
         border-radius: 5px 5px 5px 5px;
         -webkit-transition: background-color 0.9s;
@@ -14,7 +18,7 @@
         -moz-transition: background-color 5s;
     }
 
-    .controls {
+    .controls_2 {
         display: inline-block;
         line-height: 14px;
         margin: 0 0;
@@ -22,7 +26,7 @@
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
-    .one_row:hover .controls {
+    .one_row:hover .controls_2 {
         opacity: 1;
         -webkit-transition: opacity 1s;
         -moz-transition: opacity 1s;
@@ -50,7 +54,7 @@
 
      .right .signature { padding-right: 5px; }
 
-    .controls.vote {
+    .controls_2.vote {
         vertical-align: -6px;
     }
 
@@ -68,10 +72,10 @@
         background-color: #f89406;
     }
 
-    .controls .icon-chevron-up {
+    .controls_2 .icon-chevron-up {
         background-position: -284px -120px;
     }
     
-    .controls .icon-chevron-down {
+    .controls_2 .icon-chevron-down {
         background-position: -309px -119px;
     }

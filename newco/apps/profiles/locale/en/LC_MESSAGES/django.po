@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 17:19+0200\n"
+"POT-Creation-Date: 2012-08-16 00:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,19 +85,19 @@ msgstr ""
 msgid "Products:"
 msgstr ""
 
-#: templates/profiles/_profiles_subnav.html:6
+#: templates/profiles/_profiles_subnav.html:7
 msgid "Profiles"
 msgstr ""
 
-#: templates/profiles/_profiles_subnav.html:7
+#: templates/profiles/_profiles_subnav.html:8
 msgid "All Profiles"
 msgstr ""
 
-#: templates/profiles/_profiles_subnav.html:10
+#: templates/profiles/_profiles_subnav.html:11
 msgid "Search user"
 msgstr ""
 
-#: templates/profiles/profile_homepage.html:6
+#: templates/profiles/profile_homepage.html:9
 #, python-format
 msgid "Home: %(page_user_display)s"
 msgstr ""
@@ -127,7 +127,7 @@ msgstr ""
 msgid "posted a link about"
 msgstr ""
 
-#: templates/profiles/content_display/_link.html:13
+#: templates/profiles/content_display/_link.html:10
 msgid "L:"
 msgstr ""
 

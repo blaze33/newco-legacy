@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 11:30+0200\n"
-"PO-Revision-Date: 2012-07-13 02:46\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-08-16 00:08+0200\n"
+"PO-Revision-Date: 2012-07-24 17:49\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -78,7 +78,7 @@ msgstr "Comment contribuer"
 msgid "Team"
 msgstr "L'équipe"
 
-#: templates/_footer.html:8
+#: templates/_footer.html:7
 msgid "&copy; 2012 NewCo"
 msgstr "&copy; 2012 NewCo"
 
@@ -126,20 +126,41 @@ msgstr ""
 "Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
 "\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
 
-#: templates/site_base.html:44
+#: templates/site_base.html:42
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/site_base.html:45
+#: templates/site_base.html:43
 msgid "Products index"
 msgstr "Liste des produits"
 
-#: templates/idios/profile.html:15
+#: templates/account/email/email_confirmation_message.txt:6
+#, python-format
+msgid ""
+"\n"
+"\n"
+"User %(profile_name)s at %(site_name)s has given this as an email address.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s.\n"
+"\n"
+msgstr ""
+"\n"
+"L'utilisateur %(profile_name)s sur %(site_name)s a renseigné cette adresse "
+"email.\n"
+"\n"
+"Pour confirmer cette information, allez à %(activate_url)s.\n"
+
+#: templates/account/email/email_confirmation_subject.txt:3
+#, python-format
+msgid "Confirm email address for %(site_name)s"
+msgstr "Confirmez cette adresse email pour %(site_name)s"
+
+#: templates/idios/profile.html:14
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:35
+#: templates/idios/profile.html:34
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -147,33 +168,70 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:46
+#: templates/idios/profile.html:45
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:58
+#: templates/idios/profile.html:57
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:59
+#: templates/idios/profile.html:58
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:60
+#: templates/idios/profile.html:59
 msgid "Followers"
 msgstr "Abonnés"
 
-#: templates/idios/profile.html:61
+#: templates/idios/profile.html:60
+msgid "'Drafts' contains your un-published contributions"
+msgstr "'Brouillons' contient vos contributions non-publiées"
+
+#: templates/idios/profile.html:60
 msgid "Drafts"
 msgstr "Brouillons"
 
-#: templates/idios/profiles.html:7 templates/idios/profiles.html.py:11
+#: templates/idios/profiles.html:7 templates/idios/profiles.html.py:19
 msgid "All Users"
 msgstr "Tous les utilisateurs"
 
-#: templates/idios/profiles.html:12
+#: templates/idios/profiles.html:20
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui alimente NewCo."
+
+#~ msgid "store"
+#~ msgstr "Historique"
+
+#~ msgid "Profile name"
+#~ msgstr "Profil"
+
+#~ msgid "Draft"
+#~ msgstr "Brouillons"
+
+#~ msgid "story"
+#~ msgstr "Historique"
+
+#~ msgid "Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "profile"
+#~ msgstr "Profil"
+
+#~ msgid "Products:"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "All Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "Home: %(page_user_display)s"
+#~ msgstr "Profil de %(page_user_display)s"
+
+#~ msgid "Follow"
+#~ msgstr "Abonnements"
 
 #~ msgid "Newsfeed"
 #~ msgstr "Flux"

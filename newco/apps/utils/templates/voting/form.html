@@ -1,6 +1,6 @@
 {% load content_utils %}
 
-<form class="controls vote" action="" method="POST">
+<form class="controls_2 vote" action="" method="POST">
     {% csrf_token %}
     <button type="submit" class="icon-chevron-up" name="vote_button" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button><br>
     <button type="submit" class="icon-chevron-down" name="vote_button" value="{% if vote.is_downvote %}clear{% else %}down{% endif %}" data-vote="{{ vote.is_downvote }}"></button>
