@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from items.models import Item, Question, Answer, Story, Link, Feature
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
-from affiliation.utils import stores_item_search
+from affiliation.tools import stores_item_search
 
 
 class ItemForm(ModelForm):
