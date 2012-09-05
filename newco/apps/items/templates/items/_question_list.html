@@ -8,9 +8,7 @@
 {% votes_by_user user on questions as question_vote_dict %}
 {% scores_for_objects questions as question_score_dict %}
 
-{% for question in questions %}
-<div class="row question">
-<div class="span7">
+{% for question in questions %}<div class="row question"><div class="span7">
     {% dict_entry_for_item question from question_vote_dict as vote %}
     {% dict_entry_for_item question from question_score_dict as score %}
 
@@ -60,5 +58,4 @@
     {% include "items/_ask_modal.html" %}
 
     <hr>
-</div></div>
-{% endfor %}
+</div></div>{% endfor %}
