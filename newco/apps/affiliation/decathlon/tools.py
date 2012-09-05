@@ -18,8 +18,6 @@ def decathlon_item_search(keyword, nb_items=10):
 
     query = get_query(keyword, ["name"])
 
-    print query.__dict__
-
     return d4_prods.filter(query)[:nb_items]
 
 
