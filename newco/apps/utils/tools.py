@@ -1,8 +1,10 @@
+import re
 import unicodedata
 import urlparse
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.db.models import Q
 from django.db.models.loading import get_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -46,6 +48,46 @@ def load_object(request):
     except ObjectDoesNotExist:
         raise AttributeError('No %s for %s.' % (model._meta.app_label,
                                                 lookup_kwargs))
+
+
+def normalize_query(query_string,
+                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+                    normspace=re.compile(r'\s{2,}').sub):
+    """
+    Splits the query string in invidual keywords, getting rid of unecessary
+    spaces and grouping quoted words together.
+
+    Example::
+
+        >>> normalize_query(' some random  words "with quotes  " and   spaces')
+        ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
+    """
+
+    return [normspace(' ', (t[0] or t[1]).strip()) \
+                                            for t in findterms(query_string)]
+
+
+def get_query(query_string, search_fields):
+    """
+    Returns a query, that is a combination of Q objects. That combination
+    aims to search keywords within a model by testing the given search fields.
+    """
+
+    query = None
+    terms = normalize_query(query_string)
+    for term in terms:
+        or_query = None
+        for field_name in search_fields:
+            q = Q(**{"%s__icontains" % field_name: term})
+            if or_query is None:
+                or_query = q
+            else:
+                or_query = or_query | q
+        if query is None:
+            query = or_query
+        else:
+            query = query & or_query
+    return query
 
 
 def load_redis_engine():
