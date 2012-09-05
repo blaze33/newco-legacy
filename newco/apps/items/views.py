@@ -23,6 +23,7 @@ from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
 from utils.apiservices import search_images
 import json
+from content.transition import add_images
 
 app_name = 'items'
 
@@ -124,6 +125,8 @@ class ContentUpdateView(ContentView, UpdateView):
         return self.render_to_response(self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
+        if self.model == Item:
+            add_images(request, **kwargs)
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
