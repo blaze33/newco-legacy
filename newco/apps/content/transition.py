@@ -15,15 +15,14 @@ def sync_products(sender, instance, **kwargs):
     content.data['class'] = 'product'
     content.data['name'] = instance.name
     content.save()
+    return content
 
 
 def add_images(request, **kwargs):
     img_order = [int(y.split('=')[1]) for y in request.POST['img_list'].split('&')]
     print img_order
 
-    product = Item.objects.get(data__contains={
-        'legacy_id': unicode(kwargs['pk']),
-        'class': 'product'})
+    product = sync_products(LegacyItem, LegacyItem.objects.get(id=kwargs['pk']))
 
     album_data = {'class': 'image_set', 'name': 'main album'}
     album = product.get_items(**album_data)
