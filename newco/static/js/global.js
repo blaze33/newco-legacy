@@ -46,7 +46,7 @@ $(function(){
                     .attr({id: 'image_'+index})
                     .append(
                 $(document.createElement("img"))
-                    .attr({ src: value['image']['thumbnailLink'], title: 'image ' + index })
+                    .attr({ src: value['thumbnailLink'], title: 'image ' + index })
                     .addClass("thumbnail")
                     )
                     .append(

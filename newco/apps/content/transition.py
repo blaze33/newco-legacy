@@ -22,7 +22,8 @@ def add_images(request, **kwargs):
     img_order = [int(y.split('=')[1]) for y in request.POST['img_list'].split('&')]
     print img_order
 
-    product = sync_products(LegacyItem, LegacyItem.objects.get(id=kwargs['pk']))
+    legacy_product = LegacyItem.objects.get(id=kwargs['pk'])
+    product = sync_products(LegacyItem, legacy_product)
 
     album_data = {'class': 'image_set', 'name': 'main album'}
     album = product.get_items(data__contains=album_data)
@@ -32,15 +33,15 @@ def add_images(request, **kwargs):
         album = album[0]
     product.link(album, {'relationship': 'has'})
 
-    r = search_images(product.data['name'])
-    images = r.json['items']
+    images = get_album(legacy_product)
+    if not images:
+        images = search_images(product.data['name'])
     id_order = []
     for x in img_order:
         i = images[x]
         image, created = Item.objects.get_or_create(data__contains={
             'link': i['link'],
             'class': 'image'})
-        i.update(i.pop('image'))
         for k, v in i.items():
             i[k] = unicode(v)
         image.data = i
@@ -51,3 +52,14 @@ def add_images(request, **kwargs):
         id_order.append(image.id)
     album.data['id_order']=unicode(id_order)
     album.save()
+
+def get_album(instance):
+    item = sync_products(LegacyItem, instance)
+    album = item.get_items(data__contains={'class':'image_set'})[0]
+    images = album.get_items()
+    ids = [int(x) for x in album.data['id_order'].strip('[]').split(',')]
+    images = Item.objects.filter(pk__in=ids)
+    images = sorted(images, key=lambda k: ids.index(k.id))
+    json  = [i.data for i in images]
+
+    return json

@@ -48,7 +48,10 @@
 {% block extra_script %}
     {{  block.super  }}
     <script type="text/javascript">
+        pics = {{  img_album|safe  }};
         results = {{  img_search|safe  }};
-        pics = results['items'];
+        if ( pics.length == 0 ) {
+            pics.push.apply(pics, results);
+        }
     </script>
 {% endblock %}

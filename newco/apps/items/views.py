@@ -23,7 +23,7 @@ from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
 from utils.apiservices import search_images
 import json
-from content.transition import add_images
+from content.transition import add_images, get_album
 
 app_name = 'items'
 
@@ -134,8 +134,10 @@ class ContentUpdateView(ContentView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ContentUpdateView, self).get_context_data(**kwargs)
         if self.model == Item:
+            album = get_album(self.object)
             images = search_images(self.object.name)
-            context.update({'img_search': json.dumps(images.json)})
+            context.update({'img_album': json.dumps(album),
+                            'img_search': json.dumps(images)})
         return context
 
 
