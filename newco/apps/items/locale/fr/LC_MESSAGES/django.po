@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 01:21+0200\n"
-"PO-Revision-Date: 2012-09-05 01:27\n"
+"POT-Creation-Date: 2012-09-05 12:04+0200\n"
+"PO-Revision-Date: 2012-09-05 12:05\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -239,8 +239,8 @@ msgid "Stories"
 msgstr "Articles"
 
 #: templates/items/item_detail.html:69
-msgid "Prices"
-msgstr "Prix"
+msgid "Offers"
+msgstr "Offres"
 
 #: templates/items/item_detail.html:71
 msgid "EAN"
@@ -384,6 +384,9 @@ msgstr "Question"
 #: templates/items/question_form.html:10
 msgid "Ask something:"
 msgstr "Demandez quelque chose :"
+
+#~ msgid "Prices"
+#~ msgstr "Prix"
 
 #~ msgid "...or someone you may know:"
 #~ msgstr "...ou à quelqu'un que vous connaissez :"
