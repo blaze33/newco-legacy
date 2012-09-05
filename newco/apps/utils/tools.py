@@ -14,21 +14,22 @@ from taggit.models import Tag
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 
+from affiliation.models import AffiliationItemCatalog
 from items.models import Item
 from profiles.models import Profile
 
 PARAMS = {
     Item._meta.module_name: {
         "class": Item, "pk": "id", "title_field": "name",
-        "recorded_fields": ["name", "slug", "author", "pub_date"]
+        "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
     Profile._meta.module_name: {
         "class": Profile, "pk": "id", "title_field": "name",
-        "recorded_fields": ["name", "slug"]
+        "recorded_fields": ["id", "name", "slug"]
     },
     Tag._meta.module_name: {
         "class": Tag, "pk": "id", "title_field": "name",
-        "recorded_fields": ["name", "slug"]
+        "recorded_fields": ["id", "name", "slug"]
     },
 }
 
