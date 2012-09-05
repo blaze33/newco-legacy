@@ -25,7 +25,7 @@ def add_images(request, **kwargs):
     product = sync_products(LegacyItem, LegacyItem.objects.get(id=kwargs['pk']))
 
     album_data = {'class': 'image_set', 'name': 'main album'}
-    album = product.get_items(**album_data)
+    album = product.get_items(data__contains=album_data)
     if not album:
         album = Item.objects.create(data=album_data)
     else:

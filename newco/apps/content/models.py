@@ -60,9 +60,9 @@ class Item(BaseModel):
     class Meta:
         verbose_name = _("item")
 
-    def get_items(self, **data):
+    def get_items(self, **query):
         return self.context.filter(
-            to_item__from_item=self, data__contains=data)
+            to_item__from_item=self, **query)
 
     def get_relations(self):
         return Relation.objects.filter(
