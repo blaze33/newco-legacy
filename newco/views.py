@@ -89,11 +89,14 @@ class DetailView(ProfileDetailView):
                 context['is_newsfeed']=1
             elif self.kwargs['category_name']=="popular":
                 context['newsfeed_source']=items_list_pop
+                context['is_popular']=1
             elif self.kwargs['category_name']=="last":
                 context['newsfeed_source']=Item.objects.all().order_by("-pub_date")
+                context['is_last']=1
             else:
                 context['newsfeed_source']=items_list_pop
+                context['is_popular']=1
         else:
             context['newsfeed_source']=items_list_pop
-        
+            context['is_popular']=1
         return context

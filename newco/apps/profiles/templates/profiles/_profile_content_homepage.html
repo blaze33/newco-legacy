@@ -33,10 +33,16 @@
 		<i>{% if content|to_class_name == "answer" %}
 		        <a href="{{ content.author.get_absolute_url }}"style="color:#222222">
 		        {% user_display content.author %}</h4></a> answered a <a href="{{ content.question.get_absolute_url }}"style="color:#222222">question</a> about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
+	    	
+	    	{% else %}
+	    	{% if content|to_class_name == "feature" %}
+		        <a href="{{ content.author.get_absolute_url }}"style="color:#222222">
+		        {% user_display content.author %}</h4></a> added a <a href="{{ content.question.get_absolute_url }}"style="color:#222222">feature</a> about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
+	    	
 	    	{% else %}
 		        <a href="{{ content.author.get_absolute_url }}"style="color:#222222">
 		        {% user_display content.author %}</h4></a> asked a <a href="{{ content.get_absolute_url }}"style="color:#222222">question</a> about <a href="{{ content.items.all.0.get_absolute_url }}"style="color:#222222">{{ content.items.all.0 }}</a>
-	    	{% endif %}</i>
+	    	{% endif %}{% endif %}</i>
 	        <br><br>
 	        <div class="expandable"><p>{% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}</p></div>
 		    <br>{% if content.items.all.0.tags %}{% for tag in content.items.all.0.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
@@ -66,7 +72,8 @@
     	<a href="{{ content.get_absolute_url }}" style="font-size:12px; color:#222222">{{ content.name }}</a>
      {% if content.tags %}{% for tag in content.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}	
 	<br><br>
-	 <span style="color:#AD9C9C">
+	{% comment %}
+	<span style="color:#AD9C9C">
     <span class="content-item-products">
 		<span class="name">
     {% profile_pic content.author 20 %}
@@ -74,6 +81,7 @@
     </span>
     <i>By <b><a href="{{ content.author.get_absolute_url }}"style="color:#222222">{% user_display content.author %}</a></b></i>
 	</span>
+	{% endcomment %}
     </div>
     </div>
 

@@ -1,4 +1,4 @@
-{% extends "idios/base.html" %}
+{% extends "site_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
@@ -14,18 +14,17 @@
 <div class="subnav subnav-fixed">	
 <ul class="nav nav-pills">
 	<li style="padding:10px"><b>NewCo empowers people to buy better</b></li>
-    <li class="dropdown" id="everything">
+    {% if is_popular == 1 %}<li class="dropdown active" id="popular">{% else %}<li class="dropdown" id="popular">{% endif %}
+    <a class="dropdown-toggle" href="{% url home_category 'popular' %}" style="color:#222222">
+      Popular
+    </a>
+    </li>
+    {% if is_last == 1 %}<li class="dropdown active" id="everything">{% else %}<li class="dropdown" id="everything">{% endif %}
     <a class="dropdown-toggle" data-toggle="dropdown" href="{% url home_category 'last' %}" style="color:#222222">
       Last Added
     </a>
     </li>
-    <li class="dropdown" id="popular">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url home_category 'popular' %}" style="color:#222222">
-      Popular
-    </a>
-    </li>
-   
-   <li class="dropdown" id="contrib">
+    {% if is_newsfeed == 1 %}<li class="dropdown active" id="contrib">{% else %}<li class="dropdown" id="contrib">{% endif %}
     <a class="dropdown-toggle" data-toggle="dropdown" href="#contrib" style="color:#222222">
       Community
       <b class="caret"></b>
