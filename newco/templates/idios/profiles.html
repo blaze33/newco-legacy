@@ -22,11 +22,8 @@
         <p class="lead">{% trans "Here is the awesome community building NewCo." %}</p>
     </header>
 
-    {% autopaginate profiles %}
     <div class="row" id="profiles_list1">
-    {% for profile in profiles %}
-        {% include "profiles/_profile_item.html" %}
-    {% endfor %}
+        {% for profile in profiles %}{% include "profiles/_profile_item.html" %}{% endfor %}
     </div>
-    {% paginate %}
+    {% if is_paginated %}{% paginate %}{% endif %}
 {% endblock %}

@@ -1,18 +1,20 @@
+import json
+
+from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
 from django.views.generic.simple import direct_to_template
 from django.views.generic.edit import ProcessFormView
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.core.urlresolvers import reverse
-from idios.views import ProfileDetailView, ProfileListView
-import json
-import operator
 
-from items.models import Item, Content, Question
-from profiles.models import Profile
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 from follow.models import Follow
+from idios.views import ProfileDetailView, ProfileListView
+
+from items.models import Item, Content
+from profiles.models import Profile
 from utils.followtools import process_following
 from utils.tools import load_object
 
@@ -83,9 +85,6 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                 Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
                 ~Q(author=self.page_user), status=Content.STATUS.public
         )
-        feed_all = Content.objects.filter(
-               status=Content.STATUS.public
-        )
 
         profiles = Profile.objects.order_by("name").distinct("name")
         list_pf = list(profiles.values_list('name', flat=True))
@@ -114,26 +113,11 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
-            
-        if "item_search" in request.POST:
-            search = request.POST["item_search"]
-            item_list = Item.objects.filter(name=search)
-            if item_list.count() > 0:
-                response = item_list[0].get_absolute_url()
-            else:
-                tag_list = Tag.objects.filter(name=search)
-                if tag_list.count() > 0:
-                    response = reverse("tagged_items",
-                                        kwargs={'tag_slug': tag_list[0].slug}
-                    )
-                else:
-                    response = "%s?search=%s" % (reverse("item_index"), search)
-            return HttpResponseRedirect(response)
-        else:
-            return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ProfileListView(ProfileListView, ProfileProcessFormView):
+
+    paginate_by = 15
 
     def get_queryset(self):
         profiles = self.get_model_class().objects.select_related()
