@@ -69,20 +69,12 @@
             <button type="submit" class="btn">Sort</button>
         </div></form>{% endspaceless %}</div>{% else %}&nbsp;{% endif %}
 
-        {% if top_questions %}<div class="row">
-            <h3>{% trans "Top questions" %}</h3>
-            <ul>
-            {% for question in top_questions %}
-                <li><a href="{{ question.get_absolute_url }}">{{ question.content }}</a></li>
-            {% endfor %}
-            </ul>
-        </div>{% endif %}
-
-        {% if latest_questions %}<div class="row">
-            <h3>{% trans "Latest questions" %}
-
-
-        </div>{% endif %}
+        {% for title, content_list in related_questions.iteritems %}
+            {% if content_list %}<div class="row">
+                <h3>{{ title }}</h3>
+                <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
+            </div>{% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

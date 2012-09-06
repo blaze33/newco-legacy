@@ -350,10 +350,10 @@ class ContentListView(ContentView, ListView, RedirectView):
         })
         if "item_list" in context:
             item_list = context.pop("item_list")
-            questions = Question.objects.filter(
+            queryset = Question.objects.filter(
                         items__id__in=item_list.values_list("id", flat=True))
-            qs = generic_annotate(
-                        questions, Vote, Sum('votes__vote')).order_by("-score")
+            queryset_ordered = generic_annotate(
+                        queryset, Vote, Sum('votes__vote')).order_by("-score")
             if "sort_items" in self.request.POST:
                 sort = "-pub_date"
                 if self.request.POST["sort_items"] == "0":
@@ -363,7 +363,10 @@ class ContentListView(ContentView, ListView, RedirectView):
                 item_list = item_list.order_by(sort)
             context.update({
                 "item_list": item_list,
-                "top_questions": qs[:2]
+                "related_questions": {
+                    _("Top Questions"): queryset_ordered[:3],
+                    _("Latest Questions"): queryset[:3]
+                }
             })
         return context
 
