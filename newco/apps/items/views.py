@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models.loading import get_model
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 
 from account.utils import user_display
+from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
@@ -343,16 +344,27 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+        context.update({
+            "tag": getattr(self, "tag", ""),
+            "search_terms": getattr(self, "search_terms", "")
+        })
         if "item_list" in context:
-            context.update({"tag": getattr(self, "tag", "")})
-            context.update({"search_terms": getattr(self, "search_terms", "")})
+            item_list = context.pop("item_list")
+            questions = Question.objects.filter(
+                        items__id__in=item_list.values_list("id", flat=True))
+            qs = generic_annotate(
+                        questions, Vote, Sum('votes__vote')).order_by("-score")
             if "sort_items" in self.request.POST:
                 sort = "-pub_date"
-                if self.request.POST["sort_items"] == "1":
+                if self.request.POST["sort_items"] == "0":
                     pass
-                elif self.request.POST['sort_items'] == "2":
+                elif self.request.POST['sort_items'] == "1":
                     sort = "pub_date"
-                context["item_list"] = context["item_list"].order_by(sort)
+                item_list = item_list.order_by(sort)
+            context.update({
+                "item_list": item_list,
+                "top_questions": qs[:2]
+            })
         return context
 
     def post(self, request, *args, **kwargs):

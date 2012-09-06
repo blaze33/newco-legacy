@@ -54,7 +54,6 @@ class Content(models.Model):
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
                                             verbose_name=_('status'))
     items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     public = QueryManager(status=STATUS.public)
 
@@ -79,6 +78,7 @@ class Content(models.Model):
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("question")
@@ -100,6 +100,7 @@ class Question(Content):
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_("content"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("answer")
@@ -120,6 +121,7 @@ class Answer(Content):
 class Link(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("link")
@@ -135,6 +137,7 @@ class Link(Content):
 class Feature(Content):
     content = models.CharField(max_length=80, verbose_name=_('content'))
     positive = models.BooleanField()
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _('feature')
