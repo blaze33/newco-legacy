@@ -1,16 +1,17 @@
 {% load i18n %}
 
 {{ askee }},
-{{ asker }} aimerait beaucoup que vous repondiez a sa question "{{ question_object }}". Cela vous fera gagner 50 points.
+{{ asker }} {{ txt_request }}
 
-Pour voir le profil de {{ asker }}, suivez ce lien :
-{{ asker_url }}
+{% blocktrans %}
+    To see {{ asker }}'s profile, go there:
+    {{ asker_url }}
+{% endblocktrans %}
 
-
----
-Cet email vous a ete envoye parce que cette option est activee dans votre profil.
-Pour changer votre configuration suivez ce lien : {{ askee_url }} (option bientot disponible).
 
 ---
-Merci !
-The NewCo Project team
+This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: {{ settings_url }} (available soon).
+
+---
+Thanks,
+The NewCo team

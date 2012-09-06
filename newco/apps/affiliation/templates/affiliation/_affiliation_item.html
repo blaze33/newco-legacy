@@ -1,0 +1,16 @@
+{% load format_utils %}
+
+<div class="profile-item thumbnail">
+    <a href="{{ prod.url }}" target="_blank" rel="tooltip" title="{{ prod.name }}" class="black">
+        <div class="name">
+            <img src="{{ prod.img_small }}">
+            {{ prod.name|truncatechars:40 }}
+        </div>
+    </a>
+    <div class="details">
+        <h4>
+            <a href="{{ prod.store.url }}" target="_blank" class="black">{{ prod.store }}</a>
+            <a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
+        </h4>
+    </div>
+</div>

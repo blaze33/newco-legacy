@@ -69,6 +69,7 @@ LANGUAGES = (
 # Where to look to compile translations
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
@@ -183,8 +184,6 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # external
-    "newco_bw_editor",
-    
 #    "notification",  # must be first
     "staticfiles",
     "compressor",
@@ -275,6 +274,9 @@ AWS_LOCALE = os.environ.get('AWS_LOCALE')
 # API services
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
+
+# Redis database ## redis://username:password@localhost:6379/0
+REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20

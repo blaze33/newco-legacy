@@ -4,16 +4,13 @@
 {% load voting_tags %}
 {% load voting_utils %}
 {% load content_utils %}
-{% load ask_utils %}
 {% load staticfiles %}
-{% load account_tags %}
 {% load bootstrap_tags %}
 
 {% block extra_style %}
     {{ block.super }}
 
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
-    {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
 
 {% block head_title %}{{ question.content }}{% endblock %}
@@ -24,155 +21,55 @@
 {% score_for_object question as score %}
 
 <div class="row">
-	<div class="span2">
-		<h3><i>Related Products</i></h3>
-		<br>
-		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;">
-		{% for item in question.items.all %}
-		<br><h4><a href="{% url item_detail "item" item.id item.slug %}" style="color:#222222">{{ item.name }}</a></h4>
-		{% endfor %}
-		</div>
-		
-		<br><br><br>
-		
-		<h3><i>Related Questions</i></h3>
-		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;font-size:12px;">
-		{% for question_rel in question_list %}
-		<br><br><a href="{% url item_detail "question" question_rel.id "lalala" %}" style="color:#999999">{{ question_rel }}</a>
-		{% endfor %}
-		</div>
-    </div>
-
-	<div class="span10">
-		<div class="row">
-	        <div class="span4" style="text-align: left">Tags items: {% for item in question.items.all %}{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}{% endfor %}
-	        <br><br>Tags question: {% for tag in question.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}
-	        </div>
-	        <div class="span3 right">{% for prof in prof_list_question %}<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %}</span></a> {% endfor %}
-	        </div>
-		</div>
-        <br>
-
-	    <div class="row one_row" id="q-{{ question.id }}">
-	        <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
-	        <div class="span4"><h2>
-	            {{ question.content }}
-	            {% if user.is_superuser or question.author == request.user %}
-	                {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
-	            {% endif %}
-	        </h2>
-			<button class="btn btn-info" data-toggle="collapse" data-target="#details">
-					Add question details
-					</button>
-					<br><br>
-					<div id="details" class="collapse out">
-						<form method="POST" action="" class="form-horizontal">
-					        {% csrf_token %}
-					        <div class="input-prepend input-append"><span class="add-on"><i class="icon-pencil"></i></span>{{ form.content }}<button type="submit" class="btn" name="question_context"><i class="icon-share-alt"></i></button>
-					        </div>
-					    </form>	
-				    </div>
-	
-			</div>
-			<div class="span4">
-			        <h5>Add this question to an other item</h5>
-					<ul class="nav nav-list">
-					        <li>
-					            <form action="" method="POST" class="form-horizontal">{% csrf_token %}
-					                <input name="item_pick" type="text" autocomplete="off" placeholder="{% trans 'Choose an item' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_items }}">
-					                <button class="btn" type="submit" style="height:25px; "><h4> {% trans "Add" %}</h4></button>
-					            </form>
-					        </li>
-				    </ul>
-			</div>  
-	    </div>
-    {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
-    {% scores_for_objects question.answer_set.all as answer_score_dict %}
-
-    {% for answer in question.answer_set.all %}{% if answer.is_public %}
-        {% dict_entry_for_item answer from answer_vote_dict as vote %}
-        {% dict_entry_for_item answer from answer_score_dict as score %}
-        <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
-            <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
-            <div class="span4"><p>
-                {% autoescape off %}{{ answer.content }}{% endautoescape %}
-                {% if user.is_superuser or answer.author == request.user %}
-                    {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
+    <div class="span7">
+        <div class="row one_row" id="q-{{ question.id }}">
+            <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
+            <div class="span4"><h2>
+                {{ question.content }}
+                {% if user.is_superuser or question.author == request.user %}
+                    {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
                 {% endif %}
-            </p></div>
-            <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+            </h2></div>
+            <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
         </div>
-    {% endif %}{% endfor %}
+        {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
+        {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-    <div class="row"><div class="span4 offset1">
-        <div class="block_controls"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form"><i class="icon-share-alt" id="icons"></i><span id ="text_to_change">{% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
-        <br />
-        <div id="answer_form" class="collapse out"><form method="POST" action="">
-            {% csrf_token %}
-            {{ question.answer_form|as_bootstrap }}
-            <button type="submit" class="btn btn-mini" name="answer" value="{{ answer.content }}"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
-            <input type="hidden" name="question_id" value="{{ question.id }}"/>
-        </form></div>
+        {% for answer in question.answer_set.all %}{% if answer.is_public %}
+            {% dict_entry_for_item answer from answer_vote_dict as vote %}
+            {% dict_entry_for_item answer from answer_score_dict as score %}
+            <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
+                <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
+                <div class="span4"><p>
+                    {{ answer.content }}
+                    {% if user.is_superuser or answer.author == request.user %}
+                        {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
+                    {% endif %}
+                </p></div>
+                <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+            </div>
+        {% endif %}{% endfor %}
+
+        <div class="row"><div class="span6 offset1">
+            <div class="block_controls">
+                <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
+            </div>
+            <br />
+            <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
+                {% csrf_token %}
+                {{ question.answer_form|as_bootstrap }}
+                <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+                <input type="hidden" name="question_id" value="{{ question.id }}"/>
+            </form></div>
+        </div></div>
+        {% include "items/_ask_modal.html" %}
     </div>
-   
-    
-	<div class="span2 offset1 block_controls">
-		        <button data-toggle="modal" data-target="#ask" class="btn btn-mini">
-		        <i class="icon-user"></i>{% if question.answer_set.all %}{% trans "Ask someone to answer" %}{% else %}{% trans "Ask someone to answer" %}{% endif %}
-		        </button>
-		    </div>
-		    <div id="ask" class="modal fade hide">
-			    <div class="modal-header">
-		        	<button class="close" data-dismiss="modal">×</button>
-		        	<h3>Ask them to answer&nbsp;:</h3>
-	    		</div>
-	    		<div class="modal-body form-horizontal">
-			    	{% if prof_list_question.count > 0 %}
-				    	<h4>Ask an Expert</h4>
-				    	{% for prof in prof_list_question %}
-		    			<br>
-					   	<div class="row">
-						    <div class="span1 left">
-						    	<a href="{{ prof.user.get_absolute_url }}"><span class="label label-success">{% user_display prof.user %} </span></a> 
-						    </div>
-						    <div class="span1">
-							    <form action='' method='POST'>{% csrf_token %}
-								    <input type='submit' class='btn' name='ask_design' value='Ask'/>
-								    <input type='hidden' name='ask' value='{% user_display prof.user %}'/>
-								    <input type='hidden' name='app_label' value='{{ question|to_app_label }}'/>
-								    <input type='hidden' name='object_name' value='{{ question|to_class_name }}'/>
-								    <input type='hidden' name='id' value='{{ question.id }}'/>
-								</form>
-					        </div>
-				        </div>
-				    	{% endfor %}
-				    	{% else %}We're sorry, no one can help you for now. Please wait or edit the product tags.<br> Thank you!.{% endif %}
-			    	<br><br><h4>Or Ask someone else</h4>
-			    	<form action="" method="POST" class="form-horizontal">{% csrf_token %}
-		                <input name="ask_prof_pick" type="text" autocomplete="off" placeholder="{% trans 'Choose someone' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profiles }}">
-					    <input type='submit' class='btn' name='ask_design' value='Ask'/>
-					    <input type='hidden' name='app_label' value='{{ question|to_app_label }}'/>
-					    <input type='hidden' name='object_name' value='{{ question|to_class_name }}'/>
-					    <input type='hidden' name='id' value='{{ question.id }}'/>
-		            </form>
-			    	
-		    	</div>
-		    	<div class="modal-footer">
-		        	You could also push your question in Homepage for 50 points :
-			        <button class="btn btn-primary" type="submit">
-			        	Push !
-			        </button>
-	    		</div>
-	</div>
 
-	</div>
-
-</div></div>
-{% endblock %}
-
-
-{% block extra_body_base %}
-    {{ block.super }}
-    <script src="{% static "js/content.js" %}"></script>
-    {% if question %}{{ question.answer_form.media.js }}{% endif %}
+    <div class="span2 right">
+        <h3>{% trans "Related Products" %}</h3>
+        {% for item in question.items.all %}<a href="{% url item_detail 'item' item.id item.slug %}">{{ item.name }}</a>{% if not forloop.last %}<hr>{% endif %}{% endfor %}
+    </div>
+</div>
 {% endblock %}

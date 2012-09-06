@@ -6,9 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from items.models import Item, Question, Answer, Story, Link, Feature
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
-from affiliation.utils import stores_item_search
-
-from newco_bw_editor.widgets import BW_small_Widget, BW_large_Widget
+from affiliation.tools import stores_product_search
 
 
 class ItemForm(ModelForm):
@@ -64,15 +62,15 @@ class ItemForm(ModelForm):
     def stores_search(self):
         self.errors.clear()
         keyword = self.data["name"]
-        self.item_list_by_store = stores_item_search(keyword)
+        self.product_list_by_store = stores_product_search(keyword)
 
     def reload_current_search(self):
-        self.item_list_by_store = dict()
+        self.product_list_by_store = dict()
         for key in self.request.POST.keys():
             if "current_search_" in key:
                 store = unicode.replace(key, "current_search_", "")
                 aff_cat_ids = self.request.POST.getlist(key)
-                item_list = list()
+                product_list = list()
                 for aff_cat_id in aff_cat_ids:
                     try:
                         aff_cat = AffiliationItemCatalog.objects.get(
@@ -80,8 +78,8 @@ class ItemForm(ModelForm):
                     except ObjectDoesNotExist:
                         pass
                     else:
-                        item_list.append(aff_cat)
-                self.item_list_by_store.update({store: item_list})
+                        product_list.append(aff_cat)
+                self.product_list_by_store.update({store: product_list})
 
 
 class QuestionForm(ModelForm):
@@ -124,12 +122,10 @@ class AnswerForm(ModelForm):
         model = Answer
         fields = ("content", "status", )
         widgets = {
-             'content': BW_large_Widget(attrs={ 
-                'class': 'span4',
-                'rows': 6,
-                'placeholder': _('Be concise and to the point.'), 
-                'rel': "bw_editor_small",
-                }),
+            "content": Textarea(attrs={
+                "class": "span6",
+                "placeholder": _("Be concise and to the point."),
+                "rows": 6}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -247,73 +243,3 @@ class FeatureForm(ModelForm):
             return feature
         else:
             return super(FeatureForm, self).save(commit)
-
-class QuestionForm_new(ModelForm):
-
-    create = False
-
-    class Meta:
-        model = Question
-        exclude = ('author', 'items')
-        widgets = {
-            'content': Textarea(attrs={
-                'class': 'span4',
-                'placeholder': _('Add a context to the question.'),
-                'rows': 2}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-        return super(QuestionForm_new, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True, **kwargs):
-        if commit and self.create:
-            question = super(QuestionForm_new, self).save(commit=False)
-            question.author = self.user
-            question.save()
-            question.items.add(kwargs.pop('pk'))
-            return question
-        else:
-            return super(QuestionForm_new, self).save(commit)
-        
-class AnswerForm_new(ModelForm):
-
-    create = False
-
-    class Meta:
-        model = Answer
-        fields = ('content', 'status', )
-        widgets = {
-            'content': Textarea(attrs={
-                'class': 'span3',
-                'placeholder': _('Be concise and to the point.'),
-                'rows': 3}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        
-        if 'instance' not in kwargs or kwargs['instance'] == None:
-            
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-            self.question_id = self.request.POST['question_id']
-            self.question = Question.objects.get(pk=self.question_id)
-        else:
-            self.object = kwargs['instance']
-            self.question = self.object.question
-        return super(AnswerForm_new, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True, **kwargs):
-        if commit and self.create:
-            answer = super(AnswerForm_new, self).save(commit=False)
-            answer.author = self.user
-            answer.question = self.question
-            answer.save()
-            answer.items = answer.question.items.all()
-            return answer
-        else:
-            return super(AnswerForm_new, self).save(commit)

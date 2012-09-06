@@ -1,47 +1,17 @@
+{% extends "items/item_list_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load account_tags %}
 {% load content_utils %}
 {% load pagination_tags %}
 
-<br>
-{% if item_list %}
-
-
-	{% if template_choice == 1 %}
-		{% for item in item_list %}
-            <div class="row">
-                {% if not forloop.first %}<hr>{% endif %}
-                <div class="span3"><h3><a href='{{ item.get_absolute_url }}'>{{ item.name }}</a></h3></div>
-                <div class="span3">{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>
-                <div class="span1"><a href="{% url item_edit item|to_class_name item.id %}"><i class="icon-edit"></i></a></div>
+{% block itemlist %}
+    <div class="row" id="contents_list1">{% for item in item_list %}<div class="content-item thumbnail">
+            <div class="name"><a href="{{ item.get_absolute_url }}"><img src="http://lorempixel.com/260/260/technics/?{{ item.id }}" alt=""></a></div>
+            <div class="details" style="font-family:helvetica;font-size:11px">
+                <a href="{{ item.get_absolute_url }}" style="font-size:12px; color:#222222">{{ item.name }}</a>
+                {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a>{% if not forloop.last %} &nbsp;{% endif %}{% endfor %}{% endif %}
             </div>
-        {% endfor %}
-	{% else %}
-	{% autopaginate item_list %}
-		<div class="row" id="contents_list1">
-		{% for item in item_list|slice:"10" %}
-		
-		    <div class="content-item thumbnail">
-		    <div class="name">
-		        <a href="#">
-		        <img src="http://lorempixel.com/260/260/technics/?{{ item.id }}" alt="">
-		        </a>
-		    </div>
-		    <div class="details" style="font-family:helvetica;font-size:11px">
-		    	
-		    	<a href="{{ item.get_absolute_url }}" style="font-size:12px; color:#222222">{{ item.name }}</a>
-		     {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}	
-			
-		    </div>
-		    </div>
-		
-		{% endfor %}
-		</div>
-		{% paginate %}
-	{% endif %}
-	
-	{% else %}
-        <h3>{% trans "No products are available with tag" %} <a href=""><span class="label">{{ tag.name }}</span></a></h3>
-    
-{% endif %}
+    </div>{% endfor %}</div>
+{% endblock %}

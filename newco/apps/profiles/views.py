@@ -8,12 +8,13 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 from idios.views import ProfileDetailView, ProfileListView
 import json
+import operator
 
 from items.models import Item, Content, Question
 from profiles.models import Profile
 from follow.models import Follow
 from utils.followtools import process_following
-import operator
+from utils.tools import load_object
 
 
 class ProfileProcessFormView(ProcessFormView):
@@ -52,6 +53,15 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
                                                     request,
                                                     *args,
                                                     **kwargs)
+        elif request.user.is_authenticated():
+            self.template_name = "profiles/profile_homepage.html"
+            self.page_user = request.user
+            self.object = self.page_user.get_profile()
+            context = self.get_context_data()
+            context.update({'kwargs': kwargs})
+            return self.render_to_response(context)
+        else:
+            return direct_to_template(request, "homepage.html")
 
     def get_context_data(self, **kwargs):
         #TODO: better handling of QueryManager
@@ -76,12 +86,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
         feed_all = Content.objects.filter(
                status=Content.STATUS.public
         )
-        
-                    
-        list_pf = list(Profile.objects.all().values_list('name', flat=True))
-        #profile_sorted = Profile.objects.filter(name__icontains="s")
-        profile_sorted = Profile.objects.all().order_by("?")[:3]
-        #content_sorted=Content.objects.filter
+
+        profiles = Profile.objects.order_by("name").distinct("name")
+        list_pf = list(profiles.values_list('name', flat=True))
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
@@ -92,8 +99,8 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'fwees': User.objects.filter(pk__in=fwees_ids),
             'items_fwed': Item.objects.filter(pk__in=items_fwed_ids),
             'data_source_profile': json.dumps(list_pf),
-            'profile_list_sorted': profile_sorted,
-            #'content_list_sorted': feed
+            'profile_list_sorted': profiles,
+            'newsfeed': feed.select_subclasses(),
         })
 
         return context
@@ -101,7 +108,9 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if 'follow' in request.POST or 'unfollow' in request.POST:
-            return process_following(request, go_to_object=False)
+            obj = load_object(request)
+            success_url = request.path
+            return process_following(request, obj, success_url)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
