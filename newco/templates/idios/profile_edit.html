@@ -1,6 +1,7 @@
-{% extends "pinax_theme_bootstrap:idios/profile_edit.html" %}
+{% extends "dashboard/dashboard_base.html" %}
 
 {% load staticfiles %}
+{% load i18n %}
 
 {% block extra_head_base %}
     {{ block.super }}
@@ -9,4 +10,16 @@
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
 
     {{ form.media }}
+{% endblock %}
+
+
+{% block head_title %}{% trans "Edit Profile" %}{% endblock %}
+
+{% block body %}
+    <header class="jumbotron subhead" id="overview">
+        <h1>{% trans "Edit profile" %}</h1>
+    </header>
+    
+    {% include "idios/_profile_form.html" %}
+    
 {% endblock %}

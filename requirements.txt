@@ -102,4 +102,4 @@ versiontools==1.9.1
 wsgiref==0.1.2
 
 #NewCo_bw_editor
-hg+https://sebastien_worms@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor
+hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor

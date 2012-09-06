@@ -1,9 +1,11 @@
-{% extends "idios/base.html" %}
+{% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load follow_tags %}
 {% load content_utils %}
+
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
     {{ block.super }}
@@ -13,13 +15,7 @@
 
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
 
-{% block subnav %}
-    {% if user.is_authenticated %}
-        {% include "profiles/_profiles_subnav.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-{% endblock %}
+
 
 {% block body %}<div class="span7">
     {% user_display page_user as page_user_display %}
@@ -57,7 +53,7 @@
             <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
             <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
             <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
-            {% if is_me %}<li><a href="#draft" data-toggle="tab" rel="tooltip" title="{% trans "'Drafts' contains your un-published contributions" %}">{% trans "Drafts" %}</a></li>{% endif %}
+            {% if is_me %}<li><a href="#draft" data-toggle="tab" rel="tooltip-top" title="{% trans "'Drafts' contains your un-published contributions" %}">{% trans "Drafts" %}</a></li>{% endif %}
         </ul>
 
         <div class="tab-content" style="overflow: visible;">

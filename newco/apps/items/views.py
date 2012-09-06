@@ -21,6 +21,8 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
+from utils.asktools import process_asking
+from utils.tools import load_object
 
 app_name = 'items'
 
@@ -199,10 +201,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             del sets["feat_neg"]
             context.update(sets)
 
-            prof_list = Profile.objects.filter(
-                skills__id__in=self.object.tags.values_list('id', flat=True)
-            ).distinct()
-            context.update({"q_form": q_form, "prof_list": prof_list})
+            tag_ids = self.object.tags.values_list('id', flat=True)
+            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            context.update({"q_form": q_form, "prof_list": p_list})
         elif self.model == Question:
             question = context.pop("question")
             if "answer" in self.request.POST:
@@ -210,7 +211,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                                                         request=self.request)
             else:
                 question.answer_form = AnswerForm(request=self.request)
-            context.update({"question": question})
+
+            tag_ids = question.items.all().values_list("tags__id", flat=True)
+            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            context.update({"question": question, "prof_list": p_list})
         return context
 
     def form_invalid(self, form):
@@ -225,47 +229,70 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form, request, **kwargs):
-        if form.cleaned_data:
-            self.object = form.save(**kwargs)
-            form.save_m2m()
-            messages.add_message(self.request,
-                self.messages["object_created"]["level"],
-                self.messages["object_created"]["text"] % {
-                    "user": user_display(self.request.user),
-                    "object": self.object._meta.verbose_name
-                }
-            )
-        return HttpResponseRedirect(self.object.get_absolute_url())
+        self.object = form.save(**kwargs)
+        form.save_m2m()
+        messages.add_message(self.request,
+            self.messages["object_created"]["level"],
+            self.messages["object_created"]["text"] % {
+                "user": user_display(self.request.user),
+                "object": self.object._meta.verbose_name
+            }
+        )
+        return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        if "vote_button" in request.POST:
-            return self.process_voting(request)
-        elif "question" in request.POST:
-            POST_dict = request.POST.copy()
-            POST_dict.update(
-                {'status': Content._meta.get_field('status').default}
-            )
-            form = QuestionForm(POST_dict, request=request)
-            if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
+        if "next" in request.POST:
+            self.success_url = request.POST.get("next")
+        if "vote_button" in request.POST or "ask" in request.POST or \
+                                            "ask_prof_pick" in request.POST:
+            obj = load_object(request)
+            if self.model == Item:
+                item = self.get_object()
+                success_url = obj.get_product_related_url(item)
             else:
-                return self.form_invalid(form)
-        elif "answer" in request.POST:
-            form = AnswerForm(request.POST, request=request)
-            if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
+                success_url = obj.get_absolute_url()
+            if "vote_button" in request.POST:
+                return self.process_voting(request, obj, success_url)
             else:
-                return self.form_invalid(form)
+                return process_asking(request, obj, success_url)
         elif "follow" in request.POST or "unfollow" in request.POST:
-            return process_following(request, go_to_object=True)
+            obj_followed = load_object(request)
+            success_url = obj_followed.get_absolute_url()
+            return process_following(request, obj_followed, success_url)
+        elif "question" in request.POST or "answer" in request.POST:
+            if "question" in request.POST:
+                POST_dict = request.POST.copy()
+                POST_dict.update(
+                    {'status': Content._meta.get_field('status').default}
+                )
+                form = QuestionForm(POST_dict, request=request)
+            else:
+                form = AnswerForm(request.POST, request=request)
+            if form.is_valid():
+                return self.form_valid(form, request, **kwargs)
+            else:
+                return self.form_invalid(form)
         else:
             return HttpResponseRedirect(request.path)
 
+    def get_success_url(self):
+        if self.success_url:
+            url = self.success_url % self.object.__dict__
+        else:
+            try:
+                url = self.object.get_absolute_url()
+            except AttributeError:
+                raise ImproperlyConfigured(
+                    "No URL to redirect to. Either provide a url or define"
+                    " a get_absolute_url method on the Model."
+                )
+        return url
+
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
-    def process_voting(self, request):
-        return _process_voting(request, go_to_object=True)
+    def process_voting(self, request, obj, success_url):
+        return _process_voting(request, obj, success_url)
 
 
 class ContentListView(ContentView, ListView, RedirectView):

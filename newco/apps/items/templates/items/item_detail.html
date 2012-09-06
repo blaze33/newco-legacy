@@ -20,44 +20,51 @@
 <br>
 
 
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
-        <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
-        <li{% if '/feature-' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
-        <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
-    </ul>
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+            <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
+            <li{% if '/feature-' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
+            <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
+        </ul>
 
-    <div class="tab-content" style="overflow: visible;">
-        <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/_question_list.html" %}</div>
-        <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/_link_list.html" %}</div>
-        <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
-        <div id="stories" class="tab-pane{% if '/story-' in request.path %} active{% endif %}">
-            <div class="row"><div class="span7">
-                <h3>Soon you'll be able to tell us a nice story about this product</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
-                <ul class="thumbnails">
-                <li class="span3"><a href="#" class="thumbnail">
-                  <img src="http://lorempixel.com/g/260/180" alt="">
-                </a></li>
-                <li class="span3"><a href="#" class="thumbnail">
-                  <img src="http://lorempixel.com/g/260/180/technics" alt="">
-                </a>
-                </li></ul>
-                Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor.
-                </p>
-                <hr>
-            </div></div>
+        <div class="tab-content" style="overflow: visible;">
+            <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/_question_list.html" %}</div>
+            <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/_link_list.html" %}</div>
+            <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
+            <div id="stories" class="tab-pane{% if '/story-' in request.path %} active{% endif %}">
+                <div class="row"><div class="span7">
+                    <h3>Soon you'll be able to tell us a nice story about this product</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
+                    <ul class="thumbnails">
+                    <li class="span3"><a href="#" class="thumbnail">
+                      <img src="http://lorempixel.com/g/260/180" alt="">
+                    </a></li>
+                    <li class="span3"><a href="#" class="thumbnail">
+                      <img src="http://lorempixel.com/g/260/180/technics" alt="">
+                    </a>
+                    </li></ul>
+                    Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor.
+                    </p>
+                    <hr>
+                </div></div>
+            </div>
         </div>
+    </div>
+
+    <div class="row">
+        <a class="btn" href="{% url item_index %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
+        <a class="btn" href="{% url item_edit item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
+        {% if user.is_superuser %}<a class="btn" href="{% url item_delete item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
     </div>
 </div>
 
-<div class="row"><div class="span7">
-    <a class="btn" href="{% url item_index %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
-    <a class="btn" href="{% url item_edit item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
-    {% if user.is_superuser %}<a class="btn" href="{% url item_delete item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
-</div></div>
-
+<div class="span4">{% if item.affiliationitem_set.all %}
+    <h4>{% trans "Buy" %}</h4>
+    <div id="profiles_list1">
+                {% for link in item.affiliationitem_set.all %}{% include "affiliation/_affiliation_item.html" with item=link %}{% endfor %}
+    </div>
+{% endif %}</div>
 {% endblock %}
 
 {% block extra_body_base %}

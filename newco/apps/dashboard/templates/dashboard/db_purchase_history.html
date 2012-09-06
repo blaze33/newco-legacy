@@ -1,0 +1,38 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Purchase history{% endblocktrans %}{% endblock %}
+
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
+<div class="span 10">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{% trans "Purchase history" %}<br><small>Ici, retrouver ses achats, donner ses feedbacks, voir ses loyalty points...</small></h1>
+    </header>
+    
+    <br>
+    History of your purchases, visible only by you, the loyalty points it gave you, possibility to find your old purchases to give a feedback on it ....
+    <br>
+    <br>
+    <br>
+    
+    
+    <div class="row">
+        <div class="span7">
+            <form action="." method="POST" class="well">{% csrf_token %}
+                <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" class="input-xlarge" placeholder=" {% trans "Search in all my purchases" %}" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn" type="submit" style="height:40px; "><h3> <i class="icon-search"></i> </h3></button></div>
+            </form>
+        </div>
+    </div>
+    
+    </br>
+    <hr>
+    {% include "profiles/_profile_content_list.html" with contents=all_contrib_feed %}
+</div>
+{% endif %}{% endblock %}

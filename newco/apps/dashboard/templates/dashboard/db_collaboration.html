@@ -1,0 +1,48 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
+
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Teamwork{% endblocktrans %}{% endblock %}
+
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
+<div class="span 10">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{% trans "Collaborations" %}<br><small>Collaborations: articles auxquels on a participés, nouveaux membres qu'on *coach*, demande d'aide à d'autres membres ...</small></h1>
+        <br>
+        <small>La page pourrait aussi s'appeler : "Collaborer, aider les autres ou se faire aider"</small>
+    </header>
+
+    <br>
+
+    <div class="row">
+        <div class="span4 well">
+            <h3>News from projects you contributed on:</h3>
+            <p>Retrouver les projets auxquels on a contribués, mais qui ne sont pas dans l'espace public, qui sont encore en "espace contributif"</p>
+            <blockquote>
+                <p><small>Lorem ipsum lorem ipsum lorem ipsum <b>scope of competencies...</b></small></p>
+                <p><small> lorem ipsum lorem ipsum... Lorem ipsum lorem ipsum lorem ipsum </small></p>
+            </blockquote>
+        </div>
+        <div class="span4 well">
+            <h3>New members in your super-user tags:</h3>
+            <p><em>Maybe you can help them ! </em></p>
+            <p>Aider les membres seniors a regarder ce que font les nouveaux membres, pour aller les conseiller sur ce qu'ils font, ou regarder leur travail en cours si ils sont en mode "laisser les modérateurs voir ce que je fais et me laisser des commentaires"</p>
+            <blockquote>
+                <p><small>"You may be able to help :" list of questions and articles that are in you <b>scope of competencies...</b></small></p>
+                <p><small> ... where you are <b>moderator</b> / where you have <b>super-user</b> rights</small></p>
+            </blockquote>
+        </div>
+    </div>
+    <br>
+
+</div>
+{% endif %}{% endblock %}

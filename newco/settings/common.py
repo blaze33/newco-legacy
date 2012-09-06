@@ -69,6 +69,7 @@ LANGUAGES = (
 # Where to look to compile translations
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
+    PROJECT_ROOT + '/apps/affiliation/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
@@ -207,9 +208,10 @@ INSTALLED_APPS = [
     # Project
     "about",
     "affiliation",
-    "profiles",
-    "items",
     "custaccount",
+    "dashboard",
+    "items",
+    "profiles",
     "utils",
 
     # Foreign apps

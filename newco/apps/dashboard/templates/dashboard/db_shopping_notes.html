@@ -1,0 +1,66 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Shopping notes{% endblocktrans %}{% endblock %}
+
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
+<div class="span 10">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{% trans "Shopping notes" %}<br><small>On veut aider a faire ses choix ! => assistant de shopping </small></h1>
+    </header>
+    
+    <br>
+    "Boards" to organize your items per topic (ex : "possible gifts for Dad's birthday..." , or "The next vaccum !" ) ...
+    <br><br>
+    ... Or a possibility to take personnal annotations on products, and "store" those in a "purchase list" ... To let you more time to think about it, or wait for reviews/advice from others on NewCo !
+    <br><br>
+    ... Sharing your lists with others (whether *your* wish-lists or lists to prepare a gift, like "Dad's birthday", you could share your research with your Mom, and brothers & sisters "Hey what do you think of my 5-items selection? Which one do you prefer for Dad ? ")
+    <br><br>
+    ... Or *Cagnottes* like Leetchi !
+    <br>
+    <br>
+    
+    <div class="row-fluid">
+        <ul class="thumbnails">
+            <li class="span4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <h3>Dad's birthday</h3>
+                    <p>Selection of gifts for Dad's birthday</p>
+                    <p><small>Shared with <a href="#">Louis Dupond</a>, <a href="#">Alexandra Dupond</a>, and <a href="#">Marie Dupond</a></small></p>
+                </div>
+            </li>
+            <li class="span4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <h3>Next mountain bike !</h3>
+                    <p>First research for my next mountain bike! <br>Bikes with: Aluminium, Disk-brakes, Rock-Shock suspensions, Anti-flattening tires... Less than 800$.</p>
+                    <p><small>Not shared. 4 products.</small></p>
+                </div>
+            </li>
+            <li class="span4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <h3>Thumbnail label</h3>
+                    <p>Thumbnail caption...</p>
+                    <p><small>Not shared. 4 products.</small></p>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <br>
+    <hr>
+    <h2>You last notes on products:</h2>
+    {% include "profiles/_profile_content_list.html" with contents=all_contrib_feed %}
+    
+</div>
+{% endif %}{% endblock %}

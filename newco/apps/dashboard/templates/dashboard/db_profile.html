@@ -1,0 +1,59 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Profile{% endblocktrans %}{% endblock %}
+
+
+{% block body %}<div class="span7">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{{ page_user_display }} <small> - Profile overview 
+            <br>But: "résumé" du profil, qui serait la premiere page quand on "click" sur un profil.
+            <br>Ca contiendrait: quelques infos de profil (avatar, hobbies, descriptions...) et un résumé des infos publiques sur les contributions et la réputation de l'utilisateur.</small></h1>
+    </header>
+
+    <div class="row">
+        <div class="span thumbnail">
+            {% if is_me %}
+                <a href="https://fr.gravatar.com/site/signup" rel="tooltip" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" id="profile-pic">
+                {% profile_pic page_user 160 %}</a>
+            {% else %}
+                {% profile_pic page_user 160 %}
+            {% endif%}
+        </div>
+        <div class="span5">
+            {% include "profiles/_profile_info.html" %}
+            <span id="profile-follow">
+                {% if is_me %}
+                    <a href="{% url profile_edit %}" class="btn">
+                    {% trans "Update my profile" %}</a>
+                {% else %}
+                    {% follow_form page_user %}
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    </br>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
+            <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
+            <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
+            {# {% if is_me %}<li><a href="#draft" data-toggle="tab" rel="tooltip-top" title="{% trans "'Drafts' contains your un-published contributions" %}">{% trans "Drafts" %}</a></li>{% endif %} #}
+        </ul>
+
+        <div class="tab-content" style="overflow: visible;">
+            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history_feed %}</div>
+            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
+            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
+            {# {% if is_me %}<div id="draft" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=drafts %}</div>{% endif %} #}
+        </div>
+    </div>
+</div>{% endblock %}

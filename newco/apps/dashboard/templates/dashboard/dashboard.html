@@ -1,0 +1,124 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+{% load url from future %}
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }}{% endblocktrans %}{% endblock %}
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
+<div class="span10">
+    {% user_display page_user as page_user_display %}
+    <div class="row"><div class="span9">
+		    <header class="page-header" id="overview"><div class="row"><div class="span7">
+                        <h1>{% trans "Dashboard" %}<small>{#... or 'control tower ?' #}<br>{% trans "We provide you with all the things that concerns you in this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}</small>
+                        </h1>
+                    </div>
+                    <div class="span2 pull-right">
+                        {% include "profiles/_profile_item.html" %}
+                    </div>
+            </div></header>
+	</div></div>
+
+    <br>
+    <br>
+
+    <div class="row" id="boxes_container">
+        {% for box in boxes_list %}
+            {% include "dashboard/_db_box.html" with box=box %}
+        {% endfor %}
+    </div>
+
+    <br><br>
+    <p class="lead">More tools to come on the dashboard, very very soon ;) ! ... If you have any idea of how to improve this page, please <a data-toggle="modal" href="#feedbackModal">tell it to us</a>, we can't wait to read yours !</p>
+
+
+{% comment %} {# Seb: I keep these boxes in comments for some days, while I'm still iterating/working on the Dashboard/ boxes #}
+{# To Do : add followers/ following :  like in GitHub, it's well done !   #}
+
+    <div class="row"><div class="span4 well pull-right">
+            <h3>Teamwork: </h3>
+            XXXX
+    </div></div>
+    <div class="row"><div class="span4 well pull-right">
+            <h3>Shopping notes </h3>
+            Vous avez pris ces dernières notes sur des articles:
+    </div></div>
+    <div class="row"><div class="span6 well">
+            <a href="" class="black"><h3 data-toggle="collapse" data-target="#contribute">Find where to contribute:</h3></a>
+            <div id="contribute" class="collapse{# in #}">
+                <p>Liste des choses "qu'il se passe sur le site" qui correspondent à notre séniorité (petite choses au début, grosse contributions plus tard), et qui sont dans notre sphère de compétences (=tags de compétences)</p>
+                <p><em>On veut donner à manger à ceux qui ont envie de contribuer, de gagner des points ! "Je veux contribuer, dites moi où !"</em></p>
+                <blockquote>
+                    <p><small>"You may be able to help :" list of questions and articles that are in your <b>scope of competencies...</b></small></p>
+                    <p><small> ... where you are <b>moderator</b> / where you have <b>super-user</b> rights</small></p>
+                </blockquote>
+            </div>
+    </div></div>
+    <div class="row"><div class="span4 well pull-right">
+            <h3>Purchase history </h3>
+            Vos derniers achats:
+    </div></div>
+    <div class="row"><div class="span4 well well-small">
+            <h3>{% trans "Contribution center:" %}<small> {% trans "Latest activity on your skills tags" %}</small></h3>
+            <span class="pull-right"><button class="btn btn-mini" data-toggle="collapse" data-target="#contrib_well"><i rel="expand_btn_contrib" class="icon-minus"></i></button></span>
+            <p>Dernières propositions de contribution ?</p>
+            <div id="contrib_well" rel="collapse_div" class="collapse in"><blockquote>
+                <p><small>XXX</small></p>
+                <p><small>Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret</small></p>
+            </blockquote><blockquote>
+                <p><small>Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret Lorem ipsum doloret</small></p>
+            </blockquote></div>
+    </div></div>
+{% endcomment %}
+
+
+</div>
+{% endif %}{% endblock %}
+
+
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
+ 
+        {% for box in boxes_list %}
+            $(function(){
+                var collapse_div = $('#{{ box.name }}_well');
+                var icon_change = $('[rel=expand_btn_{{ box.name }}]');
+                collapse_div.on('shown', function () {
+                    icon_change.removeClass('icon-plus').addClass('icon-minus');
+                })
+                collapse_div.on('hidden', function () {
+                    icon_change.removeClass('icon-minus').addClass('icon-plus');
+                })
+            
+            });
+        {% endfor %}
+
+
+        // Seb: To Do : put in dashboard.js ? ... see where we get to use these functions
+
+        function TriggerMasonry_boxes(){
+            var $container = $('#boxes_container');
+            $container.masonry({
+                itemSelector : '.box',
+                isAnimated: true,
+                //isFitWidth: true,
+                //columnWidth : 240,
+                columnWidth: function( containerWidth ) {
+                    return containerWidth / 10; //container should be a span10, hence to fit Bootstrap columns => divide per 10
+                },
+            });
+        }
+
+        $(function(){
+            TriggerMasonry_boxes()
+            $('[rel=collapse_div]').on('hidden',function() { TriggerMasonry_boxes() });
+            $('[rel=collapse_div]').on('shown',function() { TriggerMasonry_boxes() });
+        });
+
+    </script>
+{% endblock %}
