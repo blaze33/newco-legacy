@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 14:30+0200\n"
+"POT-Creation-Date: 2012-09-06 19:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,22 +163,22 @@ msgstr ""
 msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/_question_list.html:47
+#: templates/items/_question_list.html:45
 #: templates/items/question_detail.html:55
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/_question_list.html:47
+#: templates/items/_question_list.html:45
 #: templates/items/question_detail.html:55
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/_question_list.html:49
+#: templates/items/_question_list.html:47
 #: templates/items/question_detail.html:57
 msgid "Ask someone to answer"
 msgstr ""
 
-#: templates/items/_question_list.html:55 templates/items/answer_form.html:6
+#: templates/items/_question_list.html:53 templates/items/answer_form.html:6
 #: templates/items/question_detail.html:63
 msgid "Answer"
 msgstr ""
@@ -304,59 +304,44 @@ msgstr ""
 msgid "Add selected"
 msgstr ""
 
-#: templates/items/item_list.html:9
+#: templates/items/item_list_base.html:11
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:14
-msgid "Search"
-msgstr ""
-
-#: templates/items/item_list.html:30
-msgid "No products are available."
-msgstr ""
-
-#: templates/items/item_list.html:37
+#: templates/items/item_list_base.html:38
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/item_list.html:53
-msgid "Search an item, a tag..."
+#: templates/items/item_list_base.html:44
+msgid "Newest to Oldest"
 msgstr ""
 
-#: templates/items/item_list.html:54
-msgid "What are you looking for?"
+#: templates/items/item_list_base.html:45
+msgid "Oldest to Newest"
 msgstr ""
 
-#: templates/items/item_list_tag.html:10
+#: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
-"Products with tag <a href=\"%(tag_url)s\"><span class=\"label\">"
-"%(tag_name)s</span></a>"
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
+"\"</i>."
 msgstr ""
 
-#: templates/items/item_list_tag.html:19
+#: templates/items/item_list_base.html:61
+#, python-format
 msgid ""
-"\n"
-"                <select name=\"sort_items\">\n"
-"                    <option value=\"0\">Choose</option>\n"
-"                    <option value=\"1\">Newest to Oldest</option>\n"
-"                    <option value=\"2\">Oldest to Newest</option>\n"
-"                </select><button type=\"submit\" class=\"btn\">Sort</"
-"button>\n"
-"                "
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available."
 msgstr ""
 
-#: templates/items/item_list_tag.html:49
-msgid "No products are available with tag"
+#: templates/items/item_list_base.html:63
+#, python-format
+msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_search.html:9
-msgid "Search results for"
-msgstr ""
-
-#: templates/items/item_search.html:19
-msgid "No search results for"
+#: templates/items/item_list_base.html:65
+msgid "No products are available."
 msgstr ""
 
 #: templates/items/link_form.html:6
