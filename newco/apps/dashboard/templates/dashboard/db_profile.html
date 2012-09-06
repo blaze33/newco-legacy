@@ -1,29 +1,12 @@
-{% extends "idios/base.html" %}
+{% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load follow_tags %}
 {% load content_utils %}
 
-{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
-{% block extra_style %}
-    {{ block.super }}
-
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
-{% endblock %}
-
-{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
-
-{% block subnav %}
-
-    {% if user.is_authenticated %}
-        {% include "profiles/_profiles_subnav_demo.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-
-{% endblock %}
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Profile{% endblocktrans %}{% endblock %}
 
 
 {% block body %}<div class="span7">
@@ -67,7 +50,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
+            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history_feed %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
             {# {% if is_me %}<div id="draft" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=drafts %}</div>{% endif %} #}

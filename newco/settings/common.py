@@ -208,9 +208,10 @@ INSTALLED_APPS = [
     # Project
     "about",
     "affiliation",
-    "profiles",
-    "items",
     "custaccount",
+    "dashboard",
+    "items",
+    "profiles",
     "utils",
 
     # Foreign apps

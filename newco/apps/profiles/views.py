@@ -76,7 +76,7 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             elif self.demo_dashboard:  ## For demo only line to be deleted ##
                 self.template_name = "idios/profile_demo.html"  ## For demo only line to be deleted ##
                
-                
+            #self.template_name = "profiles/profile.html"
             return super(ProfileDetailView, self).get(self,
                                                     request,
                                                     *args,
@@ -140,7 +140,8 @@ class ProfileDetailView(ProfileDetailView, ProfileProcessFormView):
             'demo_shopping_notes': self.demo_shopping_notes, ## For demo only line to be deleted ##
             'demo_purchase_history': self.demo_purchase_history, ## For demo only line to be deleted ##
             'demo_dashboard': self.demo_dashboard, ## For demo only line to be deleted ##
-            'allcontrib_feed': allcontrib_feed.select_subclasses()  ## For demo only line to be deleted ##
+            'is_profile_page': self.is_profile_page,
+            'allcontrib_feed': allcontrib_feed.select_subclasses(),  ## For demo only line to be deleted ##
         })
 
         return context

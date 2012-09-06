@@ -1,29 +1,12 @@
-{% extends "idios/base.html" %}
+{% extends "dashboard/dashboard_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load follow_tags %}
 {% load content_utils %}
 
-{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
-{% block extra_style %}
-    {{ block.super }}
-
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
-{% endblock %}
-
-{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
-
-{% block subnav %}
-
-    {% if user.is_authenticated %}
-        {% include "profiles/_profiles_subnav_demo.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-
-{% endblock %}
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Shopping notes{% endblocktrans %}{% endblock %}
 
 
 {% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}
@@ -77,7 +60,7 @@
     <br>
     <hr>
     <h2>You last notes on products:</h2>
-    {% include "profiles/_profile_content_list.html" with contents=allcontrib_feed %}
+    {% include "profiles/_profile_content_list.html" with contents=all_contrib_feed %}
     
 </div>
 {% endif %}{% endblock %}

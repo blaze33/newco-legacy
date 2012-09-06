@@ -1,0 +1,24 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
+
+
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Dashboard of {{ page_user_display }} | Drafts{% endblocktrans %}{% endblock %}
+
+
+{% block body %}{% if is_me %}{# Should not be able to reach this page if it's not your profile, but if you do, page won't be displayed #}<div class="span7">
+    {% user_display page_user as page_user_display %}
+    <header class="page-header" id="overview">
+        <h1>{% trans "Drafts" %}<br><small>{% trans "Keep here your drafts: contributions you don't want to publish yet" %}</small></h1>
+    </header>
+
+    </br>
+    <hr>
+    <div id="draft" class="tab-pane">{% include "profiles/_profile_content_list.html" with contents=drafts_feed %}</div>
+</div>{% endif %}{% endblock %}

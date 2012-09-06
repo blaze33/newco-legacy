@@ -3,6 +3,7 @@
 from common import *
 from postgresify import postgresify
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 ### other development-specific stuff
 
 # tells Pinax to serve media through the staticfiles app.

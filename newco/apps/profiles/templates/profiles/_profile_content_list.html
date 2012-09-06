@@ -1,24 +1,15 @@
-{% load i18n %}
+{# {% load i18n %} #}
 {% load voting_tags %}
-{% load content_utils %}
+{# {% load content_utils %} #}
 
 {% scores_for_objects contents as score_dict %}
 
 {# TODO: handle redirection after content edition #}
 
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
-
-{% for content in contents|slice:":20" %}{% with class_name=content|to_class_name %}
-    {% if not forloop.first %}<hr>{% endif %}
-    <div class="row content"><div class="span7">
-
-        {% dict_entry_for_item content from score_dict as score %}
-
-        {% with tpl="profiles/content_display/_"|add:class_name|add:".html" %}
-            {% include tpl with content=content author=content.author score=score user=request.user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
-        {% endwith %}
-
-    </div></div>
-{% endwith %}{% endfor %}
-
+	{% if not slicing %} {# Seb: give default behavior if slicing argument not given ... I'm still looking for a way to apply DRY ... #}
+		{% include "profiles/content_display/_content_loop.html" with slicing=":20" %}
+	{% else %}
+		{% include "profiles/content_display/_content_loop.html" %}
+	{% endif %}
 {% endwith %}
