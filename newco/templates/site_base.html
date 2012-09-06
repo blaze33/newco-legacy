@@ -62,25 +62,46 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
     <script type="text/javascript">
+    function TriggerMasonry(){
+    	$('#contents_list1').masonry({
+			itemSelector : '.content-item',
+	        isAnimated: true,
+	        isFitWidth: true,
+		});
+    }
+    $(document).ready(function() {
+  // simple example, using all default options unless overridden globally
+	  TriggerMasonry();
+	  $('div.expandable p').expander( 
+			{
+				afterExpand:function() {TriggerMasonry();},
+				//Timer to relaunch Masonry after the onCollapse event
+				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,200);
+				}
+	  });
+    });
+    </script>
+	<script type="text/javascript">
     $(document).ready(function() {
   // simple example, using all default options unless overridden globally
 	  $('div.expandable p').expander( 
-		  {afterExpand:function() {
-		  $('#contents_list1').masonry({
-		  	itemSelector : '.content-item',
-            isAnimated: true,
-            isFitWidth: true,
-		  });
-	  }
+			{collapseTimer: 2000,
+				afterCollapse:function(byUser) {
+				$('#contents_list1').masonry({
+					itemSelector : '.content-item',
+			        isAnimated: true,
+			        isFitWidth: true,
+				});
+			}
+			
 	  });
-	  
     });
     </script>
     <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
    
-   <script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function() {
         $('input#main_autocomplete').yourlabsAutocomplete({
             url: '{% url autocomplete %}',
