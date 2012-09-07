@@ -17,15 +17,15 @@
 
 
 
-{% block body %}<div class="span7">
+{% block body %}<div class="span7" itemscope itemtype="http://schema.org/Person">
     {% user_display page_user as page_user_display %}
     <header class="jumbotron subhead" id="overview">
-        <h1>{{ page_user_display }}</h1>
+        <h1 itemprop="name">{{ page_user_display }}</h1>
     </header>
 
     <div class="row">
         <hr>
-        <div class="span thumbnail">
+        <div class="span thumbnail" itemprop="image">
             {% if is_me %}
                 <a href="https://fr.gravatar.com/site/signup" rel="tooltip" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" id="profile-pic">
                 {% profile_pic page_user 160 %}</a>
