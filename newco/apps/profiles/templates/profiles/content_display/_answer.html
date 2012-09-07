@@ -10,7 +10,7 @@
         {# TODO : set the styles in a .css #}
 
         <blockquote {% if content.is_public %}{% elif content.is_draft %}class="draft"{% endif %}>
-            <h5 {#style="font-size:11px;"#}><a href='{{ content.author.get_absolute_url }}'>{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include i_link_tpl with object=content.items.all.0 %} :</h5>
+            <h5 {#style="font-size:11px;"#}><a href='{{ content.author.get_absolute_url }}'>{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include i_link_tpl with object=content.items.all.0 %}:</h5>
             
             <p{% if question.is_public %}{% elif question.is_draft %} class="draft"{% endif %}><small><a href="{{ question.get_absolute_url }}" class="black">{{ question.content }}</a></small></p>
 

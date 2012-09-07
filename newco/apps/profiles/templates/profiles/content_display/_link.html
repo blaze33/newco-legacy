@@ -5,7 +5,7 @@
 {% if mini_feed %}
 
     <blockquote {% if content.is_public %}{% elif content.is_draft %}class="draft"{% endif %}>
-        <h5 {#style="font-size:11px;"#}><a href='{{ content.author.get_absolute_url }}'>{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}posted a <a href="{{ url }}">link</a> about{% endblocktrans %} {% include i_link_tpl with object=content.items.all.0 %}:</h5>
+        <h5 {#style="font-size:11px;"#}><a href='{{ content.author.get_absolute_url }}'>{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}posted a <a href="{{ url }}">link</a> about{% endblocktrans %}{% include i_link_tpl with object=content.items.all.0 %}:</h5>
 
         <p{% if content.is_public %}{% elif content.is_draft %} class="draft"{% endif %}>
             <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}
