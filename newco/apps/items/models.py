@@ -1,16 +1,18 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
-from taggit_autosuggest.managers import TaggableManager
-from django.db.models import permalink
+from django.db.models import permalink, Q
 from django.template.defaultfilters import slugify
-from django.contrib.contenttypes import generic
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
+from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 
 from model_utils import Choices
 from model_utils.managers import InheritanceManager, QueryManager
-from voting.models import Vote
+from follow.models import Follow
 from follow.utils import register
+from taggit_autosuggest.managers import TaggableManager
+from voting.models import Vote
 
 
 class Item(models.Model):
@@ -41,6 +43,26 @@ class Item(models.Model):
 register(Item)
 
 
+class ContentManager(InheritanceManager):
+    def get_feed(self, user):
+        """
+        Get the newsfeed of a specific user
+        """
+        obj_fwed = Follow.objects.filter(user=user)
+        fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
+        items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
+
+        return self.filter(
+                Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
+                ~Q(author=user), status=Content.STATUS.public
+        )
+
+    def get_related_contributions(self, user):
+        profile = user.get_profile()
+        item_list = Item.objects.filter(tags__in=profile.skills.all())
+        return self.filter(items__in=item_list)
+
+
 class Content(models.Model):
     STATUS = Choices(
         (0, "draft", _("Draft")),
@@ -57,7 +79,7 @@ class Content(models.Model):
 
     public = QueryManager(status=STATUS.public)
 
-    objects = InheritanceManager()
+    objects = ContentManager()
 
     class Meta:
         ordering = ["-pub_date"]

@@ -170,6 +170,12 @@ img:hover + .img-controls,
     width: 38px;
 }
 
+    .myClassPopover{ 
+        position: relative;
+    }
+    .myClassPopoverProfile{ 
+        position: relative;
+    }
 
 /* twitter aditional stuff */
 /* supporting docs pages */

@@ -1,4 +1,4 @@
-{% extends "idios/base.html" %}
+{% extends "dashboard/base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
@@ -7,14 +7,6 @@
 {% block body_class %}{% endblock %}
 
 {% block head_title %}{% trans "All Users" %}{% endblock %}
-
-{% block subnav %}
-    {% if user.is_authenticated %}
-        {% include "profiles/_profiles_subnav.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-{% endblock %}
 
 {% block body %}
     <header class="jumbotron subhead" id="overview">

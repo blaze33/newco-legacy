@@ -119,5 +119,25 @@
 
 {% block extra_body_base %}
     {{ block.super }}
-    <script src="{% static 'js/content.js' %}"></script>
+    <script src="{% static "js/content.js" %}"></script>
+    {% if questions %}{{ questions.0.answer_form.media.js }}{% endif %}
+    <script type="text/javascript"> // script can't go to '/static' : needs to translate text
+        $(function(){
+            var form = $('#question_form');
+            var icon_change = $('[rel=add_icon]');
+            var text_change = $('[rel=add_q_text]');
+            var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
+            form.on('shown', function () {
+                icon_change.removeClass('icon-plus').addClass('icon-remove');
+                text_change.html('&nbsp;');
+                text_change_no_q_yet.html('{% trans "Ask a new question:" %}');
+            })
+            form.on('hidden', function () {
+                icon_change.removeClass('icon-remove').addClass('icon-plus');
+                text_change.html("{% trans "Ask a new question!" %}");
+                text_change_no_q_yet.html('{% trans "No question yet! Ask the first one here!" %}');
+            })
+        
+        });
+    </script>
 {% endblock %}

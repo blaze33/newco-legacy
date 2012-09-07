@@ -202,12 +202,16 @@ INSTALLED_APPS = [
     # Monitoring
     "raven.contrib.django",
 
+    # Project-external
+    "newco_bw_editor",
+    
     # Project
     "about",
     "affiliation",
-    "profiles",
-    "items",
     "custaccount",
+    "dashboard",
+    "items",
+    "profiles",
     "utils",
 
     # Foreign apps

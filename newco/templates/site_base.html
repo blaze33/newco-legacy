@@ -37,10 +37,7 @@ due to bad pixel fitting of small icons.
 
 {% block nav %}
     {% if user.is_authenticated %}
-        <ul class="nav">{% spaceless %}
-            <li id="tab_profile"><a href="{{ user.get_absolute_url }}">{% trans "Profile" %}</a></li>
-            {% comment %}<li id="tab_notices"><a href="{% url 'notification_notices' %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>{% endcomment %}
-        {% endspaceless %}
+        <ul class="nav">
             <li id="tab_typeahead"><form class="navbar-search" action="/content/" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
         </ul>
     {% endif %}

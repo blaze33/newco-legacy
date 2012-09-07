@@ -1,0 +1,58 @@
+{% extends "dashboard/base.html" %}
+
+{% load i18n %}
+
+{% block subtitle %}{% trans "We provide you with all the things that concerns you in this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}{% endblock %}
+
+{% block dashboard %}
+    <div class="row" id="boxes_container">
+        {% for box in boxes_list %}
+            {% include "dashboard/_box.html" with box=box %}
+        {% endfor %}
+    </div>
+
+    <br>
+
+    <p class="lead">More tools to come on the dashboard, very very soon ;) ! ... If you have any idea of how to improve this page, please <a data-toggle="modal" href="#feedbackModal">tell it to us</a>, we can't wait to read yours !</p>
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
+        {% for box in boxes_list %}
+            $(function(){
+                var collapse_div = $('#{{ box.name }}_well');
+                var icon_change = $('[rel=expand_btn_{{ box.name }}]');
+                collapse_div.on('shown', function () {
+                    icon_change.removeClass('icon-plus').addClass('icon-minus');
+                })
+                collapse_div.on('hidden', function () {
+                    icon_change.removeClass('icon-minus').addClass('icon-plus');
+                })
+            });
+        {% endfor %}
+
+
+        // Seb: To Do : put in dashboard.js ? ... see where we get to use these functions
+
+        function TriggerMasonry_boxes(){
+            var $container = $('#boxes_container');
+            $container.masonry({
+                itemSelector : '.box',
+                isAnimated: true,
+                //isFitWidth: true,
+                //columnWidth : 240,
+                columnWidth: function( containerWidth ) {
+                    return containerWidth / 10; //container should be a span10, hence to fit Bootstrap columns => divide per 10
+                },
+            });
+        }
+
+        $(function(){
+            TriggerMasonry_boxes()
+            $('[rel=collapse_div]').on('hidden',function() { TriggerMasonry_boxes() });
+            $('[rel=collapse_div]').on('shown',function() { TriggerMasonry_boxes() });
+        });
+
+    </script>
+{% endblock %}

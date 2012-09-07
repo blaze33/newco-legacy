@@ -59,22 +59,3 @@ def ua_display_good2(request):
     ua = request.META.get('HTTP_USER_AGENT', 'unknown')
     return HttpResponse("Your browser is %s" % ua) # %}
 {% endcomment %}
-
-{% comment %} Script qui charge le popover... mis dans feedback/button.html pour chopper un "include" en bas de page {% endcomment %}
-<script>
-$(function(){
-  $('.myClassPopover').popover({
-  	trigger: 'hover',
-  	placement: 'in bottom',
-  	animate: true,
-  	delay: 500,
-	//template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-  });
-  $('[rel="tooltip"]').tooltip({
-  	trigger: 'hover',
-  	placement: 'top',
-  	animate: true,
-  	//delay: 500,
-  });
-});  
-</script>
