@@ -1,0 +1,14 @@
+/* Get_started specific styling */
+
+
+#get_started_left > div{
+    display: inline-block;
+    background: #fff url(../img/get_started_left.png);
+    height:120px;
+}
+
+#get_started_right > div{
+    display: inline-block;
+    background: #fff url(../img/get_started_right.png);
+    height:120px;
+}
