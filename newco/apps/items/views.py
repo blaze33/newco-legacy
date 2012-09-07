@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models.loading import get_model
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -326,11 +326,21 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
 class ContentListView(ContentView, ListView, RedirectView):
 
+    model = Item
     template_name = "items/item_list_image.html"
     paginate_by = 9
 
     def get_queryset(self):
         queryset = super(ContentListView, self).get_queryset()
+        if "sort_products" in self.request.POST:
+            self.sort_order = self.request.POST.get("sort_products")
+            if self.sort_order == "popular":
+                pass
+                #FIXME Not working, don't know the hell why...
+#                queryset = queryset.annotate(
+#                                Count("content")).order_by("-content__count")
+            else:
+                queryset = queryset.order_by(self.sort_order)
         if "tag_slug" in self.kwargs:
             self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             queryset = queryset.filter(tags=self.tag)
@@ -344,23 +354,14 @@ class ContentListView(ContentView, ListView, RedirectView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        context.update({
-            "tag": getattr(self, "tag", ""),
-            "search_terms": getattr(self, "search_terms", "")
-        })
+        for attr in ["tag", "search_terms", "sort_order"]:
+            context.update({attr: getattr(self, attr, "")})
         if "item_list" in context:
             item_list = context.pop("item_list")
             queryset = Question.objects.filter(
                         items__id__in=item_list.values_list("id", flat=True))
             queryset_ordered = generic_annotate(
                         queryset, Vote, Sum('votes__vote')).order_by("-score")
-            if "sort_items" in self.request.POST:
-                sort = "-pub_date"
-                if self.request.POST["sort_items"] == "0":
-                    pass
-                elif self.request.POST['sort_items'] == "1":
-                    sort = "pub_date"
-                item_list = item_list.order_by(sort)
             context.update({
                 "item_list": item_list,
                 "related_questions": {

@@ -61,12 +61,13 @@
         {% endif %}
     </div>
     <div class="span3">
-        {% if item_list %}<div class="row">{% spaceless %}<form action="." method="POST">{% csrf_token %}<div class="input-append">
-             <select name="sort_items">
-                <option value="0">{% trans "Newest to Oldest" %}</option>
-                <option value="1">{% trans "Oldest to Newest" %}</option>
-            </select>
-            <button type="submit" class="btn">Sort</button>
+        {% if item_list %}<div class="row">{% spaceless %}<form action="." method="POST">{% csrf_token %}<div class="input-append span2">
+            <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
+                <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
+                <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
+            </div>
         </div></form>{% endspaceless %}</div>{% else %}&nbsp;{% endif %}
 
         {% for title, content_list in related_questions.iteritems %}
