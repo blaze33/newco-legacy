@@ -13,11 +13,12 @@
     {% user_display page_user as page_user_display %}
     <div class="row"><div class="span9">
 		    <header class="page-header" id="overview"><div class="row"><div class="span7">
-                        <h1>{% trans "Dashboard" %}<small>{#... or 'control tower ?' #}<br>{% trans "We provide you with all the things that concerns you in this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}</small>
+                        <h1>{% trans "Dashboard" %}<small>{#... or 'control tower ?' #}<br>{% trans "We provide you with all the things that concern you on this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}</small>
                         </h1>
                     </div>
-                    <div class="span2 pull-right">
+                    <div class="pull-right">
                         {% include "profiles/_profile_item.html" %}
+                        {# <p>Following: {{ fwees.all.count }} ; Followers: {{ fwers.count }}</p> #}
                     </div>
             </div></header>
 	</div></div>

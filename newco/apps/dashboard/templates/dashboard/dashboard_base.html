@@ -19,7 +19,9 @@
     {% if user.is_authenticated %}
         {% include "dashboard/_dashboard_subnav.html" %}
     {% else %}
-        &nbsp; User is not authenticated; Find a fallback for this case. (minimalized 'dashboard_subnav.html' ?)
+        {% if debug %}
+        	<b>[Debug] To do:</b>&nbsp; User is not authenticated and thus doesn't have a dashboard navbar on the left (here).<br> Find a fallback for this case. (minimalized 'dashboard_subnav.html' ? Else ?)
+        {% endif %}
     {% endif %}
 
 {% endblock %}
