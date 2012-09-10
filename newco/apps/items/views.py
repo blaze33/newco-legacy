@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models.loading import get_model
-from django.db.models import Q, Sum, Count
+from django.db.models import Q, Sum
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -324,7 +324,24 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         return _process_voting(request, obj, success_url)
 
 
-class ContentListView(ContentView, ListView, RedirectView):
+class ProcessSearchView(RedirectView):
+
+    def post(self, request, *args, **kwargs):
+        if "item_search" in request.POST:
+            search = request.POST.get("item_search")
+            item_list = Item.objects.filter(name=search)
+            tag_list = Tag.objects.filter(name=search)
+            if item_list.count() == 1:
+                response = item_list[0].get_absolute_url()
+            elif tag_list.count() == 1:
+                response = reverse("tagged_items", rgs=[tag_list[0].slug])
+            else:
+                response = "%s?search=%s" % (reverse("item_index"), search)
+            return HttpResponseRedirect(response)
+        return super(ProcessSearchView, self).post(request, *args, **kwargs)
+
+
+class ContentListView(ContentView, ListView, ProcessSearchView):
 
     model = Item
     template_name = "items/item_list_image.html"
@@ -357,37 +374,20 @@ class ContentListView(ContentView, ListView, RedirectView):
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if "item_list" in context:
-            item_list = context.pop("item_list")
-            queryset = Question.objects.filter(
-                        items__id__in=item_list.values_list("id", flat=True))
-            queryset_ordered = generic_annotate(
-                        queryset, Vote, Sum('votes__vote')).order_by("-score")
-            context.update({
-                "item_list": item_list,
-                "related_questions": {
-                    _("Top Questions"): queryset_ordered[:3],
-                    _("Latest Questions"): queryset[:3]
-                }
-            })
-        return context
-
-    def post(self, request, *args, **kwargs):
-        if "item_search" in request.POST:
-            search = request.POST["item_search"]
-            item_list = Item.objects.filter(name=search)
+            item_list = context.get("item_list")
             if item_list.count() > 0:
-                response = item_list[0].get_absolute_url()
-            else:
-                tag_list = Tag.objects.filter(name=search)
-                if tag_list.count() > 0:
-                    response = reverse("tagged_items",
-                                        kwargs={'tag_slug': tag_list[0].slug}
-                    )
-                else:
-                    response = "%s?search=%s" % (reverse("item_index"), search)
-            return HttpResponseRedirect(response)
-        else:
-            return super(ContentListView, self).post(request, *args, **kwargs)
+                queryset = Question.objects.filter(
+                        items__id__in=item_list.values_list("id", flat=True))
+                queryset_ordered = generic_annotate(
+                        queryset, Vote, Sum('votes__vote')).order_by("-score")
+                context.update({
+                    "item_list": item_list,
+                    "related_questions": {
+                        _("Top Questions"): queryset_ordered[:3],
+                        _("Latest Questions"): queryset[:3]
+                    }
+                })
+        return context
 
 
 class ContentDeleteView(ContentView, DeleteView):
