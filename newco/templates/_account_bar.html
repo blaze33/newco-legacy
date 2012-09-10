@@ -34,8 +34,8 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %} </a>
             <ul class="dropdown-menu">
                 <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
-                <li><a href="#"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
-                <li><a href="#"><i class="icon-file"></i> {% trans "Add a story" %}</a></li>
+                <li><a href="{% url 'item_create' 'question' %}"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
+                <li><a href="#" rel="tooltip-right" title="{% blocktrans %}You can try to click... But it won't work! Ah ah, we're still on it ;) {% endblocktrans %}"><i class="icon-file"></i> {% trans "Add a story" %}</a></li>
 
             </ul>
         </li>
