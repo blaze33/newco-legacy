@@ -1,0 +1,16 @@
+
+{% load i18n %}
+{% load account_tags %}
+{% load content_utils %}
+{% load follow_tags %}
+
+<div class="profile-item-small thumbnail">
+    <div class="name">
+        <a href="{{ profile.get_absolute_url }}"><h5>
+        {% profile_pic profile.user 32 %}
+        {% user_display profile.user %}</h5></a>
+    </div>
+    <div class="details">
+        {% follow_form profile.user %}
+    </div>
+</div>
