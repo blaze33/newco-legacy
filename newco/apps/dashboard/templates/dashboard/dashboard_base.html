@@ -1,0 +1,27 @@
+{% extends "subnav_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load follow_tags %}
+{% load content_utils %}
+
+{# Seb: 'body_class': is it really usefull ? #}
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
+{% block extra_style %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+{% endblock %}
+
+{% block subnav %}
+
+    {% if user.is_authenticated %}
+        {% include "dashboard/_dashboard_subnav.html" %}
+    {% else %}
+        {% if debug %}
+        	<b>[Debug] To do:</b>&nbsp; User is not authenticated and thus doesn't have a dashboard navbar on the left (here).<br> Find a fallback for this case. (minimalized 'dashboard_subnav.html' ? Else ?)
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
