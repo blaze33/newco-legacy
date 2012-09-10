@@ -15,9 +15,9 @@
             <ul class="dropdown-menu">
                 <li {% if "/newsfeed/" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
                 <li class="divider"></li>
-                <li><a href="{{ user.get_absolute_url }}">{% trans "My newsfeed" %}</a></li>
+                <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
             </ul>
         </li>
-    </ul></div> </header></div>
+    </ul></div></header></div>
     {{ block.super }}
 {% endblock %}
