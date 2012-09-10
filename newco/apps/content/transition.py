@@ -20,20 +20,19 @@ def sync_products(sender, instance, **kwargs):
 
 def add_images(request, **kwargs):
     img_order = [int(y.split('=')[1]) for y in request.POST['img_list'].split('&')]
-    print img_order
 
     legacy_product = LegacyItem.objects.get(id=kwargs['pk'])
     product = sync_products(LegacyItem, legacy_product)
 
     album_data = {'class': 'image_set', 'name': 'main album'}
-    album = product.get_items(data__contains=album_data)
+    album = product.successors.filter(data__contains=album_data)
     if not album:
         album = Item.objects.create(data=album_data)
         images = []
     else:
         album = album[0]
         images = get_album(legacy_product)
-    product.link(album, {'relationship': 'has'})
+    product.link_to(album, {'relationship': 'has'})
 
     if not images:
         images = search_images(product.data['name'])
@@ -48,7 +47,7 @@ def add_images(request, **kwargs):
         image.data = i
         image.data['class'] = 'image'
         image.save()
-        album.link(image, {'relationship': 'contains',
+        album.link_to(image, {'relationship': 'contains',
             'order': unicode(img_order.index(x))})
         id_order.append(image.id)
     album.data['id_order'] = unicode(id_order)
@@ -57,7 +56,7 @@ def add_images(request, **kwargs):
 
 def get_album(instance):
     item = sync_products(LegacyItem, instance)
-    album = item.get_items(data__contains={'class': 'image_set'})
+    album = item.successors.filter(data__contains={'class': 'image_set'})
     if not album:
         return []
     ids = [int(x) for x in album[0].data['id_order'].strip('[]').split(',')]

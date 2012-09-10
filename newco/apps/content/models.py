@@ -53,33 +53,17 @@ class Item(BaseModel):
     """ Item
     A generic class to store any kind of object.
     """
-    context = models.ManyToManyField('self', through='Relation',
+    successors = models.ManyToManyField('self', through='Relation',
                                      symmetrical=False,
-                                     related_name='related_to')
+                                     related_name='predecessors')
 
     class Meta:
         verbose_name = _("item")
 
-    def get_items(self, **query):
-        return self.context.filter(
-            to_item__from_item=self, **query)
-
-    def get_relations(self):
-        return Relation.objects.filter(
-            from_item=self)
-
-    def get_related_items(self):
-        return self.related_to.filter(
-            from_item__to_item=self)
-
-    def get_related_relations(self):
-        return Relation.objects.filter(
-            to_item=self)
-
     def __unicode__(self):
         return unicode(self.get('name'))
 
-    def link(self, item, data):
+    def link_to(self, item, data):
         relation, created = Relation.objects.get_or_create(
             from_item=self,
             to_item=item,
@@ -91,8 +75,8 @@ class Relation(BaseModel):
     """ Relation
     A class describing a relation between two items.
     """
-    from_item = models.ForeignKey(Item, related_name='from_item')
-    to_item = models.ForeignKey(Item, related_name='to_item')
+    from_item = models.ForeignKey(Item, related_name='links')
+    to_item = models.ForeignKey(Item, related_name='inlinks')
 
     def __unicode__(self):
         return "%s %s %s" % (self.from_item.get('name'),
