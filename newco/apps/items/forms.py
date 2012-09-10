@@ -1,13 +1,16 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
-from django.core.exceptions import ObjectDoesNotExist
 
-from items.models import Item, Question, Answer, Story, Link, Feature
+from chosen.forms import ChosenSelectMultiple
+from newco_bw_editor.widgets import BW_small_Widget
+
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
-from newco_bw_editor.widgets import BW_small_Widget, BW_large_Widget
+from items.models import Item, Question, Answer, Story, Link, Feature
+
 
 class ItemForm(ModelForm):
 
@@ -88,12 +91,15 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        exclude = ('author', 'items')
+        fields = ("content", "status", "items")
+        help_text = {"items": _("Pick a product.")}
         widgets = {
-            'content': Textarea(attrs={
-                'class': 'span4',
-                'placeholder': _('Ask something specific.'),
-                'rows': 1}),
+            "content": Textarea(attrs={
+                "class": "span4",
+                "placeholder": _("Ask something specific."),
+                "rows": 1}),
+            "items": ChosenSelectMultiple(attrs={"class": "span4", "rows": 1},
+                overlay=_("Pick a product.")),
         }
 
     def __init__(self, *args, **kwargs):
@@ -101,14 +107,24 @@ class QuestionForm(ModelForm):
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
-        return super(QuestionForm, self).__init__(*args, **kwargs)
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        self.fields["items"].help_text = _(
+            "Select one or several products using Enter and the Arrow keys")
+        if hasattr(self, "request"):
+            if self.request.GET.get("fields", "") != "add_items":
+                del self.fields["items"]
+        else:
+            del self.fields["items"]
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
             question.save()
-            question.items.add(kwargs.pop('pk'))
+            if "items" in self.fields:
+                self.save_m2m()
+            else:
+                question.items.add(kwargs.pop("pk"))
             return question
         else:
             return super(QuestionForm, self).save(commit)
