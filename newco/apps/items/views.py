@@ -199,7 +199,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             new_item = sync_products(Item, self.object)
             albums = new_item.successors.filter(data__contains={'class': 'image_set', 'name': 'main album'})
             if albums:
-                context.update({'album': albums[0]})
+                # This is a way to order by values of an hstore key
+                images = albums[0].successors.all() \
+                    .extra(select={"order": "content_relation.data -> 'order'"}, order_by=['order', ])
+                context.update({'album': images})
 
         return context
 
