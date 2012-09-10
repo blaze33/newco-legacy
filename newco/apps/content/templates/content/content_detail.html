@@ -20,12 +20,12 @@
 {%  if model == 'item'  %}
 <div class="row"><div class="span6">
 <h2>Linked to :</h2>
-{% for item in item.get_items %}
+{% for item in item.successors.all %}
     <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
 </div><div class="span6">
 <h2>Relations :</h2>
-{% for relation in item.get_relations %}
+{% for relation in item.links.all %}
     {{  relation.from_item  }}
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     <a href="{{  relation.to_item.get_absolute_url  }}">{{  relation.to_item  }}</a><br>
@@ -35,12 +35,12 @@
 <hr>
 <div class="row"><div class="span6">
 <h2>Linked by:</h2>
-{% for item in item.get_related_items %}
+{% for item in item.predecessors.all %}
     <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
 </div><div class="span6">
 <h2>Backlinks:</h2>
-{% for relation in item.get_related_relations %}
+{% for relation in item.backlinks.all %}
     <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a>
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     {{  relation.to_item  }}<br>
