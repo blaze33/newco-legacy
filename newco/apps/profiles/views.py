@@ -77,16 +77,18 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
 
         return context
 
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if "follow" in request.POST or "unfollow" in request.POST:
             obj = load_object(request)
             success_url = request.path
-            return process_following(request, obj, success_url)
+            return self._process_following(request, obj, success_url)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
 
+    @method_decorator(login_required)
+    def _process_following(self, request, obj, success_url):
+        return process_following(request, obj, success_url)
 
 class ProfileListView(ProfileListView, ProcessProfileSearchView):
 
