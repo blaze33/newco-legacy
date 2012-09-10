@@ -244,6 +244,21 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             tag_ids = question.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
             context.update({"question": question, "prof_list": p_list})
+
+            item_list = question.items.all()
+            queryset = Question.objects.filter(
+                    items__id__in=item_list.values_list("id", flat=True))
+            queryset = queryset.exclude(id=question.id)
+            queryset_ordered = generic_annotate(
+                    queryset, Vote, Sum('votes__vote')).order_by("-score")
+            context.update({
+                "item_list": item_list,
+                "related_questions": {
+                    _("Top Questions"): queryset_ordered[:3],
+                    _("Latest Questions"): queryset[:3]
+                }
+            })
+
         return context
 
     def form_invalid(self, form):
