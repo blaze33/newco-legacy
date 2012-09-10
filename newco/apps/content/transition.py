@@ -29,10 +29,10 @@ def add_images(request, **kwargs):
     if not album:
         album = Item.objects.create(data=album_data)
         images = []
+        product.link_to(album, {'relationship': 'has'})
     else:
         album = album[0]
         images = get_album(legacy_product)
-    product.link_to(album, {'relationship': 'has'})
 
     if not images:
         images = search_images(product.data['name'])
