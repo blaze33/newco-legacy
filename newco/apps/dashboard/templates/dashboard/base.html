@@ -13,11 +13,7 @@
 {% endblock %}
 
 {% block subnav %}
-    {% if user.is_authenticated %}
-        {% include "dashboard/_subnav.html" %}
-    {% else %}
-        <b>[Debug] To do:</b>&nbsp; User is not authenticated and thus doesn't have a dashboard navbar on the left (here).<br> Find a fallback for this case. (minimalized '_subnav.html' ? Else ?)
-    {% endif %}
+    {% include "dashboard/_subnav.html" %}
 {% endblock %}
 
 {% block head_title %}
