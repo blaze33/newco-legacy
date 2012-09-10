@@ -64,10 +64,16 @@ class Item(BaseModel):
         return unicode(self.get('name'))
 
     def link_to(self, item, data):
+        if 'relationship' in data:
+            test = {'relationship': data['relationship']}
+        else:
+            test = {}
         relation, created = Relation.objects.get_or_create(
             from_item=self,
             to_item=item,
-            data=data)
+            data__contains=test)
+        relation.data = data
+        relation.save()
         return relation
 
 
