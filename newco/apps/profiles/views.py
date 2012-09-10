@@ -47,21 +47,14 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
         #TODO: better handling of QueryManager
 
         history = Content.objects.filter(
-                Q(author=self.page_user) & Q(status=Content.STATUS.public)
+            Q(author=self.page_user) & Q(status=Content.STATUS.public)
         )
 
         fwers_ids = Follow.objects.get_follows(
-                self.page_user).values_list("user_id", flat=True)
+                            self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)
         fwees_ids = obj_fwed.values_list("target_user_id", flat=True)
         items_fwed_ids = obj_fwed.values_list("target_item_id", flat=True)
-
-        feed = Content.objects.filter(
-                Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
-                ~Q(author=self.page_user), status=Content.STATUS.public
-        )
-
-        profiles = Profile.objects.order_by("name").distinct("name")
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
@@ -71,8 +64,6 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
             "fwees": User.objects.filter(pk__in=fwees_ids),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "data_source_profile": Profile.objects.get_all_names(),
-            "profile_list_sorted": profiles,
-            "newsfeed": feed.select_subclasses(),
         })
 
         return context
@@ -89,6 +80,7 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
     @method_decorator(login_required)
     def _process_following(self, request, obj, success_url):
         return process_following(request, obj, success_url)
+
 
 class ProfileListView(ProfileListView, ProcessProfileSearchView):
 
