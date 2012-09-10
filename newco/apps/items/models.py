@@ -11,7 +11,6 @@ from model_utils import Choices
 from model_utils.managers import InheritanceManager, QueryManager
 from voting.models import Vote
 from follow.utils import register
-from django_hstore import hstore
 
 
 class Item(models.Model):
