@@ -68,18 +68,18 @@ class DashboardView(ListView, ProcessProfileSearchView):
             all_my_contrib = Content.objects.filter(author=self.user)
             contrib_feed = Content.objects.get_related_contributions(self.user)
 
-            boxes_list = []
+            boxes_dict = {}
             # feed
-            boxes_list.append({
+            boxes_dict["feed"] = {
                 "title": _("Your feed:"),
                 "subtitle": _("Mini feed from what you follow"),
                 "name": "feed",
                 "feed": feed.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["feed"]),
-            })
+            }
             # contrib
-            boxes_list.append({
+            boxes_dict["contrib"] = {
                 "title": _("Contribution center:"),
                 "subtitle": _("Latest activity on your skills tags..." \
                                 + " Maybe you would like to contribute?"),
@@ -87,26 +87,26 @@ class DashboardView(ListView, ProcessProfileSearchView):
                 "feed": contrib_feed.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["contribution"]),
-            })
+            }
             #"drafts":
-            boxes_list.append({
+            boxes_dict["drafts"] = {
                 "title": _("Drafts:"),
                 "subtitle": _("Maybe you want to complete and publish some?"),
                 "name": "drafts",
                 "feed": drafts.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["draft"]),
-            })
+            }
             #"all_contrib":
-            boxes_list.append({
+            boxes_dict["all_my_contrib"] = {
                 "title": _("All contributions:"),
                 "subtitle": _("Your latest contributions"),
                 "name": "all_my_contrib",
                 "feed": all_my_contrib.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["all"]),
-            })
-            context.update({"boxes_list": boxes_list})
+            }
+            context.update({"boxes_dict": boxes_dict})
 
         context.update({
             "my_profile": Profile.objects.get(user=self.user),
