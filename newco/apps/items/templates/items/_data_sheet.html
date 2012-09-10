@@ -7,7 +7,7 @@
 	{% for image in album|slice:":4" %}
       <li class="span3">
         <a href="{{  image.data.contextLink  }}" class="thumbnail">
-          <img src="{{  image.data.thumbnailLink  }}" alt="{{  image.data.snippet  }}">
+          <img src="{{  image.data.thumbnailLink  }}" alt="{{  image.data.snippet  }}" height="128px">
         </a>
       </li>
 	{% endfor %}
