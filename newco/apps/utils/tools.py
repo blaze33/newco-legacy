@@ -110,7 +110,8 @@ def load_redis_engine():
                 return None
     else:
         if settings.DEBUG:
-            raise RedisError("Redis Server URL is not valid.")
+            raise RedisError("Redis Server '%s' URL is not valid." \
+                                                    % settings.REDISTOGO_URL)
         else:
             return None
 
