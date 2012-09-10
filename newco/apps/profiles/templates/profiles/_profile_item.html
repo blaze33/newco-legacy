@@ -1,7 +1,7 @@
 {% load account_tags %}
 {% load content_utils %}
 
-<div class="profile-item thumbnail">
+<div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
     <div class="name">
         <a href="{{ profile.get_absolute_url }}"><h4>
         {% profile_pic profile.user 64 %}
