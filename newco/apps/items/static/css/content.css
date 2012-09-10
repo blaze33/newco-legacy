@@ -79,3 +79,15 @@
     .controls_2 .icon-chevron-down {
         background-position: -309px -119px;
     }
+    
+    .nc_transition_add {
+        opacity: 0;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
+    }
+
+    .nc_transition_add:hover {
+        opacity: 1;
+        -webkit-transition: opacity 0.6s;
+        -moz-transition: opacity 0.6s;
+    }

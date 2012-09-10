@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load account_tags %}
+{% load content_utils %}
+
+<div id="ask" class="modal fade hide">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>{% trans "Ask..." %}</h3>
+    </div>
+    <div class="modal-body">
+        {% if prof_list.count > 0 %}
+            <h4>{% trans "...an expert:" %}</h4>
+            {% for prof in prof_list %}<br /><div class="row">
+                <div class="span2 left"><a href="{{ prof.user.get_absolute_url }}" target="_blank"><span class="label label-success">{% user_display prof.user %}</span></a></div>
+                <div class="span3 right"><form action="" method="POST">{% csrf_token %}
+                    <button class="btn" type="submit" name="ask" value="{{ prof.user.id }}">{% trans "Ask" %}</button>
+                    <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
+                    <input type="hidden" name="object_name" value="{{ question|to_class_name }}"/>
+                    <input type="hidden" name="id" value="{{ question.id }}"/>
+                </form></div>
+            </div>{% endfor %}
+{% comment %}
+            <h4>{% trans "...or someone you may know:" %}</h4>
+        {% else %}
+            <br />
+            <h4>{% trans "...someone you may know:" %}</h4>
+{% endcomment %}
+        {% endif %}
+{% comment %}
+        #TODO: improve typeahead
+        <form action="" method="POST" class="form-horizontal">{% csrf_token %}
+            <input name="ask_prof_pick" type="text" autocomplete="off" placeholder="{% trans 'Pick someone' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profiles }}">
+            <input type="submit" class="btn" name="ask_design" value="{% trans 'Ask' %}"/>
+            <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
+            <input type="hidden" name="object_name" value="{{ question|to_class_name }}"/>
+            <input type="hidden" name="id" value="{{ question.id }}"/>
+        </form>
+{% endcomment %}
+    </div>
+{% comment %}
+    <div class="modal-footer">
+        You could also push your question in Homepage for 50 points :
+        <button class="btn btn-primary" type="submit">Push!</button>
+    </div>
+{% endcomment %}
+</div>

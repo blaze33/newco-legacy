@@ -5,7 +5,7 @@ Django==1.4
 --extra-index-url=http://dist.pinaxproject.com/dev/
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
-django-user-accounts==1.0b1.dev7
+django-user-accounts==1.0b6
 
 django-extensions==0.9
 django-debug-toolbar==0.9.4
@@ -13,9 +13,10 @@ django-staticfiles==1.2.1
 django-compressor==1.2a1
 
 django-timezones==0.2
-pytz==2012c
+pytz==2012d
 django-openid==0.3a1
 python-openid==2.2.5
+Babel==0.9.6
 
 django-announcements==0.2.1
 django-pagination==1.0.7
@@ -31,32 +32,31 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 # Amazon
 python-amazon-product-api==0.2.5
 
-# lxml required by amazon api
-#lxml==2.3.4
+# lxml required by amazon api (3.0 alpha 2 released)
+lxml==2.3.4
 
-## upgraded pinax-theme-bootstrap
-## git+git://github.com/pinax/pinax-theme-bootstrap.git@cff4f5bbe9f87f0c67ee9ada9aa8ae82978f9890#egg=pinax-theme-bootstrap
+## pinax-theme-bootstrap
 pinax-theme-bootstrap==2.0.4
-git+git://github.com/pinax/pinax-theme-bootstrap-account.git@8fc34ba4309fc1edd12e5836cc1398c3f9597e6d#egg=pinax-theme-bootstrap-account
+pinax-theme-bootstrap-account==1.0b2
 
 ## schema and data migrations
-South==0.7.5
+South==0.7.6
 
 ## AWS interface & storage backend
-boto==2.5.1
-django-storages==1.1.4
+boto==2.5.2
+django-storages==1.1.4  ##TODO 1.1.5 released => needs to be tested
 ## dateutil needed to only upload updated files
-python-dateutil==1.5
+python-dateutil==2.1
 
 ## memcache interface
-#pylibmc==1.2.3
-#django-pylibmc-sasl==0.2.4
+pylibmc==1.2.3
+django-pylibmc-sasl==0.2.4
 ## memcache configuration for heroku
-#django-heroku-memcacheify==0.2
+django-heroku-memcacheify==0.2  ## 0.3 "Fixing broken memcachier support"
 
 ## production webserver
-gunicorn==0.14.3
-#gevent==0.13.7
+gunicorn==0.14.6
+gevent==0.13.7
 greenlet==0.3.4
 
 ## Database backends
@@ -85,8 +85,12 @@ django-follow==0.6
 ## Autocomplete app
 django-autocomplete-light==1.0.11
 
+## Redis + complete
+redis==2.6.2
+redis-completion==0.3.1
+
 ## template loader
-hg+https://hg@bitbucket.org/wojas/django-apptemplates@ce738ccb3f02#egg=django_apptemplates
+django-apptemplates==0.0.1
 
 ## The following requirements were added by pip --freeze:
 BeautifulSoup==3.2.1
@@ -102,5 +106,4 @@ versiontools==1.9.1
 wsgiref==0.1.2
 
 #NewCo_bw_editor
-hg+https://guillaumekal@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor
-#hg+https://guillaumekal@bitbucket.org/sebastien_worms/newco_editor_demo#egg=newco_editor_demo 
+hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor

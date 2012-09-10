@@ -1,0 +1,274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-05 01:22+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models.py:13
+msgid "name"
+msgstr ""
+
+#: models.py:14
+msgid "url webapp"
+msgstr ""
+
+#: models.py:15
+msgid "slug"
+msgstr ""
+
+#: models.py:17 models.py:51
+msgid "last modified"
+msgstr ""
+
+#: models.py:20 models.py:38
+msgid "store"
+msgstr ""
+
+#: models.py:32
+msgid "Euro"
+msgstr ""
+
+#: models.py:33
+msgid "Dollar"
+msgstr ""
+
+#: models.py:34
+msgid "Pound"
+msgstr ""
+
+#: models.py:37
+msgid "name at store"
+msgstr ""
+
+#: models.py:40
+msgid "store object id"
+msgstr ""
+
+#: models.py:41
+msgid "EAN"
+msgstr ""
+
+#: models.py:42
+msgid "url"
+msgstr ""
+
+#: models.py:44
+msgid "price"
+msgstr ""
+
+#: models.py:47
+msgid "currency"
+msgstr ""
+
+#: models.py:49
+msgid "date created"
+msgstr ""
+
+#: models.py:53
+msgid "small image"
+msgstr ""
+
+#: models.py:55
+msgid "medium image"
+msgstr ""
+
+#: models.py:57
+msgid "large image"
+msgstr ""
+
+#: models.py:61
+msgid "affiliation item"
+msgstr ""
+
+#: amazon/search_index.py:4
+msgid "All"
+msgstr ""
+
+#: amazon/search_index.py:5
+msgid "Apparel"
+msgstr ""
+
+#: amazon/search_index.py:6
+msgid "Appliances"
+msgstr ""
+
+#: amazon/search_index.py:7
+msgid "Automotive"
+msgstr ""
+
+#: amazon/search_index.py:8
+msgid "Baby"
+msgstr ""
+
+#: amazon/search_index.py:9
+msgid "Beauty"
+msgstr ""
+
+#: amazon/search_index.py:10
+msgid "Blended"
+msgstr ""
+
+#: amazon/search_index.py:11
+msgid "Books"
+msgstr ""
+
+#: amazon/search_index.py:12
+msgid "Classical"
+msgstr ""
+
+#: amazon/search_index.py:13
+msgid "Digital Music"
+msgstr ""
+
+#: amazon/search_index.py:14
+msgid "DVD"
+msgstr ""
+
+#: amazon/search_index.py:15
+msgid "Electronics"
+msgstr ""
+
+#: amazon/search_index.py:16
+msgid "Foreign Books"
+msgstr ""
+
+#: amazon/search_index.py:17
+msgid "Gourmet Food"
+msgstr ""
+
+#: amazon/search_index.py:18
+msgid "Grocery"
+msgstr ""
+
+#: amazon/search_index.py:19
+msgid "Health & Personal Care"
+msgstr ""
+
+#: amazon/search_index.py:20
+msgid "Hobbies"
+msgstr ""
+
+#: amazon/search_index.py:21
+msgid "Home & Garden"
+msgstr ""
+
+#: amazon/search_index.py:22
+msgid "Industrial"
+msgstr ""
+
+#: amazon/search_index.py:23
+msgid "Jewelry"
+msgstr ""
+
+#: amazon/search_index.py:24
+msgid "Kindle Store"
+msgstr ""
+
+#: amazon/search_index.py:25
+msgid "Kitchen"
+msgstr ""
+
+#: amazon/search_index.py:26
+msgid "Lawn & Garden"
+msgstr ""
+
+#: amazon/search_index.py:27
+msgid "Magazines"
+msgstr ""
+
+#: amazon/search_index.py:28
+msgid "Miscellaneous"
+msgstr ""
+
+#: amazon/search_index.py:29
+msgid "MP3 Downloads"
+msgstr ""
+
+#: amazon/search_index.py:30
+msgid "Musical Instruments"
+msgstr ""
+
+#: amazon/search_index.py:31
+msgid "Music"
+msgstr ""
+
+#: amazon/search_index.py:32
+msgid "Music Tracks"
+msgstr ""
+
+#: amazon/search_index.py:33
+msgid "Office Products"
+msgstr ""
+
+#: amazon/search_index.py:34
+msgid "Outdoor Living"
+msgstr ""
+
+#: amazon/search_index.py:35
+msgid "PC Hardware"
+msgstr ""
+
+#: amazon/search_index.py:36
+msgid "Pet Supplies"
+msgstr ""
+
+#: amazon/search_index.py:37
+msgid "Photo"
+msgstr ""
+
+#: amazon/search_index.py:38
+msgid "Software"
+msgstr ""
+
+#: amazon/search_index.py:39
+msgid "Software & Video Games"
+msgstr ""
+
+#: amazon/search_index.py:40
+msgid "Sporting Goods"
+msgstr ""
+
+#: amazon/search_index.py:41
+msgid "Tools"
+msgstr ""
+
+#: amazon/search_index.py:42
+msgid "Toys"
+msgstr ""
+
+#: amazon/search_index.py:43
+msgid "VHS"
+msgstr ""
+
+#: amazon/search_index.py:44
+msgid "Video Games"
+msgstr ""
+
+#: amazon/search_index.py:45
+msgid "Video"
+msgstr ""
+
+#: amazon/search_index.py:46
+msgid "Watches"
+msgstr ""
+
+#: amazon/search_index.py:47
+msgid "Wireless Accessories"
+msgstr ""
+
+#: amazon/search_index.py:48
+msgid "Wireless"
+msgstr ""

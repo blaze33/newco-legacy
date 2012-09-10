@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-16 00:07+0200\n"
+"POT-Creation-Date: 2012-09-06 19:59+0200\n"
 "PO-Revision-Date: 2012-07-16 17:19\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,11 +99,6 @@ msgstr "Tous les profils"
 msgid "Search user"
 msgstr "Chercher un utilisateur"
 
-#: templates/profiles/profile_homepage.html:9
-#, python-format
-msgid "Home: %(page_user_display)s"
-msgstr "Accueil : %(page_user_display)s"
-
 #: templates/profiles/content_display/_answer.html:6
 msgid "answered a question about"
 msgstr "a répondu à une question à propos de"
@@ -140,6 +135,9 @@ msgstr "a posé une question à propos de"
 #: templates/profiles/content_display/_question.html:20
 msgid "Answer this question"
 msgstr "Répondre à cette question"
+
+#~ msgid "Home: %(page_user_display)s"
+#~ msgstr "Accueil : %(page_user_display)s"
 
 #~ msgid "Newsfeed"
 #~ msgstr "Flux"

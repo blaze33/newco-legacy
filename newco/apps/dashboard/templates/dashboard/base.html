@@ -1,0 +1,40 @@
+{% extends "theme_bootstrap/subnav_base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
+
+{% block extra_style %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+{% endblock %}
+
+{% block subnav %}
+    {% include "dashboard/_subnav.html" %}
+{% endblock %}
+
+{% block head_title %}
+    {% user_display user as username %}
+    {% blocktrans %}{{ username }}'s dashboard | {{ page_name }}{% endblocktrans %}
+{% endblock %}
+
+{% block body %}
+    <header class="page-header" id="overview">
+        <div class="row">
+            <div class="span8"><h1>
+                {% block title %}{{ page_name }}{% endblock %}
+                <br>
+                <small>{% block subtitle %}{% endblock %}</small>
+            </h1></div>
+            <div class="span2 pull-right">{% include "profiles/_profile_item.html" with profile=my_profile %}</div>
+        </div>
+    </header>
+
+    {% block dashboard %}{% endblock %}
+
+    {% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}

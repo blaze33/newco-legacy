@@ -1,21 +1,31 @@
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.db.models.signals import pre_save, post_save, post_delete
+import json
+
+from django.core.urlresolvers import reverse
 from django.dispatch import receiver
+from django.db import models
+from django.db.models.signals import pre_save, post_save, post_delete
+from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
+
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from django.template.defaultfilters import slugify
-from django.core.urlresolvers import reverse
 
-from taggit_autosuggest.managers import TaggableManager
 from idios.models import ProfileBase
 from follow.utils import register
-
+from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
+
 from items.models import Question, Answer, Link, Feature
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 register(User)
+
+
+class ProfileManager(models.Manager):
+
+    def get_all_names(self):
+        profiles = self.order_by("name").distinct("name")
+        return json.dumps(list(profiles.values_list("name", flat=True)))
 
 
 class Profile(ProfileBase):
@@ -31,6 +41,8 @@ class Profile(ProfileBase):
         help_text=_("The list of your main product skills"),
         blank=True
     )
+
+    objects = ProfileManager()
 
     class Meta:
         verbose_name = _("profile")
@@ -63,10 +75,7 @@ class Reputation(models.Model):
         rep = 0
 
         for cls in [Question, Answer, Link, Feature]:
-            ctype = ContentType.objects.get(
-                                    app_label=cls._meta.app_label,
-                                    model=cls._meta.module_name
-                    )
+            ctype = ContentType.objects.get_for_model(cls)
             obj_ids = cls.objects.filter(author=self.user).values_list('id',
                                                                     flat=True)
             votes = Vote.objects.filter(object_id__in=obj_ids,
@@ -161,10 +170,7 @@ def update_permissions(sender, instance=None, **kwargs):
     if instance is None:
         return
 
-    content_type = ContentType.objects.get(
-            app_label=Reputation._meta.app_label,
-            model=Reputation._meta.module_name
-    )
+    content_type = ContentType.objects.get_for_model(Reputation)
     permission = Permission.objects.get(codename='can_vote',
                                        content_type=content_type)
     instance.user.user_permissions.add(permission)

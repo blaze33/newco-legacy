@@ -4,7 +4,7 @@
 <dl class="dl-horizontal">
     {% if profile.about %}
         <dt>{% trans "About" %}</dt>
-        <dd>{{ profile.about }}</dd>
+        <dd itemprop="description">{{ profile.about }}</dd>
     {% endif %}
     {% if profile.location %}
         <dt>{% trans "Location" %}</dt>
@@ -12,7 +12,7 @@
     {% endif %}
     {% if profile.website %}
         <dt>{% trans "Website" %}</dt>
-        <dd><a href="{{ profile.website }}">{{ profile.website }}</a></dd>
+        <dd><a href="{{ profile.website }}" itemprop="url">{{ profile.website }}</a></dd>
     {% endif %}
     {% if profile.user.date_joined %}
         <dt>{% trans "Subscription date" %}</dt>

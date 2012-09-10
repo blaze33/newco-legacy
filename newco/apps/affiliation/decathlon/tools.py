@@ -1,18 +1,24 @@
-import sys
 import codecs
-from affiliation.models import AffiliationItemCatalog, Store
-from affiliation.catalogs_tools import csv_url2dict
+import sys
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction, IntegrityError
 
+from affiliation.models import AffiliationItemCatalog, Store
+from affiliation.catalogs_tools import csv_url2dict
+from utils.tools import get_query
 
-def decathlon_item_search(keyword, nb_items=10):
+
+def decathlon_product_search(keyword, nb_items=10):
     decathlon, created = Store.objects.get_or_create(
         name="Decathlon", url="http://www.decathlon.fr"
     )
 
-    return AffiliationItemCatalog.objects.filter(store=decathlon,
-                                    name__icontains=keyword)[:nb_items]
+    d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon)
+
+    query = get_query(keyword, ["name"])
+
+    return d4_prods.filter(query)[:nb_items]
 
 
 @transaction.commit_manually

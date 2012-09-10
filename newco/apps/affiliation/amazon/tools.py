@@ -1,11 +1,15 @@
-from django.conf import settings
-from amazonproduct import API
-from amazonproduct.errors import NoExactMatchesFound
-from affiliation.models import AffiliationItemCatalog, Store
+from urllib2 import URLError
 from math import ceil
 
+from django.conf import settings
 
-def amazon_item_search(keyword, search_index="All", nb_items=10):
+from amazonproduct import API
+from amazonproduct.errors import NoExactMatchesFound
+
+from affiliation.models import AffiliationItemCatalog, Store
+
+
+def amazon_product_search(keyword, search_index="All", nb_items=10):
     amazon, created = Store.objects.get_or_create(
         name="Amazon", url="http://www.amazon.fr"
     )
@@ -19,6 +23,12 @@ def amazon_item_search(keyword, search_index="All", nb_items=10):
                                     AssociateTag=settings.AWS_ASSOCIATE_TAG)
     except NoExactMatchesFound:
         return None
+    except URLError, e:
+        print e.message
+        if settings.DEBUG:
+            raise URLError("Problem with amazon connexion.\n%s" % e.message)
+        else:
+            return None
 
     nb_pages = int(ceil(nb_items * 0.1))
 

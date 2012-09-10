@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-16 00:06+0200\n"
+"POT-Creation-Date: 2012-09-06 19:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:45
+#: forms.py:95
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:77
+#: forms.py:127
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:120
+#: forms.py:171
 msgid "Link description"
 msgstr ""
 
-#: forms.py:174
+#: forms.py:225
 msgid "positive"
 msgstr ""
 
-#: forms.py:176
+#: forms.py:227
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:179
+#: forms.py:230
 msgid "negative"
 msgstr ""
 
-#: forms.py:181
+#: forms.py:232
 msgid "What feature do you dislike?"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "status"
 msgstr ""
 
-#: models.py:81 models.py:97 models.py:112 models.py:127 models.py:143
+#: models.py:81 models.py:102 models.py:121 models.py:136 models.py:152
 msgid "content"
 msgstr ""
 
@@ -85,42 +85,54 @@ msgstr ""
 msgid "question"
 msgstr ""
 
-#: models.py:100
+#: models.py:105
 msgid "answer"
 msgstr ""
 
-#: models.py:113
+#: models.py:122
 msgid "URL"
 msgstr ""
 
-#: models.py:116
+#: models.py:125
 msgid "link"
 msgstr ""
 
-#: models.py:131
+#: models.py:140
 msgid "feature"
 msgstr ""
 
-#: models.py:142
+#: models.py:151
 msgid "title"
 msgstr ""
 
-#: models.py:148
+#: models.py:157
 msgid "story"
 msgstr ""
 
-#: models.py:149
+#: models.py:158
 msgid "stories"
 msgstr ""
 
-#: views.py:75 views.py:152
+#: views.py:94 views.py:158
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:79 views.py:156
+#: views.py:98 views.py:162
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
+msgstr ""
+
+#: templates/items/_ask_modal.html:8
+msgid "Ask..."
+msgstr ""
+
+#: templates/items/_ask_modal.html:12
+msgid "...an expert:"
+msgstr ""
+
+#: templates/items/_ask_modal.html:16
+msgid "Ask"
 msgstr ""
 
 #: templates/items/_author.html:6
@@ -151,15 +163,23 @@ msgstr ""
 msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/_question_list.html:44
+#: templates/items/_question_list.html:45
+#: templates/items/question_detail.html:55
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/_question_list.html:44
+#: templates/items/_question_list.html:45
+#: templates/items/question_detail.html:55
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/answer_form.html:6
+#: templates/items/_question_list.html:47
+#: templates/items/question_detail.html:57
+msgid "Ask someone to answer"
+msgstr ""
+
+#: templates/items/_question_list.html:53 templates/items/answer_form.html:6
+#: templates/items/question_detail.html:63
 msgid "Answer"
 msgstr ""
 
@@ -169,7 +189,7 @@ msgid "Your answer to <i>%(question)s</i>:"
 msgstr ""
 
 #: templates/items/answer_form.html:16 templates/items/feature_form.html:17
-#: templates/items/item_form.html:62 templates/items/link_form.html:16
+#: templates/items/item_form.html:29 templates/items/link_form.html:16
 #: templates/items/question_form.html:16
 msgid "Submit"
 msgstr ""
@@ -200,32 +220,64 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:31
+#: templates/items/item_detail.html:38
 msgid "Questions"
 msgstr ""
 
-#: templates/items/item_detail.html:32
+#: templates/items/item_detail.html:39
 msgid "Links"
 msgstr ""
 
-#: templates/items/item_detail.html:33
+#: templates/items/item_detail.html:40
 msgid "Features"
 msgstr ""
 
-#: templates/items/item_detail.html:34
+#: templates/items/item_detail.html:41
 msgid "Stories"
 msgstr ""
 
-#: templates/items/item_detail.html:62
+#: templates/items/item_detail.html:69
+msgid "Offers"
+msgstr ""
+
+#: templates/items/item_detail.html:71
+msgid "EAN"
+msgstr ""
+
+#: templates/items/item_detail.html:72
+msgid "Store"
+msgstr ""
+
+#: templates/items/item_detail.html:73
+msgid "Name"
+msgstr ""
+
+#: templates/items/item_detail.html:74
+msgid "Price"
+msgstr ""
+
+#: templates/items/item_detail.html:91
 msgid "Items list"
 msgstr ""
 
-#: templates/items/item_detail.html:63
+#: templates/items/item_detail.html:92
 msgid "Edit Item"
 msgstr ""
 
-#: templates/items/item_detail.html:64
+#: templates/items/item_detail.html:93
 msgid "Delete Item"
+msgstr ""
+
+#: templates/items/item_detail.html:100
+msgid "From"
+msgstr ""
+
+#: templates/items/item_detail.html:105
+msgid "See the detailed offers"
+msgstr ""
+
+#: templates/items/item_detail.html:111
+msgid "Buy"
 msgstr ""
 
 #: templates/items/item_form.html:16
@@ -236,63 +288,60 @@ msgstr ""
 msgid "Add something new to talk about:"
 msgstr ""
 
-#: templates/items/item_form.html:29
+#: templates/items/item_form.html:32
+msgid "Linked Products"
+msgstr ""
+
+#: templates/items/item_form.html:34
+msgid "Remove unselected"
+msgstr ""
+
+#: templates/items/item_form.html:45
 msgid "Stores Search"
 msgstr ""
 
-#: templates/items/item_list.html:9
+#: templates/items/item_form.html:46
+msgid "Add selected"
+msgstr ""
+
+#: templates/items/item_list_base.html:11
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list.html:14
-msgid "Search"
-msgstr ""
-
-#: templates/items/item_list.html:30
-msgid "No products are available."
-msgstr ""
-
-#: templates/items/item_list.html:37
+#: templates/items/item_list_base.html:38
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/item_list.html:53
-msgid "Search an item, a tag..."
+#: templates/items/item_list_base.html:44
+msgid "Newest to Oldest"
 msgstr ""
 
-#: templates/items/item_list.html:54
-msgid "What are you looking for?"
+#: templates/items/item_list_base.html:45
+msgid "Oldest to Newest"
 msgstr ""
 
-#: templates/items/item_list_tag.html:10
+#: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
-"Products with tag <a href=\"%(tag_url)s\"><span class=\"label\">"
-"%(tag_name)s</span></a>"
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
+"\"</i>."
 msgstr ""
 
-#: templates/items/item_list_tag.html:19
+#: templates/items/item_list_base.html:61
+#, python-format
 msgid ""
-"\n"
-"                <select name=\"sort_items\">\n"
-"                    <option value=\"0\">Choose</option>\n"
-"                    <option value=\"1\">Newest to Oldest</option>\n"
-"                    <option value=\"2\">Oldest to Newest</option>\n"
-"                </select><button type=\"submit\" class=\"btn\">Sort</"
-"button>\n"
-"                "
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available."
 msgstr ""
 
-#: templates/items/item_list_tag.html:49
-msgid "No products are available with tag"
+#: templates/items/item_list_base.html:63
+#, python-format
+msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_search.html:9
-msgid "Search results for"
-msgstr ""
-
-#: templates/items/item_search.html:19
-msgid "No search results for"
+#: templates/items/item_list_base.html:65
+msgid "No products are available."
 msgstr ""
 
 #: templates/items/link_form.html:6
@@ -302,6 +351,10 @@ msgstr ""
 #: templates/items/link_form.html:10
 #, python-format
 msgid "Add an external link to <i>%(item)s</i>:"
+msgstr ""
+
+#: templates/items/question_detail.html:71
+msgid "Related Products"
 msgstr ""
 
 #: templates/items/question_form.html:6

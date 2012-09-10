@@ -1,0 +1,9 @@
+{% extends "dashboard/base.html" %}
+
+{% load i18n %}
+
+{% block subtitle %}{% trans "Keep here your drafts: contributions you don't want to publish yet" %}{% endblock %}
+
+{% block dashboard %}
+    {% include "profiles/_profile_content_list.html" with contents=object_list %}
+{% endblock %}
