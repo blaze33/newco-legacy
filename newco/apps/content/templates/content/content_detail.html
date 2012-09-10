@@ -1,0 +1,84 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% block head_title %}{% trans item.name %}{% endblock %}
+
+{% block body %}
+
+<h1>{{ item }}</h1>
+<br />
+<dl class="dl-horizontal">
+    <dt> ID </dt> <dd> {{ item.id }} </dd>
+    <dt> Created </dt> <dd> {{ item.created }} </dd>
+    <dt> Modified </dt> <dd> {{ item.modified }} </dd>
+    <h2>Data:</h2>
+    {% for key, value in item.data.iteritems %}
+        <dt> {{ key }} </dt> <dd> {{ value }} </dd>
+    {% endfor %}
+</dl>
+
+{%  if model == 'item'  %}
+<div class="row"><div class="span6">
+<h2>Linked to :</h2>
+{% for item in item.successors.all %}
+    <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
+{% endfor %}
+</div><div class="span6">
+<h2>Relations :</h2>
+{% for relation in item.links.all %}
+    {{  relation.from_item  }}
+    <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
+    <a href="{{  relation.to_item.get_absolute_url  }}">{{  relation.to_item  }}</a><br>
+{% endfor %}
+</div></div>
+
+<hr>
+<div class="row"><div class="span6">
+<h2>Linked by:</h2>
+{% for item in item.predecessors.all %}
+    <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
+{% endfor %}
+</div><div class="span6">
+<h2>Backlinks:</h2>
+{% for relation in item.backlinks.all %}
+    <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a>
+    <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
+    {{  relation.to_item  }}<br>
+{% endfor %}
+</div></div>
+<hr>
+
+<h2>Create a new link:</h2>
+<form action="/content2/add/relation/" method="post">{% csrf_token %}
+<div class="input-append">
+This {{  model  }}
+<input type="hidden" name="json_key[data]" value="relationship">
+<input type="text" name="json_value[data]" value="">
+<input type="hidden" name="from_item" id="id_from_item" value="{{  object.id  }}">
+{{  relation_form.to_item  }}
+<input class="btn" type="submit" value="Submit"></div>
+</form>
+
+{%  elif model == 'relation'  %}
+
+<h2>Items:</h2>
+
+<dl class="dl-horizontal">
+    <dt> From </dt> <dd> <a href="{{  item.from_item.get_absolute_url  }}">{{ item.from_item }}</a> </dd>
+    <dt> To </dt> <dd> <a href="{{  item.to_item.get_absolute_url  }}">{{ item.to_item }}</a> </dd>
+</dl>
+
+{%  endif  %}
+<hr>
+<p>
+<a class="btn" href="{% url model_index model %}">
+    <i class="icon-list"></i> {{  model|capfirst  }}s list</a>
+<a class="btn" href='{% url content_edit model item.id %}'>
+    <i class="icon-edit"></i> Edit {{  model|capfirst  }}</a>
+{% if user.is_superuser %}
+<a class="btn" href='{% url content_delete model item.id %}'>
+    <i class="icon-trash"></i> Delete {{  model|capfirst  }}</a>
+{% endif %}
+</p>
+
+{% endblock %}
