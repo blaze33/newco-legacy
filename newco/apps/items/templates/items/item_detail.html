@@ -20,18 +20,6 @@
 </br>
 
 <div class="span7">
-    <div class="row">
-        <form method="POST" action="" class="form-inline">
-            {% csrf_token %}
-            {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
-                <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
-                </div>
-                {% include "bootstrap/_field_errors.html" %}
-                {% include "bootstrap/_field_help_text.html" %}
-            </div></div>{% endwith %}
-            <input type="hidden" name="next" value="{{ item.get_absolute_url }}"/>
-        </form>
-    </div>
 
     <div class="row tabbable">
         <ul class="nav nav-tabs">

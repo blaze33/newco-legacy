@@ -10,7 +10,7 @@
         <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" rel="tooltip-right" title="{% trans "Monitor all that concerns you !" %}"><b>{% trans "Dashboard" %}</b></a></li>
 
         <li class="divider"></li>
-        <li{% if page == "feed" %} class="active"{% endif %}><a href="{% url 'dash' 'feed' %}" rel="tooltip-right" title="{% trans "Activity from what you follow" %}">{% trans "Your feed" %}</a></li>
+        <li{% if page == "feed" %} class="active"{% endif %}><a href="{% url 'dash' 'feed' %}" rel="tooltip-right" title="{% trans "Activity from what you follow" %}">{% trans "Your newsfeed" %}</a></li>
 
         <li class="divider"></li>
         <li class="nav-header">{% trans "Contributing" %}</li>

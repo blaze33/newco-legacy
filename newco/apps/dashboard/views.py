@@ -13,7 +13,7 @@ from profiles.views import ProcessProfileSearchView
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
-    "feed": _("Feed"),
+    "feed": _("Your newsfeed"),
     "contribution": _("Contribution center"),
     "collaboration": _("Teamwork"),
     "draft": _("Drafts"),
