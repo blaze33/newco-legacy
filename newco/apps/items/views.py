@@ -23,7 +23,7 @@ from utils.votingtools import process_voting as _process_voting
 from utils.followtools import process_following
 from utils.apiservices import search_images
 import json
-from content.transition import add_images, get_album
+from content.transition import add_images, get_album, sync_products
 
 app_name = 'items'
 
@@ -195,6 +195,11 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             })
 
             context.update(sets)
+
+            new_item = sync_products(Item, self.object)
+            albums = new_item.successors.filter(data__contains={'class': 'image_set', 'name': 'main album'})
+            if albums:
+                context.update({'album': albums[0]})
 
         return context
 
