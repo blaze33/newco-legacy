@@ -12,7 +12,7 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Content
 from profiles.models import Profile
-from utils.followtools import process_following
+from utils.followtools import process_following as _process_following
 from utils.tools import load_object
 
 
@@ -72,14 +72,14 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
         if "follow" in request.POST or "unfollow" in request.POST:
             obj = load_object(request)
             success_url = request.path
-            return self._process_following(request, obj, success_url)
+            return self.process_following(request, obj, success_url)
         else:
             return super(ProfileDetailView, self).post(request,
                                                             *args, **kwargs)
 
     @method_decorator(login_required)
-    def _process_following(self, request, obj, success_url):
-        return process_following(request, obj, success_url)
+    def process_following(self, request, obj, success_url):
+        return _process_following(request, obj, success_url)
 
 
 class ProfileListView(ProfileListView, ProcessProfileSearchView):
