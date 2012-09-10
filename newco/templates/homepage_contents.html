@@ -1,0 +1,32 @@
+{% extends "homepage_base.html" %}
+
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block body %}
+
+<div class="row" id="contents_list1">{% for content in object_list %}{% with author=content.author item=content.items.all.0 %}<div class="content-item thumbnail">
+    <div class="name"><a href="#"><img src="http://lorempixel.com/260/260/technics/?{{ content.id }}" alt=""></a></div>
+    <div class="details" style="font-family: helvetica neue,arial,sans-serif;"><span style="color:#888888">
+        <span class="content-item-mini"><span class="name">{% profile_pic content.author 20 %}</span></span>
+        {% if content|to_class_name == "answer" %}
+            <a href="{{ author.get_absolute_url }}" style="color:#222222">{% user_display author %}</a> answered a <a href="{{ content.question.get_absolute_url }}"style="color:#222222">question</a> about <a href="{{ item.get_absolute_url }}"style="color:#222222">{{ item }}</a>
+        {% elif content|to_class_name == "feature" %}
+            <a href="{{ author.get_absolute_url }}" style="color:#222222">{% user_display author %}</a> added a <a href="{{ content.get_absolute_url }}" style="color:#222222">feature</a> about <a href="{{ item.get_absolute_url }}"style="color:#222222">{{ item }}</a>
+        {% elif content|to_class_name == "question" %}
+            <a href="{{ author.get_absolute_url }}" style="color:#222222">{% user_display author %}</a> asked a <a href="{{ content.get_absolute_url }}" style="color:#222222">question</a> about <a href="{{ item.get_absolute_url }}" style="color:#222222">{{ item }}</a>
+        {% elif content|to_class_name == "link" %}
+            <a href="{{ author.get_absolute_url }}" style="color:#222222">{% user_display author %}</a> posted a <a href="{{ content.get_absolute_url }}" style="color:#222222">link</a> about <a href="{{ item.get_absolute_url }}" style="color:#222222">{{ item }}</a>
+        {% endif %}
+        <br><br>
+        <div class="expandable"><p>{% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}</p></div>
+        <br>
+        {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url tagged_items tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+    </span></div>
+</div>{% endwith %}{% endfor %}</div>
+
+{% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}

@@ -1,16 +1,18 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
-from taggit_autosuggest.managers import TaggableManager
-from django.db.models import permalink
+from django.db.models import permalink, Q
 from django.template.defaultfilters import slugify
-from django.contrib.contenttypes import generic
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
+from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 
 from model_utils import Choices
 from model_utils.managers import InheritanceManager, QueryManager
-from voting.models import Vote
+from follow.models import Follow
 from follow.utils import register
+from taggit_autosuggest.managers import TaggableManager
+from voting.models import Vote
 
 
 class Item(models.Model):
@@ -41,6 +43,26 @@ class Item(models.Model):
 register(Item)
 
 
+class ContentManager(InheritanceManager):
+    def get_feed(self, user):
+        """
+        Get the newsfeed of a specific user
+        """
+        obj_fwed = Follow.objects.filter(user=user)
+        fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
+        items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
+
+        return self.filter(
+                Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
+                ~Q(author=user), status=Content.STATUS.public
+        )
+
+    def get_related_contributions(self, user):
+        profile = user.get_profile()
+        item_list = Item.objects.filter(tags__in=profile.skills.all())
+        return self.filter(items__in=item_list)
+
+
 class Content(models.Model):
     STATUS = Choices(
         (0, "draft", _("Draft")),
@@ -54,11 +76,10 @@ class Content(models.Model):
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
                                             verbose_name=_('status'))
     items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
 
     public = QueryManager(status=STATUS.public)
 
-    objects = InheritanceManager()
+    objects = ContentManager()
 
     class Meta:
         ordering = ["-pub_date"]
@@ -79,8 +100,7 @@ class Content(models.Model):
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
-    tags = TaggableManager(blank=True)
-    #q_context = models.CharField(max_length=500, verbose_name=_("q_context"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("question")
@@ -90,14 +110,19 @@ class Question(Content):
         return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
 
     @permalink
-    def get_absolute_url(self, anchor_pattern="/question-%(id)s#q-%(id)s"):
+    def get_absolute_url(self):
         return ("item_detail", None, {"model_name": self._meta.module_name,
                         "pk": self.id, "slug": slugify(self.__unicode__())})
+
+    def get_product_related_url(self, item,
+                                anchor_pattern="/question-%(id)s#q-%(id)s"):
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_("content"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("answer")
@@ -110,10 +135,15 @@ class Answer(Content):
         return self.question.get_absolute_url() + \
                                             (anchor_pattern % self.__dict__)
 
+    def get_product_related_url(self, item,
+                                anchor_pattern="/answer-%(id)s#a-%(id)s"):
+        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+
 
 class Link(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("link")
@@ -129,6 +159,7 @@ class Link(Content):
 class Feature(Content):
     content = models.CharField(max_length=80, verbose_name=_('content'))
     positive = models.BooleanField()
+    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _('feature')

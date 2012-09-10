@@ -10,14 +10,14 @@
 
 <span class="myClassPopover"
     data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form object %}</td></tr></table>"
-    data-content="{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}">
-        <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+    data-content="{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}" itemscope itemtype="http://schema.org/Product">
+    <a href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a>
 </span>
 
 {% endwith %}
 
 {% endcomment %}
 
-<a href="{{ object.get_absolute_url }}">{{ object }}</a>
+<span itemscope itemtype="http://schema.org/Product"><a href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a></span>
 
 {% endspaceless %}

@@ -90,6 +90,28 @@ $(function(){
 });
 
 $(function(){
+  $('.myClassPopover').popover({
+    trigger: 'hover',
+    placement: 'in bottom',
+    animate: true,
+    delay: 500,
+    //template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+  });
+  $('[rel="tooltip-top"]').tooltip({
+    trigger: 'hover',
+    placement: 'top',
+    animate: true,
+    //delay: 500,
+  });
+    $('[rel="tooltip-right"]').tooltip({
+    trigger: 'hover',
+    placement: 'right',
+    animate: true,
+    //delay: 500,
+  });
+});
+
+$(function(){
     var $container = $('#contents_list1');
 //    $container.imagesLoaded( function(){
         $container.masonry({
@@ -143,5 +165,3 @@ $(function(){
         });
     }
 });
-
-

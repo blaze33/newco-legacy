@@ -7,6 +7,8 @@
         background: url({% static "img/Feedback_button.png" %}) no-repeat;
         width: 29px;
         height: 70px;
+        cursor: pointer;
+        cursor: hand; /* hand AND pointer are necessary for different browsers*/
     }
     
     div#feedbackModal textarea { 
@@ -24,21 +26,4 @@
     @media (max-width: 480px) { 
         .modal.fade.in { top: 5%; }
      }
-
-    
 </style>
-
-{% comment %} Css pour le "popover"... mis dans feedback/header.html pour chopper un "include" en <head> de page {% endcomment %}
-<style type="text/css">
-	.myClassPopover{ 
-		position: relative;
-		/*z-index:999999;*/
-	}
-	.myClassPopoverProfile{ 
-		position: relative;
-		/*z-index:999999;*/
-	}
-	/*.popover{ 
-		z-index:99999999;
-}*/
-</style> 

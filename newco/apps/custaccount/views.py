@@ -15,14 +15,17 @@ class SignupView(SignupView):
     form_class = SignupForm
 
     def generate_username(self, form):
-        username = unicode(User.objects.count() + 1)
+        # Dummy implementation, username is later set to user auto_id field
+        username = unicode(User.objects.count() + 1) + "_makemefeelunique"
         return username
 
-    def create_account(self, new_user, form):
-        self.update_profile(new_user, form)
-        return super(SignupView, self).create_account(new_user, form)
+    def create_account(self, form):
+        self.created_user.username = unicode(self.created_user.id)
+        self.created_user.save()
+        self.update_profile(form)
+        return super(SignupView, self).create_account(form)
 
-    def update_profile(self, user, form):
-        profile = user.get_profile()
+    def update_profile(self, form):
+        profile = self.created_user.get_profile()
         profile.name = form.cleaned_data["profile_name"]
         profile.save()

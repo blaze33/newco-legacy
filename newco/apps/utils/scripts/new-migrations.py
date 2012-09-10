@@ -13,6 +13,7 @@ for app in apps:
     for migration in app:
         if migration.app_label() + "." + migration.name() not in applied_migrations:
             num_new_migrations = num_new_migrations + 1
-print "%d new migrations to apply." % num_new_migrations
 
-sys.exit( num_new_migrations )
+if num_new_migrations > 0:
+    sys.exit( "%d new migrations to apply." % num_new_migrations )
+print "No migrations to run."

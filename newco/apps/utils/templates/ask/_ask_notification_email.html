@@ -5,8 +5,15 @@
 
 <body>
     <strong>{{ askee }}</strong>,<br><br>
-    <a href="{{ asker_url }}">{{ asker }}</a> aimerait beaucoup que vous repondiez a sa question "{{ question_object }}". Cela vous fera gagner 50 points.
-    <br><br><hr><small>Cet email vous a ete envoye parce que cette option est activee dans votre profil.
-    Pour changer votre configuration cliquez <a href="{{ askee_url }}" >ici</a> (option bientot disponible).
-    <br><br>The NewCo Project team</small>
-</body></html>
+    <a href="{{ asker_url }}">{{ asker }}</a> {{ txt_request }}
+    <br><br><hr>
+    <small>
+        {% blocktrans %}
+            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href="{{ settings_url }}" >here</a> (available soon).
+            <br><br>
+            Thanks,
+            The NewCo team
+        {% endblocktrans %}
+    </small>
+</body>
+</html>

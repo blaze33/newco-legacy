@@ -7,9 +7,11 @@ clean:
 	find . -name "*.pyc" -delete
 	find . -name "*~" -delete
 
-BRANCH = $(shell hg prompt {branch})
+BRANCH = $(shell cat .hg/branch) 
 REMOTE_URL = $(shell git config --get remote.$(BRANCH).url)
 APP = $(shell echo $(REMOTE_URL)|cut -d":" -f2|cut -d"." -f1)
+DATE = $(shell date --rfc-3339=date)
+PGDUMPURL = $(shell heroku pgbackups:url --app newco-prod)
 
 SYNCDB = django-admin.py syncdb --noinput
 MIGRATE = django-admin.py migrate
@@ -22,7 +24,7 @@ $(MIGRATE)
 endef
 
 echo: clean
-	@echo $(BRANCH) $(REMOTE_URL) $(APP)
+	@echo $(BRANCH) $(REMOTE_URL) $(APP) $(DATE) $(PGDUMPURL)
 
 maintain_on:
 	heroku maintenance:on --app $(APP)
@@ -42,7 +44,7 @@ sqldiffall:
 	heroku run '$(SQLDIFFALL)' --app $(APP)
 
 collectstatic:
-	heroku run '$(COLLECTSTATIC) --app $(APP)
+	heroku run '$(COLLECTSTATIC)' --app $(APP)
 
 heroku_bash:
 	heroku run bash --app $(APP)
@@ -66,6 +68,9 @@ simple_deploy:
 	hg merge -r staging
 	hg commit -m "Merge with staging"
 	make push
+
+pg_backup2dropbox:
+	curl -o ~/Dropbox/NewCo-Shared/Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
 
 # TODO: add additional commands to manage stuff.
 # Static stuff

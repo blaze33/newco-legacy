@@ -12,14 +12,14 @@
     data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% if not object == request.user %}{% follow_form object %}{% endif %}</td></tr></table>"
     data-content="
         {% if object.reputation %}<p><a href='{% url faq %}#reputation' style=' color: #000000 '><b>{% trans 'Reputation' %}</b></a>: {{ object.reputation.reputation_incremented }}</p>{% endif %}
-        {% if tag_list.count > 0 %}<p><b>{% trans 'Skills' %}</b>:&nbsp;{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp; {% endfor %}{% endif %}">
-        <a href="{{ object.get_absolute_url }}">{% user_display object %}</a>
+        {% if tag_list.count > 0 %}<p><b>{% trans 'Skills' %}</b>:&nbsp;{% for tag in tag_list %}<a href='{% url tagged_items tag.slug %}'><span class='label'>{{ tag.name }}</span></a>&nbsp; {% endfor %}{% endif %}" itemscope itemtype="http://schema.org/Person">
+        <a href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{% user_display object %}</span></a>
 </span>
 
 {% endwith %}
 
 {% endcomment %}
 
-<a href="{{ object.get_absolute_url }}">{% user_display object %}</a>
+<span itemscope itemtype="http://schema.org/Person"><a href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{% user_display object %}</span></a></span>
 
 {% endspaceless %}

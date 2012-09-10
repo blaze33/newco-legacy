@@ -1,28 +1,59 @@
 {% load i18n %}
 {% load content_utils %}
+{% load date_utils %}
 
 {% with question=content.question %}
-    <div class="row"><div class="span7">
-        <h4>{% include p_link_tpl with object=author %} {% trans "answered a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
-    </div></div>
 
-    <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">
-        <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
-        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
-    </div>
+        
+    {% if mini_feed %}
+        
+        {# TODO : set the styles in a .css #}
 
-    <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
-        <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
-        <div class="span3"><p>
-            {% autoescape off %}{{ content.content }}{% endautoescape %}
-            {% if user.is_superuser or author == user %}
-                {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
-            {% endif %}
-        </p></div>
-        <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
-    </div>
-    {% if user != author %}
-        <div class="row"><div class="span4 offset3"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
+        <blockquote {% if content.is_public %}{% elif content.is_draft %}class="draft"{% endif %}>
+            <h5 {#style="font-size:11px;"#}><a href='{{ content.author.get_absolute_url }}'>{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include i_link_tpl with object=content.items.all.0 %}:</h5>
+            
+            <p{% if question.is_public %}{% elif question.is_draft %} class="draft"{% endif %}><small><a href="{{ question.get_absolute_url }}" class="black">{{ question.content }}</a></small></p>
+
+            <p>
+                <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}
+                </small>
+                <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
+                
+                {# Note from Seb: Seems the "!important" tag is not the cleanest way to override styles (here: inside the `answer.content` , we don't want it to appear very large in this particular "mini_feed" thus we want to force it to use the small font-size of the span container). A javascript changing the styles dynamically inside this container should be the best option. For more info, see: http://stackoverflow.com/questions/104485/is-there-a-way-to-force-a-style-to-a-div-element-which-already-has-a-style-at#}
+
+            </p>
+
+        </blockquote>
+
+
+    {% else %}
+
+        <div class="row"><div class="span7">
+            <h4>{% include p_link_tpl with object=author %} {% trans "answered a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
+        </div></div>
+
+        <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">
+            <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
+            <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+        </div>
+
+        <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
+
+            <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
+            <div class="span3"><p>
+                {% autoescape off %}{{ content.content }}{% endautoescape %}
+                {% if user.is_superuser or author == user %}
+                    {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
+                {% endif %}
+            </p></div>
+            <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+            <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+        </div>
+
+        {% if user != author and not mini_feed %}
+            <div class="row"><div class="span4 offset3"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
+        {% endif %}
+
     {% endif %}
+
 {% endwith %}

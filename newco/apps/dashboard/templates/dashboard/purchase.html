@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+
+{% load i18n %}
+
+{% block subtitle %}Ici, retrouver ses achats, donner ses feedbacks, voir ses loyalty points...{% endblock %}
+
+{% block dashboard %}
+    <div class="row">
+        <div class="span7">
+            <form action="." method="POST" class="well">{% csrf_token %}
+                <div class="input-append"><input type="text" name="item_search" id="main_autocomplete" class="input-xlarge" placeholder=" {% trans "Search in all my purchases" %}" style="margin: 0 auto; height:30px; font-size:16px; font-weight:bold;"/><button class="btn" type="submit" style="height:40px; "><h3> <i class="icon-search"></i> </h3></button></div>
+            </form>
+        </div>
+    </div>
+    </br>
+    <hr>
+    {% include "profiles/_profile_content_list.html" with contents=object_list %}
+{% endblock %}

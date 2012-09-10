@@ -4,6 +4,7 @@ syntax: glob
 #temp files
 *.pyc
 *~
+*.swp
 
 #dev file
 *.db

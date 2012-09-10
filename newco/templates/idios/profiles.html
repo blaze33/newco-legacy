@@ -1,30 +1,21 @@
-{% extends "idios/base.html" %}
+{% extends "dashboard/base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
 
-{% block head_title %}{% trans "All Users" %}{% endblock %}
+{% block body_class %}{% endblock %}
 
-{% block subnav %}
-    {% if user.is_authenticated %}
-        {% include "profiles/_profiles_subnav.html" %}
-    {% else %}
-        &nbsp;
-    {% endif %}
-{% endblock %}
+{% block head_title %}{% trans "All Users" %}{% endblock %}
 
 {% block body %}
     <header class="jumbotron subhead" id="overview">
         <h1>{% trans "All Users" %}</h1>
         <p class="lead">{% trans "Here is the awesome community building NewCo." %}</p>
     </header>
-    
-    {% autopaginate profiles %}
+
     <div class="row" id="profiles_list1">
-    {% for profile in profiles %}
-        {% include "profiles/_profile_item.html" %}
-    {% endfor %}
+        {% for profile in profiles %}{% include "profiles/_profile_item.html" %}{% endfor %}
     </div>
-    {% paginate %}
+    {% if is_paginated %}{% paginate %}{% endif %}
 {% endblock %}
