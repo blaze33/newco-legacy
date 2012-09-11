@@ -26,6 +26,9 @@ from utils.asktools import process_asking
 from utils.followtools import process_following
 from utils.votingtools import process_voting as _process_voting
 from utils.tools import get_query, load_object
+from utils.apiservices import search_images
+import json
+from content.transition import add_images, get_album, sync_products
 
 app_name = 'items'
 
@@ -147,8 +150,18 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return self.render_to_response(self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        if self.model == Item:
+            add_images(request, **kwargs)
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentUpdateView, self).get_context_data(**kwargs)
+        if self.model == Item:
+            album = get_album(self.object)
+            images = search_images(self.object.name)
+            context.update({'img_album': json.dumps(album),
+                            'img_search': json.dumps(images)})
+        return context
 
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
@@ -233,6 +246,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     "store_prods_by_ean": store_prods_by_ean,
                     "cheapest_prod": cheapest_prod
                 })
+
+            new_item = sync_products(Item, self.object)
+            albums = new_item.successors.filter(data__contains={'class': 'image_set', 'name': 'main album'})
+            if albums:
+                # This is a way to order by values of an hstore key
+                images = albums[0].successors.all() \
+                    .extra(select={"order": "content_relation.data -> 'order'"}, order_by=['order', ])
+                context.update({'album': images})
+
         elif self.model == Question:
             question = context.pop("question")
             if "answer" in self.request.POST:

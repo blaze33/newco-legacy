@@ -1,0 +1,26 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load ifsetting_tag %}
+{% load account_tags %}
+
+{% block head_title %}{% trans "Products" %}{% endblock %}
+
+{% block body %}
+
+<h1>{% block form_header %}Add something new to talk about:{% endblock %}</h1>
+<br />
+
+<form action="." method="post">{% csrf_token %}
+{{ form.as_p }}
+<button class="btn" id="add_field"><icon class="icon-plus"></icon> Add a field</button>
+<input class="btn" type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+
+{% block extra_script %}
+    {{  block.super  }}
+    {{  form.media  }}
+{% endblock %}
