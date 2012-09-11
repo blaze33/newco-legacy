@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 10:26+0200\n"
+"POT-Creation-Date: 2012-09-11 13:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Contribution center"
 msgstr ""
 
-#: views.py:18
+#: views.py:18 templates/dashboard/_subnav.html:20
 msgid "Teamwork"
 msgstr ""
 
@@ -41,11 +41,11 @@ msgstr ""
 msgid "All your contributions"
 msgstr ""
 
-#: views.py:21
+#: views.py:21 templates/dashboard/_subnav.html:29
 msgid "Shopping notes"
 msgstr ""
 
-#: views.py:22
+#: views.py:22 templates/dashboard/_subnav.html:31
 msgid "Purchase history"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "Your latest contributions"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:11
-msgid "Monitor all that concerns you !"
+msgid "Monitor all that concerns you!"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:5
@@ -81,6 +81,10 @@ msgstr ""
 msgid "If you want to use your time and knowledge wisely, that's here!"
 msgstr ""
 
+#: templates/dashboard/_subnav.html:20
+msgid "Don't bother me, I'm working on it!"
+msgstr ""
+
 #: templates/dashboard/_subnav.html:22
 msgid "'Drafts' contains your un-published contributions"
 msgstr ""
@@ -93,20 +97,24 @@ msgstr ""
 msgid "Shopping"
 msgstr ""
 
+#: templates/dashboard/_subnav.html:29
+msgid "Available soon!"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:31
+msgid "We are working on it!"
+msgstr ""
+
 #: templates/dashboard/_subnav.html:35
 msgid "Profiles"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:38
+#: templates/dashboard/_subnav.html:38 templates/dashboard/_subnav.html:40
 msgid "Exactly as others see it! Except the 'edit' button :P"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:40
 msgid "User profile"
-msgstr ""
-
-#: templates/dashboard/_subnav.html:40
-msgid "Exactly as others see it ! Except the 'edit' button :P"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:43
@@ -144,17 +152,25 @@ msgid "Activity on your domains of skills"
 msgstr ""
 
 #: templates/dashboard/contribution.html:12
-msgid "Latest activity on your skills tags... Maybe you'd like to contribute"
+msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 
 #: templates/dashboard/draft.html:5
-msgid "Keep here your drafts: contributions you don't want to publish yet"
+msgid "Keep here your drafts: contributions you don't want to publish (yet)"
 msgstr ""
 
 #: templates/dashboard/home.html:5
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
+msgstr ""
+
+#: templates/dashboard/home.html:16
+#, python-format
+msgid ""
+" More tools to come on the dashboard, very very soon ;) ! ... If you have "
+"any idea of how to improve this page, please %(link_1)stell it to us"
+"%(link_2)s, we can't wait to read yours !"
 msgstr ""
 
 #: templates/dashboard/purchase.html:11

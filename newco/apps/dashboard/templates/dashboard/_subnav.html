@@ -17,7 +17,7 @@
             <li class="nav-header">{% trans "Contributing" %}</li>
             <li{% if page == "contribution" %} class="active"{% endif %}><a href="{% url 'dash' 'contribution' %}" rel="tooltip-right" title="{% trans "If you want to use your time and knowledge wisely, that's here!" %}">{% trans "Contribution center" %}</a></li>
 
-            <li{% if page == "collaboration" %} class="active"{% endif %}><a href="#{#{% url 'dash' 'collaboration' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% blocktrans %}Don't bother me, I'm working on it!{% endblocktrans %}">{% trans "Collaborations / Teamwork" %}</a></li>
+            <li{% if page == "collaboration" %} class="active"{% endif %}><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% blocktrans %}Don't bother me, I'm working on it!{% endblocktrans %}">{% trans "Teamwork" %}</a></li>
 
             <li{% if page == "draft" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "'Drafts' contains your un-published contributions" %}" href="{% url 'dash' 'draft' %}">{% trans "Drafts" %}</a></li>
 
@@ -26,9 +26,9 @@
 
             <li class="divider"></li>
             <li class="nav-header">{% trans "Shopping" %}</li>
-            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a href="#{#{% url 'dash' 'shopping' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "Available soon !" %}">{% trans "Shopping notes" %}</a></li>
+            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "Available soon!" %}">{% trans "Shopping notes" %}</a></li>
 
-            <li{% if page == "purchase" %} class="active"{% endif %}><a href="#{#{% url 'dash' 'purchase' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "We are working on it !" %}">{% trans "Purchase history" %}</a></li>
+            <li{% if page == "purchase" %} class="active"{% endif %}><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "We are working on it!" %}">{% trans "Purchase history" %}</a></li>
             <li class="divider"></li>
         {% endif %}
 

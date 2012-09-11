@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 10:30+0200\n"
-"PO-Revision-Date: 2012-09-11 11:35\n"
+"POT-Creation-Date: 2012-09-11 13:33+0200\n"
+"PO-Revision-Date: 2012-09-11 13:39\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,13 +25,13 @@ msgstr "Tableau de bord"
 
 #: views.py:16 views.py:74 templates/dashboard/_subnav.html:14
 msgid "Your newsfeed"
-msgstr "Votre newsfeed"
+msgstr "Votre flux"
 
 #: views.py:17 views.py:83 templates/dashboard/_subnav.html:18
 msgid "Contribution center"
 msgstr "Centre de contributions"
 
-#: views.py:18
+#: views.py:18 templates/dashboard/_subnav.html:20
 msgid "Teamwork"
 msgstr "Travail en équipe"
 
@@ -43,11 +43,11 @@ msgstr "Brouillons"
 msgid "All your contributions"
 msgstr "Toutes vos contributions"
 
-#: views.py:21
+#: views.py:21 templates/dashboard/_subnav.html:29
 msgid "Shopping notes"
 msgstr "Notes de shopping"
 
-#: views.py:22
+#: views.py:22 templates/dashboard/_subnav.html:31
 msgid "Purchase history"
 msgstr "Historique d'achat"
 
@@ -85,6 +85,10 @@ msgstr ""
 "Si vous voulez utiliser votre temps et vos connaissances intelligemment, "
 "c'est ici!"
 
+#: templates/dashboard/_subnav.html:20
+msgid "Don't bother me, I'm working on it!"
+msgstr "Ne me dérangez pas, j'y travaille !"
+
 #: templates/dashboard/_subnav.html:22
 msgid "'Drafts' contains your un-published contributions"
 msgstr "'Brouillons' contient vos contributions non-publiées"
@@ -96,6 +100,14 @@ msgstr "Où aller pour trouver n'importe laquelle de vos contributions"
 #: templates/dashboard/_subnav.html:28
 msgid "Shopping"
 msgstr "Shopping"
+
+#: templates/dashboard/_subnav.html:29
+msgid "Available soon!"
+msgstr "Bientôt disponible !"
+
+#: templates/dashboard/_subnav.html:31
+msgid "We are working on it!"
+msgstr "On y travaille !"
 
 #: templates/dashboard/_subnav.html:35
 msgid "Profiles"
@@ -150,13 +162,13 @@ msgid "Activity on your domains of skills"
 msgstr "Activité sur vos domaines de compétences"
 
 #: templates/dashboard/contribution.html:12
-msgid "Latest activity on your skills tags... Maybe you'd like to contribute"
+msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 "Dernière activité sur vos tags de compétences... Vous voulez peut être "
 "contribuer ?"
 
 #: templates/dashboard/draft.html:5
-msgid "Keep here your drafts: contributions you don't want to publish yet"
+msgid "Keep here your drafts: contributions you don't want to publish (yet)"
 msgstr ""
 "Gardez ici vos brouillons: contributions que vous ne voulez pas (encore) "
 "publier"
@@ -166,8 +178,19 @@ msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
 msgstr ""
-"Nous mettons à votre disposition tout ce qui vous concerne ici. Si vous "
-"n'avez qu'un passage rapide à faire sur NewCo"
+"Nous mettons à votre disposition sur cette page tout ce qui vous concerne. "
+"Si vous n'avez qu'un passage rapide à faire sur NewCo"
+
+#: templates/dashboard/home.html:16
+#, python-format
+msgid ""
+" More tools to come on the dashboard, very very soon ;) ! ... If you have "
+"any idea of how to improve this page, please %(link_1)stell it to "
+"us%(link_2)s, we can't wait to read yours !"
+msgstr ""
+"Plus d'outils sur le tableau de bord très bientôt ;) !... Si vous avez des "
+"idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
+"on a hâte de le lire !"
 
 #: templates/dashboard/purchase.html:11
 msgid "Search in all my purchases"
