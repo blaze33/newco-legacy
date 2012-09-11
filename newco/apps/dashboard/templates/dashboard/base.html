@@ -24,15 +24,14 @@
 {% block body %}
     <header class="jumbotron subhead" id="overview">
         <div class="row">
-            <div class="span8"><h1>
-                {% block title %}{{ page_name }}{% endblock %}</h1>
+            <div class="span8">
+                <h1>{% block title %}{{ page_name }}{% endblock %}</h1>
                 <br>
                 <p class="lead muted">{% block subtitle %}{% endblock %}</p>
             </div>
             <div class="span2 pull-right">{% include "profiles/_profile_item.html" with profile=my_profile %}</div>
-            {# <p>Following: {{ fwees.all.count }} ; Followers: {{ fwers.count }}</p> #}
         </div>
-        <hr style="position: relative; top: -15px;">
+        <hr>
     </header>
 
     {% block dashboard %}{% endblock %}

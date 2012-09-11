@@ -6,14 +6,10 @@
 
 {% block dashboard %}
     <div class="row" id="boxes_container">
-        {% for box_key, box in boxes_dict.items %}
-            {% include "dashboard/_box.html" with box=box %}
-        {% endfor %}
+        {% for key, box in boxes.items %}{% include "dashboard/_box.html" with box=box %}{% endfor %}
     </div>
-
     <br>
-
-    <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come on the dashboard, very very soon ;) ! ... If you have any idea of how to improve this page, please {{ link_1 }}tell it to us{{ link_2 }}, we can't wait to read yours !{% endblocktrans %}</p>
+    <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
 {% endblock %}
 
 {% block extra_body_base %}

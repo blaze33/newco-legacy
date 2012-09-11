@@ -70,16 +70,11 @@
     </div>
 
     <div class="offset1 span3">
-
-
-
         <div class="row well well-small">
             <h3>{% trans "Related Products" %}:</h3>
             <br>
             <div id="thumbnails_list">{% for item in question.items.all %}
-            
                 {% include "profiles/_thumbnail_frame.html" with item=item only %}
-        
             {% endfor %}</div>
         </div>
 
@@ -87,7 +82,7 @@
 
         {% for title, content_list in related_questions.iteritems %}
             {% if content_list %}<div class="row well">
-                <h3>{{ title }}:</h3>
+                <h3>{{ title }}</h3>
                 <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
             </div>{% endif %}
         {% endfor %}

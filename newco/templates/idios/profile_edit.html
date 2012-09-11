@@ -5,17 +5,18 @@
 
 {% block extra_head_base %}
     {{ block.super }}
+    {{ form.media.css }}
+    {# Can't load the js in extra_script, shitty package #}
     <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-    {{ form.media }}
+    {{ form.media.js }}
 {% endblock %}
 
 {% block head_title %}{% trans "Edit profile" %}{% endblock %}
 
 {% block body %}
-    <header class="jumbotron subhead" id="overview">
-        <h1>{% trans "Edit profile" %}</h1>
-    </header>
-
-    {% include "idios/_profile_form.html" %}
+    <div class ="span5">
+        <legend>{% trans "Edit profile" %}</legend>
+        {% include "idios/_profile_form.html" %}
+    </div>
 {% endblock %}

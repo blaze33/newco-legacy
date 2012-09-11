@@ -11,7 +11,7 @@
         <h3>{% trans "Activity on your domains of skills" %}:
             <br><small>{% trans "Latest activity on your skills tags... Maybe you'd like to contribute?" %}</small></h3>
             <hr>
-        {% include "profiles/_profile_content_list.html" with contents=object_list %}
+        {% include "profiles/_profile_content_list.html" with contents=object_list display="text" %}
     </div>
 
 {% endblock %}

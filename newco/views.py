@@ -7,7 +7,7 @@ from items.models import Item, Content
 
 class HomepageView(ListView):
 
-    paginate_by = 20
+    paginate_by = 14
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():

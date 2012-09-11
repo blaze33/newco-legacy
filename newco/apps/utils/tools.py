@@ -20,15 +20,15 @@ from items.models import Item
 from profiles.models import Profile
 
 PARAMS = {
-    Item._meta.module_name: {
+    "%s.%s" % (Item.__module__, Item._meta.object_name): {
         "class": Item, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
-    Profile._meta.module_name: {
+    "%s.%s" % (Profile.__module__, Profile._meta.object_name): {
         "class": Profile, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
-    Tag._meta.module_name: {
+    "%s.%s" % (Tag.__module__, Tag._meta.object_name): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
@@ -137,17 +137,17 @@ def update_redis_db(sender, request, user, **kwargs):
 
 @receiver(post_save)
 def redis_post_save(sender, instance=None, raw=False, **kwargs):
-    mod_name = instance._meta.module_name
-    if mod_name in PARAMS:
+    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    if key in PARAMS:
         engine = load_redis_engine()
         if engine:
-            value = PARAMS[mod_name]
+            value = PARAMS.get(key)
 
             obj_id = instance.__getattribute__(value["pk"])
             title = instance.__getattribute__(value["title_field"])
             title = unicodedata.normalize('NFKD', title).encode('utf-8',
                                                                 'ignore')
-            data = {"class": mod_name, "title": title}
+            data = {"class": key, "title": title}
             for field in value["recorded_fields"]:
                 data.update({field: unicode(instance.__getattribute__(field))})
             ctype = ContentType.objects.get_for_model(instance)

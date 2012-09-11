@@ -9,7 +9,7 @@
         <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>
-            <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "View my profile" %}</b> </a></li>
+            <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "My profile" %}</b> </a></li>
             <li><a href="{% url 'account_settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
             {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
                 <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
@@ -34,7 +34,7 @@
         <ul class="dropdown-menu">
             <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
             <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
-            <li><a rel="tooltip-left" title="{% blocktrans %}You can try to click... But it won't work! Ah ah, we're still on it ;) {% endblocktrans %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
+            <li><a rel="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
         </ul>
     </li>
 </ul></div>

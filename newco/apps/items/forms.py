@@ -58,6 +58,7 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     create = False
+    no_results = _("No results matched")
 
     class Meta:
         model = Question

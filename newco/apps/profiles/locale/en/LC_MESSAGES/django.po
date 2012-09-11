@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:09+0200\n"
+"POT-Creation-Date: 2012-09-12 00:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,59 +97,68 @@ msgstr ""
 msgid "Search user"
 msgstr ""
 
-#: templates/profiles/content_display/_answer.html:30
+#: templates/profiles/content_display/_answer.html:9
 #, python-format
-msgid "<a href=\"%(url)s\"%(color)s>answered</a> a question about"
+msgid "<a href=\"%(url)s\">answered</a> a question about"
 msgstr ""
 
-#: templates/profiles/content_display/_answer.html:35
+#: templates/profiles/content_display/_answer.html:9
+msgid ":"
+msgstr ""
+
+#: templates/profiles/content_display/_answer.html:19
+#, python-format
+msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
+msgstr ""
+
+#: templates/profiles/content_display/_answer.html:22
 msgid "answered a question about"
 msgstr ""
 
-#: templates/profiles/content_display/_answer.html:39
-#: templates/profiles/content_display/_question.html:35
+#: templates/profiles/content_display/_answer.html:26
+#: templates/profiles/content_display/_question.html:24
 msgid "Q:"
 msgstr ""
 
-#: templates/profiles/content_display/_answer.html:45
+#: templates/profiles/content_display/_answer.html:32
 msgid "A:"
 msgstr ""
 
-#: templates/profiles/content_display/_answer.html:57
+#: templates/profiles/content_display/_answer.html:44
 msgid "Add an answer"
 msgstr ""
 
-#: templates/profiles/content_display/_feature.html:23
+#: templates/profiles/content_display/_feature.html:16
 #, python-format
-msgid "suggested a <a href=\"%(url)s\" %(color)s>feature</a> on"
+msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
 msgstr ""
 
-#: templates/profiles/content_display/_feature.html:28
+#: templates/profiles/content_display/_feature.html:19
 msgid "suggested a feature on"
 msgstr ""
 
-#: templates/profiles/content_display/_link.html:23
+#: templates/profiles/content_display/_link.html:16
 #, python-format
-msgid "posted a <a href=\"%(url)s\"%(color)s>link</a> about"
+msgid "posted a <a href=\"%(url)s\" class=\"black\">link</a> about"
 msgstr ""
 
-#: templates/profiles/content_display/_link.html:28
+#: templates/profiles/content_display/_link.html:19
 msgid "posted a link about"
 msgstr ""
 
-#: templates/profiles/content_display/_link.html:33
+#: templates/profiles/content_display/_link.html:24
 msgid "L:"
 msgstr ""
 
-#: templates/profiles/content_display/_question.html:25
+#: templates/profiles/content_display/_question.html:16
 #, python-format
-msgid "asked a <a href=\"%(url)s\"%(color)s>question</a> about"
+msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
 msgstr ""
 
-#: templates/profiles/content_display/_question.html:30
+#: templates/profiles/content_display/_question.html:19
 msgid "asked a question about"
 msgstr ""
 
-#: templates/profiles/content_display/_question.html:45
+#: templates/profiles/content_display/_question.html:34
 msgid "Answer this question"
 msgstr ""
