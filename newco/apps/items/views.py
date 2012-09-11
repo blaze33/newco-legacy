@@ -150,6 +150,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return self.render_to_response(self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if self.model == Item:
             add_images(request, **kwargs)
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
