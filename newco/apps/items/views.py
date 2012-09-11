@@ -47,7 +47,7 @@ class ContentFormMixin(object):
 
     def get(self, request, *args, **kwargs):
         if self.form_class:
-            form = self.form_class(**{'request': request})
+            form = self.form_class(**{"request": request})
         else:
             form_class = self.get_form_class()
             form = self.get_form(form_class)

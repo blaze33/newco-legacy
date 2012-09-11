@@ -84,6 +84,7 @@ django-follow==0.6
 
 ## Autocomplete app
 django-autocomplete-light==1.0.11
+django-chosen==0.1
 
 ## Redis + complete
 redis==2.6.2
