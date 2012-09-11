@@ -6,12 +6,14 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from items.models import Content, Item
 from profiles.models import Profile
 from profiles.views import ProcessProfileSearchView
 from utils.followtools import process_following
 from utils.tools import load_object
+from follow.models import Follow
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
@@ -109,16 +111,33 @@ class DashboardView(ListView, ProcessProfileSearchView):
                 "page_url": reverse("dash", args=["all"]),
             })
             context.update({"boxes_list": boxes_list})
-
+            
         context.update({
             "my_profile": Profile.objects.get(user=self.user),
             "data_source_profile": Profile.objects.get_all_names(),
             "page": self.page,
             "page_name": self.page_name,
-            "profile_list_sorted": Profile.objects.order_by("?")[:2],
-            "item_list_sorted": Item.objects.order_by("?")[:1],
+            #"profile_list_sorted": Profile.objects.order_by("?")[:2],
+            #"item_list_sorted": Item.objects.order_by("?")[:1],
         })
-
+        #Build "Who to follow" List
+        obj_fwed = Follow.objects.filter(user=self.user)
+        fwees_ids = obj_fwed.values_list("target_user_id", flat=True)
+        fwees_items_ids = obj_fwed.values_list("target_item_id", flat=True)
+        fwees=list(Profile.objects.filter(pk__in=fwees_ids))
+        non_fwees=Profile.objects.filter(~Q(user__in=fwees))
+        fwees_items=list(Item.objects.filter(pk__in=fwees_items_ids))
+        non_fwees_items=Item.objects.filter(~Q(name__in=fwees_items))
+        
+        
+        context.update({
+            "profile_list_sorted": non_fwees.order_by('?')[:2],
+            "item_list_sorted": non_fwees_items.order_by('?')[:1],
+            "fwees_items": fwees_items,
+            "fwees_items_ids": fwees_items_ids,
+            "obj_fwed": obj_fwed,
+        })
+        
         return context
     
     @method_decorator(login_required)
@@ -127,3 +146,4 @@ class DashboardView(ListView, ProcessProfileSearchView):
             obj_followed = load_object(request)
             success_url = obj_followed.get_absolute_url()
             return process_following(request, obj_followed, success_url)
+        
