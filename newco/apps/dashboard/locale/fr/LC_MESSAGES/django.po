@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:44+0200\n"
-"PO-Revision-Date: 2012-09-11 18:46\n"
+"POT-Creation-Date: 2012-09-11 19:00+0200\n"
+"PO-Revision-Date: 2012-09-11 19:01\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr " :"
 msgid "Monitor all that concerns you!"
 msgstr "Gardez un œil sur tout ce qui vous concerne !"
 
-#: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:6
+#: templates/dashboard/_subnav.html:14
 msgid "Activity from what you follow"
 msgstr "Activité de ce que vous suivez"
 
@@ -175,10 +175,14 @@ msgstr ""
 "contribuer ?"
 
 #: templates/dashboard/draft.html:5
-msgid "Keep here your drafts: contributions you don't want to publish (yet)"
+msgid "Keep here your drafts: contributions you don't want to publish (yet)."
 msgstr ""
-"Gardez ici vos brouillons: contributions que vous ne voulez pas (encore) "
-"publier"
+"Gardez ici vos brouillons : contributions que vous ne voulez pas (encore) "
+"publier."
+
+#: templates/dashboard/feed.html:6
+msgid "Activity from what you follow."
+msgstr "Activité de ce que vous suivez."
 
 #: templates/dashboard/feed.html:14
 msgid "Who to follow?"
@@ -198,18 +202,18 @@ msgid ""
 "have only a 'quick check' to do on NewCo, this page is the one!"
 msgstr ""
 "Nous mettons à votre disposition sur cette page tout ce qui vous concerne. "
-"Si vous n'avez qu'un passage rapide à faire sur NewCo"
+"Si vous n'avez qu'un passage rapide à faire sur NewCo, tout est ici."
 
 #: templates/dashboard/home.html:12
 #, python-format
 msgid ""
-" More tools to come on the dashboard, very very soon ;) ! ... If you have "
-"any idea of how to improve this page, please %(link_1)stell it to "
-"us%(link_2)s, we can't wait to read yours !"
+" More tools to come very soon on the dashboard! If you have some ideas about"
+" how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait"
+" to read them!"
 msgstr ""
-"Plus d'outils sur le tableau de bord très bientôt ;) !... Si vous avez des "
-"idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
-"on a hâte de le lire !"
+"Très bientôt plus d'outils sur le tableau de bord ! Si vous avez des idées "
+"pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, nous "
+"avons hâte de les découvrir !"
 
 #: templates/dashboard/purchase.html:11
 msgid "Search in all my purchases"
