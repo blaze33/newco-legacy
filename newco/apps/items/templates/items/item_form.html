@@ -25,8 +25,6 @@
     <div class="row">
         <div class="span4">
             {{ form|as_bootstrap }}
-            <br>
-            <button type="submit" class="btn" name="create">{% trans "Submit" %}</button>
 
             {% if item %}{% if item.affiliationitem_set.all %}<br><br>
                 <h3>{% trans "Linked Products" %}</h3>
