@@ -28,5 +28,8 @@
 {% block extra_body_base %}
     {{ block.super }}
     {{ form.media.js }}
-    <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({allow_single_deselect:true}); </script>
+    <script type="text/javascript">
+        $(".chzn-select").chosen({no_results_text: "{{ form.no_results }}"});
+        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+    </script>
 {% endblock %}
