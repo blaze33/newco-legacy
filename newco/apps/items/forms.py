@@ -46,21 +46,7 @@ class ItemForm(ModelForm):
 
     def link_aff(self, item):
         if hasattr(self, "request"):
-            if "link_aff" in self.request.POST:
-                aff_cat_ids = self.request.POST.getlist("link_aff")
-                for aff_cat_id in aff_cat_ids:
-                    try:
-                        aff_cat = AffiliationItemCatalog.objects.get(
-                                                                id=aff_cat_id)
-                    except ObjectDoesNotExist:
-                        pass
-                    else:
-                        aff_item, c = AffiliationItem.objects.get_or_create(
-                                item=item, store=aff_cat.store,
-                                object_id=aff_cat.object_id
-                        )
-                        aff_item.copy_from_affcatalog(aff_cat)
-                        aff_item.save()
+            _link_aff(self.request, item)
 
     def stores_search(self):
         self.errors.clear()
@@ -68,21 +54,7 @@ class ItemForm(ModelForm):
         self.product_list_by_store = stores_product_search(keyword)
 
     def reload_current_search(self):
-        self.product_list_by_store = dict()
-        for key in self.request.POST.keys():
-            if "current_search_" in key:
-                store = unicode.replace(key, "current_search_", "")
-                aff_cat_ids = self.request.POST.getlist(key)
-                product_list = list()
-                for aff_cat_id in aff_cat_ids:
-                    try:
-                        aff_cat = AffiliationItemCatalog.objects.get(
-                                                                id=aff_cat_id)
-                    except ObjectDoesNotExist:
-                        pass
-                    else:
-                        product_list.append(aff_cat)
-                self.product_list_by_store.update({store: product_list})
+        self.product_list_by_store = _reload_current_search(self)
 
 
 class QuestionForm(ModelForm):
@@ -261,3 +233,40 @@ class FeatureForm(ModelForm):
             return feature
         else:
             return super(FeatureForm, self).save(commit)
+
+
+def _link_aff(request, item):
+    if "link_aff" in request.POST:
+        aff_cat_ids = request.POST.getlist("link_aff")
+        for aff_cat_id in aff_cat_ids:
+            try:
+                aff_cat = AffiliationItemCatalog.objects.get(
+                                                        id=aff_cat_id)
+            except ObjectDoesNotExist:
+                pass
+            else:
+                aff_item, c = AffiliationItem.objects.get_or_create(
+                        item=item, store=aff_cat.store,
+                        object_id=aff_cat.object_id
+                )
+                aff_item.copy_from_affcatalog(aff_cat)
+                aff_item.save()
+
+
+def _reload_current_search(item_form):
+    product_list_by_store = dict()
+    for key in item_form.request.POST.keys():
+        if "current_search_" in key:
+            store = unicode.replace(key, "current_search_", "")
+            aff_cat_ids = item_form.request.POST.getlist(key)
+            product_list = list()
+            for aff_cat_id in aff_cat_ids:
+                try:
+                    aff_cat = AffiliationItemCatalog.objects.get(
+                                                            id=aff_cat_id)
+                except ObjectDoesNotExist:
+                    pass
+                else:
+                    product_list.append(aff_cat)
+            product_list_by_store.update({store: product_list})
+    return product_list_by_store
