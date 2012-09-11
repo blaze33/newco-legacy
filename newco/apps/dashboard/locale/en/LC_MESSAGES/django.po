@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-11 10:26+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views.py:15 templates/dashboard/_subnav.html:11
+msgid "Dashboard"
+msgstr ""
+
+#: views.py:16 views.py:74 templates/dashboard/_subnav.html:14
+msgid "Your newsfeed"
+msgstr ""
+
+#: views.py:17 views.py:83 templates/dashboard/_subnav.html:18
+msgid "Contribution center"
+msgstr ""
+
+#: views.py:18
+msgid "Teamwork"
+msgstr ""
+
+#: views.py:19 views.py:93 templates/dashboard/_subnav.html:22
+msgid "Drafts"
+msgstr ""
+
+#: views.py:20 views.py:102 templates/dashboard/_subnav.html:25
+msgid "All your contributions"
+msgstr ""
+
+#: views.py:21
+msgid "Shopping notes"
+msgstr ""
+
+#: views.py:22
+msgid "Purchase history"
+msgstr ""
+
+#: views.py:75
+msgid "Mini feed from what you follow"
+msgstr ""
+
+#: views.py:84
+msgid "Latest activity on your skills tags..."
+msgstr ""
+
+#: views.py:94
+msgid "Maybe you want to complete and publish some?"
+msgstr ""
+
+#: views.py:103
+msgid "Your latest contributions"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:11
+msgid "Monitor all that concerns you !"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:5
+msgid "Activity from what you follow"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:17
+msgid "Contributing"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:18
+msgid "If you want to use your time and knowledge wisely, that's here!"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:22
+msgid "'Drafts' contains your un-published contributions"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:25
+msgid "Where to go to find any of your input"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:28
+msgid "Shopping"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:35
+msgid "Profiles"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:38
+msgid "Exactly as others see it! Except the 'edit' button :P"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:40
+msgid "User profile"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:40
+msgid "Exactly as others see it ! Except the 'edit' button :P"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:43
+msgid "Search user"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:46
+msgid "All Profiles"
+msgstr ""
+
+#: templates/dashboard/all.html:5
+msgid ""
+"Looking for one of your contributions? Here are the tools to help you find!"
+msgstr ""
+
+#: templates/dashboard/all.html:11
+msgid "Search in all my contributions - Not functional yet"
+msgstr ""
+
+#: templates/dashboard/base.html:21
+#, python-format
+msgid "%(username)s's dashboard | %(page_name)s"
+msgstr ""
+
+#: templates/dashboard/contribution.html:5
+msgid ""
+"Here is where we provide you with all the <a data-toggle=\"modal\" href="
+"\"#feedbackModal\" rel=\"tooltip-bottom\" title=\"We'd love to read your "
+"ideas, don't hesitate to give us a mail!\">tools</a> we have to help you "
+"contribute."
+msgstr ""
+
+#: templates/dashboard/contribution.html:11
+msgid "Activity on your domains of skills"
+msgstr ""
+
+#: templates/dashboard/contribution.html:12
+msgid "Latest activity on your skills tags... Maybe you'd like to contribute"
+msgstr ""
+
+#: templates/dashboard/draft.html:5
+msgid "Keep here your drafts: contributions you don't want to publish yet"
+msgstr ""
+
+#: templates/dashboard/home.html:5
+msgid ""
+"We provide you with all the things that concern you on this page. If you "
+"have only a 'quick check' to do on NewCo, this page is the one!"
+msgstr ""
+
+#: templates/dashboard/purchase.html:11
+msgid "Search in all my purchases"
+msgstr ""

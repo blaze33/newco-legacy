@@ -13,11 +13,11 @@ from profiles.views import ProcessProfileSearchView
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
-    "feed": _("Feed"),
+    "feed": _("Your newsfeed"),
     "contribution": _("Contribution center"),
     "collaboration": _("Teamwork"),
     "draft": _("Drafts"),
-    "all": _("All my contributions"),
+    "all": _("All your contributions"),
     "shopping": _("Shopping notes"),
     "purchase": _("Purchase history"),
 }
@@ -68,45 +68,45 @@ class DashboardView(ListView, ProcessProfileSearchView):
             all_my_contrib = Content.objects.filter(author=self.user)
             contrib_feed = Content.objects.get_related_contributions(self.user)
 
-            boxes_list = []
+            boxes_dict = {}
             # feed
-            boxes_list.append({
-                "title": _("Your feed:"),
+            boxes_dict["feed"] = {
+                "title": _("Your newsfeed"),
                 "subtitle": _("Mini feed from what you follow"),
                 "name": "feed",
                 "feed": feed.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["feed"]),
-            })
+            }
             # contrib
-            boxes_list.append({
-                "title": _("Contribution center:"),
+            boxes_dict["contrib"] = {
+                "title": _("Contribution center"),
                 "subtitle": _("Latest activity on your skills tags..." \
                                 + " Maybe you would like to contribute?"),
                 "name": "contrib",
                 "feed": contrib_feed.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["contribution"]),
-            })
+            }
             #"drafts":
-            boxes_list.append({
-                "title": _("Drafts:"),
+            boxes_dict["drafts"] = {
+                "title": _("Drafts"),
                 "subtitle": _("Maybe you want to complete and publish some?"),
                 "name": "drafts",
                 "feed": drafts.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["draft"]),
-            })
+            }
             #"all_contrib":
-            boxes_list.append({
-                "title": _("All contributions:"),
+            boxes_dict["all_my_contrib"] = {
+                "title": _("All your contributions"),
                 "subtitle": _("Your latest contributions"),
                 "name": "all_my_contrib",
                 "feed": all_my_contrib.select_subclasses()[:4],
                 "mini_feed": "True",
                 "page_url": reverse("dash", args=["all"]),
-            })
-            context.update({"boxes_list": boxes_list})
+            }
+            context.update({"boxes_dict": boxes_dict})
 
         context.update({
             "my_profile": Profile.objects.get(user=self.user),
