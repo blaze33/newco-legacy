@@ -18,6 +18,10 @@
 
     </blockquote>
 
+{% elif thumbnail %}
+
+            {% include p_link_tpl with object=content.author color_black="True" %} {% blocktrans with url=content.get_absolute_url color=' class="black"' %}posted a <a href="{{ url }}"{{ color }}>link</a> about{% endblocktrans %} {% include i_link_tpl with object=item color_black="True" %}
+
 {% else %}
 
 	<div class="row"><div class="span7">

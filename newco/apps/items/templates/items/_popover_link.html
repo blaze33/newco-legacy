@@ -18,6 +18,6 @@
 
 {% endcomment %}
 
-<span itemscope itemtype="http://schema.org/Product"><a href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a></span>
+<span itemscope itemtype="http://schema.org/Product"><a href="{{ object.get_absolute_url }}" itemprop="url"{% if color_black %} class="black"{% endif %}><span itemprop="name">{{ object }}</span></a></span>
 
 {% endspaceless %}

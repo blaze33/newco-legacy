@@ -50,9 +50,9 @@
 
       // effects for expanding and collapsing
       expandEffect: 'slideDown',
-      expandSpeed: 250,
+      expandSpeed: 350,
       collapseEffect: 'slideUp',
-      collapseSpeed: 200,
+      collapseSpeed: 300,
 
       // allow the user to re-collapse the expanded text.
       userCollapse: true,

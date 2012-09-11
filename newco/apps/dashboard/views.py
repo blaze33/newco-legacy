@@ -43,7 +43,7 @@ class DashboardView(ListView, ProcessProfileSearchView):
         else:
             self.page = kwargs.get("cat")
             self.template_name = "dashboard/" + self.page + ".html"
-            self.paginate_by = 10
+            self.paginate_by = 20
             if self.page == "feed":
                 self.queryset = Content.objects.get_feed(self.user)
             elif self.page == "contribution":

@@ -6,7 +6,7 @@
 {% load content_utils %}
 
 {% block itemlist %}
-    <div class="row" id="contents_list1">{% for item in item_list %}<div class="content-item thumbnail">
+    <div class="row" id="thumbnails_list">{% for item in item_list %}<div class="content-item thumbnail">
             <div class="name"><a href="{{ item.get_absolute_url }}"><img src="http://lorempixel.com/260/260/technics/?{{ item.id }}" alt=""></a></div>
             <div class="details" style="font-family:helvetica;font-size:11px">
                 <a href="{{ item.get_absolute_url }}" style="font-size:12px; color:#222222">{{ item.name }}</a>

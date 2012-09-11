@@ -58,19 +58,24 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
     <script type="text/javascript">
     function TriggerMasonry(){
-    	$('#contents_list1').masonry({
+    	$('#thumbnails_list').masonry({
 			itemSelector : '.content-item',
 	        isAnimated: true,
 	        isFitWidth: true,
+            // columnWidth: 180,
+            columnWidth: function( containerWidth ) {
+                return containerWidth / 40; // Seb: this thing is a mess: I think it's a matter of denominator 
+            },
 		});
     }
     $(document).ready(function() {
        // simple example, using all default options unless overridden globally
 	  TriggerMasonry();
+      setTimeout(TriggerMasonry,4000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
 	  $('div.expandable').expander({
 				afterExpand:function() {TriggerMasonry();},
 				//Timer to relaunch Masonry after the onCollapse event
-				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,400);
+				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
 				}
 	 	});
     });
