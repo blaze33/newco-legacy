@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 13:19+0200\n"
+"POT-Creation-Date: 2012-09-11 18:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,32 +144,32 @@ msgid ""
 "\">Sign up!</a></br>to start your new career."
 msgstr ""
 
-#: templates/homepage_base.html:7
+#: templates/homepage_base.html:12
 #, python-format
 msgid "Home: %(username)s"
 msgstr ""
 
-#: templates/homepage_base.html:11
+#: templates/homepage_base.html:16
 msgid "NewCo empowers people to buy better"
 msgstr ""
 
-#: templates/homepage_base.html:12
+#: templates/homepage_base.html:17
 msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:13
+#: templates/homepage_base.html:18
 msgid "Last Added"
 msgstr ""
 
-#: templates/homepage_base.html:14
+#: templates/homepage_base.html:19
 msgid "Community"
 msgstr ""
 
-#: templates/homepage_base.html:16
+#: templates/homepage_base.html:21
 msgid "Latest Contributions"
 msgstr ""
 
-#: templates/homepage_base.html:18
+#: templates/homepage_base.html:23
 msgid "My newsfeed"
 msgstr ""
 
@@ -177,11 +177,11 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: templates/site_base.html:85
+#: templates/site_base.html:86
 msgid "Search an item, a tag..."
 msgstr ""
 
-#: templates/site_base.html:86
+#: templates/site_base.html:87
 msgid "What are you looking for?"
 msgstr ""
 
@@ -228,11 +228,7 @@ msgstr ""
 msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile_edit.html:13
-msgid "Edit Profile"
-msgstr ""
-
-#: templates/idios/profile_edit.html:17
+#: templates/idios/profile_edit.html:13 templates/idios/profile_edit.html:17
 msgid "Edit profile"
 msgstr ""
 

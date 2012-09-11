@@ -51,7 +51,7 @@
         </div>
 
         {% if user != author and not mini_feed %}
-            <div class="row"><div class="span4 offset3"><a href='{% url item_create "answer" %}?question_id={{ content.question.id }}' class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
+            <div class="row"><div class="span4 offset3"><a href="{{ content.question.get_absolute_url }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
         {% endif %}
 
     {% endif %}

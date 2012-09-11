@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 13:33+0200\n"
+"POT-Creation-Date: 2012-09-11 18:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,59 +17,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:15 templates/dashboard/_subnav.html:11
+#: views.py:18 templates/dashboard/_subnav.html:11
 msgid "Dashboard"
 msgstr ""
 
-#: views.py:16 views.py:74 templates/dashboard/_subnav.html:14
-msgid "Your newsfeed"
+#: views.py:19
+msgid "Feed"
 msgstr ""
 
-#: views.py:17 views.py:83 templates/dashboard/_subnav.html:18
+#: views.py:20 views.py:37 templates/dashboard/_subnav.html:18
 msgid "Contribution center"
 msgstr ""
 
-#: views.py:18 templates/dashboard/_subnav.html:20
+#: views.py:21 templates/dashboard/_subnav.html:20
 msgid "Teamwork"
 msgstr ""
 
-#: views.py:19 views.py:93 templates/dashboard/_subnav.html:22
+#: views.py:22 views.py:45 templates/dashboard/_subnav.html:22
 msgid "Drafts"
 msgstr ""
 
-#: views.py:20 views.py:102 templates/dashboard/_subnav.html:25
-msgid "All your contributions"
+#: views.py:23 views.py:52 templates/dashboard/_subnav.html:25
+msgid "All my contributions"
 msgstr ""
 
-#: views.py:21 templates/dashboard/_subnav.html:29
+#: views.py:24 templates/dashboard/_subnav.html:29
 msgid "Shopping notes"
 msgstr ""
 
-#: views.py:22 templates/dashboard/_subnav.html:31
+#: views.py:25 templates/dashboard/_subnav.html:31
 msgid "Purchase history"
 msgstr ""
 
-#: views.py:75
+#: views.py:30 templates/dashboard/_subnav.html:14
+msgid "My newsfeed"
+msgstr ""
+
+#: views.py:31
 msgid "Mini feed from what you follow"
 msgstr ""
 
-#: views.py:84
-msgid "Latest activity on your skills tags..."
+#: views.py:38
+msgid ""
+"Latest activity on your skills tags... Maybe you would like to contribute?"
 msgstr ""
 
-#: views.py:94
+#: views.py:46
 msgid "Maybe you want to complete and publish some?"
 msgstr ""
 
-#: views.py:103
+#: views.py:53
 msgid "Your latest contributions"
+msgstr ""
+
+#: templates/dashboard/_box.html:6
+msgid ":"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:11
 msgid "Monitor all that concerns you!"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:5
+#: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:6
 msgid "Activity from what you follow"
 msgstr ""
 
@@ -78,15 +87,15 @@ msgid "Contributing"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:18
-msgid "If you want to use your time and knowledge wisely, that's here!"
+msgid "If you want to use your time and knowledge wisely, click here!"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:20
-msgid "Don't bother me, I'm working on it!"
+#: templates/dashboard/_subnav.html:20 templates/dashboard/_subnav.html:29
+msgid "Available soon"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:22
-msgid "'Drafts' contains your un-published contributions"
+msgid "&lsquo;Drafts&rsquo; contains your un-published contributions"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:25
@@ -95,10 +104,6 @@ msgstr ""
 
 #: templates/dashboard/_subnav.html:28
 msgid "Shopping"
-msgstr ""
-
-#: templates/dashboard/_subnav.html:29
-msgid "Available soon!"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:31
@@ -159,13 +164,25 @@ msgstr ""
 msgid "Keep here your drafts: contributions you don't want to publish (yet)"
 msgstr ""
 
+#: templates/dashboard/feed.html:14
+msgid "Who to follow?"
+msgstr ""
+
+#: templates/dashboard/feed.html:14
+msgid "View all"
+msgstr ""
+
+#: templates/dashboard/feed.html:18
+msgid "Products you may like"
+msgstr ""
+
 #: templates/dashboard/home.html:5
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
 msgstr ""
 
-#: templates/dashboard/home.html:16
+#: templates/dashboard/home.html:12
 #, python-format
 msgid ""
 " More tools to come on the dashboard, very very soon ;) ! ... If you have "

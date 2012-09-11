@@ -5,8 +5,8 @@
 {% load account_tags %}
 
 {% block extra_script %}
-{{ block.super }}
-<script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
 {% endblock %}
 
 {% block head_title %}{% user_display user as username %}{% blocktrans %}Home: {{ username }}{% endblocktrans %}{% endblock %}

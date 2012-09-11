@@ -52,28 +52,27 @@ due to bad pixel fitting of small icons.
 {% block extra_script %}
     <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
     <script type="text/javascript">
-    function TriggerMasonry(){
-    	$('#contents_list1').masonry({
-			itemSelector : '.content-item',
-	        isAnimated: true,
-	        isFitWidth: true,
-		});
-    }
-    $(document).ready(function() {
-       // simple example, using all default options unless overridden globally
-	  TriggerMasonry();
-	  $('div.expandable').expander({
-				afterExpand:function() {TriggerMasonry();},
-				//Timer to relaunch Masonry after the onCollapse event
-				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,400);
-				}
-	 	});
-    });
+        function TriggerMasonry(){
+        	$('#contents_list1').masonry({
+			    itemSelector : '.content-item',
+	            isAnimated: true,
+	            isFitWidth: true,
+		    });
+        }
+        $(document).ready(function() {
+            // simple example, using all default options unless overridden globally
+            TriggerMasonry();
+            $('div.expandable').expander({
+                afterExpand:function() {TriggerMasonry();},
+                //Timer to relaunch Masonry after the onCollapse event
+                onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,400);}
+	     	});
+        });
     </script>
 
     {% include "autocomplete_light/static.html" %}
@@ -107,13 +106,12 @@ due to bad pixel fitting of small icons.
     </script>
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#Carousel_Tag').carousel({
-          interval: 20000
-        });
-    });
-    </script>
-
+	$(document).ready(function() {
+		$('#Carousel_Tag').carousel({
+		  interval: 20000
+		});
+	});
+	</script>
 {% endblock %}
 
 {% block extra_body_base %}

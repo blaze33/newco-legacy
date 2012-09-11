@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 19:59+0200\n"
+"POT-Creation-Date: 2012-09-11 18:26+0200\n"
 "PO-Revision-Date: 2012-07-16 17:19\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,39 +19,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: models.py:22
+#: models.py:32
 msgid "name"
 msgstr "nom"
 
-#: models.py:23
+#: models.py:33
 msgid "slug"
 msgstr "slug"
 
-#: models.py:24
+#: models.py:34
 msgid "about"
 msgstr "à propos"
 
-#: models.py:25
+#: models.py:35
 msgid "location"
 msgstr "région"
 
-#: models.py:27
+#: models.py:37
 msgid "website"
 msgstr "site internet"
 
-#: models.py:30
+#: models.py:40
 msgid "skills"
 msgstr "compétences"
 
-#: models.py:31
+#: models.py:41
 msgid "The list of your main product skills"
 msgstr "La liste de vos principales compétences produit"
 
-#: models.py:36
+#: models.py:48
 msgid "profile"
 msgstr "profil"
 
-#: models.py:54
+#: models.py:66
 msgid "reputation"
 msgstr "réputation"
 
@@ -99,40 +99,40 @@ msgstr "Tous les profils"
 msgid "Search user"
 msgstr "Chercher un utilisateur"
 
-#: templates/profiles/content_display/_answer.html:6
+#: templates/profiles/content_display/_answer.html:32
 msgid "answered a question about"
 msgstr "a répondu à une question à propos de"
 
-#: templates/profiles/content_display/_answer.html:10
-#: templates/profiles/content_display/_question.html:10
+#: templates/profiles/content_display/_answer.html:36
+#: templates/profiles/content_display/_question.html:31
 msgid "Q:"
 msgstr "Q :"
 
-#: templates/profiles/content_display/_answer.html:15
+#: templates/profiles/content_display/_answer.html:42
 msgid "A:"
 msgstr "R :"
 
-#: templates/profiles/content_display/_answer.html:26
+#: templates/profiles/content_display/_answer.html:54
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
-#: templates/profiles/content_display/_feature.html:5
+#: templates/profiles/content_display/_feature.html:24
 msgid "suggested a feature on"
 msgstr "a suggéré une caractéristique sur"
 
-#: templates/profiles/content_display/_link.html:5
+#: templates/profiles/content_display/_link.html:24
 msgid "posted a link about"
 msgstr "a posté un lien à propos de"
 
-#: templates/profiles/content_display/_link.html:10
+#: templates/profiles/content_display/_link.html:29
 msgid "L:"
 msgstr "L :"
 
-#: templates/profiles/content_display/_question.html:5
+#: templates/profiles/content_display/_question.html:26
 msgid "asked a question about"
 msgstr "a posé une question à propos de"
 
-#: templates/profiles/content_display/_question.html:20
+#: templates/profiles/content_display/_question.html:41
 msgid "Answer this question"
 msgstr "Répondre à cette question"
 

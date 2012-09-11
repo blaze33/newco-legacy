@@ -1,45 +1,26 @@
 {% extends "dashboard/base.html" %}
 
+{% load url from future %}
 {% load i18n %}
-{% load pagination_tags %}
-{% load follow_tags %}
-{% load content_utils %}
 
 {% block subtitle %}{% trans "Activity from what you follow" %}{% endblock %}
 
 {% block dashboard %}
-{% url profile_list as profile_list_url %}
-{% url home as home_url %}
-<div class="row">
-    <div class="span7">
-        {% include "profiles/_profile_content_list.html" with contents=object_list %}
+{% url "profile_list" as profile_list_url %}
+    <div class="row">
+        <div class="span7">{% include "profiles/_profile_content_list.html" with contents=object_list %}</div>
+        <div class="offset1 span2" align="left">
+            <div class="row well well-small">
+                <h5>{% trans "Who to follow?" %} (<a href="{% url 'profile_list' %}">{% trans "View all" %}</a>)</h5>
+                <div id="profiles_list2">{% for profile in wtf.profiles %}{% include "dashboard/_thumbnail_profile.html" with profile=profile %}{% endfor %}</div>
+            </div>
+            <div class="row well well-small">
+                <h5>{% trans "Products you may like" %}</h5>
+                <div>{% for item in wtf.items %}<div class="product-item-small thumbnail">
+                    <div class="name"><a href="{{ item.get_absolute_url }}"><h5>{{ item.name|truncatechars:15 }}</h5></a></div>
+                    <div class="details">{% include "follow/form.html" with object=item %}</div>
+                </div>{% endfor %}</div>
+            </div>
+        </div>
     </div>
-	<div class="span2" align="left" style="margin-left: 50px">
-    	<div class="row"style="background-color: #F9F9F9; border-radius: 5px;">
-		  <h5>Who to follow  . . .  <a href="{{ profile_list_url }}"> View all</a></h5>
-		  <div id="profiles_list2">
-		    {% for profile in profile_list_sorted %}
-		    {% include "dashboard/_profile_item_feed.html" %}
-		    {% endfor %}
-		  </div>
-		</div>
-		<br>
-		<div class="row"style="background-color: #F9F9F9; border-radius: 5px;">
-		  <h5>Products you may like</h5>
-		  <div>
-		    {% for item in item_list_sorted %}
-				<div class="product-item-small thumbnail">
-				    <div class="name">
-				        <a href="{{ item.get_absolute_url }}"><h5>
-				        {{ item.name }}</h5></a>
-				    </div>
-				    <div class="details">
-				    	{% follow_form item %}
-				    </div>
-				</div>
-		    {% endfor %}
-		  </div>
-		</div>
-    </div>
-</div>
 {% endblock %}
