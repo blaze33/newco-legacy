@@ -42,8 +42,6 @@ class ItemForm(ModelForm):
 
         return item
 
-    # TODO: move the body of the below function somewhere else
-
     def link_aff(self, item):
         if hasattr(self, "request"):
             _link_aff(self.request, item)
