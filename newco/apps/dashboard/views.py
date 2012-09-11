@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 
 from django.db.models import Q
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 
@@ -53,7 +53,7 @@ BOXES = {
         "subtitle": _("Your latest contributions"),
         "name": "all_my_contrib",
         "mini_feed": "True",
-        "page_url": reverse_lazy    ("dash", args=["all"]),
+        "page_url": reverse_lazy("dash", args=["all"]),
     },
 }
 
