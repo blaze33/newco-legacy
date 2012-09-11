@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 19:59+0200\n"
-"PO-Revision-Date: 2012-09-06 20:10\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-09-11 13:19+0200\n"
+"PO-Revision-Date: 2012-09-11 13:28\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,29 +42,60 @@ msgstr "Revenir en arrière"
 msgid "You can't delete this content."
 msgstr "Vous n'avez pas la permission pour supprimer ce contenu."
 
-#: templates/_account_bar.html:18
+#: templates/_account_bar.html:11
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: templates/_account_bar.html:12
+msgid "View my profile"
+msgstr "Voir mon profil"
+
+#: templates/_account_bar.html:13
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/_account_bar.html:20
+#: templates/_account_bar.html:15
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/_account_bar.html:23
+#: templates/_account_bar.html:18
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:23
 msgid "Log in"
 msgstr "Se connecter"
 
-#: templates/_account_bar.html:29
+#: templates/_account_bar.html:25
 msgid "or"
 msgstr "ou"
 
-#: templates/_account_bar.html:30
+#: templates/_account_bar.html:26
 msgid "Sign up"
 msgstr "S'enregistrer"
+
+#: templates/_account_bar.html:33
+msgid "Add +"
+msgstr "Ajouter +"
+
+#: templates/_account_bar.html:35
+msgid "Add a product"
+msgstr "Ajouter un produit"
+
+#: templates/_account_bar.html:36
+msgid "Ask a question"
+msgstr "Poser une question"
+
+#: templates/_account_bar.html:37
+msgid ""
+"You can try to click... But it won't work! Ah ah, we're still on it ;) "
+msgstr ""
+"Vous pouvez essayer de cliquer mais... Ahah, ça marche pas ! On y travaille "
+";)"
+
+#: templates/_account_bar.html:37
+msgid "Add a story"
+msgstr "Ajouter un article"
 
 #: templates/_footer.html:4
 msgid "FAQ"
@@ -88,7 +119,7 @@ msgstr "Bienvenue"
 
 #: templates/homepage.html:18
 msgid "Empowering people to buy better"
-msgstr "Empowering people to buy better"
+msgstr "Vous donner le pouvoir de mieux acheter"
 
 #: templates/homepage.html:21
 msgid ""
@@ -133,7 +164,7 @@ msgstr "Accueil : %(username)s"
 
 #: templates/homepage_base.html:11
 msgid "NewCo empowers people to buy better"
-msgstr "NewCo vous donne le pouvoir pour mieux acheter"
+msgstr "NewCo vous donne le pouvoir de mieux acheter"
 
 #: templates/homepage_base.html:12
 msgid "Popular"
@@ -156,18 +187,14 @@ msgid "My newsfeed"
 msgstr "Mon flux"
 
 #: templates/site_base.html:41
-msgid "Profile"
-msgstr "Profil"
-
-#: templates/site_base.html:45
 msgid "Search"
 msgstr "Recherche"
 
-#: templates/site_base.html:86
+#: templates/site_base.html:85
 msgid "Search an item, a tag..."
 msgstr "Chercher un produit, un tag..."
 
-#: templates/site_base.html:87
+#: templates/site_base.html:86
 msgid "What are you looking for?"
 msgstr "Que cherchez-vous ?"
 
@@ -196,7 +223,7 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:36
+#: templates/idios/profile.html:28
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -204,37 +231,45 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:47
+#: templates/idios/profile.html:39
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:59
+#: templates/idios/profile.html:51
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:60
+#: templates/idios/profile.html:52
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:61
+#: templates/idios/profile.html:53
 msgid "Followers"
 msgstr "Abonnés"
 
-#: templates/idios/profile.html:62
-msgid "'Drafts' contains your un-published contributions"
-msgstr "'Brouillons' contient vos contributions non-publiées"
+#: templates/idios/profile_edit.html:13
+#, fuzzy
+msgid "Edit Profile"
+msgstr "Profil"
 
-#: templates/idios/profile.html:62
-msgid "Drafts"
-msgstr "Brouillons"
+#: templates/idios/profile_edit.html:17
+#, fuzzy
+msgid "Edit profile"
+msgstr "Profil"
 
-#: templates/idios/profiles.html:9 templates/idios/profiles.html.py:21
+#: templates/idios/profiles.html:9 templates/idios/profiles.html.py:13
 msgid "All Users"
 msgstr "Tous les utilisateurs"
 
-#: templates/idios/profiles.html:22
+#: templates/idios/profiles.html:14
 msgid "Here is the awesome community building NewCo."
-msgstr "Voici l'incroyable communauté qui alimente NewCo."
+msgstr "Voici l'incroyable communauté qui construit NewCo."
+
+#~ msgid "'Drafts' contains your un-published contributions"
+#~ msgstr "'Brouillons' contient vos contributions non-publiées"
+
+#~ msgid "Drafts"
+#~ msgstr "Brouillons"
 
 #~ msgid "Products index"
 #~ msgstr "Liste des produits"
@@ -248,14 +283,8 @@ msgstr "Voici l'incroyable communauté qui alimente NewCo."
 #~ msgid "Draft"
 #~ msgstr "Brouillons"
 
-#~ msgid "story"
-#~ msgstr "Historique"
-
 #~ msgid "Products"
 #~ msgstr "Liste des produits"
-
-#~ msgid "profile"
-#~ msgstr "Profil"
 
 #~ msgid "Products:"
 #~ msgstr "Liste des produits"

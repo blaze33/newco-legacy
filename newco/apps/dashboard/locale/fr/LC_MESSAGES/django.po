@@ -1,0 +1,200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-11 13:33+0200\n"
+"PO-Revision-Date: 2012-09-11 13:39\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Translated-Using: django-rosetta 0.6.8\n"
+
+#: views.py:15 templates/dashboard/_subnav.html:11
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: views.py:16 views.py:74 templates/dashboard/_subnav.html:14
+msgid "Your newsfeed"
+msgstr "Votre flux"
+
+#: views.py:17 views.py:83 templates/dashboard/_subnav.html:18
+msgid "Contribution center"
+msgstr "Centre de contributions"
+
+#: views.py:18 templates/dashboard/_subnav.html:20
+msgid "Teamwork"
+msgstr "Travail en équipe"
+
+#: views.py:19 views.py:93 templates/dashboard/_subnav.html:22
+msgid "Drafts"
+msgstr "Brouillons"
+
+#: views.py:20 views.py:102 templates/dashboard/_subnav.html:25
+msgid "All your contributions"
+msgstr "Toutes vos contributions"
+
+#: views.py:21 templates/dashboard/_subnav.html:29
+msgid "Shopping notes"
+msgstr "Notes de shopping"
+
+#: views.py:22 templates/dashboard/_subnav.html:31
+msgid "Purchase history"
+msgstr "Historique d'achat"
+
+#: views.py:75
+msgid "Mini feed from what you follow"
+msgstr "Mini feed de ce que vous suivez"
+
+#: views.py:84
+msgid "Latest activity on your skills tags..."
+msgstr "Dernière activité sur vos tags de compétences"
+
+#: views.py:94
+msgid "Maybe you want to complete and publish some?"
+msgstr "Vous voulez peut être en terminer et publier certains ?"
+
+#: views.py:103
+msgid "Your latest contributions"
+msgstr "Vos dernières contributions"
+
+#: templates/dashboard/_subnav.html:11
+msgid "Monitor all that concerns you!"
+msgstr "Gardez un œil sur tout ce qui vous concerne !"
+
+#: templates/dashboard/_subnav.html:14 templates/dashboard/feed.html:5
+msgid "Activity from what you follow"
+msgstr "Activité de ce que vous suivez"
+
+#: templates/dashboard/_subnav.html:17
+msgid "Contributing"
+msgstr "Contribuer"
+
+#: templates/dashboard/_subnav.html:18
+msgid "If you want to use your time and knowledge wisely, that's here!"
+msgstr ""
+"Si vous voulez utiliser votre temps et vos connaissances intelligemment, "
+"c'est ici!"
+
+#: templates/dashboard/_subnav.html:20
+msgid "Don't bother me, I'm working on it!"
+msgstr "Ne me dérangez pas, j'y travaille !"
+
+#: templates/dashboard/_subnav.html:22
+msgid "'Drafts' contains your un-published contributions"
+msgstr "'Brouillons' contient vos contributions non-publiées"
+
+#: templates/dashboard/_subnav.html:25
+msgid "Where to go to find any of your input"
+msgstr "Où aller pour trouver n'importe laquelle de vos contributions"
+
+#: templates/dashboard/_subnav.html:28
+msgid "Shopping"
+msgstr "Shopping"
+
+#: templates/dashboard/_subnav.html:29
+msgid "Available soon!"
+msgstr "Bientôt disponible !"
+
+#: templates/dashboard/_subnav.html:31
+msgid "We are working on it!"
+msgstr "On y travaille !"
+
+#: templates/dashboard/_subnav.html:35
+msgid "Profiles"
+msgstr "Profils"
+
+#: templates/dashboard/_subnav.html:38 templates/dashboard/_subnav.html:40
+msgid "Exactly as others see it! Except the 'edit' button :P"
+msgstr "Exactement tel que les autres le voient ! Sauf le bouton 'éditer'"
+
+#: templates/dashboard/_subnav.html:40
+msgid "User profile"
+msgstr "Profil utilisateur"
+
+#: templates/dashboard/_subnav.html:43
+msgid "Search user"
+msgstr "Chercher un utilisateur"
+
+#: templates/dashboard/_subnav.html:46
+msgid "All Profiles"
+msgstr "Tous les profils"
+
+#: templates/dashboard/all.html:5
+msgid ""
+"Looking for one of your contributions? Here are the tools to help you find!"
+msgstr ""
+"Vous cherchez une de vos contributions ? Ici on vous donne les outils pour "
+"vous aider à la trouver !"
+
+#: templates/dashboard/all.html:11
+msgid "Search in all my contributions - Not functional yet"
+msgstr "En construction - Chercher dans toutes mes contributions"
+
+#: templates/dashboard/base.html:21
+#, python-format
+msgid "%(username)s's dashboard | %(page_name)s"
+msgstr "Tableau de bord de %(username)s | %(page_name)s"
+
+#: templates/dashboard/contribution.html:5
+msgid ""
+"Here is where we provide you with all the <a data-toggle=\"modal\" "
+"href=\"#feedbackModal\" rel=\"tooltip-bottom\" title=\"We'd love to read "
+"your ideas, don't hesitate to give us a mail!\">tools</a> we have to help "
+"you contribute."
+msgstr ""
+"Ici, on vous donne tous les <a data-toggle=\"modal\" href=\"#feedbackModal\""
+" rel=\"tooltip-bottom\" title=\"On adorerait lire vos idées, n'hésitez pas à"
+" nous envoyer un email !\">outils</a> que nous avons pour vous aider à "
+"contribuer."
+
+#: templates/dashboard/contribution.html:11
+msgid "Activity on your domains of skills"
+msgstr "Activité sur vos domaines de compétences"
+
+#: templates/dashboard/contribution.html:12
+msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
+msgstr ""
+"Dernière activité sur vos tags de compétences... Vous voulez peut être "
+"contribuer ?"
+
+#: templates/dashboard/draft.html:5
+msgid "Keep here your drafts: contributions you don't want to publish (yet)"
+msgstr ""
+"Gardez ici vos brouillons: contributions que vous ne voulez pas (encore) "
+"publier"
+
+#: templates/dashboard/home.html:5
+msgid ""
+"We provide you with all the things that concern you on this page. If you "
+"have only a 'quick check' to do on NewCo, this page is the one!"
+msgstr ""
+"Nous mettons à votre disposition sur cette page tout ce qui vous concerne. "
+"Si vous n'avez qu'un passage rapide à faire sur NewCo"
+
+#: templates/dashboard/home.html:16
+#, python-format
+msgid ""
+" More tools to come on the dashboard, very very soon ;) ! ... If you have "
+"any idea of how to improve this page, please %(link_1)stell it to "
+"us%(link_2)s, we can't wait to read yours !"
+msgstr ""
+"Plus d'outils sur le tableau de bord très bientôt ;) !... Si vous avez des "
+"idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
+"on a hâte de le lire !"
+
+#: templates/dashboard/purchase.html:11
+msgid "Search in all my purchases"
+msgstr "Chercher dans tous mes achats"
+
+#~ msgid "All my contributions"
+#~ msgstr "Toutes mes contributions"

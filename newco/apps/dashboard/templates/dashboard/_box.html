@@ -3,7 +3,7 @@
 
 <div class="span4 well well-small box">
     <h3>
-        <a href="{{ box.page_url }}" class="black">{{ box.title }}</a> <small>{{ box.subtitle }}</small>
+        <a href="{{ box.page_url }}" class="black">{{ box.title }}</a>: <small>{{ box.subtitle }}</small>
         <span class="pull-right"><button class="btn btn-mini" data-toggle="collapse" data-target="#{{ box.name }}_well"><i rel="expand_btn_{{ box.name }}" class="icon-minus"></i></button></span>
     </h3>
     <div id="{{ box.name }}_well" rel="collapse_div" class="collapse in"><br>{% include "profiles/_profile_content_list.html" with contents=box.feed mini_feed=box.mini_feed %}</div>

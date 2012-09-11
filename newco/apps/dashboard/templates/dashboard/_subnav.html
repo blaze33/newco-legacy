@@ -7,33 +7,37 @@
 
 <div class="row">
     <ul class="nav nav-list">
-        <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" rel="tooltip-right" title="{% trans "Monitor all that concerns you !" %}"><b>{% trans "Dashboard" %}</b></a></li>
+        {% if user.is_authenticated %}
+            <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" rel="tooltip-right" title="{% trans "Monitor all that concerns you!" %}"><b>{% trans "Dashboard" %}</b></a></li>
 
-        <li class="divider"></li>
-        <li{% if page == "feed" %} class="active"{% endif %}><a href="{% url 'dash' 'feed' %}" rel="tooltip-right" title="{% trans "Activity from what you follow" %}">{% trans "Your feed" %}</a></li>
+            <li class="divider"></li>
+            <li{% if page == "feed" %} class="active"{% endif %}><a href="{% url 'dash' 'feed' %}" rel="tooltip-right" title="{% trans "Activity from what you follow" %}">{% trans "Your newsfeed" %}</a></li>
 
-        <li class="divider"></li>
-        <li class="nav-header">{% trans "Contributing" %}</li>
-        <li{% if page == "contribution" %} class="active"{% endif %}><a href="{% url 'dash' 'contribution' %}" rel="tooltip-right" title="{% trans "If you want to use your time and knowledge wisely, that's here !" %}">{% trans "Contribution center" %}</a></li>
+            <li class="divider"></li>
+            <li class="nav-header">{% trans "Contributing" %}</li>
+            <li{% if page == "contribution" %} class="active"{% endif %}><a href="{% url 'dash' 'contribution' %}" rel="tooltip-right" title="{% trans "If you want to use your time and knowledge wisely, that's here!" %}">{% trans "Contribution center" %}</a></li>
 
-        <li{% if page == "collaboration" %} class="active"{% endif %}><a href="#{#{% url 'dash' 'collaboration' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% blocktrans %}Don't bother me, I'm working on it!{% endblocktrans %}">{% trans "Collaborations / Teamwork" %}</a></li>
+            <li{% if page == "collaboration" %} class="active"{% endif %}><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% blocktrans %}Don't bother me, I'm working on it!{% endblocktrans %}">{% trans "Teamwork" %}</a></li>
 
-        <li{% if page == "draft" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans ''Drafts' contains your un-published contributions' %}" href="{% url 'dash' 'draft' %}">{% trans "Drafts" %}</a></li>
+            <li{% if page == "draft" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "'Drafts' contains your un-published contributions" %}" href="{% url 'dash' 'draft' %}">{% trans "Drafts" %}</a></li>
 
-        <li class="divider"></li>
-        <li{% if page == "all" %} class="active"{% endif %}><a href="{% url 'dash' 'all' %}" rel="tooltip-right" title="{% blocktrans %}Where to go to find any of your input{% endblocktrans %}">{% trans "All my contributions" %}</a></li>
+            <li class="divider"></li>
+            <li{% if page == "all" %} class="active"{% endif %}><a href="{% url 'dash' 'all' %}" rel="tooltip-right" title="{% blocktrans %}Where to go to find any of your input{% endblocktrans %}">{% trans "All your contributions" %}</a></li>
 
-        <li class="divider"></li>
-        <li class="nav-header">{% trans "Shopping" %}</li>
-        <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a href="#{#{% url 'dash' 'shopping' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "Available soon !" %}">{% trans "Shopping notes" %}</a></li>
+            <li class="divider"></li>
+            <li class="nav-header">{% trans "Shopping" %}</li>
+            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "Available soon!" %}">{% trans "Shopping notes" %}</a></li>
 
-        <li{% if page == "purchase" %} class="active"{% endif %}><a href="#{#{% url 'dash' 'purchase' %}#}" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "We are working on it !" %}">{% trans "Purchase history" %}</a></li>
-        <li class="divider"></li>
+            <li{% if page == "purchase" %} class="active"{% endif %}><a href="#" style="color: #999; text-decoration: none;" rel="tooltip-right" title="{% trans "We are working on it!" %}">{% trans "Purchase history" %}</a></li>
+            <li class="divider"></li>
+        {% endif %}
 
         <li class="nav-header">{% trans "Profiles" %}</li>
 
-        <li{% if is_me %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "Exactly as others see it ! Except the 'edit' button :P" %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {% user_display user %}</a></li>
-        {% if not is_me and profile %}<li class="active"><b>{% trans "User profile:" %}</b><br><a rel="tooltip-right" title="{% trans "Exactly as others see it ! Except the 'edit' button :P" %}" href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a></li>{% endif %}
+        {% if user.is_authenticated %}
+            <li{% if is_me %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "Exactly as others see it! Except the 'edit' button :P" %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {% user_display user %}</a></li>
+        {% endif %}
+        {% if not is_me and profile %}<li class="active"><b>{% trans "User profile" %}:</b><br><a rel="tooltip-right" title="{% trans "Exactly as others see it! Except the 'edit' button :P" %}" href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a></li>{% endif %}
         <li>
             <form action="" method="POST" class="form-horizontal" style="position:relative; top: 10px;">{% csrf_token %}
                 <input name="pf_pick" type="text" autocomplete="off" placeholder="{% trans 'Search user' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
@@ -41,7 +45,6 @@
         </li>
         <li{% if profiles and not profile %} class="active"{% endif %}><a href="{{ profile_list_url }}">{% trans "All Profiles" %}</a></li>
         <li class="divider"></li>
-        {#<li><a href="#">{% trans "View as others see it" %}</a></li>#}
     </ul>
 </div>
 

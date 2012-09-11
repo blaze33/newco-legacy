@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 19:59+0200\n"
+"POT-Creation-Date: 2012-09-11 13:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,28 +41,56 @@ msgstr ""
 msgid "You can't delete this content."
 msgstr ""
 
-#: templates/_account_bar.html:18
+#: templates/_account_bar.html:11
+msgid "Dashboard"
+msgstr ""
+
+#: templates/_account_bar.html:12
+msgid "View my profile"
+msgstr ""
+
+#: templates/_account_bar.html:13
 msgid "Settings"
 msgstr ""
 
-#: templates/_account_bar.html:20
+#: templates/_account_bar.html:15
 msgid "Admin"
 msgstr ""
 
-#: templates/_account_bar.html:23
+#: templates/_account_bar.html:18
 msgid "Log out"
 msgstr ""
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:23
 msgid "Log in"
 msgstr ""
 
-#: templates/_account_bar.html:29
+#: templates/_account_bar.html:25
 msgid "or"
 msgstr ""
 
-#: templates/_account_bar.html:30
+#: templates/_account_bar.html:26
 msgid "Sign up"
+msgstr ""
+
+#: templates/_account_bar.html:33
+msgid "Add +"
+msgstr ""
+
+#: templates/_account_bar.html:35
+msgid "Add a product"
+msgstr ""
+
+#: templates/_account_bar.html:36
+msgid "Ask a question"
+msgstr ""
+
+#: templates/_account_bar.html:37
+msgid "You can try to click... But it won't work! Ah ah, we're still on it ;) "
+msgstr ""
+
+#: templates/_account_bar.html:37
+msgid "Add a story"
 msgstr ""
 
 #: templates/_footer.html:4
@@ -146,18 +174,14 @@ msgid "My newsfeed"
 msgstr ""
 
 #: templates/site_base.html:41
-msgid "Profile"
-msgstr ""
-
-#: templates/site_base.html:45
 msgid "Search"
 msgstr ""
 
-#: templates/site_base.html:86
+#: templates/site_base.html:85
 msgid "Search an item, a tag..."
 msgstr ""
 
-#: templates/site_base.html:87
+#: templates/site_base.html:86
 msgid "What are you looking for?"
 msgstr ""
 
@@ -182,40 +206,40 @@ msgstr ""
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:36
+#: templates/idios/profile.html:28
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
 msgstr ""
 
-#: templates/idios/profile.html:47
+#: templates/idios/profile.html:39
 msgid "Update my profile"
 msgstr ""
 
-#: templates/idios/profile.html:59
+#: templates/idios/profile.html:51
 msgid "History"
 msgstr ""
 
-#: templates/idios/profile.html:60
+#: templates/idios/profile.html:52
 msgid "Followees"
 msgstr ""
 
-#: templates/idios/profile.html:61
+#: templates/idios/profile.html:53
 msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile.html:62
-msgid "'Drafts' contains your un-published contributions"
+#: templates/idios/profile_edit.html:13
+msgid "Edit Profile"
 msgstr ""
 
-#: templates/idios/profile.html:62
-msgid "Drafts"
+#: templates/idios/profile_edit.html:17
+msgid "Edit profile"
 msgstr ""
 
-#: templates/idios/profiles.html:9 templates/idios/profiles.html.py:21
+#: templates/idios/profiles.html:9 templates/idios/profiles.html.py:13
 msgid "All Users"
 msgstr ""
 
-#: templates/idios/profiles.html:22
+#: templates/idios/profiles.html:14
 msgid "Here is the awesome community building NewCo."
 msgstr ""
