@@ -1,7 +1,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 
-{% scores_for_objects contents as score_dict %}
+{% if not mini_feed %}{% scores_for_objects contents as score_dict %}{% endif %}
 
 {# TODO: handle redirection after content edition #}
 
