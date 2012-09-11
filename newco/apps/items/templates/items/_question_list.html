@@ -70,7 +70,7 @@
             <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
         </div>
         <br />
-        <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
+        <div id="answer_form_{{ question.id }}" class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
             {% csrf_token %}
             {{ question.answer_form|as_bootstrap }}
             <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>

@@ -13,11 +13,7 @@
 {% endblock %}
 
 {% block subnav %}
-    {% if user.is_authenticated %}
-        {% include "dashboard/_subnav.html" %}
-    {% else %}
-        &nbsp; User is not authenticated; Find a fallback for this case. (minimalized 'dashboard_subnav.html' ?)
-    {% endif %}
+    {% include "dashboard/_subnav.html" %}
 {% endblock %}
 
 {% block head_title %}

@@ -9,6 +9,7 @@
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    {% if questions %}{{ questions.0.answer_form.media.css }}{% endif %}
 {% endblock %}
 
 {% block head_title %}{{ item.name }}{% endblock %}
@@ -100,7 +101,7 @@
         <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b><span class="caret"></span></a>
         <ul class="dropdown-menu">
             {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-                {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
+                {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}" target="_blank"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
             {% endfor %}<li class="divider"></li>{% endfor %}
             <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
         </ul>
@@ -119,7 +120,7 @@
 
 {% block extra_body_base %}
     {{ block.super }}
-    <script src="{% static "js/content.js" %}"></script>
+    <script src="{% static 'js/content.js' %}"></script>
     {% if questions %}{{ questions.0.answer_form.media.js }}{% endif %}
     <script type="text/javascript"> // script can't go to '/static' : needs to translate text
         $(function(){

@@ -2,19 +2,33 @@
 
 {% load i18n %}
 {% load bootstrap_tags %}
+{% load staticfiles %}
+
+{% block extra_style %}
+    {{ block.super }}
+    {{ form.media.css }}
+{% endblock %}
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
-
 <h1>{% block form_header %}{% trans "Ask something:" %}{% endblock %}</h1>
 
 </br>
 
-<form action="." method="POST">{% csrf_token %}
+<form action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
-    <input type="submit" name="add_question" class="btn" value='{% trans "Submit" %}'/>
+    <input type="submit" name="add_question" class="btn" value="{% trans 'Submit' %}"/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    {{ form.media.js }}
+    <script type="text/javascript">
+        $(".chzn-select").chosen({no_results_text: "{{ form.no_results }}"});
+        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+    </script>
 {% endblock %}
