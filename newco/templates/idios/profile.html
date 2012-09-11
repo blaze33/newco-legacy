@@ -23,13 +23,41 @@
 
     <div class="row">
         <hr>
+        <div class="span2">
         <div class="span thumbnail" itemprop="image">
             {% if is_me %}
                 <a href="https://fr.gravatar.com/site/signup" rel="tooltip" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" id="profile-pic">
-                {% profile_pic page_user 160 %}</a>
+                {% profile_pic page_user 140 %}</a>
             {% else %}
-                {% profile_pic page_user 160 %}
+                {% profile_pic page_user 140 %}
             {% endif%}
+            
+            <br>{% trans "Following" %}:{{ numb_fwees }}
+            <br>
+            <div class="row" style="margin-left: 0px;">
+            	{% for user in fwees_dash %}<a href="{{ user.get_absolute_url }}" title="{{ user.username }}">{% profile_pic user 16 %}</a>
+            	{% endfor %}
+        	</div>
+            {% if fwers_dash %}
+	            <br>{% trans "Followers" %}:{{ numb_fwers }}
+	            <br>
+	            <div class="row" style="margin-left: 0px;">
+	            	{% for user in fwers_dash %}
+	            		<a href="{{ user.get_absolute_url }}" title="{{ user.username }}">{% profile_pic user 16 %}</a>
+            		{% endfor %}
+        		</div>
+            {% endif %}
+            {% if items_fwed_dash %}
+	            <br>{% trans "Products" %}:{{ numb_items_fwed }}
+	            <br>
+	            <div class="row" style="margin-left: 0px;">
+	            	{% for item in items_fwed_dash %}
+	            		<a href="{{ item.get_absolute_url }}" title="{{ item.name }}"><img src="http://lorempixel.com/16/16/technics/?{{ item.id }}" alt=""></a>
+            		{% endfor %}
+        		</div>
+            {% endif %}
+            <br>
+        </div>
         </div>
         <div class="span5">
             {% include "profiles/_profile_info.html" %}
@@ -45,7 +73,11 @@
     </div>
 
     </br>
+	<div id="history" class="tab-pane active">
+		{% include "profiles/_profile_content_list.html" with contents=history %}
+	</div>
 
+{% comment %}
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
@@ -54,9 +86,10 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
+			<div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
         </div>
     </div>
+{% endcomment %}    
 </div>{% endblock %}
