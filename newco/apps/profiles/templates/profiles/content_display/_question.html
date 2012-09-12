@@ -28,7 +28,7 @@
 
     <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
         <div class="span4"><p>
-            <a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ content.content }}
+            <a href="{{ content.get_absolute_url }}" class="black">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
             {% if user.is_superuser or author == user %}
                 {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
             {% endif %}

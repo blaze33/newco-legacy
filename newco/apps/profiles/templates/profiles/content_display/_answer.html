@@ -33,13 +33,13 @@
         </div></div>
 
         <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">
-            <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
+            <div class="span5"><p><small><a href="{{ question.get_absolute_url }}" class="black">{% trans "Q:" %}&nbsp;{{ question.content }}</a></small></p></div>
             <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
         </div>
 
         <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
 
-            <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
+            <div class="span1"><p><a href="{{ content.get_absolute_url }}" class="black">{% trans "A:" %}</a></p></div>
             <div class="span3"><p>
                 {% autoescape off %}{{ content.content }}{% endautoescape %}
                 {% if user.is_superuser or author == user %}
