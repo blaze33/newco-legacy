@@ -18,7 +18,7 @@
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
             {% for item in item_list %}
-                <div class="{% if forloop.first %}active{% endif %} item">
+                <div class="{% if forloop.first %}active {% endif %}item">
                     <a href="{{ item.get_absolute_url }}"><img src="http://lorempixel.com/600/300/technics/?{{ item.id }}" alt=""></a>
                     <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
                 </div>
