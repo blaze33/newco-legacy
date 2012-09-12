@@ -74,13 +74,13 @@ msgstr "Vous voulez peut être en terminer et publier certains ?"
 msgid "Your latest contributions"
 msgstr "Vos dernières contributions"
 
-#: templates/dashboard/_box.html:6
+#: templates/dashboard/_box.html:8 templates/dashboard/contribution.html:11
 msgid ":"
 msgstr " :"
 
 #: templates/dashboard/_subnav.html:11
-msgid "Monitor all that concerns you!"
-msgstr "Gardez un œil sur tout ce qui vous concerne !"
+msgid "Monitor all that concerns you"
+msgstr "Gardez un œil sur tout ce qui vous concerne"
 
 #: templates/dashboard/_subnav.html:14
 msgid "Activity from what you follow"
@@ -96,9 +96,9 @@ msgstr ""
 "Si vous voulez utiliser votre temps et vos connaissances intelligemment, "
 "cliquez ici !"
 
-#: templates/dashboard/_subnav.html:20 templates/dashboard/_subnav.html:29
-msgid "Available soon"
-msgstr "Bientôt disponible"
+#: templates/dashboard/_subnav.html:20
+msgid "Grrrr... Don't bother me, I'm working on it"
+msgstr "Grrrr... Ne me dérangez pas, j'y travaille"
 
 #: templates/dashboard/_subnav.html:22
 msgid "&lsquo;Drafts&rsquo; contains your un-published contributions"
@@ -111,6 +111,14 @@ msgstr "Où aller pour trouver n'importe laquelle de vos contributions"
 #: templates/dashboard/_subnav.html:28
 msgid "Shopping"
 msgstr "Shopping"
+
+#: templates/dashboard/_subnav.html:29
+msgid ""
+"it&lsquo;s still baking, we know you&lsquo;re hungry, but we do too, please "
+"be patient ;)"
+msgstr ""
+"Ca cuit encore... On sait que vous avez faim, mais nous aussi, un peu de "
+"patience ;)"
 
 #: templates/dashboard/_subnav.html:31
 msgid "We are working on it!"
@@ -218,6 +226,9 @@ msgstr ""
 msgid "Search in all my purchases"
 msgstr "Chercher dans tous mes achats"
 
+#~ msgid "Available soon"
+#~ msgstr "Bientôt disponible"
+
 #~ msgid "Your newsfeed"
 #~ msgstr "Votre flux"
 
@@ -226,6 +237,3 @@ msgstr "Chercher dans tous mes achats"
 
 #~ msgid "All your contributions"
 #~ msgstr "Toutes vos contributions"
-
-#~ msgid "Don't bother me, I'm working on it!"
-#~ msgstr "Ne me dérangez pas, j'y travaille !"

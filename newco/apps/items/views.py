@@ -422,8 +422,8 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
                 context.update({
                     "item_list": item_list,
                     "related_questions": {
-                        _("Top Questions"): queryset_ordered[:3],
-                        _("Latest Questions"): queryset[:3]
+                        _("Top related questions"): queryset_ordered[:3],
+                        _("Latest related questions"): queryset[:3]
                     }
                 })
         return context

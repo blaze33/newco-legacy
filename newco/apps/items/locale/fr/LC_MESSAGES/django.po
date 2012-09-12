@@ -141,19 +141,19 @@ msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
 #: views.py:257
 msgid "Top related questions"
-msgstr "Les meilleurs questions liées"
+msgstr "Meilleures questions liées"
 
 #: views.py:258
 msgid "Latest related questions"
-msgstr "Les dernières questions liées"
+msgstr "Dernières questions liées"
 
 #: views.py:401
 msgid "Top Questions"
-msgstr "Les meilleurs questions"
+msgstr "Meilleures questions"
 
 #: views.py:402
 msgid "Latest Questions"
-msgstr "Les dernières questions"
+msgstr "Dernières questions"
 
 #: templates/items/_ask_modal.html:8
 msgid "Ask..."
@@ -388,15 +388,24 @@ msgstr ""
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list_base.html:67
+#: templates/items/item_list_base.html:65
+msgid "Sort by"
+msgstr "Trier par"
+
+#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:78
+msgid ":"
+msgstr " :"
+
+#: templates/items/item_list_base.html:69
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
-#: templates/items/item_list_base.html:68
+#: templates/items/item_list_base.html:70
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
-#: templates/items/item_list_base.html:69
+#: templates/items/item_list_base.html:71
 msgid "Most popular"
 msgstr "Plus populaire"
 

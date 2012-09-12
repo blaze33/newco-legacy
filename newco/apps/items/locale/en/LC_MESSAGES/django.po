@@ -377,15 +377,24 @@ msgstr ""
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:67
-msgid "Newest to Oldest"
+#: templates/items/item_list_base.html:65
+msgid "Sort by"
 msgstr ""
 
-#: templates/items/item_list_base.html:68
-msgid "Oldest to Newest"
+#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:78
+msgid ":"
 msgstr ""
 
 #: templates/items/item_list_base.html:69
+msgid "Newest to Oldest"
+msgstr ""
+
+#: templates/items/item_list_base.html:70
+msgid "Oldest to Newest"
+msgstr ""
+
+#: templates/items/item_list_base.html:71
 msgid "Most popular"
 msgstr ""
 
