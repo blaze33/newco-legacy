@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:21+0200\n"
+"POT-Creation-Date: 2012-09-12 15:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,11 +136,11 @@ msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
 #: views.py:257 views.py:401
-msgid "Top Questions"
+msgid "Top related questions"
 msgstr ""
 
 #: views.py:258 views.py:402
-msgid "Latest Questions"
+msgid "Latest related questions"
 msgstr ""
 
 #: templates/items/_ask_modal.html:8
@@ -368,15 +368,24 @@ msgstr ""
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:67
-msgid "Newest to Oldest"
+#: templates/items/item_list_base.html:65
+msgid "Sort by"
 msgstr ""
 
-#: templates/items/item_list_base.html:68
-msgid "Oldest to Newest"
+#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:78
+msgid ":"
 msgstr ""
 
 #: templates/items/item_list_base.html:69
+msgid "Newest to Oldest"
+msgstr ""
+
+#: templates/items/item_list_base.html:70
+msgid "Oldest to Newest"
+msgstr ""
+
+#: templates/items/item_list_base.html:71
 msgid "Most popular"
 msgstr ""
 
@@ -389,7 +398,7 @@ msgstr ""
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr ""
 
-#: templates/items/question_detail.html:73
+#: templates/items/question_detail.html:74
 msgid "Related Products"
 msgstr ""
 

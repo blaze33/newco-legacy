@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:21+0200\n"
-"PO-Revision-Date: 2012-09-11 18:12\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-09-12 15:43+0200\n"
+"PO-Revision-Date: 2012-09-12 15:44\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -140,12 +140,12 @@ msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
 #: views.py:257 views.py:401
-msgid "Top Questions"
-msgstr "Les meilleurs questions"
+msgid "Top related questions"
+msgstr "Meilleures questions associées"
 
 #: views.py:258 views.py:402
-msgid "Latest Questions"
-msgstr "Les dernières questions"
+msgid "Latest related questions"
+msgstr "Dernières questions associées"
 
 #: templates/items/_ask_modal.html:8
 msgid "Ask..."
@@ -351,43 +351,52 @@ msgstr "Ajouter un produit"
 #: templates/items/item_list_base.html:52
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
-"%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
-"\"</i>."
-msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a> correspondant aux termes de recherche "
+"No products with tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a> are available for search terms "
 "<i>\"%(search_terms)s\"</i>."
+msgstr ""
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
+" class=\"label\">%(tagname)s</span></a> correspondant aux termes de "
+"recherche <i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
-"%(tagname)s</span></a> are available."
+"No products with tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a> are available."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
+" class=\"label\">%(tagname)s</span></a>."
 
 #: templates/items/item_list_base.html:57
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible correspondant aux termes de recherche <i>"
-"\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible correspondant aux termes de recherche "
+"<i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:59
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list_base.html:67
+#: templates/items/item_list_base.html:65
+msgid "Sort by"
+msgstr "Trier par"
+
+#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:78
+msgid ":"
+msgstr " :"
+
+#: templates/items/item_list_base.html:69
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
-#: templates/items/item_list_base.html:68
+#: templates/items/item_list_base.html:70
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
-#: templates/items/item_list_base.html:69
+#: templates/items/item_list_base.html:71
 msgid "Most popular"
 msgstr "Plus populaire"
 
@@ -400,7 +409,7 @@ msgstr "Lien"
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr "Ajouter un lien externe à <i>%(item)s</i> :"
 
-#: templates/items/question_detail.html:73
+#: templates/items/question_detail.html:74
 msgid "Related Products"
 msgstr "Produits Associés"
 
@@ -427,8 +436,7 @@ msgstr "Demandez quelque chose :"
 #~ "                    <option value=\"0\">Choose</option>\n"
 #~ "                    <option value=\"1\">Newest to Oldest</option>\n"
 #~ "                    <option value=\"2\">Oldest to Newest</option>\n"
-#~ "                </select><button type=\"submit\" class=\"btn\">Sort</"
-#~ "button>\n"
+#~ "                </select><button type=\"submit\" class=\"btn\">Sort</button>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"
@@ -470,9 +478,6 @@ msgstr "Demandez quelque chose :"
 
 #~ msgid "answered a question about"
 #~ msgstr "Répondre à cette question"
-
-#~ msgid "Q:"
-#~ msgstr "Q :"
 
 #~ msgid "A:"
 #~ msgstr "R :"

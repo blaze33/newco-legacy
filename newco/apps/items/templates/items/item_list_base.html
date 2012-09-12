@@ -61,18 +61,21 @@
         {% endif %}
     </div>
     <div class="span3">
-        {% if item_list %}<div class="row">{% spaceless %}<form action="." method="POST">{% csrf_token %}<div class="input-append span2">
-            <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
-                <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
-                <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
-            </div>
-        </div></form>{% endspaceless %}</div>{% else %}&nbsp;{% endif %}
+        {% if item_list %}<div class="row well well-small">{% spaceless %}
+            <h3>{% trans "Sort by" %}{% trans ":" %}</h3>
+            <form action="." method="POST">{% csrf_token %}<div class="input-append span2">
+                <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
+                    <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
+                    <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
+                </div>
+            </div></form>{% endspaceless %}
+        </div>{% else %}&nbsp;{% endif %}
 
         {% for title, content_list in related_questions.iteritems %}
-            {% if content_list %}<div class="row">
-                <h3>{{ title }}</h3>
+            {% if content_list %}<div class="row well well-small">
+                <h3>{{ title }}{% trans ":" %}</h3>
                 <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
             </div>{% endif %}
         {% endfor %}
