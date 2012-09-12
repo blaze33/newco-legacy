@@ -2,7 +2,6 @@
 
 {% load i18n %}
 {% load account_tags %}
-{% load follow_tags %}
 {% load content_utils %}
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
@@ -38,7 +37,7 @@
                     <a href="{% url profile_edit %}" class="btn">
                     {% trans "Update my profile" %}</a>
                 {% else %}
-                    {% follow_form page_user %}
+                    {% include "follow/form.html" with object=page_user %}
                 {% endif %}
             </span>
         </div>
@@ -54,7 +53,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history display="text" %}</div>
+            <div id="history" class="tab-pane active">{% include "items/content_display/_content_list.html" with contents=history display="text" %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
         </div>

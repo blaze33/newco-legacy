@@ -15,7 +15,7 @@
 {% block extra_body_base %}
     {{ block.super }}
     <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
-        {% for box_key, box in boxes_dict %}
+        {% for key, box in boxes.items %}
             $(function(){
                 var collapse_div = $('#{{ box.name }}_well');
                 var icon_change = $('[rel=expand_btn_{{ box.name }}]');
