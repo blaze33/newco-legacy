@@ -141,3 +141,5 @@ class DashboardView(ListView, ProcessProfileSearchView):
             obj_followed = load_object(request)
             success_url = obj_followed.get_absolute_url()
             return process_following(request, obj_followed, success_url)
+        else:
+            return super(DashboardView, self).post(request, *args, **kwargs)
