@@ -26,39 +26,42 @@
         <div class="row one_row" id="q-{{ question.id }}">
             <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
             <div class="span4"><h2>
-                <a href="{% url item_detail 'question' question.id 'ROOO' %}" itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
+                <span itemprop="name">{{ question.content }}</span>
                 {% if user.is_superuser or question.author == request.user %}
                     {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
                 {% endif %}
             </h2></div>
-            <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+            <div class="span2 right">{% comment %}{% include "items/_author.html" with object=question %}{% endcomment %}</div>
         </div>
         {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
         {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-        {% for answer in question.answer_set.all %}{% if answer.is_public %}
+        {% for answer, answer_prof_about in answer_dict.items %}{% if answer.is_public %}
             {% dict_entry_for_item answer from answer_vote_dict as vote %}
             {% dict_entry_for_item answer from answer_score_dict as score %}
-            <div class="row one_row" id="a-{{ answer.id }}" rel="popover">
+            <div class="row one_row" id="a-{{ answer.id }}" rel="popover" style="border-top: solid; border-width: 1px; border-color: #EEEEEE">
                 <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
                 <div class="span4"><p><span itemprop="description"{# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}>
-                    {% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
+                    {% include "items/_author_detail.html" with object=answer %}
+                    <br>{% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
                     {% if user.is_superuser or answer.author == request.user %}
                         {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                     {% endif %}
                 </p></div>
-                <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+                <div class="span2 right"><br>{% profile_pic user 20 %}</div>
             </div>
         {% endif %}{% endfor %}
-
-        <div class="row"><div class="span6 offset1">
+		<br><br>
+        <div class="row" style="border-top: solid; border-width: 1px; border-color: #CCCCCC"><div class="span6 offset1">
+           {% comment %}
             <div class="block_controls">
                 <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
                 &nbsp;&nbsp;&nbsp;
                 <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
             </div>
+            {% endcomment %}
             <br />
-            <div id="answer_form_{{ question.id }}" class="collapse out"><form method="POST" action="">
+            <div id="answer_form_{{ question.id }}"><form method="POST" action="">
                 {% csrf_token %}
                 {{ question.answer_form|as_bootstrap }}
                 <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>

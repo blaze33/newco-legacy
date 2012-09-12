@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load date_utils %}
+{% load account_tags %}
+
+<h5 class="signature">
+    {% trans "By" %} <span itemprop="contributor"{#Seb: I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#} itemscope itemtype="http://schema.org/Person"><a href='{{ object.author.get_absolute_url }}' itemprop="url" class="black"><span itemprop="name">{% user_display answer.author %}</span></a>, {{ answer_prof_about }}</span>
+</h5>

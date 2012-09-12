@@ -244,6 +244,25 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             tag_ids = question.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
             context.update({"question": question, "prof_list": p_list})
+            answer_dict={}
+            for answer in question.answer_set.all():
+                answer_prof=Profile.objects.filter(name=answer.author)
+                if answer_prof:
+                    answer_prof_about=answer_prof[0].about
+                else:
+                    for profile in Profile.objects.all():
+                        user=user_display (profile.user)
+                        if user == user_display(answer.author):
+                            answer_prof_about = profile.about
+                            break
+                answer_dict[answer] = answer_prof_about
+            context.update({ "answer_dict": answer_dict })
+            
+            list_user=[]
+#            for profile in Profile.objects.all():
+#                user=user_display (profile.user)
+#                list_user.append(user)
+#            context.update({ "profiles_all":Profile.objects.all,"list_user":list_user })
         return context
 
     def form_invalid(self, form):
