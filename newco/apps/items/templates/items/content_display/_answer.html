@@ -6,7 +6,7 @@
 
 {% if display == "mini_feed" %}
     <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-        <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %} {% include p_link_tpl with object=content.author %}</a> {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include i_link_tpl with object=content.items.all.0 %}{% trans ":" %}</h5>
+        <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% include prof_tpl with object=author display=display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include prod_tpl with object=content.items.all.0 display=display %}</h5>
         <p{% if question.is_draft %} class="draft"{% endif %}><small><a href="{{ question.get_absolute_url }}" class="black">{{ question.content }}</a></small></p>
 
         <p>
@@ -16,10 +16,10 @@
         </p>
     </blockquote>
 {% elif display == "thumbnail" %}
-    {% include p_link_tpl with object=content.author color_black="True" %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}" class="black">answered</a> a question about{% endblocktrans %} {% include i_link_tpl with object=item %}
+    {% include prof_tpl with object=content.author display=display color="black" %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}" class="black">answered</a> a question about{% endblocktrans %} {% include prod_tpl with object=item display=display color="black" %}
 {% elif display == "text" %}
     <div class="row"><div class="span7">
-        <h4>{% include p_link_tpl with object=author %} {% trans "answered a question about" %} {% include i_link_tpl with object=content.items.all.0 %}</h4>
+        <h4>{% include prof_tpl with object=author display=display %} {% trans "answered a question about" %} {% include prod_tpl with object=content.items.all.0 display=display %}</h4>
     </div></div>
 
     <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">

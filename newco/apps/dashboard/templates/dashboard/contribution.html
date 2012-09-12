@@ -2,16 +2,14 @@
 
 {% load i18n %}
 
-{% block subtitle %}{% blocktrans %}Here is where we provide you with all the <a data-toggle="modal" href="#feedbackModal" rel="tooltip-bottom" title="We'd love to read your ideas, don't hesitate to give us a mail!">tools</a> we have to help you contribute.{% endblocktrans %}
+{% block subtitle %}{% blocktrans %}Here is where we provide you with all the <a data-toggle="modal" href="#feedbackModal" rel="tooltip-bottom" title="We'd love to read your ideas, send us an email!">tools</a> we have to help you contribute.{% endblocktrans %}
 {% endblock %}
 
 {% block dashboard %}
-
-    <div class="span7 well">
+    <div class="span7 well well-small">
         <h3>{% trans "Activity on your domains of skills" %}:
             <br><small>{% trans "Latest activity on your skills tags... Maybe you'd like to contribute?" %}</small></h3>
             <hr>
-        {% include "profiles/_profile_content_list.html" with contents=object_list display="text" %}
+        {% include "items/content_display/_content_list.html" with contents=object_list display="text" %}
     </div>
-
 {% endblock %}

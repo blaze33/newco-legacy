@@ -33,10 +33,10 @@ def process_following(request, obj, success_url):
         is_following = Follow.objects.is_following(request.user, obj)
 
         if follow.target._meta.module_name == 'user':
-            if is_following:
-                mail_followee(follow.target.get_profile(),
-                    request.user.get_profile(), request.META.get('HTTP_HOST')
-                )
+#            if is_following:
+#                mail_followee(follow.target.get_profile(),
+#                    request.user.get_profile(), request.META.get('HTTP_HOST')
+#                )
             object_unicode = user_display(follow.target)
         else:
             object_unicode = follow.target

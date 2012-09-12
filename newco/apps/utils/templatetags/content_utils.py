@@ -34,7 +34,7 @@ def edit(item_name, item_id, edit_next=None):
 
 
 @register.simple_tag
-def profile_pic(user, size=None):
+def profile_pic(user, size=None, quote_type="double"):
     """
     Returns the user profile picture. Only supports gravatar for now.
 
@@ -47,7 +47,10 @@ def profile_pic(user, size=None):
         {% profile_pic_for_user request.user 48 %}
         {% profile_pic_for_user 'max' 48 %}
     """
-    return gravatar_img_for_user(user, size, rating=None)
+    img = gravatar_img_for_user(user, size, rating=None)
+    if quote_type == "single":
+        img = img.replace("\"", "\'")
+    return img
 
 
 @register.tag
