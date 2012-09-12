@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from decimal import Decimal
 
+from babel.numbers import parse_decimal
 from model_utils import Choices
 
 from items.models import Item
@@ -135,9 +136,11 @@ def _amazon_init(aff_item, amazon_item):
         elif Price.CurrencyCode == "USD":
             aff_item.currency = AffiliationItem.CURRENCIES.dollar
 
-        price_str = Price.FormattedPrice.pyval
-        aff_item.price = Decimal(
-            price_str.split(" ")[1].replace(",", ".")).quantize(Decimal('.01'))
+        price_str = Price.FormattedPrice.pyval.split(" ")
+        # fr_FR locale won't recognize the thousand dot separator !?!
+        price = parse_decimal(price_str[1], locale="de")
+
+        aff_item.price = Decimal(price).quantize(Decimal('.01'))
 
     if hasattr(amazon_item, "SmallImage"):
         aff_item.img_small = unicode(amazon_item.SmallImage.URL)

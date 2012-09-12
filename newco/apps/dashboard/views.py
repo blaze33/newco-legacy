@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from items.models import Content, Item
 from profiles.models import Profile
@@ -55,6 +56,11 @@ BOXES = {
         "mini_feed": "True",
         "page_url": reverse_lazy("dash", args=["all"]),
     },
+}
+
+WHAT_TO_FOLLOW_PARAMS = {
+    "users": {"class": User, "fieldname": "target_user_id", "nb_obj": 2},
+    "items": {"class": Item, "fieldname": "target_item_id", "nb_obj": 1},
 }
 
 
@@ -115,16 +121,12 @@ class DashboardView(ListView, ProcessProfileSearchView):
         elif self.page == "feed":
             #"Who to follow" List. For now, random on not followed people/items
             objects_followed = Follow.objects.filter(user=self.user)
-            user_ids = filter(None, objects_followed.values_list(
-                                                "target_user_id", flat=True))
-            item_ids = filter(None, objects_followed.values_list(
-                                                "target_item_id", flat=True))
-            non_fwed_profiles = Profile.objects.exclude(user_id__in=user_ids)
-            non_fwed_items = Item.objects.exclude(id__in=item_ids)
-            wtf = {
-                "profiles": non_fwed_profiles.order_by("?")[:2],
-                "items": non_fwed_items.order_by("?")[:1]
-            }
+            wtf = dict()
+            for key, value in WHAT_TO_FOLLOW_PARAMS.items():
+                ids = filter(None, objects_followed.values_list(
+                                            value.get("fieldname"), flat=True))
+                non_fwed = value.get("class").objects.exclude(id__in=ids)
+                wtf.update({key: non_fwed.order_by("?")[:value.get("nb_obj")]})
             context.update({"wtf": wtf})
 
         context.update({
@@ -141,3 +143,5 @@ class DashboardView(ListView, ProcessProfileSearchView):
             obj_followed = load_object(request)
             success_url = obj_followed.get_absolute_url()
             return process_following(request, obj_followed, success_url)
+        else:
+            return super(DashboardView, self).post(request, *args, **kwargs)
