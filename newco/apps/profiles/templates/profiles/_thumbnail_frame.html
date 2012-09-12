@@ -2,26 +2,26 @@
 {% load content_utils %}
 {% load url from future %}
 
-{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+{% with prof_tpl="profiles/_profile_display.html" prod_tpl="items/_product_display.html" class_name=object|to_class_name %}
 <div class="content-item thumbnail">
-    <div class="name"><a href="#"><img src="http://lorempixel.com/260/260/technics/?{{ content.id }}{{ item.id }}" alt=""></a></div>
+    <div class="name"><a href="{{ object.get_absolute_url }}"><img src="http://lorempixel.com/260/260/technics/?{{ object.id }}" alt=""></a></div>
     <div class="details" style="font-family: helvetica neue,arial,sans-serif;">
-        {% if content %}
-            {% with item=content.items.all.0 %}
-                <span class="content-item-mini">{% profile_pic content.author 20 %}</span>
-                {% with class_name=content|to_class_name %}{% with template="profiles/content_display/_"|add:class_name|add:".html" %}
-                    {% include template with display="thumbnail" content=content item=item p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
-                {% endwith %}{% endwith %}
+        {% if class_name == "question" or class_name == "answer" or class_name == "feature" or class_name == "feature" %}
+            {% with item=object.items.all.0 %}
+                <span class="content-item-mini">{% profile_pic object.author 20 %}</span>
+                {% with template="profiles/content_display/_"|add:class_name|add:".html" %}
+                    {% include template with display="thumbnail" content=object item=item prof_tpl=prof_tpl prod_tpl=prod_tpl only %}
+                {% endwith %}
                 <br><br>
-                <div class="expandable" style="color:#888888"><p>{% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}</p></div>
+                <div class="expandable" style="color:#888888"><p style="text-indent: 2em;">{% autoescape off %}<i>&laquo;&nbsp;{{ object.content }}&nbsp;&raquo;</i>{% endautoescape %}</p></div>
                 <br>
                 {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
             {% endwith %}
-        {% elif item %}
+        {% elif class_name == "item" %}
             <div class="details" style="font-size:12px;">
-                {% include i_link_tpl with object=item %}
+                {% include prod_tpl with object=object display="thumbnail" color="black" %}
             </div>
-            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+            {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
         {% endif %}
     </div>
 </div>

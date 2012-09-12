@@ -1,0 +1,22 @@
+{% load url from future %}
+{% load i18n %}
+{% load account_tags %}
+{% load content_utils %}
+
+{% spaceless%}
+
+{% if display == "text" %}
+    {% with tag_qs=object.get_profile.skills.all %}
+        <span class="myClassPopover"
+            data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'>{% profile_pic object 64 'single' %}</td><td align='right'>{% if not object == user %}{% include 'follow/form.html' with object=object %}{% endif %}</td></tr></table>"
+            data-content="
+                {% if object.reputation %}<p><a href='{% url 'faq' %}#reputation' style=' color: #000000 '><b>{% trans 'Reputation' %}</b></a>{% trans ':' %} {{ object.reputation.reputation_incremented }}</p>{% endif %}
+                {% if tag_qs %}<p><b>{% trans 'Skills' %}</b>{% trans ':' %}&nbsp;{% for tag in tag_qs %}<a href='{% url 'tagged_items' tag.slug %}'><span class='label'>{{ tag.name }}</span></a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}</p>{% endif %}" itemscope itemtype="http://schema.org/Person">
+            <a href="{{ object.get_absolute_url }}" itemprop="url"{% if color %} class="{{ color }}"{% endif %}><span itemprop="name">{% user_display object %}</span></a>
+        </span>
+    {% endwith %}
+{% elif display == "thumbnail" or display == "mini_feed" %}
+    <span itemscope itemtype="http://schema.org/Person"><a href="{{ object.get_absolute_url }}" itemprop="url"{% if color %} class="{{ color }}"{% endif %}><span itemprop="name">{% user_display object %}</span></a></span>
+{% endif %}
+
+{% endspaceless %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 00:04+0200\n"
+"POT-Creation-Date: 2012-09-12 12:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,16 @@ msgstr ""
 msgid "reputation"
 msgstr ""
 
+#: templates/profiles/_profile_display.html:13
+#: templates/profiles/_profile_info.html:22
+msgid "Reputation"
+msgstr ""
+
+#: templates/profiles/_profile_display.html:14
+#: templates/profiles/_profile_info.html:26
+msgid "Skills"
+msgstr ""
+
 #: templates/profiles/_profile_info.html:6
 msgid "About"
 msgstr ""
@@ -67,14 +77,6 @@ msgstr ""
 
 #: templates/profiles/_profile_info.html:18
 msgid "Subscription date"
-msgstr ""
-
-#: templates/profiles/_profile_info.html:22
-msgid "Reputation"
-msgstr ""
-
-#: templates/profiles/_profile_info.html:26
-msgid "Skills"
 msgstr ""
 
 #: templates/profiles/_profile_user_list.html:4
@@ -103,6 +105,8 @@ msgid "<a href=\"%(url)s\">answered</a> a question about"
 msgstr ""
 
 #: templates/profiles/content_display/_answer.html:9
+#: templates/profiles/content_display/_feature.html:7
+#: templates/profiles/content_display/_question.html:8
 msgid ":"
 msgstr ""
 
@@ -128,6 +132,11 @@ msgstr ""
 msgid "Add an answer"
 msgstr ""
 
+#: templates/profiles/content_display/_feature.html:7
+#, python-format
+msgid "suggested a <a href=\"%(url)s\">feature</a> on"
+msgstr ""
+
 #: templates/profiles/content_display/_feature.html:16
 #, python-format
 msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
@@ -148,6 +157,11 @@ msgstr ""
 
 #: templates/profiles/content_display/_link.html:24
 msgid "L:"
+msgstr ""
+
+#: templates/profiles/content_display/_question.html:8
+#, python-format
+msgid "asked a <a href=\"%(url)s\">question</a> about"
 msgstr ""
 
 #: templates/profiles/content_display/_question.html:16

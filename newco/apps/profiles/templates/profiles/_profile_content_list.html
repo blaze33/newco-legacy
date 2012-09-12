@@ -3,17 +3,17 @@
 
 {% if display != "mini_feed" %}{% scores_for_objects contents as score_dict %}{% endif %}
 
-{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+{% with prof_tpl="profiles/_profile_display.html" prod_tpl="items/_product_display.html" %}
 
 {% for content in contents %}{% with class_name=content|to_class_name %}
-    {% if not forloop.first and not mini_feed %}<hr>{% elif not forloop.first and mini_feed %}<br>{% endif %}
+    {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
     <div class="row content">
-        <div class="span{% if mini_feed %}4{% else %}7{%endif%}">
+        <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
 
         {% dict_entry_for_item content from score_dict as score %}
 
         {% with template="profiles/content_display/_"|add:class_name|add:".html" %}
-            {% include template with content=content author=content.author score=score user=user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl display=display only %}
+            {% include template with content=content author=content.author score=score user=user path=request.path prof_tpl=prof_tpl prod_tpl=prod_tpl display=display csrf_token=csrf_token only %}
         {% endwith %}
 
         </div>

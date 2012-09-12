@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 00:04+0200\n"
-"PO-Revision-Date: 2012-09-12 00:09\n"
+"POT-Creation-Date: 2012-09-12 12:24+0200\n"
+"PO-Revision-Date: 2012-09-12 12:25\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,6 +55,16 @@ msgstr "profil"
 msgid "reputation"
 msgstr "réputation"
 
+#: templates/profiles/_profile_display.html:13
+#: templates/profiles/_profile_info.html:22
+msgid "Reputation"
+msgstr "Réputation"
+
+#: templates/profiles/_profile_display.html:14
+#: templates/profiles/_profile_info.html:26
+msgid "Skills"
+msgstr "Compétences"
+
 #: templates/profiles/_profile_info.html:6
 msgid "About"
 msgstr "A propos"
@@ -70,14 +80,6 @@ msgstr "Site internet"
 #: templates/profiles/_profile_info.html:18
 msgid "Subscription date"
 msgstr "Date d'inscription"
-
-#: templates/profiles/_profile_info.html:22
-msgid "Reputation"
-msgstr "Réputation"
-
-#: templates/profiles/_profile_info.html:26
-msgid "Skills"
-msgstr "Compétences"
 
 #: templates/profiles/_profile_user_list.html:4
 msgid "Members:"
@@ -102,16 +104,18 @@ msgstr "Chercher un utilisateur"
 #: templates/profiles/content_display/_answer.html:9
 #, python-format
 msgid "<a href=\"%(url)s\">answered</a> a question about"
-msgstr "<a href=\"%(url)s\">a répondu</a> à une question à propos de"
+msgstr "a <a href=\"%(url)s\">répondu</a> à une question à propos de"
 
 #: templates/profiles/content_display/_answer.html:9
+#: templates/profiles/content_display/_feature.html:7
+#: templates/profiles/content_display/_question.html:8
 msgid ":"
 msgstr " :"
 
 #: templates/profiles/content_display/_answer.html:19
 #, python-format
 msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
-msgstr "<a href=\"%(url)s\" class=\"black\">a répondu</a> à une question à propos de"
+msgstr "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos de"
 
 #: templates/profiles/content_display/_answer.html:22
 msgid "answered a question about"
@@ -129,6 +133,11 @@ msgstr "R :"
 #: templates/profiles/content_display/_answer.html:44
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
+
+#: templates/profiles/content_display/_feature.html:7
+#, python-format
+msgid "suggested a <a href=\"%(url)s\">feature</a> on"
+msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #: templates/profiles/content_display/_feature.html:16
 #, python-format
@@ -151,6 +160,11 @@ msgstr "a posté un lien à propos de"
 #: templates/profiles/content_display/_link.html:24
 msgid "L:"
 msgstr "L :"
+
+#: templates/profiles/content_display/_question.html:8
+#, python-format
+msgid "asked a <a href=\"%(url)s\">question</a> about"
+msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
 
 #: templates/profiles/content_display/_question.html:16
 #, python-format
