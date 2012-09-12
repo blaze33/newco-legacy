@@ -8,7 +8,7 @@
 {% for content in contents %}{% with class_name=content|to_class_name %}
     {% if not forloop.first and not mini_feed %}<hr>{% elif not forloop.first and mini_feed %}<br>{% endif %}
     <div class="row content">
-        <div class="span{% if mini_feed %}4{% else %}7{%endif%}">
+        <div class="span{% if display == "mini_feed" %}4{% else %}7{%endif%}">
 
         {% dict_entry_for_item content from score_dict as score %}
 
