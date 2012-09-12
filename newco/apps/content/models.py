@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models import permalink
+from django.utils.translation import ugettext_lazy as _
+
+from django.contrib.contenttypes import generic
+
 from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes import generic
 from voting.models import Vote
 
 
@@ -61,7 +63,11 @@ class Item(BaseModel):
         verbose_name = _("item")
 
     def __unicode__(self):
-        return unicode(self.get('name'))
+        name = self.get("name")
+        if name:
+            return unicode(name)
+        else:
+            return unicode("<%s: %d>" % (self.get("class"), self.id))
 
     def link_to(self, item, data):
         if 'relationship' in data:
