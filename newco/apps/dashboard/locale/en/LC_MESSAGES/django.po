@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 15:43+0200\n"
+"POT-Creation-Date: 2012-09-12 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,7 +70,8 @@ msgstr ""
 msgid "Your latest contributions"
 msgstr ""
 
-#: templates/dashboard/_box.html:8 templates/dashboard/contribution.html:11
+#: templates/dashboard/_box.html:7 templates/dashboard/contribution.html:11
+#: templates/dashboard/feed.html:18
 msgid ":"
 msgstr ""
 
@@ -108,7 +109,7 @@ msgstr ""
 
 #: templates/dashboard/_subnav.html:29
 msgid ""
-"it&lsquo;s still baking, we know you&lsquo;re hungry, but we do too, please "
+"It&lsquo;s still baking. We know you&lsquo;re hungry, but we do too, please "
 "be patient ;)"
 msgstr ""
 
@@ -120,8 +121,8 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:38 templates/dashboard/_subnav.html:40
-msgid "Exactly as others see it! Except the 'edit' button :P"
+#: templates/dashboard/_subnav.html:38
+msgid "Exactly as others see it, except the 'edit' button :P"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:40
@@ -157,11 +158,11 @@ msgid ""
 "ideas, send us an email!\">tools</a> we have to help you contribute."
 msgstr ""
 
-#: templates/dashboard/contribution.html:10
+#: templates/dashboard/contribution.html:11
 msgid "Activity on your domains of skills"
 msgstr ""
 
-#: templates/dashboard/contribution.html:11
+#: templates/dashboard/contribution.html:12
 msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 
