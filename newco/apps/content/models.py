@@ -7,6 +7,16 @@ from django.contrib.contenttypes import generic
 from voting.models import Vote
 
 
+class GraphQuery(object):
+
+    def __get__(self, instance, owner):
+        self.item = instance
+        return self
+
+    def __getattr__(self, name):
+        return self.item.successors.filter(data__contains={'class': name})
+
+
 class VoteModel(TimeStampedModel):
     """ VoteModel
     An abstract base class with timestamps and votes.
@@ -56,6 +66,7 @@ class Item(BaseModel):
     successors = models.ManyToManyField('self', through='Relation',
                                      symmetrical=False,
                                      related_name='predecessors')
+    graph = GraphQuery()
 
     class Meta:
         verbose_name = _("item")
