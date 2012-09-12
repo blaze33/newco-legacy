@@ -1,0 +1,32 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load ifsetting_tag %}
+{% load account_tags %}
+
+{% block head_title %}{% trans "Products" %}{% endblock %}
+
+{% block body %}
+
+<h1>Make your choice !</h1>
+<br />
+{% if object_list %}
+    <ul>
+        {% for item in object_list %}
+            <li>
+                <a href='{{ item.get_absolute_url  }}'>{{ item }}</a>
+                &nbsp;
+                <a href='{% url content_edit model item.id %}'>
+                    <i class="icon-edit"></i>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No products are available.</p>
+{% endif %}
+<p>
+<a class="btn" href="{% url content_create model %}"><i class="icon-plus-sign"></i> Add an entry</a>
+</p>
+{% endblock %}

@@ -9,4 +9,12 @@ def search_images(query):
         'searchType': 'image',
         }
     r = requests.get("https://www.googleapis.com/customsearch/v1", params=payload)
-    return r
+
+    return flatten(r)
+
+def flatten(r):
+    flat = []
+    for i in r.json['items']:
+        i.update(i.pop('image'))
+        flat.append(i)
+    return flat

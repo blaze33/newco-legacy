@@ -25,8 +25,6 @@
     <div class="row">
         <div class="span4">
             {{ form|as_bootstrap }}
-            <br>
-            <button type="submit" class="btn" name="create">{% trans "Submit" %}</button>
 
             {% if item %}{% if item.affiliationitem_set.all %}<br><br>
                 <h3>{% trans "Linked Products" %}</h3>
@@ -63,12 +61,27 @@
             <ul class="thumbnails connectedSortable selected-list" id="selected-list">
             </ul>
           </td>
-          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1"><p>Trash <i class="icon-trash"></i></p></td>
+          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+            <p>Trash <i class="icon-trash"></i></p>
+          </td>
         </tr>
         </tbody>
     </table>
     </div>
+    <input type="hidden" name="img_list" id="img_data">
+    <input type="submit" class="btn" value='{% trans "Submit" %}'/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
+{% endblock %}
+
+{% block extra_script %}
+    {{  block.super  }}
+    <script type="text/javascript">
+        pics = {{  img_album|safe  }};
+        results = {{  img_search|safe  }};
+        if ( pics.length == 0 ) {
+            pics.push.apply(pics, results);
+        }
+    </script>
 {% endblock %}
