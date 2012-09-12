@@ -40,6 +40,9 @@ class Item(models.Model):
         return ("item_detail", None, {"model_name": self._meta.module_name,
                                       "pk": self.id,
                                       "slug": self.slug})
+
+    def node(self):
+        return sync_products(Item, self)
 register(Item)
 
 
@@ -181,3 +184,5 @@ class Story(models.Model):
     class Meta:
         verbose_name = _("story")
         verbose_name_plural = _("stories")
+
+from content.transition import sync_products
