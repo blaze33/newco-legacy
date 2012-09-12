@@ -48,7 +48,9 @@
                         {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                     {% endif %}
                 </p></div>
-                <div class="span2 right"><br>{% profile_pic user 20 %}</div>
+                <div class="span2 right">
+                	{% include "items/_author_date.html" with object=answer %}
+                	{% profile_pic user 20 %}</div>
             </div>
         {% endif %}{% endfor %}
 		<br><br>
