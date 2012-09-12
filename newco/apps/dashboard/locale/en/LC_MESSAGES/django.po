@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 23:58+0200\n"
+"POT-Creation-Date: 2012-09-12 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,12 +70,12 @@ msgstr ""
 msgid "Your latest contributions"
 msgstr ""
 
-#: templates/dashboard/_box.html:6
+#: templates/dashboard/_box.html:8 templates/dashboard/contribution.html:11
 msgid ":"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:11
-msgid "Monitor all that concerns you!"
+msgid "Monitor all that concerns you"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:14
@@ -90,8 +90,8 @@ msgstr ""
 msgid "If you want to use your time and knowledge wisely, click here!"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:20 templates/dashboard/_subnav.html:29
-msgid "Available soon"
+#: templates/dashboard/_subnav.html:20
+msgid "Grrrr... Don't bother me, I'm working on it"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:22
@@ -104,6 +104,12 @@ msgstr ""
 
 #: templates/dashboard/_subnav.html:28
 msgid "Shopping"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:29
+msgid ""
+"it&lsquo;s still baking, we know you&lsquo;re hungry, but we do too, please "
+"be patient ;)"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:31

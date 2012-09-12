@@ -2,6 +2,18 @@
 {% load account_tags %}
 {% load follow_tags %}
 
+<div class="row"><div class="span12">
+<ul class="thumbnails">
+	{% for image in album|slice:":4" %}
+      <li class="span3">
+        <a href="{{  image.data.contextLink  }}" target="_blank" class="thumbnail">
+          <img src="{{  image.data.thumbnailLink  }}" alt="{{  image.data.snippet  }}" height="128px">
+        </a>
+      </li>
+	{% endfor %}
+</ul>
+</div></div>
+
 <div class="row one_row" rel="popover" itemscope itemtype="http://schema.org/Product"><div class="span7">
     <div class="row">
         <div class="span6"><h1 itemprop="name">{{ item }}</h1></div>

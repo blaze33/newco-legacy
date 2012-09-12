@@ -8,7 +8,7 @@
 {% block dashboard %}
 
     <div class="span7 well">
-        <h3>{% trans "Activity on your domains of skills" %}:
+        <h3>{% trans "Activity on your domains of skills" %}{% trans ":" %}
             <br><small>{% trans "Latest activity on your skills tags... Maybe you'd like to contribute?" %}</small></h3>
             <hr>
         {% include "profiles/_profile_content_list.html" with contents=object_list display="text" %}
