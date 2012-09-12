@@ -12,7 +12,7 @@
         <div class="offset1 span2" align="left">
             <div class="row well well-small">
                 <h5>{% trans "Who to follow?" %} (<a href="{% url 'profile_list' %}">{% trans "View all" %}</a>)</h5>
-                <div id="profiles_list2">{% for profile in wtf.profiles %}{% include "dashboard/_thumbnail_profile.html" with profile=profile %}{% endfor %}</div>
+                <div id="profiles_list2">{% for user in wtf.users %}{% include "dashboard/_thumbnail_profile.html" with user=user %}{% endfor %}</div>
             </div>
             <div class="row well well-small">
                 <h5>{% trans "Products you may like" %}</h5>

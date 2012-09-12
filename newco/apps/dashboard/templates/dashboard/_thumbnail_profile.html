@@ -1,29 +1,16 @@
 {% load content_utils %}
+{% load account_tags %}
 
-{% if not profile_user %}
-    {% with profile_user=profile.user %}
-        <div class="profile-item-small thumbnail">
-            <div class="name">
-                <a href="{{ profile.get_absolute_url }}">
-                    <h5>
-                        {% profile_pic profile_user 32 %}
-                        {{ profile.name|truncatechars:10 }}
-                    </h5>
-                </a>
-            </div>
-            <div class="details">{% include "follow/form.html" with object=profile_user %}</div>
-        </div>
-    {% endwith %}
-{% else %}
-    <div class="profile-item-small thumbnail">
-        <div class="name">
-            <a href="{{ profile.get_absolute_url }}">
-                <h5>
-                    {% profile_pic profile_user 32 %}
-                    {{ profile.name|truncatechars:10 }}
-                </h5>
-            </a>
-        </div>
-        <div class="details">{% include "follow/form.html" with object=profile_user %}</div>
+{% user_display user as username %}
+
+<div class="profile-item-small thumbnail">
+    <div class="name">
+        <a href="{{ profile.get_absolute_url }}">
+            <h5>
+                {% profile_pic user 32 %}
+                {{ username|truncatechars:10 }}
+            </h5>
+        </a>
     </div>
-{% endif %}
+    <div class="details">{% include "follow/form.html" with object=user %}</div>
+</div>
