@@ -193,6 +193,7 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "chosen",
 
     # Deployment
     "south",

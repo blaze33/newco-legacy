@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load content_utils %}
+{% load url from future %}
+
+{% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
+<div class="content-item thumbnail">
+    <div class="name"><a href="#"><img src="http://lorempixel.com/260/260/technics/?{{ content.id }}{{ item.id }}" alt=""></a></div>
+    <div class="details" style="font-family: helvetica neue,arial,sans-serif;">
+        {% if content %}
+            {% with item=content.items.all.0 %}
+                <span class="content-item-mini">{% profile_pic content.author 20 %}</span>
+                {% with class_name=content|to_class_name %}{% with template="profiles/content_display/_"|add:class_name|add:".html" %}
+                    {% include template with display="thumbnail" content=content item=item p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl only %}
+                {% endwith %}{% endwith %}
+                <br><br>
+                <div class="expandable" style="color:#888888"><p>{% autoescape off %}<i>"{{ content.content }}"</i>{% endautoescape %}</p></div>
+                <br>
+                {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+            {% endwith %}
+        {% elif item %}
+            <div class="details" style="font-size:12px;">
+                {% include i_link_tpl with object=item %}
+            </div>
+            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endwith %}

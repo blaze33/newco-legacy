@@ -2,24 +2,20 @@
 
 {% load i18n %}
 
-{% block subtitle %}{% trans "We provide you with all the things that concerns you in this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}{% endblock %}
+{% block subtitle %}{% trans "We provide you with all the things that concern you on this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}{% endblock %}
 
 {% block dashboard %}
     <div class="row" id="boxes_container">
-        {% for box in boxes_list %}
-            {% include "dashboard/_box.html" with box=box %}
-        {% endfor %}
+        {% for key, box in boxes.items %}{% include "dashboard/_box.html" with box=box %}{% endfor %}
     </div>
-
     <br>
-
-    <p class="lead">More tools to come on the dashboard, very very soon ;) ! ... If you have any idea of how to improve this page, please <a data-toggle="modal" href="#feedbackModal">tell it to us</a>, we can't wait to read yours !</p>
+    <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
 {% endblock %}
 
 {% block extra_body_base %}
     {{ block.super }}
     <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
-        {% for box in boxes_list %}
+        {% for box_key, box in boxes_dict %}
             $(function(){
                 var collapse_div = $('#{{ box.name }}_well');
                 var icon_change = $('[rel=expand_btn_{{ box.name }}]');

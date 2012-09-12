@@ -75,7 +75,7 @@ requests==0.13.3
 
 ## tagging + autosuggest
 django-taggit==0.9.3
-hg+https://hg@bitbucket.org/fabian/django-taggit-autosuggest@925c1611d764#egg=django_taggit_autosuggest
+django-taggit-autosuggest==0.2
 
 ## voting application
 django-voting==0.1

@@ -1,17 +1,26 @@
 {% extends "dashboard/base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 
-{% block subtitle %}{% trans "Activity from what you follow" %}{% endblock %}
+{% block subtitle %}{% trans "Activity from what you follow." %}{% endblock %}
 
 {% block dashboard %}
-<div class="row">
-    <div class="span7">
-        {% include "profiles/_profile_content_list.html" with contents=object_list %}
+{% url "profile_list" as profile_list_url %}
+    <div class="row">
+        <div class="span7">{% include "profiles/_profile_content_list.html" with contents=object_list display="text" %}</div>
+        <div class="offset1 span2" align="left">
+            <div class="row well well-small">
+                <h5>{% trans "Who to follow?" %} (<a href="{% url 'profile_list' %}">{% trans "View all" %}</a>)</h5>
+                <div id="profiles_list2">{% for profile in wtf.profiles %}{% include "dashboard/_thumbnail_profile.html" with profile=profile %}{% endfor %}</div>
+            </div>
+            <div class="row well well-small">
+                <h5>{% trans "Products you may like" %}</h5>
+                <div>{% for item in wtf.items %}<div class="product-item-small thumbnail">
+                    <div class="name"><a href="{{ item.get_absolute_url }}"><h5>{{ item.name|truncatechars:15 }}</h5></a></div>
+                    <div class="details">{% include "follow/form.html" with object=item %}</div>
+                </div>{% endfor %}</div>
+            </div>
+        </div>
     </div>
-    <div class="span2 well">
-        <h5>Who to follow ...<br><br>Products you may like...<br><br>Tags you may like ...</h5>
-        <br> XXX<br> XXX
-    </div>
-</div>
 {% endblock %}

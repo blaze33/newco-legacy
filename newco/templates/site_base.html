@@ -52,47 +52,36 @@ due to bad pixel fitting of small icons.
 {% block extra_script %}
     <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-    <script type="text/javascript">
-    function TriggerMasonry(){
-    	$('#contents_list1').masonry({
-			itemSelector : '.content-item',
-	        isAnimated: true,
-	        isFitWidth: true,
-		});
-    }
-    $(document).ready(function() {
-  // simple example, using all default options unless overridden globally
-	  TriggerMasonry();
-	  $('div.expandable p').expander( 
-			{
-				afterExpand:function() {TriggerMasonry();},
-				//Timer to relaunch Masonry after the onCollapse event
-				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,200);
-				}
-	  });
-    });
-    </script>
-	<script type="text/javascript">
-    $(document).ready(function() {
-  // simple example, using all default options unless overridden globally
-	  $('div.expandable p').expander( 
-			{collapseTimer: 2000,
-				afterCollapse:function(byUser) {
-				$('#contents_list1').masonry({
-					itemSelector : '.content-item',
-			        isAnimated: true,
-			        isFitWidth: true,
-				});
-			}
-			
-	  });
-    });
-    </script>
     <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-   
+    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+    <script type="text/javascript">
+    function TriggerMasonry(){
+    	$('#thumbnails_list').masonry({
+			itemSelector : '.content-item',
+	        isAnimated: true,
+	        isFitWidth: true,
+            // columnWidth: 180,
+            columnWidth: function( containerWidth ) {
+                return containerWidth / 40; // Seb: this thing is a mess: I think it's a matter of denominator 
+            },
+		});
+    }
+    $(document).ready(function() {
+       // simple example, using all default options unless overridden globally
+	  TriggerMasonry();
+      setTimeout(TriggerMasonry,4000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
+	  $('div.expandable').expander({
+				afterExpand:function() {TriggerMasonry();},
+				//Timer to relaunch Masonry after the onCollapse event
+				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
+				}
+	 	});
+    });
+    </script>
+
+    {% include "autocomplete_light/static.html" %}
     <script type="text/javascript">
     $(document).ready(function() {
         $('input#main_autocomplete').yourlabsAutocomplete({
@@ -129,7 +118,6 @@ due to bad pixel fitting of small icons.
 		});
 	});
 	</script>
-    {% include 'autocomplete_light/static.html' %}
 {% endblock %}
 
 {% block extra_body_base %}
