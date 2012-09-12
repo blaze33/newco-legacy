@@ -44,7 +44,7 @@ class ItemForm(ModelForm):
 
     class Meta:
         model = Item
-        exclude = ('context')
+        exclude = ('successors')
 
 class RelationForm(ItemForm):
     class Meta:
