@@ -12,7 +12,7 @@
 
         {% dict_entry_for_item content from score_dict as score %}
 
-        {% with template="profiles/content_display/_"|add:class_name|add:".html" %}
+        {% with template="items/content_display/_"|add:class_name|add:".html" %}
             {% include template with content=content author=content.author score=score user=user path=request.path prof_tpl=prof_tpl prod_tpl=prod_tpl display=display csrf_token=csrf_token only %}
         {% endwith %}
 

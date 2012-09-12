@@ -1,4 +1,3 @@
-{% load i18n %}
 {% load content_utils %}
 {% load url from future %}
 
@@ -9,7 +8,7 @@
         {% if class_name == "question" or class_name == "answer" or class_name == "feature" or class_name == "feature" %}
             {% with item=object.items.all.0 %}
                 <span class="content-item-mini">{% profile_pic object.author 20 %}</span>
-                {% with template="profiles/content_display/_"|add:class_name|add:".html" %}
+                {% with template="items/content_display/_"|add:class_name|add:".html" %}
                     {% include template with display="thumbnail" content=object item=item prof_tpl=prof_tpl prod_tpl=prod_tpl only %}
                 {% endwith %}
                 <br><br>
