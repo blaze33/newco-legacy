@@ -1,0 +1,25 @@
+{% load voting_tags %}
+{% load content_utils %}
+
+{% if display != "mini_feed" %}{% scores_for_objects contents as score_dict %}{% endif %}
+
+{% with prof_tpl="profiles/_profile_display.html" prod_tpl="items/_product_display.html" %}
+
+{% for content in contents %}{% with class_name=content|to_class_name %}
+    {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
+    <div class="row content">
+        <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
+
+        {% dict_entry_for_item content from score_dict as score %}
+
+        {% with template="items/content_display/_"|add:class_name|add:".html" %}
+            {% include template with content=content author=content.author score=score user=user path=request.path prof_tpl=prof_tpl prod_tpl=prod_tpl display=display csrf_token=csrf_token only %}
+        {% endwith %}
+
+        </div>
+    </div>
+{% endwith %}{% endfor %}
+
+{% endwith %}
+
+{# TODO: handle redirection after content edition #}

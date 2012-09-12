@@ -8,7 +8,7 @@
 <div class="row">
     <ul class="nav nav-list">
         {% if user.is_authenticated %}
-            <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" rel="tooltip-right" title="{% trans 'Monitor all that concerns you!' %}"><b>{% trans "Dashboard" %}</b></a></li>
+            <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" rel="tooltip-right" title="{% trans 'Monitor all that concerns you' %}"><b>{% trans "Dashboard" %}</b></a></li>
 
             <li class="divider"></li>
             <li{% if page == "feed" %} class="active"{% endif %}><a href="{% url 'dash' 'feed' %}" rel="tooltip-right" title="{% trans 'Activity from what you follow' %}">{% trans "My newsfeed" %}</a></li>
@@ -17,7 +17,7 @@
             <li class="nav-header">{% trans "Contributing" %}</li>
             <li{% if page == "contribution" %} class="active"{% endif %}><a href="{% url 'dash' 'contribution' %}" rel="tooltip-right" title="{% trans 'If you want to use your time and knowledge wisely, click here!' %}">{% trans "Contribution center" %}</a></li>
 
-            <li{% if page == "collaboration" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans 'Available soon' %}"><span class="muted">{% trans "Teamwork" %}</span></a></li>
+            <li{% if page == "collaboration" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "Grrrr... Don't bother me, I'm working on it" %}"><span class="muted">{% trans "Teamwork" %}</span></a></li>
 
             <li{% if page == "draft" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans '&lsquo;Drafts&rsquo; contains your un-published contributions' %}" href="{% url 'dash' 'draft' %}">{% trans "Drafts" %}</a></li>
 
@@ -26,7 +26,7 @@
 
             <li class="divider"></li>
             <li class="nav-header">{% trans "Shopping" %}</li>
-            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a rel="tooltip-right" title="{% trans 'Available soon' %}"><span class="muted">{% trans "Shopping notes" %}</span></a></li>
+            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a rel="tooltip-right" title="{% trans 'it&lsquo;s still baking, we know you&lsquo;re hungry, but we do too, please be patient ;)' %}"><span class="muted">{% trans "Shopping notes" %}</span></a></li>
 
             <li{% if page == "purchase" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans 'We are working on it!' %}"><span class="muted">{% trans "Purchase history" %}</span></a></li>
             <li class="divider"></li>
