@@ -78,7 +78,7 @@
             <br>
             <div id="thumbnails_list">{% for item in question.items.all %}
             
-                {% include "profiles/_thumbnail_frame.html" with item=item only %}
+                {% include "profiles/_thumbnail_frame.html" with item=item content_item_small="True" only %}
         
             {% endfor %}</div>
         </div>

@@ -6,7 +6,7 @@
 
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
 
-<div class="content-item thumbnail">
+<div class="content-item {% if content_item_small %}content-item-small{% endif %} thumbnail">
     <div class="name"><a href="#"><img src="http://lorempixel.com/260/260/technics/?{{ content.id }}" alt=""></a></div>
     <div class="details" style="font-family: helvetica neue,arial,sans-serif;">
         
