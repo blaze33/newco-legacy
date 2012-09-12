@@ -33,7 +33,7 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 python-amazon-product-api==0.2.5
 
 # lxml required by amazon api (3.0 alpha 2 released)
-#lxml==2.3.4
+lxml==2.3.4
 
 ## pinax-theme-bootstrap
 pinax-theme-bootstrap==2.0.4
@@ -49,14 +49,14 @@ django-storages==1.1.4  ##TODO 1.1.5 released => needs to be tested
 python-dateutil==2.1
 
 ## memcache interface
-#pylibmc==1.2.3
-#django-pylibmc-sasl==0.2.4
+pylibmc==1.2.3
+django-pylibmc-sasl==0.2.4
 ## memcache configuration for heroku
-#django-heroku-memcacheify==0.2  ## 0.3 "Fixing broken memcachier support"
+django-heroku-memcacheify==0.2  ## 0.3 "Fixing broken memcachier support"
 
 ## production webserver
 gunicorn==0.14.6
-#gevent==0.13.7
+gevent==0.13.7
 greenlet==0.3.4
 
 ## Database backends
@@ -71,7 +71,7 @@ raven==1.9.4
 
 ## tagging + autosuggest
 django-taggit==0.9.3
-hg+https://hg@bitbucket.org/fabian/django-taggit-autosuggest@925c1611d764#egg=django_taggit_autosuggest
+django-taggit-autosuggest==0.2
 
 ## voting application
 django-voting==0.1

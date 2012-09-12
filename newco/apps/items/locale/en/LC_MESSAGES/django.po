@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:09+0200\n"
+"POT-Creation-Date: 2012-09-11 18:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,39 +17,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:65 forms.py:72
+#: forms.py:61
+msgid "No results matched"
+msgstr ""
+
+#: forms.py:66 forms.py:73
 msgid "Pick a product."
 msgstr ""
 
-#: forms.py:69
+#: forms.py:70
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:82
+#: forms.py:83
 msgid "Select one or several products using Enter and the Arrow keys"
 msgstr ""
 
-#: forms.py:114
+#: forms.py:115
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:159
+#: forms.py:160
 msgid "Link description"
 msgstr ""
 
-#: forms.py:213
+#: forms.py:214
 msgid "positive"
 msgstr ""
 
-#: forms.py:215
+#: forms.py:216
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:218
+#: forms.py:219
 msgid "negative"
 msgstr ""
 
-#: forms.py:220
+#: forms.py:221
 msgid "What feature do you dislike?"
 msgstr ""
 
@@ -214,7 +218,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:21 templates/items/feature_form.html:17
 #: templates/items/item_form.html:29 templates/items/link_form.html:16
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 msgid "Submit"
 msgstr ""
 
@@ -393,6 +397,6 @@ msgstr ""
 msgid "Question"
 msgstr ""
 
-#: templates/items/question_form.html:16
+#: templates/items/question_form.html:15
 msgid "Ask something:"
 msgstr ""

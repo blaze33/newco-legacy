@@ -2,57 +2,62 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:09+0200\n"
-"PO-Revision-Date: 2012-09-11 18:13\n"
-"Last-Translator:   <sebastien.worms@gmail.com>\n"
+"POT-Creation-Date: 2012-09-11 18:21+0200\n"
+"PO-Revision-Date: 2012-09-11 18:12\n"
+"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: forms.py:65 forms.py:72
-msgid "Pick a product."
-msgstr "Choisissez un produit."
+#: forms.py:61
+msgid "No results matched"
+msgstr "Pas de résultats correspondant à la requête"
 
-#: forms.py:69
+#: forms.py:66 forms.py:73
+msgid "Pick a product."
+msgstr "Choisissez un produit"
+
+#: forms.py:70
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:82
+#: forms.py:83
 msgid "Select one or several products using Enter and the Arrow keys"
 msgstr ""
-"Sélectionnez un ou plusieurs produits en utilisant \"Entrée\" ou les flèches"
+"Choisissez un ou plusieurs produits en utilisant la touche Entrée et les "
+"flèches de direction."
 
-#: forms.py:114
+#: forms.py:115
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:159
+#: forms.py:160
 msgid "Link description"
 msgstr "Description du lien"
 
-#: forms.py:213
+#: forms.py:214
 msgid "positive"
 msgstr "positive"
 
-#: forms.py:215
+#: forms.py:216
 msgid "What feature do you like?"
 msgstr "Quelle caractéristique apprécies-tu ?"
 
-#: forms.py:218
+#: forms.py:219
 msgid "negative"
 msgstr "négative"
 
-#: forms.py:220
+#: forms.py:221
 msgid "What feature do you dislike?"
 msgstr "Quelle caractéristique te déplait ?"
 
@@ -136,11 +141,11 @@ msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
 #: views.py:257 views.py:401
 msgid "Top Questions"
-msgstr "Meilleures questions"
+msgstr "Les meilleurs questions"
 
 #: views.py:258 views.py:402
 msgid "Latest Questions"
-msgstr "Dernières questions"
+msgstr "Les dernières questions"
 
 #: templates/items/_ask_modal.html:8
 msgid "Ask..."
@@ -184,11 +189,11 @@ msgstr "Publier un lien externe"
 
 #: templates/items/_question_list.html:14 templates/items/item_detail.html:126
 msgid "Ask a new question!"
-msgstr "Posez une nouvelle question !"
+msgstr "Poser une nouvelle question !"
 
 #: templates/items/_question_list.html:15 templates/items/item_detail.html:127
 msgid "No question yet! Ask the first one here!"
-msgstr "Pas encore de question ! Posez la première ici !"
+msgstr "Pas de question pour l'instant ! Soyez le premier à en poser une !"
 
 #: templates/items/_question_list.html:68
 #: templates/items/question_detail.html:57
@@ -217,7 +222,7 @@ msgstr "Votre réponse à <i>%(question)s</i> :"
 
 #: templates/items/answer_form.html:21 templates/items/feature_form.html:17
 #: templates/items/item_form.html:29 templates/items/link_form.html:16
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -309,7 +314,7 @@ msgstr "Acheter"
 
 #: templates/items/item_detail.html:122
 msgid "Ask a new question:"
-msgstr "Posez une nouvelle question :"
+msgstr "Poser une nouvelle question"
 
 #: templates/items/item_form.html:16
 msgid "Item"
@@ -346,29 +351,29 @@ msgstr "Ajouter un produit"
 #: templates/items/item_list_base.html:52
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a> are available for search terms "
-"<i>\"%(search_terms)s\"</i>."
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
+"\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
-" class=\"label\">%(tagname)s</span></a> correspondant aux termes de "
-"recherche <i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a> correspondant aux termes de recherche "
+"<i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a> are available."
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
-" class=\"label\">%(tagname)s</span></a>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a>."
 
 #: templates/items/item_list_base.html:57
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible correspondant aux termes de recherche "
-"<i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible correspondant aux termes de recherche <i>"
+"\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:59
 msgid "No products are available."
@@ -384,7 +389,7 @@ msgstr "Plus vieux au plus récent"
 
 #: templates/items/item_list_base.html:69
 msgid "Most popular"
-msgstr "Les plus populaires"
+msgstr "Plus populaire"
 
 #: templates/items/link_form.html:6
 msgid "Link"
@@ -403,7 +408,7 @@ msgstr "Produits Associés"
 msgid "Question"
 msgstr "Question"
 
-#: templates/items/question_form.html:16
+#: templates/items/question_form.html:15
 msgid "Ask something:"
 msgstr "Demandez quelque chose :"
 
@@ -422,7 +427,8 @@ msgstr "Demandez quelque chose :"
 #~ "                    <option value=\"0\">Choose</option>\n"
 #~ "                    <option value=\"1\">Newest to Oldest</option>\n"
 #~ "                    <option value=\"2\">Oldest to Newest</option>\n"
-#~ "                </select><button type=\"submit\" class=\"btn\">Sort</button>\n"
+#~ "                </select><button type=\"submit\" class=\"btn\">Sort</"
+#~ "button>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"

@@ -5,8 +5,8 @@
 {% load account_tags %}
 
 {% block extra_script %}
-{{ block.super }}
-<script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
 {% endblock %}
 
 {% block head_title %}{% user_display user as username %}{% blocktrans %}Home: {{ username }}{% endblocktrans %}{% endblock %}
@@ -14,13 +14,13 @@
 {% block body_base %}
     <div class="container"><header class="jumbotron subhead" id="overview"><div class="subnav subnav-fixed"><ul class="nav nav-pills">
         <li style="padding:10px"><b>{% trans "NewCo empowers people to buy better" %}</b></li>
-        <li class="dropdown{% if not '/last/' in request.path and not '/newsfeed/' in request.path %} active{% endif %}" id="popular"><a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
-        <li class="dropdown{% if '/last/' in request.path %} active{% endif %}" id="last"><a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
-        <li class="dropdown{% if '/newsfeed/' in request.path %} active{% endif %}" id="contrib"><a class="dropdown-toggle" data-toggle="dropdown" href="#contrib" class="black">{% trans "Community" %} <span class="caret"></span></a>
+        <li{% if not '/last/' in request.path and not '/newsfeed/' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
+        <li {% if '/last/' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
+        <li class="dropdown{% if '/newsfeed/' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li {% if "/newsfeed/" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
                 <li class="divider"></li>
-                <li><a href="{% url 'dash' 'feed' %}">{% trans "Your newsfeed" %}</a></li>
+                <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
             </ul>
         </li>
     </ul></div></header></div>

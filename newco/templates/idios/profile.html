@@ -54,9 +54,9 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history %}</div>
-            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed %}</div>
-            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers %}</div>
+            <div id="history" class="tab-pane active">{% include "profiles/_profile_content_list.html" with contents=history display="text" %}</div>
+            <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
+            <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
         </div>
     </div>
 </div>{% endblock %}

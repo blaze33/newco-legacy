@@ -1,9 +1,7 @@
 {% load voting_tags %}
 {% load content_utils %}
 
-{% scores_for_objects contents as score_dict %}
-
-{# TODO: handle redirection after content edition #}
+{% if display != "mini_feed" %}{% scores_for_objects contents as score_dict %}{% endif %}
 
 {% with p_link_tpl="profiles/_popover_link.html" i_link_tpl="items/_popover_link.html" %}
 
@@ -15,7 +13,7 @@
         {% dict_entry_for_item content from score_dict as score %}
 
         {% with template="profiles/content_display/_"|add:class_name|add:".html" %}
-            {% include template with content=content author=content.author score=score user=user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl mini_feed=mini_feed only %}
+            {% include template with content=content author=content.author score=score user=user path=request.path p_link_tpl=p_link_tpl i_link_tpl=i_link_tpl display=display only %}
         {% endwith %}
 
         </div>
@@ -23,3 +21,5 @@
 {% endwith %}{% endfor %}
 
 {% endwith %}
+
+{# TODO: handle redirection after content edition #}
