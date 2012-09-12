@@ -52,6 +52,20 @@
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
 
+
+.content-item-small img {
+    /*float: right;*/
+    margin-left: 2px;
+    width: 124px;
+    height: 124px;
+    border-radius: 2px;
+}
+
+.content-item-small { line-height: 18px; width: 125px; margin: 2px }
+/*.content-item-small .details h4 { display: run-in; }
+.content-item-small .details p { margin: 0; }*/
+
+
 .content-item-mini { line-height: 1px; width: 25px; margin: 3px }
 .content-item-mini img {
     float: left;

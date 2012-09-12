@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:21+0200\n"
+"POT-Creation-Date: 2012-09-12 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,11 +135,19 @@ msgstr ""
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:257 views.py:401
+#: views.py:257
+msgid "Top related questions"
+msgstr ""
+
+#: views.py:258
+msgid "Latest related questions"
+msgstr ""
+
+#: views.py:401
 msgid "Top Questions"
 msgstr ""
 
-#: views.py:258 views.py:402
+#: views.py:402
 msgid "Latest Questions"
 msgstr ""
 
@@ -198,6 +206,7 @@ msgstr ""
 
 #: templates/items/_question_list.html:68
 #: templates/items/question_detail.html:57
+#: templates/items/content_display/_question.html:34
 msgid "Answer this question"
 msgstr ""
 
@@ -389,7 +398,7 @@ msgstr ""
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr ""
 
-#: templates/items/question_detail.html:73
+#: templates/items/question_detail.html:74
 msgid "Related Products"
 msgstr ""
 
@@ -399,4 +408,83 @@ msgstr ""
 
 #: templates/items/question_form.html:15
 msgid "Ask something:"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:9
+#, python-format
+msgid "<a href=\"%(url)s\">answered</a> a question about"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:19
+#, python-format
+msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:22
+msgid "answered a question about"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:26
+#: templates/items/content_display/_question.html:24
+msgid "Q:"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:32
+msgid "A:"
+msgstr ""
+
+#: templates/items/content_display/_answer.html:44
+msgid "Add an answer"
+msgstr ""
+
+#: templates/items/content_display/_feature.html:7
+#, python-format
+msgid "suggested a <a href=\"%(url)s\">feature</a> on"
+msgstr ""
+
+#: templates/items/content_display/_feature.html:7
+#: templates/items/content_display/_link.html:7
+#: templates/items/content_display/_question.html:8
+msgid ":"
+msgstr ""
+
+#: templates/items/content_display/_feature.html:16
+#, python-format
+msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
+msgstr ""
+
+#: templates/items/content_display/_feature.html:19
+msgid "suggested a feature on"
+msgstr ""
+
+#: templates/items/content_display/_link.html:7
+#, python-format
+msgid "posted a <a href=\"%(url)s\">link</a> about"
+msgstr ""
+
+#: templates/items/content_display/_link.html:16
+#, python-format
+msgid "posted a <a href=\"%(url)s\" class=\"black\">link</a> about"
+msgstr ""
+
+#: templates/items/content_display/_link.html:19
+msgid "posted a link about"
+msgstr ""
+
+#: templates/items/content_display/_link.html:24
+msgid "L:"
+msgstr ""
+
+#: templates/items/content_display/_question.html:8
+#, python-format
+msgid "asked a <a href=\"%(url)s\">question</a> about"
+msgstr ""
+
+#: templates/items/content_display/_question.html:16
+#, python-format
+msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
+msgstr ""
+
+#: templates/items/content_display/_question.html:19
+msgid "asked a question about"
 msgstr ""

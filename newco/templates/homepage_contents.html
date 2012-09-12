@@ -8,7 +8,7 @@
 {% block body %}
 
 <div class="row"><div class="offset1 span10"><div id="thumbnails_list">{% for content in object_list %}
-    {% include "profiles/_thumbnail_frame.html" with content=content only %}
+    {% include "items/content_display/_thumbnail_frame.html" with object=content only %}
 {% endfor %}</div></div></div>
 
 {% if is_paginated %}{% paginate %}{% endif %}
