@@ -17,14 +17,12 @@
     <div class="span6" align="center">{% if item_list %}
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
-            {% for item in item_list %}
-            {% with image=item.node.graph.image_set.0.graph.image.0.data %}
+            {% for item in item_list %}{% with image=item.node.graph.image_set.0.graph.image.0.data %}
                 <div class="{% if forloop.first %}active {% endif %}item">
                     <a href="{{ item.get_absolute_url }}"><img src="{{ image.link }}" alt=""></a>
                     <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
                 </div>
-            {% endwith %}
-            {% endfor %}
+            {% endwith %}{% endfor %}
             </div>
             <a class="carousel-control left" href="#carousel_tag" data-slide="prev">&lsaquo;</a>
             <a class="carousel-control right" href="#carousel_tag" data-slide="next">&rsaquo;</a>
