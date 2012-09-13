@@ -24,6 +24,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.asktools import process_asking
 from utils.followtools import process_following
+from utils.answertools import process_answering
 from utils.votingtools import process_voting as _process_voting
 from utils.tools import get_query, load_object
 
@@ -286,7 +287,10 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 "object": self.object._meta.verbose_name
             }
         )
-        return HttpResponseRedirect(self.get_success_url())
+        if 'answer' in request.POST:
+                return process_answering(request)
+        else:
+            return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):

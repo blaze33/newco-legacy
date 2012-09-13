@@ -8,6 +8,10 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from account.utils import user_display
+from django.utils import timezone
+from datetime import datetime, timedelta
+
+from about.models import LastMail
 
 
 def process_asking(request, question, success_url, item=None):
@@ -61,7 +65,7 @@ def process_asking(request, question, success_url, item=None):
 def mail_askee(askee, asker, site, question, item):
     #TODO: add links to question and item
 
-    message_subject = _("%(askee)s, %(asker)s needs you help!") % \
+    message_subject = _("%(askee)s, %(asker)s needs your help!") % \
                             {"askee": askee.name, "asker": asker.name}
 
     txt_template = get_template("ask/_ask_notification_email.txt")
@@ -95,6 +99,10 @@ def mail_askee(askee, asker, site, question, item):
         "askee_url": "http://%s%s" % (site, askee.get_absolute_url()),
         "asker_url": "http://%s%s" % (site, asker.get_absolute_url()),
         "message_subject": message_subject,
+        "question_object":question,
+        "product_object":item.name,
+        "question_url":"http://%s%s" % (site, question.get_absolute_url()),
+        "product_url":"http://%s%s" % (site, item.get_absolute_url()),
         "txt_request": txt_req,
         "settings_url": "http://%s%s" % (site, reverse("account_settings"))
     })
@@ -106,4 +114,17 @@ def mail_askee(askee, asker, site, question, item):
         "auto-mailer@newco-project.fr", [askee.user.email]
     )
     msg.attach_alternative(msg_html, "text/html")
-    msg.send()
+    
+    waiting_time=timedelta(minutes=1)
+    last_modif=LastMail.objects.filter(user=asker.user)
+    if last_modif:
+        last_mail = last_modif[0]
+        diff=timezone.now()-last_mail.modified
+        print diff
+        if diff > waiting_time:
+            msg.send()
+            last_mail.save()
+    else:
+        last_mail = LastMail.objects.get_or_create(user=asker.user)[0]
+        msg.send()
+        last_mail.save()
