@@ -89,6 +89,10 @@
     margin-top: 2px;
 }
 
+.carousel .item img {
+    height: 300px;
+    max-width: none;
+}
 
 /* ↓ css defs for image selection/sort */
 
