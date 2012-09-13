@@ -14,7 +14,7 @@
 {% block body %}
 <h1>{% block form_header %}{% trans "Ask something:" %}{% endblock %}</h1>
 
-</br>
+<br>
 
 <form action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}

@@ -110,8 +110,8 @@ class AnswerForm(ModelForm):
         fields = ("content", "status", )
         widgets = {
             "content": BW_small_Widget(attrs={
-                "class": "span4",
-                "rows": 6,
+                "rows": 10,
+                "style": "width: 100%;",
                 "placeholder": _("Be concise and to the point."),
                 "rel": "bw_editor_small",
             }),
@@ -128,7 +128,8 @@ class AnswerForm(ModelForm):
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question
-        return super(AnswerForm, self).__init__(*args, **kwargs)
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = _("Your answer")
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
