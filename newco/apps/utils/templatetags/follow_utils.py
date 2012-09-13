@@ -40,7 +40,7 @@ class FollowFormNode(Node):
         self.user = Variable(user)
         self.obj = Variable(obj)
         self.next = next
-        self.template = "follow/form_new.html"
+        self.template = "follow/form.html"
 
     def render(self, context):
         user = self.user.resolve(context)
