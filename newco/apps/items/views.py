@@ -10,9 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import ProcessFormView, FormMixin
+from django.views.generic.edit import FormMixin
 
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
@@ -28,8 +28,8 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.asktools import process_asking
 from utils.follow.views import ProcessFollowView
-from utils.votingtools import process_voting as _process_voting
 from utils.tools import get_query, load_object
+from utils.vote.views import ProcessVoteView
 
 app_name = 'items'
 
@@ -166,7 +166,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView):
+class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
+                                                            ProcessVoteView):
 
     messages = {
         "object_created": {
@@ -314,20 +315,17 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
-        if "vote_button" in request.POST or "ask" in request.POST or \
-                                            "ask_prof_pick" in request.POST:
+        if "ask" in request.POST:
             obj = load_object(request)
             if self.model == Item:
                 item = self.get_object()
                 success_url = obj.get_product_related_url(item)
             else:
                 success_url = obj.get_absolute_url()
-            if "vote_button" in request.POST:
-                return self.process_voting(request, obj, success_url)
-            else:
-                return process_asking(request, obj, success_url)
+            return process_asking(request, obj, success_url)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
@@ -357,11 +355,6 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView):
                     " a get_absolute_url method on the Model."
                 )
         return url
-
-    @method_decorator(permission_required("profiles.can_vote",
-                                          raise_exception=True))
-    def process_voting(self, request, obj, success_url):
-        return _process_voting(request, obj, success_url)
 
 
 class ProcessSearchView(RedirectView):
