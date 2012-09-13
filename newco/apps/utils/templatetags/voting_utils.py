@@ -37,12 +37,12 @@ class VoteFormNode(Node):
         self.obj = Variable(obj)
         self.vote = Variable(vote)
         self.next = next
-        self.template = 'voting/form.html'
+        self.template = "voting/form.html"
 
     def render(self, context):
         ctx = {
-            'object': self.obj.resolve(context),
-            'vote': self.vote.resolve(context)
+            "object": self.obj.resolve(context),
+            "vote": self.vote.resolve(context)
         }
         if self.next:
             ctx.update({"next": self.next.resolve(context)})
