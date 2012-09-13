@@ -62,7 +62,7 @@
         </div>{% endwith %}{% endwith %}
     {% endif %}{% endfor %}
 
-    <div class="row"><div class="span6 offset1">
+    <div class="row"><div class="offset1 span6">
         <div class="block_controls">
             <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
             &nbsp;&nbsp;&nbsp;

@@ -6,6 +6,11 @@
 {% load content_utils %}
 {% load pagination_tags %}
 
+{% block extra_style %}
+    {{ block.super }}
+    {{ media.css }}
+{% endblock %}
+
 {% block body_class %}index{% endblock %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
@@ -55,6 +60,7 @@
         {% endif %}
     </div>
     <div class="span3">
+        {% comment %}
         {% if item_list %}<div class="row">{% spaceless %}<form action="." method="POST">{% csrf_token %}<div class="input-append span2">
             <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
             <div class="btn-group" data-toggle="buttons-radio">
@@ -63,6 +69,18 @@
                 <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
             </div>
         </div></form>{% endspaceless %}</div>{% else %}&nbsp;{% endif %}
+        {% endcomment %}
+
+        {% if item_list %}<div class="row"><form action="." method="POST">{% csrf_token %}
+            <select data-placeholder="Sort" class="chzn-select" name="sort_products">
+                <option value=""></option>
+                <option value="-pub_date"{% if sort_order == "-pub_date" %} selected{% endif %}>{% trans "Newest to Oldest" %}</option>
+                <option value="pub_date"{% if sort_order == "pub_date" %} selected{% endif %}>{% trans "Oldest to Newest" %}</option>
+                <option value="popular"{% if sort_order == "popular" %} selected{% endif %}>{% trans "Most popular" %}</option>
+            </select>
+            &nbsp;
+            <button type="submit" class="btn"><i class="icon-list"></i> {% trans 'Sort' %}</button>
+        </form></div>{% else %}&nbsp;{% endif %}
 
         {% for title, content_list in related_questions.iteritems %}
             {% if content_list %}<div class="row">
@@ -72,4 +90,10 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    {{ media.js }}
+    <script type="text/javascript">$(".chzn-select").chosen();</script>
 {% endblock %}
