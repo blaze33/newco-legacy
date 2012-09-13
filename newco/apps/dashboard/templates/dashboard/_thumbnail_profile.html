@@ -1,16 +1,17 @@
 {% load content_utils %}
 {% load account_tags %}
+{% load follow_utils %}
 
-{% user_display user as username %}
+{% user_display thumb_user as username %}
 
 <div class="profile-item-small thumbnail">
     <div class="name">
         <a href="{{ profile.get_absolute_url }}">
             <h5>
-                {% profile_pic user 32 %}
+                {% profile_pic thumb_user 32 %}
                 {{ username|truncatechars:10 }}
             </h5>
         </a>
     </div>
-    <div class="details">{% include "follow/form.html" with object=user %}</div>
+    <div class="details">{% follow_form user thumb_user %}</div>
 </div>

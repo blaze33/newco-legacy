@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
+from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
@@ -384,13 +385,15 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         queryset = super(ContentListView, self).get_queryset()
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
-            if self.sort_order == "popular":
-                pass
-                #FIXME Not working, don't know the hell why...
+        else:
+            self.sort_order = "-pub_date"
+        if self.sort_order == "popular":
+            pass
+            #FIXME Not working, don't know the hell why...
 #                queryset = queryset.annotate(
 #                                Count("content")).order_by("-content__count")
-            else:
-                queryset = queryset.order_by(self.sort_order)
+        else:
+            queryset = queryset.order_by(self.sort_order)
         if "tag_slug" in self.kwargs:
             self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             queryset = queryset.filter(tags=self.tag)
@@ -414,6 +417,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
                 queryset_ordered = generic_annotate(
                         queryset, Vote, Sum('votes__vote')).order_by("-score")
                 context.update({
+                    "media": ChosenSelect().media,
                     "item_list": item_list,
                     "related_questions": {
                         _("Top Questions"): queryset_ordered[:3],
