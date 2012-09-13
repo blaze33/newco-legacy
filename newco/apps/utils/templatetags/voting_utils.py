@@ -10,8 +10,9 @@ def vote_form(parser, token):
     """
     Renders the vote form.
 
-    Usage ('next' is not mandatory)::
+    Usage ('next' is optional)::
 
+        {% vote_form object vote %}
         {% vote_form object vote next %}
 
     """
