@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load account_tags %}
 {% load content_utils %}
+{% load pagination_tags %}
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
@@ -53,7 +54,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "items/content_display/_content_list.html" with contents=history display="text" %}</div>
+            <div id="history" class="tab-pane active">{% include "items/content_display/_content_list.html" with contents=object_list display="text" %}{% if is_paginated %}{% paginate %}{% endif %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
         </div>

@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.views.generic.list import MultipleObjectMixin
 
 from django.contrib.auth.models import User
 
@@ -28,8 +29,10 @@ class ProcessProfileSearchView(object):
                                                             *args, **kwargs)
 
 
-class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView,
-                                                            ProcessFollowView):
+class ProfileDetailView(ProfileDetailView, MultipleObjectMixin,
+                                ProcessProfileSearchView, ProcessFollowView):
+
+    paginate_by = 10
 
     def dispatch(self, request, *args, **kwargs):
         profile = Profile.objects.get(pk=kwargs.pop("pk"))
@@ -41,11 +44,9 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView,
                                                         *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        #TODO: better handling of QueryManager
-
         history = Content.objects.filter(
             Q(author=self.page_user) & Q(status=Content.STATUS.public)
-        )
+        ).select_subclasses()
 
         fwers_ids = Follow.objects.get_follows(
                             self.page_user).values_list("user_id", flat=True)
@@ -56,12 +57,20 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView,
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             "reputation": self.page_user.reputation,
-            "history": history.select_subclasses(),
             "fwers": User.objects.filter(pk__in=fwers_ids),
             "fwees": User.objects.filter(pk__in=fwees_ids),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "data_source_profile": Profile.objects.get_all_names(),
         })
+
+        # Next step would be to be able to "merge" the get_context_data of both
+        # DetailView (SingleObjectMixin) and MultipleObjectMixin
+        m = MultipleObjectMixin()
+        m.request = self.request
+        m.kwargs = self.kwargs
+        m.paginate_by = self.paginate_by
+
+        context.update(m.get_context_data(object_list=history))
 
         return context
 
