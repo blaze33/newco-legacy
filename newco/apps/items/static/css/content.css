@@ -48,6 +48,10 @@
         margin: 8px 0 15px;
     }
 
+    .question iframe {
+        box-sizing: border-box;
+    }
+
     .right { 
         text-align: right;
      }

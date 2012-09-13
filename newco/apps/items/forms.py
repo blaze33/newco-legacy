@@ -111,7 +111,7 @@ class AnswerForm(ModelForm):
         widgets = {
             "content": BW_small_Widget(attrs={
                 "rows": 10,
-                "style": "width: 100%;",
+                "style": "width: 100%;box-sizing: border-box;",
                 "placeholder": _("Be concise and to the point."),
                 "rel": "bw_editor_small",
             }),
