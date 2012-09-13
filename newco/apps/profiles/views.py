@@ -1,10 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.utils.decorators import method_decorator
-from django.views.generic.edit import ProcessFormView
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from follow.models import Follow
@@ -12,11 +9,10 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Content
 from profiles.models import Profile
-from utils.followtools import process_following as _process_following
-from utils.tools import load_object
+from utils.follow.views import ProcessFollowView
 
 
-class ProcessProfileSearchView(ProcessFormView):
+class ProcessProfileSearchView(object):
 
     def post(self, request, *args, **kwargs):
         if "pf_pick" in request.POST:
@@ -32,7 +28,8 @@ class ProcessProfileSearchView(ProcessFormView):
                                                             *args, **kwargs)
 
 
-class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
+class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView,
+                                                            ProcessFollowView):
 
     def dispatch(self, request, *args, **kwargs):
         profile = Profile.objects.get(pk=kwargs.pop("pk"))
@@ -67,19 +64,6 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
         })
 
         return context
-
-    def post(self, request, *args, **kwargs):
-        if "follow" in request.POST or "unfollow" in request.POST:
-            obj = load_object(request)
-            success_url = request.path
-            return self.process_following(request, obj, success_url)
-        else:
-            return super(ProfileDetailView, self).post(request,
-                                                            *args, **kwargs)
-
-    @method_decorator(login_required)
-    def process_following(self, request, obj, success_url):
-        return _process_following(request, obj, success_url)
 
 
 class ProfileListView(ProfileListView, ProcessProfileSearchView):

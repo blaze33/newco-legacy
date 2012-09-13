@@ -27,7 +27,7 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.asktools import process_asking
-from utils.followtools import process_following
+from utils.follow.views import ProcessFollowView
 from utils.votingtools import process_voting as _process_voting
 from utils.tools import get_query, load_object
 
@@ -166,7 +166,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
+class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView):
 
     messages = {
         "object_created": {
@@ -250,11 +250,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 })
 
             new_item = sync_products(Item, self.object)
-            albums = new_item.successors.filter(data__contains={'class': 'image_set', 'name': 'main album'})
+            albums = new_item.successors.filter(data__contains={
+                'class': 'image_set', 'name': 'main album'
+            })
             if albums:
                 # This is a way to order by values of an hstore key
-                images = albums[0].successors.all() \
-                    .extra(select={"order": "content_relation.data -> 'order'"}, order_by=['order', ])
+                images = albums[0].successors.all().extra(
+                    select={"order": "content_relation.data -> 'order'"},
+                    order_by=['order', ]
+                )
                 context.update({'album': images})
 
         elif self.model == Question:
@@ -324,10 +328,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 return self.process_voting(request, obj, success_url)
             else:
                 return process_asking(request, obj, success_url)
-        elif "follow" in request.POST or "unfollow" in request.POST:
-            obj_followed = load_object(request)
-            success_url = obj_followed.get_absolute_url()
-            return process_following(request, obj_followed, success_url)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
@@ -342,7 +342,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 return self.form_invalid(form)
         else:
-            return HttpResponseRedirect(request.path)
+            return super(ContentDetailView, self).post(request, *args,
+                                                                **kwargs)
 
     def get_success_url(self):
         if self.success_url:
