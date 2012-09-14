@@ -27,7 +27,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
-from utils.asktools import process_asking
+from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
 from utils.tools import get_query, load_object
 from utils.vote.views import ProcessVoteView
@@ -313,9 +313,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 "object": self.object._meta.verbose_name
             }
         )
-#        if 'answer' in request.POST:
-#            return process_answering(request)
-#        else:
+        if self.object._meta.object_name == "Answer":
+            mail_question_author(request.META.get('HTTP_HOST'), self.object)
         return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
@@ -325,12 +324,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             self.success_url = request.POST.get("next")
         if "ask" in request.POST:
             obj = load_object(request)
-            if self.model == Item:
-                item = self.get_object()
-                success_url = obj.get_product_related_url(item)
-            else:
-                success_url = obj.get_absolute_url()
-            return process_asking(request, obj, success_url)
+            return process_asking_for_help(request, obj, request.path)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
