@@ -16,7 +16,7 @@
     border-radius: 4px;
 }
 
-.profile-item { line-height: 18px; width: 165px; margin: 9px }
+.profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; }
 .profile-item .details h4 { display: run-in; }
 .profile-item .details p { margin: 0; }
 
@@ -48,7 +48,7 @@
     border-radius: 4px;
 }
 
-.content-item { line-height: 18px; width: 165px; margin: 9px }
+.content-item { line-height: 18px; width: 165px; margin: 9px; background-color: white; }
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
 

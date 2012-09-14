@@ -1,0 +1,15 @@
+{% extends "mail/_notification_email.txt" %}
+
+{% load i18n %}
+
+{% block body_title %}
+    {{ asker }}</a> {% trans "would like you to answer this question" %} "{{ question_object }}".
+    {% trans "About the product" %} "{{ product_object }}".
+{% endblock %}
+
+{% block go_to_urls %}
+    {% blocktrans %}To see {{ asker }}'s profile, go there{% endblocktrans %}:
+        {{ asker_url }}
+    {% blocktrans %}To see {{ question }}, go there{% endblocktrans %}:
+        {{ question_url }}
+{% endblock %}

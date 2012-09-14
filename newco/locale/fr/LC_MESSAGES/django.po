@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 23:59+0200\n"
-"PO-Revision-Date: 2012-09-11 23:59\n"
+"POT-Creation-Date: 2012-09-14 16:08+0200\n"
+"PO-Revision-Date: 2012-09-14 16:09\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,19 +94,23 @@ msgstr "Nous travaillons dessus"
 msgid "Add a story"
 msgstr "Ajouter un article"
 
-#: templates/_footer.html:4
+#: templates/_footer.html:5
+msgid "Get started"
+msgstr "Démarrage"
+
+#: templates/_footer.html:6
 msgid "FAQ"
 msgstr "FAQ"
 
-#: templates/_footer.html:5
+#: templates/_footer.html:7
 msgid "How to contribute?"
 msgstr "Comment contribuer"
 
-#: templates/_footer.html:6
+#: templates/_footer.html:8
 msgid "Team"
 msgstr "L'équipe"
 
-#: templates/_footer.html:7
+#: templates/_footer.html:9
 msgid "&copy; 2012 NewCo"
 msgstr "&copy; 2012 NewCo"
 
@@ -215,12 +219,12 @@ msgstr ""
 msgid "Confirm email address for %(site_name)s"
 msgstr "Confirmez cette adresse email pour %(site_name)s"
 
-#: templates/idios/profile.html:16
+#: templates/idios/profile.html:17
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:28
+#: templates/idios/profile.html:29
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -228,19 +232,19 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:39
+#: templates/idios/profile.html:40
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:51
+#: templates/idios/profile.html:52
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:53
 msgid "Followees"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:53
+#: templates/idios/profile.html:54
 msgid "Followers"
 msgstr "Abonnés"
 
