@@ -19,7 +19,6 @@ def sync_products(sender, instance, **kwargs):
 
 
 def add_images(request, **kwargs):
-    img_order = [int(y.split('=')[1]) for y in request.POST['img_list'].split('&')]
 
     legacy_product = LegacyItem.objects.get(id=kwargs['pk'])
     product = sync_products(LegacyItem, legacy_product)
@@ -33,9 +32,14 @@ def add_images(request, **kwargs):
     else:
         album = album[0]
         images = get_album(legacy_product)
+        album.successors.clear()
 
     if not images:
         images = search_images(product.data['name'])
+    if 'img_list' not in request.POST or len(request.POST['img_list']) < 1:
+        album.delete()
+        return
+    img_order = [int(y.split('=')[1]) for y in request.POST['img_list'].split('&')]
     id_order = []
     for x in img_order:
         i = images[x]

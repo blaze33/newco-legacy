@@ -1,7 +1,12 @@
-from django import template
+from django.template.base import Node, Library, Variable
+from django.template.base import TemplateSyntaxError
+from django.template.loader import render_to_string
+from django.utils.encoding import smart_str
+
+from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
 
-register = template.Library()
+register = Library()
 
 
 @register.filter
@@ -67,9 +72,9 @@ def popover_link(parser, token):
     return PopoverLinkNode(*bits[1:])
 
 
-class PopoverLinkNode(template.Node):
+class PopoverLinkNode(Node):
     def __init__(self, obj, tpl=None):
-        self.obj = template.Variable(obj)
+        self.obj = Variable(obj)
         self.template = tpl[1:-1] if tpl else None
 
     def render(self, context):
@@ -87,5 +92,83 @@ class PopoverLinkNode(template.Node):
             'object': self.obj.resolve(context),
             'tag_list': tag_list
         }
-        return template.loader.render_to_string(self.template, ctx,
+        return render_to_string(self.template, ctx,
             context_instance=context)
+
+
+@register.tag
+def content_info(parser, token):
+    """
+    Displays content creation related info: author, creation date...
+
+    Usage ('pic_size' is optional)::
+
+        {% content_info content display %}
+        {% content_info content display pic_size %}
+
+        where display can be: "signature", "signature-author", "signature-pic"
+        "header"
+
+    """
+    bits = token.split_contents()
+    if len(bits) < 3:
+        raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
+    elif len(bits) > 4:
+        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    content = bits[1]
+    display = parser.compile_filter(bits[2])
+    if len(bits) == 4:
+        pic_size = parser.compile_filter(bits[3])
+    else:
+        pic_size = None
+    return ContentInfoNode(content, display, pic_size)
+
+
+class ContentInfoNode(Node):
+    def __init__(self, content, display, pic_size=None):
+        self.content = Variable(content)
+        self.display = display
+        self.pic_size = pic_size
+        self.template = "content/info.html"
+
+    def render(self, context):
+        content = self.content.resolve(context)
+        display = smart_str(self.display.resolve(context), 'ascii')
+        if self.pic_size:
+            pic_size = self.pic_size.resolve(context)
+        else:
+            pic_size = None
+        author = content.author
+        if "signature" in display:
+            ctx = {"pub_date": content.pub_date, "signature": True}
+            if display == "signature":
+                ctx.update({
+                    "signature_author": True,
+                    "signature_pic": True,
+                    "author_name": user_display(author),
+                    "author_url": author.get_absolute_url(),
+                    "profile_pic": profile_pic(author, size=pic_size)
+                })
+            elif display == "signature-author":
+                ctx.update({
+                    "signature_author": True,
+                    "author_name": user_display(author),
+                    "author_url": author.get_absolute_url()
+                })
+            elif display == "signature-pic":
+                ctx.update({
+                    "signature_pic": True,
+                    "profile_pic": profile_pic(author, size=pic_size)
+                })
+            else:
+                raise TemplateSyntaxError("'content_info': wrong display.")
+        elif display == "header":
+            ctx = {
+                "header": True,
+                "author_name": user_display(author),
+                "author_url": author.get_absolute_url(),
+                "about": author.get_profile().about
+            }
+        else:
+            raise TemplateSyntaxError("'content_info': wrong display value.")
+        return render_to_string(self.template, ctx, context_instance=context)

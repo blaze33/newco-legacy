@@ -110,8 +110,8 @@ class AnswerForm(ModelForm):
         fields = ("content", "status", )
         widgets = {
             "content": BW_small_Widget(attrs={
-                "class": "span4",
-                "rows": 6,
+                "rows": 10,
+                "style": "width: 100%; box-sizing: border-box;",
                 "placeholder": _("Be concise and to the point."),
                 "rel": "bw_editor_small",
             }),
@@ -128,7 +128,8 @@ class AnswerForm(ModelForm):
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question
-        return super(AnswerForm, self).__init__(*args, **kwargs)
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        self.fields['content'].label = _("Your answer")
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -266,6 +267,9 @@ def _reload_current_search(item_form):
                 except ObjectDoesNotExist:
                     pass
                 else:
-                    product_list.append(aff_cat)
+                    if AffiliationItem.objects.filter(
+                                            object_id=aff_cat.object_id,
+                                            store=aff_cat.store).count() == 0:
+                        product_list.append(aff_cat)
             product_list_by_store.update({store: product_list})
     return product_list_by_store

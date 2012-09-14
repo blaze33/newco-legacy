@@ -1,10 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.utils.decorators import method_decorator
-from django.views.generic.edit import ProcessFormView
+from django.views.generic.list import MultipleObjectMixin
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from follow.models import Follow
@@ -12,11 +10,10 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Content
 from profiles.models import Profile
-from utils.followtools import process_following as _process_following
-from utils.tools import load_object
+from utils.follow.views import ProcessFollowView
 
 
-class ProcessProfileSearchView(ProcessFormView):
+class ProcessProfileSearchView(object):
 
     def post(self, request, *args, **kwargs):
         if "pf_pick" in request.POST:
@@ -31,8 +28,17 @@ class ProcessProfileSearchView(ProcessFormView):
             return super(ProcessProfileSearchView, self).post(request,
                                                             *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            "data_source_profile": Profile.objects.get_all_names()
+        })
+        return super(ProcessProfileSearchView, self).get_context_data(**kwargs)
 
-class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
+
+class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
+            MultipleObjectMixin, ProcessFollowView):
+
+    paginate_by = 10
 
     def dispatch(self, request, *args, **kwargs):
         profile = Profile.objects.get(pk=kwargs.pop("pk"))
@@ -44,11 +50,9 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
                                                         *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        #TODO: better handling of QueryManager
-
         history = Content.objects.filter(
             Q(author=self.page_user) & Q(status=Content.STATUS.public)
-        )
+        ).select_subclasses()
 
         fwers_ids = Follow.objects.get_follows(
                             self.page_user).values_list("user_id", flat=True)
@@ -59,30 +63,24 @@ class ProfileDetailView(ProfileDetailView, ProcessProfileSearchView):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             "reputation": self.page_user.reputation,
-            "history": history.select_subclasses(),
             "fwers": User.objects.filter(pk__in=fwers_ids),
             "fwees": User.objects.filter(pk__in=fwees_ids),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "data_source_profile": Profile.objects.get_all_names(),
         })
+
+        # Next step would be to be able to "merge" the get_context_data of both
+        # DetailView (SingleObjectMixin) and MultipleObjectMixin
+        m = MultipleObjectMixin()
+        m.request = self.request
+        m.kwargs = self.kwargs
+        m.paginate_by = self.paginate_by
+
+        context.update(m.get_context_data(object_list=history))
 
         return context
 
-    def post(self, request, *args, **kwargs):
-        if "follow" in request.POST or "unfollow" in request.POST:
-            obj = load_object(request)
-            success_url = request.path
-            return self.process_following(request, obj, success_url)
-        else:
-            return super(ProfileDetailView, self).post(request,
-                                                            *args, **kwargs)
 
-    @method_decorator(login_required)
-    def process_following(self, request, obj, success_url):
-        return _process_following(request, obj, success_url)
-
-
-class ProfileListView(ProfileListView, ProcessProfileSearchView):
+class ProfileListView(ProcessProfileSearchView, ProfileListView):
 
     paginate_by = 15
 
@@ -100,10 +98,3 @@ class ProfileListView(ProfileListView, ProcessProfileSearchView):
             profiles = profiles.order_by("user__username")
 
         return profiles
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileListView, self).get_context_data(**kwargs)
-        context.update({
-            "data_source_profile": Profile.objects.get_all_names()
-        })
-        return context

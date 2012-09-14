@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:06+0200\n"
+"POT-Creation-Date: 2012-09-13 17:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,39 +46,19 @@ msgstr ""
 msgid "on"
 msgstr ""
 
-#: followtools.py:17
+#: follow/tools.py:17
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr ""
 
-#: followtools.py:21
+#: follow/tools.py:21
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr ""
 
-#: followtools.py:25
+#: follow/tools.py:25
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
-msgstr ""
-
-#: votingtools.py:15
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr ""
-
-#: votingtools.py:19
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr ""
-
-#: votingtools.py:23
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr ""
-
-#: votingtools.py:27
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
 msgstr ""
 
 #: templates/ask/_ask_notification_email.html:11
@@ -114,11 +94,11 @@ msgstr ""
 msgid "No options"
 msgstr ""
 
-#: templates/follow/form.html:7
+#: templates/follow/form.html:7 templatetags/follow_utils.py:49
 msgid "Unfollow"
 msgstr ""
 
-#: templates/follow/form.html:9
+#: templates/follow/form.html:9 templatetags/follow_utils.py:52
 msgid "Follow"
 msgstr ""
 
@@ -154,3 +134,23 @@ msgid "an hour ago"
 msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
+
+#: vote/tools.py:15
+#, python-format
+msgid "%(user)s, your up vote on %(object)s has been recorded."
+msgstr ""
+
+#: vote/tools.py:19
+#, python-format
+msgid "%(user)s, your down vote on %(object)s has been recorded."
+msgstr ""
+
+#: vote/tools.py:23
+#, python-format
+msgid "%(user)s, your vote on %(object)s has been cancelled."
+msgstr ""
+
+#: vote/tools.py:27
+#, python-format
+msgid "%(user)s, you can't vote on your own contribution!"
+msgstr ""

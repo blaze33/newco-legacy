@@ -32,13 +32,13 @@
         -moz-transition: opacity 1s;
     }
 
-    .row .block_controls {
+    .question .block_controls {
         padding-top: 3px;
         opacity: 0;
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
-    .row:hover .block_controls {
+    .question:hover .block_controls {
         opacity: 1;
         -webkit-transition: opacity 1s;
         -moz-transition: opacity 1s;
@@ -46,6 +46,10 @@
 
     .question hr {
         margin: 8px 0 15px;
+    }
+
+    .question iframe {
+        box-sizing: border-box;
     }
 
     .right { 

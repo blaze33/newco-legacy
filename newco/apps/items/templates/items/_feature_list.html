@@ -24,7 +24,7 @@
                     {% with name=feat|to_class_name %}{% edit name feat.id %}{% endwith %}
                 {% endif %}
             </div>
-            <div class="span1 right">{% include "items/_author.html" with object=feat %}</div>
+            <div class="span1 right">{% content_info feat "signature-author" %}</div>
 
     </div><hr>{% endfor %}
 

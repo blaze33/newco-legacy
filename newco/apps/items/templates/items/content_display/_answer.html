@@ -16,20 +16,20 @@
         </p>
     </blockquote>
 {% elif display == "thumbnail" %}
-    {% include prof_tpl with object=content.author display=display color="black" %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}" class="black">answered</a> a question about{% endblocktrans %} {% include prod_tpl with object=item display=display color="black" %}
+    {% include prof_tpl with object=content.author display=display color="black" %} {% trans "answered a question about" %} {% include prod_tpl with object=item display=display color="black" %}
 {% elif display == "text" %}
     <div class="row"><div class="span7">
         <h4>{% include prof_tpl with object=author display=display %} {% trans "answered a question about" %} {% include prod_tpl with object=content.items.all.0 display=display %}</h4>
     </div></div>
 
     <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">
-        <div class="span5"><p><small><a href="{{ question.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
-        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+        <div class="span5"><p><small><a href="{{ question.get_absolute_url }}" class="black">{% trans "Q:" %}</a>&nbsp;{{ question.content }}</small></p></div>
+        <div class="span2 right">{% content_info question "signature-author" %}</div>
     </div>
 
     <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
 
-        <div class="span1"><p><a href="{{ content.get_absolute_url }}">{% trans "A:" %}</a></p></div>
+        <div class="span1"><p><a href="{{ content.get_absolute_url }}" class="black">{% trans "A:" %}</a></p></div>
         <div class="span3"><p>
             {% autoescape off %}{{ content.content }}{% endautoescape %}
             {% if user.is_superuser or author == user %}
@@ -37,7 +37,7 @@
             {% endif %}
         </p></div>
         <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+        <div class="span2 right">{% content_info content "signature-author" %}</div>
     </div>
 
     {% if user != author %}

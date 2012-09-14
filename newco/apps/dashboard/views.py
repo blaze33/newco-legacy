@@ -11,8 +11,7 @@ from django.contrib.auth.models import User
 from items.models import Content, Item
 from profiles.models import Profile
 from profiles.views import ProcessProfileSearchView
-from utils.followtools import process_following
-from utils.tools import load_object
+from utils.follow.views import ProcessFollowView
 from follow.models import Follow
 
 PAGES_TITLES = {
@@ -64,7 +63,7 @@ WHAT_TO_FOLLOW_PARAMS = {
 }
 
 
-class DashboardView(ListView, ProcessProfileSearchView):
+class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
 
     queryset = Content.objects.all()
 
@@ -136,12 +135,3 @@ class DashboardView(ListView, ProcessProfileSearchView):
             "page_name": self.page_name,
         })
         return context
-
-    @method_decorator(login_required)
-    def post(self, request, *args, **kwargs):
-        if "follow" in request.POST or "unfollow" in request.POST:
-            obj_followed = load_object(request)
-            success_url = obj_followed.get_absolute_url()
-            return process_following(request, obj_followed, success_url)
-        else:
-            return super(DashboardView, self).post(request, *args, **kwargs)

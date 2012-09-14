@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 20:21+0200\n"
+"POT-Creation-Date: 2012-09-14 12:05+0200\n"
 "PO-Revision-Date: 2012-09-12 19:10\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,8 +74,8 @@ msgstr "Vous voulez peut être en terminer et publier certains ?"
 msgid "Your latest contributions"
 msgstr "Vos dernières contributions"
 
-#: templates/dashboard/_box.html:7 templates/dashboard/contribution.html:11
-#: templates/dashboard/feed.html:18
+#: templates/dashboard/_box.html:7 templates/dashboard/_subnav.html:40
+#: templates/dashboard/contribution.html:11 templates/dashboard/feed.html:19
 msgid ":"
 msgstr " :"
 
@@ -189,19 +189,19 @@ msgstr ""
 "Gardez ici vos brouillons : contributions que vous ne voulez pas (encore) "
 "publier."
 
-#: templates/dashboard/feed.html:6
+#: templates/dashboard/feed.html:7
 msgid "Activity from what you follow."
 msgstr "Activité de ce que vous suivez."
 
-#: templates/dashboard/feed.html:14
+#: templates/dashboard/feed.html:15
 msgid "Who to follow?"
 msgstr "Qui suivre ?"
 
-#: templates/dashboard/feed.html:14
+#: templates/dashboard/feed.html:15
 msgid "View all"
 msgstr "Voir tous"
 
-#: templates/dashboard/feed.html:18
+#: templates/dashboard/feed.html:19
 msgid "Products you may like"
 msgstr "Les produits que vous pourriez aimer"
 

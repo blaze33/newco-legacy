@@ -10,12 +10,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import ProcessFormView, FormMixin
+from django.views.generic.edit import FormMixin
 
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
+from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
@@ -27,9 +28,9 @@ from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.asktools import process_asking
-from utils.followtools import process_following
-from utils.votingtools import process_voting as _process_voting
+from utils.follow.views import ProcessFollowView
 from utils.tools import get_query, load_object
+from utils.vote.views import ProcessVoteView
 
 app_name = 'items'
 
@@ -83,7 +84,8 @@ class ContentFormMixin(object):
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
-            form.stores_search()
+            if "store_search" in request.POST:
+                form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
             return self.form_valid(form)
@@ -166,7 +168,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
+class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
+                                                            ProcessVoteView):
 
     messages = {
         "object_created": {
@@ -250,11 +253,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 })
 
             new_item = sync_products(Item, self.object)
-            albums = new_item.successors.filter(data__contains={'class': 'image_set', 'name': 'main album'})
+            albums = new_item.successors.filter(data__contains={
+                'class': 'image_set', 'name': 'main album'
+            })
             if albums:
                 # This is a way to order by values of an hstore key
-                images = albums[0].successors.all() \
-                    .extra(select={"order": "content_relation.data -> 'order'"}, order_by=['order', ])
+                images = albums[0].successors.all().extra(
+                    select={"order": "content_relation.data -> 'order'"},
+                    order_by=['order', ]
+                )
                 context.update({'album': images})
 
         elif self.model == Question:
@@ -306,28 +313,24 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                 "object": self.object._meta.verbose_name
             }
         )
+#        if 'answer' in request.POST:
+#            return process_answering(request)
+#        else:
         return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
-        if "vote_button" in request.POST or "ask" in request.POST or \
-                                            "ask_prof_pick" in request.POST:
+        if "ask" in request.POST:
             obj = load_object(request)
             if self.model == Item:
                 item = self.get_object()
                 success_url = obj.get_product_related_url(item)
             else:
                 success_url = obj.get_absolute_url()
-            if "vote_button" in request.POST:
-                return self.process_voting(request, obj, success_url)
-            else:
-                return process_asking(request, obj, success_url)
-        elif "follow" in request.POST or "unfollow" in request.POST:
-            obj_followed = load_object(request)
-            success_url = obj_followed.get_absolute_url()
-            return process_following(request, obj_followed, success_url)
+            return process_asking(request, obj, success_url)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
@@ -342,7 +345,8 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
             else:
                 return self.form_invalid(form)
         else:
-            return HttpResponseRedirect(request.path)
+            return super(ContentDetailView, self).post(request, *args,
+                                                                **kwargs)
 
     def get_success_url(self):
         if self.success_url:
@@ -356,11 +360,6 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
                     " a get_absolute_url method on the Model."
                 )
         return url
-
-    @method_decorator(permission_required("profiles.can_vote",
-                                          raise_exception=True))
-    def process_voting(self, request, obj, success_url):
-        return _process_voting(request, obj, success_url)
 
 
 class ProcessSearchView(RedirectView):
@@ -390,13 +389,15 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         queryset = super(ContentListView, self).get_queryset()
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
-            if self.sort_order == "popular":
-                pass
-                #FIXME Not working, don't know the hell why...
+        else:
+            self.sort_order = "-pub_date"
+        if self.sort_order == "popular":
+            pass
+            #FIXME Not working, don't know the hell why...
 #                queryset = queryset.annotate(
 #                                Count("content")).order_by("-content__count")
-            else:
-                queryset = queryset.order_by(self.sort_order)
+        else:
+            queryset = queryset.order_by(self.sort_order)
         if "tag_slug" in self.kwargs:
             self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             queryset = queryset.filter(tags=self.tag)
@@ -420,6 +421,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
                 queryset_ordered = generic_annotate(
                         queryset, Vote, Sum('votes__vote')).order_by("-score")
                 context.update({
+                    "media": ChosenSelect().media,
                     "item_list": item_list,
                     "related_questions": {
                         _("Top related questions"): queryset_ordered[:3],
@@ -430,6 +432,8 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
 
 class ContentDeleteView(ContentView, DeleteView):
+
+    template_name = "items/confirm_delete.html"
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
