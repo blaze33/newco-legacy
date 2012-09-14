@@ -432,6 +432,8 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
 class ContentDeleteView(ContentView, DeleteView):
 
+    template_name = "items/confirm_delete.html"
+
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         if not request.user.has_perm("can_manage", self.object):
