@@ -118,13 +118,13 @@
             var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
             form.on('shown', function () {
                 icon_change.removeClass('icon-plus').addClass('icon-remove');
-                text_change.html('&nbsp;');
-                text_change_no_q_yet.html('{% trans "Ask a new question:" %}');
+                text_change.html("&nbsp;");
+                text_change_no_q_yet.html("{% trans "Ask a new question:" %}");
             })
             form.on('hidden', function () {
-                icon_change.removeClass('icon-remove').addClass('icon-plus');
+                icon_change.removeClass('icon-remove').addClass("icon-plus");
                 text_change.html("{% trans "Ask a new question!" %}");
-                text_change_no_q_yet.html('{% trans "No question yet! Ask the first one here!" %}');
+                text_change_no_q_yet.html("{% trans "No question yet! Ask the first one here!" %}");
             })
         
         });
