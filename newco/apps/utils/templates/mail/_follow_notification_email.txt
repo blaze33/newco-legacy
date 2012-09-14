@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block body_title %}
-    {{ follower }} {% trans "vous suit maintenant sur NewCo!" %}
+    {{ follower }} {% trans "is now following you on NewCo!" %}
 
 {% endblock %}
 
