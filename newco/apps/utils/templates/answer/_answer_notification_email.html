@@ -11,8 +11,8 @@
 			<a href="http://www.newco-project.fr/"><h3>NewCo</h3></a>
         </td>
         <td style="width: 500px; vertical-align: top;background-color: #e8e8e8">
-		    <h4><a href="{{ asker_url }}">{{ asker }}</a> would like you to answer this question <a href="{{ question_url }}">"{{ question_object }}"</a>.</h4>
-		    <br>About the product <a href="{{ product_url }}">{{ product_object }}</a>.
+		    <h4><a href="{{ answerer_url }}">{{ answerer }}</a> answered your question <a href="{{ question_url }}">"{{ question_object }}"</a>:</h4>
+		    <br>About the product <a href="{{ product_url }}">{{ product_object }}</a>
 		    <br><br>
 	    </td>
     </tr>
@@ -21,10 +21,11 @@
             &nbsp;
         </td>
         <td style="width:500px; padding: 5px 0 10px 10px; vertical-align: top;background-color: #f2f2f2">
-	    <br>Thanks.<br>The NewCo Project team
+	    <br><div style="font-family:verdana,serif;">{% autoescape off %}{{ answer_object }}{% endautoescape %}</div>
+	    <br><br>Thanks.<br>The NewCo Project team
 	    </td>
     </tr>
-</table>	
+</table>
 <table style="width: 565px;>
     <tr>
     	<td style="width: 5px; ">

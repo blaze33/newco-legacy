@@ -13,7 +13,7 @@
         </p>
     </blockquote>
 {% elif display == "thumbnail" %}
-    {% include prof_tpl with object=content.author display=display color="black" %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}" class="black">question</a> about{% endblocktrans %} {% include prod_tpl with object=item display=display color="black" %}
+    {% include prof_tpl with object=content.author display=display color="black" %} {% trans "asked a question about" %} {% include prod_tpl with object=item display=display color="black" %}
 {% elif display == "text" %}
     <div class="row"><div class="span7">
         <h4>{% include prof_tpl with object=author display=display %} {% trans "asked a question about" %} {% include prod_tpl with object=content.items.all.0 display=display %}</h4>
@@ -21,13 +21,13 @@
 
     <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
         <div class="span4"><p>
-            <a href="{{ content.get_absolute_url }}">{% trans "Q:" %}</a>&nbsp;{{ content.content }}
+            <a href="{{ content.get_absolute_url }}" class="black">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
             {% if user.is_superuser or author == user %}
                 {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
             {% endif %}
         </p></div>
         <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+        <div class="span2 right">{% content_info content "signature-author" %}</div>
     </div>
 
     {% if user != author %}

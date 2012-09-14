@@ -312,7 +312,10 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 "object": self.object._meta.verbose_name
             }
         )
-        return HttpResponseRedirect(self.get_success_url())
+        if 'answer' in request.POST:
+            return process_answering(request)
+        else:
+            return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
