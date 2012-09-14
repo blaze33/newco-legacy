@@ -84,7 +84,8 @@ class ContentFormMixin(object):
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
-            form.stores_search()
+            if "store_search" in request.POST:
+                form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
             return self.form_valid(form)
@@ -312,10 +313,10 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 "object": self.object._meta.verbose_name
             }
         )
-        if 'answer' in request.POST:
-            return process_answering(request)
-        else:
-            return HttpResponseRedirect(self.get_success_url())
+#        if 'answer' in request.POST:
+#            return process_answering(request)
+#        else:
+        return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
