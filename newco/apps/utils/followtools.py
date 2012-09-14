@@ -5,9 +5,12 @@ from django.template import Context
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from account.utils import user_display
+from django.utils import timezone
+from datetime import datetime, timedelta
 
 from follow.utils import toggle
 from follow.models import Follow
+from about.models import LastMail
 
 
 def process_following(request, obj, success_url):
@@ -60,8 +63,8 @@ def mail_followee(fwee, fwer, site):
     message_subject = "%s, %s vous suit maintenant sur NewCo !" % \
                             (fwee.name, fwer.name)
 
-    txt_template = get_template('follow/_follow_notification_email.txt')
-    html_template = get_template('follow/_follow_notification_email.html')
+    txt_template = get_template('mail/_follow_notification_email.txt')
+    html_template = get_template('mail/_follow_notification_email.html')
 
     d = Context({'followee': fwee.name, 'follower': fwer.name,
         'followee_url': "http://%s%s" % (site, fwee.get_absolute_url()),
@@ -76,4 +79,10 @@ def mail_followee(fwee, fwer, site):
         'auto-mailer@newco-project.fr', [fwee.user.email]
     )
     msg.attach_alternative(msg_html, "text/html")
-    msg.send()
+   
+    waiting_time=timedelta(minutes=1)
+    last_mail, created = LastMail.objects.get_or_create(user=fwer.user)
+    diff=timezone.now()-last_mail.modified
+    if diff > waiting_time or created:
+        msg.send()
+        last_mail.save()

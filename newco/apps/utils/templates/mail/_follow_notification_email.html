@@ -1,0 +1,6 @@
+{% extends "mail/_notification_email.html" %}
+
+{% load i18n %}
+{% block body_title %}
+    <h4><a href="{{ follower_url }}">{{ follower }}</a> {% trans "is now following you on NewCo!" %}
+{% endblock %}

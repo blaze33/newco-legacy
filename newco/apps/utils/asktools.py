@@ -68,8 +68,8 @@ def mail_askee(askee, asker, site, question, item):
     message_subject = _("%(askee)s, %(asker)s needs your help!") % \
                             {"askee": askee.name, "asker": asker.name}
 
-    txt_template = get_template("ask/_ask_notification_email.txt")
-    html_template = get_template("ask/_ask_notification_email.html")
+    txt_template = get_template("mail/_ask_notification_email.txt")
+    html_template = get_template("mail/_ask_notification_email.html")
 
     txt_req = _('would like you to answer this question "%(question)s"') % \
                                                 {"question": question.content}
@@ -116,15 +116,9 @@ def mail_askee(askee, asker, site, question, item):
     msg.attach_alternative(msg_html, "text/html")
     
     waiting_time=timedelta(minutes=1)
-    last_modif=LastMail.objects.filter(user=asker.user)
-    if last_modif:
-        last_mail = last_modif[0]
-        diff=timezone.now()-last_mail.modified
-        print diff
-        if diff > waiting_time:
-            msg.send()
-            last_mail.save()
-    else:
-        last_mail = LastMail.objects.get_or_create(user=asker.user)[0]
+    last_mail, created = LastMail.objects.get_or_create(user=asker.user)
+    diff=timezone.now()-last_mail.modified
+    if diff > waiting_time or created:
         msg.send()
         last_mail.save()
+

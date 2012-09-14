@@ -45,8 +45,8 @@ def mail_answeree(answeree, answerer, site, question, answer):
     message_subject = "%s, %s a repondu a votre question !" % \
                             (answeree.name, answerer.name)
 
-    txt_template = get_template('answer/_answer_notification_email.txt')
-    html_template = get_template('answer/_answer_notification_email.html')
+    txt_template = get_template('mail/_answer_notification_email.txt')
+    html_template = get_template('mail/_answer_notification_email.html')
 
     txt_req = _('answered your question "%(question)s"') % \
                                                 {"question": question.content}
@@ -91,15 +91,8 @@ def mail_answeree(answeree, answerer, site, question, answer):
     msg.attach_alternative(msg_html, "text/html")
     
     waiting_time=timedelta(minutes=1)
-    last_modif=LastMail.objects.filter(user=answerer.user)
-    if last_modif:
-        last_mail = last_modif[0]
-        diff=timezone.now()-last_mail.modified
-        print diff
-        if diff > waiting_time:
-            msg.send()
-            last_mail.save()
-    else:
-        last_mail = LastMail.objects.get_or_create(user=answerer.user)[0]
+    last_mail, created = LastMail.objects.get_or_create(user=answerer.user)
+    diff=timezone.now()-last_mail.modified
+    if diff > waiting_time or created:
         msg.send()
         last_mail.save()
