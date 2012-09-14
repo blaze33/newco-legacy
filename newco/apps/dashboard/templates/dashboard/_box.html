@@ -6,6 +6,7 @@
         <span class="pull-right" style="position: relative; top:-10px; right: -6px;"><button class="btn btn-mini" data-toggle="collapse" data-target="#{{ box.name }}_well"><i rel="expand_btn_{{ box.name }}" class="icon-minus"></i></button></span>
         <a href="{{ box.page_url }}" class="black">{{ box.title }}</a>{% trans ":" %} <small>{{ box.subtitle }}</small>
     </h3>
+
     <div id="{{ box.name }}_well" rel="collapse_div" class="collapse in">
         <br>{% include "items/content_display/_content_list.html" with contents=box.feed display="mini_feed" %}
     </div>

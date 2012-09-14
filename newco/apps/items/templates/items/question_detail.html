@@ -81,8 +81,8 @@
         <hr>
 
         {% for title, content_list in related_questions.iteritems %}
-            {% if content_list %}<div class="row well">
-                <h3>{{ title }}</h3>
+            {% if content_list %}<div class="row well well-small">
+                <h3>{{ title }}{% trans ":" %}</h3>
                 <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
             </div>{% endif %}
         {% endfor %}

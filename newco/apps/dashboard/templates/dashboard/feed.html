@@ -16,7 +16,7 @@
                 <div id="profiles_list2">{% for thumb_user in wtf.users %}{% include "dashboard/_thumbnail_profile.html" with thumb_user=thumb_user %}{% endfor %}</div>
             </div>
             <div class="row well well-small">
-                <h5>{% trans "Products you may like" %}</h5>
+                <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
                 <div>{% for item in wtf.items %}<div class="product-item-small thumbnail">
                     <div class="name"><a href="{{ item.get_absolute_url }}"><h5>{{ item.name|truncatechars:15 }}</h5></a></div>
                     <div class="details">{% follow_form user item %}</div>

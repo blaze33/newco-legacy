@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 15:43+0200\n"
+"POT-Creation-Date: 2012-09-14 12:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,12 +70,13 @@ msgstr ""
 msgid "Your latest contributions"
 msgstr ""
 
-#: templates/dashboard/_box.html:6
+#: templates/dashboard/_box.html:7 templates/dashboard/_subnav.html:40
+#: templates/dashboard/contribution.html:11 templates/dashboard/feed.html:19
 msgid ":"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:11
-msgid "Monitor all that concerns you!"
+msgid "Monitor all that concerns you"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:14
@@ -90,8 +91,8 @@ msgstr ""
 msgid "If you want to use your time and knowledge wisely, click here!"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:20 templates/dashboard/_subnav.html:29
-msgid "Available soon"
+#: templates/dashboard/_subnav.html:20
+msgid "Grrrr... Don't bother me, I'm working on it"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:22
@@ -106,6 +107,12 @@ msgstr ""
 msgid "Shopping"
 msgstr ""
 
+#: templates/dashboard/_subnav.html:29
+msgid ""
+"It&lsquo;s still baking. We know you&lsquo;re hungry, but we do too, please "
+"be patient ;)"
+msgstr ""
+
 #: templates/dashboard/_subnav.html:31
 msgid "We are working on it!"
 msgstr ""
@@ -114,8 +121,8 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:38 templates/dashboard/_subnav.html:40
-msgid "Exactly as others see it! Except the 'edit' button :P"
+#: templates/dashboard/_subnav.html:38
+msgid "Exactly as others see it, except the 'edit' button :P"
 msgstr ""
 
 #: templates/dashboard/_subnav.html:40
@@ -151,11 +158,11 @@ msgid ""
 "ideas, send us an email!\">tools</a> we have to help you contribute."
 msgstr ""
 
-#: templates/dashboard/contribution.html:10
+#: templates/dashboard/contribution.html:11
 msgid "Activity on your domains of skills"
 msgstr ""
 
-#: templates/dashboard/contribution.html:11
+#: templates/dashboard/contribution.html:12
 msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 
@@ -163,19 +170,19 @@ msgstr ""
 msgid "Keep here your drafts: contributions you don't want to publish (yet)."
 msgstr ""
 
-#: templates/dashboard/feed.html:6
+#: templates/dashboard/feed.html:7
 msgid "Activity from what you follow."
 msgstr ""
 
-#: templates/dashboard/feed.html:14
+#: templates/dashboard/feed.html:15
 msgid "Who to follow?"
 msgstr ""
 
-#: templates/dashboard/feed.html:14
+#: templates/dashboard/feed.html:15
 msgid "View all"
 msgstr ""
 
-#: templates/dashboard/feed.html:18
+#: templates/dashboard/feed.html:19
 msgid "Products you may like"
 msgstr ""
 

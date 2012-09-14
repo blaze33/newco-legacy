@@ -26,7 +26,7 @@
 
             <li class="divider"></li>
             <li class="nav-header">{% trans "Shopping" %}</li>
-            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a rel="tooltip-right" title="{% trans 'it&lsquo;s still baking, we know you&lsquo;re hungry, but we do too, please be patient ;)' %}"><span class="muted">{% trans "Shopping notes" %}</span></a></li>
+            <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a rel="tooltip-right" title="{% trans 'It&lsquo;s still baking. We know you&lsquo;re hungry, but we do too, please be patient ;)' %}"><span class="muted">{% trans "Shopping notes" %}</span></a></li>
 
             <li{% if page == "purchase" %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans 'We are working on it!' %}"><span class="muted">{% trans "Purchase history" %}</span></a></li>
             <li class="divider"></li>
@@ -35,9 +35,9 @@
         <li class="nav-header">{% trans "Profiles" %}</li>
 
         {% if user.is_authenticated %}
-            <li{% if is_me or profile_form %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "Exactly as others see it! Except the 'edit' button :P" %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {% user_display user %}</a></li>
+            <li{% if is_me or profile_form %} class="active"{% endif %}><a rel="tooltip-right" title="{% trans "Exactly as others see it, except the 'edit' button :P" %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {% user_display user %}</a></li>
         {% endif %}
-        {% if not is_me and not profile_form and profile %}<li class="active"><b>{% trans "User profile" %}{% trans ":" %}</b><br><a rel="tooltip-right" title="{% trans "Exactly as others see it! Except the 'edit' button :P" %}" href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a></li>{% endif %}
+        {% if not is_me and not profile_form and profile %}<li class="active"><b>{% trans "User profile" %}{% trans ":" %}</b><br><a href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a></li>{% endif %}
         <li>
             <form action="" method="POST" class="form-horizontal" style="position:relative; top: 10px;">{% csrf_token %}
                 <input name="pf_pick" type="text" autocomplete="off" placeholder="{% trans 'Search user' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profile }}">
