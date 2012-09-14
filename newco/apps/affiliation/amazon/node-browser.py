@@ -13,8 +13,8 @@ sys.path.append("/usr/lib/python2.7/dist-packages/gtk-2.0")
 import gtk
 from amazonproduct.api import API
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_PRODUCT_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_PRODUCT_SECRET_ACCESS_KEY')
 AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
 AWS_LOCALE = os.environ.get('AWS_LOCALE')
 

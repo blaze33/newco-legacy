@@ -277,6 +277,10 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
 AWS_LOCALE = os.environ.get('AWS_LOCALE')
 
+# Amazon Product API because IAM credentials aren't working
+AWS_PRODUCT_ACCESS_KEY_ID = os.environ.get('AWS_PRODUCT_ACCESS_KEY_ID')
+AWS_PRODUCT_SECRET_ACCESS_KEY = os.environ.get('AWS_PRODUCT_SECRET_ACCESS_KEY')
+
 # API services
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
