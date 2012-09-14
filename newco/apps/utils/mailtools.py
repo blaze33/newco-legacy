@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -31,7 +32,8 @@ def send_mail(message_subject, receiver, txt_template, html_template, context):
 #    diff = timezone.now() - last_mail.modified
 #    if diff > waiting_time or created:
 #        last_mail.save()
-    msg.send()
+    if not settings.DEBUG:
+        msg.send()
 
 
 def mail_question_author(site, answer):
