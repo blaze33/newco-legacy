@@ -42,7 +42,7 @@
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+        <div class="span2 right">{% content_info question "signature-author" %}</div>
     </div>{% endwith %}{% endwith %}
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
@@ -58,11 +58,11 @@
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
-            <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+            <div class="span2 right">{% content_info answer "signature-author" %}</div>
         </div>{% endwith %}{% endwith %}
     {% endif %}{% endfor %}
 
-    <div class="row"><div class="span6 offset1">
+    <div class="row"><div class="offset1 span6">
         <div class="block_controls">
             <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
             &nbsp;&nbsp;&nbsp;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 23:59+0200\n"
+"POT-Creation-Date: 2012-09-14 16:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,19 +93,23 @@ msgstr ""
 msgid "Add a story"
 msgstr ""
 
-#: templates/_footer.html:4
-msgid "FAQ"
-msgstr ""
-
 #: templates/_footer.html:5
-msgid "How to contribute?"
+msgid "Get started"
 msgstr ""
 
 #: templates/_footer.html:6
-msgid "Team"
+msgid "FAQ"
 msgstr ""
 
 #: templates/_footer.html:7
+msgid "How to contribute?"
+msgstr ""
+
+#: templates/_footer.html:8
+msgid "Team"
+msgstr ""
+
+#: templates/_footer.html:9
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
@@ -201,30 +205,30 @@ msgstr ""
 msgid "Confirm email address for %(site_name)s"
 msgstr ""
 
-#: templates/idios/profile.html:16
+#: templates/idios/profile.html:17
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:28
+#: templates/idios/profile.html:29
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
 msgstr ""
 
-#: templates/idios/profile.html:39
+#: templates/idios/profile.html:40
 msgid "Update my profile"
 msgstr ""
 
-#: templates/idios/profile.html:51
+#: templates/idios/profile.html:52
 msgid "History"
 msgstr ""
 
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:53
 msgid "Followees"
 msgstr ""
 
-#: templates/idios/profile.html:53
+#: templates/idios/profile.html:54
 msgid "Followers"
 msgstr ""
 
