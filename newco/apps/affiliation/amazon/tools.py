@@ -14,7 +14,7 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
         name="Amazon", url="http://www.amazon.fr"
     )
 
-    api = API(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY,
+    api = API(settings.AWS_PRODUCT_ACCESS_KEY_ID, settings.AWS_PRODUCT_SECRET_ACCESS_KEY,
                                                         settings.AWS_LOCALE)
 
     try:
