@@ -77,7 +77,7 @@
     </div>{% endwith %}{% endif %}
 
     <div class="row">
-        <a class="btn" href="{% url 'item_index' %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
+        {# <a class="btn" href="{% url 'item_index' %}"><i class="icon-list"></i> {% trans "Items list" %}</a> #}
         <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
         {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
     </div>
