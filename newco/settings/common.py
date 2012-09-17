@@ -205,7 +205,7 @@ INSTALLED_APPS = [
 
     # Project-external
     "newco_bw_editor",
-    
+
     # Project
     "about",
     "affiliation",
@@ -252,9 +252,8 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-LOGIN_URL = "/account/login"
-
 # django-user-accounts
+ACCOUNT_LOGIN_URL = "/account/login"
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
@@ -262,6 +261,7 @@ ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
 ACCOUNT_LOGIN_REDIRECT_URL = "get_started"
+ACCOUNT_SIGNUP_REDIRECT_URL = ACCOUNT_LOGIN_REDIRECT_URL
 ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
@@ -287,6 +287,9 @@ GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
 # Redis database ## redis://username:password@localhost:6379/0
 REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
+
+# Voting
+VOTING_ZERO_VOTES_ALLOWED = True
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
