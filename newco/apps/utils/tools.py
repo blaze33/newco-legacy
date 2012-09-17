@@ -4,7 +4,7 @@ import urlparse
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.db.models.loading import get_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -12,11 +12,13 @@ from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
 
-from taggit.models import Tag
+from generic_aggregation import generic_annotate
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
+from taggit.models import Tag
+from voting.models import Vote
 
-from items.models import Item
+from items.models import Item, Content
 from profiles.models import Profile
 
 PARAMS = {
@@ -90,6 +92,15 @@ def get_query(query_string, search_fields):
     return query
 
 
+def get_ordered_content_queryset(query, user):
+    queryset = generic_annotate(Content.objects.filter(query),
+        Vote, Sum('votes__vote')).order_by("-score")
+    scores = Vote.objects.get_scores_in_bulk(queryset)
+    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
+    return {"queryset": queryset.select_subclasses(),
+            "scores": scores, "votes": votes}
+
+
 def load_redis_engine():
     redis_url = urlparse.urlparse(settings.REDISTOGO_URL)
     if redis_url.scheme == "redis":
@@ -145,13 +156,15 @@ def redis_post_save(sender, instance=None, raw=False, **kwargs):
 
             obj_id = instance.__getattribute__(value["pk"])
             title = instance.__getattribute__(value["title_field"])
-            title = unicodedata.normalize('NFKD', title).encode('utf-8',
-                                                                'ignore')
-            data = {"class": key, "title": title}
-            for field in value["recorded_fields"]:
-                data.update({field: unicode(instance.__getattribute__(field))})
-            ctype = ContentType.objects.get_for_model(instance)
-            engine.store_json(obj_id, title, data, ctype.id)
+            if title:
+                title = unicodedata.normalize('NFKD', title).encode('utf-8',
+                                                                    'ignore')
+                data = {"class": key, "title": title}
+                for field in value["recorded_fields"]:
+                    data.update({field: unicode(
+                                            instance.__getattribute__(field))})
+                ctype = ContentType.objects.get_for_model(instance)
+                engine.store_json(obj_id, title, data, ctype.id)
 
 
 @receiver(post_delete)
