@@ -127,6 +127,8 @@ def update_redis_db(sender, request, user, **kwargs):
             for obj in cls.objects.all():
                 obj_id = obj.__getattribute__(value["pk"])
                 title = obj.__getattribute__(value["title_field"])
+                if not title:
+                    continue
                 title = unicodedata.normalize('NFKD', title).encode('utf-8',
                                                                     'ignore')
                 data = {"class": key, "title": title}
