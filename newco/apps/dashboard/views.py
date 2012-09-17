@@ -1,18 +1,19 @@
-from django.views.generic import ListView
+from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-
-from django.db.models import Q
-from django.core.urlresolvers import reverse_lazy
+from django.views.generic import ListView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+
+from follow.models import Follow
+from voting.models import Vote
 
 from items.models import Content, Item
 from profiles.models import Profile
 from profiles.views import ProcessProfileSearchView
 from utils.follow.views import ProcessFollowView
-from follow.models import Follow
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
@@ -93,6 +94,7 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
                                                 status=Content.STATUS.draft)
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
+            self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -133,5 +135,6 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
             "data_source_profile": Profile.objects.get_all_names(),
             "page": self.page,
             "page_name": self.page_name,
+            "scores": getattr(self, "scores", {})
         })
         return context

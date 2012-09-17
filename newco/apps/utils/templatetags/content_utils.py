@@ -96,34 +96,6 @@ class PopoverLinkNode(Node):
             context_instance=context)
 
 
-@register.tag
-def content_info(parser, token):
-    """
-    Displays content creation related info: author, creation date...
-
-    Usage ('pic_size' is optional)::
-
-        {% content_info content display %}
-        {% content_info content display pic_size %}
-
-        where display can be: "signature", "signature-author", "signature-pic"
-        "header"
-
-    """
-    bits = token.split_contents()
-    if len(bits) < 3:
-        raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
-    elif len(bits) > 4:
-        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
-    content = bits[1]
-    display = parser.compile_filter(bits[2])
-    if len(bits) == 4:
-        pic_size = parser.compile_filter(bits[3])
-    else:
-        pic_size = None
-    return ContentInfoNode(content, display, pic_size)
-
-
 class ContentInfoNode(Node):
     def __init__(self, content, display, pic_size=None):
         self.content = Variable(content)
@@ -172,3 +144,71 @@ class ContentInfoNode(Node):
         else:
             raise TemplateSyntaxError("'content_info': wrong display value.")
         return render_to_string(self.template, ctx, context_instance=context)
+
+
+@register.tag
+def content_info(parser, token):
+    """
+    Displays content creation related info: author, creation date...
+
+    Usage ('pic_size' is optional)::
+
+        {% content_info content display %}
+        {% content_info content display pic_size %}
+
+        where display can be: "signature", "signature-author", "signature-pic"
+        "header"
+
+    """
+    bits = token.split_contents()
+    if len(bits) < 3:
+        raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
+    elif len(bits) > 4:
+        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    content = bits[1]
+    display = parser.compile_filter(bits[2])
+    if len(bits) == 4:
+        pic_size = parser.compile_filter(bits[3])
+    else:
+        pic_size = None
+    return ContentInfoNode(content, display, pic_size)
+
+
+class RangeNode(Node):
+    def __init__(self, num, context_name):
+        self.num, self.context_name = num, context_name
+
+    def render(self, context):
+        context[self.context_name] = range(int(self.num))
+        return ""
+
+
+@register.tag
+def num_range(parser, token):
+    """
+    Takes a number and iterates and returns a range (list) that can be
+    iterated through in templates
+
+    Syntax:
+    {% num_range 5 as some_range %}
+
+    {% for i in some_range %}
+      {{ i }}: Something I want to repeat\n
+    {% endfor %}
+
+    Produces:
+    0: Something I want to repeat
+    1: Something I want to repeat
+    2: Something I want to repeat
+    3: Something I want to repeat
+    4: Something I want to repeat
+    """
+    try:
+        fnctn, num, trash, context_name = token.split_contents()
+    except ValueError:
+        raise TemplateSyntaxError("%s takes the syntax %s number_to_iterate\
+            as context_variable" % (fnctn, fnctn))
+    if not trash == 'as':
+        raise TemplateSyntaxError("%s takes the syntax %s number_to_iterate\
+            as context_variable" % (fnctn, fnctn))
+    return RangeNode(num, context_name)

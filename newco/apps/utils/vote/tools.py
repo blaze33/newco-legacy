@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
+
+from django.contrib import messages
+
 from account.utils import user_display
 
 from voting.models import Vote
@@ -39,6 +41,8 @@ def process_voting(request, obj, success_url):
                 "'%s' is not a valid vote type." % direction
             )
 
+        if hasattr(obj, "content_ptr"):
+            obj = obj.content_ptr
         Vote.objects.record_vote(obj, request.user, vote)
 
         messages.add_message(request,

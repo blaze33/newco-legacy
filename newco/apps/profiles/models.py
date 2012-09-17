@@ -15,7 +15,7 @@ from follow.utils import register
 from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
 
-from items.models import Question, Answer, Link, Feature
+from items.models import Content
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
 
 register(User)
@@ -74,19 +74,20 @@ class Reputation(models.Model):
     def compute_reputation(self):
         rep = 0
 
-        for cls in [Question, Answer, Link, Feature]:
-            ctype = ContentType.objects.get_for_model(cls)
-            obj_ids = cls.objects.filter(author=self.user).values_list('id',
-                                                                    flat=True)
-            votes = Vote.objects.filter(object_id__in=obj_ids,
-                                        content_type=ctype)
+        ctype = ContentType.objects.get_for_model(Content)
+        obj_ids = Content.objects.filter(author=self.user).values_list('id',
+                                                                flat=True)
+        votes = Vote.objects.filter(object_id__in=obj_ids,
+                                    content_type=ctype)
 
-            for vote in votes:
-                rep += POINTS_TABLE_RATED[cls._meta.module_name][vote.vote]
+        for vote in votes:
+            module_name = vote.object.select_subclass()._meta.module_name
+            rep += POINTS_TABLE_RATED[module_name][vote.vote]
 
         votes = Vote.objects.filter(user=self.user)
         for vote in votes:
-            rep += POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
+            module_name = vote.object.select_subclass()._meta.module_name
+            rep += POINTS_TABLE_RATING[module_name][vote.vote]
 
         return rep
 
@@ -109,8 +110,9 @@ def increment_reputation(sender, instance=None, **kwargs):
     # Update reputation for owner of rated content
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
+        module_name = vote.object.select_subclass()._meta.module_name
         rep_rated.reputation_incremented += \
-                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
+                POINTS_TABLE_RATED[module_name][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -118,8 +120,9 @@ def increment_reputation(sender, instance=None, **kwargs):
     # Update reputation for rater
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
+        module_name = vote.object.select_subclass()._meta.module_name
         rep_rating.reputation_incremented += \
-                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
+                POINTS_TABLE_RATING[module_name][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -134,8 +137,9 @@ def decrement_reputation(sender, instance=None, **kwargs):
     # Update reputation for owner of rated content
     try:
         rep_rated = Reputation.objects.get(user=vote.object.author)
+        module_name = vote.object.select_subclass()._meta.module_name
         rep_rated.reputation_incremented -= \
-                POINTS_TABLE_RATED[vote.content_type.model][vote.vote]
+                POINTS_TABLE_RATED[module_name][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -143,8 +147,9 @@ def decrement_reputation(sender, instance=None, **kwargs):
     # Update reputation for rater
     try:
         rep_rating = Reputation.objects.get(user=vote.user)
+        module_name = vote.object.select_subclass()._meta.module_name
         rep_rating.reputation_incremented -= \
-                POINTS_TABLE_RATING[vote.content_type.model][vote.vote]
+                POINTS_TABLE_RATING[module_name][vote.vote]
         rep_rating.save()
     except:
         pass

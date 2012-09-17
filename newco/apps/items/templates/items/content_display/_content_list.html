@@ -8,7 +8,7 @@
     <div class="row content">
         <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
 
-        {% if display != "mini_feed" %}{% score_for_object content as score %}{% endif %}
+        {% dict_entry_for_item content from scores as score %}
 
         {% with template="items/content_display/_"|add:class_name|add:".html" %}
             {% include template with content=content author=content.author score=score user=user path=request.path prof_tpl=prof_tpl prod_tpl=prod_tpl display=display csrf_token=csrf_token only %}

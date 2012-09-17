@@ -92,7 +92,7 @@ def get_query(query_string, search_fields):
     return query
 
 
-def get_ordered_content_queryset(query, user):
+def get_sorted_queryset(query, user):
     queryset = generic_annotate(Content.objects.filter(query),
         Vote, Sum('votes__vote')).order_by("-score")
     scores = Vote.objects.get_scores_in_bulk(queryset)
