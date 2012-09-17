@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import permalink, Q
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -109,8 +109,7 @@ class Question(Content):
         verbose_name = _("question")
 
     def __unicode__(self):
-        q = self.content
-        return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
+        return truncatechars(self.content, 50)
 
     @permalink
     def get_absolute_url(self):
@@ -131,8 +130,7 @@ class Answer(Content):
         verbose_name = _("answer")
 
     def __unicode__(self):
-        a = self.content
-        return u"%s" % (a if len(a) <= 50 else a[:50] + "...")
+        return truncatechars(self.content, 50)
 
     def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
