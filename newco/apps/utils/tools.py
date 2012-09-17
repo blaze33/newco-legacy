@@ -148,7 +148,7 @@ def redis_post_save(sender, instance=None, raw=False, **kwargs):
             obj_id = instance.__getattribute__(value["pk"])
             title = instance.__getattribute__(value["title_field"])
             if not title:
-                    continue
+                return
             title = unicodedata.normalize('NFKD', title).encode('utf-8',
                                                                 'ignore')
             data = {"class": key, "title": title}
