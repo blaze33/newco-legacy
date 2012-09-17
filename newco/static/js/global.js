@@ -112,4 +112,17 @@ $(function(){
     animate: true,
     //delay: 500,
   });
+    $('[rel="tooltip-bottom"]').tooltip({
+    trigger: 'hover',
+    placement: 'bottom',
+    animate: true,
+    //delay: 500,
+  });
+    $('[rel="tooltip-left"]').tooltip({
+    trigger: 'hover',
+    placement: 'left',
+    animate: true,
+    //delay: 500,
+  });
+
 });

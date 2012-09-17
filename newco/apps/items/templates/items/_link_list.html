@@ -25,7 +25,7 @@
                 {% with name=link|to_class_name %}{% edit name link.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=link %}</div>
+        <div class="span2 right">{% content_info link "signature-author" %}</div>
     </div>
     <hr>
 </div></div>{% endfor %}

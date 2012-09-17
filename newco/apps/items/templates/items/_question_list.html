@@ -10,8 +10,8 @@
     <i rel="add_icon" class="icon-plus" style="opacity: 0.1 ; cursor: pointer; cursor: hand; z-index: -1 ; position: relative; left: 20px; top: -13px;"></i>
     <span class="nc_transition_add" style="position: relative; left: -5px; top: -15px;">
         <button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i></button>
-        {% if questions %}<h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2>{% endif %}
-    </span>{% if not questions %}<h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2>{% endif %}
+        {% if questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2></a>{% endif %}
+    </span>{% if not questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2></a>{% endif %}
 
     <div id="question_form" class="collapse out" style="position: relative; left: 65px; top: -40px;">
         <form method="POST" action="" class="form-inline">{% if not questions %}<br><br><br>{% endif %}
@@ -42,7 +42,7 @@
                 {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=question %}</div>
+        <div class="span2 right">{% content_info question "signature-author" %}</div>
     </div>{% endwith %}{% endwith %}
     {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
     {% scores_for_objects question.answer_set.all as answer_score_dict %}
@@ -58,11 +58,11 @@
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
-            <div class="span2 right">{% include "items/_author.html" with object=answer %}</div>
+            <div class="span2 right">{% content_info answer "signature-author" %}</div>
         </div>{% endwith %}{% endwith %}
     {% endif %}{% endfor %}
 
-    <div class="row"><div class="span6 offset1">
+    <div class="row"><div class="offset1 span6">
         <div class="block_controls">
             <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
             &nbsp;&nbsp;&nbsp;

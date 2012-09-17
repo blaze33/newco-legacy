@@ -111,7 +111,7 @@ class AnswerForm(ModelForm):
         widgets = {
             "content": BW_small_Widget(attrs={
                 "rows": 10,
-                "style": "width: 100%;box-sizing: border-box;",
+                "style": "width: 100%; box-sizing: border-box;",
                 "placeholder": _("Be concise and to the point."),
                 "rel": "bw_editor_small",
             }),
@@ -267,6 +267,9 @@ def _reload_current_search(item_form):
                 except ObjectDoesNotExist:
                     pass
                 else:
-                    product_list.append(aff_cat)
+                    if AffiliationItem.objects.filter(
+                                            object_id=aff_cat.object_id,
+                                            store=aff_cat.store).count() == 0:
+                        product_list.append(aff_cat)
             product_list_by_store.update({store: product_list})
     return product_list_by_store

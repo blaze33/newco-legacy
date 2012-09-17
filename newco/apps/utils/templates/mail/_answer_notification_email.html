@@ -1,0 +1,11 @@
+{% extends "mail/_notification_email.html" %}
+
+{% load i18n %}
+{% block body_title %}
+    <h4><a href="{{ answerer_url }}">{{ answerer }}</a> {% trans "answered your question" %} <a href="{{ question_url }}">"{{ question_object }}"</a>.</h4>
+    <br>{% trans "About the product" %} <a href="{{ product_url }}">{{ product_object }}</a>.
+{% endblock %}
+
+{% block body_answer %}
+    {% autoescape off %}{{ answer_object }}{% endautoescape %}
+{% endblock %}

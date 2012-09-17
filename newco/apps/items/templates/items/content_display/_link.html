@@ -13,7 +13,7 @@
         </p>
     </blockquote>
 {% elif display == "thumbnail" %}
-    {% include prof_tpl with object=content.author display=display color="black" %} {% blocktrans with url=content.get_absolute_url %}posted a <a href="{{ url }}" class="black">link</a> about{% endblocktrans %} {% include prod_tpl with object=item display=display color="black" %}
+    {% include prof_tpl with object=content.author display=display color="black" %} {% trans "posted a link about" %} {% include prod_tpl with object=item display=display color="black" %}
 {% elif display == "text" %}
     <div class="row"><div class="span7">
         <h4>{% include prof_tpl with object=author display=display %} {% trans "posted a link about" %} {% include prod_tpl with object=content.items.all.0 display=display %}</h4>
@@ -27,6 +27,6 @@
             {% endif %}
         </p></div>
         <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-        <div class="span2 right">{% include "items/_author.html" with object=content %}</div>
+        <div class="span2 right">{% content_info content "signature-author" %}</div>
     </div>
 {% endif %}

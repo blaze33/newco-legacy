@@ -2,118 +2,72 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:06+0200\n"
-"PO-Revision-Date: 2012-08-28 00:04\n"
+"POT-Creation-Date: 2012-09-14 21:03+0200\n"
+"PO-Revision-Date: 2012-09-14 21:10\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: asktools.py:18
+#: mailtools.py:51
 #, python-format
-msgid "%(user)s, your request has been sent to %(ask_profile)s!"
-msgstr "%(user)s, votre requête a été envoyée à %(ask_profile)s !"
+msgid "answered your question \"%(question)s\""
+msgstr "a répondu à votre question \"%(question)s\""
 
-#: asktools.py:23
+#: mailtools.py:58 mailtools.py:148 mailtools.py:155
+#, python-format
+msgid "about the product %(product)s."
+msgstr "à propos du produit %(product)s."
+
+#: mailtools.py:62 mailtools.py:159
+msgid "on"
+msgstr "sur"
+
+#: mailtools.py:93
+#, python-format
+msgid "%(user)s, your request has been sent to %(receiver)s!"
+msgstr "%(user)s, votre requête a été envoyée à %(receiver)s !"
+
+#: mailtools.py:98
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 "%(user)s, vous ne pouvez pas vous proposer de répondre à une question !"
 
-#: asktools.py:64
+#: mailtools.py:139
 #, python-format
-msgid "%(askee)s, %(asker)s needs you help!"
-msgstr "%(askee)s, %(asker)s a besoin de vous !"
+msgid "%(receiver)s, %(requester)s needs your help!"
+msgstr "%(receiver)s, %(requester)s a besoin de vous !"
 
-#: asktools.py:70
+#: mailtools.py:145
 #, python-format
 msgid "would like you to answer this question \"%(question)s\""
 msgstr "aimerait que vous répondiez à cette question \"%(question)s\""
 
-#: asktools.py:73 asktools.py:79
-#, python-format
-msgid "about the product %(product)s."
-msgstr "à propos du produit %(product)s."
-
-#: asktools.py:83
-msgid "on"
-msgstr "sur"
-
-#: followtools.py:17
+#: follow/tools.py:19
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr "%(user)s, vous suivez désormais %(object)s."
 
-#: followtools.py:21
+#: follow/tools.py:23
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr "%(user)s, vous ne suivez plus %(object)s."
 
-#: followtools.py:25
+#: follow/tools.py:27
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
 msgstr "%(user)s, vous ne pouvez pas vous suivre !"
-
-#: votingtools.py:15
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
-
-#: votingtools.py:19
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
-
-#: votingtools.py:23
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr "%(user)s, votre vote sur %(object)s a été annulé."
-
-#: votingtools.py:27
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
-msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
-
-#: templates/ask/_ask_notification_email.html:11
-#, python-format
-msgid ""
-"\n"
-"            This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
-"\" >here</a> (available soon).\n"
-"            <br><br>\n"
-"            Thanks,\n"
-"            The NewCo team\n"
-"        "
-msgstr ""
-"\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
-"<br><br>\n"
-"Merci,\n"
-"L'équipe NewCo"
-
-#: templates/ask/_ask_notification_email.txt:6
-#, python-format
-msgid ""
-"\n"
-"    To see %(asker)s's profile, go there:\n"
-"    %(asker_url)s\n"
-msgstr ""
-"\n"
-"Pour voir le profil de %(asker)s, rendez-vous ici :\n"
-"%(asker_url)s\n"
 
 #: templates/autocomplete/autocomplete.html:7
 msgid "Items"
@@ -127,13 +81,65 @@ msgstr "Tags"
 msgid "No options"
 msgstr "Pas de résultat correspondant à la recherche."
 
-#: templates/follow/form.html:7
-msgid "Unfollow"
-msgstr "Abonné"
+#: templates/content/info.html:6
+msgid "by"
+msgstr "par"
 
-#: templates/follow/form.html:9
-msgid "Follow"
-msgstr "Suivre"
+#: templates/mail/_answer_notification_email.html:5
+#: templates/mail/_answer_notification_email.txt:6
+msgid "answered your question"
+msgstr "a répondu à votre question"
+
+#: templates/mail/_answer_notification_email.html:6
+#: templates/mail/_answer_notification_email.txt:7
+#: templates/mail/_ask_notification_email.html:6
+#: templates/mail/_ask_notification_email.txt:7
+msgid "About the product"
+msgstr "A propos du produit"
+
+#: templates/mail/_answer_notification_email.txt:11
+#, python-format
+msgid "To see %(answerer)s's profile, go there"
+msgstr "Pour voir le profil de %(answerer)s, rendez-vous ici"
+
+#: templates/mail/_answer_notification_email.txt:13
+#: templates/mail/_ask_notification_email.txt:13
+#, python-format
+msgid "To see %(question)s, go there"
+msgstr "Pour voir %(question)s, rendez-vous ici"
+
+#: templates/mail/_ask_notification_email.html:5
+#: templates/mail/_ask_notification_email.txt:6
+msgid "would like you to answer this question"
+msgstr "aimerait que vous répondiez à cette question"
+
+#: templates/mail/_ask_notification_email.txt:11
+#, python-format
+msgid "To see %(asker)s's profile, go there"
+msgstr "Pour voir le profil de %(asker)s, rendez-vous ici"
+
+#: templates/mail/_follow_notification_email.html:5
+msgid "is now following you on NewCo!"
+msgstr "vous suit désormais sur NewCo !"
+
+#: templates/mail/_follow_notification_email.txt:6
+msgid "vous suit maintenant sur NewCo!"
+msgstr "vous suit désormais sur NewCo !"
+
+#: templates/mail/_follow_notification_email.txt:11
+#, python-format
+msgid "To see %(follower)s's profile, go there"
+msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
+
+#: templates/mail/_notification_email.html:34
+#, python-format
+msgid ""
+"\n"
+"            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon).\n"
+"            "
+msgstr ""
+"\n"
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
 
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
@@ -167,3 +173,31 @@ msgid "an hour ago"
 msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
+
+#: templatetags/follow_utils.py:49
+msgid "Unfollow"
+msgstr "Abonné"
+
+#: templatetags/follow_utils.py:52
+msgid "Follow"
+msgstr "Suivre"
+
+#: vote/tools.py:15
+#, python-format
+msgid "%(user)s, your up vote on %(object)s has been recorded."
+msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
+
+#: vote/tools.py:19
+#, python-format
+msgid "%(user)s, your down vote on %(object)s has been recorded."
+msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
+
+#: vote/tools.py:23
+#, python-format
+msgid "%(user)s, your vote on %(object)s has been cancelled."
+msgstr "%(user)s, votre vote sur %(object)s a été annulé."
+
+#: vote/tools.py:27
+#, python-format
+msgid "%(user)s, you can't vote on your own contribution!"
+msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."

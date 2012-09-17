@@ -28,9 +28,15 @@ class ProcessProfileSearchView(object):
             return super(ProcessProfileSearchView, self).post(request,
                                                             *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        kwargs.update({
+            "data_source_profile": Profile.objects.get_all_names()
+        })
+        return super(ProcessProfileSearchView, self).get_context_data(**kwargs)
 
-class ProfileDetailView(ProfileDetailView, MultipleObjectMixin,
-                                ProcessProfileSearchView, ProcessFollowView):
+
+class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
+            MultipleObjectMixin, ProcessFollowView):
 
     paginate_by = 10
 
@@ -60,7 +66,6 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin,
             "fwers": User.objects.filter(pk__in=fwers_ids),
             "fwees": User.objects.filter(pk__in=fwees_ids),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "data_source_profile": Profile.objects.get_all_names(),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both
@@ -75,7 +80,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin,
         return context
 
 
-class ProfileListView(ProfileListView, ProcessProfileSearchView):
+class ProfileListView(ProcessProfileSearchView, ProfileListView):
 
     paginate_by = 15
 
@@ -93,10 +98,3 @@ class ProfileListView(ProfileListView, ProcessProfileSearchView):
             profiles = profiles.order_by("user__username")
 
         return profiles
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileListView, self).get_context_data(**kwargs)
-        context.update({
-            "data_source_profile": Profile.objects.get_all_names()
-        })
-        return context

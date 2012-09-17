@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
+from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
@@ -26,7 +27,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
-from utils.asktools import process_asking
+from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
 from utils.tools import get_query, load_object
 from utils.vote.views import ProcessVoteView
@@ -83,7 +84,8 @@ class ContentFormMixin(object):
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
-            form.stores_search()
+            if "store_search" in request.POST:
+                form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
             return self.form_valid(form)
@@ -311,6 +313,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 "object": self.object._meta.verbose_name
             }
         )
+        if self.object._meta.object_name == "Answer":
+            mail_question_author(request.META.get('HTTP_HOST'), self.object)
         return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(login_required)
@@ -320,12 +324,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             self.success_url = request.POST.get("next")
         if "ask" in request.POST:
             obj = load_object(request)
-            if self.model == Item:
-                item = self.get_object()
-                success_url = obj.get_product_related_url(item)
-            else:
-                success_url = obj.get_absolute_url()
-            return process_asking(request, obj, success_url)
+            return process_asking_for_help(request, obj, request.path)
         elif "question" in request.POST or "answer" in request.POST:
             if "question" in request.POST:
                 POST_dict = request.POST.copy()
@@ -384,13 +383,15 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         queryset = super(ContentListView, self).get_queryset()
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
-            if self.sort_order == "popular":
-                pass
-                #FIXME Not working, don't know the hell why...
+        else:
+            self.sort_order = "-pub_date"
+        if self.sort_order == "popular":
+            pass
+            #FIXME Not working, don't know the hell why...
 #                queryset = queryset.annotate(
 #                                Count("content")).order_by("-content__count")
-            else:
-                queryset = queryset.order_by(self.sort_order)
+        else:
+            queryset = queryset.order_by(self.sort_order)
         if "tag_slug" in self.kwargs:
             self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             queryset = queryset.filter(tags=self.tag)
@@ -414,16 +415,19 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
                 queryset_ordered = generic_annotate(
                         queryset, Vote, Sum('votes__vote')).order_by("-score")
                 context.update({
+                    "media": ChosenSelect().media,
                     "item_list": item_list,
                     "related_questions": {
-                        _("Top Questions"): queryset_ordered[:3],
-                        _("Latest Questions"): queryset[:3]
+                        _("Top related questions"): queryset_ordered[:3],
+                        _("Latest related questions"): queryset[:3]
                     }
                 })
         return context
 
 
 class ContentDeleteView(ContentView, DeleteView):
+
+    template_name = "items/confirm_delete.html"
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
