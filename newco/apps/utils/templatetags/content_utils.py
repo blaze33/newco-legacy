@@ -1,10 +1,14 @@
 from django.template.base import Node, Library, Variable
-from django.template.base import TemplateSyntaxError
+from django.template.base import TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
+from django.contrib.auth.models import User
+
 from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
+
+from items.models import Item
 
 register = Library()
 
@@ -58,42 +62,53 @@ def profile_pic(user, size=None, quote_type="double"):
     return img
 
 
+class ObjectDisplayNode(Node):
+    def __init__(self, obj, display, color=None):
+        self.obj = Variable(obj)
+        self.display = Variable(display)
+        self.color = Variable(color) if color else None
+
+    def render(self, context):
+        try:
+            obj = self.obj.resolve(context)
+        except VariableDoesNotExist:
+            return ""
+        else:
+            display = self.display.resolve(context)
+            color = self.color.resolve(context) if self.color else None
+            if obj.__class__ is Item:
+                template = "items/_product_display.html"
+                ctx = {"tag_qs": obj.tags.all()}
+            elif obj.__class__ is User:
+                template = "profiles/_profile_display.html"
+                tag_qs = obj.get_profile().skills.all()
+                ctx = {"tag_qs": tag_qs, "username": user_display(obj)}
+
+            ctx.update({"object": obj, "display": display, "color": color})
+            return render_to_string(template, ctx, context_instance=context)
+
+
 @register.tag
-def popover_link(parser, token):
+def object_display(parser, token):
     """
-    Renders the item link with its popover.
+    Renders the item link with or without its popover, depending on display.
+    Can add a css defined color
 
     Usage::
 
-        {% item_link object template %}
+        {% item_link object display %}
+        {% item_link object display color %}
 
     """
     bits = token.split_contents()
-    return PopoverLinkNode(*bits[1:])
-
-
-class PopoverLinkNode(Node):
-    def __init__(self, obj, tpl=None):
-        self.obj = Variable(obj)
-        self.template = tpl[1:-1] if tpl else None
-
-    def render(self, context):
-        obj = self.obj.resolve(context)
-        if obj._meta.module_name == "item":
-            tag_list = obj.tags.all()
-            if not self.template:
-                self.template = "items/_popover_link.html"
-        elif obj._meta.module_name == "user":
-            tag_list = obj.get_profile().skills.all()
-            if not self.template:
-                self.template = "profiles/_popover_link.html"
-
-        ctx = {
-            'object': self.obj.resolve(context),
-            'tag_list': tag_list
-        }
-        return render_to_string(self.template, ctx,
-            context_instance=context)
+    if len(bits) < 3:
+        raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
+    elif len(bits) > 4:
+        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    obj = bits[1]
+    display = bits[2]
+    link_color = bits[3] if len(bits) == 4 else None
+    return ObjectDisplayNode(obj, display, link_color)
 
 
 class ContentInfoNode(Node):
