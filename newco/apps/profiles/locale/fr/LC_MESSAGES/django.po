@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-12 15:41+0200\n"
+"POT-Creation-Date: 2012-09-18 17:51+0200\n"
 "PO-Revision-Date: 2012-09-12 12:25\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,17 +55,17 @@ msgstr "profil"
 msgid "reputation"
 msgstr "réputation"
 
-#: templates/profiles/_profile_display.html:13
+#: templates/profiles/_profile_display.html:12
 #: templates/profiles/_profile_info.html:22
 msgid "Reputation"
 msgstr "Réputation"
 
+#: templates/profiles/_profile_display.html:12
 #: templates/profiles/_profile_display.html:13
-#: templates/profiles/_profile_display.html:14
 msgid ":"
 msgstr " :"
 
-#: templates/profiles/_profile_display.html:14
+#: templates/profiles/_profile_display.html:13
 #: templates/profiles/_profile_info.html:26
 msgid "Skills"
 msgstr "Compétences"
