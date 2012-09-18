@@ -24,8 +24,8 @@ register(User)
 class ProfileManager(models.Manager):
 
     def get_all_names(self):
-        profiles = self.order_by("name").distinct("name")
-        return json.dumps(list(profiles.values_list("name", flat=True)))
+        qs = self.order_by("name").distinct("name")
+        return json.dumps(filter(None, qs.values_list("name", flat=True)))
 
 
 class Profile(ProfileBase):
