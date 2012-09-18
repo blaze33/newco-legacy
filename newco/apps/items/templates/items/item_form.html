@@ -17,7 +17,18 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% trans "Add something new to talk about:" %}{% endblock %}</h1>
+<h1>{% block form_header %}{% trans "Add a product:" %}{% endblock %}</h1>
+<br>
+<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#item_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i>How it works</button>
+<div id="item_form" class="collapse out">
+	<br>
+	{% trans "You can create here new product pages. To create one, you need to" %}:
+	<ol>
+		<li>{% trans "Put in the product name and its associated tags "%}(<a href="{% url faq %}">{% trans "see here how to use tags" %}</a>).</li>
+		<li>{% trans "Create the affiliate links using <i>Stores search</i>." %}</li>
+		<li>{% trans "The last step is to generate the images by <b>editing</b> the product, once this one has been created." %}</li>
+	</ol>
+</div>
 
 </br>
 

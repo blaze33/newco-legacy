@@ -7,8 +7,18 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% trans "Ask something:" %}{% endblock %}</h1>
-
+<h1>{% block form_header %}{% trans "Ask a question:" %}{% endblock %}</h1>
+<br>
+<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i>How it works</button>
+<div id="question_form" class="collapse out">
+	<br>
+	{% trans "You can ask here some questions about one or several products already registered in the database. " %}:
+	<ol>
+		<li>{% trans "Write down the question"%}.</li>
+		<li>{% trans "Select 1 or several products to bind to that question using the search bar." %}</li>
+		<li>{% trans "Once submitted, then Wait for an answer or <b>Ask an Expert</b> to help you out." %}</li>
+	</ol>
+</div>
 </br>
 
 <form action="." method="POST">{% csrf_token %}
