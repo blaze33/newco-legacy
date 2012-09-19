@@ -48,7 +48,6 @@ def process_following(request, obj, success_url):
             msgs[msg]["text"] % {"user": username, "object": object_unicode}
         )
     else:
-        follow = None
         messages.add_message(request,
             msgs["warning"]["level"],
             msgs["warning"]["text"] % {"user": username}

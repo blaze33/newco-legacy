@@ -4,18 +4,17 @@
 {% load content_utils %}
 {% load staticfiles %}
 
-<div class="row">{% for feat_list in feat_lists %}<div class="{% if forloop.last %}offset1 {% endif %}span3">
+{% num_range 2 as range %}
 
-    {% votes_by_user user on feat_list as vote_dict %}
-    {% scores_for_objects feat_list as score_dict %}
+<div class="row">{% for index in range %}{% cycle feat_pos feat_neg as feats silent %}<div class="{% if forloop.last %}offset1 {% endif %}span3">
 
     <div style="text-align:center;"><h5>{% if forloop.first %}{% trans "Positive Features" %}{% else %}{% trans "Negative Features" %}{% endif %}</h5></div>
 
     <hr>
 
-    {% for feat in feat_list %}<div class="row one_row" id="f-{{ feat.id }}">
-        {% dict_entry_for_item feat from vote_dict as vote %}
-        {% dict_entry_for_item feat from score_dict as score %}
+    {% for feat in feats.queryset %}<div class="row one_row" id="f-{{ feat.id }}">
+        {% dict_entry_for_item feat from feats.votes as vote %}
+        {% dict_entry_for_item feat from feats.scores as score %}
 
             <div class="span2">
                 <b>{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form feat vote %}</b>

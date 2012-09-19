@@ -6,13 +6,11 @@
 {% spaceless%}
 
 {% if display == "text" %}
-    {% with tag_qs=object.tags.all %}
-        <span class="myClassPopover"
-            data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form user object %}</td></tr></table>"
-            data-content="{% for tag in tag_qs %}<a href='{% url 'tagged_items' tag.slug %}'><span class='label'>{{ tag.name }}</span></a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}" itemscope itemtype="http://schema.org/Product">
-            <a href="{{ object.get_absolute_url }}" itemprop="url"{% if color %} class="{{ color }}"{% endif %}><span itemprop="name">{{ object }}</span></a>
-        </span>
-    {% endwith %}
+    <span class="myClassPopover"
+        data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form user object %}</td></tr></table>"
+        data-content="{% for tag in tag_qs %}<a href='{% url 'tagged_items' tag.slug %}'><span class='label'>{{ tag.name }}</span></a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}" itemscope itemtype="http://schema.org/Product">
+        <a href="{{ object.get_absolute_url }}" itemprop="url"{% if color %} class="{{ color }}"{% endif %}><span itemprop="name">{{ object }}</span></a>
+    </span>
 {% elif display == "thumbnail" or display == "mini_feed" %}
     <span itemscope itemtype="http://schema.org/Product"><a href="{{ object.get_absolute_url }}" itemprop="url"{% if color %} class="{{ color }}"{% endif %}><span itemprop="name">{{ object }}</span></a></span>
 {% endif %}

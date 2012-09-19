@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-14 12:05+0200\n"
+"POT-Creation-Date: 2012-09-18 17:58+0200\n"
 "PO-Revision-Date: 2012-09-12 19:10\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,58 +19,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: views.py:18 templates/dashboard/_subnav.html:11
+#: views.py:19 templates/dashboard/_subnav.html:11
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: views.py:19
+#: views.py:20
 msgid "Feed"
 msgstr "Flux"
 
-#: views.py:20 views.py:37 templates/dashboard/_subnav.html:18
+#: views.py:21 views.py:38 templates/dashboard/_subnav.html:18
 msgid "Contribution center"
 msgstr "Centre de contributions"
 
-#: views.py:21 templates/dashboard/_subnav.html:20
+#: views.py:22 templates/dashboard/_subnav.html:20
 msgid "Teamwork"
 msgstr "Travail en équipe"
 
-#: views.py:22 views.py:45 templates/dashboard/_subnav.html:22
+#: views.py:23 views.py:46 templates/dashboard/_subnav.html:22
 msgid "Drafts"
 msgstr "Brouillons"
 
-#: views.py:23 views.py:52 templates/dashboard/_subnav.html:25
+#: views.py:24 views.py:53 templates/dashboard/_subnav.html:25
 msgid "All my contributions"
 msgstr "Toutes mes contributions"
 
-#: views.py:24 templates/dashboard/_subnav.html:29
+#: views.py:25 templates/dashboard/_subnav.html:29
 msgid "Shopping notes"
 msgstr "Notes de shopping"
 
-#: views.py:25 templates/dashboard/_subnav.html:31
+#: views.py:26 templates/dashboard/_subnav.html:31
 msgid "Purchase history"
 msgstr "Historique d'achat"
 
-#: views.py:30 templates/dashboard/_subnav.html:14
+#: views.py:31 templates/dashboard/_subnav.html:14
 msgid "My newsfeed"
 msgstr "Mon flux"
 
-#: views.py:31
+#: views.py:32
 msgid "Mini feed from what you follow"
 msgstr "Mini feed de ce que vous suivez"
 
-#: views.py:38
+#: views.py:39
 msgid ""
 "Latest activity on your skills tags... Maybe you would like to contribute?"
 msgstr ""
 "Dernière activité sur vos tags de compétences... Peut-être voulez-vous "
 "contribuer ?"
 
-#: views.py:46
+#: views.py:47
 msgid "Maybe you want to complete and publish some?"
 msgstr "Vous voulez peut être en terminer et publier certains ?"
 
-#: views.py:53
+#: views.py:54
 msgid "Your latest contributions"
 msgstr "Vos dernières contributions"
 

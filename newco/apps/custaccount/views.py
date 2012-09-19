@@ -1,4 +1,8 @@
+import hashlib
+import random
+
 from django.contrib.auth.models import User
+
 from account.views import LoginView, SignupView
 from account.forms import LoginEmailForm
 
@@ -15,8 +19,18 @@ class SignupView(SignupView):
     form_class = SignupForm
 
     def generate_username(self, form):
-        # Dummy implementation, username is later set to user auto_id field
-        username = unicode(User.objects.count() + 1) + "_makemefeelunique"
+        def random_username():
+            h = hashlib.sha1(form.cleaned_data["email"]).hexdigest()[:25]
+            # don't ask
+            n = random.randint(1, (10 ** (5 - 1)) - 1)
+            return "%s%d" % (h, n)
+        while True:
+            try:
+                username = random_username()
+                print username
+                User.objects.get(username=username)
+            except User.DoesNotExist:
+                break
         return username
 
     def create_account(self, form):
