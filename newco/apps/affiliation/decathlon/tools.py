@@ -28,10 +28,7 @@ def decathlon_product_search(keyword, nb_items=10):
         #TODO: better implementation
         item_list = list(d4_prods.filter(query))
         for item in item_list:
-            try:
-                dup_entry = results.index(item)
-                item_list.remove(dup_entry)
-            except ValueError:
+            if not results.__contains__(item):
                 results.append(item)
         if len(results) >= nb_items:
             break
