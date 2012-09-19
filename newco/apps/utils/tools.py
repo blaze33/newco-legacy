@@ -131,13 +131,15 @@ def load_redis_engine():
 def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
 
-    if engine:
-        for key, value in PARAMS.iteritems():
-            cls = value["class"]
-            ctype = ContentType.objects.get_for_model(cls)
-            for obj in cls.objects.all():
-                obj_id = obj.__getattribute__(value["pk"])
-                title = obj.__getattribute__(value["title_field"])
+    if not engine:
+        return
+    for key, value in PARAMS.iteritems():
+        cls = value["class"]
+        ctype = ContentType.objects.get_for_model(cls)
+        for obj in cls.objects.all():
+            obj_id = obj.__getattribute__(value["pk"])
+            title = obj.__getattribute__(value["title_field"])
+            if title:
                 title = unicodedata.normalize('NFKD', title).encode('utf-8',
                                                                     'ignore')
                 data = {"class": key, "title": title}
