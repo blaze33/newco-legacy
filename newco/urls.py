@@ -11,6 +11,8 @@ admin.autodiscover()
 from views import HomepageView
 from tastypie.api import Api
 from content.api import ItemResource, RelationResource
+from sitemaps import all_sitemaps as sitemaps
+
 
 v1_api = Api(api_name='v1')
 v1_api.register(ItemResource())
@@ -35,6 +37,9 @@ urlpatterns = patterns("",
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
     url(r"^autocomplete/", include("autocomplete_light.urls")),
     url(r"^utils/", include("utils.urls")),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
+    url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+
 )
 
 if settings.DEBUG:
