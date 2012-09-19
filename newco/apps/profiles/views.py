@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
+from voting.models import Vote
 
 from items.models import Item, Content
 from profiles.models import Profile
@@ -51,8 +52,7 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
 
     def get_context_data(self, **kwargs):
         history = Content.objects.filter(
-            Q(author=self.page_user) & Q(status=Content.STATUS.public)
-        ).select_subclasses()
+            Q(author=self.page_user) & Q(status=Content.STATUS.public))
 
         fwers_ids = Follow.objects.get_follows(
                             self.page_user).values_list("user_id", flat=True)
@@ -66,6 +66,7 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
             "fwers": User.objects.filter(pk__in=fwers_ids),
             "fwees": User.objects.filter(pk__in=fwees_ids),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
+            "scores": Vote.objects.get_scores_in_bulk(history),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both
@@ -75,6 +76,7 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
         m.kwargs = self.kwargs
         m.paginate_by = self.paginate_by
 
+        history = history.select_subclasses()
         context.update(m.get_context_data(object_list=history))
 
         return context

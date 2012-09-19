@@ -1,12 +1,9 @@
-import datetime
-
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
-from django.utils import timezone
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
@@ -23,7 +20,7 @@ def send_mail(message_subject, receiver, txt_template, html_template, context):
     msg_html = html_template.render(context)
 
     msg = EmailMultiAlternatives(message_subject, msg_txt,
-        "auto-mailer@newco-project.fr", [receiver.email]
+        "notifications@newco-project.fr", [receiver.email]
     )
     msg.attach_alternative(msg_html, "text/html")
 

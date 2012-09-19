@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-11 18:06+0200\n"
+"POT-Creation-Date: 2012-09-18 17:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:13
+#: models.py:14
 msgid "name"
 msgstr ""
 
-#: models.py:14
+#: models.py:15
 msgid "url webapp"
 msgstr ""
 
-#: models.py:15
+#: models.py:16
 msgid "slug"
 msgstr ""
 
-#: models.py:17 models.py:51
+#: models.py:18 models.py:52
 msgid "last modified"
 msgstr ""
 
-#: models.py:20 models.py:38
+#: models.py:21 models.py:39
 msgid "store"
 msgstr ""
 
-#: models.py:32
+#: models.py:33
 msgid "Euro"
 msgstr ""
 
-#: models.py:33
+#: models.py:34
 msgid "Dollar"
 msgstr ""
 
-#: models.py:34
+#: models.py:35
 msgid "Pound"
 msgstr ""
 
-#: models.py:37
+#: models.py:38
 msgid "name at store"
 msgstr ""
 
-#: models.py:40
+#: models.py:41
 msgid "store object id"
 msgstr ""
 
-#: models.py:41
+#: models.py:42
 msgid "EAN"
 msgstr ""
 
-#: models.py:42
+#: models.py:43
 msgid "url"
 msgstr ""
 
-#: models.py:44
+#: models.py:45
 msgid "price"
 msgstr ""
 
-#: models.py:47
+#: models.py:48
 msgid "currency"
 msgstr ""
 
-#: models.py:49
+#: models.py:50
 msgid "date created"
 msgstr ""
 
-#: models.py:53
+#: models.py:54
 msgid "small image"
 msgstr ""
 
-#: models.py:55
+#: models.py:56
 msgid "medium image"
 msgstr ""
 
-#: models.py:57
+#: models.py:58
 msgid "large image"
 msgstr ""
 
-#: models.py:61
+#: models.py:62
 msgid "affiliation item"
 msgstr ""
 

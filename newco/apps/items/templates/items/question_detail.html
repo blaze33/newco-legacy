@@ -19,13 +19,10 @@
 
 {% block body %}
 
-{% vote_by_user user on question as vote %}
-{% score_for_object question as score %}
-
 <div class="row">
     <div class="span7" itemscope itemtype="http://schema.org/Article">
         <div class="row one_row" id="q-{{ question.id }}">
-            <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
+            <div class="span1"><h2 class="right">{% if question.score %}{{ question.score.score }}{% else %}0{% endif %}{% vote_form question question.vote %}</h2></div>
             <div class="span4"><h2>
                 <span itemprop="name">{{ question.content }}</span>
                 {% if user.is_superuser or question.author == request.user %}
@@ -34,12 +31,10 @@
             </h2></div>
             <div class="span2 right">{% content_info question "signature" 30 %}</div>
         </div>
-        {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
-        {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-        {% for answer in question.answer_set.all %}{% if answer.is_public %}
-            {% dict_entry_for_item answer from answer_vote_dict as vote %}
-            {% dict_entry_for_item answer from answer_score_dict as score %}
+        {% for answer in question.answers.queryset %}{% if answer.is_public %}
+            {% dict_entry_for_item answer from question.answers.votes as vote %}
+            {% dict_entry_for_item answer from question.answers.scores as score %}
             <hr>
             <div class="row one_row" id="a-{{ answer.id }}">
                 <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>

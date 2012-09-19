@@ -1,8 +1,9 @@
-from django.db import models
-from django.template.defaultfilters import slugify
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 from decimal import Decimal
+
+from django.db import models
+from django.template.defaultfilters import slugify, truncatechars
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from babel.numbers import parse_decimal
 from model_utils import Choices
@@ -115,7 +116,10 @@ def _amazon_init(aff_item, amazon_item):
     )
     aff_item.store = amazon
 
-    aff_item.name = amazon_item.ItemAttributes.Title.pyval
+    max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
+
+    aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval,
+                                                                    max_chars)
     aff_item.object_id = unicode(amazon_item.ASIN)
     aff_item.ean = unicode(getattr(amazon_item.ItemAttributes, "EAN", ""))
     aff_item.url = unicode(amazon_item.DetailPageURL)
@@ -157,6 +161,7 @@ def _decathlon_init(aff_item, decathlon_item):
         name="Decathlon", url="http://www.decathlon.fr"
     )
     aff_item.store = decathlon
+    max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
     for key, value in decathlon_item.items():
         if key == "Prix":
@@ -167,7 +172,7 @@ def _decathlon_init(aff_item, decathlon_item):
         elif key == "EAN":
             aff_item.ean = unicode(value)
         elif key == "Nom":
-            aff_item.name = unicode(value, "utf-8")
+            aff_item.name = truncatechars(unicode(value, "utf-8"), max_chars)
         elif key == "Id produit":
             aff_item.object_id = unicode(value)
         elif key == "Url image petite":

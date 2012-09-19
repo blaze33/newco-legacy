@@ -45,6 +45,8 @@ class FollowFormNode(Node):
     def render(self, context):
         user = self.user.resolve(context)
         obj = self.obj.resolve(context)
+        if user == obj:
+            return ""
         if Follow.objects.is_following(user, obj):
             btn_var = {"name": "unfollow", "value": _("Unfollow"),
                                             "class": "btn btn-primary"}
