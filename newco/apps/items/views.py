@@ -208,12 +208,16 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
+            media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
                 q.answers = get_sorted_queryset(
                             Q(answer__question__id=q.id) & public_query, user)
+                if not media:
+                    media = q.answer_form.media
             context.update(contents)
+            context.update({"media": media})
 
             p_list = Profile.objects.filter(skills__in=self.object.tags.all())
             context.update({"q_form": q_form, "prof_list": p_list.distinct()})
