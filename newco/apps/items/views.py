@@ -30,7 +30,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
-from utils.tools import get_query, load_object, get_sorted_queryset
+from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 
 app_name = 'items'
@@ -373,8 +373,9 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
             self.search_terms = self.request.GET.get("search", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
-                query = get_query(self.search_terms, ["name"])
-                queryset = queryset.filter(query)
+                queryset = get_search_results(queryset, self.search_terms,
+                                                                    ["name"])
+                return queryset
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
         else:

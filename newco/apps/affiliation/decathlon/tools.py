@@ -6,7 +6,7 @@ from django.db import transaction, IntegrityError
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog, Store
 from affiliation.catalogs_tools import csv_url2dict
-from utils.tools import get_queries_by_score
+from utils.tools import get_search_results
 
 
 def decathlon_product_search(keyword, nb_items=10):
@@ -20,20 +20,7 @@ def decathlon_product_search(keyword, nb_items=10):
     d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon).exclude(
                             object_id__in=d4_object_ids, store=decathlon)
 
-    query_dict = get_queries_by_score(keyword, ["name"])
-    keys = sorted(query_dict.keys(), reverse=True)
-    results = list()
-    for score in keys:
-        query = query_dict.get(score)
-        #TODO: better implementation
-        item_list = list(d4_prods.filter(query))
-        for item in item_list:
-            if not results.__contains__(item):
-                results.append(item)
-        if len(results) >= nb_items:
-            break
-
-    return results[:nb_items]
+    return get_search_results(d4_prods, keyword, ["name"], nb_items)
 
 
 @transaction.commit_manually

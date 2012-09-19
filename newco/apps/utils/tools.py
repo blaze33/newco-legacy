@@ -116,6 +116,24 @@ def get_sorted_queryset(query, user):
             "scores": scores, "votes": votes}
 
 
+def get_search_results(qs, keyword, search_fields, nb_items=None):
+    query_dict = get_queries_by_score(keyword, search_fields)
+    keys = sorted(query_dict.keys(), reverse=True)
+    results = list()
+    for score in keys:
+        query = query_dict.get(score)
+        #TODO: better implementation, meaning find a way to use qs
+        #   instead of lists
+        item_list = list(qs.filter(query))
+        for item in item_list:
+            if not results.__contains__(item):
+                results.append(item)
+        if nb_items and len(results) >= nb_items:
+            break
+    results = results[:nb_items] if nb_items else results
+    return results
+
+
 def load_redis_engine():
     redis_url = urlparse.urlparse(settings.REDISTOGO_URL)
     if redis_url.scheme == "redis":
