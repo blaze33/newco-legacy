@@ -1,3 +1,4 @@
+import itertools
 import re
 import unicodedata
 import urlparse
@@ -69,27 +70,41 @@ def normalize_query(query_string,
                                             for t in findterms(query_string)]
 
 
-def get_query(query_string, search_fields):
+def get_query(query_string, search_fields, terms=None):
     """
     Returns a query, that is a combination of Q objects. That combination
     aims to search keywords within a model by testing the given search fields.
     """
 
+    if not terms:
+        terms = normalize_query(query_string)
     query = None
-    terms = normalize_query(query_string)
     for term in terms:
         or_query = None
         for field_name in search_fields:
             q = Q(**{"%s__icontains" % field_name: term})
-            if or_query is None:
-                or_query = q
-            else:
-                or_query = or_query | q
-        if query is None:
-            query = or_query
-        else:
-            query = query & or_query
+            or_query = q if or_query is None else or_query | q
+        query = or_query if query is None else query & or_query
     return query
+
+
+def get_queries_by_score(query_string, search_fields):
+    """
+    Returns a list of queries, with each element being a combination of
+    Q objects. That combination aims to search keywords within a model
+    by testing the given search fields.
+    """
+
+    terms = normalize_query(query_string)
+    query_dict = dict()
+    for score in range(1, len(terms) + 1):
+        queries = None
+        term_combinations = itertools.combinations(terms, score)
+        for term_combination in term_combinations:
+            query = get_query("", search_fields, term_combination)
+            queries = queries | (query) if queries is not None else (query)
+        query_dict.update({score: queries})
+    return query_dict
 
 
 def get_sorted_queryset(query, user):
