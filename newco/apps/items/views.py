@@ -2,8 +2,9 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
-from django.db.models.loading import get_model
 from django.db.models import Q, Sum, Count
+from django.db.models.loading import get_model
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -387,18 +388,20 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+        context.update({"media": ChosenSelect().media})
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
             return context
-        object_list = context.get("object_list")
-        qs = Content.objects.filter(question__items__in=object_list)
-        qs_sorted = generic_annotate(qs, Vote,
-                                        Sum('votes__vote')).order_by("-score")
+        objs = context.get("object_list")
+        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
+        if nb_items == 0:
+            return context
+        qs = Content.objects.filter(question__items__in=objs)
+        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         context.update({
-            "media": ChosenSelect().media,
             "related_questions": {
-                _("Top related questions"): qs_sorted.select_subclasses()[:3],
+                _("Top related questions"): qss.select_subclasses()[:3],
                 _("Latest related questions"): qs.select_subclasses()[:3]
             }
         })
