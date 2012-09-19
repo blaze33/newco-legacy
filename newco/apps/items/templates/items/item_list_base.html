@@ -19,10 +19,10 @@
 
 <div class="row">
     <div class="span2"><h2>{% if tag %}{{ tag }}{% elif search_terms %}{{ search_terms }}{% else %}Products{% endif %}</h2></div>
-    <div class="span6" align="center">{% if item_list %}
+    <div class="span6" align="center">{% if object_list %}
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
-            {% for item in item_list %}{% with image=item.node.graph.image_set.0.graph.image.0.data %}
+            {% for item in object_list %}{% with image=item.node.graph.image_set.0.graph.image.0.data %}
                 <div class="{% if forloop.first %}active {% endif %}item">
                     <a href="{{ item.get_absolute_url }}"><img src="{{ image.link }}" alt=""></a>
                     <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
@@ -41,7 +41,7 @@
     <div class="span2">&nbsp;</div>
     <div class="span7">
 
-        {% if item_list %}
+        {% if object_list %}
             {% block itemlist %}
             {% endblock %}
             {% if is_paginated %}{% paginate %}{% endif %}
@@ -61,7 +61,7 @@
     </div>
     <div class="span3">
         {% comment %}
-        {% if item_list %}<div class="row well well-small">{% spaceless %}
+        {% if object_list %}<div class="row well well-small">{% spaceless %}
             <h3>{% trans "Sort by" %}{% trans ":" %}</h3>
             <form action="." method="POST">{% csrf_token %}<div class="input-append span2">
                 <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
@@ -74,7 +74,7 @@
         {% endspaceless %}</div>{% else %}&nbsp;{% endif %}
         {% endcomment %}
 
-        {% if item_list %}<div class="row"><form action="." method="POST">{% csrf_token %}
+        {% if object_list %}<div class="row"><form action="." method="POST">{% csrf_token %}
             <select data-placeholder="Sort" class="chzn-select" name="sort_products">
                 <option value=""></option>
                 <option value="-pub_date"{% if sort_order == "-pub_date" %} selected{% endif %}>{% trans "Newest to Oldest" %}</option>

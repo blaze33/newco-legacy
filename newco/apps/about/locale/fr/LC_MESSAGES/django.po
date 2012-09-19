@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-14 18:35+0200\n"
-"PO-Revision-Date: 2012-09-14 18:35\n"
-"Last-Translator:   <sebastien.worms@gmail.com>\n"
+"POT-Creation-Date: 2012-09-18 17:50+0200\n"
+"PO-Revision-Date: 2012-09-18 17:53\n"
+"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -110,11 +110,11 @@ msgstr ""
 
 #: templates/about/get_started.html:7
 msgid "Get started"
-msgstr "Get started"
+msgstr "Lancez-vous"
 
 #: templates/about/get_started.html:67
 msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
-msgstr "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
+msgstr "Lancez-<em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
 
 #: templates/about/get_started.html:76
 msgid "Explore"

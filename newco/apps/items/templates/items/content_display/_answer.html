@@ -6,7 +6,7 @@
 
 {% if display == "mini_feed" %}
     <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-        <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% include prof_tpl with object=author display=display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% include prod_tpl with object=content.items.all.0 display=display %}</h5>
+        <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% object_display author display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question about{% endblocktrans %} {% object_display content.items.all.0 display %}</h5>
         <p{% if question.is_draft %} class="draft"{% endif %}><small><a href="{{ question.get_absolute_url }}" class="black">{{ question.content }}</a></small></p>
 
         <p>
@@ -16,10 +16,10 @@
         </p>
     </blockquote>
 {% elif display == "thumbnail" %}
-    {% include prof_tpl with object=content.author display=display color="black" %} {% trans "answered a question about" %} {% include prod_tpl with object=item display=display color="black" %}
+    {% object_display author display "black" %} {% trans "answered a question about" %} {% object_display item display "black" %}
 {% elif display == "text" %}
     <div class="row"><div class="span7">
-        <h4>{% include prof_tpl with object=author display=display %} {% trans "answered a question about" %} {% include prod_tpl with object=content.items.all.0 display=display %}</h4>
+        <h4>{% object_display author display %} {% trans "answered a question about" %} {% object_display content.items.all.0 display %}</h4>
     </div></div>
 
     <div class="row {% if question.is_public %}one_row{% elif question.is_draft %}draft{% endif %}">

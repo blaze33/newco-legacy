@@ -70,6 +70,7 @@ LANGUAGES = (
 LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/affiliation/locale',
+    PROJECT_ROOT + '/apps/dashboard/locale',
     PROJECT_ROOT + '/apps/profiles/locale',
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
@@ -174,6 +175,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.sitemaps",
     "account",
 
     "pinax.templatetags",
@@ -205,7 +207,7 @@ INSTALLED_APPS = [
 
     # Project-external
     "newco_bw_editor",
-    
+
     # Project
     "about",
     "affiliation",
@@ -255,6 +257,7 @@ DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 LOGIN_URL = "/account/login"
 
 # django-user-accounts
+ACCOUNT_LOGIN_URL = "/account/login"
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
@@ -262,6 +265,7 @@ ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
 ACCOUNT_LOGIN_REDIRECT_URL = "get_started"
+ACCOUNT_SIGNUP_REDIRECT_URL = ACCOUNT_LOGIN_REDIRECT_URL
 ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
@@ -277,12 +281,19 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_ASSOCIATE_TAG = os.environ.get('AWS_ASSOCIATE_TAG')
 AWS_LOCALE = os.environ.get('AWS_LOCALE')
 
+# Amazon Product API because IAM credentials aren't working
+AWS_PRODUCT_ACCESS_KEY_ID = os.environ.get('AWS_PRODUCT_ACCESS_KEY_ID')
+AWS_PRODUCT_SECRET_ACCESS_KEY = os.environ.get('AWS_PRODUCT_SECRET_ACCESS_KEY')
+
 # API services
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.environ.get('GOOGLE_SEARCH_ENGINE_ID')
 
 # Redis database ## redis://username:password@localhost:6379/0
 REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
+
+# Voting
+VOTING_ZERO_VOTES_ALLOWED = True
 
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
