@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
+"POT-Creation-Date: 2012-09-20 17:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgid "last modified"
 msgstr ""
 
 #: models.py:30
-msgid "item"
+msgid "product"
 msgstr ""
 
 #: models.py:72
@@ -129,21 +129,76 @@ msgstr ""
 msgid "stories"
 msgstr ""
 
-#: views.py:101 views.py:177
+#: translation.py:4
+msgctxt "item"
+msgid "the "
+msgstr ""
+
+#: translation.py:5
+msgctxt "question"
+msgid "the "
+msgstr ""
+
+#: translation.py:6
+msgctxt "answer"
+msgid "the "
+msgstr ""
+
+#: translation.py:7
+msgctxt "link"
+msgid "the "
+msgstr ""
+
+#: translation.py:8
+msgctxt "feature"
+msgid "the "
+msgstr ""
+
+#: translation.py:12
+#, python-format
+msgctxt "item"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr ""
+
+#: translation.py:13
+#, python-format
+msgctxt "question"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr ""
+
+#: translation.py:14
+#, python-format
+msgctxt "answer"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr ""
+
+#: translation.py:15
+#, python-format
+msgctxt "link"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr ""
+
+#: translation.py:16
+#, python-format
+msgctxt "feature"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr ""
+
+#: views.py:102 views.py:178
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:105 views.py:181
+#: views.py:106 views.py:182
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:270 views.py:397
+#: views.py:275 views.py:405
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:271 views.py:398
+#: views.py:276 views.py:406
 msgid "Latest related questions"
 msgstr ""
 
@@ -222,7 +277,7 @@ msgstr ""
 
 #: templates/items/confirm_delete.html:10
 #, python-format
-msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
 #: templates/items/confirm_delete.html:15
@@ -327,6 +382,7 @@ msgid "Add selected"
 msgstr ""
 
 #: templates/items/item_list_base.html:16
+#: templates/items/item_list_base.html:21
 msgid "Products"
 msgstr ""
 

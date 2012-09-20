@@ -27,7 +27,7 @@ class Item(models.Model):
     tags = TaggableManager()
 
     class Meta:
-        verbose_name = _("item")
+        verbose_name = _("product")
 
     def __unicode__(self):
         return u"%s" % (self.name)

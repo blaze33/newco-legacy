@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
-"PO-Revision-Date: 2012-09-18 18:24\n"
+"POT-Creation-Date: 2012-09-20 17:29+0200\n"
+"PO-Revision-Date: 2012-09-20 17:14\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -82,8 +82,8 @@ msgid "last modified"
 msgstr "dernière modification"
 
 #: models.py:30
-msgid "item"
-msgstr "item"
+msgid "product"
+msgstr "produit"
 
 #: models.py:72
 msgid "Draft"
@@ -133,21 +133,76 @@ msgstr "article"
 msgid "stories"
 msgstr "articles"
 
-#: views.py:101 views.py:177
+#: translation.py:4
+msgctxt "item"
+msgid "the "
+msgstr "le "
+
+#: translation.py:5
+msgctxt "question"
+msgid "the "
+msgstr "la "
+
+#: translation.py:6
+msgctxt "answer"
+msgid "the "
+msgstr "la "
+
+#: translation.py:7
+msgctxt "link"
+msgid "the "
+msgstr "le "
+
+#: translation.py:8
+msgctxt "feature"
+msgid "the "
+msgstr "la "
+
+#: translation.py:12
+#, python-format
+msgctxt "item"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
+
+#: translation.py:13
+#, python-format
+msgctxt "question"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: translation.py:14
+#, python-format
+msgctxt "answer"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: translation.py:15
+#, python-format
+msgctxt "link"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
+
+#: translation.py:16
+#, python-format
+msgctxt "feature"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: views.py:102 views.py:178
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:105 views.py:181
+#: views.py:106 views.py:182
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:270 views.py:397
+#: views.py:275 views.py:405
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:271 views.py:398
+#: views.py:276 views.py:406
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -226,8 +281,8 @@ msgstr "Supprimer"
 
 #: templates/items/confirm_delete.html:10
 #, python-format
-msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
-msgstr "L'objet %(class)s <i>%(name)s</i> sera supprimé :"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
 
 #: templates/items/confirm_delete.html:15
 msgid "Yes"
@@ -331,6 +386,7 @@ msgid "Add selected"
 msgstr "Ajouter les produits cochés"
 
 #: templates/items/item_list_base.html:16
+#: templates/items/item_list_base.html:21
 msgid "Products"
 msgstr "Produits"
 
@@ -341,29 +397,29 @@ msgstr "Ajouter un produit"
 #: templates/items/item_list_base.html:51
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a> are available for search terms "
-"<i>\"%(search_terms)s\"</i>."
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
+"\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
-" class=\"label\">%(tagname)s</span></a> correspondant aux termes de "
-"recherche <i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a> correspondant aux termes de recherche "
+"<i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:54
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
-"class=\"label\">%(tagname)s</span></a> are available."
+"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"%(tagname)s</span></a> are available."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
-" class=\"label\">%(tagname)s</span></a>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span "
+"class=\"label\">%(tagname)s</span></a>."
 
 #: templates/items/item_list_base.html:56
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible correspondant aux termes de recherche "
-"<i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible correspondant aux termes de recherche <i>"
+"\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:58
 msgid "No products are available."
@@ -440,7 +496,8 @@ msgstr "Ajouter une réponse"
 #: templates/items/content_display/_feature.html:7
 #, python-format
 msgid "suggested a <a href=\"%(url)s\">feature</a> on"
-msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+msgstr ""
+"a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #: templates/items/content_display/_feature.html:16
 #: templates/items/content_display/_feature.html:19
@@ -471,6 +528,45 @@ msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
 msgid "asked a question about"
 msgstr "a posé une question à propos de"
 
+#~ msgctxt "item"
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgctxt "question"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgctxt "answer"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgctxt "link"
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgctxt "feature"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgid "the "
+#~ msgstr "le "
+
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgid "%(article)s%(class)s <i>%(object)s</i> will be %(deleted)s:"
+#~ msgstr "%(article)s%(class)s <i>%(object)s</i> sera %(deleted)s :"
+
+#~ msgid ""
+#~ "\n"
+#~ "    %(caca)s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%(caca)s\n"
+
+#~ msgid "item"
+#~ msgstr "item"
+
 #~ msgid "by"
 #~ msgstr "par"
 
@@ -478,16 +574,20 @@ msgstr "a posé une question à propos de"
 #~ msgstr "Liste des Items"
 
 #~ msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
-#~ msgstr "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos de"
+#~ msgstr ""
+#~ "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos "
+#~ "de"
 
 #~ msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
-#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr ""
+#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "posted a <a href=\"%(url)s\" class=\"black\">link</a> about"
 #~ msgstr "a posté un <a href=\"%(url)s\" class=\"black\">lien</a> à propos de"
 
 #~ msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
-#~ msgstr "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
+#~ msgstr ""
+#~ "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
 
 #~ msgid "Top Questions"
 #~ msgstr "Meilleures questions"
@@ -516,7 +616,8 @@ msgstr "a posé une question à propos de"
 #~ "                    <option value=\"0\">Choose</option>\n"
 #~ "                    <option value=\"1\">Newest to Oldest</option>\n"
 #~ "                    <option value=\"2\">Oldest to Newest</option>\n"
-#~ "                </select><button type=\"submit\" class=\"btn\">Sort</button>\n"
+#~ "                </select><button type=\"submit\" class=\"btn\">Sort</"
+#~ "button>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"
