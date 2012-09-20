@@ -1,17 +1,42 @@
 {% load voting_tags %}
 {% load content_utils %}
+{% load i18n %}
+{% load url from future %}
 
-{% for content in contents %}{% with class_name=content|to_class_name %}
-    {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
-    <div class="row content">
-        <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
+{% if contents %}
+	{% for content in contents %}{% with class_name=content|to_class_name %}
+	    {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
+	    <div class="row content">
+	        <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
 
-        {% dict_entry_for_item content from scores as score %}
+	        {% dict_entry_for_item content from scores as score %}
 
-        {% with template="items/content_display/_"|add:class_name|add:".html" %}
-            {% include template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
-        {% endwith %}
+	        {% with template="items/content_display/_"|add:class_name|add:".html" %}
+	            {% include template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
+	        {% endwith %}
 
-        </div>
-    </div>
-{% endwith %}{% endfor %}
+	        </div>
+	    </div>
+	{% endwith %}{% endfor %}
+
+{% elif type == "feed" %}
+
+	<p>{% blocktrans %}You don't follow anything nor anyone yet... Find people or products to follow on your right, or navigating NewCo!{% endblocktrans %}</p>
+
+{% elif type == "contribution" %}
+
+	<p>{% url 'profile_edit' as url_profile_edit %}{% blocktrans %}We don't know what to advice you to contribute on, we would need to know more about you. Maybe you could <a href="{{ url_profile_edit }}">add skill tags</a> to your profile?{% endblocktrans %}</p>
+
+{% elif type == "drafts" %}
+
+	<p>{% trans "You don't have any drafts." %}</p>
+
+{% elif type == "all" %}
+
+	<p>{% url 'contribute' as url_contribute %}{% url 'get_started' as url_get_started %}{% blocktrans %}You haven't contributed yet... Have you checked the <a href="{{ url_get_started }}">Get Started</a> or <a href="{{ url_contribute }}">How to contribute</a> pages?{% endblocktrans %}</p>
+
+{% else %}
+
+    <p>{% trans "Oh no! This newsfeed is empty!" %}</p>
+
+{% endif %}

@@ -5,6 +5,7 @@
 {% load content_utils %}
 {% load pagination_tags %}
 {% load follow_utils %}
+{% load url from future %}
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
@@ -36,7 +37,7 @@
             {% include "profiles/_profile_info.html" %}
             <span id="profile-follow">
                 {% if is_me %}
-                    <a href="{% url profile_edit %}" class="btn">
+                    <a href="{% url 'profile_edit' %}" class="btn">
                     {% trans "Update my profile" %}</a>
                 {% else %}
                     {% follow_form user page_user %}

@@ -8,6 +8,6 @@
     </h3>
 
     <div id="{{ box.name }}_well" rel="collapse_div" class="collapse in">
-        <br>{% include "items/content_display/_content_list.html" with contents=box.feed display="mini_feed" %}
+        <br>{% include "items/content_display/_content_list.html" with contents=box.feed display="mini_feed" type=box.type %}
     </div>
 </div>

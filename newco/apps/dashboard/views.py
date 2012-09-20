@@ -32,6 +32,7 @@ BOXES = {
         "subtitle": _("Mini feed from what you follow"),
         "name": "feed",
         "mini_feed": "True",
+        "type": "feed",
         "page_url": reverse_lazy("dash", args=["feed"]),
     },
     "contrib": {
@@ -40,6 +41,7 @@ BOXES = {
                         " Maybe you would like to contribute?"),
         "name": "contrib",
         "mini_feed": "True",
+        "type": "contribution",
         "page_url": reverse_lazy("dash", args=["contribution"]),
     },
     "drafts": {
@@ -47,6 +49,7 @@ BOXES = {
         "subtitle": _("Maybe you want to complete and publish some?"),
         "name": "drafts",
         "mini_feed": "True",
+        "type": "drafts",
         "page_url": reverse_lazy("dash", args=["draft"]),
     },
     "all_my_contrib": {
@@ -54,6 +57,7 @@ BOXES = {
         "subtitle": _("Your latest contributions"),
         "name": "all_my_contrib",
         "mini_feed": "True",
+        "type": "all",
         "page_url": reverse_lazy("dash", args=["all"]),
     },
 }
