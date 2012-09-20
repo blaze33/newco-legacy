@@ -2,8 +2,9 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
-from django.db.models.loading import get_model
 from django.db.models import Q, Sum, Count
+from django.db.models.loading import get_model
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -29,7 +30,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
-from utils.tools import get_query, load_object, get_sorted_queryset
+from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 
 app_name = 'items'
@@ -208,12 +209,16 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
+            media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
                 q.answers = get_sorted_queryset(
                             Q(answer__question__id=q.id) & public_query, user)
+                if not media:
+                    media = q.answer_form.media
             context.update(contents)
+            context.update({"media": media})
 
             p_list = Profile.objects.filter(skills__in=self.object.tags.all())
             context.update({"q_form": q_form, "prof_list": p_list.distinct()})
@@ -368,8 +373,9 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
             self.search_terms = self.request.GET.get("search", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
-                query = get_query(self.search_terms, ["name"])
-                queryset = queryset.filter(query)
+                queryset = get_search_results(queryset, self.search_terms,
+                                                                    ["name"])
+                return queryset
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
         else:
@@ -383,18 +389,20 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+        context.update({"media": ChosenSelect().media})
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
             return context
-        object_list = context.get("object_list")
-        qs = Content.objects.filter(question__items__in=object_list)
-        qs_sorted = generic_annotate(qs, Vote,
-                                        Sum('votes__vote')).order_by("-score")
+        objs = context.get("object_list")
+        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
+        if nb_items == 0:
+            return context
+        qs = Content.objects.filter(question__items__in=objs)
+        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         context.update({
-            "media": ChosenSelect().media,
             "related_questions": {
-                _("Top related questions"): qs_sorted.select_subclasses()[:3],
+                _("Top related questions"): qss.select_subclasses()[:3],
                 _("Latest related questions"): qs.select_subclasses()[:3]
             }
         })

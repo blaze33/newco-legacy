@@ -24,9 +24,8 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
     except NoExactMatchesFound:
         return None
     except URLError, e:
-        print e.message
         if settings.DEBUG:
-            raise URLError("Problem with amazon connexion.\n%s" % e.message)
+            raise e
         else:
             return None
 

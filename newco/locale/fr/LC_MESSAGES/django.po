@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:49+0200\n"
-"PO-Revision-Date: 2012-09-18 17:52\n"
+"POT-Creation-Date: 2012-09-19 18:59+0200\n"
+"PO-Revision-Date: 2012-09-19 19:02\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,21 +26,29 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: templates/403.html:5
+#: templates/403.html:6
 msgid "Error 403"
 msgstr "Erreur 403"
 
 #: templates/403.html:10
+msgid "Permission Denied"
+msgstr "Permission refusée"
+
+#: templates/403.html:13
 msgid "You can't vote."
 msgstr "Vous ne pouvez pas voter."
 
-#: templates/403.html:12 templates/403.html.py:16
+#: templates/403.html:15 templates/403.html.py:19
 msgid "Go back"
 msgstr "Revenir en arrière"
 
-#: templates/403.html:14
+#: templates/403.html:17
 msgid "You can't delete this content."
 msgstr "Vous n'avez pas la permission pour supprimer ce contenu."
+
+#: templates/403.html:21
+msgid "Go back to homepage"
+msgstr "Retour à l'accueil"
 
 #: templates/_account_bar.html:11
 msgid "Dashboard"

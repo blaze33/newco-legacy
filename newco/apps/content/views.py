@@ -1,41 +1,22 @@
-# Create your views here.
-from django.conf import settings
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
-from django.core.urlresolvers import resolve, reverse
+from django.core.urlresolvers import reverse
 from django.db.models.loading import get_model
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import (View, ListView, CreateView,
                                   DetailView, UpdateView, DeleteView)
 from django.views.generic.edit import ProcessFormView, FormMixin
 
-from django.contrib.auth.decorators import (permission_required,
-                                            login_required,
-                                            PermissionDenied)
-from django.contrib import messages
-
 from content.models import Item, Relation
 from content.forms import ItemForm, RelationForm
+from utils.decorators import staff_member_required
 
 app_name = 'content'
 
 
-class StaffRequiredMixin(object):
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            messages.error(
-                request,
-                'You do not have the permission required to perform the '
-                'requested operation.')
-            return redirect(settings.LOGIN_URL)
-        return super(StaffRequiredMixin, self).dispatch(request,
-            *args, **kwargs)
+class ContentView(View):
 
-
-class ContentView(StaffRequiredMixin, View):
-
+    @method_decorator(staff_member_required(raise_exception=True))
     def dispatch(self, request, *args, **kwargs):
         if self.model:
             self.model_name = self.model._meta.module_name
@@ -64,7 +45,8 @@ class ContentView(StaffRequiredMixin, View):
     def get_template_names(self):
         names = []
         if self.template_name_suffix:
-            names.append("%s/%s%s.html" % (app_name, app_name, self.template_name_suffix))
+            names.append("%s/%s%s.html" % \
+                            (app_name, app_name, self.template_name_suffix))
             return names
         return super(ContentView, self).get_template_names()
 
@@ -103,8 +85,10 @@ class ContentFormMixin(object):
         else:
             return self.form_invalid(form)
 
+
 class ContentCreateView(ContentView, ContentFormMixin, CreateView): pass
 class ContentUpdateView(ContentView, UpdateView): pass
+
 
 class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
@@ -130,7 +114,9 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         else:
             return self.form_invalid(form)
 
+
 class ContentListView(ContentView, ListView): pass
+
 
 class ContentDeleteView(ContentView, DeleteView):
 
