@@ -24,7 +24,7 @@
     <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
 </div><div class="span6">
-<h2>Relations :</h2>
+<h2>Links :</h2>
 {% for relation in item.links.all %}
     {{  relation.from_item  }}
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
@@ -34,13 +34,13 @@
 
 <hr>
 <div class="row"><div class="span6">
-<h2>Linked by:</h2>
+<h2>Linked from:</h2>
 {% for item in item.predecessors.all %}
     <a href="{{  item.get_absolute_url  }}">{{  item  }}</a><br>
 {% endfor %}
 </div><div class="span6">
-<h2>Backlinks:</h2>
-{% for relation in item.backlinks.all %}
+<h2>Inlinks:</h2>
+{% for relation in item.inlinks.all %}
     <a href="{{  relation.from_item.get_absolute_url  }}">{{  relation.from_item  }}</a>
     <a href="{{  relation.get_absolute_url  }}">{{  relation.data.relationship  }}</a>
     {{  relation.to_item  }}<br>
