@@ -10,5 +10,4 @@ urlpatterns = patterns('',
     url(r"^edit/$", ProfileUpdateView.as_view(), name="profile_edit"),
     url(r"^$", ProfileListView.as_view(), name="profile_list"),
     url(r"^all/$", ProfileListView.as_view(all_profiles=True), name="profile_list_all"),
-    url(r"^", include("idios.urls")),
 )
