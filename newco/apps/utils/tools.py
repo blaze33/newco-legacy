@@ -9,6 +9,7 @@ from django.db.models import Q, Sum
 from django.db.models.loading import get_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.utils.datastructures import SortedDict
 
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
@@ -96,8 +97,8 @@ def get_queries_by_score(query_string, search_fields):
     """
 
     terms = normalize_query(query_string)
-    query_dict = dict()
-    for score in range(1, len(terms) + 1):
+    query_dict = SortedDict()
+    for score in range(len(terms), 0, -1):
         queries = None
         term_combinations = itertools.combinations(terms, score)
         for term_combination in term_combinations:
@@ -107,21 +108,10 @@ def get_queries_by_score(query_string, search_fields):
     return query_dict
 
 
-def get_sorted_queryset(query, user):
-    queryset = generic_annotate(Content.objects.filter(query),
-        Vote, Sum('votes__vote')).order_by("-score")
-    scores = Vote.objects.get_scores_in_bulk(queryset)
-    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
-    return {"queryset": queryset.select_subclasses(),
-            "scores": scores, "votes": votes}
-
-
 def get_search_results(qs, keyword, search_fields, nb_items=None):
     query_dict = get_queries_by_score(keyword, search_fields)
-    keys = sorted(query_dict.keys(), reverse=True)
     results = list()
-    for score in keys:
-        query = query_dict.get(score)
+    for score, query in query_dict.items():
         #TODO: better implementation, meaning find a way to use qs
         #   instead of lists
         item_list = list(qs.filter(query))
@@ -132,6 +122,15 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
             break
     results = results[:nb_items] if nb_items else results
     return results
+
+
+def get_sorted_queryset(query, user):
+    queryset = generic_annotate(Content.objects.filter(query),
+        Vote, Sum('votes__vote')).order_by("-score")
+    scores = Vote.objects.get_scores_in_bulk(queryset)
+    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
+    return {"queryset": queryset.select_subclasses(),
+            "scores": scores, "votes": votes}
 
 
 def load_redis_engine():
