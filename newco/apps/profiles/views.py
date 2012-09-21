@@ -53,7 +53,6 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
     def get_context_data(self, **kwargs):
         history = Content.objects.filter(
             Q(author=self.page_user) & Q(status=Content.STATUS.public))
-
         fwers_ids = Follow.objects.get_follows(
                             self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)
@@ -63,8 +62,10 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
             "reputation": self.page_user.reputation,
-            "fwers": User.objects.filter(pk__in=fwers_ids),
-            "fwees": User.objects.filter(pk__in=fwees_ids),
+            "fwers": User.objects.filter(pk__in=fwers_ids).order_by(
+                                        "-reputation__reputation_incremented"),
+            "fwees": User.objects.filter(pk__in=fwees_ids).order_by(
+                                        "-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "scores": Vote.objects.get_scores_in_bulk(history),
         })

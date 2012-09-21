@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load bootstrap_tags %}
 {% load staticfiles %}
@@ -12,9 +13,23 @@
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
-<h1>{% block form_header %}{% trans "Ask something:" %}{% endblock %}</h1>
-
+<h1>{% block form_header %}{% trans "Ask a question:" %}{% endblock %}</h1>
 <br>
+
+{% url "item_create" "item" as url %}
+
+<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i>{% trans "Tips" %}</button>
+<div id="question_form" class="collapse out">
+    {% blocktrans %}
+        Here, you can ask a question about one or several products already <b><a href="{{ url }}" class="black" rel="tooltip-top" title="Click here if not" target="_blank">existing</a></b> at NewCo:
+        <ol>
+            <li>Write down your question.</li>
+            <li>Select one or several products to bind that question to, using the search bar.</li>
+            <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
+        </ol>
+    {% endblocktrans %}
+</div>
+</br>
 
 <form action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}

@@ -76,10 +76,10 @@ class Content(models.Model):
 
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                            verbose_name=_('date published'))
+                                            verbose_name=_("date published"))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                            verbose_name=_('status'))
-    items = models.ManyToManyField(Item)
+                                            verbose_name=_("status"))
+    items = models.ManyToManyField(Item, verbose_name=_("products"))
     votes = generic.GenericRelation(Vote)
 
     public = QueryManager(status=STATUS.public)

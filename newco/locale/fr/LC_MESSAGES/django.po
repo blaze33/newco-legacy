@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-19 18:59+0200\n"
-"PO-Revision-Date: 2012-09-19 19:02\n"
+"POT-Creation-Date: 2012-09-20 20:34+0200\n"
+"PO-Revision-Date: 2012-09-20 20:34\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -232,7 +232,11 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:29
+#: templates/idios/profile.html:25
+msgid "Update my profile"
+msgstr "Mettre à jour mon profil"
+
+#: templates/idios/profile.html:39
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -240,19 +244,15 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:40
-msgid "Update my profile"
-msgstr "Mettre à jour mon profil"
-
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:55
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:53
-msgid "Followees"
+#: templates/idios/profile.html:56
+msgid "Following"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:54
+#: templates/idios/profile.html:57
 msgid "Followers"
 msgstr "Abonnés"
 
@@ -267,6 +267,9 @@ msgstr "Tous les utilisateurs"
 #: templates/idios/profiles.html:14
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
+
+#~ msgid "Followees"
+#~ msgstr "Abonnements"
 
 #~ msgid "View my profile"
 #~ msgstr "Voir mon profil"
@@ -309,6 +312,3 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "All Profiles"
 #~ msgstr "Profil"
-
-#~ msgid "Follow"
-#~ msgstr "Abonnements"

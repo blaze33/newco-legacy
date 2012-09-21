@@ -13,7 +13,7 @@
 
 {% block body_base %}
     <div class="container"><header class="jumbotron subhead" id="overview"><div class="subnav subnav-fixed"><ul class="nav nav-pills">
-        <li style="padding:10px"><b>{% trans "NewCo empowers people to buy better" %}</b></li>
+        <li style="padding:10px"><b>{% trans "NewCo empowers you to buy better" %}</b></li>
         <li{% if not '/last/' in request.path and not '/newsfeed/' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
         <li {% if '/last/' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
         <li class="dropdown{% if '/newsfeed/' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
