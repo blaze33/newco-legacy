@@ -23,7 +23,8 @@ handler500 = "pinax.views.server_error"
 
 urlpatterns = patterns("",
     url(r"^$", HomepageView.as_view(), name="home"),
-    url(r"^(?P<cat>last|newsfeed)/$", HomepageView.as_view(), name="home"),
+    url(r"^(?P<cat>last|newsfeed)$", HomepageView.as_view(), name="home"),
+    url(r"^content$", HomepageView.as_view(), name="item_index"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^admin_tools/", include("admin_tools.urls")),
     url(r"^about/", include("about.urls")),
