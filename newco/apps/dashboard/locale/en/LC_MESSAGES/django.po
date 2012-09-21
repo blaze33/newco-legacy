@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:57+0200\n"
+"POT-Creation-Date: 2012-09-21 19:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Feed"
 msgstr ""
 
-#: views.py:21 views.py:38 templates/dashboard/_subnav.html:18
+#: views.py:21 views.py:40 templates/dashboard/_subnav.html:18
 msgid "Contribution center"
 msgstr ""
 
@@ -33,11 +33,11 @@ msgstr ""
 msgid "Teamwork"
 msgstr ""
 
-#: views.py:23 views.py:46 templates/dashboard/_subnav.html:22
+#: views.py:23 views.py:48 templates/dashboard/_subnav.html:22
 msgid "Drafts"
 msgstr ""
 
-#: views.py:24 views.py:53 templates/dashboard/_subnav.html:25
+#: views.py:24 views.py:56 templates/dashboard/_subnav.html:25
 msgid "All my contributions"
 msgstr ""
 
@@ -57,17 +57,42 @@ msgstr ""
 msgid "Mini feed from what you follow"
 msgstr ""
 
-#: views.py:39
+#: views.py:35
+msgid ""
+"You don't follow anything nor anyone yet. Find people or products to follow "
+"on your right, or navigating NewCo!"
+msgstr ""
+
+#: views.py:41
 msgid ""
 "Latest activity on your skills tags... Maybe you would like to contribute?"
 msgstr ""
 
-#: views.py:47
+#: views.py:49
 msgid "Maybe you want to complete and publish some?"
 msgstr ""
 
-#: views.py:54
+#: views.py:52
+msgid "You don't have any drafts."
+msgstr ""
+
+#: views.py:57
 msgid "Your latest contributions"
+msgstr ""
+
+#: views.py:77
+#, python-format
+msgid ""
+"We don't know what to advice you to contribute on, we would need to know "
+"more about you. Maybe you could <a href='%(url_ed)s'>add skill tags</a> to "
+"your profile?"
+msgstr ""
+
+#: views.py:83
+#, python-format
+msgid ""
+"You haven't contributed yet. Have you checked the <a href='%(url_get)s'>Get "
+"Started</a> or <a href='%(url_cont)s'>How to contribute</a> pages?"
 msgstr ""
 
 #: templates/dashboard/_box.html:7 templates/dashboard/_subnav.html:40
@@ -109,7 +134,7 @@ msgstr ""
 
 #: templates/dashboard/_subnav.html:29
 msgid ""
-"It&lsquo;s still baking. We know you&lsquo;re hungry, but we do too, please "
+"It&lsquo;s still baking. We know you&lsquo;re hungry, and we do too, please "
 "be patient ;)"
 msgstr ""
 

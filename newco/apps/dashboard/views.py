@@ -32,12 +32,14 @@ BOXES = {
         "subtitle": _("Mini feed from what you follow"),
         "name": "feed",
         "mini_feed": "True",
+        "empty_msg": _("You don't follow anything nor anyone yet. Find people "
+                "or products to follow on your right, or navigating NewCo!"),
         "page_url": reverse_lazy("dash", args=["feed"]),
     },
-    "contrib": {
+    "contribution": {
         "title": _("Contribution center"),
         "subtitle": _("Latest activity on your skills tags..."
-                        " Maybe you would like to contribute?"),
+                      " Maybe you would like to contribute?"),
         "name": "contrib",
         "mini_feed": "True",
         "page_url": reverse_lazy("dash", args=["contribution"]),
@@ -47,12 +49,13 @@ BOXES = {
         "subtitle": _("Maybe you want to complete and publish some?"),
         "name": "drafts",
         "mini_feed": "True",
+        "empty_msg": _("You don't have any drafts."),
         "page_url": reverse_lazy("dash", args=["draft"]),
     },
-    "all_my_contrib": {
+    "all": {
         "title": _("All my contributions"),
         "subtitle": _("Your latest contributions"),
-        "name": "all_my_contrib",
+        "name": "all",
         "mini_feed": "True",
         "page_url": reverse_lazy("dash", args=["all"]),
     },
@@ -67,6 +70,22 @@ WHAT_TO_FOLLOW_PARAMS = {
 class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
 
     queryset = Content.objects.all()
+
+    def __init__(self, **kwargs):
+        super(DashboardView, self).__init__(**kwargs)
+        BOXES.get("contribution").update({"empty_msg": _(
+            "We don't know what to advice you to contribute on, we would need "
+            "to know more about you. Maybe you could <a href='%(url_ed)s'>"
+            "add skill tags</a> to your profile?") % {
+                "url_ed": reverse_lazy("profile_edit")}
+        })
+        BOXES.get("all").update({"empty_msg": _(
+            "You haven't contributed yet. Have you checked the "
+            "<a href='%(url_get)s'>Get Started</a> or <a href='%(url_cont)s'>"
+            "How to contribute</a> pages?") % {
+                "url_get": reverse_lazy("get_started"),
+                "url_cont": reverse_lazy("contribute")}
+        })
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -85,13 +104,13 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
                 self.queryset = Content.objects.get_feed(self.user)
             elif self.page == "contribution":
                 self.queryset = Content.objects.get_related_contributions(
-                                                                    self.user)
+                    self.user)
 #            elif self.page == "collaboration":
             elif self.page == "draft" or self.page == "all":
                 self.queryset = self.queryset.filter(author=self.user)
                 if self.page == "draft":
                     self.queryset = self.queryset.filter(
-                                                status=Content.STATUS.draft)
+                        status=Content.STATUS.draft)
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
             self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
@@ -112,23 +131,27 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
 
             boxes = BOXES
             boxes.get("feed").update({"feed": feed.select_subclasses()[:4]})
-            boxes.get("contrib").update(
-                            {"feed": contrib_feed.select_subclasses()[:4]})
+            boxes.get("contribution").update(
+                {"feed": contrib_feed.select_subclasses()[:4]})
             boxes.get("drafts").update(
-                            {"feed": drafts.select_subclasses()[:4]})
-            boxes.get("all_my_contrib").update(
-                            {"feed": all_my_contrib.select_subclasses()[:4]})
+                {"feed": drafts.select_subclasses()[:4]})
+            boxes.get("all").update(
+                {"feed": all_my_contrib.select_subclasses()[:4]})
             context.update({"boxes": boxes})
-        elif self.page == "feed":
-            #"Who to follow" List. For now, random on not followed people/items
-            objects_followed = Follow.objects.filter(user=self.user)
-            wtf = dict()
-            for key, value in WHAT_TO_FOLLOW_PARAMS.items():
-                ids = filter(None, objects_followed.values_list(
-                                            value.get("fieldname"), flat=True))
-                non_fwed = value.get("class").objects.exclude(id__in=ids)
-                wtf.update({key: non_fwed.order_by("?")[:value.get("nb_obj")]})
-            context.update({"wtf": wtf})
+        else:
+            empty_msg = BOXES.get(self.page).get("empty_msg")
+            context.update({"empty_msg": empty_msg})
+            if self.page == "feed":
+                # "Who to follow": For now, random on not followed people/items
+                objects_followed = Follow.objects.filter(user=self.user)
+                wtf = dict()
+                for key, value in WHAT_TO_FOLLOW_PARAMS.items():
+                    ids = filter(None, objects_followed.values_list(
+                        value.get("fieldname"), flat=True))
+                    non_fwed = value.get("class").objects.exclude(id__in=ids)
+                    nb_obj = value.get("nb_obj")
+                    wtf.update({key: non_fwed.order_by("?")[:nb_obj]})
+                context.update({"wtf": wtf})
 
         context.update({
             "my_profile": Profile.objects.get(user=self.user),

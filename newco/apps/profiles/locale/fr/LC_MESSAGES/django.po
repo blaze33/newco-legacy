@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-20 20:33+0200\n"
-"PO-Revision-Date: 2012-09-20 20:33\n"
+"POT-Creation-Date: 2012-09-21 19:43+0200\n"
+"PO-Revision-Date: 2012-09-21 19:44\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,11 @@ msgstr "profil"
 #: models.py:66
 msgid "reputation"
 msgstr "réputation"
+
+#: views.py:64
+#, python-format
+msgid "%(page_user_display)s have not contributed yet."
+msgstr "%(page_user_display)s n'a pas contribué pour le moment."
 
 #: templates/profiles/_profile_display.html:12
 #: templates/profiles/_profile_info.html:24

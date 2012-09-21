@@ -54,6 +54,9 @@
                 {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available.{% endblocktrans %}
             {% elif not tag and search_terms %}
                 {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+                <br>
+                <br>
+                {% url 'item_create' 'item' as add_item_url %}{% blocktrans %}Maybe you want to <a href="{{ add_item_url }}" class="btn btn-primary ">Add a product</a> ?{% endblocktrans %}
             {% else %}
                 {% blocktrans %}No products are available.{% endblocktrans %}
             {% endif %}</h3>

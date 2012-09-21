@@ -20,7 +20,7 @@ def send_mail(message_subject, receiver, txt_template, html_template, context):
     msg_html = html_template.render(context)
 
     msg = EmailMultiAlternatives(message_subject, msg_txt,
-        "notifications@newco-project.fr", [receiver.email]
+        '"NewCo" <notifications@newco-project.fr>', [receiver.email]
     )
     msg.attach_alternative(msg_html, "text/html")
 

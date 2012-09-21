@@ -140,7 +140,7 @@ class Question(Content):
                         "pk": self.id, "slug": slugify(self.__unicode__())})
 
     def get_product_related_url(self, item,
-                                anchor_pattern="/question-%(id)s#q-%(id)s"):
+                                anchor_pattern="?question=%(id)s#q-%(id)s"):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
@@ -154,12 +154,12 @@ class Answer(Content):
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
-    def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
                                             (anchor_pattern % self.__dict__)
 
     def get_product_related_url(self, item,
-                                anchor_pattern="/answer-%(id)s#a-%(id)s"):
+                                anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
@@ -173,7 +173,7 @@ class Link(Content):
     def __unicode__(self):
         return u"%s" % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="/link-%(id)s#l-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?link=%(id)s#l-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
@@ -188,7 +188,7 @@ class Feature(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?feature=%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
