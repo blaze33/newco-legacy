@@ -2,6 +2,8 @@
 {% load content_utils %}
 {% load i18n %}
 {% load url from future %}
+{% load account_tags %}
+
 
 {% if contents %}
 	{% for content in contents %}{% with class_name=content|to_class_name %}
@@ -34,6 +36,10 @@
 {% elif type == "all" %}
 
 	<p>{% url 'contribute' as url_contribute %}{% url 'get_started' as url_get_started %}{% blocktrans %}You haven't contributed yet... Have you checked the <a href="{{ url_get_started }}">Get Started</a> or <a href="{{ url_contribute }}">How to contribute</a> pages?{% endblocktrans %}</p>
+
+{% elif type == "history" %}
+
+	<p>{% user_display page_user as page_user_display %}{% blocktrans %}{{ page_user_display }} have not contributed yet{% endblocktrans %}.</p>
 
 {% else %}
 
