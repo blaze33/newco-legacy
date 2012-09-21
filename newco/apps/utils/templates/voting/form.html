@@ -7,4 +7,5 @@
     <input type="hidden" name="app_label" value="{{ object|to_app_label }}"/>
     <input type="hidden" name="object_name" value="{{ object|to_class_name }}"/>
     <input type="hidden" name="id" value="{{ object.id }}"/>
+    {% if next %}<input type="hidden" name="next" value="{{ next }}"/>{% endif %}
 </form>

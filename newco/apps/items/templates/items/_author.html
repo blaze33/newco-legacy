@@ -1,7 +1,0 @@
-{% load i18n %}
-{% load date_utils %}
-{% load account_tags %}
-
-<p class="signature"><small>
-    <b itemprop="dateModified">{{ object.pub_date|datediff:"SHORT_DATE_FORMAT" }}</b> {% trans "by" %} <span itemprop="contributor"{#Seb: I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#} itemscope itemtype="http://schema.org/Person"><a href='{{ object.author.get_absolute_url }}' itemprop="url"><span itemprop="name">{% user_display object.author %}</span></a></span>
-</small></p>

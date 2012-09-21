@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load account_tags %}
+{% load content_utils %}
 
 <div class="profile_info">
 <dl class="dl-horizontal">
@@ -29,4 +31,14 @@
                 <span class="label">{{ skill.name }}</span></a>
             {% endfor %}</dd>
     {% endif %}
+    {% if fwees or fwers %}<br>{% endif %}
+    {% if fwees %}
+        <dt>{% trans "Following" %}</dt>
+        <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
+    {% endif %}
+    {% if fwers %}
+        <dt>{% trans "Followers" %}</dt>
+        <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
+    {% endif %}
+</dl>
 </div>

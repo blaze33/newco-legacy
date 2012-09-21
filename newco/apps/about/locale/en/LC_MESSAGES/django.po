@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-20 20:25+0200\n"
+"POT-Creation-Date: 2012-09-18 17:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,196 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/about/contribute.html:5 templates/about/contribute.html.py:8
-#: templates/about/faq.html:13
+#: templates/about/faq.html:28
 msgid "How to contribute?"
 msgstr ""
 
-#: templates/about/faq.html:6 templates/about/faq.html.py:9
+#: templates/about/faq.html:6 templates/about/faq.html.py:22
 #: templates/about/team.html:6
 msgid "FAQ"
+msgstr ""
+
+#: templates/about/faq.html:24 templates/about/get_started.html:177
+msgid "Why NewCo?"
+msgstr ""
+
+#: templates/about/faq.html:24
+msgid ""
+"We believe in today's connected world you should be able to find easily a "
+"deep information on any product. It would empower you to make wise choices. "
+"We work hard to make it real, and sometimes work late at night. We believe "
+"if we realize this vision we will all be able to buy products better adapter "
+"to our needs, push industrials to produce better products, and help you save "
+"a lot of time and energy finding what you want to buy."
+msgstr ""
+
+#: templates/about/faq.html:26
+msgid "Quels sont les partenariats déjà en place ?"
+msgstr ""
+
+#: templates/about/faq.html:26
+msgid ""
+"Pour l'instant, nous avons négocié des partenariats d'affiliation avec "
+"Amazon, Décathlon, Virgin Mega, Woodbrass... Et bien plus à venir ! Vous "
+"pouvez nous contacter pour en savoir plus sur ces accords."
+msgstr ""
+
+#: templates/about/faq.html:28
+msgid "Comment puis-je contribuer au site ?"
+msgstr ""
+
+#: templates/about/faq.html:30
+msgid ""
+"Comment vous assurez-vous d'avoir du contenu de qualité sur la plateforme ?"
+msgstr ""
+
+#: templates/about/faq.html:30
+msgid ""
+"La qualité du contenu est, avec l'expérience utilisateur, notre première "
+"préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en "
+"oeuvre pour :<ul><li>guider les contributeurs et les inciter à collaborer "
+"entre eux.</li><li>favoriser l'émergence du bon contenu via notre système "
+"d'intelligence collective."
+msgstr ""
+
+#: templates/about/faq.html:33
+msgid "Comment gagner des points de réputation ?"
+msgstr ""
+
+#: templates/about/faq.html:33
+msgid ""
+"Il vous est très simple d'accumuler des points de réputation. Il suffit "
+"d'apporter une contribution (question/réponse, caractéristique, article). Si "
+"celle-ci est jugée positivement par la communauté, elle vous rapportera un "
+"certain nombre de points (dépendant du type de contribution) par vote "
+"favorable."
+msgstr ""
+
+#: templates/about/faq.html:35
+msgid "A quoi servent les tags ?"
+msgstr ""
+
+#: templates/about/faq.html:35
+msgid ""
+"Vous remarquerez qu'il y a 2 catégories différentes de tags : les tags "
+"produit et les tags utilisateur (compétences).<ul><li>Ils permettent de "
+"facilement naviguer sur le site, en favorisant le déplacement d'un produit "
+"ou d'une catégorie à l'autre.</li><li>Par la suite, ils nous permettrons "
+"d'introduire un système de cartographie intelligent des produits.</"
+"li><li>Enfin, on utilise aussi les tags pour associer chaque produit à un "
+"groupe d'experts."
+msgstr ""
+
+#: templates/about/get_started.html:7
+msgid "Get started"
+msgstr ""
+
+#: templates/about/get_started.html:67
+msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
+msgstr ""
+
+#: templates/about/get_started.html:76
+msgid "Explore"
+msgstr ""
+
+#: templates/about/get_started.html:79
+msgid "Ask a question"
+msgstr ""
+
+#: templates/about/get_started.html:82
+msgid "Add a product"
+msgstr ""
+
+#: templates/about/get_started.html:91
+msgid "Or get to know more NewCo"
+msgstr ""
+
+#: templates/about/get_started.html:117
+msgid "How it works?"
+msgstr ""
+
+#: templates/about/get_started.html:131
+msgid "Public space"
+msgstr ""
+
+#: templates/about/get_started.html:135
+#, python-format
+msgid ""
+"Product information? Go this way, Explore through the <a href=\"%(url_home)s"
+"\">homepage</a> or the search bar!"
+msgstr ""
+
+#: templates/about/get_started.html:136
+msgid ""
+"Here, you will see what each visitor can see. This is the part of the "
+"website shared by everyone."
+msgstr ""
+
+#: templates/about/get_started.html:146
+msgid "Personal space"
+msgstr ""
+
+#: templates/about/get_started.html:150
+msgid "Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
+msgstr ""
+
+#: templates/about/get_started.html:152
+msgid ""
+"This is your exclusive space. We offer you the tools to display the "
+"information as <b>you</b> want to see it."
+msgstr ""
+
+#: templates/about/get_started.html:162
+msgid "tell me more!"
+msgstr ""
+
+#: templates/about/get_started.html:179
+msgid ""
+"NewCo empowers you to buy better.<br>How? We enable you to get the "
+"information you look for, and share your knowledge back to the community."
+msgstr ""
+
+#: templates/about/get_started.html:188
+msgid "Get information"
+msgstr ""
+
+#: templates/about/get_started.html:192
+msgid "To get some information about products, you can:"
+msgstr ""
+
+#: templates/about/get_started.html:194
+msgid "browse the public area"
+msgstr ""
+
+#: templates/about/get_started.html:195
+msgid "use the tools available in your private space"
+msgstr ""
+
+#: templates/about/get_started.html:202
+msgid "Share knowledge"
+msgstr ""
+
+#: templates/about/get_started.html:206
+#, python-format
+msgid ""
+"You can contribute while browsing the public area. Or visit the <b><a href="
+"\"%(url_contrib)s\" class=\"black\">contribution center</a></b>."
+msgstr ""
+
+#: templates/about/get_started.html:207
+msgid ""
+"Build your reputation: create quality content and you will get points from "
+"other users votes."
+msgstr ""
+
+#: templates/about/get_started.html:208
+msgid ""
+"<b>NEW:</b> We just set up a tool to create <b>easily</b> affiliation links "
+"towards our partners!"
+msgstr ""
+
+#: templates/about/get_started.html:208
+msgid "<i>Check this out</i></a>!"
 msgstr ""
 
 #: templates/about/team.html:10

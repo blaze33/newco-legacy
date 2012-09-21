@@ -1,6 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import permalink, Q
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -26,7 +27,7 @@ class Item(models.Model):
     tags = TaggableManager()
 
     class Meta:
-        verbose_name = _("item")
+        verbose_name = _("product")
 
     def __unicode__(self):
         return u"%s" % (self.name)
@@ -40,6 +41,9 @@ class Item(models.Model):
         return ("item_detail", None, {"model_name": self._meta.module_name,
                                       "pk": self.id,
                                       "slug": self.slug})
+
+    def node(self):
+        return sync_products(Item, self)
 register(Item)
 
 
@@ -72,10 +76,11 @@ class Content(models.Model):
 
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                            verbose_name=_('date published'))
+                                            verbose_name=_("date published"))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                            verbose_name=_('status'))
-    items = models.ManyToManyField(Item)
+                                            verbose_name=_("status"))
+    items = models.ManyToManyField(Item, verbose_name=_("products"))
+    votes = generic.GenericRelation(Vote)
 
     public = QueryManager(status=STATUS.public)
 
@@ -83,6 +88,13 @@ class Content(models.Model):
 
     class Meta:
         ordering = ["-pub_date"]
+
+    def save(self):
+        super(Content, self).save()
+        obj = self.select_parent()
+        if obj.votes.count() == 0:
+            user1 = User.objects.get(id=2)
+            Vote.objects.record_vote(obj, user1, 0)
 
     def delete(self):
         try:
@@ -97,17 +109,30 @@ class Content(models.Model):
     def is_draft(self):
         return self.status == self.STATUS.draft
 
+    def select_subclass(self):
+        subclasses = ["answer", "question", "feature", "link"]
+        for subclass in subclasses:
+            try:
+                return getattr(self, subclass)
+            except ObjectDoesNotExist:
+                pass
+        return self
+
+    def select_parent(self):
+        if not self.__class__ is Content:
+            return self.content_ptr
+        else:
+            return self
+
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("question")
 
     def __unicode__(self):
-        q = self.content
-        return u"%s" % (q if len(q) <= 50 else q[:50] + "...")
+        return truncatechars(self.content, 50)
 
     @permalink
     def get_absolute_url(self):
@@ -122,14 +147,12 @@ class Question(Content):
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
     content = models.CharField(max_length=1000, verbose_name=_("content"))
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("answer")
 
     def __unicode__(self):
-        a = self.content
-        return u"%s" % (a if len(a) <= 50 else a[:50] + "...")
+        return truncatechars(self.content, 50)
 
     def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
@@ -143,7 +166,6 @@ class Answer(Content):
 class Link(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
     url = models.URLField(max_length=200, verbose_name=_("URL"))
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _("link")
@@ -159,7 +181,6 @@ class Link(Content):
 class Feature(Content):
     content = models.CharField(max_length=80, verbose_name=_('content'))
     positive = models.BooleanField()
-    votes = generic.GenericRelation(Vote)
 
     class Meta:
         verbose_name = _('feature')
@@ -181,3 +202,5 @@ class Story(models.Model):
     class Meta:
         verbose_name = _("story")
         verbose_name_plural = _("stories")
+
+from content.transition import sync_products

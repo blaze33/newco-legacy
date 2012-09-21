@@ -6,11 +6,5 @@
 {% load content_utils %}
 
 {% block itemlist %}
-    <div class="row" id="contents_list1">{% for item in item_list %}<div class="content-item thumbnail">
-            <div class="name"><a href="{{ item.get_absolute_url }}"><img src="http://lorempixel.com/260/260/technics/?{{ item.id }}" alt=""></a></div>
-            <div class="details" style="font-family:helvetica;font-size:11px">
-                <a href="{{ item.get_absolute_url }}" style="font-size:12px; color:#222222">{{ item.name }}</a>
-                {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a>{% if not forloop.last %} &nbsp;{% endif %}{% endfor %}{% endif %}
-            </div>
-    </div>{% endfor %}</div>
+    <div class="row" id="thumbnails_list">{% for item in object_list %}{% include "items/content_display/_thumbnail_frame.html" with object=item only %}{% endfor %}</div>
 {% endblock %}

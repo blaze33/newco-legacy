@@ -9,6 +9,7 @@
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    {{ media.css }}
 {% endblock %}
 
 {% block head_title %}{{ item.name }}{% endblock %}
@@ -20,18 +21,6 @@
 </br>
 
 <div class="span7">
-    <div class="row">
-        <form method="POST" action="" class="form-inline">
-            {% csrf_token %}
-            {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
-                <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
-                </div>
-                {% include "bootstrap/_field_errors.html" %}
-                {% include "bootstrap/_field_help_text.html" %}
-            </div></div>{% endwith %}
-            <input type="hidden" name="next" value="{{ item.get_absolute_url }}"/>
-        </form>
-    </div>
 
     <div class="row tabbable">
         <ul class="nav nav-tabs">
@@ -88,7 +77,7 @@
     </div>{% endwith %}{% endif %}
 
     <div class="row">
-        <a class="btn" href="{% url 'item_index' %}"><i class="icon-list"></i> {% trans "Items list" %}</a>
+        {# <a class="btn" href="{% url 'item_index' %}"><i class="icon-list"></i> {% trans "Items list" %}</a> #}
         <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
         {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
     </div>
@@ -100,7 +89,7 @@
         <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b><span class="caret"></span></a>
         <ul class="dropdown-menu">
             {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-                {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
+                {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}" target="_blank"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
             {% endfor %}<li class="divider"></li>{% endfor %}
             <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
         </ul>
@@ -119,8 +108,8 @@
 
 {% block extra_body_base %}
     {{ block.super }}
-    <script src="{% static "js/content.js" %}"></script>
-    {% if questions %}{{ questions.0.answer_form.media.js }}{% endif %}
+    <script src="{% static 'js/content.js' %}"></script>
+    {{ media.js }}
     <script type="text/javascript"> // script can't go to '/static' : needs to translate text
         $(function(){
             var form = $('#question_form');
@@ -129,15 +118,14 @@
             var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
             form.on('shown', function () {
                 icon_change.removeClass('icon-plus').addClass('icon-remove');
-                text_change.html('&nbsp;');
-                text_change_no_q_yet.html('{% trans "Ask a new question:" %}');
+                text_change.html("&nbsp;");
+                text_change_no_q_yet.html("{% trans "Ask a new question:" %}");
             })
             form.on('hidden', function () {
-                icon_change.removeClass('icon-remove').addClass('icon-plus');
+                icon_change.removeClass('icon-remove').addClass("icon-plus");
                 text_change.html("{% trans "Ask a new question!" %}");
-                text_change_no_q_yet.html('{% trans "No question yet! Ask the first one here!" %}');
+                text_change_no_q_yet.html("{% trans "No question yet! Ask the first one here!" %}");
             })
-        
         });
     </script>
 {% endblock %}

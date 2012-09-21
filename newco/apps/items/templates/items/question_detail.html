@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load voting_tags %}
 {% load voting_utils %}
@@ -18,52 +19,44 @@
 
 {% block body %}
 
-{% vote_by_user user on question as vote %}
-{% score_for_object question as score %}
-
 <div class="row">
     <div class="span7" itemscope itemtype="http://schema.org/Article">
         <div class="row one_row" id="q-{{ question.id }}">
-            <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote %}</h2></div>
+            <div class="span1"><h2 class="right">{% if question.score %}{{ question.score.score }}{% else %}0{% endif %}{% vote_form question question.vote %}</h2></div>
             <div class="span4"><h2>
                 <span itemprop="name">{{ question.content }}</span>
                 {% if user.is_superuser or question.author == request.user %}
                     {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
                 {% endif %}
             </h2></div>
-            <div class="span2 right">{% comment %}{% include "items/_author.html" with object=question %}{% endcomment %}</div>
+            <div class="span2 right">{% content_info question "signature" 30 %}</div>
         </div>
-        {% votes_by_user user on question.answer_set.all as answer_vote_dict %}
-        {% scores_for_objects question.answer_set.all as answer_score_dict %}
 
-        {% for answer, answer_prof_about in answer_dict.items %}{% if answer.is_public %}
-            {% dict_entry_for_item answer from answer_vote_dict as vote %}
-            {% dict_entry_for_item answer from answer_score_dict as score %}
-            <div class="row one_row" id="a-{{ answer.id }}" rel="popover" style="border-top: solid; border-width: 1px; border-color: #EEEEEE">
+        {% for answer in question.answers.queryset %}{% if answer.is_public %}
+            {% dict_entry_for_item answer from question.answers.votes as vote %}
+            {% dict_entry_for_item answer from question.answers.scores as score %}
+            <hr>
+            <div class="row one_row" id="a-{{ answer.id }}">
                 <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
-                <div class="span4"><p><span itemprop="description"{# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}>
-                    {% include "items/_author_detail.html" with object=answer %}
-                    <br>{% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
+                <div class="span4"><p>
+                    <span itemprop="description"{# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}>
+                        {% content_info answer "header" %}
+                        <br>{% autoescape off %}{{ answer.content }}{% endautoescape %}
+                    </span>
                     {% if user.is_superuser or answer.author == request.user %}
                         {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                     {% endif %}
                 </p></div>
-                <div class="span2 right">
-                	{% include "items/_author_date.html" with object=answer %}
-                	{% profile_pic user 20 %}</div>
+                <div class="span2 right">{% content_info answer "signature-pic" 30 %}</div>
             </div>
         {% endif %}{% endfor %}
-		<br><br>
-        <div class="row" style="border-top: solid; border-width: 1px; border-color: #CCCCCC"><div class="span6 offset1">
-           {% comment %}
-            <div class="block_controls">
-                <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answer_set.all %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
-            </div>
-            {% endcomment %}
-            <br />
-            <div id="answer_form_{{ question.id }}"><form method="POST" action="">
+
+        <hr>
+
+        <div class="row"><div class="span6 offset1">
+            <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+            <br>
+            <div id="answer_form"><form method="POST" action="#answer_form">
                 {% csrf_token %}
                 {{ question.answer_form|as_bootstrap }}
                 <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
@@ -73,9 +66,21 @@
         {% include "items/_ask_modal.html" %}
     </div>
 
-    <div class="span2 right">
-        <h3>{% trans "Related Products" %}</h3>
-        {% for item in question.items.all %}<a href="{% url item_detail 'item' item.id item.slug %}">{{ item.name }}</a>{% if not forloop.last %}<hr>{% endif %}{% endfor %}
+    <div class="offset1 span3">
+        <div class="row well well-small">
+            <h3>{% trans "Related Products" %}:</h3>
+            <br>
+            <div id="thumbnails_list">{% for item in question.items.all %}
+                {% include "items/content_display/_thumbnail_frame.html" with object=item only %}
+            {% endfor %}</div>
+        </div>
+        <hr>
+        {% for title, content_list in related_questions.iteritems %}
+            {% if content_list %}<div class="row well well-small">
+                <h3>{{ title }}{% trans ":" %}</h3>
+                <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
+            </div>{% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
@@ -83,6 +88,6 @@
 
 {% block extra_body_base %}
     {{ block.super }}
-    <script src="{% static "js/content.js" %}"></script>
+    <script src="{% static 'js/content.js' %}"></script>
     {% if question %}{{ question.answer_form.media.js }}{% endif %}
 {% endblock %}

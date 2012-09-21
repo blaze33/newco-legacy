@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-18 17:57+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views.py:19 templates/dashboard/_subnav.html:11
+msgid "Dashboard"
+msgstr ""
+
+#: views.py:20
+msgid "Feed"
+msgstr ""
+
+#: views.py:21 views.py:38 templates/dashboard/_subnav.html:18
+msgid "Contribution center"
+msgstr ""
+
+#: views.py:22 templates/dashboard/_subnav.html:20
+msgid "Teamwork"
+msgstr ""
+
+#: views.py:23 views.py:46 templates/dashboard/_subnav.html:22
+msgid "Drafts"
+msgstr ""
+
+#: views.py:24 views.py:53 templates/dashboard/_subnav.html:25
+msgid "All my contributions"
+msgstr ""
+
+#: views.py:25 templates/dashboard/_subnav.html:29
+msgid "Shopping notes"
+msgstr ""
+
+#: views.py:26 templates/dashboard/_subnav.html:31
+msgid "Purchase history"
+msgstr ""
+
+#: views.py:31 templates/dashboard/_subnav.html:14
+msgid "My newsfeed"
+msgstr ""
+
+#: views.py:32
+msgid "Mini feed from what you follow"
+msgstr ""
+
+#: views.py:39
+msgid ""
+"Latest activity on your skills tags... Maybe you would like to contribute?"
+msgstr ""
+
+#: views.py:47
+msgid "Maybe you want to complete and publish some?"
+msgstr ""
+
+#: views.py:54
+msgid "Your latest contributions"
+msgstr ""
+
+#: templates/dashboard/_box.html:7 templates/dashboard/_subnav.html:40
+#: templates/dashboard/contribution.html:11 templates/dashboard/feed.html:19
+msgid ":"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:11
+msgid "Monitor all that concerns you"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:14
+msgid "Activity from what you follow"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:17
+msgid "Contributing"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:18
+msgid "If you want to use your time and knowledge wisely, click here!"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:20
+msgid "Grrrr... Don't bother me, I'm working on it"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:22
+msgid "&lsquo;Drafts&rsquo; contains your un-published contributions"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:25
+msgid "Where to go to find any of your input"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:28
+msgid "Shopping"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:29
+msgid ""
+"It&lsquo;s still baking. We know you&lsquo;re hungry, but we do too, please "
+"be patient ;)"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:31
+msgid "We are working on it!"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:35
+msgid "Profiles"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:38
+msgid "Exactly as others see it, except the 'edit' button :P"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:40
+msgid "User profile"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:43
+msgid "Search user"
+msgstr ""
+
+#: templates/dashboard/_subnav.html:46
+msgid "All Profiles"
+msgstr ""
+
+#: templates/dashboard/all.html:5
+msgid ""
+"Looking for one of your contributions? Here are the tools to help you find!"
+msgstr ""
+
+#: templates/dashboard/all.html:11
+msgid "Search in all my contributions - Not functional yet"
+msgstr ""
+
+#: templates/dashboard/base.html:21
+#, python-format
+msgid "%(username)s's dashboard | %(page_name)s"
+msgstr ""
+
+#: templates/dashboard/contribution.html:5
+msgid ""
+"Here is where we provide you with all the <a data-toggle=\"modal\" href="
+"\"#feedbackModal\" rel=\"tooltip-bottom\" title=\"We'd love to read your "
+"ideas, send us an email!\">tools</a> we have to help you contribute."
+msgstr ""
+
+#: templates/dashboard/contribution.html:11
+msgid "Activity on your domains of skills"
+msgstr ""
+
+#: templates/dashboard/contribution.html:12
+msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
+msgstr ""
+
+#: templates/dashboard/draft.html:5
+msgid "Keep here your drafts: contributions you don't want to publish (yet)."
+msgstr ""
+
+#: templates/dashboard/feed.html:7
+msgid "Activity from what you follow."
+msgstr ""
+
+#: templates/dashboard/feed.html:15
+msgid "Who to follow?"
+msgstr ""
+
+#: templates/dashboard/feed.html:15
+msgid "View all"
+msgstr ""
+
+#: templates/dashboard/feed.html:19
+msgid "Products you may like"
+msgstr ""
+
+#: templates/dashboard/home.html:5
+msgid ""
+"We provide you with all the things that concern you on this page. If you "
+"have only a 'quick check' to do on NewCo, this page is the one!"
+msgstr ""
+
+#: templates/dashboard/home.html:12
+#, python-format
+msgid ""
+" More tools to come very soon on the dashboard! If you have some ideas about "
+"how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait "
+"to read them!"
+msgstr ""
+
+#: templates/dashboard/purchase.html:11
+msgid "Search in all my purchases"
+msgstr ""

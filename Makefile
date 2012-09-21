@@ -7,7 +7,7 @@ clean:
 	find . -name "*.pyc" -delete
 	find . -name "*~" -delete
 
-BRANCH = $(shell cat .hg/branch) 
+BRANCH = $(shell cat .hg/branch)
 REMOTE_URL = $(shell git config --get remote.$(BRANCH).url)
 APP = $(shell echo $(REMOTE_URL)|cut -d":" -f2|cut -d"." -f1)
 DATE = $(shell date --rfc-3339=date)

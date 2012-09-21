@@ -6,6 +6,11 @@
 {% load content_utils %}
 {% load pagination_tags %}
 
+{% block extra_style %}
+    {{ block.super }}
+    {{ media.css }}
+{% endblock %}
+
 {% block body_class %}index{% endblock %}
 
 {% block head_title %}{% trans "Products" %}{% endblock %}
@@ -13,22 +18,16 @@
 {% block body %}
 
 <div class="row">
-    <div class="span2"><h2>{% if tag %}{{ tag }}{% elif search_terms %}{{ search_terms }}{% else %}Products{% endif %}</h2></div>
-    <div class="span6" align="center">{% if item_list %}
+    <div class="span2"><h2>{% if tag %}{{ tag }}{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h2></div>
+    <div class="span6" align="center">{% if object_list %}
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
-                <div class="active item">
-                    <a href="{{ item_list.0.get_absolute_url }}"><img src="http://lorempixel.com/600/300/technics/1" alt=""></a>
-                    <div class="carousel-caption">
-                        <h4>{{ item_list.0.name }}</h4>
-                    </div>
-                </div>
-            {% for item in item_list %}{% if not forloop.first %}
-                <div class="item">
-                    <a href="{{ item.get_absolute_url }}"><img src="http://lorempixel.com/600/300/technics/?{{ item.id }}" alt=""></a>
+            {% for item in object_list %}{% with image=item.node.graph.image_set.0.graph.image.0.data %}
+                <div class="{% if forloop.first %}active {% endif %}item">
+                    <a href="{{ item.get_absolute_url }}"><img src="{{ image.link }}" alt=""></a>
                     <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
                 </div>
-            {% endif %}{% endfor %}
+            {% endwith %}{% endfor %}
             </div>
             <a class="carousel-control left" href="#carousel_tag" data-slide="prev">&lsaquo;</a>
             <a class="carousel-control right" href="#carousel_tag" data-slide="next">&rsaquo;</a>
@@ -42,7 +41,7 @@
     <div class="span2">&nbsp;</div>
     <div class="span7">
 
-        {% if item_list %}
+        {% if object_list %}
             {% block itemlist %}
             {% endblock %}
             {% if is_paginated %}{% paginate %}{% endif %}
@@ -61,21 +60,43 @@
         {% endif %}
     </div>
     <div class="span3">
-        {% if item_list %}<div class="row">{% spaceless %}<form action="." method="POST">{% csrf_token %}<div class="input-append span2">
-            <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
-            <div class="btn-group" data-toggle="buttons-radio">
-                <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
-                <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
-                <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
-            </div>
-        </div></form>{% endspaceless %}</div>{% else %}&nbsp;{% endif %}
+        {% comment %}
+        {% if object_list %}<div class="row well well-small">{% spaceless %}
+            <h3>{% trans "Sort by" %}{% trans ":" %}</h3>
+            <form action="." method="POST">{% csrf_token %}<div class="input-append span2">
+                <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
+                    <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
+                    <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
+                </div>
+            </div></form>
+        {% endspaceless %}</div>{% else %}&nbsp;{% endif %}
+        {% endcomment %}
+
+        {% if object_list %}<div class="row"><form action="." method="POST">{% csrf_token %}
+            <select data-placeholder="Sort" class="chzn-select" name="sort_products">
+                <option value=""></option>
+                <option value="-pub_date"{% if sort_order == "-pub_date" %} selected{% endif %}>{% trans "Newest to Oldest" %}</option>
+                <option value="pub_date"{% if sort_order == "pub_date" %} selected{% endif %}>{% trans "Oldest to Newest" %}</option>
+                <option value="popular"{% if sort_order == "popular" %} selected{% endif %}>{% trans "Most popular" %}</option>
+            </select>
+            &nbsp;
+            <button type="submit" class="btn"><i class="icon-list"></i> {% trans 'Sort' %}</button>
+        </form></div>{% else %}&nbsp;{% endif %}
 
         {% for title, content_list in related_questions.iteritems %}
-            {% if content_list %}<div class="row">
-                <h3>{{ title }}</h3>
+            {% if content_list %}<div class="row well well-small">
+                <h3>{{ title }}{% trans ":" %}</h3>
                 <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
             </div>{% endif %}
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    {{ media.js }}
+    <script type="text/javascript">$(".chzn-select").chosen();</script>
 {% endblock %}

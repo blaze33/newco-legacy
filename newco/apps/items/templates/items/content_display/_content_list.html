@@ -1,0 +1,17 @@
+{% load voting_tags %}
+{% load content_utils %}
+
+{% for content in contents %}{% with class_name=content|to_class_name %}
+    {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
+    <div class="row content">
+        <div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
+
+        {% dict_entry_for_item content from scores as score %}
+
+        {% with template="items/content_display/_"|add:class_name|add:".html" %}
+            {% include template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
+        {% endwith %}
+
+        </div>
+    </div>
+{% endwith %}{% endfor %}

@@ -16,7 +16,7 @@
     border-radius: 4px;
 }
 
-.profile-item { line-height: 18px; width: 165px; margin: 9px }
+.profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; }
 .profile-item .details h4 { display: run-in; }
 .profile-item .details p { margin: 0; }
 
@@ -44,13 +44,27 @@
     float: right;
     margin-left: 5px;
     width: 164px;
-    height: 164px;
+    /*height: 164px;*/
     border-radius: 4px;
 }
 
-.content-item { line-height: 18px; width: 165px; margin: 9px }
+.content-item { line-height: 18px; width: 165px; margin: 9px; background-color: white; }
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
+
+
+.content-item-small img {
+    /*float: right;*/
+    margin-left: 2px;
+    width: 124px;
+    height: 124px;
+    border-radius: 2px;
+}
+
+.content-item-small { line-height: 18px; width: 125px; margin: 2px }
+/*.content-item-small .details h4 { display: run-in; }
+.content-item-small .details p { margin: 0; }*/
+
 
 .content-item-mini { line-height: 1px; width: 25px; margin: 3px }
 .content-item-mini img {
@@ -75,6 +89,10 @@
     margin-top: 2px;
 }
 
+.carousel .item img {
+    height: 300px;
+    max-width: none;
+}
 
 /* ↓ css defs for image selection/sort */
 

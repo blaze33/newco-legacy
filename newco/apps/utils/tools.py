@@ -1,34 +1,38 @@
+import itertools
 import re
 import unicodedata
 import urlparse
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.db.models.loading import get_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.utils.datastructures import SortedDict
 
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
 
-from taggit.models import Tag
+from generic_aggregation import generic_annotate
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
+from taggit.models import Tag
+from voting.models import Vote
 
-from items.models import Item
+from items.models import Item, Content
 from profiles.models import Profile
 
 PARAMS = {
-    Item._meta.module_name: {
+    "%s.%s" % (Item.__module__, Item._meta.object_name): {
         "class": Item, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
-    Profile._meta.module_name: {
+    "%s.%s" % (Profile.__module__, Profile._meta.object_name): {
         "class": Profile, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
-    Tag._meta.module_name: {
+    "%s.%s" % (Tag.__module__, Tag._meta.object_name): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
@@ -67,27 +71,66 @@ def normalize_query(query_string,
                                             for t in findterms(query_string)]
 
 
-def get_query(query_string, search_fields):
+def get_query(query_string, search_fields, terms=None):
     """
     Returns a query, that is a combination of Q objects. That combination
     aims to search keywords within a model by testing the given search fields.
     """
 
+    if not terms:
+        terms = normalize_query(query_string)
     query = None
-    terms = normalize_query(query_string)
     for term in terms:
         or_query = None
         for field_name in search_fields:
             q = Q(**{"%s__icontains" % field_name: term})
-            if or_query is None:
-                or_query = q
-            else:
-                or_query = or_query | q
-        if query is None:
-            query = or_query
-        else:
-            query = query & or_query
+            or_query = q if or_query is None else or_query | q
+        query = or_query if query is None else query & or_query
     return query
+
+
+def get_queries_by_score(query_string, search_fields):
+    """
+    Returns a list of queries, with each element being a combination of
+    Q objects. That combination aims to search keywords within a model
+    by testing the given search fields.
+    """
+
+    terms = normalize_query(query_string)
+    query_dict = SortedDict()
+    for score in range(len(terms), 0, -1):
+        queries = None
+        term_combinations = itertools.combinations(terms, score)
+        for term_combination in term_combinations:
+            query = get_query("", search_fields, term_combination)
+            queries = queries | (query) if queries is not None else (query)
+        query_dict.update({score: queries})
+    return query_dict
+
+
+def get_search_results(qs, keyword, search_fields, nb_items=None):
+    query_dict = get_queries_by_score(keyword, search_fields)
+    results = list()
+    for score, query in query_dict.items():
+        #TODO: better implementation, meaning find a way to use qs
+        #   instead of lists
+        item_list = list(qs.filter(query))
+        for item in item_list:
+            if not results.__contains__(item):
+                results.append(item)
+        if nb_items and len(results) >= nb_items:
+            break
+    results = results[:nb_items] if nb_items else results
+    return results
+
+
+def get_sorted_queryset(query, user):
+    queryset = generic_annotate(Content.objects.filter(query),
+        Vote, Sum('votes__vote')).order_by("-score")
+    scores = Vote.objects.get_scores_in_bulk(queryset)
+    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
+    return {"queryset": queryset.select_subclasses(),
+            "scores": scores, "votes": votes}
 
 
 def load_redis_engine():
@@ -110,7 +153,8 @@ def load_redis_engine():
                 return None
     else:
         if settings.DEBUG:
-            raise RedisError("Redis Server URL is not valid.")
+            raise RedisError("Redis Server '%s' URL is not valid." \
+                                                    % settings.REDISTOGO_URL)
         else:
             return None
 
@@ -119,48 +163,53 @@ def load_redis_engine():
 def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
 
-    if engine:
-        for key, value in PARAMS.iteritems():
-            cls = value["class"]
-            ctype = ContentType.objects.get_for_model(cls)
-            for obj in cls.objects.all():
-                obj_id = obj.__getattribute__(value["pk"])
-                title = obj.__getattribute__(value["title_field"])
-                title = unicodedata.normalize('NFKD', title).encode('utf-8',
-                                                                    'ignore')
-                data = {"class": key, "title": title}
-                for field in value["recorded_fields"]:
-                    data.update({field: unicode(obj.__getattribute__(field))})
-                engine.store_json(obj_id, title, data, ctype.id)
+    if not engine:
+        return
+    for key, value in PARAMS.iteritems():
+        cls = value["class"]
+        ctype = ContentType.objects.get_for_model(cls)
+        for obj in cls.objects.all():
+            record_object(engine, obj, key, value, ctype)
 
 
 @receiver(post_save)
 def redis_post_save(sender, instance=None, raw=False, **kwargs):
-    mod_name = instance._meta.module_name
-    if mod_name in PARAMS:
-        engine = load_redis_engine()
-        if engine:
-            value = PARAMS[mod_name]
+    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    if not key in PARAMS:
+        return
+    engine = load_redis_engine()
+    if not engine:
+        return
+    value = PARAMS.get(key)
 
-            obj_id = instance.__getattribute__(value["pk"])
-            title = instance.__getattribute__(value["title_field"])
-            title = unicodedata.normalize('NFKD', title).encode('utf-8',
-                                                                'ignore')
-            data = {"class": mod_name, "title": title}
-            for field in value["recorded_fields"]:
-                data.update({field: unicode(instance.__getattribute__(field))})
-            ctype = ContentType.objects.get_for_model(instance)
-            engine.store_json(obj_id, title, data, ctype.id)
+    record_object(engine, instance, key, value)
+
+
+def record_object(engine, obj, key, value, ctype=None):
+    if ctype is None:
+        ctype = ContentType.objects.get_for_model(obj)
+    obj_id = obj.__getattribute__(value["pk"])
+    title = obj.__getattribute__(value["title_field"])
+    if not title:
+        return
+    title = unicodedata.normalize('NFKD', title).encode('utf-8',
+                                                        'ignore')
+    data = {"class": key, "title": title}
+    for field in value["recorded_fields"]:
+        data.update({field: unicode(obj.__getattribute__(field))})
+    engine.store_json(obj_id, title, data, ctype.id)
 
 
 @receiver(post_delete)
 def redis_post_delete(sender, instance=None, **kwargs):
-    mod_name = instance._meta.module_name
-    if mod_name in PARAMS:
-        engine = load_redis_engine()
-        if engine:
-            value = PARAMS[mod_name]
+    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    if not key in PARAMS:
+        return
+    engine = load_redis_engine()
+    if not engine:
+        return
+    value = PARAMS[key]
 
-            obj_id = instance.__getattribute__(value["pk"])
-            ctype = ContentType.objects.get_for_model(instance)
-            engine.remove(obj_id, ctype.id)
+    obj_id = instance.__getattribute__(value["pk"])
+    ctype = ContentType.objects.get_for_model(instance)
+    engine.remove(obj_id, ctype.id)
