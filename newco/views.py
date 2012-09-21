@@ -10,7 +10,7 @@ class HomepageView(ListView):
     paginate_by = 14
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() or "/content" in request.path:
             if not "cat" in kwargs or kwargs.get("cat") == "popular" or \
                                       kwargs.get("cat") == "last":
                 self.queryset = Item.objects.all()

@@ -9,7 +9,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
 {% endblock %}
 
-{% block head_title %}{% user_display user as username %}{% blocktrans %}Home: {{ username }}{% endblocktrans %}{% endblock %}
+{% block head_title %}
+    {% if user.is_authenticated %}{% user_display user as username %}{% blocktrans %}Home: {{ username }}{% endblocktrans %}{% else %}{% trans "Home" %}{% endif %}
+{% endblock %}
 
 {% block body_base %}
     <div class="container"><header class="jumbotron subhead" id="overview"><div class="subnav subnav-fixed"><ul class="nav nav-pills">
