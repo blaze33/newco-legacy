@@ -14,17 +14,96 @@
 {% endblock %}
 
 {% block body_base %}
-    <div class="container"><header class="jumbotron subhead" id="overview"><div class="subnav subnav-fixed"><ul class="nav nav-pills">
-        <li style="padding:10px"><b>{% trans "NewCo empowers you to buy better" %}</b></li>
-        <li{% if not '/last/' in request.path and not '/newsfeed/' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
-        <li {% if '/last/' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
-        <li class="dropdown{% if '/newsfeed/' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
+    <div id="why_NewCo" class="collapse out">
+        <div class="container">
+            <div class="hero-unit well">
+                <div style="text-align:center;">
+                    <h1>NewCo</h1>
+                    <p><i>{% trans "Empowering people to buy better" %}</i></p>
+                    </br>
+
+                    <p style="text-align:center;">{% blocktrans %}NewCo helps you choose with confidence</br>and share your advice between users.{% endblocktrans %}</p>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="span4">
+                    {% url item_index as index_url %}
+                    <div style="text-align:center;"><h3>
+                        {% blocktrans %}Go to the</br><a href="{{ index_url }}" class="btn btn-large btn-primary">Product index</a></br>to explore the website.{% endblocktrans %}
+                    </h3></div>
+                </div>
+                <div class="span4">
+                    {% url contribute as contribute_url %}
+                    <div style="text-align:center;"><h3>
+                        {% blocktrans %}Go to</br><a href="{{ contribute_url }}" class="btn btn-large btn-primary">How to contribute?</a></br>to get ready for the next step.{% endblocktrans %}
+                    </h3></div>
+                </div>
+                <div class="span4">
+                    {% url account_signup as signup_url %}
+                    <div style="text-align:center;"><h3>
+                        {% blocktrans %}Directly</br><a href="{{ signup_url }}" class="btn btn-large btn-primary">Sign up!</a></br>to start your new career.{% endblocktrans %}
+                    </h3></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
+        <li style="padding:10px"><b><a rel="tooltip-tutorial" title="Click here to close the tutorial" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+        <li{% if not '/last' in request.path and not '/newsfeed' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
+        <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
+        <li class="dropdown{% if '/newsfeed' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li {% if "/newsfeed/" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
+                <li {% if "/newsfeed" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
                 <li class="divider"></li>
                 <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
             </ul>
         </li>
-    </ul></div></header></div>
+    </ul></div>
     {{ block.super }}
+{% endblock %}
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script type="text/javascript"> // script can't go to '/static' : needs to translate text
+        $(function(){
+            var why_NewCo_div = $('#why_NewCo');
+            var subnav2move = $('[rel=subnav]');
+
+            why_NewCo_div.on('show', function () {
+                subnav2move.removeClass('subnav-fixed').addClass('subnav-moved');
+            })
+
+            why_NewCo_div.on('shown', function () {
+                $('[rel="tooltip-tutorial"]').tooltip('show');
+            })
+
+            why_NewCo_div.on('hidden', function () {
+                subnav2move.removeClass('subnav-moved').addClass("subnav-fixed");
+                $('[rel="tooltip-tutorial"]').tooltip('hide');
+            })
+
+            $('[rel="tooltip-tutorial"]').tooltip({
+                trigger: 'manual',
+                placement: 'top',
+                animate: true,
+                //delay: 500,
+            });
+        });
+
+        {% if not user.is_authenticated %}
+
+        $(document).ready(function() {
+            //setTimeout($('#why_NewCo').collapse('show'),120000);
+            $('#why_NewCo').collapse('show');
+        });
+
+        {% endif %}
+    </script>
 {% endblock %}
