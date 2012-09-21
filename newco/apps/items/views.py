@@ -61,7 +61,7 @@ class ContentFormMixin(object):
 
     def load_form(self, request):
         if self.form_class and (
-                    self.__class__ == ContentCreateView or self.model == Item):
+                self.__class__ == ContentCreateView or self.model == Item):
             form_kwargs = self.get_form_kwargs()
             form_kwargs.update({"request": request})
             form = self.form_class(**form_kwargs)
@@ -75,8 +75,8 @@ class ContentFormMixin(object):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         if self.model == Item and ("store_search" in request.POST or
-                                    "add_links" in request.POST or
-                                    "remove_links" in request.POST):
+                                   "add_links" in request.POST or
+                                   "remove_links" in request.POST):
             if "add_links" in request.POST and self.object:
                 form.link_aff(self.object)
             if "remove_links" in request.POST and self.object:
@@ -122,6 +122,11 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                 "object": self.object._meta.verbose_name
             }
         )
+        if self.model == Item and "edit" in self.request.POST:
+            return HttpResponseRedirect(reverse(
+                "item_edit",
+                args=[self.object._meta.module_name, self.object.id]
+            ))
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
@@ -170,7 +175,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
-                                                            ProcessVoteView):
+                        ProcessVoteView):
 
     messages = {
         "object_created": {
@@ -191,12 +196,11 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
         public_query = Q(status=Content.STATUS.public)
         if self.model == Item:
             item = context.get("item")
+            q_feat = Q(feature__items__id=item.id)
             queries = {
                 "questions": Q(question__items__id=item.id) & public_query,
-                "feat_pos": Q(feature__items__id=item.id) &\
-                            Q(feature__positive=True) & public_query,
-                "feat_neg": Q(feature__items__id=item.id) &\
-                            Q(feature__positive=False) & public_query,
+                "feat_pos": q_feat & Q(feature__positive=True) & public_query,
+                "feat_neg": q_feat & Q(feature__positive=False) & public_query,
                 "links": Q(link__items__id=item.id) & public_query,
             }
 
@@ -214,7 +218,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
                 q.answers = get_sorted_queryset(
-                            Q(answer__question__id=q.id) & public_query, user)
+                    Q(answer__question__id=q.id) & public_query, user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -267,8 +271,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
 
             qs = Content.objects.filter(question__items__in=q.items.all())
             qs = qs.exclude(id=q.id)
-            qs_ordered = generic_annotate(qs, Vote,
-                Sum('votes__vote')).order_by("-score").select_subclasses()
+            qs_ordered = generic_annotate(qs, Vote, Sum('votes__vote'))
+            qs_ordered = qs_ordered.order_by("-score").select_subclasses()
             context.update({
                 "question": q, "prof_list": p_list, "item_list": q.items.all(),
                 "related_questions": {
@@ -325,7 +329,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 return self.form_invalid(form)
         else:
             return super(ContentDetailView, self).post(request, *args,
-                                                                **kwargs)
+                                                       **kwargs)
 
     def get_success_url(self):
         if self.success_url:
@@ -373,16 +377,15 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
             self.search_terms = self.request.GET.get("search", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
-                queryset = get_search_results(queryset, self.search_terms,
-                                                                    ["name"])
-                return queryset
+                qs = get_search_results(queryset, self.search_terms, ["name"])
+                return qs
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
         else:
             self.sort_order = "-pub_date"
         if self.sort_order == "popular":
             queryset = list(queryset.annotate(
-                    score=Count("content__question__id")).order_by("-score"))
+                score=Count("content__question__id")).order_by("-score"))
         else:
             queryset = queryset.order_by(self.sort_order)
         return queryset
