@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, Count
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.contenttypes import generic
@@ -7,9 +7,15 @@ from django.contrib.contenttypes import generic
 from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
 from voting.models import Vote
+from content.manager import Manager
 
 
 class GraphQuery(object):
+
+    @classmethod
+    def count(cls, key):
+        return Item.objects.hselect('data', [key]).values(key) \
+                           .annotate(Count('id')).order_by('-id__count')
 
     def __get__(self, instance, owner):
         self.item = instance
@@ -17,6 +23,9 @@ class GraphQuery(object):
 
     def __getattr__(self, name):
         return self.item.successors.filter(data__contains={'class': name})
+
+    def all_keys(self, keys):
+        return Item.objects.hselect('data', keys).order_by(*keys)
 
 
 class VoteModel(TimeStampedModel):
@@ -42,7 +51,7 @@ class BaseModel(VoteModel):
     Stores data with HStore.
     """
     data = hstore.DictionaryField(db_index=True)
-    objects = hstore.HStoreManager()
+    objects = Manager()
 
     class Meta:
         abstract = True
