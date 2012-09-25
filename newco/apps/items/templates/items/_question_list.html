@@ -2,12 +2,32 @@
 {% load voting_tags %}
 {% load voting_utils %}
 {% load content_utils %}
+{% load staticfiles %}
 {% load bootstrap_tags %}
 
-<div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">
-	{% if item_page %}
 
+<div class="row"><div class="span7">
+    <i rel="add_icon" class="icon-plus" style="opacity: 0.1 ; cursor: pointer; cursor: hand; z-index: -1 ; position: relative; left: 20px; top: -13px;"></i>
+    <span class="nc_transition_add" style="position: relative; left: -5px; top: -15px;">
+        <button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i></button>
+        {% if questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2></a>{% endif %}
+    </span>{% if not questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2></a>{% endif %}
 
+    <div id="question_form" class="collapse out" style="position: relative; left: 65px; top: -40px;">
+        <form method="POST" action="" class="form-inline">{% if not questions %}<br><br><br>{% endif %}
+            {% csrf_token %}
+            {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+                <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
+                </div>
+                {% include "bootstrap/_field_errors.html" %}
+                {% include "bootstrap/_field_help_text.html" %}
+            </div></div>{% endwith %}
+            <input type="hidden" name="next" value="{{ item.get_absolute_url }}"/>
+        </form>
+    </div>
+</div></div>
+
+{% for question in questions.queryset %}<div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">
     {% dict_entry_for_item question from questions.votes as vote %}
     {% dict_entry_for_item question from questions.scores as score %}
 
@@ -52,69 +72,7 @@
         </form></div>
     </div></div>
 
+    {% include "items/_ask_modal.html" %}
 
-
-
-
-
-
-
-	{% elif detail %}
-
-
-
-
-
-        <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="q-{{ question.id }}">
-            <div class="span1"><h2 class="right">{% if question.score %}{{ question.score.score }}{% else %}0{% endif %}{% vote_form question question.vote %}</h2></div>
-            <div class="span4"><h2>
-                <span itemprop="name">{{ question.content }}</span>
-                {% if user.is_superuser or question.author == request.user %}
-                    {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
-                {% endif %}
-            </h2></div>
-            <div class="{% if question.is_draft %}span1{% else %}span2{% endif %} right">{% if question.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% content_info question "signature" 30 %}{% endif %}</div>
-        </div>
-
-        {% for answer in question.answers.queryset %}{% if answer.is_public %}
-            {% dict_entry_for_item answer from question.answers.votes as vote %}
-            {% dict_entry_for_item answer from question.answers.scores as score %}
-            <hr>
-            <div class="row one_row" id="a-{{ answer.id }}">
-                <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote %}</h3></div>
-                <div class="span4"><p>
-                    <span itemprop="description"{# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}>
-                        {% content_info answer "header" %}
-                        <br>{% autoescape off %}{{ answer.content }}{% endautoescape %}
-                    </span>
-                    {% if user.is_superuser or answer.author == request.user %}
-                        {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
-                    {% endif %}
-                </p></div>
-                <div class="span2 right">{% content_info answer "signature-pic" 30 %}</div>
-            </div>
-        {% endif %}{% endfor %}
-
-        <hr>
-
-        <div class="row"><div class="span6 offset1">
-            <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
-            <br>
-            <div id="answer_form"><form method="POST" action="#answer_form">
-                {% csrf_token %}
-                {{ question.answer_form|as_bootstrap }}
-                <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
-                <input type="hidden" name="question_id" value="{{ question.id }}"/>
-            </form></div>
-        </div></div>
-        
-
-
-	{% endif %}
-
-
-	{% include "items/_ask_modal.html" %}
-
-	{% if item_page %}<hr>{% endif %}
-
-</div></div>
+    <hr>
+</div></div>{% endfor %}
