@@ -5,7 +5,7 @@
 
 {% if class_name == "question" or class_name == "answer" or class_name == "feature" or class_name == "link" %}
     {% with item=object.items.all.0 %}
-        {% with image=item.node.graph.image_set.0.graph.image.0.data %}
+        {% with image=item.node.graph.image_set.0.links.all.0.to_item.data %}
             <div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
         {% endwith %}
         <div class="details">
@@ -20,7 +20,7 @@
         </div>
     {% endwith %}
 {% elif class_name == "item" %}
-    {% with image=object.node.graph.image_set.0.graph.image.0.data %}
+    {% with image=object.node.graph.image_set.0.links.all.0.to_item.data %}
         <div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
     {% endwith %}
     <div class="details" style="font-size:12px;">
