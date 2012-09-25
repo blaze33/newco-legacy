@@ -4,7 +4,7 @@ from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from chosen.forms import ChosenSelectMultiple
+from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
@@ -63,12 +63,12 @@ class QuestionForm(ModelForm):
     class Meta:
         model = Question
         fields = ("content", "status", "items")
-        help_text = {"items": _("Pick a product.")}
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
+            "status": ChosenSelect(),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
@@ -82,10 +82,12 @@ class QuestionForm(ModelForm):
             self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields["items"].help_text = _(
-            "Select one or several products using Enter and the Arrow keys")
+            "Select one product using Enter and the Arrow keys")
         if hasattr(self, "request"):
             if self.request.GET.get("fields", "") != "add_items":
                 del self.fields["items"]
+        else:
+            del self.fields["items"]
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:

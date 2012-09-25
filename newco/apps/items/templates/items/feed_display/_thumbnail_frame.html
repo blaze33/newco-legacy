@@ -10,7 +10,7 @@
         {% endwith %}
         <div class="details">
             <span class="content-item-mini">{% profile_pic object.author 20 %}</span>
-            {% with template="items/content_display/_"|add:class_name|add:".html" %}
+            {% with template="items/feed_display/_"|add:class_name|add:".html" %}
                 {% include template with display="thumbnail" content=object author=object.author item=item only %}
             {% endwith %}
             <br><br>

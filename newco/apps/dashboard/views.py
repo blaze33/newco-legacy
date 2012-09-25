@@ -42,7 +42,6 @@ BOXES = {
                       " Maybe you would like to contribute?"),
         "name": "contrib",
         "mini_feed": "True",
-        "type": "contribution",
         "page_url": reverse_lazy("dash", args=["contribution"]),
     },
     "drafts": {
@@ -58,7 +57,6 @@ BOXES = {
         "subtitle": _("Your latest contributions"),
         "name": "all",
         "mini_feed": "True",
-        "type": "all",
         "page_url": reverse_lazy("dash", args=["all"]),
     },
 }

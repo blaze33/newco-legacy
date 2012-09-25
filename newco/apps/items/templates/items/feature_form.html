@@ -12,7 +12,7 @@
 
 </br>
 
-<form action="." method="POST">{% csrf_token %}
+<form action="" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
     <input type="submit" name="add_link" class="btn" value='{% trans "Submit" %}'/>
     <input type="hidden" name="item_id" value="{{ form.item.id }}"/>

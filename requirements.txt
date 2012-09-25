@@ -88,7 +88,8 @@ django-follow==0.6
 
 ## Autocomplete app
 django-autocomplete-light==1.0.11
-django-chosen==0.1
+git+git://github.com/theatlantic/django-chosen.git@b230dd5fe2d42c0bae9b4c3c61ae0eb964a118ea#egg=django_chosen
+# django-chosen==0.1
 
 ## Redis + complete
 redis==2.6.2

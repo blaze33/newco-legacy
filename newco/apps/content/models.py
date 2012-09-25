@@ -7,6 +7,7 @@ from django.contrib.contenttypes import generic
 from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
 from voting.models import Vote
+
 from content.manager import Manager
 
 

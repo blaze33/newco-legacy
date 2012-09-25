@@ -12,7 +12,7 @@ class HomepageView(ListView):
     def get(self, request, *args, **kwargs):
         # if request.user.is_authenticated() or "/content" in request.path:
         if not "cat" in kwargs or kwargs.get("cat") == "popular" or \
-                                  kwargs.get("cat") == "last":
+                kwargs.get("cat") == "last":
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
             if kwargs.get("cat") == "last":
