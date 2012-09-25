@@ -46,20 +46,22 @@
             {% endblock %}
             {% if is_paginated %}{% paginate %}{% endif %}
         {% else %}
-            <h3>{% if tag and search_terms %}
-                {% url 'tagged_items' tag.slug as tagurl %}
-                {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-            {% elif tag and not search_terms %}
-                {% url 'tagged_items' tag.slug as tagurl %}
-                {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available.{% endblocktrans %}
-            {% elif not tag and search_terms %}
-                {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-                <br>
-                <br>
-                {% url 'item_create' 'item' as add_item_url %}{% blocktrans %}Maybe you want to <a href="{{ add_item_url }}" class="btn btn-primary ">Add a product</a> ?{% endblocktrans %}
-            {% else %}
-                {% blocktrans %}No products are available.{% endblocktrans %}
-            {% endif %}</h3>
+            <h3>
+                {% if tag and search_terms %}
+                    {% url 'tagged_items' tag.slug as tagurl %}
+                    {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+                {% elif tag and not search_terms %}
+                    {% url 'tagged_items' tag.slug as tagurl %}
+                    {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available.{% endblocktrans %}
+                {% elif not tag and search_terms %}
+                    {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}No products are available.{% endblocktrans %}
+                {% endif %}
+                <br><br>
+                {% url "item_create" "item" as add_item_url %}
+                {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">creating one</a> yourself?{% endblocktrans %}
+            </h3>
         {% endif %}
     </div>
     <div class="span3">

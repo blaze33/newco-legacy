@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-21 13:33+0200\n"
+"POT-Creation-Date: 2012-09-25 19:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,43 +21,43 @@ msgstr ""
 msgid "No results matched"
 msgstr ""
 
-#: forms.py:66 forms.py:73
-msgid "Pick a product."
-msgstr ""
-
-#: forms.py:70
+#: forms.py:69
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:83
-msgid "Select one or several products using Enter and the Arrow keys"
+#: forms.py:74
+msgid "Pick a product."
 msgstr ""
 
-#: forms.py:115
+#: forms.py:85
+msgid "Select one product using Enter and the Arrow keys"
+msgstr ""
+
+#: forms.py:117
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:132
+#: forms.py:134
 msgid "Your answer"
 msgstr ""
 
-#: forms.py:161
+#: forms.py:163
 msgid "Link description"
 msgstr ""
 
-#: forms.py:215
+#: forms.py:217
 msgid "positive"
 msgstr ""
 
-#: forms.py:217
+#: forms.py:219
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:220
+#: forms.py:222
 msgid "negative"
 msgstr ""
 
-#: forms.py:222
+#: forms.py:224
 msgid "What feature do you dislike?"
 msgstr ""
 
@@ -188,21 +188,21 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:102 views.py:181
+#: views.py:102 views.py:183
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:106 views.py:185
+#: views.py:106 views.py:187
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:278 views.py:408
+#: views.py:279 views.py:408
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:279 views.py:409
+#: views.py:280 views.py:409
 msgid "Latest related questions"
 msgstr ""
 
@@ -372,7 +372,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:91
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:96
 #: templates/items/question_detail.html:80
 #: templates/items/content_display/_feature.html:7
 #: templates/items/content_display/_link.html:7
@@ -441,7 +441,7 @@ msgstr ""
 msgid "Add an entry"
 msgstr ""
 
-#: templates/items/item_list_base.html:51
+#: templates/items/item_list_base.html:52
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
@@ -449,35 +449,42 @@ msgid ""
 "\"</i>."
 msgstr ""
 
-#: templates/items/item_list_base.html:54
+#: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
 "%(tagname)s</span></a> are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:56
+#: templates/items/item_list_base.html:57
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_list_base.html:58
+#: templates/items/item_list_base.html:59
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:81
-msgid "Newest to Oldest"
-msgstr ""
-
-#: templates/items/item_list_base.html:82
-msgid "Oldest to Newest"
-msgstr ""
-
-#: templates/items/item_list_base.html:83
-msgid "Most popular"
+#: templates/items/item_list_base.html:63
+#, python-format
+msgid ""
+"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating "
+"one</a> yourself?"
 msgstr ""
 
 #: templates/items/item_list_base.html:86
+msgid "Newest to Oldest"
+msgstr ""
+
+#: templates/items/item_list_base.html:87
+msgid "Oldest to Newest"
+msgstr ""
+
+#: templates/items/item_list_base.html:88
+msgid "Most popular"
+msgstr ""
+
+#: templates/items/item_list_base.html:91
 msgid "Sort"
 msgstr ""
 
@@ -540,6 +547,10 @@ msgstr ""
 
 #: templates/items/content_display/_answer.html:44
 msgid "Add an answer"
+msgstr ""
+
+#: templates/items/content_display/_content_list.html:23
+msgid "Sorry... This newsfeed is empty."
 msgstr ""
 
 #: templates/items/content_display/_feature.html:7
