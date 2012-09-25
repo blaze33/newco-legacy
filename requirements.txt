@@ -36,7 +36,8 @@ python-amazon-product-api==0.2.5
 lxml==2.3.4
 
 ## pinax-theme-bootstrap
-pinax-theme-bootstrap==2.0.4
+# pinax-theme-bootstrap==2.0.4
+git+git://github.com/pinax/pinax-theme-bootstrap.git@c12c88471ee591e17e3fe1d0b223afdf0acbb538#egg=pinax_theme_bootstrap
 pinax-theme-bootstrap-account==1.0b2
 
 ## schema and data migrations

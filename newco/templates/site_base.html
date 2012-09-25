@@ -35,6 +35,8 @@ due to bad pixel fitting of small icons.
     </script>
 {% endblock %}
 
+{% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
+
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">
