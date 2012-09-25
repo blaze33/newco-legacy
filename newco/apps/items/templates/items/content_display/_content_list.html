@@ -1,6 +1,9 @@
 {% load i18n %}
 {% load voting_tags %}
 {% load content_utils %}
+{% load i18n %}
+{% load url from future %}
+{% load account_tags %}
 
 {% if contents %}
 	{% for content in contents %}{% with class_name=content|to_class_name %}

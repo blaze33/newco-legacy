@@ -86,8 +86,6 @@ class QuestionForm(ModelForm):
         if hasattr(self, "request"):
             if self.request.GET.get("fields", "") != "add_items":
                 del self.fields["items"]
-        else:
-            del self.fields["items"]
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:

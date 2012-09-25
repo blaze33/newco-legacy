@@ -393,6 +393,15 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
         context.update({"media": ChosenSelect().media})
+        if "tag_slug" in self.kwargs:
+            try:
+                tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
+                profile = self.request.user.get_profile()
+                if tag in profile.skills.all():
+                    context.update({"user_has_tag_as_skill": "True"})
+            except:
+                print "There was an error in Tag.object.get"
+                ## Todo : better manage error (+ give message to user that there was an error and it's normal if nothing happened)
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
@@ -410,6 +419,21 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
             }
         })
         return context
+    
+    def post(self, request, *args, **kwargs):
+        if "tag_slug" in self.kwargs:
+            try:
+                profile = request.user.get_profile()
+                tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
+                if "add_tag" in request.POST:
+                    profile.skills.add(tag)
+                elif "remove_tag" in request.POST:
+                    profile.skills.remove(tag)
+            except:
+                ## lazy error management: if error getting/adding the tag => nothing happens... but at least it doesn crash
+                print "Arf problem dans le Tag.objects.get"
+
+        return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ContentDeleteView(ContentView, DeleteView):
