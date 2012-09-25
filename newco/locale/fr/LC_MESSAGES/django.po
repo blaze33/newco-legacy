@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-20 20:34+0200\n"
-"PO-Revision-Date: 2012-09-20 20:34\n"
+"POT-Creation-Date: 2012-09-26 01:11+0200\n"
+"PO-Revision-Date: 2012-09-26 01:13\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Permission refusée"
 msgid "You can't vote."
 msgstr "Vous ne pouvez pas voter."
 
-#: templates/403.html:15 templates/403.html.py:19
+#: templates/403.html:15 templates/403.html.py:19 templates/404.html:17
 msgid "Go back"
 msgstr "Revenir en arrière"
 
@@ -46,9 +46,25 @@ msgstr "Revenir en arrière"
 msgid "You can't delete this content."
 msgstr "Vous n'avez pas la permission pour supprimer ce contenu."
 
-#: templates/403.html:21
+#: templates/403.html:21 templates/404.html:17
 msgid "Go back to homepage"
 msgstr "Retour à l'accueil"
+
+#: templates/404.html:7
+msgid "Not Found"
+msgstr "Ressource non trouvée"
+
+#: templates/404.html:11
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: templates/404.html:13
+msgid "We're sorry but that page could not be found."
+msgstr "Nous sommes confus, la page que vous demandez n'existe pas."
+
+#: templates/404.html:17 templates/_account_bar.html:25
+msgid "or"
+msgstr "ou"
 
 #: templates/_account_bar.html:11
 msgid "Dashboard"
@@ -73,10 +89,6 @@ msgstr "Se déconnecter"
 #: templates/_account_bar.html:23
 msgid "Log in"
 msgstr "Se connecter"
-
-#: templates/_account_bar.html:25
-msgid "or"
-msgstr "ou"
 
 #: templates/_account_bar.html:26
 msgid "Sign up"
@@ -126,11 +138,11 @@ msgstr "&copy; 2012 NewCo"
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: templates/homepage.html:18
+#: templates/homepage.html:18 templates/homepage_base.html:22
 msgid "Empowering people to buy better"
 msgstr "Vous donner le pouvoir de mieux acheter"
 
-#: templates/homepage.html:21
+#: templates/homepage.html:21 templates/homepage_base.html:25
 msgid ""
 "NewCo helps you choose with confidence</br>and share your advice between "
 "users."
@@ -147,7 +159,7 @@ msgstr ""
 "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
 "large btn-primary\">L'index Produit</a></br>pour explorer le site."
 
-#: templates/homepage.html:35
+#: templates/homepage.html:35 templates/homepage_base.html:39
 #, python-format
 msgid ""
 "Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-"
@@ -157,7 +169,7 @@ msgstr ""
 "btn-large btn-primary\">Comment contribuer ?</a></br>pour passer à l'étape "
 "suivante."
 
-#: templates/homepage.html:43
+#: templates/homepage.html:43 templates/homepage_base.html:45
 #, python-format
 msgid ""
 "Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-"
@@ -166,32 +178,45 @@ msgstr ""
 "Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
 "\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
 
-#: templates/homepage_base.html:12
+#: templates/homepage_base.html:13
 #, python-format
 msgid "Home: %(username)s"
 msgstr "Accueil : %(username)s"
 
-#: templates/homepage_base.html:16
-msgid "NewCo empowers people to buy better"
+#: templates/homepage_base.html:13
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/homepage_base.html:33
+#, python-format
+msgid ""
+"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary\" "
+"id=\"explore\">Product index</a></br>to explore the website."
+msgstr ""
+"Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-"
+"primary\">L'index Produit</a></br>pour explorer le site."
+
+#: templates/homepage_base.html:54
+msgid "NewCo empowers you to buy better"
 msgstr "NewCo vous donne le pouvoir de mieux acheter"
 
-#: templates/homepage_base.html:17
+#: templates/homepage_base.html:55
 msgid "Popular"
 msgstr "Populaire"
 
-#: templates/homepage_base.html:18
+#: templates/homepage_base.html:56
 msgid "Last Added"
 msgstr "Derniers ajouts"
 
-#: templates/homepage_base.html:19
+#: templates/homepage_base.html:57
 msgid "Community"
 msgstr "Communauté"
 
-#: templates/homepage_base.html:21
+#: templates/homepage_base.html:59
 msgid "Latest Contributions"
 msgstr "Dernières contributions"
 
-#: templates/homepage_base.html:23
+#: templates/homepage_base.html:61
 msgid "My newsfeed"
 msgstr "Mon flux"
 
@@ -227,16 +252,24 @@ msgstr ""
 msgid "Confirm email address for %(site_name)s"
 msgstr "Confirmez cette adresse email pour %(site_name)s"
 
-#: templates/idios/profile.html:17
+#: templates/idios/_profile_form.html:13
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/idios/_profile_form.html:14
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: templates/idios/profile.html:18
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/idios/profile.html:25
+#: templates/idios/profile.html:26
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/idios/profile.html:39
+#: templates/idios/profile.html:40
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -244,15 +277,15 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier !"
 
-#: templates/idios/profile.html:55
+#: templates/idios/profile.html:53
 msgid "History"
 msgstr "Historique"
 
-#: templates/idios/profile.html:56
+#: templates/idios/profile.html:54
 msgid "Following"
 msgstr "Abonnements"
 
-#: templates/idios/profile.html:57
+#: templates/idios/profile.html:55
 msgid "Followers"
 msgstr "Abonnés"
 
