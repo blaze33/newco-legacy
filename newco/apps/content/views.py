@@ -45,7 +45,7 @@ class ContentView(StaffRequiredMixin, View):
             form_class_name = kwargs['model_name'].title() + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
-            print self.form_class
+                print self.form_class
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -63,14 +63,15 @@ class ContentView(StaffRequiredMixin, View):
 
     def get_template_names(self):
         names = []
-        if self.template_name_suffix:
+        if self.template_name_suffix and not self.template_name:
             names.append("%s/%s%s.html" % (app_name, app_name, self.template_name_suffix))
             return names
         return super(ContentView, self).get_template_names()
 
     def get_context_data(self, **kwargs):
         context = super(ContentView, self).get_context_data(**kwargs)
-        context['model'] = self.model_name.lower()
+        if hasattr(self, 'model_name'):
+            context['model'] = self.model_name.lower()
         return context
 
 
@@ -130,7 +131,13 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
         else:
             return self.form_invalid(form)
 
-class ContentListView(ContentView, ListView): pass
+
+class ContentListView(ContentView, ListView):
+    def get_queryset(self):
+        q = super(ContentListView, self).get_queryset()
+        if "class_name" in self.kwargs:
+            q = q.filter(data__contains={'class': self.kwargs['class_name']})
+        return q
 
 class ContentDeleteView(ContentView, DeleteView):
 

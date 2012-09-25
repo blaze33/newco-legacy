@@ -1,0 +1,13 @@
+table.lead td a {
+	text-decoration:none;
+	display:block;
+	padding:0px;
+	height:100%;
+}
+
+table.lead td:first-child {
+	width: 20%;
+}
+table.lead td:last-child {
+	width: 30%;
+}
