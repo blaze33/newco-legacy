@@ -41,9 +41,20 @@
 
 {% block extra_body_base %}
     {{ block.super }}
-    {{ form.media.js }}
     <script type="text/javascript">
-        $(".chzn-select").chosen({no_results_text: "{{ form.no_results }}"});
-        $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+        (function ($) {
+            $(function () {
+                $(".chzn-select").each(function(i, select) {
+                    var $select = $(select);
+                    $select.chosen({max_selected_options: 1, no_results_text: "{{ form.no_results }}"});
+                    $select.bind("liszt:maxselected", function () {});
+                });
+                $(".chzn-select-deselect").each(function(i, select) {
+                    var $select = $(select);
+                    $select.chosen({allow_single_deselect: true});
+                });
+            });
+        })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
     </script>
+    {{ form.media.js }}
 {% endblock %}

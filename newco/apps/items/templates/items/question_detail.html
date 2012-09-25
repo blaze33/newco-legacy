@@ -1,12 +1,7 @@
 {% extends "site_base.html" %}
 
-{% load url from future %}
 {% load i18n %}
-{% load voting_tags %}
-{% load voting_utils %}
-{% load content_utils %}
 {% load staticfiles %}
-{% load bootstrap_tags %}
 
 {% block extra_style %}
     {{ block.super }}
@@ -20,7 +15,7 @@
 {% block body %}
 <div class="row">
     <div class="span7">
-        {% include "items/_question_box.html" with question=question detail="True" %}
+        {% include "items/root_display/_question.html" with question=question vote=question.vote score=question.score answers=question.answers display="detail" %}
     </div>
 
     <div class="offset1 span3">
@@ -28,7 +23,7 @@
             <h3>{% trans "Related Products" %}:</h3>
             <br>
             <div id="thumbnails_list">{% for item in question.items.all %}
-                {% include "items/content_display/_thumbnail_frame.html" with object=item only %}
+                {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
             {% endfor %}</div>
         </div>
         <hr>
