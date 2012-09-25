@@ -12,14 +12,14 @@ class HomepageView(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated() or "/content" in request.path:
             if not "cat" in kwargs or kwargs.get("cat") == "popular" or \
-                                      kwargs.get("cat") == "last":
+                    kwargs.get("cat") == "last":
                 self.queryset = Item.objects.all()
                 self.template_name = "homepage_products.html"
                 if kwargs.get("cat") == "last":
                     self.queryset = self.queryset.order_by("-pub_date")
                 else:
                     self.queryset = self.queryset.annotate(
-                                Count("content")).order_by("-content__count")
+                        Count("content")).order_by("-content__count")
             elif kwargs.get("cat") == "newsfeed":
                 self.queryset = Content.objects.all().select_subclasses()
                 self.template_name = "homepage_contents.html"

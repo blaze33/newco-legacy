@@ -355,9 +355,9 @@ class ProcessSearchView(RedirectView):
             if item_list.count() == 1:
                 response = item_list[0].get_absolute_url()
             elif tag_list.count() == 1:
-                response = reverse("tagged_items", rgs=[tag_list[0].slug])
+                response = reverse("tagged_items", args=[tag_list[0].slug])
             else:
-                response = "%s?search=%s" % (reverse("item_index"), search)
+                response = "%s?q=%s" % (reverse("content_search"), search)
             return HttpResponseRedirect(response)
         return super(ProcessSearchView, self).post(request, *args, **kwargs)
 
@@ -373,8 +373,8 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         if "tag_slug" in self.kwargs:
             self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
             queryset = queryset.filter(tags=self.tag)
-        if "search" in self.request.GET:
-            self.search_terms = self.request.GET.get("search", "")
+        if "q" in self.request.GET:
+            self.search_terms = self.request.GET.get("q", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
                 qs = get_search_results(queryset, self.search_terms, ["name"])

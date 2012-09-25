@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-25 19:08+0200\n"
+"POT-Creation-Date: 2012-09-25 20:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -444,7 +444,7 @@ msgstr ""
 #: templates/items/item_list_base.html:52
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"No products with tag <a href=\"%(tag_url)s\"><span class=\"label\">"
 "%(tagname)s</span></a> are available for search terms <i>\"%(search_terms)s"
 "\"</i>."
 msgstr ""
@@ -452,7 +452,7 @@ msgstr ""
 #: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span class=\"label\">"
+"No products with tag <a href=\"%(tag_url)s\"><span class=\"label\">"
 "%(tagname)s</span></a> are available."
 msgstr ""
 
