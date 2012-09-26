@@ -1,19 +1,24 @@
 {% extends "site_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Error 403" %}{% endblock %}
 
 {% block body %}
 
+<legend>{% trans "Permission Denied" %}</legend>
+
 {% if 'vote_button' in request.POST %}
     <p>{% trans "You can't vote." %}</p>
 
-    <p><a href={{ request.META.HTTP_REFERER }} class="btn">{% trans "Go back" %}</a></p>
+    <p><a href="{{ request.META.HTTP_REFERER }}" class="btn">{% trans "Go back" %}</a></p>
 {% elif "delete_content" in request.POST %}
     <p>{% trans "You can't delete this content." %}</p>
 
-    <p><a href={{ request.POST.success_url }} class="btn">{% trans "Go back" %}</a></p>
+    <p><a href="{{ request.POST.success_url }}" class="btn">{% trans "Go back" %}</a></p>
+{% else %}
+    <p><a href="{% url 'home' %}" class="btn">{% trans "Go back to homepage" %}</a></p>
 {% endif %}
 
 {% endblock %}

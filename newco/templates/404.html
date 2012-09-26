@@ -1,0 +1,19 @@
+{% extends "site_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load content_utils %}
+
+{% block head_title %}{% trans "Not Found" %}{% endblock %}
+
+{% block body %}
+
+<legend>{% trans "Page not found" %}</legend>
+
+<p>{% trans "We're sorry but that page could not be found." %}</p>
+
+<br>
+
+{% if request.META.HTTP_REFERER and request.META.HTTP_REFERER != request_path %}<a href="{{ request.META.HTTP_REFERER }}" class="btn">{% trans "Go back" %}</a> {% trans "or" %}&nbsp;{% endif %}<a href="{% url 'home' %}" class="btn">{% trans "Go back to homepage" %}</a>
+
+{% endblock %}

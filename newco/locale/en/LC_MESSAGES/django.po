@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:49+0200\n"
+"POT-Creation-Date: 2012-09-26 15:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,20 +25,44 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: templates/403.html:5
+#: templates/403.html:6
 msgid "Error 403"
 msgstr ""
 
 #: templates/403.html:10
+msgid "Permission Denied"
+msgstr ""
+
+#: templates/403.html:13
 msgid "You can't vote."
 msgstr ""
 
-#: templates/403.html:12 templates/403.html.py:16
+#: templates/403.html:15 templates/403.html.py:19 templates/404.html:17
 msgid "Go back"
 msgstr ""
 
-#: templates/403.html:14
+#: templates/403.html:17
 msgid "You can't delete this content."
+msgstr ""
+
+#: templates/403.html:21 templates/404.html:17
+msgid "Go back to homepage"
+msgstr ""
+
+#: templates/404.html:7
+msgid "Not Found"
+msgstr ""
+
+#: templates/404.html:11
+msgid "Page not found"
+msgstr ""
+
+#: templates/404.html:13
+msgid "We're sorry but that page could not be found."
+msgstr ""
+
+#: templates/404.html:17 templates/_account_bar.html:25
+msgid "or"
 msgstr ""
 
 #: templates/_account_bar.html:11
@@ -63,10 +87,6 @@ msgstr ""
 
 #: templates/_account_bar.html:23
 msgid "Log in"
-msgstr ""
-
-#: templates/_account_bar.html:25
-msgid "or"
 msgstr ""
 
 #: templates/_account_bar.html:26
@@ -117,11 +137,11 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: templates/homepage.html:18
+#: templates/homepage.html:18 templates/homepage_base.html:22
 msgid "Empowering people to buy better"
 msgstr ""
 
-#: templates/homepage.html:21
+#: templates/homepage.html:21 templates/homepage_base.html:25
 msgid ""
 "NewCo helps you choose with confidence</br>and share your advice between "
 "users."
@@ -134,46 +154,57 @@ msgid ""
 "\">Product index</a></br>to explore the website."
 msgstr ""
 
-#: templates/homepage.html:35
+#: templates/homepage.html:35 templates/homepage_base.html:39
 #, python-format
 msgid ""
 "Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
 "\">How to contribute?</a></br>to get ready for the next step."
 msgstr ""
 
-#: templates/homepage.html:43
+#: templates/homepage.html:43 templates/homepage_base.html:45
 #, python-format
 msgid ""
 "Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
 "\">Sign up!</a></br>to start your new career."
 msgstr ""
 
-#: templates/homepage_base.html:12
+#: templates/homepage_base.html:13
 #, python-format
 msgid "Home: %(username)s"
 msgstr ""
 
-#: templates/homepage_base.html:16
-msgid "NewCo empowers people to buy better"
+#: templates/homepage_base.html:13
+msgid "Home"
 msgstr ""
 
-#: templates/homepage_base.html:17
+#: templates/homepage_base.html:33
+#, python-format
+msgid ""
+"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary\" "
+"id=\"explore\">Product index</a></br>to explore the website."
+msgstr ""
+
+#: templates/homepage_base.html:54
+msgid "NewCo empowers you to buy better"
+msgstr ""
+
+#: templates/homepage_base.html:55
 msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:18
+#: templates/homepage_base.html:56
 msgid "Last Added"
 msgstr ""
 
-#: templates/homepage_base.html:19
+#: templates/homepage_base.html:57
 msgid "Community"
 msgstr ""
 
-#: templates/homepage_base.html:21
+#: templates/homepage_base.html:59
 msgid "Latest Contributions"
 msgstr ""
 
-#: templates/homepage_base.html:23
+#: templates/homepage_base.html:61
 msgid "My newsfeed"
 msgstr ""
 
@@ -205,30 +236,38 @@ msgstr ""
 msgid "Confirm email address for %(site_name)s"
 msgstr ""
 
-#: templates/idios/profile.html:17
+#: templates/idios/_profile_form.html:13
+msgid "Cancel"
+msgstr ""
+
+#: templates/idios/_profile_form.html:14
+msgid "Update"
+msgstr ""
+
+#: templates/idios/profile.html:18
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr ""
 
-#: templates/idios/profile.html:29
+#: templates/idios/profile.html:26
+msgid "Update my profile"
+msgstr ""
+
+#: templates/idios/profile.html:40
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
 msgstr ""
 
-#: templates/idios/profile.html:40
-msgid "Update my profile"
-msgstr ""
-
-#: templates/idios/profile.html:52
+#: templates/idios/profile.html:53
 msgid "History"
 msgstr ""
 
-#: templates/idios/profile.html:53
-msgid "Followees"
+#: templates/idios/profile.html:54
+msgid "Following"
 msgstr ""
 
-#: templates/idios/profile.html:54
+#: templates/idios/profile.html:55
 msgid "Followers"
 msgstr ""
 

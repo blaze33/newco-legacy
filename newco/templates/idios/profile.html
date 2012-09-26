@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load account_tags %}
 {% load content_utils %}
@@ -18,6 +19,16 @@
 
 {% block body %}<div class="span7" itemscope itemtype="http://schema.org/Person">
     {% user_display page_user as page_user_display %}
+    <div class="pull-right">
+        <span id="profile-follow">
+            {% if is_me %}
+                <a href="{% url 'profile_edit' %}" class="btn">
+                {% trans "Update my profile" %}</a>
+            {% else %}
+                {% follow_form user page_user %}
+            {% endif %}
+        </span>
+    </div>
     <header class="jumbotron subhead" id="overview">
         <h1 itemprop="name">{{ page_user_display }}</h1>
     </header>
@@ -32,17 +43,7 @@
                 {% profile_pic page_user 160 %}
             {% endif%}
         </div>
-        <div class="span5">
-            {% include "profiles/_profile_info.html" %}
-            <span id="profile-follow">
-                {% if is_me %}
-                    <a href="{% url profile_edit %}" class="btn">
-                    {% trans "Update my profile" %}</a>
-                {% else %}
-                    {% follow_form user page_user %}
-                {% endif %}
-            </span>
-        </div>
+        <div class="span5">{% include "profiles/_profile_info.html" %}</div>
     </div>
 
     </br>
@@ -50,12 +51,12 @@
     <div class="tabbable">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
-            <li><a href="#followees" data-toggle="tab">{% trans "Followees" %}</a></li>
+            <li><a href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
             <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "items/content_display/_content_list.html" with contents=object_list scores=scores display="text" %}{% if is_paginated %}{% paginate %}{% endif %}</div>
+            <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" type="history" %}{% if is_paginated %}{% paginate %}{% endif %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
         </div>

@@ -88,11 +88,12 @@ django-follow==0.6
 
 ## Autocomplete app
 django-autocomplete-light==1.0.11
-django-chosen==0.1
+git+git://github.com/theatlantic/django-chosen.git@b230dd5fe2d42c0bae9b4c3c61ae0eb964a118ea#egg=django_chosen
+# django-chosen==0.1
 
 ## Redis + complete
 redis==2.6.2
-redis-completion==0.3.1
+redis-completion==0.4
 
 ## template loader
 django-apptemplates==0.0.1
@@ -111,4 +112,4 @@ versiontools==1.9.1
 wsgiref==0.1.2
 
 #NewCo_bw_editor
-hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor
+hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor@0d1451ac8a46#egg=newco_bw_editor

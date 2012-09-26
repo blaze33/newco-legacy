@@ -2,9 +2,12 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
-from django.db.models.loading import get_model
 from django.db.models import Q, Sum, Count
+from django.db.models.loading import get_model
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
@@ -29,7 +32,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
-from utils.tools import get_query, load_object, get_sorted_queryset
+from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 
 app_name = 'items'
@@ -60,7 +63,7 @@ class ContentFormMixin(object):
 
     def load_form(self, request):
         if self.form_class and (
-                    self.__class__ == ContentCreateView or self.model == Item):
+                self.__class__ == ContentCreateView or self.model == Item):
             form_kwargs = self.get_form_kwargs()
             form_kwargs.update({"request": request})
             form = self.form_class(**form_kwargs)
@@ -74,8 +77,8 @@ class ContentFormMixin(object):
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         if self.model == Item and ("store_search" in request.POST or
-                                    "add_links" in request.POST or
-                                    "remove_links" in request.POST):
+                                   "add_links" in request.POST or
+                                   "remove_links" in request.POST):
             if "add_links" in request.POST and self.object:
                 form.link_aff(self.object)
             if "remove_links" in request.POST and self.object:
@@ -121,6 +124,11 @@ class ContentCreateView(ContentView, ContentFormMixin, CreateView):
                 "object": self.object._meta.verbose_name
             }
         )
+        if self.model == Item and "edit" in self.request.POST:
+            return HttpResponseRedirect(reverse(
+                "item_edit",
+                args=[self.object._meta.module_name, self.object.id]
+            ))
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
@@ -169,7 +177,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
-                                                            ProcessVoteView):
+                        ProcessVoteView):
 
     messages = {
         "object_created": {
@@ -190,12 +198,11 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
         public_query = Q(status=Content.STATUS.public)
         if self.model == Item:
             item = context.get("item")
+            q_feat = Q(feature__items__id=item.id)
             queries = {
                 "questions": Q(question__items__id=item.id) & public_query,
-                "feat_pos": Q(feature__items__id=item.id) &\
-                            Q(feature__positive=True) & public_query,
-                "feat_neg": Q(feature__items__id=item.id) &\
-                            Q(feature__positive=False) & public_query,
+                "feat_pos": q_feat & Q(feature__positive=True) & public_query,
+                "feat_neg": q_feat & Q(feature__positive=False) & public_query,
                 "links": Q(link__items__id=item.id) & public_query,
             }
 
@@ -208,12 +215,16 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
+            media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
                 q.answers = get_sorted_queryset(
-                            Q(answer__question__id=q.id) & public_query, user)
+                    Q(answer__question__id=q.id) & public_query, user)
+                if not media:
+                    media = q.answer_form.media
             context.update(contents)
+            context.update({"media": media})
 
             p_list = Profile.objects.filter(skills__in=self.object.tags.all())
             context.update({"q_form": q_form, "prof_list": p_list.distinct()})
@@ -262,8 +273,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
 
             qs = Content.objects.filter(question__items__in=q.items.all())
             qs = qs.exclude(id=q.id)
-            qs_ordered = generic_annotate(qs, Vote,
-                Sum('votes__vote')).order_by("-score").select_subclasses()
+            qs_ordered = generic_annotate(qs, Vote, Sum('votes__vote'))
+            qs_ordered = qs_ordered.order_by("-score").select_subclasses()
             context.update({
                 "question": q, "prof_list": p_list, "item_list": q.items.all(),
                 "related_questions": {
@@ -320,7 +331,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                 return self.form_invalid(form)
         else:
             return super(ContentDetailView, self).post(request, *args,
-                                                                **kwargs)
+                                                       **kwargs)
 
     def get_success_url(self):
         if self.success_url:
@@ -346,9 +357,9 @@ class ProcessSearchView(RedirectView):
             if item_list.count() == 1:
                 response = item_list[0].get_absolute_url()
             elif tag_list.count() == 1:
-                response = reverse("tagged_items", rgs=[tag_list[0].slug])
+                response = reverse("tagged_items", args=[tag_list[0].slug])
             else:
-                response = "%s?search=%s" % (reverse("item_index"), search)
+                response = "%s?q=%s" % (reverse("content_search"), search)
             return HttpResponseRedirect(response)
         return super(ProcessSearchView, self).post(request, *args, **kwargs)
 
@@ -362,43 +373,51 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
     def get_queryset(self):
         queryset = super(ContentListView, self).get_queryset()
         if "tag_slug" in self.kwargs:
-            self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
+            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
             queryset = queryset.filter(tags=self.tag)
-        if "search" in self.request.GET:
-            self.search_terms = self.request.GET.get("search", "")
+        if "q" in self.request.GET:
+            self.search_terms = self.request.GET.get("q", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
-                query = get_query(self.search_terms, ["name"])
-                queryset = queryset.filter(query)
+                qs = get_search_results(queryset, self.search_terms, ["name"])
+                return qs
         if "sort_products" in self.request.POST:
             self.sort_order = self.request.POST.get("sort_products")
         else:
             self.sort_order = "-pub_date"
         if self.sort_order == "popular":
             queryset = list(queryset.annotate(
-                    score=Count("content__question__id")).order_by("-score"))
+                score=Count("content__question__id")).order_by("-score"))
         else:
             queryset = queryset.order_by(self.sort_order)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+        context.update({"media": ChosenSelect().media})
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
             return context
-        object_list = context.get("object_list")
-        qs = Content.objects.filter(question__items__in=object_list)
-        qs_sorted = generic_annotate(qs, Vote,
-                                        Sum('votes__vote')).order_by("-score")
-        context.update({
-            "media": ChosenSelect().media,
-            "related_questions": {
-                _("Top related questions"): qs_sorted.select_subclasses()[:3],
-                _("Latest related questions"): qs.select_subclasses()[:3]
-            }
-        })
+        objs = context.get("object_list")
+        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
+        if nb_items == 0:
+            return context
+        qs = Content.objects.filter(question__items__in=objs)
+        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
+        rq = SortedDict()
+        rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
+        rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
+        context.update({"related_questions": rq})
         return context
+
+    def post(self, request, *args, **kwargs):
+        if "tag_slug" in self.kwargs and "skills" in request.POST:
+            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+            prof = request.user.get_profile()
+            prof.skills.add(tag) if request.POST.get("skills") == "add" \
+                else prof.skills.remove(tag)
+        return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ContentDeleteView(ContentView, DeleteView):

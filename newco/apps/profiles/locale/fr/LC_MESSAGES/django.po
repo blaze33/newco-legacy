@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
-"PO-Revision-Date: 2012-09-12 12:25\n"
+"POT-Creation-Date: 2012-09-21 19:43+0200\n"
+"PO-Revision-Date: 2012-09-21 19:44\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -55,8 +55,13 @@ msgstr "profil"
 msgid "reputation"
 msgstr "réputation"
 
+#: views.py:64
+#, python-format
+msgid "%(page_user_display)s have not contributed yet."
+msgstr "%(page_user_display)s n'a pas contribué pour le moment."
+
 #: templates/profiles/_profile_display.html:12
-#: templates/profiles/_profile_info.html:22
+#: templates/profiles/_profile_info.html:24
 msgid "Reputation"
 msgstr "Réputation"
 
@@ -66,25 +71,33 @@ msgid ":"
 msgstr " :"
 
 #: templates/profiles/_profile_display.html:13
-#: templates/profiles/_profile_info.html:26
+#: templates/profiles/_profile_info.html:28
 msgid "Skills"
 msgstr "Compétences"
 
-#: templates/profiles/_profile_info.html:6
+#: templates/profiles/_profile_info.html:8
 msgid "About"
 msgstr "A propos"
 
-#: templates/profiles/_profile_info.html:10
+#: templates/profiles/_profile_info.html:12
 msgid "Location"
 msgstr "Région"
 
-#: templates/profiles/_profile_info.html:14
+#: templates/profiles/_profile_info.html:16
 msgid "Website"
 msgstr "Site internet"
 
-#: templates/profiles/_profile_info.html:18
+#: templates/profiles/_profile_info.html:20
 msgid "Subscription date"
 msgstr "Date d'inscription"
+
+#: templates/profiles/_profile_info.html:36
+msgid "Following"
+msgstr "Abonnements"
+
+#: templates/profiles/_profile_info.html:40
+msgid "Followers"
+msgstr "Abonnés"
 
 #: templates/profiles/_profile_user_list.html:4
 msgid "Members:"
@@ -93,6 +106,9 @@ msgstr "Membres :"
 #: templates/profiles/_profile_user_list.html:12
 msgid "Products:"
 msgstr "Produits :"
+
+#~ msgid "Top Followers"
+#~ msgstr "Meilleurs Abonnés"
 
 #~ msgid "Profiles"
 #~ msgstr "Profils"
@@ -107,9 +123,7 @@ msgstr "Produits :"
 #~ msgstr "a <a href=\"%(url)s\">répondu</a> à une question à propos de"
 
 #~ msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
-#~ msgstr ""
-#~ "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos "
-#~ "de"
+#~ msgstr "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos de"
 
 #~ msgid "answered a question about"
 #~ msgstr "a répondu à une question à propos de"
@@ -124,12 +138,10 @@ msgstr "Produits :"
 #~ msgstr "Ajouter une réponse"
 
 #~ msgid "suggested a <a href=\"%(url)s\">feature</a> on"
-#~ msgstr ""
-#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
-#~ msgstr ""
-#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "suggested a feature on"
 #~ msgstr "a suggéré une caractéristique sur"
@@ -147,8 +159,7 @@ msgstr "Produits :"
 #~ msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
 
 #~ msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
-#~ msgstr ""
-#~ "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
+#~ msgstr "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
 
 #~ msgid "asked a question about"
 #~ msgstr "a posé une question à propos de"
@@ -164,12 +175,6 @@ msgstr "Produits :"
 
 #~ msgid "Newsfeed"
 #~ msgstr "Flux"
-
-#~ msgid "Followees"
-#~ msgstr "Abonnements"
-
-#~ msgid "Followers"
-#~ msgstr "Abonnés"
 
 #~ msgid "by"
 #~ msgstr "par"
