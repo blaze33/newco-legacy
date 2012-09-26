@@ -9,7 +9,7 @@
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
-    {% if questions %}{{ questions.0.answer_form.media.css }}{% endif %}
+    {{ media.css }}
 {% endblock %}
 
 {% block head_title %}{{ item.name }}{% endblock %}
@@ -24,17 +24,17 @@
 
     <div class="row tabbable">
         <ul class="nav nav-tabs">
-            <li{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
-            <li{% if '/link-' in request.path %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
-            <li{% if '/feature-' in request.path %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
-            <li{% if '/story-' in request.path %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
+            <li{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+            <li{% if 'link' in request.GET %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
+            <li{% if 'feature' in request.GET %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
+            <li{% if 'story' in request.GET %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="questions" class="tab-pane{% if '/link-' not in request.path and '/feature-' not in request.path and '/story-' not in request.path %} active{% endif %}">{% include "items/_question_list.html" %}</div>
-            <div id="links" class="tab-pane{% if '/link-' in request.path %} active{% endif %}">{% include "items/_link_list.html" %}</div>
-            <div id="features" class="tab-pane{% if '/feature-' in request.path %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
-            <div id="stories" class="tab-pane{% if '/story-' in request.path %} active{% endif %}">
+            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %}">{% include "items/_question_list.html" %}</div>
+            <div id="links" class="tab-pane{% if 'link' in request.GET %} active{% endif %}">{% include "items/_link_list.html" %}</div>
+            <div id="features" class="tab-pane{% if 'feature' in request.GET %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
+            <div id="stories" class="tab-pane{% if 'story' in request.GET %} active{% endif %}">
                 <div class="row"><div class="span7">
                     <h3>Soon you'll be able to tell us a nice story about this product</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
@@ -109,7 +109,7 @@
 {% block extra_body_base %}
     {{ block.super }}
     <script src="{% static 'js/content.js' %}"></script>
-    {% if questions %}{{ questions.0.answer_form.media.js }}{% endif %}
+    {{ media.js }}
     <script type="text/javascript"> // script can't go to '/static' : needs to translate text
         $(function(){
             var form = $('#question_form');
@@ -126,7 +126,6 @@
                 text_change.html("{% trans "Ask a new question!" %}");
                 text_change_no_q_yet.html("{% trans "No question yet! Ask the first one here!" %}");
             })
-        
         });
     </script>
 {% endblock %}

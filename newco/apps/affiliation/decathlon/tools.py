@@ -6,7 +6,7 @@ from django.db import transaction, IntegrityError
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog, Store
 from affiliation.catalogs_tools import csv_url2dict
-from utils.tools import get_query
+from utils.tools import get_search_results
 
 
 def decathlon_product_search(keyword, nb_items=10):
@@ -14,15 +14,13 @@ def decathlon_product_search(keyword, nb_items=10):
         name="Decathlon", url="http://www.decathlon.fr"
     )
 
-    d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon)
-
-    query = get_query(keyword, ["name"])
-
+    # Exclude from search already linked items
     d4_object_ids = AffiliationItem.objects.filter(
                         store=decathlon).values_list("object_id", flat=True)
+    d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon).exclude(
+                            object_id__in=d4_object_ids, store=decathlon)
 
-    return d4_prods.filter(query).exclude(object_id__in=d4_object_ids,
-                                                    store=decathlon)[:nb_items]
+    return get_search_results(d4_prods, keyword, ["name"], nb_items)
 
 
 @transaction.commit_manually

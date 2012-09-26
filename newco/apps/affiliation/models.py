@@ -116,10 +116,9 @@ def _amazon_init(aff_item, amazon_item):
     )
     aff_item.store = amazon
 
-    max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
+    maxl = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
-    aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval,
-                                                                    max_chars)
+    aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval, maxl)
     aff_item.object_id = unicode(amazon_item.ASIN)
     aff_item.ean = unicode(getattr(amazon_item.ItemAttributes, "EAN", ""))
     aff_item.url = unicode(amazon_item.DetailPageURL)
@@ -128,7 +127,10 @@ def _amazon_init(aff_item, amazon_item):
     Price = None
     if hasattr(amazon_item, "Offers") & hasattr(amazon_item, "OfferSummary"):
         if amazon_item.Offers.TotalOffers > 0:
-            Price = amazon_item.Offers.Offer.OfferListing.Price
+            if hasattr(amazon_item.Offers.Offer.OfferListing, "SalePrice"):
+                Price = amazon_item.Offers.Offer.OfferListing.SalePrice
+            else:
+                Price = amazon_item.Offers.Offer.OfferListing.Price
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
             Price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):

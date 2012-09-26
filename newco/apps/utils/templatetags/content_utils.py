@@ -74,6 +74,8 @@ class ObjectDisplayNode(Node):
         except VariableDoesNotExist:
             return ""
         else:
+            if not obj:
+                return ""
             display = self.display.resolve(context)
             color = self.color.resolve(context) if self.color else None
             if obj.__class__ is Item:

@@ -4,7 +4,7 @@ from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
-from chosen.forms import ChosenSelectMultiple
+from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
@@ -24,7 +24,7 @@ class ItemForm(ModelForm):
         if "request" in kwargs:
             self.request = kwargs.pop("request")
             self.reload_current_search()
-        if "instance" not in kwargs or kwargs["instance"] == None:
+        if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
             self.user = self.request.user
         return super(ItemForm, self).__init__(*args, **kwargs)
@@ -63,24 +63,26 @@ class QuestionForm(ModelForm):
     class Meta:
         model = Question
         fields = ("content", "status", "items")
-        help_text = {"items": _("Pick a product.")}
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "items": ChosenSelectMultiple(attrs={"class": "span4", "rows": 1},
-                overlay=_("Pick a product.")),
+            "status": ChosenSelect(),
+            "items": ChosenSelectMultiple(
+                attrs={"class": "span4", "rows": 1},
+                overlay=_("Pick a product."),
+            ),
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
+        if 'instance' not in kwargs or kwargs['instance'] is None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields["items"].help_text = _(
-            "Select one or several products using Enter and the Arrow keys")
+            "Select one product using Enter and the Arrow keys")
         if hasattr(self, "request"):
             if self.request.GET.get("fields", "") != "add_items":
                 del self.fields["items"]
@@ -118,7 +120,7 @@ class AnswerForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if "instance" not in kwargs or kwargs["instance"] == None:
+        if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
             self.request = kwargs.pop("request")
             self.user = self.request.user
@@ -163,7 +165,7 @@ class LinkForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
+        if 'instance' not in kwargs or kwargs['instance'] is None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
@@ -199,7 +201,7 @@ class FeatureForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] == None:
+        if 'instance' not in kwargs or kwargs['instance'] is None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
@@ -214,13 +216,13 @@ class FeatureForm(ModelForm):
             if self.positive:
                 self.way = _("positive")
                 self._meta.widgets['content'].attrs['placeholder'] = ugettext(
-    'What feature do you like?'
-)
+                    'What feature do you like?'
+                )
             else:
                 self.way = _("negative")
                 self._meta.widgets['content'].attrs['placeholder'] = ugettext(
-    'What feature do you dislike?'
-)
+                    'What feature do you dislike?'
+                )
         return super(FeatureForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
@@ -241,13 +243,13 @@ def _link_aff(request, item):
         for aff_cat_id in aff_cat_ids:
             try:
                 aff_cat = AffiliationItemCatalog.objects.get(
-                                                        id=aff_cat_id)
+                    id=aff_cat_id)
             except ObjectDoesNotExist:
                 pass
             else:
                 aff_item, c = AffiliationItem.objects.get_or_create(
-                        item=item, store=aff_cat.store,
-                        object_id=aff_cat.object_id
+                    item=item, store=aff_cat.store,
+                    object_id=aff_cat.object_id
                 )
                 aff_item.copy_from_affcatalog(aff_cat)
                 aff_item.save()
@@ -263,13 +265,13 @@ def _reload_current_search(item_form):
             for aff_cat_id in aff_cat_ids:
                 try:
                     aff_cat = AffiliationItemCatalog.objects.get(
-                                                            id=aff_cat_id)
+                        id=aff_cat_id)
                 except ObjectDoesNotExist:
                     pass
                 else:
                     if AffiliationItem.objects.filter(
-                                            object_id=aff_cat.object_id,
-                                            store=aff_cat.store).count() == 0:
+                            object_id=aff_cat.object_id,
+                            store=aff_cat.store).count() == 0:
                         product_list.append(aff_cat)
             product_list_by_store.update({store: product_list})
     return product_list_by_store

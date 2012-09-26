@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
-"PO-Revision-Date: 2012-09-18 18:24\n"
+"POT-Creation-Date: 2012-09-25 22:23+0200\n"
+"PO-Revision-Date: 2012-09-25 22:26\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,45 +23,45 @@ msgstr ""
 msgid "No results matched"
 msgstr "Pas de résultats correspondant à la requête"
 
-#: forms.py:66 forms.py:73
-msgid "Pick a product."
-msgstr "Choisissez un produit"
-
-#: forms.py:70
+#: forms.py:69
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:83
-msgid "Select one or several products using Enter and the Arrow keys"
-msgstr ""
-"Choisissez un ou plusieurs produits en utilisant la touche Entrée et les "
-"flèches de direction."
+#: forms.py:74
+msgid "Pick a product."
+msgstr "Choisissez un produit"
 
-#: forms.py:115
+#: forms.py:85
+msgid "Select one product using Enter and the Arrow keys"
+msgstr ""
+"Choisissez un produit en utilisant la touche Entrée et les flèches de "
+"direction."
+
+#: forms.py:117
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:132
+#: forms.py:134
 msgid "Your answer"
 msgstr "Votre réponse"
 
-#: forms.py:161
+#: forms.py:163
 msgid "Link description"
 msgstr "Description du lien"
 
-#: forms.py:215
+#: forms.py:217
 msgid "positive"
 msgstr "positive"
 
-#: forms.py:217
+#: forms.py:219
 msgid "What feature do you like?"
 msgstr "Quelle caractéristique apprécies-tu ?"
 
-#: forms.py:220
+#: forms.py:222
 msgid "negative"
 msgstr "négative"
 
-#: forms.py:222
+#: forms.py:224
 msgid "What feature do you dislike?"
 msgstr "Quelle caractéristique te déplait ?"
 
@@ -82,8 +82,8 @@ msgid "last modified"
 msgstr "dernière modification"
 
 #: models.py:30
-msgid "item"
-msgstr "item"
+msgid "product"
+msgstr "produit"
 
 #: models.py:72
 msgid "Draft"
@@ -96,6 +96,10 @@ msgstr "Public"
 #: models.py:81
 msgid "status"
 msgstr "statut"
+
+#: models.py:82
+msgid "products"
+msgstr "produits"
 
 #: models.py:129 models.py:149 models.py:167 models.py:182 models.py:198
 msgid "content"
@@ -133,21 +137,76 @@ msgstr "article"
 msgid "stories"
 msgstr "articles"
 
-#: views.py:101 views.py:177
+#: translation.py:4
+msgctxt "item"
+msgid "the "
+msgstr "le "
+
+#: translation.py:5
+msgctxt "question"
+msgid "the "
+msgstr "la "
+
+#: translation.py:6
+msgctxt "answer"
+msgid "the "
+msgstr "la "
+
+#: translation.py:7
+msgctxt "link"
+msgid "the "
+msgstr "le "
+
+#: translation.py:8
+msgctxt "feature"
+msgid "the "
+msgstr "la "
+
+#: translation.py:12
+#, python-format
+msgctxt "item"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
+
+#: translation.py:13
+#, python-format
+msgctxt "question"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: translation.py:14
+#, python-format
+msgctxt "answer"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: translation.py:15
+#, python-format
+msgctxt "link"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
+
+#: translation.py:16
+#, python-format
+msgctxt "feature"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
+
+#: views.py:103 views.py:184
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:105 views.py:181
+#: views.py:107 views.py:188
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:270 views.py:397
+#: views.py:280 views.py:409
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:271 views.py:398
+#: views.py:281 views.py:410
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -195,28 +254,14 @@ msgstr "Poser une nouvelle question !"
 msgid "No question yet! Ask the first one here!"
 msgstr "Pas de question pour l'instant ! Soyez le premier à en poser une !"
 
-#: templates/items/_question_list.html:62
-msgid "Add a better answer"
-msgstr "Donner une meilleure réponse"
-
-#: templates/items/_question_list.html:62
-#: templates/items/content_display/_question.html:34
-msgid "Answer this question"
-msgstr "Répondre à cette question"
-
-#: templates/items/_question_list.html:64
-#: templates/items/question_detail.html:57
-msgid "Ask someone to answer"
-msgstr "Demandez à quelqu'un de répondre"
-
-#: templates/items/_question_list.html:70 templates/items/answer_form.html:11
-#: templates/items/question_detail.html:62
+#: templates/items/answer_form.html:11
+#: templates/items/root_display/_question.html:46
+#: templates/items/root_display/_question.html:89
 msgid "Answer"
 msgstr "Réponse"
 
 #: templates/items/answer_form.html:23 templates/items/feature_form.html:17
-#: templates/items/item_form.html:74 templates/items/link_form.html:16
-#: templates/items/question_form.html:21
+#: templates/items/link_form.html:16 templates/items/question_form.html:36
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -226,8 +271,8 @@ msgstr "Supprimer"
 
 #: templates/items/confirm_delete.html:10
 #, python-format
-msgid "The object %(class)s <i>%(name)s</i> will be deleted:"
-msgstr "L'objet %(class)s <i>%(name)s</i> sera supprimé :"
+msgid "The %(class)s <i>%(object)s</i> will be deleted:"
+msgstr "Le %(class)s <i>%(object)s</i> sera supprimé :"
 
 #: templates/items/confirm_delete.html:15
 msgid "Yes"
@@ -306,92 +351,162 @@ msgstr "Acheter"
 msgid "Ask a new question:"
 msgstr "Poser une nouvelle question"
 
-#: templates/items/item_form.html:17
+#: templates/items/item_form.html:18
 msgid "Item"
 msgstr "Item"
 
-#: templates/items/item_form.html:21
-msgid "Add something new to talk about:"
-msgstr "De quoi voulez-vous parler :"
+#: templates/items/item_form.html:22
+msgid "Add a product:"
+msgstr "Ajouter un produit :"
 
-#: templates/items/item_form.html:31
+#: templates/items/item_form.html:22
+msgid "Edit"
+msgstr "Modifier"
+
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:102
+#: templates/items/question_detail.html:32
+#: templates/items/feed_display/_feature.html:7
+#: templates/items/feed_display/_link.html:7
+#: templates/items/feed_display/_question.html:8
+msgid ":"
+msgstr " :"
+
+#: templates/items/item_form.html:27 templates/items/question_form.html:21
+msgid "Tips"
+msgstr "Astuces"
+
+#: templates/items/item_form.html:29
+#, python-format
+msgid ""
+"\n"
+"        Here, you can create a new product page in 10 seconds. To do so, you need to:\n"
+"        <ol>\n"
+"            <li>Fill in the product name and its associated <b><a href=\"%(url)s\" class=\"black\" rel=\"tooltip-top\" title=\"Click here for help on tags\">tags</a></b>.</li>\n"
+"            <i class=\"icon-play\"></i> You want to do more? <b>Add features!</b> You can:\n"
+"            <li>Create the associated Store links using <em>Stores search</em>.</li>\n"
+"            <li>Drag and drop the right corresponding images on the top positions, and trash the irrelevant ones.</li>\n"
+"        </ol>\n"
+"    "
+msgstr ""
+"\n"
+"Ici, vous pouvez créer un page produit en 10 secondes. Pour ce faire, vous devez :\n"
+"<ol>\n"
+"<li>Remplir le champ nom ainsi que les <b><a href=\"%(url)s\" class=\"black\" rel=\"tooltip-top\" title=\"Cliquez ici pour de l'aide sur les tags\">tags</a></b> associés.</li>\n"
+"<i class=\"icon-play\"></i> Il vous en reste sous le coude ? <b>Ajoutez des caractéristiques !</b> Vous pouvez :\n"
+"<li>Créer les liens vers les sites marchands en utilisant le bouton <em>Recherche chez les e-commerçants</em>.</li>\n"
+"<li>Glissez et déposez les meilleures images correspondantes au début de la liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
+"</ol>"
+
+#: templates/items/item_form.html:48
 msgid "Linked Products"
 msgstr "Produits Associés"
 
-#: templates/items/item_form.html:33
+#: templates/items/item_form.html:50
 msgid "Remove unselected"
 msgstr "Enlever les produits non-cochés"
 
-#: templates/items/item_form.html:44
+#: templates/items/item_form.html:61
 msgid "Stores Search"
 msgstr "Recherche chez les e-commerçants"
 
-#: templates/items/item_form.html:45
+#: templates/items/item_form.html:63
 msgid "Add selected"
 msgstr "Ajouter les produits cochés"
 
+#: templates/items/item_form.html:92
+msgid "Create"
+msgstr "Créer"
+
+#: templates/items/item_form.html:92
+msgid "Create and add features"
+msgstr "Créer et ajouter des caractéristiques"
+
+#: templates/items/item_form.html:94
+msgid "Update"
+msgstr "Mettre à jour"
+
 #: templates/items/item_list_base.html:16
+#: templates/items/item_list_base.html:27
 msgid "Products"
 msgstr "Produits"
 
-#: templates/items/item_list_base.html:37
-msgid "Add an entry"
+#: templates/items/item_list_base.html:23
+#, python-format
+msgid "Click to remove tag %(tag)s from your skill list"
+msgstr "Cliquez pour enlever le tag %(tag)s de votre liste de compétences"
+
+#: templates/items/item_list_base.html:23
+msgid "This is my skill"
+msgstr "Ma compétence"
+
+#: templates/items/item_list_base.html:25
+#, python-format
+msgid "Click to add tag %(tag)s to your skill list"
+msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
+
+#: templates/items/item_list_base.html:25
+msgid "Add to skills"
+msgstr "Ajouter aux compétences"
+
+#: templates/items/item_list_base.html:43
+msgid "Add a product"
 msgstr "Ajouter un produit"
 
-#: templates/items/item_list_base.html:51
+#: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
+"No products with tag <a href=\"%(tag_url)s\"><span "
 "class=\"label\">%(tagname)s</span></a> are available for search terms "
 "<i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\"><span"
 " class=\"label\">%(tagname)s</span></a> correspondant aux termes de "
 "recherche <i>\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:54
+#: templates/items/item_list_base.html:61
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag.url)s\"><span "
+"No products with tag <a href=\"%(tag_url)s\"><span "
 "class=\"label\">%(tagname)s</span></a> are available."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag.url)s\"><span"
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\"><span"
 " class=\"label\">%(tagname)s</span></a>."
 
-#: templates/items/item_list_base.html:56
+#: templates/items/item_list_base.html:63
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 "Il n'y a pas de produit disponible correspondant aux termes de recherche "
 "<i>\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:58
+#: templates/items/item_list_base.html:65
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list_base.html:81
+#: templates/items/item_list_base.html:69
+#, python-format
+msgid ""
+"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating "
+"one</a> yourself?"
+msgstr ""
+"Pourquoi ne pas le <a href=\"%(add_item_url)s\" class=\"btn btn-primary "
+"\">créer</a> vous-même ?"
+
+#: templates/items/item_list_base.html:92
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
-#: templates/items/item_list_base.html:82
+#: templates/items/item_list_base.html:93
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
-#: templates/items/item_list_base.html:83
+#: templates/items/item_list_base.html:94
 msgid "Most popular"
 msgstr "Plus populaire"
 
-#: templates/items/item_list_base.html:86
+#: templates/items/item_list_base.html:97
 msgid "Sort"
 msgstr "Trier"
-
-#: templates/items/item_list_base.html:91
-#: templates/items/question_detail.html:80
-#: templates/items/content_display/_feature.html:7
-#: templates/items/content_display/_link.html:7
-#: templates/items/content_display/_question.html:8
-msgid ":"
-msgstr " :"
 
 #: templates/items/link_form.html:6
 msgid "Link"
@@ -402,74 +517,164 @@ msgstr "Lien"
 msgid "Add an external link to <i>%(item)s</i>:"
 msgstr "Ajouter un lien externe à <i>%(item)s</i> :"
 
-#: templates/items/question_detail.html:71
+#: templates/items/question_detail.html:23
 msgid "Related Products"
 msgstr "Produits Associés"
 
-#: templates/items/question_form.html:12
+#: templates/items/question_form.html:13
 msgid "Question"
 msgstr "Question"
 
-#: templates/items/question_form.html:15
-msgid "Ask something:"
-msgstr "Demandez quelque chose :"
+#: templates/items/question_form.html:16
+msgid "Ask a question:"
+msgstr "Poser une question :"
 
-#: templates/items/content_display/_answer.html:9
+#: templates/items/question_form.html:23
+#, python-format
+msgid ""
+"\n"
+"        Here, you can ask a question about one or several products already <b><a href=\"%(url)s\" class=\"black\" rel=\"tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
+"        <ol>\n"
+"            <li>Write down your question.</li>\n"
+"            <li>Select one or several products to bind that question to, using the search bar.</li>\n"
+"            <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
+"        </ol>\n"
+"    "
+msgstr ""
+"\n"
+"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black\" rel=\"tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
+"<ol>\n"
+"<li>Ecrivez votre question.</li>\n"
+"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
+"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
+"</ol>"
+
+#: templates/items/feed_display/_answer.html:9
 #, python-format
 msgid "<a href=\"%(url)s\">answered</a> a question about"
 msgstr "a <a href=\"%(url)s\">répondu</a> à une question à propos de"
 
-#: templates/items/content_display/_answer.html:19
-#: templates/items/content_display/_answer.html:22
+#: templates/items/feed_display/_answer.html:19
+#: templates/items/feed_display/_answer.html:22
 msgid "answered a question about"
 msgstr "a répondu à une question à propos de"
 
-#: templates/items/content_display/_answer.html:26
-#: templates/items/content_display/_question.html:24
+#: templates/items/feed_display/_answer.html:26
+#: templates/items/feed_display/_question.html:24
 msgid "Q:"
 msgstr "Q :"
 
-#: templates/items/content_display/_answer.html:32
+#: templates/items/feed_display/_answer.html:32
 msgid "A:"
 msgstr "R :"
 
-#: templates/items/content_display/_answer.html:44
+#: templates/items/feed_display/_answer.html:44
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
-#: templates/items/content_display/_feature.html:7
+#: templates/items/feed_display/_content_list.html:23
+msgid "Sorry... This newsfeed is empty."
+msgstr "Désolé... Ce flux est vide."
+
+#: templates/items/feed_display/_feature.html:7
 #, python-format
 msgid "suggested a <a href=\"%(url)s\">feature</a> on"
 msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
-#: templates/items/content_display/_feature.html:16
-#: templates/items/content_display/_feature.html:19
+#: templates/items/feed_display/_feature.html:16
+#: templates/items/feed_display/_feature.html:19
 msgid "suggested a feature on"
 msgstr "a suggéré une caractéristique sur"
 
-#: templates/items/content_display/_link.html:7
+#: templates/items/feed_display/_link.html:7
 #, python-format
 msgid "posted a <a href=\"%(url)s\">link</a> about"
 msgstr "a posté un <a href=\"%(url)s\">lien</a> à propos de"
 
-#: templates/items/content_display/_link.html:16
-#: templates/items/content_display/_link.html:19
+#: templates/items/feed_display/_link.html:16
+#: templates/items/feed_display/_link.html:19
 msgid "posted a link about"
 msgstr "a posté un lien à propos de"
 
-#: templates/items/content_display/_link.html:24
+#: templates/items/feed_display/_link.html:24
 msgid "L:"
 msgstr "L :"
 
-#: templates/items/content_display/_question.html:8
+#: templates/items/feed_display/_question.html:8
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a> about"
 msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
 
-#: templates/items/content_display/_question.html:16
-#: templates/items/content_display/_question.html:19
+#: templates/items/feed_display/_question.html:16
+#: templates/items/feed_display/_question.html:19
 msgid "asked a question about"
 msgstr "a posé une question à propos de"
+
+#: templates/items/feed_display/_question.html:34
+#: templates/items/root_display/_question.html:38
+msgid "Answer this question"
+msgstr "Répondre à cette question"
+
+#: templates/items/root_display/_question.html:38
+msgid "Add a better answer"
+msgstr "Donner une meilleure réponse"
+
+#: templates/items/root_display/_question.html:40
+#: templates/items/root_display/_question.html:84
+msgid "Ask someone to answer"
+msgstr "Demandez à quelqu'un de répondre"
+
+#: templates/items/root_display/_question.html:59
+msgid "This question is a draft.<br>It has been anonymized."
+msgstr "Cette question est un brouillon.<br>Elle est anonyme."
+
+#~ msgid "Add an entry"
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "Add something new to talk about:"
+#~ msgstr "De quoi voulez-vous parler :"
+
+#~ msgid "Ask something:"
+#~ msgstr "Demandez quelque chose :"
+
+#~ msgctxt "item"
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgctxt "question"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgctxt "answer"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgctxt "link"
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgctxt "feature"
+#~ msgid "deleted"
+#~ msgstr "supprimée"
+
+#~ msgid "the "
+#~ msgstr "le "
+
+#~ msgid "deleted"
+#~ msgstr "supprimé"
+
+#~ msgid "%(article)s%(class)s <i>%(object)s</i> will be %(deleted)s:"
+#~ msgstr "%(article)s%(class)s <i>%(object)s</i> sera %(deleted)s :"
+
+#~ msgid ""
+#~ "\n"
+#~ "    %(caca)s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%(caca)s\n"
+
+#~ msgid "item"
+#~ msgstr "item"
 
 #~ msgid "by"
 #~ msgstr "par"

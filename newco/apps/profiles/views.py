@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import MultipleObjectMixin
 
 from django.contrib.auth.models import User
 
+from account.utils import user_display
 from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
 from voting.models import Vote
@@ -27,7 +29,7 @@ class ProcessProfileSearchView(object):
             return HttpResponseRedirect(response)
         else:
             return super(ProcessProfileSearchView, self).post(request,
-                                                            *args, **kwargs)
+                                                              *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         kwargs.update({
@@ -37,7 +39,7 @@ class ProcessProfileSearchView(object):
 
 
 class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
-            MultipleObjectMixin, ProcessFollowView):
+                        MultipleObjectMixin, ProcessFollowView):
 
     paginate_by = 10
 
@@ -48,23 +50,29 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
             return HttpResponsePermanentRedirect(url)
         kwargs["username"] = profile.user.username
         return super(ProfileDetailView, self).dispatch(request,
-                                                        *args, **kwargs)
+                                                       *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         history = Content.objects.filter(
             Q(author=self.page_user) & Q(status=Content.STATUS.public))
-
         fwers_ids = Follow.objects.get_follows(
-                            self.page_user).values_list("user_id", flat=True)
+            self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)
         fwees_ids = obj_fwed.values_list("target_user_id", flat=True)
         items_fwed_ids = obj_fwed.values_list("target_item_id", flat=True)
 
+        empty_msg = _("%(page_user_display)s have not contributed yet.") % {
+            "page_user_display": user_display(self.page_user)
+        }
+
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         context.update({
+            "empty_msg": empty_msg,
             "reputation": self.page_user.reputation,
-            "fwers": User.objects.filter(pk__in=fwers_ids),
-            "fwees": User.objects.filter(pk__in=fwees_ids),
+            "fwers": User.objects.filter(pk__in=fwers_ids).order_by(
+                "-reputation__reputation_incremented"),
+            "fwees": User.objects.filter(pk__in=fwees_ids).order_by(
+                "-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "scores": Vote.objects.get_scores_in_bulk(history),
         })

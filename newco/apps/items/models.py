@@ -27,7 +27,7 @@ class Item(models.Model):
     tags = TaggableManager()
 
     class Meta:
-        verbose_name = _("item")
+        verbose_name = _("product")
 
     def __unicode__(self):
         return u"%s" % (self.name)
@@ -76,10 +76,10 @@ class Content(models.Model):
 
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                            verbose_name=_('date published'))
+                                            verbose_name=_("date published"))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                            verbose_name=_('status'))
-    items = models.ManyToManyField(Item)
+                                            verbose_name=_("status"))
+    items = models.ManyToManyField(Item, verbose_name=_("products"))
     votes = generic.GenericRelation(Vote)
 
     public = QueryManager(status=STATUS.public)
@@ -140,7 +140,7 @@ class Question(Content):
                         "pk": self.id, "slug": slugify(self.__unicode__())})
 
     def get_product_related_url(self, item,
-                                anchor_pattern="/question-%(id)s#q-%(id)s"):
+                                anchor_pattern="?question=%(id)s#q-%(id)s"):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
@@ -154,12 +154,12 @@ class Answer(Content):
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
-    def get_absolute_url(self, anchor_pattern="/answer-%(id)s#a-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
                                             (anchor_pattern % self.__dict__)
 
     def get_product_related_url(self, item,
-                                anchor_pattern="/answer-%(id)s#a-%(id)s"):
+                                anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
 
@@ -173,7 +173,7 @@ class Link(Content):
     def __unicode__(self):
         return u"%s" % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="/link-%(id)s#l-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?link=%(id)s#l-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 
@@ -188,7 +188,7 @@ class Feature(Content):
     def __unicode__(self):
         return u'%s' % (self.content)
 
-    def get_absolute_url(self, anchor_pattern="/feature-%(id)s#f-%(id)s"):
+    def get_absolute_url(self, anchor_pattern="?feature=%(id)s#f-%(id)s"):
         item = self.items.select_related()[0]
         return item.get_absolute_url() + (anchor_pattern % self.__dict__)
 

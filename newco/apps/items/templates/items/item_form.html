@@ -1,5 +1,6 @@
 {% extends "site_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load bootstrap_tags %}
 {% load staticfiles %}
@@ -18,11 +19,27 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% trans "Add something new to talk about:" %}{% endblock %}</h1>
+<h1>{% block form_header %}{% if not item %}{% trans "Add a product:" %}{% else %}{% trans "Edit"%} {{ item }}{% trans ":"%}{% endif %}{% endblock %}</h1>
+<br>
+
+{% url 'faq' as faq %}
+
+<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#item_form" style="z-index: 0 ;"><i class="icon-plus"></i>{% trans "Tips" %}</button>
+<div id="item_form" class="collapse out">
+    {% blocktrans with url=faq|add:"#tags" %}
+        Here, you can create a new product page in 10 seconds. To do so, you need to:
+        <ol>
+            <li>Fill in the product name and its associated <b><a href="{{ url }}" class="black" rel="tooltip-top" title="Click here for help on tags">tags</a></b>.</li>
+            <i class="icon-play"></i> You want to do more? <b>Add features!</b> You can:
+            <li>Create the associated Store links using <em>Stores search</em>.</li>
+            <li>Drag and drop the right corresponding images on the top positions, and trash the irrelevant ones.</li>
+        </ol>
+    {% endblocktrans %}
+</div>
 
 </br>
 
-<form action="." method="POST">{% csrf_token %}
+<form action="" method="POST">{% csrf_token %}
     <div class="row">
         <div class="span4">
             {{ form|as_bootstrap }}
@@ -40,38 +57,42 @@
                 {% endfor %}
             {% endif %}{% endif %}
         </div>
-        <div class="span6">
+        <div class="span8">{% if item %}
             <button type="submit" class="btn" name="store_search"><i class="icon-eye-open"></i> {% trans "Stores Search" %}</button>
-            {% if form.product_list_by_store and item %}<button type="submit" class="btn" name="add_links"><i class="icon-plus-sign"></i> {% trans "Add selected" %}</button>{% endif %}
-            {% if form.product_list_by_store %}<br><br><div class="row">{% for store, product_list in form.product_list_by_store.items %}{% if product_list %}<div class="well well-small">
-                <h3><a href="{{ product_list.0.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:product_list.0.store.url as icon_url %}<img src="{{ icon_url }}" height="24px" width="24px">&nbsp;{{ product_list.0.store }}{% endwith %}</a></h3>
-                {% for i in product_list %}<div class="row">
-                    <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
-                    <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
-                    <div class="span4"><a href="{{ i.url }}" class="black" target="_blank">{{ i.name }}</a></div>
-                    <div class="span1"><a href="{{ i.url }}" target="_blank">{% price i.price i.currency LANGUAGE_CODE %}</a></div>
-                </div>{% endfor %}
-            </div>{% endif %}{% endfor %}</div>{% endif %}
-        </div>
+            {% if form.product_list_by_store %}
+                <button type="submit" class="btn" name="add_links"><i class="icon-plus-sign"></i> {% trans "Add selected" %}</button><br><br>
+                {% for store, product_list in form.product_list_by_store.items %}{% if product_list %}{% cycle 1 0 as row silent %}{% if row %}<div class="row">{% endif %}<div class="span4"><div class="thumbnail row">
+                    <h3><a href="{{ product_list.0.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:product_list.0.store.url as icon_url %}<img src="{{ icon_url }}" height="24px" width="24px">&nbsp;{{ product_list.0.store }}{% endwith %}</a></h3>
+                    {% for i in product_list %}<div class="row">
+                        <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
+                        <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
+                        <div class="span2"><a href="{{ i.url }}" class="black" target="_blank">{{ i.name }}</a></div>
+                        <div class="span1"><a href="{{ i.url }}" target="_blank">{% price i.price i.currency LANGUAGE_CODE %}</a></div>
+                    </div>{% endfor %}
+                </div></div>{% if not row %}</div>{% endif %}{% endif %}{% if row and forloop.last %}</div>{% endif %}{% endfor %}
+            {% endif %}<br><br>
+        {% endif %}</div>
     </div>
 
-    <div class="row">
-    <table class="img-selector span12" id="img-selector-1">
-        <tbody>
-        <tr>
-          <td>
-            <ul class="thumbnails connectedSortable selected-list" id="selected-list">
-            </ul>
-          </td>
-          <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
-            <p>Trash <i class="icon-trash"></i></p>
-          </td>
-        </tr>
-        </tbody>
-    </table>
-    </div>
+    <div class="row"><table class="img-selector span12" id="img-selector-1">
+      <tbody>
+      <tr>
+        <td>
+          <ul class="thumbnails connectedSortable selected-list" id="selected-list">
+          </ul>
+        </td>
+        <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+          <p>Trash <i class="icon-trash"></i></p>
+        </td>
+      </tr>
+      </tbody>
+    </table></div>
     <input type="hidden" name="img_list" id="img_data">
-    <input type="submit" class="btn" value='{% trans "Submit" %}'/>
+    {% if not item %}
+        <input type="submit" class="btn" value="{% trans 'Create' %}"/> or <button type="submit" class="btn" name="edit">{% trans 'Create and add features' %}</button>
+    {% else %}
+        <input type="submit" class="btn" value="{% trans 'Update' %}"/>
+    {% endif %}
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
