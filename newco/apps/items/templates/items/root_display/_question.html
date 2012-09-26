@@ -4,97 +4,76 @@
 {% load content_utils %}
 {% load bootstrap_tags %}
 
-<div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">
-{% if display == "list" %}
+<div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
+    
+    <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
+        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor_q %}</h3></div>
 
-    {% with obj_id=question.id|slugify %}{% with anchor="q-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
-        <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor %}</h3></div>
         <div class="span4"><h3>
-            <a href="{{ question.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
+            <a href="{{ question.get_absolute_url }}" class="black" itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
             {% if user.is_superuser or question.author == request.user %}
-                {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
+            {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}
         </h3></div>
-        <div class="span2 right">{% content_info question "signature-author" %}</div>
-    </div>{% endwith %}{% endwith %}
+
+        <div class="{% if question.is_draft %}span1{% else %}span2{% endif %} right">{% if question.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% if display == "list" %}{% content_info question "signature-author" %}{% elif display == "detail" %}{% content_info question "signature" 30 %}{% endif %}{% endif %}</div>
+    </div>
+
 
     {% for answer in answers.queryset %}
         {% dict_entry_for_item answer from answers.votes as vote %}
         {% dict_entry_for_item answer from answers.scores as score %}
-        {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}" rel="popover">
-            <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote request.path|add:"#"|add:anchor %}</h3></div>
-            <div class="span4"><p><span itemprop="description">
-                {% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
-                {% if user.is_superuser or answer.author == request.user %}
-                    {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
-                {% endif %}
-            </p></div>
-            <div class="span2 right">{% content_info answer "signature-author" %}</div>
-        </div>{% endwith %}{% endwith %}
-    {% endfor %}
-
-    <div class="row"><div class="offset1 span6">
-        <div class="block_controls">
-            <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answers %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
-            &nbsp;&nbsp;&nbsp;
-            <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
-        </div>
-        <br />
-        <div id="answer_form_{{ question.id }}" class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
-            {% csrf_token %}
-            {{ question.answer_form|as_bootstrap }}
-            <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
-            <input type="hidden" name="question_id" value="{{ question.id }}"/>
-        </form></div>
-    </div></div>
-{% elif display == "detail" %}
-    {% with obj_id=question.id|slugify %}{% with anchor="q-"|add:obj_id %}<div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="q-{{ question.id }}">
-        <div class="span1"><h2 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor %}</h2></div>
-        <div class="span4"><h2>
-            <span itemprop="name">{{ question.content }}</span>
-            {% if user.is_superuser or question.author == request.user %}
-                {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
-            {% endif %}
-        </h2></div>
-        <div class="{% if question.is_draft %}span1{% else %}span2{% endif %} right">{% if question.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% content_info question "signature" 30 %}{% endif %}</div>
-    </div>{% endwith %}{% endwith %}
-
-    {% for answer in answers.queryset %}
-        {% dict_entry_for_item answer from answers.votes as vote %}
-        {% dict_entry_for_item answer from answers.scores as score %}
-        <hr>
-        {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="a-{{ answer.id }}">
+        <br>
+        {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
             <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote request.path|add:"#"|add:anchor %}</h3></div>
             <div class="span4"><p>
+                {% if display == "detail" %}{% content_info answer "header" %}<br>{% endif %}
                 <span itemprop="description">
-                    {% content_info answer "header" %}
-                    <br>{% autoescape off %}{{ answer.content }}{% endautoescape %}
+                    {% autoescape off %}{{ answer.content }}{% endautoescape %}
                 </span>
                 {% if user.is_superuser or answer.author == request.user %}
                     {% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}
                 {% endif %}
             </p></div>
-            <div class="span2 right">{% content_info answer "signature-pic" 30 %}</div>
+            <div class="span2 right">{% if display == "list" %}{% content_info answer "signature-author" %}{% elif display == "detail" %}{% content_info answer "signature-pic" 30 %}{% endif %}</div>
         </div>{% endwith %}{% endwith %}
     {% endfor %}
 
-    <hr>
+
 
     <div class="row"><div class="span6 offset1">
-        <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+
+        {% if display == "list" %}
+
+            <div class="block_controls">
+                <button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i class="icon-share-alt"></i> {% if question.answers %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button>
+            </div>
+
+        {% elif display == "detail" %}
+
+            <hr>
+            <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+
+        {% endif %}
+
+
         <br>
-        <div id="answer_form"><form method="POST" action="#answer_form">
+
+        <div id="answer_form_{{ question.id }}"{% if display ==  "list" %} class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"{% endif %}><form method="POST" action="#answer_form_{{ question.id }}">
             {% csrf_token %}
             {{ question.answer_form|as_bootstrap }}
             <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
             <input type="hidden" name="question_id" value="{{ question.id }}"/>
         </form></div>
-    </div></div>
-{% endif %}
 
-{% include "items/_ask_modal.html" %}
 
-{% if item_page %}<hr>{% endif %}
+    {% endwith %}{% endwith %}</div></div>
+
+    {% include "items/_ask_modal.html" %}
+
+    {% if display == "list" %}<hr>{% endif %}
 
 </div></div>
 

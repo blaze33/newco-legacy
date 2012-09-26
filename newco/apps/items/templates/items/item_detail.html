@@ -31,7 +31,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %}">{% include "items/_question_list.html" %}</div>
+            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %} nc_qna_list_div">{% include "items/_question_list.html" %}</div>
             <div id="links" class="tab-pane{% if 'link' in request.GET %} active{% endif %}">{% include "items/_link_list.html" %}</div>
             <div id="features" class="tab-pane{% if 'feature' in request.GET %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
             <div id="stories" class="tab-pane{% if 'story' in request.GET %} active{% endif %}">
