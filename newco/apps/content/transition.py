@@ -11,9 +11,11 @@ def sync_products(sender, instance, **kwargs):
     '''
     content, created = Item.objects.get_or_create(
         data__contains={'legacy_id': unicode(instance.id), 'class': 'product'})
-    content.data['legacy_id'] = unicode(instance.id)
-    content.data['class'] = 'product'
-    content.data['name'] = instance.name
+    if not created and content.data['name'] == instance.name:
+        return content
+    content.data.update({'legacy_id': unicode(instance.id),
+                         'class': 'product',
+                         'name': instance.name})
     content.save()
     return content
 
