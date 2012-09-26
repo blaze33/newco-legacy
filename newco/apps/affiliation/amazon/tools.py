@@ -14,13 +14,13 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
         name="Amazon", url="http://www.amazon.fr"
     )
 
-    api = API(settings.AWS_PRODUCT_ACCESS_KEY_ID, settings.AWS_PRODUCT_SECRET_ACCESS_KEY,
-                                                        settings.AWS_LOCALE)
+    api = API(settings.AWS_PRODUCT_ACCESS_KEY_ID,
+              settings.AWS_PRODUCT_SECRET_ACCESS_KEY, settings.AWS_LOCALE)
 
     try:
         node = api.item_search(search_index, Keywords=keyword,
-                                    ResponseGroup="Large",
-                                    AssociateTag=settings.AWS_ASSOCIATE_TAG)
+                               ResponseGroup="Large",
+                               AssociateTag=settings.AWS_ASSOCIATE_TAG)
     except NoExactMatchesFound:
         return None
     except URLError, e:
