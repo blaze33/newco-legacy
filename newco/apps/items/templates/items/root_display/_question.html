@@ -10,7 +10,7 @@
         <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor_q %}</h3></div>
 
         <div class="span4"><h3>
-            <a href="{{ question.get_absolute_url }}" class="black" itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
+            <a href="{{ question.get_absolute_url }}"{% if display == "detail" %} class="black"{% endif %} itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
             {% if user.is_superuser or question.author == request.user %}
             {% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}
             {% endif %}

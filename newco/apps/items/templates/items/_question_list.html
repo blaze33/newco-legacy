@@ -10,8 +10,8 @@
     <i rel="add_icon" class="icon-plus" style="opacity: 0.1 ; cursor: pointer; cursor: hand; z-index: -1 ; position: relative; left: 20px; top: -13px;"></i>
     <span class="nc_transition_add" style="position: relative; left: -5px; top: -15px;">
         <button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i></button>
-        {% if questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2></a>{% endif %}
-    </span>{% if not questions %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2></a>{% endif %}
+        {% if questions.queryset %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form" ><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2></a>{% endif %}
+    </span>{% if not questions.queryset %}<a style="text-decoration: none; color: #000; cursor: pointer; cursor: hand;" data-toggle="collapse" data-target="#question_form"><h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:-10px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2></a>{% endif %}
 
     <div id="question_form" class="collapse out" style="position: relative; left: 65px; top: -40px;">
         <form method="POST" action="" class="form-inline">{% if not questions %}<br><br><br>{% endif %}
