@@ -58,7 +58,7 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
         entry.store_init("amazon", item)
         entry.save()
         if AffiliationItem.objects.filter(object_id=entry.object_id,
-                                            store=amazon).count() == 0:
+                                          store=amazon).count() == 0:
             aff_item_list.append(entry)
             counter += 1
             if counter == nb_items:
