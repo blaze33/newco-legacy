@@ -8,10 +8,11 @@ autocomplete_light.autodiscover()
 from django.contrib import admin
 admin.autodiscover()
 
-from views import HomepageView
-from tastypie.api import Api
 from content.api import ItemResource, RelationResource
 from sitemaps import all_sitemaps as sitemaps
+from tastypie.api import Api
+from utils.views.autocomplete import redis_to_json
+from views import HomepageView
 
 
 v1_api = Api(api_name='v1')
@@ -38,6 +39,7 @@ urlpatterns = patterns("",
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
     url(r"^autocomplete/", include("autocomplete_light.urls")),
     url(r"^utils/", include("utils.urls")),
+    url(r"^redis/search", redis_to_json, name="redis"),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 

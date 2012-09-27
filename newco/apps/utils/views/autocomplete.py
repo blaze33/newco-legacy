@@ -1,11 +1,15 @@
-from django import shortcuts
+import json
 
-from items.models import Item
+from django.http import HttpResponse
+from django.shortcuts import render
+
 from taggit.models import Tag
 
+from items.models import Item
+from utils.tools import load_redis_engine
 
-def autocomplete(request, template_name="autocomplete/autocomplete.html",
-                                                        extra_context=None):
+
+def autocomplete(request, template_name="autocomplete/autocomplete.html"):
     q = request.GET['q']  # crash if q is not in the url
     context = {'q': q}
     queries = {}
@@ -23,4 +27,15 @@ def autocomplete(request, template_name="autocomplete/autocomplete.html",
         options += len(query)
     context['options'] = options
 
-    return shortcuts.render(request, template_name, context)
+    return render(request, template_name, context)
+
+
+def redis_to_json(request):
+
+    engine = load_redis_engine()
+    if not "q" in request.GET or not engine:
+        return HttpResponse(dict())
+    q = request.GET.get("q")
+    data = json.dumps(engine.search_json(q))
+
+    return HttpResponse(data, mimetype='application/json')
