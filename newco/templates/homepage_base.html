@@ -51,7 +51,7 @@
     </div>
 
     <div class="subnav subnav-fixed{% if not request.COOKIES %} subnav-moved{% endif %}" rel="subnav"><ul class="nav nav-pills">
-        <li style="padding:10px"><b><a rel="tooltip-tutorial" title="Click here to close the tutorial" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+        <li style="padding:10px"><b><a rel="tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black">{% trans "NewCo empowers you to buy better" %}</a></b></li>
         <li{% if not '/last' in request.path and not '/newsfeed' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
         <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
         <li class="dropdown{% if '/newsfeed' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>

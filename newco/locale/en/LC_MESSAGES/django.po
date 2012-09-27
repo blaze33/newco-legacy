@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-26 01:11+0200\n"
+"POT-Creation-Date: 2012-09-27 17:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,10 @@ msgid ""
 msgstr ""
 
 #: templates/homepage_base.html:54
+msgid "Click here to close the tutorial"
+msgstr ""
+
+#: templates/homepage_base.html:54
 msgid "NewCo empowers you to buy better"
 msgstr ""
 
@@ -208,15 +212,15 @@ msgstr ""
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:41
+#: templates/site_base.html:40
 msgid "Search"
 msgstr ""
 
-#: templates/site_base.html:92
+#: templates/site_base.html:90
 msgid "Search an item, a tag..."
 msgstr ""
 
-#: templates/site_base.html:93
+#: templates/site_base.html:91
 msgid "What are you looking for?"
 msgstr ""
 

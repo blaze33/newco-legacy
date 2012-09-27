@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-25 22:23+0200\n"
+"POT-Creation-Date: 2012-09-27 17:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,21 +188,21 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:103 views.py:184
+#: views.py:104 views.py:185
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr ""
 
-#: views.py:107 views.py:188
+#: views.py:108 views.py:189
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:280 views.py:409
+#: views.py:281 views.py:409
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:281 views.py:410
+#: views.py:282 views.py:410
 msgid "Latest related questions"
 msgstr ""
 
@@ -251,8 +251,7 @@ msgid "No question yet! Ask the first one here!"
 msgstr ""
 
 #: templates/items/answer_form.html:11
-#: templates/items/root_display/_question.html:46
-#: templates/items/root_display/_question.html:89
+#: templates/items/root_display/_question.html:67
 msgid "Answer"
 msgstr ""
 
@@ -347,8 +346,8 @@ msgstr ""
 msgid "Ask a new question:"
 msgstr ""
 
-#: templates/items/item_form.html:18
-msgid "Item"
+#: templates/items/item_form.html:18 templates/items/item_list_base.html:43
+msgid "Add a product"
 msgstr ""
 
 #: templates/items/item_form.html:22
@@ -359,7 +358,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:102
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:113
 #: templates/items/question_detail.html:32
 #: templates/items/feed_display/_feature.html:7
 #: templates/items/feed_display/_link.html:7
@@ -442,10 +441,6 @@ msgstr ""
 msgid "Add to skills"
 msgstr ""
 
-#: templates/items/item_list_base.html:43
-msgid "Add a product"
-msgstr ""
-
 #: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
@@ -477,19 +472,33 @@ msgid ""
 "one</a> yourself?"
 msgstr ""
 
-#: templates/items/item_list_base.html:92
+#: templates/items/item_list_base.html:75
+#, python-format
+msgid ""
+"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating a "
+"product</a> yourself?"
+msgstr ""
+
+#: templates/items/item_list_base.html:76
+msgid ""
+"By creating a product product page you lay the first brick to gather "
+"information about this product: other members will see this page, add things "
+"they know about it, and... answer to you questions if you ask some."
+msgstr ""
+
+#: templates/items/item_list_base.html:103
 msgid "Newest to Oldest"
 msgstr ""
 
-#: templates/items/item_list_base.html:93
+#: templates/items/item_list_base.html:104
 msgid "Oldest to Newest"
 msgstr ""
 
-#: templates/items/item_list_base.html:94
+#: templates/items/item_list_base.html:105
 msgid "Most popular"
 msgstr ""
 
-#: templates/items/item_list_base.html:97
+#: templates/items/item_list_base.html:108
 msgid "Sort"
 msgstr ""
 
@@ -593,19 +602,19 @@ msgid "asked a question about"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:34
-#: templates/items/root_display/_question.html:38
+#: templates/items/root_display/_question.html:49
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/root_display/_question.html:38
+#: templates/items/root_display/_question.html:19
+msgid "This question is a draft.<br>It has been anonymized."
+msgstr ""
+
+#: templates/items/root_display/_question.html:49
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:40
-#: templates/items/root_display/_question.html:84
+#: templates/items/root_display/_question.html:51
+#: templates/items/root_display/_question.html:57
 msgid "Ask someone to answer"
-msgstr ""
-
-#: templates/items/root_display/_question.html:59
-msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
