@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
+"POT-Creation-Date: 2012-09-27 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,6 +133,18 @@ msgid ""
 "configuration. If you want to change it, please go <a href=\"%(settings_url)s"
 "\" >here</a> (available soon).\n"
 "            "
+msgstr ""
+
+#: templates/voting/form.html:7
+msgid ""
+"Vote up: this contribution shows effort on quality; it is usefull and clear "
+"(click again to undo)"
+msgstr ""
+
+#: templates/voting/form.html:8
+msgid ""
+"Vote down: this contribution does't show effort on quality; it is not useful "
+"or unclear (click again to undo)"
 msgstr ""
 
 #: templatetags/date_utils.py:33

@@ -20,9 +20,9 @@
 <div class="row">
     <div class="span2"><h2>{% if tag %}<form method="POST" action="">{{ tag }}<div class="pull-right">{% csrf_token %}
         {% if tag in user.get_profile.skills.all %}
-            <a rel="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "This is my skill" %}</button></a>
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
         {% else %}
-            <a rel="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
         {% endif %}
     </div></form>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h2></div>
     <div class="span6" align="center">{% if object_list %}
