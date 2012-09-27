@@ -18,7 +18,13 @@
 {% block body %}
 
 <div class="row">
-    <div class="span2"><h2>{% if tag %}{{ tag }}{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h2></div>
+    <div class="span2"><h2>{% if tag %}<form method="POST" action="">{{ tag }}<div class="pull-right">{% csrf_token %}
+        {% if tag in user.get_profile.skills.all %}
+            <a rel="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "This is my skill" %}</button></a>
+        {% else %}
+            <a rel="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
+        {% endif %}
+    </div></form>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h2></div>
     <div class="span6" align="center">{% if object_list %}
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
@@ -34,7 +40,7 @@
         </div>
     {% else %}&nbsp;{% endif %}</div>
 
-    <div class="span2"><a class="btn" href="{% url 'item_create' 'item' %}"><i class="icon-plus-sign"></i> {% trans "Add an entry" %}</a></div>
+    <div class="span2"><a class="btn" href="{% url 'item_create' 'item' %}"><i class="icon-plus-sign"></i> {% trans "Add a product" %}</a></div>
 </div>
 
 <div class="row">
@@ -46,20 +52,22 @@
             {% endblock %}
             {% if is_paginated %}{% paginate %}{% endif %}
         {% else %}
-            <h3>{% if tag and search_terms %}
-                {% url 'tagged_items' tag.slug as tagurl %}
-                {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-            {% elif tag and not search_terms %}
-                {% url 'tagged_items' tag.slug as tagurl %}
-                {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag.url }}"><span class="label">{{ tagname }}</span></a> are available.{% endblocktrans %}
-            {% elif not tag and search_terms %}
-                {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-                <br>
-                <br>
-                {% url 'item_create' 'item' as add_item_url %}{% blocktrans %}Maybe you want to <a href="{{ add_item_url }}" class="btn btn-primary ">Add a product</a> ?{% endblocktrans %}
-            {% else %}
-                {% blocktrans %}No products are available.{% endblocktrans %}
-            {% endif %}</h3>
+            <h3>
+                {% if tag and search_terms %}
+                    {% url 'tagged_items' tag.slug as tag_url %}
+                    {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}"><span class="label">{{ tagname }}</span></a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+                {% elif tag and not search_terms %}
+                    {% url 'tagged_items' tag.slug as tag_url %}
+                    {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}"><span class="label">{{ tagname }}</span></a> are available.{% endblocktrans %}
+                {% elif not tag and search_terms %}
+                    {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+                {% else %}
+                    {% blocktrans %}No products are available.{% endblocktrans %}
+                {% endif %}
+                <br><br>
+                {% url "item_create" "item" as add_item_url %}
+                {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">creating one</a> yourself?{% endblocktrans %}
+            </h3>
         {% endif %}
     </div>
     <div class="span3">
@@ -77,7 +85,7 @@
         {% endspaceless %}</div>{% else %}&nbsp;{% endif %}
         {% endcomment %}
 
-        {% if object_list %}<div class="row"><form action="." method="POST">{% csrf_token %}
+        {% if object_list %}<div class="row"><form action="" method="POST">{% csrf_token %}
             <select data-placeholder="Sort" class="chzn-select" name="sort_products">
                 <option value=""></option>
                 <option value="-pub_date"{% if sort_order == "-pub_date" %} selected{% endif %}>{% trans "Newest to Oldest" %}</option>

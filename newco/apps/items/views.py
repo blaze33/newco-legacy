@@ -6,6 +6,8 @@ from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
@@ -355,9 +357,9 @@ class ProcessSearchView(RedirectView):
             if item_list.count() == 1:
                 response = item_list[0].get_absolute_url()
             elif tag_list.count() == 1:
-                response = reverse("tagged_items", rgs=[tag_list[0].slug])
+                response = reverse("tagged_items", args=[tag_list[0].slug])
             else:
-                response = "%s?search=%s" % (reverse("item_index"), search)
+                response = "%s?q=%s" % (reverse("content_search"), search)
             return HttpResponseRedirect(response)
         return super(ProcessSearchView, self).post(request, *args, **kwargs)
 
@@ -371,10 +373,10 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
     def get_queryset(self):
         queryset = super(ContentListView, self).get_queryset()
         if "tag_slug" in self.kwargs:
-            self.tag = Tag.objects.get(slug=self.kwargs["tag_slug"])
+            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
             queryset = queryset.filter(tags=self.tag)
-        if "search" in self.request.GET:
-            self.search_terms = self.request.GET.get("search", "")
+        if "q" in self.request.GET:
+            self.search_terms = self.request.GET.get("q", "")
             if self.search_terms:
                 self.template_name = "items/item_list_text.html"
                 qs = get_search_results(queryset, self.search_terms, ["name"])
@@ -403,13 +405,19 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
             return context
         qs = Content.objects.filter(question__items__in=objs)
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
-        context.update({
-            "related_questions": {
-                _("Top related questions"): qss.select_subclasses()[:3],
-                _("Latest related questions"): qs.select_subclasses()[:3]
-            }
-        })
+        rq = SortedDict()
+        rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
+        rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
+        context.update({"related_questions": rq})
         return context
+
+    def post(self, request, *args, **kwargs):
+        if "tag_slug" in self.kwargs and "skills" in request.POST:
+            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+            prof = request.user.get_profile()
+            prof.skills.add(tag) if request.POST.get("skills") == "add" \
+                else prof.skills.remove(tag)
+        return super(ContentListView, self).post(request, *args, **kwargs)
 
 
 class ContentDeleteView(ContentView, DeleteView):

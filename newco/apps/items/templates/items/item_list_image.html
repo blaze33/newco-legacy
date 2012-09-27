@@ -6,5 +6,5 @@
 {% load content_utils %}
 
 {% block itemlist %}
-    <div class="row" id="thumbnails_list">{% for item in object_list %}{% include "items/content_display/_thumbnail_frame.html" with object=item only %}{% endfor %}</div>
+    <div class="row" id="thumbnails_list">{% for item in object_list %}{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}{% endfor %}</div>
 {% endblock %}

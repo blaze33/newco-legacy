@@ -14,6 +14,7 @@
        border-top:50px solid transparent;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/xkcd.css">
 
 {% endblock %}
 
@@ -21,7 +22,29 @@
 {% block body %}
     <div class="hero-unit" style="text-align:center;"><h1>{% trans "FAQ" %}</h1></div></br>
 
-    <div class="content_row" id="why_newco"><h3>{% trans "Why NewCo?" %}</h3><p>{% trans "We believe in today's connected world you should be able to find easily a deep information on any product. It would empower you to make wise choices. We work hard to make it real, and sometimes work late at night. We believe if we realize this vision we will all be able to buy products better adapter to our needs, push industrials to produce better products, and help you save a lot of time and energy finding what you want to buy." %}</p></div>
+    <div class="content_row" id="why_newco">
+        <h3>{% trans "Why NewCo?" %}</h3><p>{% trans "We believe in today's connected world you should be able to find easily a deep information on any product. It would empower you to make wise choices. We work hard to make it real, and sometimes work late at night. We believe if we realize this vision we will all be able to buy products better adapter to our needs, push industrials to produce better products, and help you save a lot of time and energy finding what you want to buy." %}</p>
+        <br><br><br><br>
+        <p>{% trans "We believe this shouldn't happen" %}{% trans ":" %}</p>
+        <div class="span12">
+            <div style="text-align: left;">
+            <p style="font-size:130%"><i>Sur le Web, on trouve tout et surtout n’importe quoi...</i></p>
+            <br />
+            </div>
+            <div id="xkcd">
+                <div title="xkcd reviews part 1" style="width:166px; background-position: 0px 0px"></div>
+                <div title="xkcd reviews part 2" style="width:180px; background-position: -172px 0px"></div>
+                <div title="xkcd reviews part 3" style="width:180px; background-position: -358px 0px"></div>
+                <div title="xkcd reviews part 4" style="width:196px; background-position: -544px 0px"></div>
+                <br/><span><i>Crédit : <a href="http://xkcd.com/1036/">xkcd</a> - Texte original traduit de l'anglais sous <a href="http://creativecommons.org/licenses/by-nc/2.5/">licence CC BY-NC 2.5</a></i></span>
+            </div>
+            <div style="text-align: right;"><br />
+            <p style="font-size:130%"><i>...NewCo fait le choix de l'entraide{# le pari du partage d'information #}.</i></p>
+
+            </div>
+        </div>
+        <br><br><br><br>
+    </div>
 
     <div class="content_row" id="partners"><h3>{% trans "Quels sont les partenariats déjà en place ?" %}</h3><p>{% trans "Pour l'instant, nous avons négocié des partenariats d'affiliation avec Amazon, Décathlon, Virgin Mega, Woodbrass... Et bien plus à venir ! Vous pouvez nous contacter pour en savoir plus sur ces accords." %}</p></div>
 
@@ -36,17 +59,18 @@
 {% endblock %}
 
 
+{% comment %}
+    {% block extra_script %}
+        {{ block.super }}
+        
+        {# ##### offset window position for anchor to take navbar into account ##### #}
+        <script type="text/javascript">
+            // doesn't seem to work : source : https://github.com/twitter/bootstrap/issues/1768
 
-{% block extra_script %}
-    {{ block.super }}
-    
-    {# ##### Equalize columns height ##### #}
-    <script type="text/javascript">
-
-	    var shiftWindow = function() { scrollBy(0, -50) };
-	    if (location.hash) shiftWindow();
-	    window.addEventListener("hashchange", shiftWindow);
-    </script>
-    {# ##### End of Equalize columns height ##### #}
-{% endblock %}
-
+    	    // var shiftWindow = function() { scrollBy(0, -50) };
+    	    // if (location.hash) shiftWindow();
+    	    // window.addEventListener("hashchange", shiftWindow);
+        </script>
+        {# ##### End of offset window position for anchor to take navbar into account ##### #}
+    {% endblock %}
+{% endcomment %}

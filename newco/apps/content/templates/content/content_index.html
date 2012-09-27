@@ -1,0 +1,49 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load ifsetting_tag %}
+{% load account_tags %}
+{% load content_utils %}
+
+{% block extra_style %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content2.css">
+{% endblock %}
+
+{% block head_title %}{% trans "Class list" %}{% endblock %}
+
+{% block body %}
+
+<h1>Class list</h1>
+<br>
+{% if object_list %}
+{% for class, key, data in object_list %}
+<h2>{{ class }}</h2>
+    <table class="table table-striped lead">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ key }} Name</th>
+          <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in data %}
+        <tr>
+          <td></td>
+          <td><a href='{% url class_index class item.0 %}'>{{ item.0 }}</a></td>
+          <td><strong>{{ item.1 }}</strong></td>
+        </tr>
+        {% endfor %}
+  </tbody>
+    </table>
+{% endfor %}
+{% else %}
+    <p>Nothing to display.</p>
+{% endif %}
+<p>
+<a class="btn" href="{% url content_create 'item' %}"><i class="icon-plus-sign"></i> Add an item</a>
+<a class="btn" href="{% url content_create 'relation' %}"><i class="icon-plus-sign"></i> Add a relation</a>
+</p>
+{% endblock %}

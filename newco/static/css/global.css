@@ -276,7 +276,7 @@ img:hover + .img-controls,
     position: fixed;
     top: 40px;
     left: 0;
-    right: 0;
+    /*right: 0; */ /* shouldn't we only define left OR right ? */
     z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
     border-color: #d5d5d5;
     border-width: 0 0 1px; /* drop the border on the fixed edges */
@@ -298,6 +298,11 @@ img:hover + .img-controls,
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
+  }
+
+  .subnav-moved {
+    position: relative;
+    top: 0;
   }
 }
 
