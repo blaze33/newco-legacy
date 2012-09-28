@@ -2,16 +2,12 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.views.generic.simple import redirect_to
 
-import autocomplete_light
-autocomplete_light.autodiscover()
-
 from django.contrib import admin
 admin.autodiscover()
 
 from content.api import ItemResource, RelationResource
 from sitemaps import all_sitemaps as sitemaps
 from tastypie.api import Api
-from utils.views.autocomplete import redis_to_json
 from views import HomepageView
 
 
@@ -37,9 +33,7 @@ urlpatterns = patterns("",
     url(r'^api/', include(v1_api.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
-    url(r"^autocomplete/", include("autocomplete_light.urls")),
-    url(r"^utils/", include("utils.urls")),
-    url(r"^redis/search", redis_to_json, name="redis"),
+    url(r"^utils", include("utils.urls")),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 
