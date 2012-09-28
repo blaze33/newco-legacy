@@ -18,19 +18,18 @@ class TypeaheadSearchView(RedirectView):
     def post(self, request, *args, **kwargs):
         if "typeahead_search" in request.POST:
             search = request.POST.get("typeahead_search")
-            try:
-                obj_info = re.sub("[<>]", "", re.findall("<.*>", search)[0])
-            except IndexError:
-                response = "%s?q=%s" % (reverse("content_search"), search)
-            else:
-                obj_model, obj_id = re.split(": ", obj_info)
-                obj_model = get_model(*re.split(".models.", obj_model))
+            if "obj_class" in request.POST and "obj_id" in request.POST:
+                obj_class = request.POST.get("obj_class")
+                obj_model = get_model(*re.split(".models.", obj_class))
+                obj_id = request.POST.get("obj_id")
                 obj = obj_model.objects.get(id=obj_id)
 
                 if obj_model == Item or obj_model == Profile:
                     response = obj.get_absolute_url()
                 elif obj_model == Tag:
                     response = reverse("tagged_items", args=[obj.slug])
+            else:
+                response = "%s?q=%s" % (reverse("content_search"), search)
             return HttpResponseRedirect(response)
         return super(TypeaheadSearchView, self).post(request, *args, **kwargs)
 

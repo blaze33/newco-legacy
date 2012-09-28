@@ -40,7 +40,11 @@
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">
-            <li><form class="navbar-search" action="{% url 'typeahead_search' %}" method="POST" class="form-horizontal">{% csrf_token %}<input type="text" autocomplete="off" class="typeahead input-large search-query" name="typeahead_search" id="global_search"></form></li>
+            <li><form class="navbar-search" action="{% url 'typeahead_search' %}" method="POST" class="form-horizontal">{% csrf_token %}
+                <input type="text" autocomplete="off" class="typeahead input-large search-query" name="typeahead_search" id="global_search">
+                <input type="hidden" id="obj_class" name="obj_class"/>
+                <input type="hidden" id="obj_id" name="obj_id"/>
+            </form></li>
         </ul>
     {% endif %}
 {% endblock %}
@@ -102,7 +106,9 @@
                 }
                 , updater: function (item) {
                     var obj = mapped[item];
-                    return obj.title + " <" + obj.class + ": " + obj.id + ">";
+                    $('#obj_class').val(obj.class);
+                    $('#obj_id').val(obj.id);
+                    return obj.title
                 }
             });
         });
