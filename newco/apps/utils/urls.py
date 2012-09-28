@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from utils.views.autocomplete import redis_to_json, TypeaheadSearchView
+from utils.views.search import redis_to_json, TypeaheadSearchView
 
 urlpatterns = patterns('',
     url(r"^/redis/search", redis_to_json, name="redis"),
