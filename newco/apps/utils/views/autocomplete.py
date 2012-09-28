@@ -18,10 +18,10 @@ class TypeaheadSearchView(RedirectView):
     def post(self, request, *args, **kwargs):
         if "typeahead_search" in request.POST:
             search = request.POST.get("typeahead_search")
-            if "obj_class" in request.POST and "obj_id" in request.POST:
-                obj_class = request.POST.get("obj_class")
+            obj_class = request.POST.get("obj_class", "")
+            obj_id = request.POST.get("obj_id", "")
+            if obj_class and obj_id:
                 obj_model = get_model(*re.split(".models.", obj_class))
-                obj_id = request.POST.get("obj_id")
                 obj = obj_model.objects.get(id=obj_id)
 
                 if obj_model == Item or obj_model == Profile:
