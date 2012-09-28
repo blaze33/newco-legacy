@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-26 15:56+0200\n"
-"PO-Revision-Date: 2012-09-26 15:59\n"
+"POT-Creation-Date: 2012-09-28 15:34+0200\n"
+"PO-Revision-Date: 2012-09-28 15:34\n"
 "Last-Translator:   <rouyrre@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,55 +62,59 @@ msgstr "Page non trouvée"
 msgid "We're sorry but that page could not be found."
 msgstr "Nous sommes confus, la page que vous demandez n'existe pas."
 
-#: templates/404.html:17 templates/_account_bar.html:25
+#: templates/404.html:17 templates/_account_bar.html:26
 msgid "or"
 msgstr "ou"
 
-#: templates/_account_bar.html:11
+#: templates/_account_bar.html:9
+msgid "Your reputation"
+msgstr "Votre réputation"
+
+#: templates/_account_bar.html:12
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: templates/_account_bar.html:12
+#: templates/_account_bar.html:13
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/_account_bar.html:13
+#: templates/_account_bar.html:14
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/_account_bar.html:15
+#: templates/_account_bar.html:16
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/_account_bar.html:18
+#: templates/_account_bar.html:19
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/_account_bar.html:23
+#: templates/_account_bar.html:24
 msgid "Log in"
 msgstr "Se connecter"
 
-#: templates/_account_bar.html:26
+#: templates/_account_bar.html:27
 msgid "Sign up"
 msgstr "S'enregistrer"
 
-#: templates/_account_bar.html:33
+#: templates/_account_bar.html:34
 msgid "Add +"
 msgstr "Ajouter +"
 
-#: templates/_account_bar.html:35
+#: templates/_account_bar.html:36
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
-#: templates/_account_bar.html:36
+#: templates/_account_bar.html:37
 msgid "Ask a question"
 msgstr "Poser une question"
 
-#: templates/_account_bar.html:37
+#: templates/_account_bar.html:38
 msgid "We are still working on it"
 msgstr "Nous travaillons dessus"
 
-#: templates/_account_bar.html:37
+#: templates/_account_bar.html:38
 msgid "Add a story"
 msgstr "Ajouter un article"
 
