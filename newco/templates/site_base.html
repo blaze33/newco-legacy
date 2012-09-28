@@ -40,7 +40,7 @@
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">
-            <li><form class="navbar-search" action="{% url 'typeahead_search' %}" method="POST" class="form-horizontal">{% csrf_token %}<input type="text" autocomplete="off" class="typeahead span3" name="typeahead_search" id="global_search"></form></li>
+            <li><form class="navbar-search" action="{% url 'typeahead_search' %}" method="POST" class="form-horizontal">{% csrf_token %}<input type="text" autocomplete="off" class="typeahead input-large search-query" name="typeahead_search" id="global_search"></form></li>
         </ul>
     {% endif %}
 {% endblock %}
@@ -88,15 +88,7 @@
         $(function() {
             var labels, mapped
             $("#global_search").typeahead({
-                select: function () {
-                    alert("caca")
-                    var val = this.$menu.find('.active').attr('data-value')
-                    this.$element
-                        .val(this.updater(val))
-                        .change()
-                    return this
-                }
-                , source: function (query, process) {
+                source: function (query, process) {
                     $.get('{% url "redis" %}', {q: query}, function (data) {
                         labels = []
                         mapped = {}
