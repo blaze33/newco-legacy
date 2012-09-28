@@ -16,8 +16,8 @@ from utils.tools import load_redis_engine
 class TypeaheadSearchView(RedirectView):
 
     def post(self, request, *args, **kwargs):
-        if "typeahead_search" in request.POST:
-            search = request.POST.get("typeahead_search")
+        if "q" in request.POST:
+            q = request.POST.get("q")
             obj_class = request.POST.get("obj_class", "")
             obj_id = request.POST.get("obj_id", "")
             if obj_class and obj_id:
@@ -29,7 +29,7 @@ class TypeaheadSearchView(RedirectView):
                 elif obj_model == Tag:
                     response = reverse("tagged_items", args=[obj.slug])
             else:
-                response = "%s?q=%s" % (reverse("content_search"), search)
+                response = "%s?q=%s" % (reverse("content_search"), q)
             return HttpResponseRedirect(response)
         return super(TypeaheadSearchView, self).post(request, *args, **kwargs)
 
