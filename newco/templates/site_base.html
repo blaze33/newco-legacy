@@ -40,8 +40,8 @@
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">
-            <li><form class="navbar-search" action="{% url 'typeahead_search' %}" method="POST">{% csrf_token %}
-                <input type="text" autocomplete="off" class="typeahead input-large search-query" name="typeahead_search" id="global_search" placeholder="{% trans 'Search' %}">
+            <li class="offset2"><form class="navbar-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
+                <input type="text" autocomplete="off" class="typeahead input-large search-query" name="q" id="global_search" placeholder="{% trans 'Search' %}">
                 <input type="hidden" id="obj_class" name="obj_class"/>
                 <input type="hidden" id="obj_id" name="obj_id"/>
             </form></li>
