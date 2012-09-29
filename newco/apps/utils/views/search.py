@@ -4,6 +4,7 @@ import re
 from django.core.urlresolvers import reverse
 from django.db.models.loading import get_model
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import View
 from django.views.generic.base import RedirectView
 
 from taggit.models import Tag
@@ -34,12 +35,13 @@ class TypeaheadSearchView(RedirectView):
         return super(TypeaheadSearchView, self).post(request, *args, **kwargs)
 
 
-def redis_to_json(request):
+class RedisView(View):
 
-    engine = load_redis_engine()
-    if not "q" in request.GET or not engine:
-        return HttpResponse(list())
-    q = request.GET.get("q")
-    data = json.dumps(engine.search_json(q))
+    def get(self, request, *args, **kwargs):
+        engine = load_redis_engine()
+        if not "q" in request.GET or not engine:
+            return HttpResponse(json.dumps(list()))
+        q = request.GET.get("q")
+        data = json.dumps(engine.search_json(q))
 
-    return HttpResponse(data, mimetype='application/json')
+        return HttpResponse(data, mimetype='application/json')
