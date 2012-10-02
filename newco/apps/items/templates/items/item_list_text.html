@@ -9,7 +9,7 @@
         <div class="row">
             {% if not forloop.first %}<hr>{% endif %}
             <div class="span2"><h3><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h3></div>
-            <div class="span2">{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}"><span class="label">{{ tag.name }}</span></a> {% endfor %}</div>
+            <div class="span2">{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}</div>
             <div class="span1"><a href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i></a></div>
         </div>
     {% endfor %}
