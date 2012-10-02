@@ -21,7 +21,7 @@ class Item(models.Model):
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                            verbose_name=_('date published'))
+                                    verbose_name=_('date published'))
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
     tags = TaggableManager()
@@ -33,7 +33,8 @@ class Item(models.Model):
         return u"%s" % (self.name)
 
     def save(self):
-        self.slug = slugify(self.name)
+        maxl = self._meta.get_field_by_name('slug')[0].max_length
+        self.slug = truncatechars(slugify(self.name), maxl)
         super(Item, self).save()
 
     @permalink
@@ -57,8 +58,8 @@ class ContentManager(InheritanceManager):
         items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
 
         return self.filter(
-                Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
-                ~Q(author=user), status=Content.STATUS.public
+            Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
+            ~Q(author=user), status=Content.STATUS.public
         )
 
     def get_related_contributions(self, user):
@@ -76,9 +77,9 @@ class Content(models.Model):
 
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                            verbose_name=_("date published"))
+                                    verbose_name=_("date published"))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                            verbose_name=_("status"))
+                                      verbose_name=_("status"))
     items = models.ManyToManyField(Item, verbose_name=_("products"))
     votes = generic.GenericRelation(Vote)
 
