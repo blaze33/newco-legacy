@@ -100,25 +100,25 @@ $(function(){
     delay: 500,
     //template: '<div class="popover" onmouseover="$(this).mouseleave(function() {$(this).hide(); });"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   });
-  $('[rel="tooltip-top"]').tooltip({
+  $('.tooltip-top').tooltip({
     trigger: 'hover',
     placement: 'top',
     animate: true,
     //delay: 500,
   });
-    $('[rel="tooltip-right"]').tooltip({
+    $('.tooltip-right').tooltip({
     trigger: 'hover',
     placement: 'right',
     animate: true,
     //delay: 500,
   });
-    $('[rel="tooltip-bottom"]').tooltip({
+    $('.tooltip-bottom').tooltip({
     trigger: 'hover',
     placement: 'bottom',
     animate: true,
     //delay: 500,
   });
-    $('[rel="tooltip-left"]').tooltip({
+    $('.tooltip-left').tooltip({
     trigger: 'hover',
     placement: 'left',
     animate: true,

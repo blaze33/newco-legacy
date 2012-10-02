@@ -13,18 +13,18 @@
 
 {% block body_class %}index{% endblock %}
 
-{% block head_title %}{% trans "Products" %}{% endblock %}
+{% block head_title %}{% trans "Products" %}{% if tag %} | {% trans "Tag" %} {{ tag }}{% endif %}{% endblock %}
 
 {% block body %}
 
 <div class="row">
-    <div class="span2"><h2>{% if tag %}<form method="POST" action="">{{ tag }}<div class="pull-right">{% csrf_token %}
-        {% if tag in user.get_profile.skills.all %}
-            <a rel="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "This is my skill" %}</button></a>
+    <div class="span2"><h1>{% if tag %}<form method="POST" action="">{{ tag }}<div class="pull-right">{% csrf_token %}
+        {% if user.is_authenticated %}{% if tag in user.get_profile.skills.all %}
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
         {% else %}
-            <a rel="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
-        {% endif %}
-    </div></form>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h2></div>
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
+        {% endif %}{% endif %}
+    </div></form>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h1></div>
     <div class="span6" align="center">{% if object_list %}
         <div id="carousel_tag" class="carousel slide">
             <div class="carousel-inner">
@@ -66,7 +66,12 @@
                 {% endif %}
                 <br><br>
                 {% url "item_create" "item" as add_item_url %}
-                {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">creating one</a> yourself?{% endblocktrans %}
+                
+                {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">creating a product</a> yourself?{% endblocktrans %}
+                <br><small>{% trans "By creating a product product page you lay the first brick to gather information about this product: other members will see this page, add things they know about it, and... answer to you questions if you ask some." %}
+                </small>
+
+
             </h3>
         {% endif %}
     </div>
