@@ -95,3 +95,13 @@
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
+    
+    .nc_transition_add {
+        padding-bottom:10px;
+        cursor: pointer; 
+        cursor: hand;
+    }
+
+    .nc_transition_add:hover {
+        background-color: #eee;
+    }

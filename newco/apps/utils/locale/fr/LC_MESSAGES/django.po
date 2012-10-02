@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
-"PO-Revision-Date: 2012-09-14 21:10\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-09-27 18:59+0200\n"
+"PO-Revision-Date: 2012-09-27 19:04\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -132,15 +132,27 @@ msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 #, python-format
 msgid ""
 "\n"
-"            This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
-"\" >here</a> (available soon).\n"
+"            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon).\n"
 "            "
 msgstr ""
 "\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+
+#: templates/voting/form.html:7
+msgid ""
+"Vote up: this contribution shows effort on quality; it is usefull and clear "
+"(click again to undo)"
+msgstr ""
+"Vote positif : cette contribution montre des efforts sur la qualité ; elle "
+"est utile et claire (cliquer à nouveau pour enlever)"
+
+#: templates/voting/form.html:8
+msgid ""
+"Vote down: this contribution does't show effort on quality; it is not useful"
+" or unclear (click again to undo)"
+msgstr ""
+"Vote négatif : cette contribution ne montre pas d'efforts sur la qualité ; "
+"elle n'est pas utile ou pas claire (cliquer à nouveau pour enlever)"
 
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
