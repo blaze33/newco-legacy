@@ -120,6 +120,7 @@
                 icon_change.removeClass('icon-plus').addClass('icon-remove');
                 text_change.html("&nbsp;");
                 text_change_no_q_yet.html("{% trans "Ask a new question:" %}");
+                $('#id_content').focus();
             })
             form.on('hidden', function () {
                 icon_change.removeClass('icon-remove').addClass("icon-plus");

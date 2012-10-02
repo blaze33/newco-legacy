@@ -37,6 +37,9 @@ class GraphQuery(object):
                             .order_by('-id__count', 'key')
         return tuple((k['key'], k['id__count']) for k in keys)
 
+    def isolated(self):
+        return Item.objects.filter(links__isnull=True, inlinks__isnull=True)
+
 
 class VoteModel(TimeStampedModel):
     """ VoteModel

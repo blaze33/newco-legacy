@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:50+0200\n"
+"POT-Creation-Date: 2012-09-27 17:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/about/contribute.html:5 templates/about/contribute.html.py:8
-#: templates/about/faq.html:28
+#: templates/about/faq.html:49
 msgid "How to contribute?"
 msgstr ""
 
-#: templates/about/faq.html:6 templates/about/faq.html.py:22
-#: templates/about/team.html:6
+#: templates/about/faq.html:6 templates/about/faq.html.py:23
 msgid "FAQ"
 msgstr ""
 
-#: templates/about/faq.html:24 templates/about/get_started.html:177
+#: templates/about/faq.html:26 templates/about/get_started.html:177
 msgid "Why NewCo?"
 msgstr ""
 
-#: templates/about/faq.html:24
+#: templates/about/faq.html:26
 msgid ""
 "We believe in today's connected world you should be able to find easily a "
 "deep information on any product. It would empower you to make wise choices. "
@@ -41,61 +40,50 @@ msgid ""
 "a lot of time and energy finding what you want to buy."
 msgstr ""
 
-#: templates/about/faq.html:26
-msgid "Quels sont les partenariats déjà en place ?"
-msgstr ""
-
-#: templates/about/faq.html:26
-msgid ""
-"Pour l'instant, nous avons négocié des partenariats d'affiliation avec "
-"Amazon, Décathlon, Virgin Mega, Woodbrass... Et bien plus à venir ! Vous "
-"pouvez nous contacter pour en savoir plus sur ces accords."
+#: templates/about/faq.html:28
+msgid "We believe this shouldn't happen"
 msgstr ""
 
 #: templates/about/faq.html:28
-msgid "Comment puis-je contribuer au site ?"
+msgid ":"
 msgstr ""
 
-#: templates/about/faq.html:30
+#: templates/about/faq.html:49
+msgid "How can I contribute to NewCo?"
+msgstr ""
+
+#: templates/about/faq.html:51
+msgid "How do you ensure to have quality content on the platform?"
+msgstr ""
+
+#: templates/about/faq.html:51
 msgid ""
-"Comment vous assurez-vous d'avoir du contenu de qualité sur la plateforme ?"
+"Quality of content is, with user experience, our first worry. To reach great "
+"result, we set up everything to:<ul><li>guide contributors and entice them "
+"to collaborate between them</li><li>promote best content emergence through "
+"our collective intelligence system"
 msgstr ""
 
-#: templates/about/faq.html:30
+#: templates/about/faq.html:54
+msgid "How to earn reputation points?"
+msgstr ""
+
+#: templates/about/faq.html:54
 msgid ""
-"La qualité du contenu est, avec l'expérience utilisateur, notre première "
-"préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en "
-"oeuvre pour :<ul><li>guider les contributeurs et les inciter à collaborer "
-"entre eux.</li><li>favoriser l'émergence du bon contenu via notre système "
-"d'intelligence collective."
+"Build your reputation by creating quality content. You will get points from "
+"other users votes."
 msgstr ""
 
-#: templates/about/faq.html:33
-msgid "Comment gagner des points de réputation ?"
+#: templates/about/faq.html:56
+msgid "What are the tags for?"
 msgstr ""
 
-#: templates/about/faq.html:33
+#: templates/about/faq.html:56
 msgid ""
-"Il vous est très simple d'accumuler des points de réputation. Il suffit "
-"d'apporter une contribution (question/réponse, caractéristique, article). Si "
-"celle-ci est jugée positivement par la communauté, elle vous rapportera un "
-"certain nombre de points (dépendant du type de contribution) par vote "
-"favorable."
-msgstr ""
-
-#: templates/about/faq.html:35
-msgid "A quoi servent les tags ?"
-msgstr ""
-
-#: templates/about/faq.html:35
-msgid ""
-"Vous remarquerez qu'il y a 2 catégories différentes de tags : les tags "
-"produit et les tags utilisateur (compétences).<ul><li>Ils permettent de "
-"facilement naviguer sur le site, en favorisant le déplacement d'un produit "
-"ou d'une catégorie à l'autre.</li><li>Par la suite, ils nous permettrons "
-"d'introduire un système de cartographie intelligent des produits.</"
-"li><li>Enfin, on utilise aussi les tags pour associer chaque produit à un "
-"groupe d'experts."
+"Tags are used for two things: tag products, and tag skills. Tags can both be "
+"used for skills and products, but the use is different: tags on products is "
+"a way to categorize, tags on skills is a way to identify someone's area of "
+"competence."
 msgstr ""
 
 #: templates/about/get_started.html:7
@@ -172,7 +160,7 @@ msgid "Get information"
 msgstr ""
 
 #: templates/about/get_started.html:192
-msgid "To get some information about products, you can:"
+msgid "To get some information about products:"
 msgstr ""
 
 #: templates/about/get_started.html:194
@@ -208,6 +196,10 @@ msgstr ""
 
 #: templates/about/get_started.html:208
 msgid "<i>Check this out</i></a>!"
+msgstr ""
+
+#: templates/about/team.html:6
+msgid "Team"
 msgstr ""
 
 #: templates/about/team.html:10
