@@ -33,7 +33,8 @@ class Item(models.Model):
         return u"%s" % (self.name)
 
     def save(self):
-        self.slug = slugify(self.name)
+        maxl = self._meta.get_field_by_name('slug')[0].max_length
+        self.slug = truncatechars(slugify(self.name), maxl)
         super(Item, self).save()
 
     @permalink
