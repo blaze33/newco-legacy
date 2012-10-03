@@ -94,22 +94,6 @@ due to bad pixel fitting of small icons.
     </script>
 
     <script type="text/javascript">
-    $(document).ready( function() {
-        var form = $('#answer_form');
-        var icon_change = $('#icons');
-        var text_change = $('#text_to_change');
-        form.on('shown', function () {
-            icon_change.removeClass('icon-share-alt').addClass('icon-remove');
-            text_change.html("Close");
-        })
-        form.on('hidden', function () {
-            icon_change.removeClass('icon-remove').addClass('icon-share-alt');
-            text_change.html("Add an answer");
-        })
-    });
-    </script>
-
-    <script type="text/javascript">
 	$(document).ready(function() {
 		$('#Carousel_Tag').carousel({
 		  interval: 20000
