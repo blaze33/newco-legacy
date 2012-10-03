@@ -70,7 +70,7 @@ simple_deploy:
 	make push
 
 pg_backup2dropbox:
-	curl -o ~/Dropbox/NewCo-Shared/Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
+	curl -o ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
 
 # TODO: add additional commands to manage stuff.
 # Static stuff
