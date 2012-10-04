@@ -10,6 +10,13 @@
     {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
 
+{% block extra_script %}
+{{ block.super }}
+<script type ="text/javascript">
+	$(document).ready(function(){mixpanel.track("Load_question_detail");});
+</script>
+{% endblock %}
+
 {% block head_title %}{{ question.content }}{% endblock %}
 
 {% block body %}

@@ -63,7 +63,7 @@
 {% block body %}
 
 <div class="row">
-    <div class="hero-unit{#span10 offset1 well#}" style="text-align: center;">
+    <div class="hero-unit{#span10 offset1 well#}" style="text-align: center;" id="mixpanel_get_started" data-user_id="{{ request.user.id }}" data-email="guillaume.kalaydjian@gmail.com">
         <h1>{% trans "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>" %}</h1>
     </div>
 </div>
@@ -218,7 +218,6 @@
 
 {% block extra_script %}
     {{ block.super }}
-    
     {# ##### Equalize columns height ##### #}
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
@@ -251,6 +250,15 @@
     <script type ="text/javascript">
 	
 	$(document).ready(function(){
+	var get_started=document.getElementById("mixpanel_get_started");
+	var user_id=get_started.getAttribute("data-user_id");
+	var user_email=get_started.getAttribute("data-email");
+	mixpanel.track("Load get started");
+	mixpanel.people.identify(user_id);
+	mixpanel.people.set({
+		"email":user_email,
+		"gender": user_gender, 
+	});
     mixpanel.track_links("#mixpanel_explore_gs","Explore_gs");
     mixpanel.track_links("#mixpanel_question_gs","Question_gs");
     mixpanel.track_links("#mixpanel_product_gs","Product_gs");

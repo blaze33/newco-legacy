@@ -5,6 +5,17 @@
 {% load account_tags %}
 {% load pagination_tags %}
 
+{% block extra_script %}
+{{ block.super }}
+<script type ="text/javascript">
+	$(document).ready(function(){
+    mixpanel.track_links("#mixpanel_image_home","Image_home");
+    mixpanel.track_links("#mixpanel_question_home","Question_home");
+    mixpanel.track_links("#mixpanel_tag_home","Tag_home");
+	});
+</script>
+{% endblock %}
+
 {% block body %}
 
 <div class="row"><div class="offset1 span10"><div id="thumbnails_list">{% for content in object_list %}

@@ -6,7 +6,7 @@
 {% if class_name == "question" or class_name == "answer" or class_name == "feature" or class_name == "link" %}
     {% with item=object.items.all.0 %}
         {% with image=item.node.graph.image_set.0.links.all.0.to_item.data %}
-            <div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
+            <div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image_home"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
         {% endwith %}
         <div class="details">
             <span class="content-item-mini">{% profile_pic object.author 20 %}</span>
@@ -14,19 +14,19 @@
                 {% include template with display="thumbnail" content=object author=object.author item=item only %}
             {% endwith %}
             <br><br>
-            <div class="expandable"><p style="text-indent: 2em;"><a href="{{ object.get_absolute_url }}" style="color:#888888">{% autoescape off %}<i>&laquo;&nbsp;{{ object.content }}&nbsp;&raquo;</i>{% endautoescape %}</a></p></div>
+            <div class="expandable"><p style="text-indent: 2em;"><a href="{{ object.get_absolute_url }}" id="mixpanel_question_home" style="color:#888888">{% autoescape off %}<i>&laquo;&nbsp;{{ object.content }}&nbsp;&raquo;</i>{% endautoescape %}</a></p></div>
             <br>
-            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label" id="mixpanel_tag_home">{{ tag.name }}</a> {% endfor %}{% endif %}
         </div>
     {% endwith %}
 {% elif class_name == "item" %}
     {% with image=object.node.graph.image_set.0.links.all.0.to_item.data %}
-        <div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
+        <div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image_home"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
     {% endwith %}
     <div class="details" style="font-size:12px;">
         {% object_display object "thumbnail" "black" %}
     </div>
-    {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+    {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label" id="mixpanel_tag_home">{{ tag.name }}</a> {% endfor %}{% endif %}
 {% endif %}
 
 </div>{% endwith %}

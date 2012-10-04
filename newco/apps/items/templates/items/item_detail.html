@@ -6,6 +6,16 @@
 {% load format_utils %}
 {% load staticfiles %}
 
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){mixpanel.track("Load_item_detail");});
+	</script>
+	<script type="text/javascript" src="{% static 'js/mixpanel_items.js' %}"></script>
+
+{% endblock %}
+
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
@@ -67,9 +77,9 @@
                 <hr>
                 <div class="row">
                     {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
-                    <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
+                    <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black" id="mp_click_store">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
                     <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-                    <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+                    <div class="span1"><a href="{{ prod.url }}" target="_blank" id="mp_click_price">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
                 </div>
             {% endfor %}
         {% endfor %}
