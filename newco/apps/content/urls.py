@@ -5,6 +5,7 @@ from content.views import ContentCreateView, ContentUpdateView, ContentDeleteVie
 
 G = GraphQuery()
 index_queryset = [(Item.__name__, 'class', G.values('class', Item)),
+                  (Item.__name__, '_class', G.values('_class', Item)),
                   (Relation.__name__, 'relationship', G.values('relationship', Relation))]
 
 urlpatterns = patterns('',

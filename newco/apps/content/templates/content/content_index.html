@@ -32,7 +32,7 @@
         {% for item in data %}
         <tr>
           <td></td>
-          <td><a href='{% url filtered_index class key|add:"."|add:item.0 %}'>{{ item.0 }}</a></td>
+          <td>{% if item.0 %}<a href='{% url filtered_index class key|add:"."|add:item.0 %}'>{{ item.0 }}</a>{% else %}{{ item.0 }}{% endif %}</td>
           <td><strong>{{ item.1 }}</strong></td>
         </tr>
         {% endfor %}
