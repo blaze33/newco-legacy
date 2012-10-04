@@ -21,9 +21,8 @@ class QuerySet(HStoreQuerySet):
         Returns a ValuesQuerySet with the keys corresponding
         to keys of the specified hstore.
         """
-        table = self.model._meta.db_table
         extra_select = dict([(k,
-                              "{0}.{1} -> %s".format(table, self.hfield)
+                              "{0}.{1} -> %s".format(self.table, self.hfield)
                               ) for k in keys])
         clone = self._clone()
         clone.query.add_extra(extra_select, keys, None, None, None, None)
@@ -35,7 +34,8 @@ class QuerySet(HStoreQuerySet):
 
     @select_query
     def hkeys(self, query):
-        keys = self.extra(select=dict(key='skeys({0}.{1})'.format(self.table, self.hfield))) \
+        extra_select = dict(key='skeys({0}.{1})'.format(self.table, self.hfield))
+        keys = self.extra(select=extra_select) \
                    .values('key').annotate(Count('id')) \
                    .order_by('-id__count', 'key')
         return tuple((k['key'], k['id__count']) for k in keys)
