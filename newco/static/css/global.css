@@ -190,10 +190,10 @@ img:hover + .img-controls,
     width: 38px;
 }
 
-    .myClassPopover{ 
+    .myClassPopover{
         position: relative;
     }
-    .myClassPopoverProfile{ 
+    .myClassPopoverProfile{
         position: relative;
     }
 
@@ -298,11 +298,6 @@ img:hover + .img-controls,
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
-  }
-
-  .subnav-moved {
-    position: relative;
-    top: 0;
   }
 }
 
