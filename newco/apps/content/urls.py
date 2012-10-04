@@ -24,5 +24,7 @@ urlpatterns = patterns('',
     url(r"^delete/(?P<model_name>[-\w]+)/(?P<pk>\d+)/$",
         ContentDeleteView.as_view(),
         name="content_delete"),
+    url(r"^(?P<model_name>[-\w]+)/(?P<kvquery>[\w]+(.[\w]*)?)/$", ContentListView.as_view(), name="filtered_index"),
     url(r"^(?P<model_name>[-\w]+)/(?P<class_name>[-\w]+)/$", ContentListView.as_view(), name="class_index"),
+
 )

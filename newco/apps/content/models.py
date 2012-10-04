@@ -18,27 +18,30 @@ class GraphQuery(object):
         return self
 
     def __getattr__(self, name):
-        return self.item.successors.filter(data__contains={'class': name})
+        return self.item.successors.hfilter({'class': name})
 
     def _get_class(self, klass):
         return klass if klass else Item
 
     def values(self, key, klass=None):
         klass = self._get_class(klass)
-        values = klass.objects.hselect('data', [key]) \
-                              .values(key).annotate(Count('id')) \
-                              .order_by('-id__count', key)
-        return tuple((v[key], v['id__count']) for v in values)
+        return klass.objects.hvalues(key)
 
     def keys(self, klass=None):
         klass = self._get_class(klass)
-        keys = klass.objects.extra(select=dict(key='skeys(data)')) \
-                            .values('key').annotate(Count('id')) \
-                            .order_by('-id__count', 'key')
-        return tuple((k['key'], k['id__count']) for k in keys)
+        return klass.objects.hkeys()
 
-    def isolated(self):
-        return Item.objects.filter(links__isnull=True, inlinks__isnull=True)
+    def isolated(self, klass=None):
+        klass = self._get_class(klass)
+        return klass.objects.isolated()
+
+    def get_image(self):
+        try:
+            q = Item.objects.filter(inlinks__data__contains={'order': '0'},
+                inlinks__from_item__inlinks__from_item_id=self.item.id)
+            return q[0]
+        except IndexError:
+            return None
 
 
 class VoteModel(TimeStampedModel):
