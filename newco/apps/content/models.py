@@ -35,6 +35,14 @@ class GraphQuery(object):
         klass = self._get_class(klass)
         return klass.objects.isolated()
 
+    def get_image(self):
+        try:
+            q = Item.objects.filter(inlinks__data__contains={'order': '0'},
+                inlinks__from_item__inlinks__from_item_id=self.item.id)
+            return q[0]
+        except IndexError:
+            return None
+
 
 class VoteModel(TimeStampedModel):
     """ VoteModel
