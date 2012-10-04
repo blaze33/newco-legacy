@@ -1,16 +1,11 @@
 from django.conf.urls import patterns, include, url
-from content.models import Item, Relation, GraphQuery
 from content.views import ContentListView, ContentDetailView
 from content.views import ContentCreateView, ContentUpdateView, ContentDeleteView
 
-G = GraphQuery()
-index_queryset = [(Item.__name__, 'class', G.values('class', Item)),
-                  (Item.__name__, '_class', G.values('_class', Item)),
-                  (Relation.__name__, 'relationship', G.values('relationship', Relation))]
 
 urlpatterns = patterns('',
-    url(r"^$", ContentListView.as_view(queryset=index_queryset,
-                                       template_name='content/content_index.html'),
+    url(r"^$", ContentListView.as_view(template_name='content/content_index.html'),
+                                        {'index': True},
                                        name="content_index"),
     url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]*)",
         ContentDetailView.as_view(),
