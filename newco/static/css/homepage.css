@@ -39,3 +39,16 @@
 .body-less-padding {
   padding-top: 40px;
 }
+
+.btn-glow {
+   /*Glow*/
+  -webkit-box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
+  -moz-box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
+  box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
+  z-index: 5;
+
+  /*Transition*/
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}

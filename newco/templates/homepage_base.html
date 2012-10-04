@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="span6">
-                    <div class="well well-large WhyNC_col" id="info" style="margin-bottom: 5px;">
+                    <div class="well well-large WhyNC-col" id="info" style="margin-bottom: 5px;">
                         <h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}</em></h1>
                         <br>
                         <p class="lead" style="margin-bottom: 0px;">
@@ -49,13 +49,13 @@
                     </div>
                 </div>
                 <div class="span6">
-                    <div class="well well-large WhyNC_col" id="contribute">
+                    <div class="well well-large WhyNC-col" id="contribute">
                         <h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}</em></h1>
                         <br>
                         <p class="lead" style="margin-bottom: 0px;">
                             {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><b><a href="{{ url_contrib }}" class="black"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i>contribute</a></b></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
                             <br><br>
-                            {#<i class="icon-resize-full" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-arrow-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-chevron-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-fullscreen" style="margin-right: 3px; vertical-align: middle;"></i>#}{% url 'faq' as url_faq %}{% blocktrans %}...and build your <em><b><a href="{{ url_faq }}#reputation" class="black">reputation</a></b></em> from others' votes{% endblocktrans %}
+                            {#<i class="icon-resize-full" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-arrow-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-chevron-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-fullscreen" style="margin-right: 3px; vertical-align: middle;"></i>#}{% url 'faq' as url_faq %}{% blocktrans %}...and build your <em><b><a class="black" id="reputation-trigger" href="{{ url_faq }}#reputation">reputation</a></b></em> from others' votes{% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -118,7 +118,15 @@
             });
 
             $('.arrow_search_bar_trigger').click(function () {
-                $("#main_autocomplete").focus();
+                $('#main_autocomplete').focus();
+            });
+
+            $('#reputation-trigger').mouseover(function () {
+                $('#reputation-btn').addClass('btn-glow');
+            });
+
+            $('#reputation-trigger').mouseout(function () {
+                $('#reputation-btn').removeClass('btn-glow');
             });
 
         {% if request.GET.welcome %}
@@ -135,8 +143,8 @@
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
         // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
-        $('.WhyNC_col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC_col'), function (elem, index, list) {
+        $('.WhyNC-col').height(function () {
+            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();
             });
             return $(h).height();

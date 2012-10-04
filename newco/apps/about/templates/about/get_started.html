@@ -185,7 +185,7 @@
 
 <div class="row">
     <div class="span6">
-        <div class="well well-large WhyNC_col" id="info"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}{# Learn / Get to know #}</em>
+        <div class="well well-large WhyNC-col" id="info"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}{# Learn / Get to know #}</em>
             </h1><br>
             <p style="color:#CCCCCC; font-size:14px;">
                 <div id="text_inf" style="opacity:1">
@@ -199,7 +199,7 @@
         </div></br>
     </div>
     <div class="span6">
-        <div class="well well-large WhyNC_col" id="contribute"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}{# Share your knowledge #}</em>
+        <div class="well well-large WhyNC-col" id="contribute"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}{# Share your knowledge #}</em>
             </h1><br>
             <p style="color:#CCCCCC; font-size:14px;">
                 <div id="text_contribut" style="opacity:1">
@@ -223,8 +223,8 @@
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
         // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
-        $('.WhyNC_col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC_col'), function (elem, index, list) {
+        $('.WhyNC-col').height(function () {
+            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();
             });
             return $(h).height();
