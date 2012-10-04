@@ -55,7 +55,7 @@
     </div>
 
     {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
-        <h3>{% trans "Offers" %}</h3>
+        <h3>{% trans "Where to buy" %}</h3>
         <div class="row">
             {% if nb_ean != 1 %}<div class="span1"><h4>{% trans "EAN" %}</h4></div>{% endif %}
             <div class="span2"><h4>{% trans "Store" %}</h4></div>
@@ -97,7 +97,7 @@
 
     <hr>
 
-    <h4>{% trans "Buy" %}</h4>
+    <h4>{% trans "Where to buy" %}</h4>
     <div>{% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
         {% include "affiliation/_affiliation_item.html" with prod=prod %}
     {% endfor %}{% endfor %}</div>
