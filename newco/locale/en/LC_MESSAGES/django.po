@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 15:34+0200\n"
+"POT-Creation-Date: 2012-10-04 21:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,16 +216,8 @@ msgstr ""
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:40
-msgid "Search"
-msgstr ""
-
-#: templates/site_base.html:90
-msgid "Search an item, a tag..."
-msgstr ""
-
-#: templates/site_base.html:91
-msgid "What are you looking for?"
+#: templates/site_base.html:43
+msgid "Search a product, a user, a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6

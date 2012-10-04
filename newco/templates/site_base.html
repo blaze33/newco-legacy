@@ -40,7 +40,7 @@
 {% block nav %}
     <ul class="nav">
         <li class="offset2"><form class="navbar-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
-            <input type="text" autocomplete="off" class="typeahead input-large search-query" name="q" id="global_search" placeholder="{% trans 'Search' %}">
+            <input type="text" autocomplete="off" class="typeahead input-xlarge search-query" name="q" id="global_search" placeholder="{% trans 'Search a product, a user, a tag' %}">
             <input type="hidden" id="obj_class" name="obj_class"/>
             <input type="hidden" id="obj_id" name="obj_id"/>
         </form></li>
