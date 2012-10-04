@@ -5,6 +5,8 @@ from selenium.webdriver.common.keys import Keys
 
 class PollsTest(LiveServerTestCase):
 
+    __test__ = False
+
     def setUp(self):
         self.browser = webdriver.Firefox()
 

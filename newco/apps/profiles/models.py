@@ -48,6 +48,9 @@ class Profile(ProfileBase):
         verbose_name = _("profile")
         ordering = ["-user__reputation__reputation_incremented"]
 
+    def __unicode__(self):
+        return self.name
+
     def save(self, **kwargs):
         self.slug = slugify(self.name)
         super(Profile, self).save(**kwargs)

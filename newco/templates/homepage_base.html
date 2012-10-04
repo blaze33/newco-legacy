@@ -30,10 +30,10 @@
 
             <div class="row">
                 <div class="span6">
-                    <div class="well well-large WhyNC_col" id="info">
+                    <div class="well well-large WhyNC_col" id="info" style="margin-bottom: 5px;">
                         <h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}</em></h1>
                         <br>
-                        <p class="lead">
+                        <p class="lead" style="margin-bottom: 0px;">
                             <span class="arrow_search_bar_trigger" style="position: relative; cursor: pointer; cursor: hand;"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar..." %}<img src="{% static 'img/arrows_top_right.png' %}" type="image/png" class="arrow_search_bar" style="position: absolute; bottom: -60px; right: +0px;"></span>
                             <br><br>
                             {#i class="icon-screenshot" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-road" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-globe" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-star" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-cog" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-chevron-right" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-forward" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-move" style="margin-right: 3px; vertical-align: middle;"></i>#}
@@ -52,7 +52,7 @@
                     <div class="well well-large WhyNC_col" id="contribute">
                         <h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}</em></h1>
                         <br>
-                        <p class="lead">
+                        <p class="lead" style="margin-bottom: 0px;">
                             {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><b><a href="{{ url_contrib }}" class="black"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i>contribute</a></b></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
                             <br><br>
                             {#<i class="icon-resize-full" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-arrow-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-chevron-up" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i><i class="icon-fullscreen" style="margin-right: 3px; vertical-align: middle;"></i>#}{% url 'faq' as url_faq %}{% blocktrans %}...and build your <em><b><a href="{{ url_faq }}#reputation" class="black">reputation</a></b></em> from others' votes{% endblocktrans %}

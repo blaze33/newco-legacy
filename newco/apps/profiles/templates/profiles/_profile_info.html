@@ -26,10 +26,7 @@
     {% endif %}
     {% if profile.skills.count > 0 %}
         <dt>{% trans "Skills" %}</dt>
-        <dd>{% for skill in profile.skills.all %}
-                <a href="{% url tagged_items skill.slug %}">
-                <span class="label">{{ skill.name }}</span></a>
-            {% endfor %}</dd>
+        <dd>{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}" class="label">{{ skill.name }}</a> {% endfor %}</dd>
     {% endif %}
     {% if fwees or fwers %}<br>{% endif %}
     {% if fwees %}

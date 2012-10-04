@@ -36,9 +36,9 @@ due to bad pixel fitting of small icons.
 {% endblock %}
 
 {% block nav %}
-        <ul class="nav">
-            <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
-        </ul>
+    <ul class="nav">
+        <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
+    </ul>
 {% endblock %}
 
 {% block footer %}
