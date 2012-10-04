@@ -13,6 +13,7 @@ class QuerySet(HStoreQuerySet):
         hfields = [x for x in d if type(d[x]) == HStoreDescriptor]
         if len(hfields) > 0:  # TODO: solve multiple hstore fields case.
             self.hfield = hfields[0]
+            self.table = self.model._meta.db_table
 
     @select_query
     def hselect(self, query, keys):
@@ -34,7 +35,7 @@ class QuerySet(HStoreQuerySet):
 
     @select_query
     def hkeys(self, query):
-        keys = self.extra(select=dict(key='skeys({0})'.format(self.hfield))) \
+        keys = self.extra(select=dict(key='skeys({0}.{1})'.format(self.table, self.hfield))) \
                    .values('key').annotate(Count('id')) \
                    .order_by('-id__count', 'key')
         return tuple((k['key'], k['id__count']) for k in keys)
