@@ -6,7 +6,7 @@
 <div class="pull-right">{% if request.user.is_authenticated %}
     <div class="btn-group">
         <a href="{% url 'dash' %}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
-        <a href="/about/faq/#reputation" class="btn btn-inverse" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
+        <a class="btn btn-inverse" id="reputation-btn" href="{% url 'faq' %}#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
         <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>

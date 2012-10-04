@@ -7,7 +7,7 @@ from django.views.generic import (View, ListView, CreateView,
                                   DetailView, UpdateView, DeleteView)
 from django.views.generic.edit import ProcessFormView, FormMixin
 
-from content.models import Item, Relation
+from content.models import Item, Relation, GraphQuery
 from content.forms import ItemForm, RelationForm
 from utils.decorators import staff_member_required
 
@@ -118,9 +118,19 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 
 class ContentListView(ContentView, ListView):
     def get_queryset(self):
+        if self.kwargs.get('index', False):
+            G = GraphQuery()
+            self.queryset = [(Item.__name__, 'class', G.values('class', Item)),
+                  (Item.__name__, '_class', G.values('_class', Item)),
+                  (Relation.__name__, 'relationship', G.values('relationship', Relation))]
         q = super(ContentListView, self).get_queryset()
-        if "class_name" in self.kwargs:
-            q = q.filter(data__contains={'class': self.kwargs['class_name']})
+        if "kvquery" in self.kwargs:
+            d = self.kwargs['kvquery'].split('.')
+            if len(d) == 2 and len(d[1]) > 0:
+                params = {d[0]: d[1]}
+            elif len(d) == 1 or len(d[1]) == 0:
+                params = d[0]
+            q = q.hfilter(params)
         return q
 
 class ContentDeleteView(ContentView, DeleteView):
