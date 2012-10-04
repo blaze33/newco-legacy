@@ -41,7 +41,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %}">{% include "items/_question_list.html" %}</div>
+            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %} nc_qna_list_div">{% include "items/_question_list.html" %}</div>
             <div id="links" class="tab-pane{% if 'link' in request.GET %} active{% endif %}">{% include "items/_link_list.html" %}</div>
             <div id="features" class="tab-pane{% if 'feature' in request.GET %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
             <div id="stories" class="tab-pane{% if 'story' in request.GET %} active{% endif %}">
@@ -121,7 +121,7 @@
     <script src="{% static 'js/content.js' %}"></script>
     {{ media.js }}
     <script type="text/javascript"> // script can't go to '/static' : needs to translate text
-        $(function(){
+        $(document).ready( function() {
             var form = $('#question_form');
             var icon_change = $('[rel=add_icon]');
             var text_change = $('[rel=add_q_text]');
@@ -129,12 +129,32 @@
             form.on('shown', function () {
                 icon_change.removeClass('icon-plus').addClass('icon-remove');
                 text_change.html("&nbsp;");
-                text_change_no_q_yet.html("{% trans "Ask a new question:" %}");
+                text_change_no_q_yet.html("{% trans 'Ask a new question:' %}");
+                $('#id_content').focus();
             })
             form.on('hidden', function () {
                 icon_change.removeClass('icon-remove').addClass("icon-plus");
-                text_change.html("{% trans "Ask a new question!" %}");
-                text_change_no_q_yet.html("{% trans "No question yet! Ask the first one here!" %}");
+                text_change.html("{% trans 'Ask a new question!' %}");
+                text_change_no_q_yet.html("{% trans 'No question yet! Ask the first one here!' %}");
+            })
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready( function() {
+            var divCollection = $("#[id^='answer\_form\_']");
+            $.each(divCollection, function (i, item) {
+                var bc = $("#controls_" + $(this)[0].id)
+                var icon_change = $('[rel=icon]', bc);
+                var text_change = $('[rel=text]', bc);
+                $(this).on('shown', function () {
+                    icon_change.removeClass('icon-share-alt').addClass('icon-remove');
+                    text_change.html("{% trans 'Close' %}");
+                })
+                $(this).on('hidden', function () {
+                    icon_change.removeClass('icon-remove').addClass('icon-share-alt');
+                    text_change.html("{% trans 'Add an answer' %}");
+                })
             })
         });
     </script>

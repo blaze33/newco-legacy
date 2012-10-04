@@ -84,14 +84,24 @@
         background-position: -309px -119px;
     }
     
-    .nc_transition_add {
+    .nc_qna_list_div .nc_transition_add {
         opacity: 0;
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
 
-    .nc_transition_add:hover {
+    .nc_qna_list_div:hover .nc_transition_add {
         opacity: 1;
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
+    }
+    
+    .nc_transition_add {
+        padding-bottom:10px;
+        cursor: pointer; 
+        cursor: hand;
+    }
+
+    .nc_transition_add:hover {
+        background-color: #eee;
     }
