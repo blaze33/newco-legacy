@@ -23,16 +23,21 @@ from voting.models import Vote
 from items.models import Item, Content
 from profiles.models import Profile
 
+
+def get_class_name(klass):
+    return "%s.%s" % (klass.__module__, klass._meta.object_name)
+
+
 PARAMS = {
-    "%s.%s" % (Item.__module__, Item._meta.object_name): {
+    get_class_name(Item): {
         "class": Item, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
-    "%s.%s" % (Profile.__module__, Profile._meta.object_name): {
+    get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
-    "%s.%s" % (Tag.__module__, Tag._meta.object_name): {
+    get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
@@ -88,8 +93,8 @@ def normalize_query(query_string,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ', (t[0] or t[1]).strip()) \
-                                            for t in findterms(query_string)]
+    return [normspace(' ',
+                      (t[0] or t[1]).strip()) for t in findterms(query_string)]
 
 
 def get_query(query_string, search_fields, terms=None):
@@ -147,7 +152,7 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
 
 def get_sorted_queryset(query, user):
     queryset = generic_annotate(Content.objects.filter(query),
-        Vote, Sum('votes__vote')).order_by("-score")
+                                Vote, Sum('votes__vote')).order_by("-score")
     scores = Vote.objects.get_scores_in_bulk(queryset)
     votes = Vote.objects.get_for_user_in_bulk(queryset, user)
     return {"queryset": queryset.select_subclasses(),
@@ -158,7 +163,7 @@ def load_redis_engine():
     redis_url = urlparse.urlparse(settings.REDISTOGO_URL)
     if redis_url.scheme == "redis":
         engine = RedisEngine(host=redis_url.hostname, port=redis_url.port,
-                                                password=redis_url.password)
+                             password=redis_url.password)
         try:
             info = engine.client.info()
             if "db0" in info:
@@ -174,8 +179,8 @@ def load_redis_engine():
                 return None
     else:
         if settings.DEBUG:
-            raise RedisError("Redis Server '%s' URL is not valid." \
-                                                    % settings.REDISTOGO_URL)
+            raise RedisError("Redis Server '%s' URL is not valid."
+                             % settings.REDISTOGO_URL)
         else:
             return None
 
@@ -184,6 +189,7 @@ def load_redis_engine():
 def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
 
+    # TODO: check that all redis items exists
     if not engine:
         return
     for key, value in PARAMS.iteritems():
@@ -195,7 +201,7 @@ def update_redis_db(sender, request, user, **kwargs):
 
 @receiver(post_save)
 def redis_post_save(sender, instance=None, raw=False, **kwargs):
-    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    key = get_class_name(instance)
     if not key in PARAMS:
         return
     engine = load_redis_engine()
@@ -223,7 +229,7 @@ def record_object(engine, obj, key, value, ctype=None):
 
 @receiver(post_delete)
 def redis_post_delete(sender, instance=None, **kwargs):
-    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    key = get_class_name(instance)
     if not key in PARAMS:
         return
     engine = load_redis_engine()
