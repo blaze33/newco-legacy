@@ -40,6 +40,15 @@ class RedisView(View):
         if not "q" in request.GET or not engine:
             return HttpResponse(json.dumps(list()))
         q = request.GET.get("q")
-        data = json.dumps(engine.search_json(q))
+        limit = int(request.GET.get("limit", -1))
+
+        filters = list()
+        filtered_fields = ["class"]
+        for field in filtered_fields:
+            if field in request.GET:
+                filtered_values = request.GET.getlist(field)
+                filters.append(lambda i: i[field] in filtered_values)
+
+        data = json.dumps(engine.search_json(q, limit=limit, filters=filters))
 
         return HttpResponse(data, mimetype='application/json')
