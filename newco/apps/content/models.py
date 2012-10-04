@@ -130,5 +130,3 @@ class Relation(BaseModel):
         return "%s %s %s" % (self.from_item.get('name'),
                              self.get('relationship'),
                              self.to_item.get('name'))
-
-import content.transition
