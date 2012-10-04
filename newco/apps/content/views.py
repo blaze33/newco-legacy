@@ -119,9 +119,15 @@ class ContentDetailView(ContentView, DetailView, ProcessFormView, FormMixin):
 class ContentListView(ContentView, ListView):
     def get_queryset(self):
         q = super(ContentListView, self).get_queryset()
-        if "class_name" in self.kwargs:
-            q = q.filter(data__contains={'class': self.kwargs['class_name']})
+        if "kvquery" in self.kwargs:
+            d = self.kwargs['kvquery'].split('.')
+            if len(d) == 2 and len(d[1]) > 0:
+                params = {d[0]: d[1]}
+            elif len(d) == 1 or len(d[1]) == 0:
+                params = d[0]
+            q = q.hfilter(params)
         return q
+
 
 class ContentDeleteView(ContentView, DeleteView):
 
