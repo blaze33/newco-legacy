@@ -118,8 +118,9 @@ class Question(Content):
 
     @permalink
     def get_absolute_url(self):
-        return ("item_detail", None, {"model_name": self._meta.module_name,
-                        "pk": self.id, "slug": slugify(self.__unicode__())})
+        return ("item_detail", [], {"model_name": self._meta.module_name,
+                                    "pk": self.id,
+                                    "slug": slugify(unicode(self))})
 
     def get_product_related_url(self, item,
                                 anchor_pattern="?question=%(id)s#q-%(id)s"):
@@ -138,7 +139,7 @@ class Answer(Content):
 
     def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
-                                            (anchor_pattern % self.__dict__)
+            (anchor_pattern % self.__dict__)
 
     def get_product_related_url(self, item,
                                 anchor_pattern="?answer=%(id)s#a-%(id)s"):
