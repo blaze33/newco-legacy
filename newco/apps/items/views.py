@@ -247,7 +247,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
 
             new_item = sync_products(Item, self.object)
             albums = new_item.successors.filter(data__contains={
-                'class': 'image_set', 'name': 'main album'
+                '_class': 'image_set', 'name': 'main album'
             })
             if albums:
                 # This is a way to order by values of an hstore key
