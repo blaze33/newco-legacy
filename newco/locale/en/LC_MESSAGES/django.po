@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-04 22:44+0200\n"
+"POT-Creation-Date: 2012-10-05 19:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: templates/homepage_base.html:25
+#: templates/homepage_base.html:26
 msgid "NewCo"
 msgstr ""
 
@@ -159,66 +159,78 @@ msgid ""
 "NewCo helps you choose with confidence and share your advice between users."
 msgstr ""
 
-#: templates/homepage_base.html:34
+#: templates/homepage_base.html:35
 msgid "Get information"
 msgstr ""
 
-#: templates/homepage_base.html:37
-msgid "Find products or tags in the search bar..."
+#: templates/homepage_base.html:38 templates/homepage_base.html.py:45
+msgid "Find products or tags in the search bar"
 msgstr ""
 
-#: templates/homepage_base.html:48
-#, python-format
+#: templates/homepage_base.html:41
 msgid ""
-"...or <a href=\"%(index_url)s\" class=\"black\" id=\"explore\"><em><b><i "
-"class=\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></i> "
-"explore NewCo</b></em></a>"
+"...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
+"a>"
 msgstr ""
 
-#: templates/homepage_base.html:54
+#: templates/homepage_base.html:47
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
+"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
+"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
+"i>explore NewCo</em></a>"
+msgstr ""
+
+#: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:57
+#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
 #, python-format
 msgid ""
-"Find where to <em><b><a href=\"%(url_contrib)s\" class=\"black\"><i class="
-"\"icon-pencil\" style=\"margin-right: 3px; vertical-align: middle;\"></i> "
-"contribute</a></b></em>..."
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contribute</a></em>..."
 msgstr ""
 
-#: templates/homepage_base.html:60
+#: templates/homepage_base.html:58
+msgid "...and build your reputation from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:64
 #, python-format
 msgid ""
-"...and build your <em><b><a class=\"black\" id=\"reputation-trigger\" href="
-"\"%(url_faq)s#reputation\">reputation</a></b></em> from others' votes"
-msgstr ""
-
-#: templates/homepage_base.html:70
-msgid "Click here to close the tutorial"
-msgstr ""
-
-#: templates/homepage_base.html:70
-msgid "NewCo empowers you to buy better"
-msgstr ""
-
-#: templates/homepage_base.html:71
-msgid "Popular"
-msgstr ""
-
-#: templates/homepage_base.html:72
-msgid "Last Added"
+"...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
+"\">reputation</a> from others' votes"
 msgstr ""
 
 #: templates/homepage_base.html:73
-msgid "Community"
+msgid "Click here to close the tutorial"
+msgstr ""
+
+#: templates/homepage_base.html:73
+msgid "NewCo empowers you to buy better"
+msgstr ""
+
+#: templates/homepage_base.html:74
+msgid "Popular"
 msgstr ""
 
 #: templates/homepage_base.html:75
+msgid "Last Added"
+msgstr ""
+
+#: templates/homepage_base.html:76
+msgid "Community"
+msgstr ""
+
+#: templates/homepage_base.html:78
 msgid "Latest Contributions"
 msgstr ""
 
-#: templates/homepage_base.html:77
+#: templates/homepage_base.html:80
 msgid "My newsfeed"
 msgstr ""
 

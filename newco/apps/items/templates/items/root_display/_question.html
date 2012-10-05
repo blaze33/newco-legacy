@@ -5,7 +5,7 @@
 {% load bootstrap_tags %}
 
 <div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
-    
+
     <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
         <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor_q %}</h3></div>
 

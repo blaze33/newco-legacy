@@ -340,6 +340,8 @@ img:hover + .img-controls,
          -moz-border-radius: 4px 4px 0 0;
               border-radius: 4px 4px 0 0;
   }
-
-
 }
+
+/*body {
+  background-image: url(/site_media/static/img/bg_grey.jpg);
+}*/

@@ -1,54 +1,69 @@
 /* ↓ css defs for homepage */
 
 
-.arrow_search_bar {
-  z-index: -5;
-/* I can't have it work grrrrr !  */
-/*  -webkit-transition: z-index 5s;
-  -moz-transition: z-index 5s;*/
-/*  -webkit-transition-delay: z-index 5s;
-  -moz-transition-delay: z-index 5s;*/
-/*  -webkit-transition-property: top, bottom, z-index;
-  -webkit-transition-duration: 1.5s;
-  -webkit-transition-delay: 0s, 0s, 1.5s;*/
-
-
+.arrow-search-bar-hidden {
+  z-index: -1;
   opacity: 0;
   -webkit-transition: opacity 1s;
   -moz-transition: opacity 1s;
 }
 
-.arrow_search_bar_trigger:hover {
+/*.arrow_search_bar_trigger:hover {
   text-shadow: 0px 0px 1px #AAAAFF;
+}*/
+
+@media (min-width: 768px) and (max-width: 979px) {
+  .reduced-margin-navbar{
+    margin-bottom: 0px;
+  }
 }
 
-.arrow_search_bar_trigger:hover .arrow_search_bar {
-  /*z-index: +1;*/
-  opacity: 1;
-  -webkit-transition: opacity 1s;
-  -moz-transition: opacity 1s;
+
+@media (max-width: 980px) {
+  .arrow-search-bar-shown {
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+  }
+
+  #why_NewCo {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 @media (min-width: 980px) { /* to be verified : how it should be done regarding window size / "media" ... */
+  .arrow-search-bar-shown {
+    z-index: -1;
+    opacity: 1;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+  }
   .subnav-moved {
     position: relative;
     top: 0;
   }
-}
 
-.body-less-padding {
-  padding-top: 40px;
+  .body-less-padding {
+    padding-top: 40px;
+  }
 }
 
 .btn-glow {
    /*Glow*/
-  -webkit-box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
-  -moz-box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
-  box-shadow: 0px 0px 30px rgba(255,255,255,0.8);
+  -webkit-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
+  -moz-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
+  box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
   z-index: 5;
 
   /*Transition*/
-  -webkit-transition: all 0.5s ease;
+/*  -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;*/
+  -webkit-transition: box-shadow linear 0.4s;
+  -moz-transition: box-shadow linear 0.4s;
+  -ms-transition: box-shadow linear 0.4s;
+  -o-transition: box-shadow linear 0.4s;
+  transition: box-shadow linear 0.4s;
 }
