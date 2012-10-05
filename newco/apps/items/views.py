@@ -195,24 +195,25 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         request = self.request
-        POST = request.POST
-        user = request.user
+        POST, user = [request.POST, request.user]
         public_query = Q(status=Content.STATUS.public)
         if self.model == Item:
             item = context.get("item")
-            queries = {
-                "questions": Q(question__items__id=item.id) & public_query,
+            item_query = Q(items__id=item.id)
+            content_qs = Content.objects.filter(public_query & item_query)
+            querysets = {
+                "questions": content_qs.filter(question__isnull=False),
             }
-            # q_feat = Q(feature__items__id=item.id)
-            # queries.update({
-            #   "feat_pos": q_feat & Q(feature__positive=True) & public_query,
-            #   "feat_neg": q_feat & Q(feature__positive=False) & public_query,
-            #   "links": Q(link__items__id=item.id) & public_query,
+            # feat_qs = content_qs.filter(feature__isnull=False)
+            # querysets.update({
+            #     "feat_pos": feat_qs.filter(feature__positive=True),
+            #     "feat_neg": feat_qs.filter(feature__positive=False),
+            #     "links": content_qs.filter(link__isnull=False),
             # })
 
             contents = dict()
-            for key, query in queries.items():
-                contents.update({key: get_sorted_queryset(query, user)})
+            for key, queryset in querysets.items():
+                contents.update({key: get_sorted_queryset(queryset, user)})
 
             q_form = QuestionForm(POST, request=request) \
                 if "question" in POST else QuestionForm(request=request)
@@ -223,8 +224,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
-                q.answers = get_sorted_queryset(
-                    Q(answer__question__id=q.id) & public_query, user)
+                answer_qs = Content.objects.filter(
+                    Q(answer__question__id=q.id) & public_query)
+                q.answers = get_sorted_queryset(answer_qs, user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -268,8 +270,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            query = Q(answer__question__id=q.id) & public_query
-            q.answers = get_sorted_queryset(query, user)
+            answer_qs = Content.objects.filter(
+                Q(answer__question__id=q.id) & public_query)
+            q.answers = get_sorted_queryset(answer_qs, user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()

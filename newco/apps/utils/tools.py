@@ -124,9 +124,9 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
     return results
 
 
-def get_sorted_queryset(query, user):
-    queryset = generic_annotate(Content.objects.filter(query),
-        Vote, Sum('votes__vote')).order_by("-score")
+def get_sorted_queryset(queryset, user):
+    queryset = generic_annotate(
+        queryset, Vote, Sum('votes__vote')).order_by("-score")
     scores = Vote.objects.get_scores_in_bulk(queryset)
     votes = Vote.objects.get_for_user_in_bulk(queryset, user)
     return {"queryset": queryset.select_subclasses(),
@@ -137,7 +137,7 @@ def load_redis_engine():
     redis_url = urlparse.urlparse(settings.REDISTOGO_URL)
     if redis_url.scheme == "redis":
         engine = RedisEngine(host=redis_url.hostname, port=redis_url.port,
-                                                password=redis_url.password)
+                             password=redis_url.password)
         try:
             info = engine.client.info()
             if "db0" in info:
@@ -153,8 +153,8 @@ def load_redis_engine():
                 return None
     else:
         if settings.DEBUG:
-            raise RedisError("Redis Server '%s' URL is not valid." \
-                                                    % settings.REDISTOGO_URL)
+            raise RedisError("Redis Server '%s' URL is not valid."
+                             % settings.REDISTOGO_URL)
         else:
             return None
 
