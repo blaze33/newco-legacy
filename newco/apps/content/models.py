@@ -18,7 +18,7 @@ class GraphQuery(object):
         return self
 
     def __getattr__(self, name):
-        return self.item.successors.hfilter({'class': name})
+        return self.item.successors.hfilter({'_class': name})
 
     def _get_class(self, klass):
         return klass if klass else Item
