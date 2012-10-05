@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 15:34+0200\n"
+"POT-Creation-Date: 2012-10-05 18:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,82 +137,100 @@ msgstr ""
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
-#: templates/homepage.html:6
-msgid "Welcome"
-msgstr ""
-
-#: templates/homepage.html:18 templates/homepage_base.html:22
-msgid "Empowering people to buy better"
-msgstr ""
-
-#: templates/homepage.html:21 templates/homepage_base.html:25
-msgid ""
-"NewCo helps you choose with confidence</br>and share your advice between "
-"users."
-msgstr ""
-
-#: templates/homepage.html:28
-#, python-format
-msgid ""
-"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
-"\">Product index</a></br>to explore the website."
-msgstr ""
-
-#: templates/homepage.html:35 templates/homepage_base.html:39
-#, python-format
-msgid ""
-"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
-"\">How to contribute?</a></br>to get ready for the next step."
-msgstr ""
-
-#: templates/homepage.html:43 templates/homepage_base.html:45
-#, python-format
-msgid ""
-"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
-"\">Sign up!</a></br>to start your new career."
-msgstr ""
-
-#: templates/homepage_base.html:13
+#: templates/homepage_base.html:9
 #, python-format
 msgid "Home: %(username)s"
 msgstr ""
 
-#: templates/homepage_base.html:13
+#: templates/homepage_base.html:9
 msgid "Home"
 msgstr ""
 
-#: templates/homepage_base.html:33
+#: templates/homepage_base.html:25
+msgid "NewCo"
+msgstr ""
+
+#: templates/homepage_base.html:26
+msgid "Empowering you to buy better"
+msgstr ""
+
+#: templates/homepage_base.html:27
+msgid ""
+"NewCo helps you choose with confidence and share your advice between users."
+msgstr ""
+
+#: templates/homepage_base.html:34
+msgid "Get information"
+msgstr ""
+
+#: templates/homepage_base.html:37 templates/homepage_base.html.py:44
+msgid "Find products or tags in the search bar"
+msgstr ""
+
+#: templates/homepage_base.html:40
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
+"a>"
+msgstr ""
+
+#: templates/homepage_base.html:47
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
+"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
+"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
+"i>explore NewCo</em></a>"
+msgstr ""
+
+#: templates/homepage_base.html:53
+msgid "Share knowledge"
+msgstr ""
+
+#: templates/homepage_base.html:56 templates/homepage_base.html.py:62
 #, python-format
 msgid ""
-"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary\" "
-"id=\"explore\">Product index</a></br>to explore the website."
-msgstr ""
-
-#: templates/homepage_base.html:54
-msgid "Click here to close the tutorial"
-msgstr ""
-
-#: templates/homepage_base.html:54
-msgid "NewCo empowers you to buy better"
-msgstr ""
-
-#: templates/homepage_base.html:55
-msgid "Popular"
-msgstr ""
-
-#: templates/homepage_base.html:56
-msgid "Last Added"
-msgstr ""
-
-#: templates/homepage_base.html:57
-msgid "Community"
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contribute</a></em>..."
 msgstr ""
 
 #: templates/homepage_base.html:59
+msgid "...and build your reputation from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:65
+#, python-format
+msgid ""
+"...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
+"\">reputation</a> from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:75
+msgid "Click here to close the tutorial"
+msgstr ""
+
+#: templates/homepage_base.html:75
+msgid "NewCo empowers you to buy better"
+msgstr ""
+
+#: templates/homepage_base.html:76
+msgid "Popular"
+msgstr ""
+
+#: templates/homepage_base.html:77
+msgid "Last Added"
+msgstr ""
+
+#: templates/homepage_base.html:78
+msgid "Community"
+msgstr ""
+
+#: templates/homepage_base.html:80
 msgid "Latest Contributions"
 msgstr ""
 
-#: templates/homepage_base.html:61
+#: templates/homepage_base.html:82
 msgid "My newsfeed"
 msgstr ""
 
