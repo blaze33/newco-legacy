@@ -10,11 +10,11 @@ def sync_products(sender, instance, **kwargs):
     ''' Keep legacy items in sync with new Items of class product
     '''
     content, created = Item.objects.get_or_create(
-        data__contains={'legacy_id': unicode(instance.id), 'class': 'product'})
+        data__contains={'legacy_id': unicode(instance.id), '_class': 'product'})
     if not created and content.data['name'] == instance.name:
         return content
     content.data.update({'legacy_id': unicode(instance.id),
-                         'class': 'product',
+                         '_class': 'product',
                          'name': instance.name})
     content.save()
     return content
@@ -25,7 +25,7 @@ def add_images(request, **kwargs):
     legacy_product = LegacyItem.objects.get(id=kwargs['pk'])
     product = sync_products(LegacyItem, legacy_product)
 
-    album_data = {'class': 'image_set', 'name': 'main album'}
+    album_data = {'_class': 'image_set', 'name': 'main album'}
     album = product.successors.filter(data__contains=album_data)
     if not album:
         album = Item.objects.create(data=album_data)
@@ -47,11 +47,11 @@ def add_images(request, **kwargs):
         i = images[x]
         image, created = Item.objects.get_or_create(data__contains={
             'link': i['link'],
-            'class': 'image'})
+            '_class': 'image'})
         for k, v in i.items():
             i[k] = unicode(v)
         image.data = i
-        image.data['class'] = 'image'
+        image.data['_class'] = 'image'
         image.save()
         album.link_to(image, {'relationship': 'contains',
             'order': unicode(img_order.index(x))})
@@ -62,7 +62,7 @@ def add_images(request, **kwargs):
 
 def get_album(instance):
     item = sync_products(LegacyItem, instance)
-    album = item.successors.filter(data__contains={'class': 'image_set'})
+    album = item.successors.filter(data__contains={'_class': 'image_set'})
     if not album:
         return []
     ids = [int(x) for x in album[0].data['id_order'].strip('[]').split(',')]
