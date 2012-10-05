@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.db.models.query import QuerySet
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
@@ -25,7 +25,7 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album, sync_products
-from items.models import Item, Content, Question
+from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
@@ -43,6 +43,8 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
+            if self.model is Link or self.model is Feature:
+                raise Http404()
             form_class_name = self.model._meta.object_name + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
@@ -198,13 +200,15 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
         public_query = Q(status=Content.STATUS.public)
         if self.model == Item:
             item = context.get("item")
-            q_feat = Q(feature__items__id=item.id)
             queries = {
                 "questions": Q(question__items__id=item.id) & public_query,
-                "feat_pos": q_feat & Q(feature__positive=True) & public_query,
-                "feat_neg": q_feat & Q(feature__positive=False) & public_query,
-                "links": Q(link__items__id=item.id) & public_query,
             }
+            # q_feat = Q(feature__items__id=item.id)
+            # queries.update({
+            #   "feat_pos": q_feat & Q(feature__positive=True) & public_query,
+            #   "feat_neg": q_feat & Q(feature__positive=False) & public_query,
+            #   "links": Q(link__items__id=item.id) & public_query,
+            # })
 
             contents = dict()
             for key, query in queries.items():
