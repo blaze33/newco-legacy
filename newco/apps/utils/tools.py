@@ -23,20 +23,46 @@ from voting.models import Vote
 from items.models import Item, Content
 from profiles.models import Profile
 
+
+def get_class_name(klass):
+    return "%s.%s" % (klass.__module__, klass._meta.object_name)
+
+
 PARAMS = {
-    "%s.%s" % (Item.__module__, Item._meta.object_name): {
+    get_class_name(Item): {
         "class": Item, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
-    "%s.%s" % (Profile.__module__, Profile._meta.object_name): {
+    get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
-    "%s.%s" % (Tag.__module__, Tag._meta.object_name): {
+    get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
 }
+
+MODULE_PATTERN = "(?P<module_name>[\w+\.]+)\.(?P<fromlist>\w+)$"
+
+
+def get_class_from_string(class_string, pattern=MODULE_PATTERN):
+    match_obj = re.match(pattern, class_string)
+    if not match_obj:
+        print "Class string expresion didn't match pattern '%s'" % pattern
+        return None
+    try:
+        module = __import__(match_obj.group("module_name"),
+                            fromlist=[match_obj.group("fromlist")])
+    except ImportError:
+        print "Failed to import module <%s>" % match_obj.group("module_name")
+        return None
+
+    cls = getattr(module, match_obj.group("fromlist"), None)
+    if not cls:
+        print "Module <%s> doesn't have class '%s'" % \
+            (match_obj.group("module_name"), match_obj.group("fromlist"))
+    return cls
 
 
 def load_object(request):
@@ -67,8 +93,8 @@ def normalize_query(query_string,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ', (t[0] or t[1]).strip()) \
-                                            for t in findterms(query_string)]
+    return [normspace(' ',
+                      (t[0] or t[1]).strip()) for t in findterms(query_string)]
 
 
 def get_query(query_string, search_fields, terms=None):
@@ -163,6 +189,7 @@ def load_redis_engine():
 def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
 
+    # TODO: check that all redis items exists
     if not engine:
         return
     for key, value in PARAMS.iteritems():
@@ -174,7 +201,7 @@ def update_redis_db(sender, request, user, **kwargs):
 
 @receiver(post_save)
 def redis_post_save(sender, instance=None, raw=False, **kwargs):
-    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    key = get_class_name(instance)
     if not key in PARAMS:
         return
     engine = load_redis_engine()
@@ -202,7 +229,7 @@ def record_object(engine, obj, key, value, ctype=None):
 
 @receiver(post_delete)
 def redis_post_delete(sender, instance=None, **kwargs):
-    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    key = get_class_name(instance)
     if not key in PARAMS:
         return
     engine = load_redis_engine()
