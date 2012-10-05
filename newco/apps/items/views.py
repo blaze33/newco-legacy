@@ -251,13 +251,10 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
                     "cheapest_prod": cheapest_prod
                 })
 
-            new_item = sync_products(Item, self.object)
-            albums = new_item.successors.filter(data__contains={
-                'class': 'image_set', 'name': 'main album'
-            })
+            albums = self.object.node().graph.image_set
             if albums:
                 # This is a way to order by values of an hstore key
-                images = albums[0].successors.all().extra(
+                images = albums[0].successors.extra(
                     select={"order": "content_relation.data -> 'order'"},
                     order_by=['order', ]
                 )

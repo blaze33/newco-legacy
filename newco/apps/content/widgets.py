@@ -14,13 +14,12 @@ except ImportError:
     def _to_text(value):
         return json.dumps(value, sort_keys=True, indent=2)
 
-import simplejson 
 from django.forms import Widget
-from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.forms.widgets import flatatt
 from django.contrib.admin.widgets import AdminTextareaWidget
 from django.utils.html import escape
+
 
 class JsonPairInputs(AdminTextareaWidget):
     """A widget that displays JSON Key Value Pairs
@@ -58,18 +57,19 @@ class JsonPairInputs(AdminTextareaWidget):
         value (str)  -- a json string of a two-tuple list automatically passed in by django
         attrs (dict) -- automatically passed in by django (unused in this function)
         """
-        
+
         ret = '<div class="control-group" id="form_data">'
-        if value and len(value) > 0: 
-            if type(value) == type(''): value = _to_python(value)
+        if value and len(value) > 0:
+            if type(value) == type(''):
+                value = _to_python(value)
             print value.__class__, value
-            for k,v in value.items(): 
-                ctx = {'key':escape(k),
-                       'value':escape(v),
-                       'fieldname':name,
+            for k, v in value.items():
+                ctx = {'key': escape(k),
+                       'value': escape(v),
+                       'fieldname': name,
                        'key_attrs': flatatt(self.key_attrs),
-                       'val_attrs': flatatt(self.val_attrs) }
-                ret += '<input type="text" name="json_key[%(fieldname)s]" value="%(key)s" %(key_attrs)s> <input type="text" name="json_value[%(fieldname)s]" value="%(value)s" %(val_attrs)s><br />' % ctx
+                       'val_attrs': flatatt(self.val_attrs)}
+                ret += '<input type="text" name="json_key[%(fieldname)s]" value="%(key)s" %(key_attrs)s> <input type="text" name="json_value[%(fieldname)s]" value="%(value)s" %(val_attrs)s><br>' % ctx
         ret += '</div>'
         return mark_safe(ret)
 
@@ -85,13 +85,13 @@ class JsonPairInputs(AdminTextareaWidget):
 
         """
         datadict = "null"
-        if data.has_key('json_key[%s]' % name) and data.has_key('json_value[%s]' % name): 
-            keys     = data.getlist("json_key[%s]" % name) 
-            values   = data.getlist("json_value[%s]" % name) 
+        if ('json_key[%s]' % name) and ('json_value[%s]' % name) in data:
+            keys     = data.getlist("json_key[%s]" % name)
+            values   = data.getlist("json_value[%s]" % name)
             datadict = {}
-            for key, value in zip(keys, values): 
+            for key, value in zip(keys, values):
                 if len(key) > 0:
-                    datadict[key]=value
+                    datadict[key] = value
         return _to_text(datadict)
 
     class Media:
