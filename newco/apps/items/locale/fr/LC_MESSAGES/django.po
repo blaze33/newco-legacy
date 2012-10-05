@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-04 22:11+0200\n"
-"PO-Revision-Date: 2012-10-04 22:15\n"
+"POT-Creation-Date: 2012-10-05 13:53+0200\n"
+"PO-Revision-Date: 2012-10-05 13:55\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -355,7 +355,7 @@ msgstr "Fermer"
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
-#: templates/items/item_form.html:18 templates/items/item_list_base.html:43
+#: templates/items/item_form.html:18 templates/items/item_list_base.html:41
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
@@ -367,7 +367,7 @@ msgstr "Ajouter un produit :"
 msgid "Edit"
 msgstr "Modifier"
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:107
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:102
 #: templates/items/question_detail.html:32
 #: templates/items/feed_display/_feature.html:7
 #: templates/items/feed_display/_link.html:7
@@ -456,7 +456,7 @@ msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
 msgid "Add to skills"
 msgstr "Ajouter aux compétences"
 
-#: templates/items/item_list_base.html:58
+#: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a>"
@@ -466,7 +466,7 @@ msgstr ""
 "class=\"label\">%(tagname)s</a> correspondant aux termes de recherche "
 "<i>\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:61
+#: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a>"
@@ -475,50 +475,50 @@ msgstr ""
 "Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\" "
 "class=\"label\">%(tagname)s</a>."
 
-#: templates/items/item_list_base.html:63
+#: templates/items/item_list_base.html:60
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 "Il n'y a pas de produit disponible correspondant aux termes de recherche "
 "<i>\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:62
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list_base.html:70
+#: templates/items/item_list_base.html:67
 #, python-format
 msgid ""
-"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating a "
+"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">create a "
 "product</a> yourself?"
 msgstr ""
 "Pourquoi ne pas <a href=\"%(add_item_url)s\" class=\"btn btn-primary "
 "\">créer un produit</a> vous-même ?"
 
-#: templates/items/item_list_base.html:71
+#: templates/items/item_list_base.html:69
 msgid ""
-"By creating a product product page you lay the first brick to gather "
+"By creating a product product page, you lay the first brick to gather "
 "information about this product: other members will see this page, add things"
-" they know about it, and... answer to you questions if you ask some."
+" they know about it, and even answer to you questions if you ask some."
 msgstr ""
 "En créant une page produit, vous posez la première pierre pour rassembler de"
-" l'information sur celui ci : d'autres membres vont voir cette page, ajouter"
-" des choses qu'ils savent sur cet article, et... répondre à vos questions si"
-" vous en avez posé."
+" l'information sur celui ci : d'autres membres verront cette page, "
+"ajouteront des choses qu'ils savent sur cet article, et répondront même à "
+"vos questions si vous en posez."
 
-#: templates/items/item_list_base.html:97
+#: templates/items/item_list_base.html:92
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
-#: templates/items/item_list_base.html:98
+#: templates/items/item_list_base.html:93
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
-#: templates/items/item_list_base.html:99
+#: templates/items/item_list_base.html:94
 msgid "Most popular"
 msgstr "Plus populaire"
 
-#: templates/items/item_list_base.html:102
+#: templates/items/item_list_base.html:97
 msgid "Sort"
 msgstr "Trier"
 
