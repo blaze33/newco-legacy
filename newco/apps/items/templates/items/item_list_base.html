@@ -115,4 +115,10 @@
     {{ block.super }}
     {{ media.js }}
     <script type="text/javascript">$(".chzn-select").chosen();</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#carousel_tag').carousel({ interval: 15000 });
+        });
+    </script>
 {% endblock %}
