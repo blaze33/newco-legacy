@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-05 18:03+0200\n"
+"POT-Creation-Date: 2012-10-05 19:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: templates/homepage_base.html:25
+#: templates/homepage_base.html:26
 msgid "NewCo"
 msgstr ""
 
@@ -159,15 +159,15 @@ msgid ""
 "NewCo helps you choose with confidence and share your advice between users."
 msgstr ""
 
-#: templates/homepage_base.html:34
+#: templates/homepage_base.html:35
 msgid "Get information"
 msgstr ""
 
-#: templates/homepage_base.html:37 templates/homepage_base.html.py:44
+#: templates/homepage_base.html:38 templates/homepage_base.html.py:45
 msgid "Find products or tags in the search bar"
 msgstr ""
 
-#: templates/homepage_base.html:40
+#: templates/homepage_base.html:41
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
 "style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:62
+#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -195,42 +195,42 @@ msgid ""
 "middle;\"></i> contribute</a></em>..."
 msgstr ""
 
-#: templates/homepage_base.html:59
+#: templates/homepage_base.html:58
 msgid "...and build your reputation from others' votes"
 msgstr ""
 
-#: templates/homepage_base.html:65
+#: templates/homepage_base.html:64
 #, python-format
 msgid ""
 "...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
 "\">reputation</a> from others' votes"
 msgstr ""
 
-#: templates/homepage_base.html:75
+#: templates/homepage_base.html:73
 msgid "Click here to close the tutorial"
 msgstr ""
 
-#: templates/homepage_base.html:75
+#: templates/homepage_base.html:73
 msgid "NewCo empowers you to buy better"
 msgstr ""
 
-#: templates/homepage_base.html:76
+#: templates/homepage_base.html:74
 msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:77
+#: templates/homepage_base.html:75
 msgid "Last Added"
 msgstr ""
 
-#: templates/homepage_base.html:78
+#: templates/homepage_base.html:76
 msgid "Community"
 msgstr ""
 
-#: templates/homepage_base.html:80
+#: templates/homepage_base.html:78
 msgid "Latest Contributions"
 msgstr ""
 
-#: templates/homepage_base.html:82
+#: templates/homepage_base.html:80
 msgid "My newsfeed"
 msgstr ""
 

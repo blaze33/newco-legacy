@@ -44,7 +44,7 @@ BOXES = {
         "mini_feed": "True",
         "page_url": reverse_lazy("dash", args=["contribution"]),
     },
-    "drafts": {
+    "draft": {
         "title": _("Drafts"),
         "subtitle": _("Maybe you want to complete and publish some?"),
         "name": "drafts",
@@ -101,10 +101,10 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
             self.template_name = "dashboard/" + self.page + ".html"
             self.paginate_by = 14
             if self.page == "feed":
-                self.queryset = Content.objects.get_feed(self.user)
+                self.queryset = self.queryset.get_feed(self.user)
             elif self.page == "contribution":
-                self.queryset = Content.objects.get_related_contributions(
-                    self.user)
+                self.queryset = self.queryset.get_related_contributions(
+                    self.user, Item.objects.all())
 #            elif self.page == "collaboration":
             elif self.page == "draft" or self.page == "all":
                 self.queryset = self.queryset.filter(author=self.user)
@@ -122,18 +122,19 @@ class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         if self.page == "dashboard":
-            drafts = Content.objects.filter(
+            drafts = self.queryset.filter(
                 Q(author=self.user) & Q(status=Content.STATUS.draft)
             )
-            feed = Content.objects.get_feed(self.user)
-            all_my_contrib = Content.objects.filter(author=self.user)
-            contrib_feed = Content.objects.get_related_contributions(self.user)
+            feed = self.queryset.get_feed(self.user)
+            all_my_contrib = self.queryset.filter(author=self.user)
+            contrib_feed = self.queryset.get_related_contributions(
+                self.user, Item.objects.all())
 
             boxes = BOXES
             boxes.get("feed").update({"feed": feed.select_subclasses()[:4]})
             boxes.get("contribution").update(
                 {"feed": contrib_feed.select_subclasses()[:4]})
-            boxes.get("drafts").update(
+            boxes.get("draft").update(
                 {"feed": drafts.select_subclasses()[:4]})
             boxes.get("all").update(
                 {"feed": all_my_contrib.select_subclasses()[:4]})

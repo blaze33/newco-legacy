@@ -17,72 +17,72 @@
 
 
 {% block body_base %}
-    <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% if request.GET.bg == "1" %}{% static 'img/bg/iPad_bg_texture_grey.png' %}{% elif request.GET.bg == "2" %}{% static 'img/bg/bg_grey.jpg' %}{% elif request.GET.bg == "3" %}{% static 'img/bg/apple_bg_texture_light_grey.png' %}{% elif request.GET.bg == "4" %}{% static 'img/bg/sp/whitey.png' %}{% else %}{% static 'img/bg/apple_bg_linen_light_grey.jpeg' %}{% endif %});">
-        <div class="container" style="position: relative; z-index: +2;">
+  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/apple_bg_linen_light_grey.jpeg' %});">
+    <div class="container" style="position: relative; z-index: +2;">
 
-            <header class="jumbotron subhead" id="newco" style="border-top: 30px solid transparent;">
-                <div class="row">
-                    <center><h1 style="font-size: 60px; line-height: 18px;">{% trans "NewCo" %}<br>
-                        <small><i>{% trans "Empowering you to buy better" %}</i></small></h1>
-                    <p class="lead muted">{% blocktrans %}NewCo helps you choose with confidence and share your advice between users.{% endblocktrans %}</p></center>
-                </div>
-            </header>
-
-            <div class="row">
-                <div class="span6">
-                    <div class="well well-large WhyNC-col" id="info" style="margin-bottom: 5px; position: relative;">
-                        <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Get information" %}</em></h2>
-                        <br>
-                        <p class="lead" style="margin-bottom: 0px; opacity: 0;">
-                            <i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}...
-                            <br><br>
-                            {% url "item_index" as index_url %}
-                            {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
-                        </p>
-                        <img class="arrow-search-bar-hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="arrow_search_bar" style="position: absolute; top: -140px; left: +0px;">
-                        <p class="lead" style="margin-bottom: 0px; position: absolute; bottom: 24px;">
-                            <a class="arrow_search_bar_trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}</a>...
-                            <br><br>
-                            {% blocktrans %}...or <a href="#" class="btn btn-primary" id="explore" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-                <div class="span6">
-                    <div class="well well-large WhyNC-col" id="contribute" style="position: relative;">
-                        <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Share knowledge" %}</em></h2>
-                        <br>
-                        <p class="lead" style="margin-bottom: 0px; opacity: 0;">
-                            {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
-                            <br><br>
-                            {% blocktrans %}...and build your reputation from others' votes{% endblocktrans %}
-                        </p>
-                        <p class="lead" style="margin-bottom: 0px; position:absolute; bottom: 24px; opacity: 1;">
-                            {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do" ? #}
-                            <br><br>
-                            {% url 'faq' as url_faq %}
-                            {% blocktrans %}...and build your <a id="reputation-trigger" href="{{ url_faq }}#reputation">reputation</a> from others' votes{% endblocktrans %}
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+      <header class="jumbotron subhead" id="newco" style="border-top: 30px solid transparent;">
+        <div class="row">
+          <center>
+            <h1 style="font-size: 60px; line-height: 18px;">{% trans "NewCo" %}<br><small><i>{% trans "Empowering you to buy better" %}</i></small></h1>
+            <p class="lead muted">{% blocktrans %}NewCo helps you choose with confidence and share your advice between users.{% endblocktrans %}</p>
+          </center>
         </div>
+      </header>
+
+      <div class="row">
+        <div class="span6">
+          <div class="well well-large WhyNC-col" id="info" style="margin-bottom: 5px; position: relative;">
+            <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Get information" %}</em></h2>
+            <br>
+            <p class="lead" style="margin-bottom: 0px; opacity: 0;">
+              <i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}...
+              <br><br>
+              {% url "item_index" as index_url %}
+              {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
+            </p>
+            <img class="arrow-search-bar-hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="arrow_search_bar" style="position: absolute; top: -140px; left: +0px;">
+            <p class="lead" style="margin-bottom: 0px; position: absolute; bottom: 24px;">
+              <a class="arrow_search_bar_trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}</a>...
+              <br><br>
+              {% blocktrans %}...or <a href="#" class="btn btn-primary" id="explore" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
+            </p>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="well well-large WhyNC-col" id="contribute" style="position: relative;">
+            <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Share knowledge" %}</em></h2>
+            <br>
+            <p class="lead" style="margin-bottom: 0px; opacity: 0;">
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
+              <br><br>
+              {% blocktrans %}...and build your reputation from others' votes{% endblocktrans %}
+            </p>
+            <p class="lead" style="margin-bottom: 0px; position:absolute; bottom: 24px; opacity: 1;">
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do" ? #}
+              <br><br>
+              {% url 'faq' as url_faq %}
+              {% blocktrans %}...and build your <a id="reputation-trigger" href="{{ url_faq }}#reputation">reputation</a> from others' votes{% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
-        <li style="padding:10px"><b><a title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black tooltip-tutorial">{% trans "NewCo empowers you to buy better" %}</a></b></li>
-        <li{% if not '/last' in request.path and not '/newsfeed' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
-        <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
-        <li class="dropdown{% if '/newsfeed' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li {% if "/newsfeed" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
-            </ul>
-        </li>
-    </ul></div>
+  <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
+    <li style="padding:10px"><b><a title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black tooltip-tutorial">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+    <li{% if not '/last' in request.path and not '/newsfeed' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
+    <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
+    <li class="dropdown{% if '/newsfeed' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li {% if "/newsfeed" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'newsfeed' %}">{% trans "Latest Contributions" %}</a></li>
+        <li class="divider"></li>
+        <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
+      </ul>
+    </li>
+  </ul></div>
 
-    {{ block.super }}
+  {{ block.super }}
 {% endblock %}
 
 {% block extra_script %}
@@ -133,13 +133,11 @@
                 $('#main_autocomplete').focus();
             });
 
-
             // "explore NewCo"
             $('#explore').click(function(){
                 why_NewCo_div.collapse('hide');
                 return false;
             });
-
 
             // "build your reputation ..."
             $('#reputation-trigger').mouseover(function () {
@@ -149,7 +147,6 @@
             $('#reputation-trigger').mouseout(function () {
                 $('#reputation-btn').removeClass('btn-glow');
             });
-
 
         {% if request.GET.welcome %}
             setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
