@@ -1,0 +1,12 @@
+{% extends "homepage_base.html" %}
+
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block body %}
+
+<h1>Empty template: example 1 !</h1>
+
+{% endblock %}
