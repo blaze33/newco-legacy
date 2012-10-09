@@ -1,6 +1,8 @@
 from django.db.models import Count
 from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from items.models import Item, Content
 
@@ -28,3 +30,7 @@ class HomepageView(ListView):
         return super(HomepageView, self).get(request, *args, **kwargs)
         # else:
         #     return direct_to_template(request, "homepage.html")
+
+    def index_view(request):
+    
+        return render_to_response('site_base.html', {}, context_instance=RequestContext(request))
