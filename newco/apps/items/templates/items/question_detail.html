@@ -14,6 +14,7 @@
 {{ block.super }}
 <script type ="text/javascript">
 	$(document).ready(function(){mixpanel.track("Load_question_detail");});
+	if ($('div').hasClass('alert-success')){mixpanel.track("Question Success");};
 </script>
 {% endblock %}
 
