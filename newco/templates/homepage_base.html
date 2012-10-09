@@ -70,16 +70,12 @@
   </div>
 
   <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
-    <li style="padding:10px"><b><a title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black tooltip-tutorial">{% trans "NewCo empowers you to buy better" %}</a></b></li>
-    <li{% if not '/last' in request.path and not '/questions' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black">{% trans "Popular" %}</a></li>
-    <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black">{% trans "Last Added" %}</a></li>
-    <li class="dropdown{% if '/newsfeed' in request.path %} active{% endif %}" id="contrib"><a class="black dropdown-toggle" data-toggle="dropdown" href="#contrib">{% trans "Community" %} <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li {% if "/questions" in request.path %}class="active"{% endif %}><a href="{% url 'home' 'questions' %}">{% trans "Unanswered Questions" %}</a></li>
-        <li class="divider"></li>
-        <li><a href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
-      </ul>
-    </li>
+    <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+    <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}">{% trans "Popular" %}</a></li>
+    <li {% if cat == "last" %} class="active"{% endif %} id="last"><a class="black" href="{% url 'home' 'last' %}">{% trans "Last Added" %}</a></li>
+    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}">{% trans "Unanswered Questions" %}</a></li>
+    <li class="divider"></li>
+    <li><a class="black" href="{% url 'dash' 'feed' %}">{% trans "My newsfeed" %}</a></li>
   </ul></div>
 
   {{ block.super }}
