@@ -55,6 +55,7 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+    <script type="text/javascript">$(document).ready(function(){mixpanel.track_links("#mixpanel_signup_page","Signup_Page");});</script>
     <script type="text/javascript">
     function TriggerMasonry(){
     	$('#thumbnails_list').masonry({
