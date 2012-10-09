@@ -10,6 +10,7 @@ from django.db.models.loading import get_model
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.utils.datastructures import SortedDict
+from django.template import TemplateDoesNotExist
 
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
@@ -213,3 +214,24 @@ def redis_post_delete(sender, instance=None, **kwargs):
     obj_id = instance.__getattribute__(value["pk"])
     ctype = ContentType.objects.get_for_model(instance)
     engine.remove(obj_id, ctype.id)
+
+    from django.template.base import TemplateDoesNotExist
+from django.template.loader import find_template_loader
+
+
+def get_template_source(template_name):
+    loaders = []
+    for loader_name in settings.TEMPLATE_LOADERS:
+        loader = find_template_loader(loader_name)
+        if loader is not None:
+            loaders.append(loader)
+    template_source_loaders = tuple(loaders)
+
+    for loader in template_source_loaders:
+        try:
+            tpl, source = loader.load_template_source(template_name)
+            return source
+        except TemplateDoesNotExist:
+            pass
+
+    return None

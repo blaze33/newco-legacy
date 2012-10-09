@@ -43,12 +43,12 @@
 {% if debug %}
     <div class="pull-right"><ul class="nav pull-right">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Trial templates" %}{% trans ":" %} {{ temp_av|length }} </a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Trial templates" %}{% trans ":" %} {{ trial_temp|length|add:"-1" }} </a>
             <ul class="dropdown-menu">
                 <li><a href="?">{% trans "Original template" %}</a></li>
-                {% for key, temp_av in temp_av.items %}
+                {% for disp_name in trial_temp %}
 
-                    <li><a href="?template_test={{ key }}">{{ temp_av }}</a></li>
+                    <li><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == "trial_template" %}{{ k }}={{ v }}&{% endif %}{% endfor %}trial_template={{ disp_name }}">{{ disp_name }}</a></li>
 
                 {% endfor %}
             </ul>
