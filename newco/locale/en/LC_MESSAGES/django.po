@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 13:21+0200\n"
+"POT-Creation-Date: 2012-10-09 17:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -223,27 +223,15 @@ msgid "Last Added"
 msgstr ""
 
 #: templates/homepage_base.html:76
-msgid "Community"
-msgstr ""
-
-#: templates/homepage_base.html:78
 msgid "Unanswered Questions"
 msgstr ""
 
-#: templates/homepage_base.html:80
+#: templates/homepage_base.html:78
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:40
-msgid "Search"
-msgstr ""
-
-#: templates/site_base.html:90
-msgid "Search an item, a tag..."
-msgstr ""
-
-#: templates/site_base.html:91
-msgid "What are you looking for?"
+#: templates/site_base.html:43
+msgid "Search a product, a user, a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
