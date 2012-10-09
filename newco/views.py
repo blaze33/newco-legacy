@@ -2,9 +2,10 @@ from django.db.models import Count
 from django.views.generic import ListView
 
 from items.models import Item, Question
+from utils.views.trial_template import TrialTemplateMixin
 
 
-class HomepageView(ListView):
+class HomepageView(TrialTemplateMixin, ListView):
 
     paginate_by = 14
 
