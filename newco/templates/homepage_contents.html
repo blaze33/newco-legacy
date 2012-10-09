@@ -4,12 +4,20 @@
 {% load content_utils %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load staticfiles %}
+
+{% block extra_style %}
+    {{ block.super }}
+    <link href="{% static 'css/content.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 
-<div class="row"><div class="offset1 span10"><div id="thumbnails_list">{% for content in object_list %}
-    {% include "items/feed_display/_thumbnail_frame.html" with object=content only %}
-{% endfor %}</div></div></div>
+<br>
+
+<div class="row"><div class="offset1 span10">
+    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" %}
+</div></div>
 
 {% if is_paginated %}{% paginate %}{% endif %}
 

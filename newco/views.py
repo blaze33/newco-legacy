@@ -1,8 +1,7 @@
 from django.db.models import Count
 from django.views.generic import ListView
-from django.views.generic.simple import direct_to_template
 
-from items.models import Item, Content
+from items.models import Item, Question
 
 
 class HomepageView(ListView):
@@ -19,12 +18,11 @@ class HomepageView(ListView):
                 self.queryset = self.queryset.order_by("-pub_date")
             else:
                 self.queryset = self.queryset.annotate(
-                            Count("content")).order_by("-content__count")
-        elif kwargs.get("cat") == "newsfeed":
-            self.queryset = Content.objects.all().select_subclasses()
+                    Count("content")).order_by("-content__count")
+        elif kwargs.get("cat") == "questions":
+            self.queryset = Question.objects.annotate(
+                score=Count("answer")).filter(score__lte=0)
             self.template_name = "homepage_contents.html"
         else:
             pass
         return super(HomepageView, self).get(request, *args, **kwargs)
-        # else:
-        #     return direct_to_template(request, "homepage.html")
