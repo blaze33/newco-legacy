@@ -52,10 +52,10 @@
       <h3>
         {% if tag and search_terms %}
             {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% elif tag and not search_terms %}
             {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label">{{ tagname }}</a> are available.{% endblocktrans %}
+            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
         {% elif not tag and search_terms %}
             {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% else %}
