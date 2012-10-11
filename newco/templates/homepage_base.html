@@ -3,6 +3,12 @@
 {% load url from future %}
 {% load i18n %}
 {% load account_tags %}
+{% load staticfiles %}
+
+{% block extra_style %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/global.css">
+{% endblock %}
 
 {% block extra_script %}
     {{ block.super }}
@@ -50,7 +56,26 @@
         <br><br><br>
     </div>
 
-    
+<div id="create_typeahead" class="modal fade hide">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>{% trans "Create..." %}</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="row" style="margin-left: 50px">
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'item' %}"><img src="{% static 'img/gears.png' %}" type="image/png"><br><br><h3 class="black">Add a product</h3></a></div>
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'question' %}"><img src="{% static 'img/bulb.png' %}" type="image/png"><br><br><h3 class="black">Ask a question</h3></a></div>
+    	</div>
+    </div>
+</div>
+
+ <div class="subnav subnav-fixed" rel="subnav" id="homepage_fixed"><ul class="nav nav-pills">
+        <li style="padding:10px"><b><a title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#" class="black tooltip-tutorial">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+        <li{% if not '/last' in request.path and not '/questions_to_answer' in request.path %} class="active"{% endif %} id="popular"><a href="{% url 'home' %}" class="black" id="mixpanel_popular">{% trans "Popular" %}</a></li>
+        <li {% if '/last' in request.path %} class="active"{% endif %} id="last"><a href="{% url 'home' 'last' %}" class="black" id="mixpanel_last">{% trans "Last Added" %}</a></li>
+        <li {% if '/questions_to_answer' in request.path %} class="active"{% endif %} id="questions_to_answer"><a href="{% url 'home' 'questions_to_answer' %}" class="black" id="mixpanel_questions_to_answer">{% trans "Answer Questions" %}</a></li>
+        <li {% if '/dash_feed' in request.path %} class="active"{% endif %} id="dash_feed"><a href="{% url 'dash' 'feed' %}" class="black" id="mixpanel_mynews_home">{% trans "My Newsfeed" %}</a></li>
+    </ul></div>
     {{ block.super }}
 {% endblock %}
 
