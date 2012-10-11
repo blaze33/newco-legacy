@@ -4,7 +4,7 @@ from django.views.generic.simple import direct_to_template
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from items.models import Item, Content
+from items.models import Item, Content, Question, Answer
 
 
 class HomepageView(ListView):
@@ -22,15 +22,11 @@ class HomepageView(ListView):
             else:
                 self.queryset = self.queryset.annotate(
                             Count("content")).order_by("-content__count")
-        elif kwargs.get("cat") == "newsfeed":
-            self.queryset = Content.objects.all().select_subclasses()
-            self.template_name = "homepage_contents.html"
+        elif kwargs.get("cat") == "questions_to_answer":
+            self.queryset = Question.objects.all()
+            self.template_name = "homepage_questions.html"
         else:
             pass
         return super(HomepageView, self).get(request, *args, **kwargs)
         # else:
         #     return direct_to_template(request, "homepage.html")
-
-    def index_view(request):
-    
-        return render_to_response('site_base.html', {}, context_instance=RequestContext(request))
