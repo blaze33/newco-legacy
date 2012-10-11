@@ -380,15 +380,15 @@ img:hover + .img-controls,
 
 .nav.btn-group > li.btn > a {
   padding: 9px 10px 11px;
-  line-height: 19px;
+  line-height: 20px;
 }
 .nav.btn-group > li.navbar-text {
   padding: 9px 1px 11px;
-  line-height: 19px;
+  line-height: 20px;
 }
 
 .nav.btn-group > li > a > .gravatar {
-  margin-top: -4px;
+  margin-top: -7px;
   margin-bottom: -3px;
   margin-right: 4px;
 }
