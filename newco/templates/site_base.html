@@ -33,6 +33,7 @@ due to bad pixel fitting of small icons.
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
+        <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
     <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
 {% endblock %}
 
@@ -55,7 +56,12 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-    <script type="text/javascript">$(document).ready(function(){mixpanel.track_links("#mixpanel_signup_page","Signup_Page");});</script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	mixpanel.track_links("#mixpanel_signup_page","Signup_Page");
+    	if ($('li').hasClass('non_auth')){mixpanel.track("Page Load User non authenticated");};
+    });
+    </script>
     <script type="text/javascript">
     function TriggerMasonry(){
     	$('#thumbnails_list').masonry({
@@ -93,9 +99,6 @@ due to bad pixel fitting of small icons.
             placeholder : "{% trans 'What are you looking for?' %}",
         });
     });
-    </script>
-    <script type="text/javascript">
-    var var_mixpanel="{{ MIXPANEL_KEY_ID }}"
     </script>
 {% endblock %}
 
