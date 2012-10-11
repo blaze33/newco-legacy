@@ -2,20 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-15 13:23-0600\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2012-10-11 01:37\n"
+"Last-Translator:   <rouyrre@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"X-Translated-Using: django-rosetta 0.6.8\n"
 
 #: templates/_account_bar.html:6
 msgid "Logged in as:"
@@ -46,7 +47,7 @@ msgstr "ou"
 #: templates/_account_bar.html:28 templates/account/signup.html:12
 #: templates/account/signup.html.py:20
 msgid "Sign up"
-msgstr "Enregistrement"
+msgstr "Inscription"
 
 #: templates/account/base.html:9
 msgid "Account"
@@ -81,13 +82,13 @@ msgstr "Confirmez votre adresse email"
 msgid ""
 "We have sent you an email to <b>%(email)s</b> for verification. Follow the "
 "link provided to finalize the signup process. If you do not receive it "
-"within a few minutes, contact us at <a href=\"mailto:"
-"%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"within a few minutes, contact us at <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 msgstr ""
 "Nous vous avons envoyé un email à <b>%(email)s</b> pour vérification. "
 "Cliquez sur le lien fourni pour finaliser le processus d'inscription. Si "
-"vous ne l'avez pas reçu d'ici quelques minutes, contactez-nous à "
-"<a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"vous ne l'avez pas reçu d'ici quelques minutes, contactez-nous à <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 
 #: templates/account/email_confirmed.html:5
 #: templates/account/email_confirmed.html:8
@@ -155,12 +156,12 @@ msgstr "Réinitialiser mon mot de passe"
 #: templates/account/password_reset.html:24
 #, python-format
 msgid ""
-"If you have any trouble resetting your password, contact us at <a href="
-"\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"If you have any trouble resetting your password, contact us at <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 msgstr ""
-"Si vous avez des problèmes pour réinitialiser votre mot de passe, "
-"contactez-nous à "
-"<a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"Si vous avez des problèmes pour réinitialiser votre mot de passe, contactez-"
+"nous à <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 
 #: templates/account/password_reset_sent.html:6
 #: templates/account/password_reset_sent.html:9
@@ -171,12 +172,12 @@ msgstr "Mot de passe réinitialisé envoyé"
 #, python-format
 msgid ""
 "We have sent you an email. If you do not receive it within a few minutes, "
-"try resending or contact us at <a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">"
-"%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"try resending or contact us at <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 msgstr ""
 "Nous vous avons envoyé un email. Si vous ne l'avez pas reçu d'ici quelques "
-"minutes, essayez de le renvoyer ou contactez-nous à "
-"<a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"minutes, essayez de le renvoyer ou contactez-nous à <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 
 #: templates/account/password_reset_sent.html:17
 msgid "Resend"
@@ -186,12 +187,12 @@ msgstr "Renvoyer"
 #, python-format
 msgid ""
 "We have resent the password email. If you do not receive it within a few "
-"minutes, contact us at <a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">"
-"%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"minutes, contact us at <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 msgstr ""
 "Nous avons renvoyé l'email pour le mot de passe. Si vous ne l'avez pas reçu "
-"d'ici quelques minutes, contactez-nous à "
-"<a href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
+"d'ici quelques minutes, contactez-nous à <a "
+"href=\"mailto:%(ACCOUNT_CONTACT_EMAIL)s\">%(ACCOUNT_CONTACT_EMAIL)s</a>."
 
 #: templates/account/password_reset_token.html:10
 msgid "Set password"
@@ -209,19 +210,19 @@ msgid ""
 "used.  Please request a <a href=\"%(url)s\">new password reset</a>."
 msgstr ""
 "Le lien de réinitialisation du mot de passe est invalide, potentiellement "
-"parce qu'il a déjà été utilisé. Merci de faire une nouvelle demande de "
-"<a href=\"%(url)s\">réinitialisation du mot de passe</a>."
+"parce qu'il a déjà été utilisé. Merci de faire une nouvelle demande de <a "
+"href=\"%(url)s\">réinitialisation du mot de passe</a>."
 
 #: templates/account/signup.html:6
 msgid "Sign Up"
-msgstr "Enregistrement"
+msgstr "Inscription"
 
 #: templates/account/signup_closed.html:6
 #: templates/account/signup_closed.html:9
 #: templates/account/signup_code_failure.html:6
 #: templates/account/signup_code_failure.html:9
 msgid "Sign Up Closed"
-msgstr "Enregistrement vérrouillé"
+msgstr "Inscriptions closes"
 
 #: templates/account/signup_closed.html:11
 msgid "The code you provided was not accepted."
@@ -254,18 +255,13 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 #: templates/account/email/password_reset.txt:1
 #, python-format
 msgid ""
-"You're receiving this email becuase you or someone else has requested a "
-"password for your user account at %(site_name)s.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password.\n"
+"You're receiving this email becuase you or someone else has requested a password for your user account at %(site_name)s.\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset your password.\n"
 "\n"
 "%(password_reset_url)s\n"
 msgstr ""
-"Vous recevez cet email parce que vous ou quelqu'un d'autre a demandé un mot "
-"de passe pour votre compte utilisateur sur %(site_name)s.\n"
-"Vous pouvez l'ignorer sans crainte si vous n'avez pas fait une demande de "
-"réinitialisation de mot de passe. Cliquez sur le lien ci-dessous pour "
-"réinitialiser votre mot de passe.\n"
+"Vous recevez cet email parce que vous ou quelqu'un d'autre a demandé un mot de passe pour votre compte utilisateur sur %(site_name)s.\n"
+"Vous pouvez l'ignorer sans crainte si vous n'avez pas fait une demande de réinitialisation de mot de passe. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe.\n"
 "\n"
 "%(password_reset_url)s\n"
 
