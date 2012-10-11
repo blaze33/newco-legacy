@@ -4,7 +4,7 @@
 {% load content_utils %}
 
 <div class="pull-right">{% if request.user.is_authenticated %}
-    <div class="btn-group">
+    <div class="btn-group well_auth">
         <a href="{% url 'dash' %}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
         <a href="/about/faq/#reputation" class="btn btn-inverse" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
         <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
@@ -23,7 +23,7 @@
     <ul class="nav pull-right">
         <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
         {% if ACCOUNT_OPEN_SIGNUP %}
-            <li class="navbar-text">{% trans "or" %}</li>
+            <li class="navbar-text non_auth">{% trans "or" %}</li>
             <li><a href="{% url 'account_signup' %}" id="mixpanel_signup_page">{% trans "Sign up" %}</a></li>
         {% endif %}
     </ul>

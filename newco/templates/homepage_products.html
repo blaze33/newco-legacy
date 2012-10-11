@@ -1,9 +1,20 @@
 {% extends "homepage_base.html" %}
 
+{% load url from future %}
 {% load i18n %}
 {% load content_utils %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load staticfiles %}
+
+{% block body %}
+<div class="row" style="margin-top: 30px"><div class="offset1 span10"><div id="thumbnails_list">{% for item in object_list %}
+    {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+{% endfor %}</div></div></div>
+
+{% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}
 
 {% block extra_script %}
 {{ block.super }}
@@ -15,14 +26,4 @@
     mixpanel.track_links("#mixpanel_tag_home","Tag_home");
 	});
 </script>
-{% endblock %}
-
-{% block body %}
-
-<div class="row"><div class="offset1 span10"><div id="thumbnails_list">{% for item in object_list %}
-    {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
-{% endfor %}</div></div></div>
-
-{% if is_paginated %}{% paginate %}{% endif %}
-
 {% endblock %}

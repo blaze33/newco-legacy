@@ -6,16 +6,6 @@
 {% load format_utils %}
 {% load staticfiles %}
 
-{% block extra_script %}
-    {{ block.super }}
-
-	<script type ="text/javascript">
-		$(document).ready(function(){mixpanel.track("Load_item_detail");});
-		if ($('div').hasClass('alert-success')){mixpanel.track("Item Success");};
-	</script>
-	<script type="text/javascript" src="{% static 'js/mixpanel_items.js' %}"></script>
-
-{% endblock %}
 
 {% block extra_style %}
     {{ block.super }}
@@ -159,4 +149,15 @@
             })
         });
     </script>
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){mixpanel.track("Load_item_detail");});
+		if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
+	</script>
+	<script type="text/javascript" src="{% static 'js/mixpanel_items.js' %}"></script>
+
 {% endblock %}
