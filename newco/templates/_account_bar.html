@@ -4,44 +4,39 @@
 {% load content_utils %}
 
 <div class="pull-right">{% if request.user.is_authenticated %}
-  <ul class="nav btn-group" role="navigation">
-    <li class="btn btn-inverse">
-      <a href="{% url 'dash' %}">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
-    </li>
-    <li class="btn btn-inverse">
-      <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
-    </li>
-    <li class="dropdown btn btn-inverse">
-      <a title="Menu" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>
-        <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "My profile" %}</b> </a></li>
-        <li><a href="{% url 'account_settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
-        {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
-        <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+    <div class="btn-group">
+        <a href="{% url 'dash' %}" class="btn btn-inverse">{% profile_pic request.user 18 %} {% user_display request.user %}</a>
+        <a href="/about/faq/#reputation" class="btn btn-inverse" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
+        <a href="#" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>
+            <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "My profile" %}</b> </a></li>
+            <li><a href="{% url 'account_settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+            {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
+                <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+            {% endif %}
+            <li class="divider"></li>
+            <li><a href="{% url 'account_logout' %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+        </ul>
+    </div>
+{% else %}
+    <ul class="nav pull-right">
+        <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
+        {% if ACCOUNT_OPEN_SIGNUP %}
+            <li class="navbar-text">{% trans "or" %}</li>
+            <li><a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
         {% endif %}
-        <li class="divider"></li>
-        <li><a href="{% url 'account_logout' %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
-      </ul>
-    </li>
-  </ul>
-  {% else %}
-  <ul class="nav pull-right btn-group">
-    <li class="btn btn-inverse"><a href="{% url 'account_login' %}"><strong>{% trans "Log in" %}</strong></a></li>
-    {% if ACCOUNT_OPEN_SIGNUP %}
-    <li class="btn btn-danger"><a href="{% url 'account_signup' %}"><strong>{% trans "Sign up" %}</strong></a></li>
-    {% endif %}
-  </ul>
-  {% endif %}</div>
+    </ul>
+{% endif %}</div>
 
-  <div class="pull-right"><ul class="nav pull-right">
+<div class="pull-right"><ul class="nav pull-right">
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %} </a>
-      <ul class="dropdown-menu">
-        <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
-        <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
-        <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
-      </ul>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %} </a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
+            <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
+            <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
+        </ul>
     </li>
-  </ul></div>
+</ul></div>
 
