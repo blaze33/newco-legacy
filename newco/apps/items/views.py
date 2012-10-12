@@ -35,7 +35,7 @@ from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
-from utils.views.trial_template import TrialTemplateMixin
+from utils.multitemplate.views import MultiTemplateMixin
 
 app_name = 'items'
 
@@ -106,7 +106,8 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
 
-class ContentCreateView(ContentView, ContentFormMixin, TrialTemplateMixin, CreateView):
+class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
+                        CreateView):
 
     messages = {
         "object_created": {
