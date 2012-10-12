@@ -3,7 +3,25 @@
 {% load url from future %}
 {% load content_utils %}
 
-<div class="pull-right">{% if request.user.is_authenticated %}
+<div class="pull-right">
+  <ul class="nav">
+    {% if debug and templates %}<li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
+      <ul class="dropdown-menu">{% for name, title in templates.items %}
+        <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == 'template' %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
+      {% endfor %}</ul>
+    </li>{% endif %}
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %}</a>
+      <ul class="dropdown-menu">
+        <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
+        <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
+        <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
+      </ul>
+    </li>
+  </ul>
+
+{% if request.user.is_authenticated %}
   <ul class="nav btn-group" role="navigation">
     <li class="btn btn-inverse">
       <a href="{% url 'dash' %}">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
@@ -26,26 +44,11 @@
     </li>
   </ul>
 {% else %}
-  <ul class="nav pull-right btn-group">
+  <ul class="nav btn-group">
     <li class="btn btn-inverse"><a href="{% url 'account_login' %}"><strong>{% trans "Log in" %}</strong></a></li>
     {% if ACCOUNT_OPEN_SIGNUP %}
     <li class="btn btn-danger"><a href="{% url 'account_signup' %}"><strong>{% trans "Sign up" %}</strong></a></li>
     {% endif %}
   </ul>
-{% endif %}</div>
-
-<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %} </a>
-  <ul class="dropdown-menu">
-    <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
-    <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
-    <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
-  </ul>
-</li></ul></div>
-
-{% if debug and templates %}<div class="pull-right"><ul class="nav pull-right"><li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
-  <ul class="dropdown-menu">{% for name, title in templates.items %}
-    <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == "template" %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
-  {% endfor %}</ul>
-</li></ul></div>{% endif %}
+{% endif %}
+</div>
