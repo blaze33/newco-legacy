@@ -33,11 +33,13 @@ due to bad pixel fitting of small icons.
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
+        <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+    <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
 {% endblock %}
 
 {% block nav %}
     <ul class="nav">
-        <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
+        <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button id="mixpanel_typeahead" class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
     </ul>
 {% endblock %}
 
@@ -54,6 +56,13 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.21.custom.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	mixpanel.track_links("#mixpanel_signup_page","Signup_Page");
+    	if ($('li').hasClass('non_auth')){mixpanel.track("Page Load User non authenticated");};
+    	if ($('div').hasClass('well_auth')){mixpanel.track("Page Load User authenticated");};
+    });
+    </script>
     <script type="text/javascript">
     function TriggerMasonry(){
     	$('#thumbnails_list').masonry({

@@ -11,6 +11,17 @@
     <link href="{% static 'css/content.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block extra_script %}
+{{ block.super }}
+<script type ="text/javascript">
+	$(document).ready(function(){
+    mixpanel.track_links("#mixpanel_image_home","Image_home");
+    mixpanel.track_links("#mixpanel_question_home","Question_home");
+    mixpanel.track_links("#mixpanel_tag_home","Tag_home");
+	});
+</script>
+{% endblock %}
+
 {% block body %}
 
 <br>

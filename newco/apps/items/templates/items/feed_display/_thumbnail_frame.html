@@ -14,9 +14,9 @@
                 {% include template with display="thumbnail" content=object author=object.author item=item only %}
             {% endwith %}
             <br><br>
-            <div class="expandable"><p style="text-indent: 2em;"><a href="{{ object.get_absolute_url }}" style="color:#888888">{% autoescape off %}<i>&laquo;&nbsp;{{ object.content }}&nbsp;&raquo;</i>{% endautoescape %}</a></p></div>
+            <div class="expandable"><p style="text-indent: 2em;"><a href="{{ object.get_absolute_url }}" id="mixpanel_question_home" style="color:#888888">{% autoescape off %}<i>&laquo;&nbsp;{{ object.content }}&nbsp;&raquo;</i>{% endautoescape %}</a></p></div>
             <br>
-            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+            {% if item.tags %}{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label" id="mixpanel_tag_home">{{ tag.name }}</a> {% endfor %}{% endif %}
         </div>
     {% endwith %}
 {% elif class_name == "item" %}
@@ -26,7 +26,7 @@
     <div class="details" style="font-size:12px;">
         {% object_display object "thumbnail" "black" %}
     </div>
-    {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+    {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label" id="mixpanel_tag_home">{{ tag.name }}</a> {% endfor %}{% endif %}
 {% endif %}
 
 </div>{% endwith %}

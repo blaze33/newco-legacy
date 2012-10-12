@@ -11,6 +11,15 @@
     {{ media.css }}
 {% endblock %}
 
+{% block extra_script %}
+    {{  block.super  }}
+	<script type ="text/javascript">
+		$(document).ready(function(){
+	    mixpanel.track("Load_tag_page");
+		});
+	</script>
+{% endblock %}
+
 {% block body_class %}index{% endblock %}
 
 {% block head_title %}{% trans "Products" %}{% if tag %} | {% trans "Tag" %} {{ tag }}{% endif %}{% endblock %}

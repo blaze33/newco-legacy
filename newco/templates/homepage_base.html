@@ -12,6 +12,7 @@
 
 {% block extra_style %}
     {{ block.super }}
+    <link type="text/css" href="{{ STATIC_URL }}css/global.css" rel="stylesheet">
     <link href="{% static 'css/homepage.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -66,6 +67,19 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="create_typeahead" class="modal fade hide">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>{% trans "Create..." %}</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="row" style="margin-left: 50px">
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'item' %}"><img src="{% static 'img/gears.png' %}" type="image/png"><br><br><h3 class="black">Add a product</h3></a></div>
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'question' %}"><img src="{% static 'img/bulb.png' %}" type="image/png"><br><br><h3 class="black">Ask a question</h3></a></div>
+    	</div>
     </div>
   </div>
 
@@ -184,6 +198,14 @@
         // });
     </script>
     {# ##### End of Equalize columns height ##### #}
-
+    <script type ="text/javascript">
+	$(document).ready(function(){
+	mixpanel.track_links("#mixpanel_popular","Popular_home");
+	mixpanel.track_links("#mixpanel_last","Lastadded_home");
+	mixpanel.track_links("#mixpanel_last_contrib","Lastcontrib_home");
+	mixpanel.track_links("#mixpanel_mynews_home","Mynews_home");
+	if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
+	});
+	</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
 {% endblock %}

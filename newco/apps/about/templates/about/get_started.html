@@ -63,7 +63,7 @@
 {% block body %}
 
 <div class="row">
-    <div class="hero-unit{#span10 offset1 well#}" style="text-align: center;">
+    <div class="hero-unit{#span10 offset1 well#}" style="text-align: center;" id="mixpanel_get_started" data-user_id="{{ request.user.id }}" data-email="guillaume.kalaydjian@gmail.com">
         <h1>{% trans "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>" %}</h1>
     </div>
 </div>
@@ -73,13 +73,13 @@
 <br><br>
 <div class="row">
     <div class="span4">
-        <center><a href="{% url 'home' %}" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Explore" %}</a></center>
+        <center><a href="{% url 'home' %}" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_explore_gs">{% trans "Explore" %}</a></center>
     </div>
     <div class="span4">
-        <center><a href="{% url 'item_create' 'question' %}?fields=add_items" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Ask a question" %}</a></center>
+        <center><a href="{% url 'item_create' 'question' %}?fields=add_items" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_question_gs">{% trans "Ask a question" %}</a></center>
     </div>
     <div class="span4">
-        <center><a href="{% url 'item_create' 'item' %}" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Add a product" %}</a></center>
+        <center><a href="{% url 'item_create' 'item' %}" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_product_gs">{% trans "Add a product" %}</a></center>
     </div>
 </div>
 
@@ -248,6 +248,23 @@
         //     //alert("test");
         // });
     </script>
+    <script type ="text/javascript">
+	
+	$(document).ready(function(){
+	var get_started=document.getElementById("mixpanel_get_started");
+	var user_id=get_started.getAttribute("data-user_id");
+	var user_email=get_started.getAttribute("data-email");
+	mixpanel.track("Load get started");
+	mixpanel.people.identify(user_id);
+	mixpanel.people.set({
+		"email":user_email,
+		"gender": user_gender, 
+	});
+    mixpanel.track_links("#mixpanel_explore_gs","Explore_gs");
+    mixpanel.track_links("#mixpanel_question_gs","Question_gs");
+    mixpanel.track_links("#mixpanel_product_gs","Product_gs");
+	});
+	</script>
     {# ##### End of Equalize columns height ##### #}
 {% endblock %}
 

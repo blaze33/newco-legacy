@@ -10,6 +10,16 @@
     {{ form.media.css }}
 {% endblock %}
 
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){
+	    mixpanel.track("Load_add_question");
+		});
+	</script>
+{% endblock %}
+
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
