@@ -43,7 +43,7 @@ PARAMS = {
     },
 }
 
-MODULE_PATTERN = "(?P<module_name>[\w+\.]+)\.(?P<fromlist>\w+)$"
+MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
 
 
 def get_class_from_string(class_string, pattern=MODULE_PATTERN):
