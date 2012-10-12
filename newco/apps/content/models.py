@@ -94,6 +94,7 @@ class Item(BaseModel):
                                      symmetrical=False,
                                      related_name='predecessors')
     graph = GraphQuery()
+    initial = {'data': {'_class': ''}}
 
     class Meta:
         verbose_name = _("item")

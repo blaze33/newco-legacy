@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 13:21+0200\n"
-"PO-Revision-Date: 2012-10-09 13:22\n"
+"POT-Creation-Date: 2012-10-12 15:30+0200\n"
+"PO-Revision-Date: 2012-10-12 15:40\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,61 +62,69 @@ msgstr "Page non trouvée"
 msgid "We're sorry but that page could not be found."
 msgstr "Nous sommes confus, la page que vous demandez n'existe pas."
 
-#: templates/404.html:17 templates/_account_bar.html:26
+#: templates/404.html:17
 msgid "or"
 msgstr "ou"
 
-#: templates/_account_bar.html:9
+#: templates/_account_bar.html:12
 msgid "Your reputation"
 msgstr "Votre réputation"
 
-#: templates/_account_bar.html:12
+#: templates/_account_bar.html:17
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: templates/_account_bar.html:13
+#: templates/_account_bar.html:18
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/_account_bar.html:14
+#: templates/_account_bar.html:19
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/_account_bar.html:16
+#: templates/_account_bar.html:21
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/_account_bar.html:19
+#: templates/_account_bar.html:24
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/_account_bar.html:24
+#: templates/_account_bar.html:30
 msgid "Log in"
-msgstr "Se connecter"
+msgstr "Connection"
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:32
 msgid "Sign up"
-msgstr "S'enregistrer"
+msgstr "Inscription"
 
-#: templates/_account_bar.html:34
+#: templates/_account_bar.html:38
 msgid "Add +"
 msgstr "Ajouter +"
 
-#: templates/_account_bar.html:36
+#: templates/_account_bar.html:40
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
-#: templates/_account_bar.html:37
+#: templates/_account_bar.html:41
 msgid "Ask a question"
 msgstr "Poser une question"
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "We are still working on it"
 msgstr "Nous travaillons dessus"
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "Add a story"
 msgstr "Ajouter un article"
+
+#: templates/_account_bar.html:47
+msgid "Templates"
+msgstr "Templates"
+
+#: templates/_account_bar.html:47
+msgid ":"
+msgstr " :"
 
 #: templates/_footer.html:5
 msgid "Get started"
@@ -240,14 +248,10 @@ msgid "Last Added"
 msgstr "Derniers ajouts"
 
 #: templates/homepage_base.html:76
-msgid "Community"
-msgstr "Communauté"
-
-#: templates/homepage_base.html:78
 msgid "Unanswered Questions"
 msgstr "Questions orphelines"
 
-#: templates/homepage_base.html:80
+#: templates/homepage_base.html:78
 msgid "My newsfeed"
 msgstr "Mon flux"
 
@@ -332,6 +336,9 @@ msgstr "Tous les utilisateurs"
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
 
+#~ msgid "Community"
+#~ msgstr "Communauté"
+
 #~ msgid "Latest Contributions"
 #~ msgstr "Dernières contributions"
 
@@ -390,9 +397,6 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "We believe this shouldn't happen"
 #~ msgstr "Nous croyons que cela ne devrait pas se produire"
-
-#~ msgid ":"
-#~ msgstr " :"
 
 #~ msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
 #~ msgstr "Lancez <em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
