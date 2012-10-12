@@ -8,72 +8,160 @@
 {% block extra_style %}
     {{ block.super }}
     {{ form.media.css }}
+    {{ i_form.media.css }}
+    {{ a_form.media.css }}
 {% endblock %}
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
-<h1>{% block form_header %}{% trans "Ask a question:" %}{% endblock %}</h1>
+<div class="row">
+    <div class="span10">
+        <h1>{% block form_header %}{% trans "Ask a question" %}{% trans ":" %}{% endblock %}</h1>
+    </div>
+    <div class="span2">
+        <button class="btn btn-mini btn-success" data-toggle="collapse" data-target="#tips_div" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Tips" %}</button>
+    </div>
+</div>
+<div class="row collapse out" id="tips_div">
+    <div class="span10 offset2">
+        <div class="well">
+            {% blocktrans %}
+                <h4>Tips:</h4>
+                Here, you can ask a question about one or several products already <b><a href="{{ url }}" class="black tooltip-top" title="Click here if not" target="_blank">existing</a></b> at NewCo:
+                <ol>
+                    <li>Write down your question.</li>
+                    <li>Select one or several products to bind that question to, using the search bar.</li>
+                    <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
+                </ol>
+            {% endblocktrans %}
+        </div>
+    </div>
+</div>
 <br>
 
 {% url "item_create" "item" as url %}
 
-<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i>{% trans "Tips" %}</button>
-<div id="question_form" class="collapse out">
-    {% blocktrans %}
-        Here, you can ask a question about one or several products already <b><a href="{{ url }}" class="black tooltip-top" title="Click here if not" target="_blank">existing</a></b> at NewCo:
-        <ol>
-            <li>Write down your question.</li>
-            <li>Select one or several products to bind that question to, using the search bar.</li>
-            <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
-        </ol>
-    {% endblocktrans %}
-</div>
+
 </br>
 
-<form action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
-    {{ form|as_bootstrap }}
+<form class="form-horizontal" action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
+    {# {{ form|as_bootstrap }} #}
 
-    <br>
-    <label class="checkbox">
-        <input type="checkbox" name="add_product" data-toggle="collapse" data-target="#item_form">
-        {% trans "I don't find (one of) the product(s) relative to my question" %}<a href="#page_TO_DO"> {% trans "XXXX" %}</a>
-    </label>
-    <div id="item_form" class="collapse out">
-        {% blocktrans %}
-            <h3>2nd form, for a new item this time ! </h3>
-            <ol>
-                <li>Add the item you want to link your question to</li>
-                <li>XXXXX</li>
-                <li> => Faire une template "_item_form.html" qu'on pourrait inclure au besoin dans "question_form" ou "item_form" ?</li>
-            </ol>
-        {% endblocktrans %}
+    <div class="control-group">
+        <label class="control-label" for="status">{% trans "Status" %}{% trans ":" %}</label>
+        <div class="controls">
+            {{ form.status }}
+        </div>
     </div>
-    <br><br>
-    <hr>
-    <br>
-    <br>
-
-    <label class="checkbox">
-        <input type="checkbox" name="add_answer" data-toggle="collapse" data-target="#answer_form">
-        {% trans "Answer your own question, like a Q&A" %}<a href="#page_TO_DO"> {% trans "Is it a good thing to answer your own questions?" %}</a>
-    </label>
-    <div id="answer_form" class="collapse out">
-        {% blocktrans %}
-            <h3>3rd form, for the answer this time ! </h3> <b><a href="{{ url }}" class="black tooltip-top" title="Click here if not" target="_blank">existing</a></b> at NewCo:
-            <ol>
-                <li>Write the answer to your question, just like an FAQ.</li>
-                <li>XXXXX</li>
-                <li>XXXXX</li>
-            </ol>
-        {% endblocktrans %}
+    <div class="control-group">
+        <label class="control-label" for="content">{% trans "Question" %}{% trans ":" %}</label>
+        <div class="controls">
+            {{ form.content }}
+        </div>
     </div>
     <br>
+    <div class="control-group">
+        <label class="control-label" for="related_tag_or_item">{% trans "Related tag or item" %}{% trans ":" %}</label>
+
+        <div class="row controls">
+            <div class="span5 well">
+                <label class="radio">
+                    <input type="radio" name="tag_or_prod">
+                    <b>{% trans "This question concerns one or some products in particular" %}{% trans ":" %}</b>
+
+                </label>
+                <br>
+                {{ form.items }}
+                <br>
+                <br>
+                <label class="checkbox">
+                    <input type="checkbox" name="add_product" data-toggle="collapse" data-target="#item_form">
+                    {% trans "I don't find (one of) the product(s) relative to my question" %}
+                </label>
+                <div id="item_form" class="collapse out">
+                    {% blocktrans %}
+                        <h5>Add a product relative to my question:</h5>
+                        <ol>
+                            <li>Add an item if you don't find it above</li>
+                            <li>It will be added to the items you list here-above, if any</li>
+                        </ol>
+                    {% endblocktrans %}
+                    {{ i_form|as_bootstrap }}
+                </div>
+            </div>
+            <div class="span4 well">
+                <label class="radio">
+                    <input type="radio" name="tag_or_prod" disabled>
+                    <b>{% trans "This question concerns a category of products, represented by tag(s)" %}</b>
+                </label>
+                {#{{ i_form.tags }}#}
+            </div>
+        </div>
+    </div>
+
     <br>
     <br>
+
+    <div class="control-group">
+        <div class="controls">
+            <div class="row">
+                <div class="span4">
+                    <label class="checkbox">
+                        <input type="checkbox" name="add_answer" data-toggle="collapse" data-target="#answer_form">
+                        <b>{% trans "Answer your own question, like a Q&A" %}</b>
+
+                        {#<a href="#page_TO_DO"> {% trans "Is it a good thing to answer your own questions?" %}</a>#}
+                    </label>
+                </div>
+                <div class="span3 pull-right">
+                    <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#why_answer_your_q" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Why is it encouraged?" %}</button>
+                </div>
+            </div>
+            <div id="why_answer_your_q" class="collapse out">
+                <div class="well">
+                    {% blocktrans %}
+                        <h3>We encourage you to answer your own questions ! </h3> Why? On NewCo, giving answers to others is central. And sometimes you know things, but you don't find a question on NewCo allowing you to document that knowledge. Why wouldn't we allow you to create the question relative to what you want to share? Is it a bad behavior? We think no, and if you happen to ask a question and give an answer that doesn't interest many people, you'll just not gather many votes.
+                        <br>
+                        <br>
+                        <br>
+                        (...)
+                        And in many cases, you have already the answer to your question:
+                        <ol>
+                            <li>You can have had a question before, now you've found the answer and you want to share it to others</li>
+                            <li>You can have an answer to a question you <i>suppose</i> others can have, in this case, if it reveals that your question/answer is not very usefull, it will just not get a lot of points, but you don't have to be scared of trying</li>
+                            <li>You may want to document what you know, and on NewCo, the adapted format is Q&A</li>
+                        </ol>
+                        So if
+                    {% endblocktrans %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="span8">
+                    <div id="answer_form" class="collapse out">
+                        {% blocktrans %}
+                            <h5>ccc</h5> <b><a href="{{ url }}" class="black tooltip-top" title="Click here if not" target="_blank">VVV</a></b> at NewCo:
+                            <ol>
+                                <li>Write the answer to your question, just like an FAQ.</li>
+                                <li>XXXXX</li>
+                                <li>XXXXX</li>
+                            </ol>
+                        {% endblocktrans %}
+                        {{ a_form }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
-    <input type="submit" name="add_question" class="btn" value="{% trans 'Submit' %}"/>
-    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+    <br>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" name="add_question" class="btn" value="{% trans 'Submit' %}">
+            <input type="submit" name="save_as_draft" class="btn" value="{% trans 'Save as draft' %}" disabled>
+            {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        </div>
+    </div>
 </form>
 
 {% endblock %}
@@ -96,6 +184,8 @@
         })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
     </script>
     {{ form.media.js }}
+    {{ i_form.media.js }}
+    {{ a_form.media.js }}
 {% endblock %}
 
 {# TITLE: With add prod and add answer #}

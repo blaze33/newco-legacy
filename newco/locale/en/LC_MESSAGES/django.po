@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-10 16:50+0200\n"
+"POT-Creation-Date: 2012-10-10 18:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,7 +178,7 @@ msgstr ""
 #: templates/homepage_base.html:41
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
-"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
+"style=\"margin-right: 3px; vertical-align:middle;\"></i> explore NewCo</em></"
 "a>"
 msgstr ""
 
@@ -186,15 +186,15 @@ msgstr ""
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
-"i>explore NewCo</em></a>"
+"\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
 msgstr ""
 
 #: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:56
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -203,38 +203,47 @@ msgid ""
 "middle;\"></i> contribute</a></em>..."
 msgstr ""
 
-#: templates/homepage_base.html:58
+#: templates/homepage_base.html:59
 msgid "...and build your reputation from others' votes"
 msgstr ""
 
-#: templates/homepage_base.html:64
+#: templates/homepage_base.html:62
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-"
+"align: middle;\"></i> contribute</a></em>..."
+msgstr ""
+
+#: templates/homepage_base.html:66
 #, python-format
 msgid ""
 "...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
 "\">reputation</a> from others' votes"
 msgstr ""
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:75
 msgid "Click here to close the tutorial"
 msgstr ""
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:75
 msgid "NewCo empowers you to buy better"
 msgstr ""
 
-#: templates/homepage_base.html:74
+#: templates/homepage_base.html:76
 msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:75
+#: templates/homepage_base.html:77
 msgid "Last Added"
 msgstr ""
 
-#: templates/homepage_base.html:76
+#: templates/homepage_base.html:78
 msgid "Unanswered Questions"
 msgstr ""
 
-#: templates/homepage_base.html:78
+#: templates/homepage_base.html:80
 msgid "My newsfeed"
 msgstr ""
 
