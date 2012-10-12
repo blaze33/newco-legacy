@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 17:12+0200\n"
+"POT-Creation-Date: 2012-10-10 16:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgid "Get information"
 msgstr ""
 
 #: templates/homepage_base.html:38 templates/homepage_base.html.py:45
-msgid "Find products or tags in the search bar"
+msgid "Find products, users or tags in the search bar"
 msgstr ""
 
 #: templates/homepage_base.html:41
@@ -238,8 +238,8 @@ msgstr ""
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:43
-msgid "Search a product, a user, a tag"
+#: templates/site_base.html:44
+msgid "Search for product, user or tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6

@@ -7,7 +7,7 @@
 
 {% if display == "text" %}
   {% url 'faq' as faq %}
-  <span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'>{% profile_pic object 64 'single' %}</td><td align='right'>{% follow_form user object %}</td></tr></table>" data-content="{% if object.reputation %}<p><a class='black' href='{{ faq }}#reputation'><b>{% trans 'Reputation' %}</b></a>{% trans ':' %} {{ object.reputation.reputation_incremented }}</p>{% endif %}{% if tag_qs %}<p><b>{% trans 'Skills' %}</b>{% trans ':' %}&nbsp;{% for tag in tag_qs %}<a class='label' href='{% url 'tagged_items' tag.slug %}'>{{ tag.name }}</a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}</p>{% endif %}" itemscope itemtype="http://schema.org/Person">
+  <span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'>{% profile_pic object 64 'single' %}</td><td align='right'>{% follow_form user object %}</td></tr></table>" data-content="{% if object.reputation %}<p><a class='black' href='{{ faq }}#reputation'><b>{% trans 'Reputation' %}</b></a>{% trans ':' %} {{ object.reputation.reputation_incremented }}</p>{% endif %}{% if tag_qs %}<p><b>{% trans 'Skills' %}</b>{% trans ':' %}&nbsp;{% for tag in tag_qs %}<a class='label nc-tag' href='{% url 'tagged_items' tag.slug %}'>{{ tag.name }}</a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}</p>{% endif %}" itemscope itemtype="http://schema.org/Person">
     <a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ username }}</span></a>
   </span>
 {% elif display == "thumbnail" or display == "mini_feed" %}
