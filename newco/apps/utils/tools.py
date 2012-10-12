@@ -20,7 +20,7 @@ from redis.exceptions import ConnectionError, RedisError
 from taggit.models import Tag
 from voting.models import Vote
 
-from items.models import Item, Content
+from items.models import Item
 from profiles.models import Profile
 
 

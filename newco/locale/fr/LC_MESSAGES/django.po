@@ -62,7 +62,7 @@ msgstr "Page non trouvée"
 msgid "We're sorry but that page could not be found."
 msgstr "Nous sommes confus, la page que vous demandez n'existe pas."
 
-#: templates/404.html:17 templates/_account_bar.html:26
+#: templates/404.html:17
 msgid "or"
 msgstr "ou"
 
@@ -117,6 +117,14 @@ msgstr "Nous travaillons dessus"
 #: templates/_account_bar.html:38
 msgid "Add a story"
 msgstr "Ajouter un article"
+
+#: templates/_account_bar.html:47
+msgid "Templates"
+msgstr "Templates"
+
+#: templates/_account_bar.html:47
+msgid ":"
+msgstr " :"
 
 #: templates/_footer.html:5
 msgid "Get started"

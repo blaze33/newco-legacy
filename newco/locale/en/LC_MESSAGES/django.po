@@ -61,7 +61,7 @@ msgstr ""
 msgid "We're sorry but that page could not be found."
 msgstr ""
 
-#: templates/404.html:17 templates/_account_bar.html:26
+#: templates/404.html:17
 msgid "or"
 msgstr ""
 
@@ -115,6 +115,14 @@ msgstr ""
 
 #: templates/_account_bar.html:38
 msgid "Add a story"
+msgstr ""
+
+#: templates/_account_bar.html:47
+msgid "Templates"
+msgstr ""
+
+#: templates/_account_bar.html:47
+msgid ":"
 msgstr ""
 
 #: templates/_footer.html:5
