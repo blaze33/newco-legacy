@@ -38,7 +38,7 @@
               <i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products, users or tags in the search bar" %}...
               <br><br>
               {% url "item_index" as index_url %}
-              {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
+              {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i> explore NewCo</em></a>{% endblocktrans %}
             </p>
             <img class="arrow-search-bar-hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="arrow_search_bar" style="position: absolute; top: -140px; left: +0px;">
             <p class="lead" style="margin-bottom: 0px; position: absolute; bottom: 24px;">
@@ -53,12 +53,14 @@
             <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Share knowledge" %}</em></h2>
             <br>
             <p class="lead" style="margin-bottom: 0px; opacity: 0;">
-              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}
+              {# change contribution center to a page "give me things to do ?" #}
               <br><br>
               {% blocktrans %}...and build your reputation from others' votes{% endblocktrans %}
             </p>
             <p class="lead" style="margin-bottom: 0px; position:absolute; bottom: 24px; opacity: 1;">
-              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil icon-white" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do" ? #}
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil icon-white" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}
+              {# change contribution center to a page "give me things to do" ? #}
               <br><br>
               {% url 'faq' as url_faq %}
               {% blocktrans %}...and build your <a id="reputation-trigger" href="{{ url_faq }}#reputation">reputation</a> from others' votes{% endblocktrans %}

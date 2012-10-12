@@ -26,7 +26,7 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album, sync_products
-from items.models import Item, Content, Question, Link, Feature
+from items.models import Item, Content, Question, Link, Feature, Answer
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
@@ -77,12 +77,25 @@ class ContentFormMixin(object):
         return form
 
     def post(self, request, *args, **kwargs):
+        print "\n\n\n\n\nHey yo ! I'm hereeee: contentformmixin.post()\n\n\n\n\n"
         form = self.load_form(request)
         if "add_product" in request.POST:
-            print "\n\n\nAdd product has been checked !\n\n\n"
+            print "\n\n\n\n\nHey yo ! I'm hereeee\n\n\n\n\n"
+            item_form = ItemForm(request.POST, request=request, prefix='item')
+                    ##############add something that brings to item_update to complete the item with image and links
+            if item_form.is_valid():
+                self.item_created = self.form_valid(item_form)
+                POST = request.POST.copy()
+                POST.update({'items': self.item_created.id})
+                question_form = QuestionForm(POST, request=request)
 
-        if "add_answer" in request.POST:
-            print "\n\n\nAnswer has been checked !\n\n\n"
+                if question_form.is_valid():
+                    return self.form_valid(question_form)
+                else:
+                    return self.form_invalid(question_form)
+            else:
+                print "just before form_invalid on item\n\n\n\n\n\n\n"
+                self.form_invalid(item_form)
 
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
@@ -125,8 +138,18 @@ class ContentCreateView(ContentView, ContentFormMixin, TrialTemplateMixin, Creat
                                                        *args,
                                                        **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        request = self.request
+        i_form = ItemForm(request=request, prefix='item')
+        a_form = AnswerForm(request=request, prefix='answer')
+        context.update({"i_form": i_form})
+        context.update({"a_form": a_form})
+        return context
+
     def form_valid(self, form):
         self.object = form.save()
+
         messages.add_message(
             self.request, self.messages["object_created"]["level"],
             self.messages["object_created"]["text"] % {
@@ -139,6 +162,43 @@ class ContentCreateView(ContentView, ContentFormMixin, TrialTemplateMixin, Creat
                 "item_edit",
                 args=[self.object._meta.module_name, self.object.id]
             ))
+        ########################
+        ### Seb s dev ######################################################
+        ##########################################################################################################
+        elif self.model == Question:
+            if form.prefix == "item" and "add_product" in self.request.POST:
+                #print "\n\nI'm in the form_valid - item ...\n\n"
+                return self.object
+
+            elif "add_answer" in self.request.POST:
+                #print "\n\n\nAnswer has been checked ! - in form_valid\n\n\n"
+                answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
+                answer_form.question = self.object
+                self.model = Answer
+                if answer_form.is_valid():
+                    self.form_valid(answer_form)
+                else:
+                    self.form_invalid(answer_form)
+                ##########################################################################################################
+                ### end of Seb s dev ######################################################
+                ########################
+        if "add_product" in self.request.POST:
+            print "\n\n\n\nI am in just bofore the HttpResponseRedirect:\n\nself.object_created :\n\n"
+            print self.item_created
+            url_built =  "%(url)s?question_id=%(q_id)d&next=%(next)s" % {
+                "url": reverse(
+                  "item_edit",
+                    args=(
+                        self.item_created._meta.module_name,
+                        self.item_created.id,
+                    ),
+                ),
+                "q_id": self.object.question.id,
+                "next": self.get_success_url(),
+            }
+            # print "\n\n\n\nurl_built :\n\n"
+            # print url_built
+            return HttpResponseRedirect(url_built)
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):

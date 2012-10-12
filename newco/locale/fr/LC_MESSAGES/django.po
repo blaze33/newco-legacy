@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-10 16:50+0200\n"
-"PO-Revision-Date: 2012-10-10 16:50\n"
+"POT-Creation-Date: 2012-10-10 18:18+0200\n"
+"PO-Revision-Date: 2012-10-10 18:20\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -118,6 +118,18 @@ msgstr "Nous travaillons dessus"
 msgid "Add a story"
 msgstr "Ajouter un article"
 
+#: templates/_account_bar.html:46
+msgid "Trial templates"
+msgstr "Trial template"
+
+#: templates/_account_bar.html:46
+msgid ":"
+msgstr " :"
+
+#: templates/_account_bar.html:48
+msgid "Original template"
+msgstr "Template d'origine"
+
 #: templates/_footer.html:5
 msgid "Get started"
 msgstr "Lancez-vous"
@@ -173,30 +185,30 @@ msgstr "Trouvez des produits, utilisateurs ou tags dans la barre de recherche"
 #: templates/homepage_base.html:41
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
-"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i> explore "
 "NewCo</em></a>"
 msgstr ""
 "...ou <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
-"style=\"margin-right: 3px; vertical-align:middle;\"></i>explorez "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i> explorez "
 "NewCo</em></a>"
 
 #: templates/homepage_base.html:47
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
-"=\"icon-play\" style=\"margin-right: 3px; vertical-"
-"align:middle;\"></i>explore NewCo</em></a>"
+"=\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
 msgstr ""
 "...ou <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
-"=\"icon-play\" style=\"margin-right: 3px; vertical-"
-"align:middle;\"></i>explorez NewCo</em></a>"
+"=\"icon-play icon-white\" style=\"margin-right: 3px; vertical-"
+"align:middle;\"></i> explorez NewCo</em></a>"
 
 #: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr "Partagez vos connaissances"
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:56
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -206,14 +218,27 @@ msgid ""
 msgstr ""
 "Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
 "=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
-"class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
+"class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-align: "
 "middle;\"></i> contributer</a></em>..."
 
-#: templates/homepage_base.html:58
+#: templates/homepage_base.html:59
 msgid "...and build your reputation from others' votes"
 msgstr "...et construisez votre réputation par les votes des utilisateurs"
 
-#: templates/homepage_base.html:64
+#: templates/homepage_base.html:62
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: "
+"-3px;\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; "
+"vertical-align: middle;\"></i> contribute</a></em>..."
+msgstr ""
+"Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
+"=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
+"class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contributer</a></em>..."
+
+#: templates/homepage_base.html:66
 #, python-format
 msgid ""
 "...and build your <a id=\"reputation-trigger\" "
@@ -223,27 +248,27 @@ msgstr ""
 "href=\"%(url_faq)s#reputation\">réputation</a> par les votes des "
 "utilisateurs"
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:75
 msgid "Click here to close the tutorial"
 msgstr "Cliquez ici pour fermer le tutoriel"
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:75
 msgid "NewCo empowers you to buy better"
 msgstr "NewCo vous donne le pouvoir de mieux acheter"
 
-#: templates/homepage_base.html:74
+#: templates/homepage_base.html:76
 msgid "Popular"
 msgstr "Populaire"
 
-#: templates/homepage_base.html:75
+#: templates/homepage_base.html:77
 msgid "Last Added"
 msgstr "Derniers ajouts"
 
-#: templates/homepage_base.html:76
+#: templates/homepage_base.html:78
 msgid "Unanswered Questions"
 msgstr "Questions orphelines"
 
-#: templates/homepage_base.html:78
+#: templates/homepage_base.html:80
 msgid "My newsfeed"
 msgstr "Mon flux"
 
@@ -390,9 +415,6 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "We believe this shouldn't happen"
 #~ msgstr "Nous croyons que cela ne devrait pas se produire"
-
-#~ msgid ":"
-#~ msgstr " :"
 
 #~ msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
 #~ msgstr "Lancez <em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
