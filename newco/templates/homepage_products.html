@@ -20,10 +20,8 @@
 {{ block.super }}
 <script type ="text/javascript">
 	$(document).ready(function(){
-    mixpanel.track_links("#mixpanel_image_home","Image_home");
-    mixpanel.track_links("#mixpanel_product_home","Product_home");
-    mixpanel.track_links("#mixpanel_profile_home","Profile_home");
-    mixpanel.track_links("#mixpanel_tag_home","Tag_home");
+    mixpanel.track_links("#mixpanel_image","Click Image Homepage");
+    mixpanel.track_links("#mixpanel_tag_home","Click Tag Homepage");
 	});
 </script>
 {% endblock %}
