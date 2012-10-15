@@ -14,9 +14,10 @@ except ImportError:
     def _to_text(value):
         return json.dumps(value, sort_keys=True, indent=2)
 
-from django.forms import ModelForm, Field, CharField
+from django.forms import ModelForm, Field
 from content.models import Item, Relation
 from content.widgets import JsonPairInputs
+
 
 class DictionaryField(Field):
     """A dictionary form field."""
@@ -28,11 +29,12 @@ class DictionaryField(Field):
     def to_python(self, value):
         return _to_python(value)
 
+
 class ItemForm(ModelForm):
 
-    data = DictionaryField(label  = "HStore Key Value Field", required = False,
-                                   widget = JsonPairInputs(val_attrs={'size':35},
-                                                           key_attrs={'class':'large'}))
+    data = DictionaryField(label="HStore Key Value Field", required=False,
+                           widget=JsonPairInputs(val_attrs={'size': 35},
+                                                 key_attrs={'class': 'large'}))
     create = False
 
     def __init__(self, *args, **kwargs):
@@ -45,6 +47,7 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         exclude = ('successors')
+
 
 class RelationForm(ItemForm):
     class Meta:
