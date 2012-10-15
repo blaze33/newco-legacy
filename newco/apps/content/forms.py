@@ -1,33 +1,24 @@
-import json
 from django.forms import ModelForm, Field
 from content.models import Item, Relation
-from content.widgets import JsonPairInputs
-
-
-def _to_python(value):
-    return json.loads(value)
-
-
-def _to_text(value):
-    return json.dumps(value, sort_keys=True, indent=2)
+from content.widgets import JsonPairInputs, _to_python
 
 
 class DictionaryField(Field):
     """A dictionary form field."""
 
     def __init__(self, **params):
-        params['widget'] = JsonPairInputs
         super(DictionaryField, self).__init__(**params)
 
     def to_python(self, value):
+        print "to_python ", value
+        print _to_python(value)
         return _to_python(value)
 
 
 class ItemForm(ModelForm):
 
     data = DictionaryField(label="HStore Key Value Field", required=False,
-                           widget=JsonPairInputs(val_attrs={'size': 35},
-                                                 key_attrs={'class': 'large'}))
+                           widget=JsonPairInputs())
     create = False
 
     def __init__(self, *args, **kwargs):

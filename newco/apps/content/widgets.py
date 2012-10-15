@@ -47,22 +47,23 @@ class JsonPairInputs(AdminTextareaWidget):
 
         args:
         name  (str)  -- name of the field
-        value (str)  -- a json string of a two-tuple list automatically passed in by django
+        value (str)  -- a dictionary automatically passed in by django
         attrs (dict) -- automatically passed in by django (unused in this function)
         """
 
+        pair_template = '''
+        <input type="text" name="json_key[{fieldname}]" value="{key}" {key_attrs}>
+        <input type="text" name="json_value[{fieldname}]" value="{value}" {val_attrs}>
+        <br>'''
         ret = '<div class="control-group" id="form_data">'
-        if value and len(value) > 0:
-            if type(value) == type(''):
-                value = _to_python(value)
-            print value.__class__, value
+        if value:
             for k, v in value.items():
                 ctx = {'key': escape(k),
                        'value': escape(v),
                        'fieldname': name,
                        'key_attrs': flatatt(self.key_attrs),
                        'val_attrs': flatatt(self.val_attrs)}
-                ret += '<input type="text" name="json_key[%(fieldname)s]" value="%(key)s" %(key_attrs)s> <input type="text" name="json_value[%(fieldname)s]" value="%(value)s" %(val_attrs)s><br>' % ctx
+                ret += pair_template.format(**ctx)
         ret += '</div>'
         return mark_safe(ret)
 
