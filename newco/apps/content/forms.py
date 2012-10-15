@@ -1,22 +1,15 @@
-try:
-    import yaml
-    def _to_python(value):
-        return yaml.load(value)
-    def _to_text(value):
-        return yaml.dump(value, default_flow_style=False)
-except ImportError:
-    try:
-        import json
-    except ImportError:
-        from django.utils import simplejson as json
-    def _to_python(value):
-        return json.loads(value)
-    def _to_text(value):
-        return json.dumps(value, sort_keys=True, indent=2)
-
+import json
 from django.forms import ModelForm, Field
 from content.models import Item, Relation
 from content.widgets import JsonPairInputs
+
+
+def _to_python(value):
+    return json.loads(value)
+
+
+def _to_text(value):
+    return json.dumps(value, sort_keys=True, indent=2)
 
 
 class DictionaryField(Field):

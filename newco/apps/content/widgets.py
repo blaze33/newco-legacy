@@ -1,24 +1,17 @@
-try:
-    import yaml
-    def _to_python(value):
-        return yaml.load(value)
-    def _to_text(value):
-        return yaml.dump(value, default_flow_style=False)
-except ImportError:
-    try:
-        import json
-    except ImportError:
-        from django.utils import simplejson as json
-    def _to_python(value):
-        return json.loads(value)
-    def _to_text(value):
-        return json.dumps(value, sort_keys=True, indent=2)
-
+import json
 from django.forms import Widget
 from django.utils.safestring import mark_safe
 from django.forms.widgets import flatatt
 from django.contrib.admin.widgets import AdminTextareaWidget
 from django.utils.html import escape
+
+
+def _to_python(value):
+    return json.loads(value)
+
+
+def _to_text(value):
+    return json.dumps(value, sort_keys=True, indent=2)
 
 
 class JsonPairInputs(AdminTextareaWidget):
