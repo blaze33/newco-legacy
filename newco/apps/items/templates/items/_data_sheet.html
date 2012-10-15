@@ -1,29 +1,16 @@
 {% load url from future %}
 {% load i18n %}
-{% load account_tags %}
 {% load follow_utils %}
 
-<div class="row"><div class="span12">
-<ul class="thumbnails">
-    {% for image in album|slice:":4" %}
-      <li class="span3">
-        <a href="{{  image.data.contextLink  }}" target="_blank" class="thumbnail">
-          <img src="{{  image.data.thumbnailLink  }}" alt="{{  image.data.snippet  }}" height="128px">
-        </a>
-      </li>
-    {% endfor %}
-</ul>
-</div></div>
+<div itemscope itemtype="http://schema.org/Product">
+  <div class="row">
+    <div class="span6"><h1 itemprop="name">{{ item }}</h1></div>
+    <div class="span1 right">{% follow_form user item %}</div>
+  </div>
+  {% if prof_list.count > 0 %}<div class="row"><div class="span7 right"><div class="controls_2"><h4>{% trans "Maybe they can help you?" %}</h4></div></div></div>{% else %}</br>{% endif %}
 
-<div class="row one_row" itemscope itemtype="http://schema.org/Product"><div class="span7">
-    <div class="row">
-        <div class="span6"><h1 itemprop="name">{{ item }}</h1></div>
-        <div class="span1 right">{% follow_form user item %}</div>
-    </div>
-    {% if prof_list.count > 0 %}<div class="row"><div class="span7 right"><div class="controls_2"><h4>{% trans "Maybe they can help you?" %}</h4></div></div></div>{% else %}</br>{% endif %}
-
-    <div class="row">
-        <div class="span4">{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}</div>
-        <div class="span3 right">{% for prof in prof_list %}<a href="{{ prof.user.get_absolute_url }}" class="label label-success">{{ prof.name }}</a> {% endfor %}</div>
-    </div>
-</div></div>
+  <div class="row">
+    <div class="span4">{% for tag in item.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label nc-tag">{{ tag.name }}</a> {% endfor %}</div>
+    <div class="span3 right">{% for prof in prof_list %}<a href="{{ prof.user.get_absolute_url }}" class="label label-success nc-tag">{{ prof.name }}</a> {% endfor %}</div>
+  </div>
+</div>

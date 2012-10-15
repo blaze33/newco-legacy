@@ -17,7 +17,7 @@
 }
 
 .profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; }
-.profile-item .details h4 { display: run-in; }
+.profile-item h5 { display: run-in; margin: 0px; }
 .profile-item .details p { margin: 0; }
 
 #profile-follow {
@@ -190,12 +190,9 @@ img:hover + .img-controls,
     width: 38px;
 }
 
-    .myClassPopover{
-        position: relative;
-    }
-    .myClassPopoverProfile{
-        position: relative;
-    }
+.myClassPopover{
+    position: relative;
+}
 
 /* twitter aditional stuff */
 /* supporting docs pages */
@@ -277,7 +274,7 @@ img:hover + .img-controls,
     top: 40px;
     left: 0;
     /*right: 0; */ /* shouldn't we only define left OR right ? */
-    z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
+    z-index: 999; /* 10 less than .navbar-fixed to prevent any overlap */
     border-color: #d5d5d5;
     border-width: 0 0 1px; /* drop the border on the fixed edges */
     -webkit-border-radius: 0;
@@ -345,6 +342,11 @@ img:hover + .img-controls,
          -moz-border-radius: 4px 4px 0 0;
               border-radius: 4px 4px 0 0;
   }
+}
+
+.nc-tag {
+  font-size: 11px;
+  font-weight: 400;
 }
 
 /* Use btn-group and btn styles in a nav */
