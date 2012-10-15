@@ -3,6 +3,7 @@ from django.views.generic import ListView
 
 from items.models import Item, Question
 
+from datetime import datetime, timedelta
 
 class HomepageView(ListView):
 
@@ -14,6 +15,8 @@ class HomepageView(ListView):
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
             if self.cat == "home":
+                week_ago = datetime.now() - timedelta(days=7)
+                self.queryset = self.queryset.filter(content__pub_date__gt=week_ago)
                 self.queryset = self.queryset.annotate(
                     Count("content")).order_by("-content__count")
             else:
