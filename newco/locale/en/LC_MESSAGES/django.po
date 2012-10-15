@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-10 16:50+0200\n"
+"POT-Creation-Date: 2012-10-15 11:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,55 +65,55 @@ msgstr ""
 msgid "or"
 msgstr ""
 
-#: templates/_account_bar.html:9
+#: templates/_account_bar.html:12
 msgid "Your reputation"
 msgstr ""
 
-#: templates/_account_bar.html:12
+#: templates/_account_bar.html:17
 msgid "Dashboard"
 msgstr ""
 
-#: templates/_account_bar.html:13
+#: templates/_account_bar.html:18
 msgid "My profile"
 msgstr ""
 
-#: templates/_account_bar.html:14
+#: templates/_account_bar.html:19
 msgid "Settings"
 msgstr ""
 
-#: templates/_account_bar.html:16
+#: templates/_account_bar.html:21
 msgid "Admin"
 msgstr ""
 
-#: templates/_account_bar.html:19
+#: templates/_account_bar.html:24
 msgid "Log out"
 msgstr ""
 
-#: templates/_account_bar.html:24
+#: templates/_account_bar.html:30
 msgid "Log in"
 msgstr ""
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:32
 msgid "Sign up"
 msgstr ""
 
-#: templates/_account_bar.html:34
+#: templates/_account_bar.html:38
 msgid "Add +"
 msgstr ""
 
-#: templates/_account_bar.html:36
+#: templates/_account_bar.html:40
 msgid "Add a product"
 msgstr ""
 
-#: templates/_account_bar.html:37
+#: templates/_account_bar.html:41
 msgid "Ask a question"
 msgstr ""
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "We are still working on it"
 msgstr ""
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "Add a story"
 msgstr ""
 
@@ -186,15 +186,15 @@ msgstr ""
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
-"i>explore NewCo</em></a>"
+"\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
 msgstr ""
 
 #: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:56
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -205,6 +205,15 @@ msgstr ""
 
 #: templates/homepage_base.html:58
 msgid "...and build your reputation from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:61
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-"
+"align: middle;\"></i> contribute</a></em>..."
 msgstr ""
 
 #: templates/homepage_base.html:64
@@ -238,8 +247,8 @@ msgstr ""
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:44
-msgid "Search for product, user or tag"
+#: templates/site_base.html:43
+msgid "Search a product, a user, a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
