@@ -127,6 +127,8 @@ class Relation(BaseModel):
     from_item = models.ForeignKey(Item, related_name='links')
     to_item = models.ForeignKey(Item, related_name='inlinks')
 
+    initial = {}
+
     def __unicode__(self):
         return "%s %s %s" % (self.from_item.get('name'),
                              self.get('relationship'),
