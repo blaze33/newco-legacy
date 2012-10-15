@@ -1,6 +1,5 @@
 import json
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
@@ -20,12 +19,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
-from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
-from content.transition import add_images, get_album, sync_products
+from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
@@ -407,7 +405,6 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        context.update({"media": ChosenSelect().media})
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
