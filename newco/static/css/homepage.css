@@ -67,3 +67,18 @@
   -o-transition: box-shadow linear 0.4s;
   transition: box-shadow linear 0.4s;
 }
+
+#arrow_tutorial > div{
+    display: inline-block;
+    background: #fff url(../img/arrow_tutorial.png);
+    height:60px;
+}
+
+.tutorial > a > img{
+opacity:0.1;
+}
+
+.tutorial > a > img:hover {
+opacity:1.0;
+
+}

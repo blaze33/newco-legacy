@@ -83,11 +83,34 @@
     </div>
   </div>
 
-  <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
-    <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+
+<!-- New Template on Homepage  -->
+<div class="row">
+    <div class="span4 tutorial" align="center">
+    <a href="#" data-toggle="collapse" data-target="#why_NewCo">
+    	<img src="{% static 'img/arrow_tutorial.png' %}" type="image/png"></a>
+    </div>
+
+    <div class="span8" style="margin-top: 0px; margin-left:0px; background-color: #FFF9B1; text-align: center;">
+        <h3>Discover the NewCo community</h3>
+
+        <br><a href="{% url 'account_signup' %}" id="mixpanel_signup_page"><button class="btn btn-danger" style="height:30px; width:160px; font-color:#FFF"><h3> {% trans "Join NewCo" %}<i class="icon-forward" style="margin-left:5px; "></i></h3></button></a>
+
+        <a href="{% url 'account_login' %}"><button class="btn btn-default" style="margin-left:10px; height:30px; width:100px;"><h3> {% trans "Login" %}</h3></button></a>
+    </div>
+</div>
+
+
+
+{% if user.is_authenticated %}
+  <div class="subnav" rel="subnav">
+{% else %}
+  <div class="subnav subnav-fixed" rel="subnav">
+{% endif %}
+  	<ul class="nav nav-pills">
+    <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewC" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
     <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}" id="mixpanel_popular">{% trans "Popular" %}</a></li>
-    <li {% if cat == "last" %} class="active"{% endif %} id="last"><a class="black" href="{% url 'home' 'last' %}" id="mixpanel_last">{% trans "Last Added" %}</a></li>
-    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Unanswered Questions" %}</a></li>
+    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Answer questions" %}</a></li>
     <li class="divider"></li>
     <li><a class="black" href="{% url 'dash' 'feed' %}" id="mixpanel_mynewsfeed">{% trans "My newsfeed" %}</a></li>
   </ul></div>
@@ -200,10 +223,6 @@
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">
 	$(document).ready(function(){
-	mixpanel.track_links("#mixpanel_popular","Click Popular");
-	mixpanel.track_links("#mixpanel_last","Click Last Added");
-	mixpanel.track_links("#mixpanel_questions","Click Unanswered Questions");
-	mixpanel.track_links("#mixpanel_mynewsfeed","Click My Newsfeed");
 	if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
 	});
 	</script>

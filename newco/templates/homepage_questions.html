@@ -1,4 +1,4 @@
-{% extends "homepage_base.html" %}
+{% extends "homepage_base_gui.html" %}
 
 {% load url from future %}
 {% load i18n %}
@@ -14,6 +14,9 @@
 		<h2>Answer Questions</h2>
 		<hr>
 	</div>
+    <div class="span4">
+    <form class="navbar-sear" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button id="mixpanel_typeahead" class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form>
+    </div>
 </div>
 <div class="row"><div class="offset1 span6">{% for content in object_list %}
 	<span class="content-item-mini">

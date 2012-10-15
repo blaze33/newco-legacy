@@ -18,6 +18,7 @@ $(function(){
 	mixpanel.track_links("#mixpanel_image","Click Image Homepage");
     mixpanel.track_links("#mixpanel_tag_home","Click Tag Homepage");
     //Authentification (on Homepage only)
+    if ($('div').hasClass('well_auth')){
     var identity=document.getElementById("mixpanel_identity");
 	var user_id=identity.getAttribute("data-user_id");
 	var user_email=identity.getAttribute("data-email");
@@ -29,7 +30,7 @@ $(function(){
 	mixpanel.people.set({
 		"email":user_email,"created":user_created,"name":user_name,"bio":user_bio,"reputation":user_reputation,
 	});
-
+    };
 
 
 });

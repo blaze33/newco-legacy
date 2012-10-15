@@ -4,6 +4,7 @@
 {% load metron_tags %}
 {% load i18n %}
 {% load staticfiles %}
+{% load account_tags %}
 
 {% block extra_style %}
     <link href="{% static 'css/global.css' %}" rel="stylesheet">
@@ -38,7 +39,11 @@ due to bad pixel fitting of small icons.
 {% endblock %}
 
 {% block nav %}
-    <ul class="nav">
+{% if user.is_authenticated %}
+    <ul class="nav" id="mixpanel_identity" data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}">
+{% else %}
+    <ul class="nav" id="mixpanel_identity">
+{% endif %}
         <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button id="mixpanel_typeahead" class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
     </ul>
 {% endblock %}
