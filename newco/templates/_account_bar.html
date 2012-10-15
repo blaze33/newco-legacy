@@ -6,10 +6,10 @@
 <div class="pull-right">{% if request.user.is_authenticated %}
   <ul class="nav btn-group" role="navigation">
     <li class="btn btn-inverse">
-      <a href="{% url 'dash' %}">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
+      <a href="{% url 'dash' %}" style="font-size: 12px;">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
     </li>
-    <li class="btn btn-inverse">
-      <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
+    <li class="btn btn-inverse" id="reputation-btn">
+      <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}">{{ request.user.reputation.reputation_incremented }}</a>
     </li>
     <li class="dropdown btn btn-inverse">
       <a title="Menu" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>

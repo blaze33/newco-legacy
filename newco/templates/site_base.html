@@ -38,13 +38,16 @@
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
 
 {% block nav %}
-    <ul class="nav">
-        <li class="offset2"><form class="navbar-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
-            <input type="text" autocomplete="off" class="typeahead input-xlarge search-query" name="q" id="global_search" placeholder="{% trans 'Search a product, a user, a tag' %}">
-            <input type="hidden" id="obj_class" name="obj_class"/>
-            <input type="hidden" id="obj_id" name="obj_id"/>
-        </form></li>
-    </ul>
+<ul class="nav pull-left">
+    <li class="offset1"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
+        <div class="input-append">
+            <input type="text" autocomplete="off" class="typeahead input-xlarge search-query" name="q" id="global_search" placeholder="{% trans 'Search for product, user or tag' %}">
+            <button type="submit" class="btn" style="position: relative; top: -4px; padding: 4px 5px;"><i class="icon-search"></i></button>
+        </div>
+        <input type="hidden" id="obj_class" name="obj_class"/>
+        <input type="hidden" id="obj_id" name="obj_id"/>
+    </form></li>
+</ul>
 {% endblock %}
 
 {% block footer %}

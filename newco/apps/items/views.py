@@ -79,8 +79,8 @@ class ContentFormMixin(object):
     def post(self, request, *args, **kwargs):
         print "\n\n\n\n\nHey yo ! I'm hereeee: contentformmixin.post()\n\n\n\n\n"
         form = self.load_form(request)
-        if "add_product" in request.POST:
-            print "\n\n\n\n\nHey yo ! I'm hereeee\n\n\n\n\n"
+        if "q_add_product" in request.POST:
+            print "\n\n\n\n\nHey yo ! I'm hereeee : 'q_add_product' in POST\n\n\n\n\n"
             item_form = ItemForm(request.POST, request=request, prefix='item')
                     ##############add something that brings to item_update to complete the item with image and links
             if item_form.is_valid():
@@ -105,13 +105,16 @@ class ContentFormMixin(object):
             if "add_links" in request.POST and self.object:
                 form.link_aff(self.object)
             if "remove_links" in request.POST and self.object:
+                # print "\n\nself.model = item and 'remove_links' in POST \n\n"
                 aff_item_ids = request.POST.getlist("linked_aff")
                 linked_items = self.object.affiliationitem_set.select_related()
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
             if "store_search" in request.POST:
+                print "\n\nself.model = item and 'store_search' in POST \n\n"
                 form.stores_search()
+                print "\n\n after stores_search() \n\n"
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
             return self.form_valid(form)
@@ -167,7 +170,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         ### Seb s dev ######################################################
         ##########################################################################################################
         elif self.model == Question:
-            if form.prefix == "item" and "add_product" in self.request.POST:
+            if form.prefix == "item" and "q_add_product" in self.request.POST:
                 #print "\n\nI'm in the form_valid - item ...\n\n"
                 return self.object
 
@@ -183,7 +186,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 ##########################################################################################################
                 ### end of Seb s dev ######################################################
                 ########################
-        if "add_product" in self.request.POST:
+        if "q_add_product" in self.request.POST:
             print "\n\n\n\nI am in just bofore the HttpResponseRedirect:\n\nself.object_created :\n\n"
             print self.item_created
             url_built =  "%(url)s?question_id=%(q_id)d&next=%(next)s" % {
@@ -214,9 +217,12 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
+    # object = None
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        print "\n\nKwargs : \n\n"
+        print kwargs
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
