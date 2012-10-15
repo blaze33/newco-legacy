@@ -25,6 +25,12 @@ class JsonPairInputs(AdminTextareaWidget):
 
     """
 
+    base_template = '<div class="control-group" id="form_data">{0}</div>'
+    kv_template = '''
+    <input type="text" name="json_key[{fieldname}]" value="{key}" {key_attrs}>
+    <input type="text" name="json_value[{fieldname}]" value="{value}" {val_attrs}>
+    <br>'''
+
     def __init__(self, *args, **kwargs):
         """A widget that displays JSON Key Value Pairs
         as a list of text input box pairs
@@ -51,11 +57,7 @@ class JsonPairInputs(AdminTextareaWidget):
         attrs (dict) -- automatically passed in by django (unused in this function)
         """
 
-        pair_template = '''
-        <input type="text" name="json_key[{fieldname}]" value="{key}" {key_attrs}>
-        <input type="text" name="json_value[{fieldname}]" value="{value}" {val_attrs}>
-        <br>'''
-        ret = '<div class="control-group" id="form_data">'
+        ret = ''
         if value:
             for k, v in value.items():
                 ctx = {'key': escape(k),
@@ -63,9 +65,8 @@ class JsonPairInputs(AdminTextareaWidget):
                        'fieldname': name,
                        'key_attrs': flatatt(self.key_attrs),
                        'val_attrs': flatatt(self.val_attrs)}
-                ret += pair_template.format(**ctx)
-        ret += '</div>'
-        return mark_safe(ret)
+                ret += self.kv_template.format(**ctx)
+        return mark_safe(self.base_template.format(ret))
 
     def value_from_datadict(self, data, files, name):
         """
