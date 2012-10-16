@@ -1,12 +1,9 @@
-import json
-from django.conf import settings
 from django.utils import unittest
 from django.test.client import RequestFactory, Client
-from django.core.exceptions import PermissionDenied
+from django.forms import CharField
 from django.contrib.auth.models import User, AnonymousUser
 from ..models import Item
-from ..forms import ItemForm, DictionaryField
-from ..views import ContentCreateView, ContentDeleteView, ContentDetailView
+from ..forms import ItemForm, DictionaryField, KeyValueField
 
 
 class SimpleTest(unittest.TestCase):
@@ -16,35 +13,38 @@ class SimpleTest(unittest.TestCase):
         self.client = Client()
         self.request = self.factory.get('/')
         self.request.user = AnonymousUser()
-        self.views = [ContentCreateView, ContentDeleteView, ContentDetailView]
-
-    def test_redirect_anon(self):
-        '''
-        Content: AnonymousUser is redirected
-        '''
-        for view in self.views:
-            response = view().dispatch(self.request)
-            self.assertEqual(response.status_code, 302)
-            assert settings.LOGIN_URL in response._headers['location'][1]
-
-    def test_non_staff_fordidden(self):
-        '''
-        Content: non staff user is fordidden
-        '''
-        request = self.request
-        request.user = User()
-        for view in self.views:
-            self.assertRaises(PermissionDenied, view().dispatch, request)
 
     def test_dictionary_field(self):
         '''
-        Content: test dictionary field
+        Content: test DictionaryField
         '''
-        form = ItemForm(request=self.request, initial=Item.initial)
-        field = form.declared_fields['data']
-        widget = field.widget
-        context = {}
-        self.assertEqual(widget.render('data', context),
-                         widget.base_template.format(''))
+        payload = {"data_0_0": "_class",
+                   "data_0_1": "product",
+                   "data_1_0": "name",
+                   "data_1_1": "something awesome",
+                   "data_2_0": "www",
+                   "data_2_1": "zzz"}
+        expected_output = {'data': {u'_class': u'product',
+                                    u'name': u'something awesome',
+                                    u'www': u'zzz'}}
+        request = self.factory.post('/add/item/', payload)
+        request.user = User.objects.get(id=1)
+        form = ItemForm(**{'data': payload, 'request': request})
+        assert form.is_bound
+        assert form.is_valid()
+        self.assertEqual(form.cleaned_data, expected_output)
+
+        form = ItemForm(request=request, initial=Item.initial)
+        assert not form.is_valid()
+
+        field = DictionaryField(fields=(CharField, CharField))
         data = {"VENEZUELA": "CARACAS", "CANADA": "TORONTO"}
-        self.assertEqual(field.clean(json.dumps(data)), json.loads(json.dumps(data)))
+        self.assertEqual(field.compress(field.widget.decompress(data)), data)
+
+    def test_keyvalue_field(self):
+        '''
+        Content: test KeyValueField
+        '''
+        kvf = KeyValueField(fields=(CharField, CharField))
+        pair = ('a', 'b')
+        self.assertEquals(kvf.compress(kvf.widget.decompress(pair)), pair)
