@@ -52,10 +52,10 @@
       <h3>
         {% if tag and search_terms %}
             {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% elif tag and not search_terms %}
             {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label">{{ tagname }}</a> are available.{% endblocktrans %}
+            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
         {% elif not tag and search_terms %}
             {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% else %}
@@ -70,31 +70,16 @@
       </h3>
     {% endif %}
   </div>
-  <div class="span3">
-    {% comment %}
-    {% if object_list %}<div class="row well well-small">{% spaceless %}
-      <h3>{% trans "Sort by" %}{% trans ":" %}</h3>
-      <form action="." method="POST">{% csrf_token %}<div class="input-append span2">
-        <!--use  btn-group-vertical when bootstrap 2.1.0 !-->
-        <div class="btn-group" data-toggle="buttons-radio">
+  <div class="span3">{% if object_list %}
+    <div class="row">
+      <form action="" method="POST">{% csrf_token %}
+        <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
           <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
           <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
           <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
         </div>
-      </div></form>
-    {% endspaceless %}</div>{% else %}&nbsp;{% endif %}
-    {% endcomment %}
-
-    {% if object_list %}<div class="row"><form action="" method="POST">{% csrf_token %}
-      <select data-placeholder="Sort" class="chzn-select" name="sort_products">
-        <option value=""></option>
-        <option value="-pub_date"{% if sort_order == "-pub_date" %} selected{% endif %}>{% trans "Newest to Oldest" %}</option>
-        <option value="pub_date"{% if sort_order == "pub_date" %} selected{% endif %}>{% trans "Oldest to Newest" %}</option>
-        <option value="popular"{% if sort_order == "popular" %} selected{% endif %}>{% trans "Most popular" %}</option>
-      </select>
-      &nbsp;
-      <button type="submit" class="btn"><i class="icon-list"></i> {% trans 'Sort' %}</button>
-    </form></div>{% else %}&nbsp;{% endif %}
+      </form>
+    </div>
 
     {% for title, content_list in related_questions.iteritems %}
       {% if content_list %}<div class="row well well-small">
@@ -102,7 +87,7 @@
           <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
       </div>{% endif %}
     {% endfor %}
-  </div>
+  {% endif %}</div>
 </div>
 {% endblock %}
 

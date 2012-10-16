@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 15:30+0200\n"
-"PO-Revision-Date: 2012-10-12 15:40\n"
+"POT-Creation-Date: 2012-10-15 11:19+0200\n"
+"PO-Revision-Date: 2012-10-15 11:21\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -92,11 +92,11 @@ msgstr "Se déconnecter"
 
 #: templates/_account_bar.html:30
 msgid "Log in"
-msgstr "Connection"
+msgstr "Se connecter"
 
 #: templates/_account_bar.html:32
 msgid "Sign up"
-msgstr "Inscription"
+msgstr "S'enregistrer"
 
 #: templates/_account_bar.html:38
 msgid "Add +"
@@ -175,8 +175,8 @@ msgid "Get information"
 msgstr "Informez-vous"
 
 #: templates/homepage_base.html:38 templates/homepage_base.html.py:45
-msgid "Find products or tags in the search bar"
-msgstr "Trouvez des produits ou tags dans la barre de recherche"
+msgid "Find products, users or tags in the search bar"
+msgstr "Trouvez des produits, utilisateurs ou tags dans la barre de recherche"
 
 #: templates/homepage_base.html:41
 msgid ""
@@ -192,19 +192,19 @@ msgstr ""
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
-"=\"icon-play\" style=\"margin-right: 3px; vertical-"
-"align:middle;\"></i>explore NewCo</em></a>"
+"=\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
 msgstr ""
 "...ou <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
-"=\"icon-play\" style=\"margin-right: 3px; vertical-"
-"align:middle;\"></i>explorez NewCo</em></a>"
+"=\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explorez NewCo</em></a>"
 
 #: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr "Partagez vos connaissances"
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:56
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -220,6 +220,19 @@ msgstr ""
 #: templates/homepage_base.html:58
 msgid "...and build your reputation from others' votes"
 msgstr "...et construisez votre réputation par les votes des utilisateurs"
+
+#: templates/homepage_base.html:61
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: "
+"-3px;\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; "
+"vertical-align: middle;\"></i> contribute</a></em>..."
+msgstr ""
+"Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
+"=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
+"class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contribuer</a></em>..."
 
 #: templates/homepage_base.html:64
 #, python-format
@@ -255,17 +268,9 @@ msgstr "Questions orphelines"
 msgid "My newsfeed"
 msgstr "Mon flux"
 
-#: templates/site_base.html:40
-msgid "Search"
-msgstr "Recherche"
-
-#: templates/site_base.html:90
-msgid "Search an item, a tag..."
-msgstr "Chercher un produit, un tag..."
-
-#: templates/site_base.html:91
-msgid "What are you looking for?"
-msgstr "Que cherchez-vous ?"
+#: templates/site_base.html:43
+msgid "Search a product, a user, a tag"
+msgstr "Cherchez un produit, un utilisateur ou un tag"
 
 #: templates/account/email/email_confirmation_message.txt:6
 #, python-format
@@ -336,11 +341,20 @@ msgstr "Tous les utilisateurs"
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
 
+#~ msgid "Find products or tags in the search bar"
+#~ msgstr "Trouvez des produits ou tags dans la barre de recherche"
+
 #~ msgid "Community"
 #~ msgstr "Communauté"
 
-#~ msgid "Latest Contributions"
-#~ msgstr "Dernières contributions"
+#~ msgid "Search"
+#~ msgstr "Recherche"
+
+#~ msgid "Search an item, a tag..."
+#~ msgstr "Chercher un produit, un tag..."
+
+#~ msgid "What are you looking for?"
+#~ msgstr "Que cherchez-vous ?"
 
 #~ msgid "Find products or tags in the search bar..."
 #~ msgstr "Trouvez des produits ou tags dans la barre de recherche..."
@@ -564,6 +578,9 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "Products:"
 #~ msgstr "Liste des produits"
+
+#~ msgid "answered your question"
+#~ msgstr "Poser une question"
 
 #~ msgid "About the product"
 #~ msgstr "Ajouter un produit"

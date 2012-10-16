@@ -4,16 +4,16 @@
 {% load content_utils %}
 
 <div class="pull-right">
-  <ul class="nav">
+  <ul class="nav" role="navigation">
     {% if debug and templates %}<li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
-      <ul class="dropdown-menu">{% for name, title in templates.items %}
+      <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
+      <ul class="dropdown-menu pull-right" role="menu">{% for name, title in templates.items %}
         <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == 'template' %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
       {% endfor %}</ul>
     </li>{% endif %}
     <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %}</a>
-      <ul class="dropdown-menu">
+      <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Add +" %}</a>
+      <ul class="dropdown-menu pull-right" role="menu">
         <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
         <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
         <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
@@ -30,8 +30,8 @@
       <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
     </li>
     <li class="dropdown btn btn-inverse">
-      <a title="Menu" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-      <ul class="dropdown-menu">
+      <a class="dropdown-toggle" data-toggle=dropdown data-target="#" title="Menu" href=""><b class="caret"></b></a>
+      <ul class="dropdown-menu pull-right">
         <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>
         <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "My profile" %}</b> </a></li>
         <li><a href="{% url 'account_settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
