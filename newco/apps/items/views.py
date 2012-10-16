@@ -413,7 +413,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         nb_items = objs.count() if type(objs) is QuerySet else len(objs)
         if nb_items == 0:
             return context
-        qs = Content.objects.filter(question__items__in=objs)
+        qs = Content.objects.filter(question__items__in=objs).distinct()
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         rq = SortedDict()
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})

@@ -13,7 +13,7 @@
 <br />
 
 <form action="." method="post">{% csrf_token %}
-{{ form.as_p }}
+{{ form|as_bootstrap }}
 <button class="btn" id="add_field"><icon class="icon-plus"></icon> Add a field</button>
 <input class="btn" type="submit" value="Submit" />
 </form>
