@@ -5,7 +5,7 @@ Django==1.4.1
 --extra-index-url=http://dist.pinaxproject.com/dev/
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 Pinax==0.9b1.dev10
-django-user-accounts==1.0b6
+django-user-accounts==1.0b7
 
 django-extensions==0.9
 django-debug-toolbar==0.9.4
