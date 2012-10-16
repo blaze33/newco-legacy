@@ -104,7 +104,7 @@ class Item(BaseModel):
         if name:
             return unicode(name)
         else:
-            return unicode("<%s: %d>" % (self.get("class"), self.id))
+            return unicode("<{0}: {1}>".format(self.get("class"), self.id))
 
     def link_to(self, item, data):
         if 'relationship' in data:
@@ -127,7 +127,7 @@ class Relation(BaseModel):
     from_item = models.ForeignKey(Item, related_name='links')
     to_item = models.ForeignKey(Item, related_name='inlinks')
 
-    initial = {}
+    initial = {'data': {}}
 
     def __unicode__(self):
         return "%s %s %s" % (self.from_item.get('name'),
