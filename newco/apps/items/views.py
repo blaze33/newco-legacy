@@ -224,15 +224,17 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             for key, queryset in querysets.items():
                 contents.update({key: get_sorted_queryset(queryset, user)})
 
-            q_form = QuestionForm(POST, request=request) \
-                if "question" in POST else QuestionForm(request=request)
+            initial = {"status": Content._meta.get_field("status").default,
+                       "items": item.id}
+            q_form = QuestionForm(data=POST, request=request) if "question" \
+                in POST else QuestionForm(initial=initial, request=request)
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
             media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
-                    if q.id != q_id else AnswerForm(POST, request=request)
+                    if q.id != q_id else AnswerForm(data=POST, request=request)
                 answer_qs = Content.objects.filter(
                     Q(answer__question__id=q.id) & public_query)
                 q.answers = get_sorted_queryset(answer_qs, user)
@@ -331,13 +333,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in request.POST or "answer" in request.POST:
-            if "question" in request.POST:
-                POST = request.POST.copy()
-                default_status = Content._meta.get_field('status').default
-                POST.update({'status': default_status})
-                form = QuestionForm(POST, request=request)
-            else:
-                form = AnswerForm(request.POST, request=request)
+            Form = QuestionForm if "question" in request.POST else AnswerForm
+            form = Form(data=request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:

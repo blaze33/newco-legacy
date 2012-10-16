@@ -1,4 +1,4 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
@@ -6,6 +6,7 @@ from django.utils.translation import ugettext
 
 from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
+from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
@@ -62,45 +63,49 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ("content", "status", "items")
+        fields = ("content", "status", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(),
+            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
             ),
+            "tags": TagAutoSuggest(attrs={"class": "span4"})
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] is None:
+        if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
             self.request = kwargs.pop('request')
             self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields["items"].help_text = _(
             "Select one product using Enter and the Arrow keys")
-        if hasattr(self, "request"):
-            if self.request.GET.get("fields", "") != "add_items":
-                del self.fields["items"]
-        else:
-            del self.fields["items"]
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
             question.save()
-            if "items" in self.fields:
-                self.save_m2m()
-            else:
-                question.items.add(kwargs.pop("pk"))
+            self.save_m2m()
             return question
         else:
             return super(QuestionForm, self).save(commit)
+
+    def clean(self):
+        cleaned_data = super(QuestionForm, self).clean()
+        tags = cleaned_data.get("tags")
+        items = cleaned_data.get("items")
+
+        if not tags and not items:
+            raise ValidationError(_("Link your question to at least one"
+                                    " product or on tag."))
+
+        return cleaned_data
 
 
 class AnswerForm(ModelForm):

@@ -61,8 +61,10 @@ class Content(models.Model):
                                     verbose_name=_("date published"))
     status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
                                       verbose_name=_("status"))
-    items = models.ManyToManyField(Item, verbose_name=_("products"))
+    items = models.ManyToManyField(Item, verbose_name=_("products"),
+                                   blank=True)
     votes = generic.GenericRelation(Vote)
+    tags = TaggableManager(blank=True)
 
     public = QueryManager(status=STATUS.public)
 
