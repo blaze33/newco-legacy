@@ -83,8 +83,10 @@ class QuestionForm(ModelForm):
             self.request = kwargs.pop('request')
             self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields["items"].help_text = _(
-            "Select one product using Enter and the Arrow keys")
+        self.fields.get("items").help_text = _(
+            "Select one or several products using Enter and the Arrow keys")
+        self.fields.get("tags").help_text = _(
+            "Select/add one or several categories to link your question to")
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -102,6 +104,10 @@ class QuestionForm(ModelForm):
         items = cleaned_data.get("items")
 
         if not tags and not items:
+            msg = u""
+            self._errors["tags"] = self.error_class([msg])
+            self._errors["items"] = self.error_class([msg])
+
             raise ValidationError(_("Link your question to at least one"
                                     " product or on tag."))
 
