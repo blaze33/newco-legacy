@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-17 18:05+0200\n"
+"POT-Creation-Date: 2012-10-17 18:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,35 +37,47 @@ msgstr ""
 msgid "Select/add one or several categories to link your question to"
 msgstr ""
 
-#: forms.py:111
-msgid "Link your question to at least one product or on tag."
+#: forms.py:107
+msgid "Choose between either products or tags to link your question to."
 msgstr ""
 
-#: forms.py:128
+#: forms.py:110
+msgid "Link your question to at least one product or one tag."
+msgstr ""
+
+#: forms.py:117
+msgid "Pick less than 5 tags"
+msgstr ""
+
+#: forms.py:121
+msgid "Pick less than 10 items"
+msgstr ""
+
+#: forms.py:139
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:145
+#: forms.py:156
 msgid "Your answer"
 msgstr ""
 
-#: forms.py:174
+#: forms.py:185
 msgid "Link description"
 msgstr ""
 
-#: forms.py:228
+#: forms.py:239
 msgid "positive"
 msgstr ""
 
-#: forms.py:230
+#: forms.py:241
 msgid "What feature do you like?"
 msgstr ""
 
-#: forms.py:233
+#: forms.py:244
 msgid "negative"
 msgstr ""
 
-#: forms.py:235
+#: forms.py:246
 msgid "What feature do you dislike?"
 msgstr ""
 

@@ -100,16 +100,26 @@ class QuestionForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
-        tags = cleaned_data.get("tags")
-        items = cleaned_data.get("items")
+        tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
 
-        if not tags and not items:
-            msg = u""
-            self._errors["tags"] = self.error_class([msg])
-            self._errors["items"] = self.error_class([msg])
-
-            raise ValidationError(_("Link your question to at least one"
-                                    " product or on tag."))
+        if not tags and not items or tags and items:
+            self._errors["tags"] = self.error_class([""])
+            self._errors["items"] = self.error_class([""])
+            if tags:
+                raise ValidationError(_("Choose between either products or "
+                                        "tags to link your question to."))
+            else:
+                raise ValidationError(_("Link your question to at least one "
+                                        "product or one tag."))
+        else:
+            if len(tags) > 5:
+                tags_msg = _("Pick less than 5 tags")
+                self._errors["tags"] = self.error_class([tags_msg])
+                del cleaned_data["tags"]
+            elif len(items) > 10:
+                items_msg = _("Pick less than 10 items")
+                self._errors["items"] = self.error_class([items_msg])
+                del cleaned_data["items"]
 
         return cleaned_data
 

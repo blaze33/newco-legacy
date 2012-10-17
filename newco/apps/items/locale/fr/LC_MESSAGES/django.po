@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-17 18:05+0200\n"
-"PO-Revision-Date: 2012-10-17 18:06\n"
+"POT-Creation-Date: 2012-10-17 18:43+0200\n"
+"PO-Revision-Date: 2012-10-17 19:00\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,35 +42,47 @@ msgid "Select/add one or several categories to link your question to"
 msgstr ""
 "Selectionnez/ajoutez une ou plusieurs catégories à lier à votre question"
 
-#: forms.py:111
-msgid "Link your question to at least one product or on tag."
+#: forms.py:107
+msgid "Choose between either products or tags to link your question to."
+msgstr "Choisissez soit des produits, soit des tags à lier à votre question."
+
+#: forms.py:110
+msgid "Link your question to at least one product or one tag."
 msgstr "Liez votre question à au moins un produit ou un tag."
 
-#: forms.py:128
+#: forms.py:117
+msgid "Pick less than 5 tags"
+msgstr "Choisissez moins de 5 tags"
+
+#: forms.py:121
+msgid "Pick less than 10 items"
+msgstr "Choisissez moins de 10 produits"
+
+#: forms.py:139
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:145
+#: forms.py:156
 msgid "Your answer"
 msgstr "Votre réponse"
 
-#: forms.py:174
+#: forms.py:185
 msgid "Link description"
 msgstr "Description du lien"
 
-#: forms.py:228
+#: forms.py:239
 msgid "positive"
 msgstr "positive"
 
-#: forms.py:230
+#: forms.py:241
 msgid "What feature do you like?"
 msgstr "Quelle caractéristique apprécies-tu ?"
 
-#: forms.py:233
+#: forms.py:244
 msgid "negative"
 msgstr "négative"
 
-#: forms.py:235
+#: forms.py:246
 msgid "What feature do you dislike?"
 msgstr "Quelle caractéristique te déplait ?"
 
