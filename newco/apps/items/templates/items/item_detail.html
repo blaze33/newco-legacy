@@ -22,40 +22,10 @@
 
 <div class="span7">
 
-    <div class="row tabbable">
-        <ul class="nav nav-tabs">
-            <li{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} class="active"{% endif %}><a href="#questions" data-toggle="tab">{% trans "Questions" %}</a></li>
-            <li{% if 'link' in request.GET %} class="active"{% endif %}><a href="#links" data-toggle="tab">{% trans "Links" %}</a></li>
-            <li{% if 'feature' in request.GET %} class="active"{% endif %}><a href="#features" data-toggle="tab">{% trans "Features" %}</a></li>
-            <li{% if 'story' in request.GET %} class="active"{% endif %}><a href="#stories" data-toggle="tab">{% trans "Stories" %}</a></li>
-        </ul>
-
-        <div class="tab-content" style="overflow: visible;">
-            <div id="questions" class="tab-pane{% if 'link' not in request.GET and 'feature' not in request.GET and 'story' not in request.GET %} active{% endif %} nc_qna_list_div">{% include "items/_question_list.html" %}</div>
-            <div id="links" class="tab-pane{% if 'link' in request.GET %} active{% endif %}">{% include "items/_link_list.html" %}</div>
-            <div id="features" class="tab-pane{% if 'feature' in request.GET %} active{% endif %}">{% include "items/_feature_list.html" %}</div>
-            <div id="stories" class="tab-pane{% if 'story' in request.GET %} active{% endif %}">
-                <div class="row"><div class="span7">
-                    <h3>Soon you'll be able to tell us a nice story about this product</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus erat diam, convallis et convallis vel, pharetra vel nulla. Aliquam ac tellus a purus mollis posuere. Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor. Nunc cursus, turpis eu malesuada pharetra, velit lacus interdum ipsum, ac venenatis turpis dolor at augue. Vestibulum tellus risus, interdum vitae fringilla nec, iaculis vel metus.
-                    <ul class="thumbnails">
-                        <li class="span3"><a href="#" class="thumbnail">
-                          <img src="http://lorempixel.com/g/260/180" alt="">
-                        </a></li>
-                        <li class="span3"><a href="#" class="thumbnail">
-                          <img src="http://lorempixel.com/g/260/180/technics" alt="">
-                        </a></li>
-                    </ul>
-                    Etiam interdum dictum sapien eu condimentum. Fusce commodo pellentesque diam et mollis. Nulla et purus nunc, non placerat lacus. Phasellus elementum fermentum tortor vel porttitor.
-                    </p>
-                    <hr>
-                </div></div>
-            </div>
-        </div>
-    </div>
+    <div class="row">{% include "items/_question_list.html" %}</div>
 
     {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
-        <h3>{% trans "Offers" %}</h3>
+        <h3>{% trans "Where to buy" %}</h3>
         <div class="row">
             {% if nb_ean != 1 %}<div class="span1"><h4>{% trans "EAN" %}</h4></div>{% endif %}
             <div class="span2"><h4>{% trans "Store" %}</h4></div>
@@ -97,7 +67,7 @@
 
     <hr>
 
-    <h4>{% trans "Buy" %}</h4>
+    <h4>{% trans "Where to buy" %}</h4>
     <div>{% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
         {% include "affiliation/_affiliation_item.html" with prod=prod %}
     {% endfor %}{% endfor %}</div>

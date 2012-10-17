@@ -33,9 +33,9 @@ class Profile(ProfileBase):
     slug = models.SlugField(verbose_name=_('slug'), editable=False)
     about = models.TextField(_("about"), null=True, blank=True)
     location = models.CharField(_("location"), max_length=40, null=True,
-                                                              blank=True)
+                                blank=True)
     website = models.URLField(_("website"), null=True, blank=True,
-                                                       verify_exists=False)
+                              verify_exists=False)
     skills = TaggableManager(
         verbose_name=_("skills"),
         help_text=_("The list of your main product skills"),
@@ -46,7 +46,7 @@ class Profile(ProfileBase):
 
     class Meta:
         verbose_name = _("profile")
-        ordering = ["-user__reputation__reputation_incremented"]
+        ordering = ["-user__reputation__reputation_incremented", "name"]
 
     def __unicode__(self):
         return self.name
@@ -78,8 +78,8 @@ class Reputation(models.Model):
         rep = 0
 
         ctype = ContentType.objects.get_for_model(Content)
-        obj_ids = Content.objects.filter(author=self.user).values_list('id',
-                                                                flat=True)
+        obj_ids = Content.objects.filter(
+            author=self.user).values_list('id', flat=True)
         votes = Vote.objects.filter(object_id__in=obj_ids,
                                     content_type=ctype)
 
@@ -97,7 +97,7 @@ class Reputation(models.Model):
 
 @receiver(post_save, sender=User)
 def create_reputation(sender, instance=None, raw=False, **kwargs):
-    if instance is None or raw == True:
+    if instance is None or raw:
         return
     rep, created = Reputation.objects.get_or_create(user=instance)
     rep.reputation_computed = rep.compute_reputation()
@@ -115,7 +115,7 @@ def increment_reputation(sender, instance=None, **kwargs):
         rep_rated = Reputation.objects.get(user=vote.object.author)
         module_name = vote.object.select_subclass()._meta.module_name
         rep_rated.reputation_incremented += \
-                POINTS_TABLE_RATED[module_name][vote.vote]
+            POINTS_TABLE_RATED[module_name][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -125,7 +125,7 @@ def increment_reputation(sender, instance=None, **kwargs):
         rep_rating = Reputation.objects.get(user=vote.user)
         module_name = vote.object.select_subclass()._meta.module_name
         rep_rating.reputation_incremented += \
-                POINTS_TABLE_RATING[module_name][vote.vote]
+            POINTS_TABLE_RATING[module_name][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -142,7 +142,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
         rep_rated = Reputation.objects.get(user=vote.object.author)
         module_name = vote.object.select_subclass()._meta.module_name
         rep_rated.reputation_incremented -= \
-                POINTS_TABLE_RATED[module_name][vote.vote]
+            POINTS_TABLE_RATED[module_name][vote.vote]
         rep_rated.save()
     except:
         pass
@@ -152,7 +152,7 @@ def decrement_reputation(sender, instance=None, **kwargs):
         rep_rating = Reputation.objects.get(user=vote.user)
         module_name = vote.object.select_subclass()._meta.module_name
         rep_rating.reputation_incremented -= \
-                POINTS_TABLE_RATING[module_name][vote.vote]
+            POINTS_TABLE_RATING[module_name][vote.vote]
         rep_rating.save()
     except:
         pass
@@ -180,7 +180,7 @@ def update_permissions(sender, instance=None, **kwargs):
 
     content_type = ContentType.objects.get_for_model(Reputation)
     permission = Permission.objects.get(codename='can_vote',
-                                       content_type=content_type)
+                                        content_type=content_type)
     instance.user.user_permissions.add(permission)
 
 #    if instance.reputation_incremented >= 2:

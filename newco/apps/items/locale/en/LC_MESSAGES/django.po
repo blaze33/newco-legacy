@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-03 17:35+0200\n"
+"POT-Creation-Date: 2012-10-05 13:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -251,7 +251,7 @@ msgid "No question yet! Ask the first one here!"
 msgstr ""
 
 #: templates/items/answer_form.html:11
-#: templates/items/root_display/_question.html:68
+#: templates/items/root_display/_question.html:66
 msgid "Answer"
 msgstr ""
 
@@ -302,8 +302,8 @@ msgstr ""
 msgid "Stories"
 msgstr ""
 
-#: templates/items/item_detail.html:58
-msgid "Offers"
+#: templates/items/item_detail.html:58 templates/items/item_detail.html:100
+msgid "Where to buy"
 msgstr ""
 
 #: templates/items/item_detail.html:60
@@ -338,10 +338,6 @@ msgstr ""
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:100
-msgid "Buy"
-msgstr ""
-
 #: templates/items/item_detail.html:122
 msgid "Ask a new question:"
 msgstr ""
@@ -355,7 +351,7 @@ msgstr ""
 msgid "Add an answer"
 msgstr ""
 
-#: templates/items/item_form.html:18 templates/items/item_list_base.html:43
+#: templates/items/item_form.html:18 templates/items/item_list_base.html:41
 msgid "Add a product"
 msgstr ""
 
@@ -367,7 +363,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:107
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:102
 #: templates/items/question_detail.html:32
 #: templates/items/feed_display/_feature.html:7
 #: templates/items/feed_display/_link.html:7
@@ -454,56 +450,56 @@ msgstr ""
 msgid "Add to skills"
 msgstr ""
 
-#: templates/items/item_list_base.html:58
+#: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
 "are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_list_base.html:61
+#: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
 "are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:63
+#: templates/items/item_list_base.html:60
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:62
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:70
+#: templates/items/item_list_base.html:67
 #, python-format
 msgid ""
-"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating a "
+"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">create a "
 "product</a> yourself?"
 msgstr ""
 
-#: templates/items/item_list_base.html:71
+#: templates/items/item_list_base.html:69
 msgid ""
-"By creating a product product page you lay the first brick to gather "
+"By creating a product product page, you lay the first brick to gather "
 "information about this product: other members will see this page, add things "
-"they know about it, and... answer to you questions if you ask some."
+"they know about it, and even answer to you questions if you ask some."
 msgstr ""
 
-#: templates/items/item_list_base.html:97
+#: templates/items/item_list_base.html:92
 msgid "Newest to Oldest"
 msgstr ""
 
-#: templates/items/item_list_base.html:98
+#: templates/items/item_list_base.html:93
 msgid "Oldest to Newest"
 msgstr ""
 
-#: templates/items/item_list_base.html:99
+#: templates/items/item_list_base.html:94
 msgid "Most popular"
 msgstr ""
 
-#: templates/items/item_list_base.html:102
+#: templates/items/item_list_base.html:97
 msgid "Sort"
 msgstr ""
 
@@ -603,7 +599,7 @@ msgid "asked a question about"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:34
-#: templates/items/root_display/_question.html:50
+#: templates/items/root_display/_question.html:49
 msgid "Answer this question"
 msgstr ""
 
@@ -611,11 +607,11 @@ msgstr ""
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
 
-#: templates/items/root_display/_question.html:50
+#: templates/items/root_display/_question.html:49
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:52
-#: templates/items/root_display/_question.html:58
+#: templates/items/root_display/_question.html:50
+#: templates/items/root_display/_question.html:56
 msgid "Ask someone to answer"
 msgstr ""

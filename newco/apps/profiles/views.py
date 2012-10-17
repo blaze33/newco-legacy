@@ -105,6 +105,6 @@ class ProfileListView(ProcessProfileSearchView, ProfileListView):
         if order == "date":
             profiles = profiles.order_by("-user__date_joined")
         elif order == "name":
-            profiles = profiles.order_by("user__username")
+            profiles = profiles.order_by("name")
 
         return profiles

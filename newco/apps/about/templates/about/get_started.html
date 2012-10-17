@@ -15,43 +15,43 @@
 
 .call2action_btn{
     width: 265px;
-    display: block; 
-    padding: 19px 24px; 
-    margin-bottom: 27px; 
-    font-size: 30px; 
-    line-height: 1; 
-    text-align: center; 
-    -webkit-border-radius: 6px; 
-    -moz-border-radius: 6px; 
+    display: block;
+    padding: 19px 24px;
+    margin-bottom: 27px;
+    font-size: 30px;
+    line-height: 1;
+    text-align: center;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
     border-radius: 6px;
 }
 
     /* Large desktop */
     @media (min-width: 1200px) {
         .call2action_btn{
-            width: 300px; 
+            width: 300px;
         }
     }
-     
+
     /* Portrait tablet to landscape and desktop */
     @media (min-width: 768px) and (max-width: 979px) {
         .call2action_btn{
-            width: 220px; 
-            padding: 19px 5px; 
+            width: 220px;
+            padding: 19px 5px;
         }
     }
-     
+
     /* Landscape phone to portrait tablet */
     @media (max-width: 767px) {
         .call2action_btn{
-            width: 250px; 
+            width: 250px;
         }
     }
-     
+
     /* Landscape phones and down */
     @media (max-width: 480px) {
         .call2action_btn{
-            width: 250px; 
+            width: 250px;
         }
     }
 
@@ -127,7 +127,7 @@
     <div class="row">
         <div class="span6">
             <div id="container-for-relative" style="position: relative;">
-                <img src="{% static 'img/arrows_top_left.png' %}" type="image/png" style="position: absolute; top:-270px; left:+60px; opacity: 0.2; z-index: +1;"> 
+                <img src="{% static 'img/arrows_top_left.png' %}" type="image/png" style="position: absolute; top:-270px; left:+60px; opacity: 0.2; z-index: +1;">
                 <div id="info" class="well well-large Struct_col"><br><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Public space" %}</em>
                     </h1><br>
                     <p style="color:#CCCCCC; font-size:14px;">
@@ -185,13 +185,13 @@
 
 <div class="row">
     <div class="span6">
-        <div class="well well-large WhyNC_col" id="info"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}{# Learn / Get to know #}</em>
+        <div class="well well-large WhyNC-col" id="info"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Get information" %}{# Learn / Get to know #}</em>
             </h1><br>
             <p style="color:#CCCCCC; font-size:14px;">
                 <div id="text_inf" style="opacity:1">
                     <p class="lead"><i class="icon-shopping-cart" style="margin-right: 3px; vertical-align: middle;"></i>{% trans "To get some information about products:" %}
                     <ul style="font-size: 20px; font-weight: 200;">
-                        <li>{% trans "browse the public area" %}<br><br></li> 
+                        <li>{% trans "browse the public area" %}<br><br></li>
                         <li>{% trans "use the tools available in your private space" %}{#: abonnements à des produits, tags ou personnes, outils de recherche, de prise de notes...#}</li>
                     </ul></p>
                 </div>
@@ -199,7 +199,7 @@
         </div></br>
     </div>
     <div class="span6">
-        <div class="well well-large WhyNC_col" id="contribute"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}{# Share your knowledge #}</em>
+        <div class="well well-large WhyNC-col" id="contribute"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}{# Share your knowledge #}</em>
             </h1><br>
             <p style="color:#CCCCCC; font-size:14px;">
                 <div id="text_contribut" style="opacity:1">
@@ -218,13 +218,13 @@
 
 {% block extra_script %}
     {{ block.super }}
-    
+
     {# ##### Equalize columns height ##### #}
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
         // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
-        $('.WhyNC_col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC_col'), function (elem, index, list) {
+        $('.WhyNC-col').height(function () {
+            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();
             });
             return $(h).height();

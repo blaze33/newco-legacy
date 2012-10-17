@@ -2,1612 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 01:38+0200\n"
-"PO-Revision-Date: 2012-10-11 01:30\n"
-"Last-Translator:   <rouyrre@gmail.com>\n"
+"POT-Creation-Date: 2012-10-12 15:30+0200\n"
+"PO-Revision-Date: 2012-10-12 15:40\n"
+"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
-
-#: apps/about/templates/about/contribute.html:5
-#: apps/about/templates/about/contribute.html:8
-#: apps/about/templates/about/faq.html:49 templates/_footer.html:7
-msgid "How to contribute?"
-msgstr "Comment contribuer"
-
-#: apps/about/templates/about/faq.html:6
-#: apps/about/templates/about/faq.html:23 templates/_footer.html:6
-msgid "FAQ"
-msgstr "FAQ"
-
-#: apps/about/templates/about/faq.html:26
-#: apps/about/templates/about/get_started.html:177
-msgid "Why NewCo?"
-msgstr "Pourquoi NewCo ?"
-
-#: apps/about/templates/about/faq.html:26
-msgid ""
-"We believe in today's connected world you should be able to find easily a "
-"deep information on any product. It would empower you to make wise choices. "
-"We work hard to make it real, and sometimes work late at night. We believe "
-"if we realize this vision we will all be able to buy products better adapter "
-"to our needs, push industrials to produce better products, and help you save "
-"a lot of time and energy finding what you want to buy."
-msgstr ""
-"Nous croyons que dans le monde connecté d'aujourd'hui, vous devriez avoir la "
-"possibilité de trouver facilement de l'information détaillée sur n'importe "
-"quel produit. Vous auriez le pouvoir de faire des choix en connaissance de "
-"cause. Nous travaillons dur pour concrétiser ça, et parfois tard la nuit. "
-"Nous croyons que si nous réalisons cette vision, nous aurons tous la "
-"possibilité d'acheter des produits plus adaptés à nos besoins, d'inciter les "
-"industriels à faire de meilleurs produits, et de vous aider à gagner du "
-"temps et de l'énergie à trouver ce que vous voulez acheter."
-
-#: apps/about/templates/about/faq.html:28
-msgid "We believe this shouldn't happen"
-msgstr "Nous croyons que cela ne devrait pas se produire"
-
-#: apps/about/templates/about/faq.html:28
-#: apps/dashboard/templates/dashboard/_box.html:7
-#: apps/dashboard/templates/dashboard/_subnav.html:40
-#: apps/dashboard/templates/dashboard/contribution.html:11
-#: apps/dashboard/templates/dashboard/feed.html:19
-#: apps/items/templates/items/item_form.html:22
-#: apps/items/templates/items/item_list_base.html:107
-#: apps/items/templates/items/question_detail.html:32
-#: apps/items/templates/items/feed_display/_feature.html:7
-#: apps/items/templates/items/feed_display/_link.html:7
-#: apps/items/templates/items/feed_display/_question.html:8
-#: apps/profiles/templates/profiles/_profile_display.html:12
-#: apps/profiles/templates/profiles/_profile_display.html:13
-msgid ":"
-msgstr " :"
-
-#: apps/about/templates/about/faq.html:49
-#, fuzzy
-msgid "How can I contribute to NewCo?"
-msgstr "Comment contribuer"
-
-#: apps/about/templates/about/faq.html:51
-msgid "How do you ensure to have quality content on the platform?"
-msgstr ""
-
-#: apps/about/templates/about/faq.html:51
-msgid ""
-"Quality of content is, with user experience, our first worry. To reach great "
-"result, we set up everything to:<ul><li>guide contributors and entice them "
-"to collaborate between them</li><li>promote best content emergence through "
-"our collective intelligence system"
-msgstr ""
-
-#: apps/about/templates/about/faq.html:54
-msgid "How to earn reputation points?"
-msgstr ""
-
-#: apps/about/templates/about/faq.html:54
-msgid ""
-"Build your reputation by creating quality content. You will get points from "
-"other users votes."
-msgstr ""
-
-#: apps/about/templates/about/faq.html:56
-#, fuzzy
-msgid "What are the tags for?"
-msgstr "Que cherchez-vous ?"
-
-#: apps/about/templates/about/faq.html:56
-msgid ""
-"Tags are used for two things: tag products, and tag skills. Tags can both be "
-"used for skills and products, but the use is different: tags on products is "
-"a way to categorize, tags on skills is a way to identify someone's area of "
-"competence."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:7 templates/_footer.html:5
-msgid "Get started"
-msgstr "Lancez-vous"
-
-#: apps/about/templates/about/get_started.html:67
-msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
-msgstr "Lancez <em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
-
-#: apps/about/templates/about/get_started.html:76
-msgid "Explore"
-msgstr "Explorez"
-
-#: apps/about/templates/about/get_started.html:79
-#: templates/_account_bar.html:51
-msgid "Ask a question"
-msgstr "Poser une question"
-
-#: apps/about/templates/about/get_started.html:82
-#: apps/items/templates/items/item_form.html:18
-#: apps/items/templates/items/item_list_base.html:43
-#: templates/_account_bar.html:50
-msgid "Add a product"
-msgstr "Ajouter un produit"
-
-#: apps/about/templates/about/get_started.html:91
-msgid "Or get to know more NewCo"
-msgstr "Ou découvrez-en plus sur NewCo"
-
-#: apps/about/templates/about/get_started.html:117
-msgid "How it works?"
-msgstr "Comment ça marche ?"
-
-#: apps/about/templates/about/get_started.html:131
-msgid "Public space"
-msgstr "Espace public"
-
-#: apps/about/templates/about/get_started.html:135
-#, python-format
-msgid ""
-"Product information? Go this way, Explore through the <a href=\"%(url_home)s"
-"\">homepage</a> or the search bar!"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:136
-msgid ""
-"Here, you will see what each visitor can see. This is the part of the "
-"website shared by everyone."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:146
-#, fuzzy
-msgid "Personal space"
-msgstr "Espace public"
-
-#: apps/about/templates/about/get_started.html:150
-msgid "Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:152
-msgid ""
-"This is your exclusive space. We offer you the tools to display the "
-"information as <b>you</b> want to see it."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:162
-msgid "tell me more!"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:179
-msgid ""
-"NewCo empowers you to buy better.<br>How? We enable you to get the "
-"information you look for, and share your knowledge back to the community."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:188
-msgid "Get information"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:192
-msgid "To get some information about products:"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:194
-msgid "browse the public area"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:195
-msgid "use the tools available in your private space"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:202
-msgid "Share knowledge"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:206
-#, python-format
-msgid ""
-"You can contribute while browsing the public area. Or visit the <b><a href="
-"\"%(url_contrib)s\" class=\"black\">contribution center</a></b>."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:207
-msgid ""
-"Build your reputation: create quality content and you will get points from "
-"other users votes."
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:208
-msgid ""
-"<b>NEW:</b> We just set up a tool to create <b>easily</b> affiliation links "
-"towards our partners!"
-msgstr ""
-
-#: apps/about/templates/about/get_started.html:208
-msgid "<i>Check this out</i></a>!"
-msgstr ""
-
-#: apps/about/templates/about/team.html:6 templates/_footer.html:8
-msgid "Team"
-msgstr "L'équipe"
-
-#: apps/about/templates/about/team.html:10
-msgid "Who are we?"
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:6
-#: apps/about/templates/about/what_next.html:9
-msgid "What Next?"
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:35
-#, python-format
-msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
-"\"%(login_url)s\">logging in</a>."
-msgstr ""
-
-#: apps/about/templates/about/what_next.html:37
-#, python-format
-msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
-msgstr ""
-
-#: apps/affiliation/models.py:15 apps/items/models.py:20
-#: apps/profiles/models.py:32
-msgid "name"
-msgstr ""
-
-#: apps/affiliation/models.py:16
-msgid "url webapp"
-msgstr ""
-
-#: apps/affiliation/models.py:17 apps/items/models.py:21
-#: apps/profiles/models.py:33
-msgid "slug"
-msgstr ""
-
-#: apps/affiliation/models.py:19 apps/affiliation/models.py:53
-#: apps/items/models.py:26
-msgid "last modified"
-msgstr "Derniers ajouts"
-
-#: apps/affiliation/models.py:22 apps/affiliation/models.py:40
-msgid "store"
-msgstr "Historique"
-
-#: apps/affiliation/models.py:34
-msgid "Euro"
-msgstr ""
-
-#: apps/affiliation/models.py:35
-msgid "Dollar"
-msgstr ""
-
-#: apps/affiliation/models.py:36
-msgid "Pound"
-msgstr ""
-
-#: apps/affiliation/models.py:39
-msgid "name at store"
-msgstr ""
-
-#: apps/affiliation/models.py:42
-msgid "store object id"
-msgstr ""
-
-#: apps/affiliation/models.py:43
-#: apps/items/templates/items/item_detail.html:60
-msgid "EAN"
-msgstr ""
-
-#: apps/affiliation/models.py:44
-msgid "url"
-msgstr ""
-
-#: apps/affiliation/models.py:46
-msgid "price"
-msgstr ""
-
-#: apps/affiliation/models.py:49
-msgid "currency"
-msgstr ""
-
-#: apps/affiliation/models.py:51
-msgid "date created"
-msgstr ""
-
-#: apps/affiliation/models.py:55
-msgid "small image"
-msgstr ""
-
-#: apps/affiliation/models.py:57
-msgid "medium image"
-msgstr ""
-
-#: apps/affiliation/models.py:59
-msgid "large image"
-msgstr ""
-
-#: apps/affiliation/models.py:63
-msgid "affiliation item"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:4
-msgid "All"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:5
-msgid "Apparel"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:6
-msgid "Appliances"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:7
-msgid "Automotive"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:8
-msgid "Baby"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:9
-msgid "Beauty"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:10
-msgid "Blended"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:11
-msgid "Books"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:12
-msgid "Classical"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:13
-msgid "Digital Music"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:14
-msgid "DVD"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:15
-msgid "Electronics"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:16
-msgid "Foreign Books"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:17
-msgid "Gourmet Food"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:18
-msgid "Grocery"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:19
-msgid "Health & Personal Care"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:20
-msgid "Hobbies"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:21
-msgid "Home & Garden"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:22
-msgid "Industrial"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:23
-msgid "Jewelry"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:24
-msgid "Kindle Store"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:25
-msgid "Kitchen"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:26
-msgid "Lawn & Garden"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:27
-msgid "Magazines"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:28
-msgid "Miscellaneous"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:29
-msgid "MP3 Downloads"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:30
-msgid "Musical Instruments"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:31
-msgid "Music"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:32
-msgid "Music Tracks"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:33
-msgid "Office Products"
-msgstr "Liste des produits"
-
-#: apps/affiliation/amazon/search_index.py:34
-msgid "Outdoor Living"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:35
-msgid "PC Hardware"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:36
-msgid "Pet Supplies"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:37
-msgid "Photo"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:38
-msgid "Software"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:39
-msgid "Software & Video Games"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:40
-msgid "Sporting Goods"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:41
-msgid "Tools"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:42
-msgid "Toys"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:43
-msgid "VHS"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:44
-msgid "Video Games"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:45
-msgid "Video"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:46
-msgid "Watches"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:47
-msgid "Wireless Accessories"
-msgstr ""
-
-#: apps/affiliation/amazon/search_index.py:48
-msgid "Wireless"
-msgstr ""
-
-#: apps/custaccount/forms.py:9
-msgid "Profile name"
-msgstr "Profil"
-
-#: apps/custaccount/forms.py:11
-msgid "30 characters tops. Can be whatever you want. And can be modified."
-msgstr ""
-
-#: apps/custaccount/forms.py:14
-msgid "No more than 30 characters."
-msgstr ""
-
-#: apps/dashboard/views.py:19
-#: apps/dashboard/templates/dashboard/_subnav.html:11
-#: templates/_account_bar.html:26
-msgid "Dashboard"
-msgstr "Tableau de bord"
-
-#: apps/dashboard/views.py:20
-msgid "Feed"
-msgstr ""
-
-#: apps/dashboard/views.py:21 apps/dashboard/views.py:40
-#: apps/dashboard/templates/dashboard/_subnav.html:18
-msgid "Contribution center"
-msgstr "Dernières contributions"
-
-#: apps/dashboard/views.py:22
-#: apps/dashboard/templates/dashboard/_subnav.html:20
-msgid "Teamwork"
-msgstr "L'équipe"
-
-#: apps/dashboard/views.py:23 apps/dashboard/views.py:48
-#: apps/dashboard/templates/dashboard/_subnav.html:22
-msgid "Drafts"
-msgstr "Brouillons"
-
-#: apps/dashboard/views.py:24 apps/dashboard/views.py:56
-#: apps/dashboard/templates/dashboard/_subnav.html:25
-msgid "All my contributions"
-msgstr "Dernières contributions"
-
-#: apps/dashboard/views.py:25
-#: apps/dashboard/templates/dashboard/_subnav.html:29
-msgid "Shopping notes"
-msgstr ""
-
-#: apps/dashboard/views.py:26
-#: apps/dashboard/templates/dashboard/_subnav.html:31
-msgid "Purchase history"
-msgstr ""
-
-#: apps/dashboard/views.py:31
-#: apps/dashboard/templates/dashboard/_subnav.html:14
-#: templates/homepage_base.html:61
-msgid "My newsfeed"
-msgstr "Mon flux"
-
-#: apps/dashboard/views.py:32
-msgid "Mini feed from what you follow"
-msgstr ""
-
-#: apps/dashboard/views.py:35
-msgid ""
-"You don't follow anything nor anyone yet. Find people or products to follow "
-"on your right, or navigating NewCo!"
-msgstr ""
-
-#: apps/dashboard/views.py:41
-msgid ""
-"Latest activity on your skills tags... Maybe you would like to contribute?"
-msgstr ""
-
-#: apps/dashboard/views.py:49
-msgid "Maybe you want to complete and publish some?"
-msgstr ""
-
-#: apps/dashboard/views.py:52
-msgid "You don't have any drafts."
-msgstr ""
-
-#: apps/dashboard/views.py:57
-msgid "Your latest contributions"
-msgstr "Dernières contributions"
-
-#: apps/dashboard/views.py:77
-#, python-format
-msgid ""
-"We don't know what to advice you to contribute on, we would need to know "
-"more about you. Maybe you could <a href='%(url_ed)s'>add skill tags</a> to "
-"your profile?"
-msgstr ""
-
-#: apps/dashboard/views.py:83
-#, python-format
-msgid ""
-"You haven't contributed yet. Have you checked the <a href='%(url_get)s'>Get "
-"Started</a> or <a href='%(url_cont)s'>How to contribute</a> pages?"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:11
-msgid "Monitor all that concerns you"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:14
-msgid "Activity from what you follow"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:17
-msgid "Contributing"
-msgstr "Dernières contributions"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:18
-msgid "If you want to use your time and knowledge wisely, click here!"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:20
-msgid "Grrrr... Don't bother me, I'm working on it"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:22
-msgid "&lsquo;Drafts&rsquo; contains your un-published contributions"
-msgstr "'Brouillons' contient vos contributions non-publiées"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:25
-msgid "Where to go to find any of your input"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:28
-msgid "Shopping"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:29
-msgid ""
-"It&lsquo;s still baking. We know you&lsquo;re hungry, and we do too, please "
-"be patient ;)"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:31
-msgid "We are working on it!"
-msgstr "Nous travaillons dessus"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:35
-msgid "Profiles"
-msgstr "Profil"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:38
-msgid "Exactly as others see it, except the 'edit' button :P"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/_subnav.html:40
-msgid "User profile"
-msgstr "Mon profil"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:43
-msgid "Search user"
-msgstr "Recherche"
-
-#: apps/dashboard/templates/dashboard/_subnav.html:46
-msgid "All Profiles"
-msgstr "Profil"
-
-#: apps/dashboard/templates/dashboard/all.html:5
-msgid ""
-"Looking for one of your contributions? Here are the tools to help you find!"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/all.html:11
-msgid "Search in all my contributions - Not functional yet"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/base.html:21
-#, python-format
-msgid "%(username)s's dashboard | %(page_name)s"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/contribution.html:5
-msgid ""
-"Here is where we provide you with all the <a data-toggle=\"modal\" href="
-"\"#feedbackModal\" class=\"tooltip-bottom\" title=\"We'd love to read your "
-"ideas, send us an email!\">tools</a> we have to help you contribute."
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/contribution.html:11
-msgid "Activity on your domains of skills"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/contribution.html:12
-msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/draft.html:5
-msgid "Keep here your drafts: contributions you don't want to publish (yet)."
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/feed.html:7
-msgid "Activity from what you follow."
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/feed.html:15
-msgid "Who to follow?"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/feed.html:15
-msgid "View all"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/feed.html:19
-msgid "Products you may like"
-msgstr "Liste des produits"
-
-#: apps/dashboard/templates/dashboard/home.html:5
-msgid ""
-"We provide you with all the things that concern you on this page. If you "
-"have only a 'quick check' to do on NewCo, this page is the one!"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/home.html:12
-#, python-format
-msgid ""
-" More tools to come very soon on the dashboard! If you have some ideas about "
-"how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait "
-"to read them!"
-msgstr ""
-
-#: apps/dashboard/templates/dashboard/purchase.html:11
-msgid "Search in all my purchases"
-msgstr ""
-
-#: apps/items/forms.py:61
-msgid "No results matched"
-msgstr ""
-
-#: apps/items/forms.py:69
-msgid "Ask something specific."
-msgstr ""
-
-#: apps/items/forms.py:74
-msgid "Pick a product."
-msgstr "Ajouter un produit"
-
-#: apps/items/forms.py:85
-msgid "Select one product using Enter and the Arrow keys"
-msgstr ""
-
-#: apps/items/forms.py:117
-msgid "Be concise and to the point."
-msgstr ""
-
-#: apps/items/forms.py:134
-msgid "Your answer"
-msgstr ""
-
-#: apps/items/forms.py:163
-msgid "Link description"
-msgstr ""
-
-#: apps/items/forms.py:217
-msgid "positive"
-msgstr ""
-
-#: apps/items/forms.py:219
-msgid "What feature do you like?"
-msgstr "Que cherchez-vous ?"
-
-#: apps/items/forms.py:222
-msgid "negative"
-msgstr ""
-
-#: apps/items/forms.py:224
-msgid "What feature do you dislike?"
-msgstr "Que cherchez-vous ?"
-
-#: apps/items/models.py:24 apps/items/models.py:80
-msgid "date published"
-msgstr ""
-
-#: apps/items/models.py:30
-msgid "product"
-msgstr "Liste des produits"
-
-#: apps/items/models.py:73
-msgid "Draft"
-msgstr "Brouillons"
-
-#: apps/items/models.py:75
-#, fuzzy
-msgid "Public"
-msgstr "Espace public"
-
-#: apps/items/models.py:82
-msgid "status"
-msgstr ""
-
-#: apps/items/models.py:83
-msgid "products"
-msgstr "Liste des produits"
-
-#: apps/items/models.py:130 apps/items/models.py:150 apps/items/models.py:168
-#: apps/items/models.py:183 apps/items/models.py:199
-msgid "content"
-msgstr ""
-
-#: apps/items/models.py:133
-msgid "question"
-msgstr "Poser une question"
-
-#: apps/items/models.py:153
-#, fuzzy
-msgid "answer"
-msgstr "Ajouter un article"
-
-#: apps/items/models.py:169
-msgid "URL"
-msgstr ""
-
-#: apps/items/models.py:172
-msgid "link"
-msgstr ""
-
-#: apps/items/models.py:187
-msgid "feature"
-msgstr ""
-
-#: apps/items/models.py:198
-msgid "title"
-msgstr ""
-
-#: apps/items/models.py:204
-msgid "story"
-msgstr "Historique"
-
-#: apps/items/models.py:205
-msgid "stories"
-msgstr "Historique"
-
-#: apps/items/translation.py:4
-msgctxt "item"
-msgid "the "
-msgstr ""
-
-#: apps/items/translation.py:5
-msgctxt "question"
-msgid "the "
-msgstr ""
-
-#: apps/items/translation.py:6
-msgctxt "answer"
-msgid "the "
-msgstr ""
-
-#: apps/items/translation.py:7
-msgctxt "link"
-msgid "the "
-msgstr ""
-
-#: apps/items/translation.py:8
-msgctxt "feature"
-msgid "the "
-msgstr ""
-
-#: apps/items/translation.py:12
-#, python-format
-msgctxt "item"
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/translation.py:13
-#, python-format
-msgctxt "question"
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/translation.py:14
-#, python-format
-msgctxt "answer"
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/translation.py:15
-#, python-format
-msgctxt "link"
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/translation.py:16
-#, python-format
-msgctxt "feature"
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/views.py:104 apps/items/views.py:185
-#, python-format
-msgid "Thanks %(user)s, %(object)s successfully created."
-msgstr ""
-
-#: apps/items/views.py:108 apps/items/views.py:189
-#, python-format
-msgid "Warning %(user)s, %(object)s form is invalid."
-msgstr ""
-
-#: apps/items/views.py:278 apps/items/views.py:406
-msgid "Top related questions"
-msgstr "Poser une question"
-
-#: apps/items/views.py:279 apps/items/views.py:407
-msgid "Latest related questions"
-msgstr "Dernières contributions"
-
-#: apps/items/templates/items/_ask_modal.html:8
-msgid "Ask..."
-msgstr ""
-
-#: apps/items/templates/items/_ask_modal.html:12
-msgid "...an expert:"
-msgstr ""
-
-#: apps/items/templates/items/_ask_modal.html:16
-msgid "Ask"
-msgstr ""
-
-#: apps/items/templates/items/_data_sheet.html:23
-msgid "Maybe they can help you?"
-msgstr ""
-
-#: apps/items/templates/items/_feature_list.html:11
-msgid "Positive Features"
-msgstr ""
-
-#: apps/items/templates/items/_feature_list.html:11
-msgid "Negative Features"
-msgstr ""
-
-#: apps/items/templates/items/_feature_list.html:31
-msgid "Add a positive feature"
-msgstr ""
-
-#: apps/items/templates/items/_feature_list.html:31
-msgid "Add a negative feature"
-msgstr ""
-
-#: apps/items/templates/items/_link_list.html:8
-msgid "Publish an external link"
-msgstr ""
-
-#: apps/items/templates/items/_question_list.html:14
-#: apps/items/templates/items/item_detail.html:127
-msgid "Ask a new question!"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/_question_list.html:15
-#: apps/items/templates/items/item_detail.html:128
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-
-#: apps/items/templates/items/answer_form.html:11
-#: apps/items/templates/items/root_display/_question.html:66
-#, fuzzy
-msgid "Answer"
-msgstr "Ajouter un article"
-
-#: apps/items/templates/items/answer_form.html:23
-#: apps/items/templates/items/feature_form.html:17
-#: apps/items/templates/items/link_form.html:16
-#: apps/items/templates/items/question_form.html:36
-msgid "Submit"
-msgstr ""
-
-#: apps/items/templates/items/confirm_delete.html:6
-msgid "Delete"
-msgstr ""
-
-#: apps/items/templates/items/confirm_delete.html:10
-#, python-format
-msgid "The %(class)s <i>%(object)s</i> will be deleted:"
-msgstr ""
-
-#: apps/items/templates/items/confirm_delete.html:15
-msgid "Yes"
-msgstr ""
-
-#: apps/items/templates/items/confirm_delete.html:17
-msgid "No"
-msgstr ""
-
-#: apps/items/templates/items/feature_form.html:6
-msgid "Feature"
-msgstr ""
-
-#: apps/items/templates/items/feature_form.html:11
-#, python-format
-msgid "Add a %(way)s feature to <i>%(item)s</i>:"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:27
-msgid "Questions"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/item_detail.html:28
-msgid "Links"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:29
-msgid "Features"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:30
-#, fuzzy
-msgid "Stories"
-msgstr "Historique"
-
-#: apps/items/templates/items/item_detail.html:58
-msgid "Offers"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:61
-msgid "Store"
-msgstr "Historique"
-
-#: apps/items/templates/items/item_detail.html:62
-msgid "Name"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:63
-msgid "Price"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:81
-msgid "Edit Item"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:82
-msgid "Delete Item"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:89
-msgid "From"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:94
-msgid "See the detailed offers"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:100
-msgid "Buy"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:122
-msgid "Ask a new question:"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/item_detail.html:142
-msgid "Close"
-msgstr ""
-
-#: apps/items/templates/items/item_detail.html:146
-#: apps/items/templates/items/feed_display/_answer.html:44
-msgid "Add an answer"
-msgstr "Ajouter un article"
-
-#: apps/items/templates/items/item_form.html:22
-msgid "Add a product:"
-msgstr "Ajouter un produit"
-
-#: apps/items/templates/items/item_form.html:22
-msgid "Edit"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:27
-#: apps/items/templates/items/question_form.html:21
-msgid "Tips"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:29
-#, python-format
-msgid ""
-"\n"
-"        Here, you can create a new product page in 10 seconds. To do so, you "
-"need to:\n"
-"        <ol>\n"
-"            <li>Fill in the product name and its associated <b><a href="
-"\"%(url)s\" class=\"black tooltip-top\" title=\"Click here for help on tags"
-"\">tags</a></b>.</li>\n"
-"            <i class=\"icon-play\"></i> You want to do more? <b>Add features!"
-"</b> You can:\n"
-"            <li>Create the associated Store links using <em>Stores search</"
-"em>.</li>\n"
-"            <li>Drag and drop the right corresponding images on the top "
-"positions, and trash the irrelevant ones.</li>\n"
-"        </ol>\n"
-"    "
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:48
-msgid "Linked Products"
-msgstr "Liste des produits"
-
-#: apps/items/templates/items/item_form.html:50
-msgid "Remove unselected"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:61
-msgid "Stores Search"
-msgstr "Recherche"
-
-#: apps/items/templates/items/item_form.html:63
-msgid "Add selected"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:92
-msgid "Create"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:92
-msgid "Create and add features"
-msgstr ""
-
-#: apps/items/templates/items/item_form.html:94
-#: templates/idios/_profile_form.html:14
-msgid "Update"
-msgstr "Mettre à jour"
-
-#: apps/items/templates/items/item_list_base.html:16
-#: apps/items/templates/items/item_list_base.html:27
-msgid "Products"
-msgstr "Liste des produits"
-
-#: apps/items/templates/items/item_list_base.html:16
-msgid "Tag"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:23
-#, python-format
-msgid "Click to remove tag %(tag)s from your skill list"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:23
-msgid "In my skills"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:25
-#, python-format
-msgid "Click to add tag %(tag)s to your skill list"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:25
-msgid "Add to skills"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:58
-#, python-format
-msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
-"are available for search terms <i>\"%(search_terms)s\"</i>."
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:61
-#, python-format
-msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
-"are available."
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:63
-#, python-format
-msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:65
-msgid "No products are available."
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:70
-#, fuzzy, python-format
-msgid ""
-"Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating a "
-"product</a> yourself?"
-msgstr ""
-"Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
-"large btn-primary\">L'index Produit</a></br>pour explorer le site."
-
-#: apps/items/templates/items/item_list_base.html:71
-msgid ""
-"By creating a product product page you lay the first brick to gather "
-"information about this product: other members will see this page, add things "
-"they know about it, and... answer to you questions if you ask some."
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:97
-msgid "Newest to Oldest"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:98
-msgid "Oldest to Newest"
-msgstr ""
-
-#: apps/items/templates/items/item_list_base.html:99
-msgid "Most popular"
-msgstr "Populaire"
-
-#: apps/items/templates/items/item_list_base.html:102
-msgid "Sort"
-msgstr ""
-
-#: apps/items/templates/items/link_form.html:6
-msgid "Link"
-msgstr ""
-
-#: apps/items/templates/items/link_form.html:10
-#, python-format
-msgid "Add an external link to <i>%(item)s</i>:"
-msgstr ""
-
-#: apps/items/templates/items/question_detail.html:23
-msgid "Related Products"
-msgstr "Liste des produits"
-
-#: apps/items/templates/items/question_form.html:13
-msgid "Question"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/question_form.html:16
-msgid "Ask a question:"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/question_form.html:23
-#, python-format
-msgid ""
-"\n"
-"        Here, you can ask a question about one or several products already "
-"<b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not"
-"\" target=\"_blank\">existing</a></b> at NewCo:\n"
-"        <ol>\n"
-"            <li>Write down your question.</li>\n"
-"            <li>Select one or several products to bind that question to, "
-"using the search bar.</li>\n"
-"            <li>Once the question submitted, you can wait for an answer or, "
-"if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
-"        </ol>\n"
-"    "
-msgstr ""
-
-#: apps/items/templates/items/feed_display/_answer.html:9
-#, fuzzy, python-format
-msgid "<a href=\"%(url)s\">answered</a> a question about"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/feed_display/_answer.html:19
-#: apps/items/templates/items/feed_display/_answer.html:22
-msgid "answered a question about"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/feed_display/_answer.html:26
-#: apps/items/templates/items/feed_display/_question.html:24
-#, fuzzy
-msgid "Q:"
-msgstr " :"
-
-#: apps/items/templates/items/feed_display/_answer.html:32
-#, fuzzy
-msgid "A:"
-msgstr " :"
-
-#: apps/items/templates/items/feed_display/_content_list.html:23
-msgid "Sorry... This newsfeed is empty."
-msgstr ""
-
-#: apps/items/templates/items/feed_display/_feature.html:7
-#, python-format
-msgid "suggested a <a href=\"%(url)s\">feature</a> on"
-msgstr ""
-
-#: apps/items/templates/items/feed_display/_feature.html:16
-#: apps/items/templates/items/feed_display/_feature.html:19
-msgid "suggested a feature on"
-msgstr ""
-
-#: apps/items/templates/items/feed_display/_link.html:7
-#, python-format
-msgid "posted a <a href=\"%(url)s\">link</a> about"
-msgstr ""
-
-#: apps/items/templates/items/feed_display/_link.html:16
-#: apps/items/templates/items/feed_display/_link.html:19
-#, fuzzy
-msgid "posted a link about"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/feed_display/_link.html:24
-#, fuzzy
-msgid "L:"
-msgstr " :"
-
-#: apps/items/templates/items/feed_display/_question.html:8
-#, fuzzy, python-format
-msgid "asked a <a href=\"%(url)s\">question</a> about"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/feed_display/_question.html:16
-#: apps/items/templates/items/feed_display/_question.html:19
-msgid "asked a question about"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/feed_display/_question.html:34
-#: apps/items/templates/items/root_display/_question.html:49
-msgid "Answer this question"
-msgstr "Poser une question"
-
-#: apps/items/templates/items/root_display/_question.html:19
-msgid "This question is a draft.<br>It has been anonymized."
-msgstr ""
-
-#: apps/items/templates/items/root_display/_question.html:49
-#, fuzzy
-msgid "Add a better answer"
-msgstr "Ajouter un article"
-
-#: apps/items/templates/items/root_display/_question.html:50
-#: apps/items/templates/items/root_display/_question.html:56
-msgid "Ask someone to answer"
-msgstr ""
-
-#: apps/profiles/models.py:34
-msgid "about"
-msgstr ""
-
-#: apps/profiles/models.py:35
-msgid "location"
-msgstr ""
-
-#: apps/profiles/models.py:37
-msgid "website"
-msgstr ""
-
-#: apps/profiles/models.py:40
-msgid "skills"
-msgstr ""
-
-#: apps/profiles/models.py:41
-msgid "The list of your main product skills"
-msgstr ""
-
-#: apps/profiles/models.py:48
-msgid "profile"
-msgstr "Mon profil"
-
-#: apps/profiles/models.py:69
-#, fuzzy
-msgid "reputation"
-msgstr "Votre réputation"
-
-#: apps/profiles/views.py:64
-#, python-format
-msgid "%(page_user_display)s have not contributed yet."
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_display.html:12
-#: apps/profiles/templates/profiles/_profile_info.html:24
-#, fuzzy
-msgid "Reputation"
-msgstr "Votre réputation"
-
-#: apps/profiles/templates/profiles/_profile_display.html:13
-#: apps/profiles/templates/profiles/_profile_info.html:28
-msgid "Skills"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:8
-msgid "About"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:12
-msgid "Location"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:16
-msgid "Website"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:20
-msgid "Subscription date"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_info.html:33
-#: templates/idios/profile.html:54
-msgid "Following"
-msgstr "Abonnements"
-
-#: apps/profiles/templates/profiles/_profile_info.html:37
-#: templates/idios/profile.html:55
-msgid "Followers"
-msgstr "Abonnés"
-
-#: apps/profiles/templates/profiles/_profile_user_list.html:4
-msgid "Members:"
-msgstr ""
-
-#: apps/profiles/templates/profiles/_profile_user_list.html:12
-msgid "Products:"
-msgstr "Liste des produits"
-
-#: apps/utils/mailtools.py:50
-#, fuzzy, python-format
-msgid "answered your question \"%(question)s\""
-msgstr "Poser une question"
-
-#: apps/utils/mailtools.py:57 apps/utils/mailtools.py:147
-#: apps/utils/mailtools.py:154
-#, fuzzy, python-format
-msgid "about the product %(product)s."
-msgstr "Ajouter un produit"
-
-#: apps/utils/mailtools.py:61 apps/utils/mailtools.py:158
-msgid "on"
-msgstr ""
-
-#: apps/utils/mailtools.py:92
-#, python-format
-msgid "%(user)s, your request has been sent to %(receiver)s!"
-msgstr ""
-
-#: apps/utils/mailtools.py:97
-#, python-format
-msgid "%(user)s, you can't ask yourself to answer a question!"
-msgstr ""
-
-#: apps/utils/mailtools.py:138
-#, python-format
-msgid "%(receiver)s, %(requester)s needs your help!"
-msgstr ""
-
-#: apps/utils/mailtools.py:144
-#, python-format
-msgid "would like you to answer this question \"%(question)s\""
-msgstr ""
-
-#: apps/utils/follow/tools.py:19
-#, python-format
-msgid "%(user)s, you are now following %(object)s."
-msgstr ""
-
-#: apps/utils/follow/tools.py:23
-#, python-format
-msgid "%(user)s, you are not following %(object)s anymore."
-msgstr ""
-
-#: apps/utils/follow/tools.py:27
-#, python-format
-msgid "%(user)s, you can't follow yourself!"
-msgstr ""
-
-#: apps/utils/templates/autocomplete/autocomplete.html:7
-msgid "Items"
-msgstr ""
-
-#: apps/utils/templates/autocomplete/autocomplete.html:11
-msgid "Tags"
-msgstr ""
-
-#: apps/utils/templates/autocomplete/autocomplete.html:16
-msgid "No options"
-msgstr ""
-
-#: apps/utils/templates/content/info.html:6
-msgid "by"
-msgstr ""
-
-#: apps/utils/templates/mail/_answer_notification_email.html:5
-#: apps/utils/templates/mail/_answer_notification_email.txt:6
-msgid "answered your question"
-msgstr "Poser une question"
-
-#: apps/utils/templates/mail/_answer_notification_email.html:6
-#: apps/utils/templates/mail/_answer_notification_email.txt:7
-#: apps/utils/templates/mail/_ask_notification_email.html:6
-#: apps/utils/templates/mail/_ask_notification_email.txt:7
-msgid "About the product"
-msgstr "Ajouter un produit"
-
-#: apps/utils/templates/mail/_answer_notification_email.txt:11
-#, python-format
-msgid "To see %(answerer)s's profile, go there"
-msgstr ""
-
-#: apps/utils/templates/mail/_answer_notification_email.txt:13
-#: apps/utils/templates/mail/_ask_notification_email.txt:13
-#, fuzzy, python-format
-msgid "To see %(question)s, go there"
-msgstr "Poser une question"
-
-#: apps/utils/templates/mail/_ask_notification_email.html:5
-#: apps/utils/templates/mail/_ask_notification_email.txt:6
-#, fuzzy
-msgid "would like you to answer this question"
-msgstr "Poser une question"
-
-#: apps/utils/templates/mail/_ask_notification_email.txt:11
-#, python-format
-msgid "To see %(asker)s's profile, go there"
-msgstr ""
-
-#: apps/utils/templates/mail/_follow_notification_email.html:5
-#: apps/utils/templates/mail/_follow_notification_email.txt:6
-msgid "is now following you on NewCo!"
-msgstr ""
-
-#: apps/utils/templates/mail/_follow_notification_email.txt:11
-#, python-format
-msgid "To see %(follower)s's profile, go there"
-msgstr ""
-
-#: apps/utils/templates/mail/_notification_email.html:34
-#, python-format
-msgid ""
-"\n"
-"            This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
-"\" >here</a> (available soon).\n"
-"            "
-msgstr ""
-
-#: apps/utils/templates/voting/form.html:7
-msgid ""
-"Vote up: this contribution shows effort on quality; it is usefull and clear "
-"(click again to undo)"
-msgstr ""
-
-#: apps/utils/templates/voting/form.html:8
-msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful "
-"or unclear (click again to undo)"
-msgstr ""
-
-#: apps/utils/templatetags/date_utils.py:33
-msgid "2 days ago"
-msgstr ""
-
-#: apps/utils/templatetags/date_utils.py:35
-msgid "yesterday"
-msgstr ""
-
-#: apps/utils/templatetags/date_utils.py:38
-msgid "now"
-msgstr ""
-
-#: apps/utils/templatetags/date_utils.py:41
-#, python-format
-msgid "a second ago"
-msgid_plural "%(count)s seconds ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: apps/utils/templatetags/date_utils.py:46
-#, python-format
-msgid "a minute ago"
-msgid_plural "%(count)s minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: apps/utils/templatetags/date_utils.py:51
-#, python-format
-msgid "an hour ago"
-msgid_plural "%(count)s hours ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: apps/utils/templatetags/follow_utils.py:51
-#, fuzzy
-msgid "Unfollow"
-msgstr "Abonnements"
-
-#: apps/utils/templatetags/follow_utils.py:54
-msgid "Follow"
-msgstr "Abonnements"
-
-#: apps/utils/vote/tools.py:17
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr ""
-
-#: apps/utils/vote/tools.py:21
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr ""
-
-#: apps/utils/vote/tools.py:25
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr ""
-
-#: apps/utils/vote/tools.py:29
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
-msgstr ""
 
 #: settings/common.py:65
 msgid "English"
@@ -1658,139 +67,193 @@ msgid "or"
 msgstr "ou"
 
 #: templates/_account_bar.html:12
-msgid "Notifications"
-msgstr ""
-
-#: templates/_account_bar.html:21
 msgid "Your reputation"
 msgstr "Votre réputation"
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:17
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: templates/_account_bar.html:18
 msgid "My profile"
 msgstr "Mon profil"
 
-#: templates/_account_bar.html:28
+#: templates/_account_bar.html:19
 msgid "Settings"
 msgstr "Paramètres"
 
-#: templates/_account_bar.html:30
+#: templates/_account_bar.html:21
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/_account_bar.html:33
+#: templates/_account_bar.html:24
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/_account_bar.html:39
+#: templates/_account_bar.html:30
 msgid "Log in"
-msgstr "Se connecter"
+msgstr "Connection"
 
-#: templates/_account_bar.html:41
+#: templates/_account_bar.html:32
 msgid "Sign up"
 msgstr "Inscription"
 
-#: templates/_account_bar.html:48
+#: templates/_account_bar.html:38
 msgid "Add +"
 msgstr "Ajouter +"
 
-#: templates/_account_bar.html:52
+#: templates/_account_bar.html:40
+msgid "Add a product"
+msgstr "Ajouter un produit"
+
+#: templates/_account_bar.html:41
+msgid "Ask a question"
+msgstr "Poser une question"
+
+#: templates/_account_bar.html:42
 msgid "We are still working on it"
 msgstr "Nous travaillons dessus"
 
-#: templates/_account_bar.html:52
+#: templates/_account_bar.html:42
 msgid "Add a story"
 msgstr "Ajouter un article"
+
+#: templates/_account_bar.html:47
+msgid "Templates"
+msgstr "Templates"
+
+#: templates/_account_bar.html:47
+msgid ":"
+msgstr " :"
+
+#: templates/_footer.html:5
+msgid "Get started"
+msgstr "Lancez-vous"
+
+#: templates/_footer.html:6
+msgid "FAQ"
+msgstr "FAQ"
+
+#: templates/_footer.html:7
+msgid "How to contribute?"
+msgstr "Comment contribuer"
+
+#: templates/_footer.html:8
+msgid "Team"
+msgstr "L'équipe"
 
 #: templates/_footer.html:9
 msgid "&copy; 2012 NewCo"
 msgstr "&copy; 2012 NewCo"
 
-#: templates/homepage.html:6
-msgid "Welcome"
-msgstr "Bienvenue"
-
-#: templates/homepage.html:18 templates/homepage_base.html:22
-msgid "Empowering people to buy better"
-msgstr "Vous donner le pouvoir de mieux acheter"
-
-#: templates/homepage.html:21 templates/homepage_base.html:25
-msgid ""
-"NewCo helps you choose with confidence</br>and share your advice between "
-"users."
-msgstr ""
-"NewCo vous aide à choisir en toute confiance</br>et à partager vos conseils "
-"entre utilisateurs."
-
-#: templates/homepage.html:28
-#, python-format
-msgid ""
-"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary"
-"\">Product index</a></br>to explore the website."
-msgstr ""
-"Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
-"large btn-primary\">L'index Produit</a></br>pour explorer le site."
-
-#: templates/homepage.html:35 templates/homepage_base.html:39
-#, python-format
-msgid ""
-"Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-primary"
-"\">How to contribute?</a></br>to get ready for the next step."
-msgstr ""
-"Les doigts vous démangent ?</br><a href=\"%(contribute_url)s\" class=\"btn "
-"btn-large btn-primary\">Comment contribuer ?</a></br>pour passer à l'étape "
-"suivante."
-
-#: templates/homepage.html:43 templates/homepage_base.html:45
-#, python-format
-msgid ""
-"Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
-"\">Sign up!</a></br>to start your new career."
-msgstr ""
-"Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
-"\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
-
-#: templates/homepage_base.html:13
+#: templates/homepage_base.html:9
 #, python-format
 msgid "Home: %(username)s"
 msgstr "Accueil : %(username)s"
 
-#: templates/homepage_base.html:13
+#: templates/homepage_base.html:9
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/homepage_base.html:33
+#: templates/homepage_base.html:26
+msgid "NewCo"
+msgstr "NewCo"
+
+#: templates/homepage_base.html:26
+msgid "Empowering you to buy better"
+msgstr "Vous donner le pouvoir de mieux acheter"
+
+#: templates/homepage_base.html:27
+msgid ""
+"NewCo helps you choose with confidence and share your advice between users."
+msgstr ""
+"NewCo vous aide à choisir en toute confiance et à partager vos conseils "
+"entre utilisateurs."
+
+#: templates/homepage_base.html:35
+msgid "Get information"
+msgstr "Informez-vous"
+
+#: templates/homepage_base.html:38 templates/homepage_base.html.py:45
+msgid "Find products or tags in the search bar"
+msgstr "Trouvez des produits ou tags dans la barre de recherche"
+
+#: templates/homepage_base.html:41
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore "
+"NewCo</em></a>"
+msgstr ""
+"...ou <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i>explorez "
+"NewCo</em></a>"
+
+#: templates/homepage_base.html:47
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
+"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
+"=\"icon-play\" style=\"margin-right: 3px; vertical-"
+"align:middle;\"></i>explore NewCo</em></a>"
+msgstr ""
+"...ou <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
+"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
+"=\"icon-play\" style=\"margin-right: 3px; vertical-"
+"align:middle;\"></i>explorez NewCo</em></a>"
+
+#: templates/homepage_base.html:53
+msgid "Share knowledge"
+msgstr "Partagez vos connaissances"
+
+#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
 #, python-format
 msgid ""
-"Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary\" "
-"id=\"explore\">Product index</a></br>to explore the website."
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: "
+"-3px;\"><i class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contribute</a></em>..."
 msgstr ""
-"Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
-"large btn-primary\" id=\"explore\">L'index Produit</a></br>pour explorer le "
-"site."
+"Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
+"=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
+"class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
+"middle;\"></i> contributer</a></em>..."
 
-#: templates/homepage_base.html:54
+#: templates/homepage_base.html:58
+msgid "...and build your reputation from others' votes"
+msgstr "...et construisez votre réputation par les votes des utilisateurs"
+
+#: templates/homepage_base.html:64
+#, python-format
+msgid ""
+"...and build your <a id=\"reputation-trigger\" "
+"href=\"%(url_faq)s#reputation\">reputation</a> from others' votes"
+msgstr ""
+"...et construisez votre <a id=\"reputation-trigger\" "
+"href=\"%(url_faq)s#reputation\">réputation</a> par les votes des "
+"utilisateurs"
+
+#: templates/homepage_base.html:73
 msgid "Click here to close the tutorial"
 msgstr "Cliquez ici pour fermer le tutoriel"
 
-#: templates/homepage_base.html:54
+#: templates/homepage_base.html:73
 msgid "NewCo empowers you to buy better"
 msgstr "NewCo vous donne le pouvoir de mieux acheter"
 
-#: templates/homepage_base.html:55
+#: templates/homepage_base.html:74
 msgid "Popular"
 msgstr "Populaire"
 
-#: templates/homepage_base.html:56
+#: templates/homepage_base.html:75
 msgid "Last Added"
 msgstr "Derniers ajouts"
 
-#: templates/homepage_base.html:57
-msgid "Community"
-msgstr "Communauté"
+#: templates/homepage_base.html:76
+msgid "Unanswered Questions"
+msgstr "Questions orphelines"
 
-#: templates/homepage_base.html:59
-msgid "Latest Contributions"
-msgstr "Dernières contributions"
+#: templates/homepage_base.html:78
+msgid "My newsfeed"
+msgstr "Mon flux"
 
 #: templates/site_base.html:40
 msgid "Search"
@@ -1815,8 +278,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"L'utilisateur %(profile_name)s sur %(site_name)s a renseigné cette adresse "
-"email.\n"
+"L'utilisateur %(profile_name)s sur %(site_name)s a renseigné cette adresse email.\n"
 "\n"
 "Pour confirmer cette information, allez à %(activate_url)s.\n"
 
@@ -1828,6 +290,10 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 #: templates/idios/_profile_form.html:13
 msgid "Cancel"
 msgstr "Annuler"
+
+#: templates/idios/_profile_form.html:14
+msgid "Update"
+msgstr "Mettre à jour"
 
 #: templates/idios/profile.html:18
 #, python-format
@@ -1850,6 +316,14 @@ msgstr ""
 msgid "History"
 msgstr "Historique"
 
+#: templates/idios/profile.html:54
+msgid "Following"
+msgstr "Abonnements"
+
+#: templates/idios/profile.html:55
+msgid "Followers"
+msgstr "Abonnés"
+
 #: templates/idios/profile_edit.html:15 templates/idios/profile_edit.html:19
 msgid "Edit profile"
 msgstr "Editer votre profil"
@@ -1862,12 +336,240 @@ msgstr "Tous les utilisateurs"
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
 
+#~ msgid "Community"
+#~ msgstr "Communauté"
+
+#~ msgid "Latest Contributions"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "Find products or tags in the search bar..."
+#~ msgstr "Trouvez des produits ou tags dans la barre de recherche..."
+
+#~ msgid "Welcome"
+#~ msgstr "Bienvenue"
+
+#~ msgid ""
+#~ "Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-"
+#~ "primary\">Product index</a></br>to explore the website."
+#~ msgstr ""
+#~ "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
+#~ "large btn-primary\">L'index Produit</a></br>pour explorer le site."
+
+#~ msgid ""
+#~ "Go to</br><a href=\"%(contribute_url)s\" class=\"btn btn-large btn-"
+#~ "primary\">How to contribute?</a></br>to get ready for the next step."
+#~ msgstr ""
+#~ "Les doigts vous démangent ?</br><a href=\"%(contribute_url)s\" class=\"btn "
+#~ "btn-large btn-primary\">Comment contribuer ?</a></br>pour passer à l'étape "
+#~ "suivante."
+
+#~ msgid ""
+#~ "Directly</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-"
+#~ "primary\">Sign up!</a></br>to start your new career."
+#~ msgstr ""
+#~ "Impatient ?</br><a href=\"%(signup_url)s\" class=\"btn btn-large btn-primary"
+#~ "\">Enregistrez-vous !</a></br>et commencez votre nouvelle carrière."
+
+#~ msgid ""
+#~ "Go to the</br><a href=\"%(index_url)s\" class=\"btn btn-large btn-primary\" "
+#~ "id=\"explore\">Product index</a></br>to explore the website."
+#~ msgstr ""
+#~ "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
+#~ "large btn-primary\" id=\"explore\">L'index Produit</a></br>pour explorer le "
+#~ "site."
+
+#~ msgid ""
+#~ "We believe in today's connected world you should be able to find easily a "
+#~ "deep information on any product. It would empower you to make wise choices. "
+#~ "We work hard to make it real, and sometimes work late at night. We believe "
+#~ "if we realize this vision we will all be able to buy products better adapter"
+#~ " to our needs, push industrials to produce better products, and help you "
+#~ "save a lot of time and energy finding what you want to buy."
+#~ msgstr ""
+#~ "Nous croyons que dans le monde connecté d'aujourd'hui, vous devriez avoir la"
+#~ " possibilité de trouver facilement de l'information détaillée sur n'importe "
+#~ "quel produit. Vous auriez le pouvoir de faire des choix en connaissance de "
+#~ "cause. Nous travaillons dur pour concrétiser ça, et parfois tard la nuit. "
+#~ "Nous croyons que si nous réalisons cette vision, nous aurons tous la "
+#~ "possibilité d'acheter des produits plus adaptés à nos besoins, d'inciter les"
+#~ " industriels à faire de meilleurs produits, et de vous aider à gagner du "
+#~ "temps et de l'énergie à trouver ce que vous voulez acheter."
+
+#~ msgid "We believe this shouldn't happen"
+#~ msgstr "Nous croyons que cela ne devrait pas se produire"
+
+#~ msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
+#~ msgstr "Lancez <em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
+
+#~ msgid "Explore"
+#~ msgstr "Explorez"
+
+#~ msgid "Or get to know more NewCo"
+#~ msgstr "Ou découvrez-en plus sur NewCo"
+
+#~ msgid "How it works?"
+#~ msgstr "Comment ça marche ?"
+
+#~ msgid "Public space"
+#~ msgstr "Espace public"
+
+#~ msgid "last modified"
+#~ msgstr "Derniers ajouts"
+
+#~ msgid "store"
+#~ msgstr "Historique"
+
+#~ msgid "Office Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Profile name"
+#~ msgstr "Profil"
+
+#~ msgid "Contribution center"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "Teamwork"
+#~ msgstr "L'équipe"
+
+#~ msgid "Drafts"
+#~ msgstr "Brouillons"
+
+#~ msgid "All my contributions"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "Your latest contributions"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "Contributing"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "&lsquo;Drafts&rsquo; contains your un-published contributions"
+#~ msgstr "'Brouillons' contient vos contributions non-publiées"
+
+#~ msgid "We are working on it!"
+#~ msgstr "Nous travaillons dessus"
+
+#~ msgid "Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "User profile"
+#~ msgstr "Mon profil"
+
+#~ msgid "Search user"
+#~ msgstr "Recherche"
+
+#~ msgid "All Profiles"
+#~ msgstr "Profil"
+
+#~ msgid "Products you may like"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Pick a product."
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "What feature do you like?"
+#~ msgstr "Que cherchez-vous ?"
+
+#~ msgid "What feature do you dislike?"
+#~ msgstr "Que cherchez-vous ?"
+
+#~ msgid "product"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Draft"
+#~ msgstr "Brouillons"
+
+#~ msgid "products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "question"
+#~ msgstr "Poser une question"
+
+#~ msgid "story"
+#~ msgstr "Historique"
+
+#~ msgid "stories"
+#~ msgstr "Historique"
+
+#~ msgid "Top related questions"
+#~ msgstr "Poser une question"
+
+#~ msgid "Latest related questions"
+#~ msgstr "Dernières contributions"
+
+#~ msgid "Ask a new question!"
+#~ msgstr "Poser une question"
+
+#~ msgid "Questions"
+#~ msgstr "Poser une question"
+
+#~ msgid "Store"
+#~ msgstr "Historique"
+
+#~ msgid "Ask a new question:"
+#~ msgstr "Poser une question"
+
+#~ msgid "Add a product:"
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "Linked Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Stores Search"
+#~ msgstr "Recherche"
+
 #~ msgid ""
 #~ "Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating "
 #~ "one</a> yourself?"
 #~ msgstr ""
 #~ "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
 #~ "large btn-primary\">L'index Produit</a></br>pour explorer le site."
+
+#~ msgid ""
+#~ "Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">creating a "
+#~ "product</a> yourself?"
+#~ msgstr ""
+#~ "Aventurier ? Rendez-vous à</br><a href=\"%(index_url)s\" class=\"btn btn-"
+#~ "large btn-primary\">L'index Produit</a></br>pour explorer le site."
+
+#~ msgid "Most popular"
+#~ msgstr "Populaire"
+
+#~ msgid "Related Products"
+#~ msgstr "Liste des produits"
+
+#~ msgid "Question"
+#~ msgstr "Poser une question"
+
+#~ msgid "Ask a question:"
+#~ msgstr "Poser une question"
+
+#~ msgid "answered a question about"
+#~ msgstr "Poser une question"
+
+#~ msgid "Add an answer"
+#~ msgstr "Ajouter un article"
+
+#~ msgid "asked a question about"
+#~ msgstr "Poser une question"
+
+#~ msgid "Answer this question"
+#~ msgstr "Poser une question"
+
+#~ msgid "profile"
+#~ msgstr "Mon profil"
+
+#~ msgid "Products:"
+#~ msgstr "Liste des produits"
+
+#~ msgid "About the product"
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "Follow"
+#~ msgstr "Abonnements"
 
 #~ msgid "Followees"
 #~ msgstr "Abonnements"
@@ -1878,8 +580,8 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 #~ msgid ""
 #~ "You can try to click... But it won't work! Ah ah, we're still on it ;) "
 #~ msgstr ""
-#~ "Vous pouvez essayer de cliquer mais... Ahah, ça marche pas ! On y "
-#~ "travaille ;)"
+#~ "Vous pouvez essayer de cliquer mais... Ahah, ça marche pas ! On y travaille "
+#~ ";)"
 
 #~ msgid "Edit Profile"
 #~ msgstr "Profil"

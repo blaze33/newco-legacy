@@ -1,11 +1,12 @@
 import json
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.db.models.query import QuerySet
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
@@ -25,7 +26,7 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album, sync_products
-from items.models import Item, Content, Question
+from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
@@ -34,6 +35,7 @@ from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
+from utils.multitemplate.views import MultiTemplateMixin
 
 app_name = 'items'
 
@@ -43,6 +45,8 @@ class ContentView(View):
     def dispatch(self, request, *args, **kwargs):
         if 'model_name' in kwargs:
             self.model = get_model(app_name, kwargs['model_name'])
+            if self.model is Link or self.model is Feature:
+                raise Http404()
             form_class_name = self.model._meta.object_name + 'Form'
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
@@ -74,6 +78,12 @@ class ContentFormMixin(object):
 
     def post(self, request, *args, **kwargs):
         form = self.load_form(request)
+        if "add_product" in request.POST:
+            print "\n\n\nAdd product has been checked !\n\n\n"
+
+        if "add_answer" in request.POST:
+            print "\n\n\nAnswer has been checked !\n\n\n"
+
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         if self.model == Item and ("store_search" in request.POST or
@@ -96,7 +106,8 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
 
-class ContentCreateView(ContentView, ContentFormMixin, CreateView):
+class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
+                        CreateView):
 
     messages = {
         "object_created": {
@@ -193,22 +204,25 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
         request = self.request
-        POST = request.POST
-        user = request.user
+        POST, user = [request.POST, request.user]
         public_query = Q(status=Content.STATUS.public)
         if self.model == Item:
             item = context.get("item")
-            q_feat = Q(feature__items__id=item.id)
-            queries = {
-                "questions": Q(question__items__id=item.id) & public_query,
-                "feat_pos": q_feat & Q(feature__positive=True) & public_query,
-                "feat_neg": q_feat & Q(feature__positive=False) & public_query,
-                "links": Q(link__items__id=item.id) & public_query,
+            item_query = Q(items__id=item.id)
+            content_qs = Content.objects.filter(public_query & item_query)
+            querysets = {
+                "questions": content_qs.filter(question__isnull=False),
             }
+            # feat_qs = content_qs.filter(feature__isnull=False)
+            # querysets.update({
+            #     "feat_pos": feat_qs.filter(feature__positive=True),
+            #     "feat_neg": feat_qs.filter(feature__positive=False),
+            #     "links": content_qs.filter(link__isnull=False),
+            # })
 
             contents = dict()
-            for key, query in queries.items():
-                contents.update({key: get_sorted_queryset(query, user)})
+            for key, queryset in querysets.items():
+                contents.update({key: get_sorted_queryset(queryset, user)})
 
             q_form = QuestionForm(POST, request=request) \
                 if "question" in POST else QuestionForm(request=request)
@@ -219,8 +233,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(POST, request=request)
-                q.answers = get_sorted_queryset(
-                    Q(answer__question__id=q.id) & public_query, user)
+                answer_qs = Content.objects.filter(
+                    Q(answer__question__id=q.id) & public_query)
+                q.answers = get_sorted_queryset(answer_qs, user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -261,8 +276,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            query = Q(answer__question__id=q.id) & public_query
-            q.answers = get_sorted_queryset(query, user)
+            answer_qs = Content.objects.filter(
+                Q(answer__question__id=q.id) & public_query)
+            q.answers = get_sorted_queryset(answer_qs, user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
@@ -400,7 +416,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         nb_items = objs.count() if type(objs) is QuerySet else len(objs)
         if nb_items == 0:
             return context
-        qs = Content.objects.filter(question__items__in=objs)
+        qs = Content.objects.filter(question__items__in=objs).distinct()
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         rq = SortedDict()
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})

@@ -1,0 +1,66 @@
+/* ↓ css defs for homepage */
+
+
+.arrow-search-bar-hidden {
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+}
+
+
+@media (min-width: 768px) and (max-width: 979px) {
+  .reduced-margin-navbar{
+    margin-bottom: 0px;
+  }
+}
+
+
+@media (max-width: 980px) {
+  .arrow-search-bar-shown {
+    z-index: -1;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+  }
+
+  #why_NewCo {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (min-width: 980px) {
+  .arrow-search-bar-shown {
+    z-index: -1;
+    opacity: 1;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+  }
+  .subnav-moved {
+    position: relative;
+    top: 0;
+  }
+
+  .body-less-padding {
+    padding-top: 40px;
+  }
+}
+
+.btn-glow {
+   /*Glow*/
+  -webkit-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
+  -moz-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
+  box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
+  z-index: 5;
+
+  /*Transition*/
+/*  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;*/
+  -webkit-transition: box-shadow linear 0.4s;
+  -moz-transition: box-shadow linear 0.4s;
+  -ms-transition: box-shadow linear 0.4s;
+  -o-transition: box-shadow linear 0.4s;
+  transition: box-shadow linear 0.4s;
+}

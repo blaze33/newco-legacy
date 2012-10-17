@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-15 13:23-0600\n"
-"PO-Revision-Date: 2012-10-11 01:37\n"
+"PO-Revision-Date: 2012-10-11 15:10\n"
 "Last-Translator:   <rouyrre@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "Inscription"
 #: templates/account/signup_code_failure.html:6
 #: templates/account/signup_code_failure.html:9
 msgid "Sign Up Closed"
-msgstr "Inscriptions closes"
+msgstr "Inscription closes"
 
 #: templates/account/signup_closed.html:11
 msgid "The code you provided was not accepted."

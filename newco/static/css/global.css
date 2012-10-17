@@ -190,10 +190,10 @@ img:hover + .img-controls,
     width: 38px;
 }
 
-    .myClassPopover{ 
+    .myClassPopover{
         position: relative;
     }
-    .myClassPopoverProfile{ 
+    .myClassPopoverProfile{
         position: relative;
     }
 
@@ -345,8 +345,6 @@ img:hover + .img-controls,
          -moz-border-radius: 4px 4px 0 0;
               border-radius: 4px 4px 0 0;
   }
-
-
 }
 
 /* Use btn-group and btn styles in a nav */
@@ -380,15 +378,15 @@ img:hover + .img-controls,
 
 .nav.btn-group > li.btn > a {
   padding: 9px 10px 11px;
-  line-height: 19px;
+  line-height: 20px;
 }
 .nav.btn-group > li.navbar-text {
   padding: 9px 1px 11px;
-  line-height: 19px;
+  line-height: 20px;
 }
 
 .nav.btn-group > li > a > .gravatar {
-  margin-top: -4px;
+  margin-top: -7px;
   margin-bottom: -3px;
   margin-right: 4px;
 }
