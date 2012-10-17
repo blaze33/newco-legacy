@@ -15,11 +15,11 @@
         </span>{% if not questions.queryset %}<h2 style="display:inline; opacity:0.2; position:relative; left:60px; top:+5px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2>{% endif %}
     </div></div>
 
-    <div class="row"><div id="question_form" class="span7 collapse {% if not questions.queryset %}in{% else %}out{% endif %}" style="position: relative; left: 65px; top: -50px;">
+    <div class="row"><div id="question_form" class="span7 collapse out" style="position: relative; left: 65px; top: -50px;">
         <form method="POST" action="" class="form-inline">{% if not questions.queryset %}<br><br><br>{% endif %}
             {% csrf_token %}
             {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
-                <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
+                <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button>
                 </div>
                 {% include "bootstrap/_field_errors.html" %}
                 {% include "bootstrap/_field_help_text.html" %}

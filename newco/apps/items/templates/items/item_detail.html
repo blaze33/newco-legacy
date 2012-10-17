@@ -31,7 +31,7 @@
     {% include "items/_data_sheet.html" %}
     <br>
 
-    <div class="row">{% include "items/_question_list.html" %}</div>
+    <div class="row"><div class="span7">{% include "items/_question_list.html" %}</div></div>
 
     {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
       <h3>{% trans "Where to buy" %}</h3>
@@ -103,6 +103,7 @@
               text_change.html("{% trans 'Ask a new question!' %}");
               text_change_no_q_yet.html("{% trans 'No question yet! Ask the first one here!' %}");
           })
+          {% if not questions.queryset %}form.collapse('show');{% endif %}
       });
   </script>
 
