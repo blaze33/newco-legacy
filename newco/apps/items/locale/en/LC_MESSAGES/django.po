@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-16 18:52+0200\n"
+"POT-Creation-Date: 2012-10-17 18:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,7 +340,7 @@ msgid "Close"
 msgstr ""
 
 #: templates/items/item_detail.html:116
-#: templates/items/feed_display/_answer.html:44
+#: templates/items/feed_display/_answer.html:38
 msgid "Add an answer"
 msgstr ""
 
@@ -600,20 +600,19 @@ msgstr ""
 
 #: templates/items/feed_display/_answer.html:9
 #, python-format
-msgid "<a href=\"%(url)s\">answered</a> a question about"
+msgid "<a href=\"%(url)s\">answered</a> a question"
 msgstr ""
 
 #: templates/items/feed_display/_answer.html:19
-#: templates/items/feed_display/_answer.html:22
-msgid "answered a question about"
+msgid "answered a question"
 msgstr ""
 
-#: templates/items/feed_display/_answer.html:26
-#: templates/items/feed_display/_question.html:24
+#: templates/items/feed_display/_answer.html:23
+#: templates/items/feed_display/_question.html:21
 msgid "Q:"
 msgstr ""
 
-#: templates/items/feed_display/_answer.html:32
+#: templates/items/feed_display/_answer.html:28
 msgid "A:"
 msgstr ""
 
@@ -623,39 +622,36 @@ msgstr ""
 
 #: templates/items/feed_display/_feature.html:7
 #, python-format
-msgid "suggested a <a href=\"%(url)s\">feature</a> on"
+msgid "suggested a <a href=\"%(url)s\">feature</a>"
 msgstr ""
 
 #: templates/items/feed_display/_feature.html:16
-#: templates/items/feed_display/_feature.html:19
-msgid "suggested a feature on"
+msgid "suggested a feature"
 msgstr ""
 
 #: templates/items/feed_display/_link.html:7
 #, python-format
-msgid "posted a <a href=\"%(url)s\">link</a> about"
+msgid "posted a <a href=\"%(url)s\">link</a>"
 msgstr ""
 
 #: templates/items/feed_display/_link.html:16
-#: templates/items/feed_display/_link.html:19
-msgid "posted a link about"
+msgid "posted a link"
 msgstr ""
 
-#: templates/items/feed_display/_link.html:24
+#: templates/items/feed_display/_link.html:21
 msgid "L:"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:8
 #, python-format
-msgid "asked a <a href=\"%(url)s\">question</a> about"
+msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:16
-#: templates/items/feed_display/_question.html:19
-msgid "asked a question about"
+msgid "asked a question"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:34
+#: templates/items/feed_display/_question.html:28
 #: templates/items/root_display/_question.html:39
 msgid "Answer this question"
 msgstr ""

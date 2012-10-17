@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 18:59+0200\n"
+"POT-Creation-Date: 2012-10-17 18:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,6 +146,23 @@ msgid ""
 "Vote down: this contribution does't show effort on quality; it is not useful "
 "or unclear (click again to undo)"
 msgstr ""
+
+#: templatetags/content_utils.py:147
+msgid "about the product"
+msgid_plural "about the products"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templatetags/content_utils.py:155 templatetags/content_utils.py:159
+#: templatetags/content_utils.py:170
+msgid "and"
+msgstr ""
+
+#: templatetags/content_utils.py:161
+msgid "with the tag"
+msgid_plural "with the tags"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templatetags/date_utils.py:33
 msgid "2 days ago"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-16 18:52+0200\n"
-"PO-Revision-Date: 2012-10-16 18:57\n"
+"POT-Creation-Date: 2012-10-17 18:05+0200\n"
+"PO-Revision-Date: 2012-10-17 18:06\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -345,7 +345,7 @@ msgid "Close"
 msgstr "Fermer"
 
 #: templates/items/item_detail.html:116
-#: templates/items/feed_display/_answer.html:44
+#: templates/items/feed_display/_answer.html:38
 msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
@@ -629,20 +629,19 @@ msgstr ""
 
 #: templates/items/feed_display/_answer.html:9
 #, python-format
-msgid "<a href=\"%(url)s\">answered</a> a question about"
-msgstr "a <a href=\"%(url)s\">répondu</a> à une question à propos de"
+msgid "<a href=\"%(url)s\">answered</a> a question"
+msgstr "a <a href=\"%(url)s\">répondu</a> à une question"
 
 #: templates/items/feed_display/_answer.html:19
-#: templates/items/feed_display/_answer.html:22
-msgid "answered a question about"
-msgstr "a répondu à une question à propos de"
+msgid "answered a question"
+msgstr "a répondu à une question"
 
-#: templates/items/feed_display/_answer.html:26
-#: templates/items/feed_display/_question.html:24
+#: templates/items/feed_display/_answer.html:23
+#: templates/items/feed_display/_question.html:21
 msgid "Q:"
 msgstr "Q :"
 
-#: templates/items/feed_display/_answer.html:32
+#: templates/items/feed_display/_answer.html:28
 msgid "A:"
 msgstr "R :"
 
@@ -652,39 +651,36 @@ msgstr "Désolé... Ce flux est vide."
 
 #: templates/items/feed_display/_feature.html:7
 #, python-format
-msgid "suggested a <a href=\"%(url)s\">feature</a> on"
-msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+msgid "suggested a <a href=\"%(url)s\">feature</a>"
+msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a>"
 
 #: templates/items/feed_display/_feature.html:16
-#: templates/items/feed_display/_feature.html:19
-msgid "suggested a feature on"
-msgstr "a suggéré une caractéristique sur"
+msgid "suggested a feature"
+msgstr "a suggéré une caractéristique"
 
 #: templates/items/feed_display/_link.html:7
 #, python-format
-msgid "posted a <a href=\"%(url)s\">link</a> about"
-msgstr "a posté un <a href=\"%(url)s\">lien</a> à propos de"
+msgid "posted a <a href=\"%(url)s\">link</a>"
+msgstr "a posté un <a href=\"%(url)s\">lien</a>"
 
 #: templates/items/feed_display/_link.html:16
-#: templates/items/feed_display/_link.html:19
-msgid "posted a link about"
-msgstr "a posté un lien à propos de"
+msgid "posted a link"
+msgstr "a posté un lien"
 
-#: templates/items/feed_display/_link.html:24
+#: templates/items/feed_display/_link.html:21
 msgid "L:"
 msgstr "L :"
 
 #: templates/items/feed_display/_question.html:8
 #, python-format
-msgid "asked a <a href=\"%(url)s\">question</a> about"
-msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
+msgid "asked a <a href=\"%(url)s\">question</a>"
+msgstr "a posé une <a href=\"%(url)s\">question</a>"
 
 #: templates/items/feed_display/_question.html:16
-#: templates/items/feed_display/_question.html:19
-msgid "asked a question about"
-msgstr "a posé une question à propos de"
+msgid "asked a question"
+msgstr "a posé une question"
 
-#: templates/items/feed_display/_question.html:34
+#: templates/items/feed_display/_question.html:28
 #: templates/items/root_display/_question.html:39
 msgid "Answer this question"
 msgstr "Répondre à cette question"
