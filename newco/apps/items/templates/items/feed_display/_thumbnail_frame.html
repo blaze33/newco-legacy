@@ -8,5 +8,5 @@
   <div class="details" style="font-size:12px;">
     {% object_display object "thumbnail" "black" %}
   </div>
-  {% if object.tags %}{% for tag in object.tags.all %}<a href="{% url 'tagged_items' tag.slug %}" class="label">{{ tag.name }}</a> {% endfor %}{% endif %}
+  {% tags_display object.tags 3 %}
 </div>{% endwith %}

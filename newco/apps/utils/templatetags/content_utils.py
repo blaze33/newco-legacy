@@ -126,51 +126,45 @@ class SourceDisplayNode(Node):
     def render(self, context):
         try:
             obj = self.obj.resolve(context)
-        except VariableDoesNotExist:
-            return ""
-        else:
             if not obj:
                 return ""
-            display = self.display.resolve(context)
-            color = self.color.resolve(context) if self.color else None
-            if not (obj.__class__ is Content or hasattr(obj, "content_ptr")):
-                raise TemplateSyntaxError("'source_display' only renders "
-                                          "Content instances")
+        except VariableDoesNotExist:
+            return ""
 
-            ctx = {"display": display, "color": color}
-            item_tpl = "items/_product_display.html"
-            tag_tpl = "tags/_tag_display.html"
-            nb_items = obj.items.count()
-            nb_tags = obj.tags.count()
+        display = self.display.resolve(context)
+        color = self.color.resolve(context) if self.color else None
+        if not (obj.__class__ is Content or hasattr(obj, "content_ptr")):
+            raise TemplateSyntaxError("'source_display' only renders "
+                                      "Content instances")
 
-            sentence = ungettext(
-                "about the product",
-                "about the products",
-                nb_items) if nb_items > 0 else ""
-            for index, item in enumerate(obj.items.all()):
-                ctx.update({"object": item, "tag_qs": item.tags.all()})
-                s = render_to_string(item_tpl, ctx, context_instance=context)
-                link = ""
-                if index:
-                    link = "," if index + 1 != nb_items else " " + _("and")
-                sentence = sentence + link + " " + s
+        ctx = {"display": display, "color": color}
+        item_tpl = "items/_product_display.html"
+        tag_tpl = "tags/_tag_display.html"
+        nb_items, nb_tags = [obj.items.count(), obj.tags.count()]
 
-            if nb_tags and nb_items:
-                sentence = sentence + " " + _("and") + " "
-            sentence = sentence + ungettext(
-                "with the tag",
-                "with the tags",
-                nb_tags) if nb_tags > 0 else sentence
-            for index, tag in enumerate(obj.tags.all()):
-                ctx = {"tag": tag}
-                s = render_to_string(tag_tpl, ctx, context_instance=context)
+        sentence = ungettext("about the product", "about the products",
+                             nb_items) if nb_items > 0 else ""
+        for index, item in enumerate(obj.items.all()):
+            ctx.update({"object": item, "tag_qs": item.tags.all()})
+            s = render_to_string(item_tpl, ctx, context_instance=context)
+            sep = ""
+            if index:
+                sep = "," if index + 1 != nb_items else " " + _("and")
+            sentence = sentence + sep + " " + s
 
-                link = ""
-                if index:
-                    link = "," if index + 1 != nb_tags else " " + _("and")
-                sentence = sentence + link + " " + s
+        if nb_tags and nb_items:
+            sentence = sentence + " " + _("and") + " "
+        sentence = sentence + ungettext("with the tag", "with the tags",
+                                        nb_tags) if nb_tags > 0 else sentence
+        for index, tag in enumerate(obj.tags.all()):
+            ctx = {"tag": tag}
+            s = render_to_string(tag_tpl, ctx, context_instance=context)
+            sep = ""
+            if index:
+                sep = "," if index + 1 != nb_tags else " " + _("and")
+            sentence = sentence + sep + " " + s
 
-            return sentence
+        return sentence
 
 
 @register.tag
@@ -195,6 +189,52 @@ def source_display(parser, token):
     display = bits[2]
     link_color = bits[3] if len(bits) == 4 else None
     return SourceDisplayNode(obj, display, link_color)
+
+
+class TagsDisplayNode(Node):
+    def __init__(self, tags, nb_tags=None):
+        self.tags = Variable(tags)
+        self.nb_tags = Variable(nb_tags) if nb_tags else None
+
+    def render(self, context):
+        try:
+            tags = self.tags.resolve(context)
+            if not tags:
+                return ""
+        except VariableDoesNotExist:
+            return ""
+
+        nb_tags = int(self.nb_tags.var) if self.nb_tags else tags.count()
+        tag_tpl, tag_list, sep = ["tags/_tag_display.html", "", " "]
+        for index, tag in enumerate(tags.all()):
+            ctx = {"tag": tag}
+            s = render_to_string(tag_tpl, ctx, context_instance=context)
+            tag_list = tag_list + sep + s if index else s
+            if index + 1 == nb_tags:
+                break
+        return tag_list
+
+
+@register.tag
+def tags_display(parser, token):
+    """
+    Renders the tags contained in a TaggableManager using tag_display template.
+    Can add a max number of tags displayed condition
+
+    Usage::
+
+        {% tags_display tags %}
+        {% tags_display tags nb_tags %}
+
+    """
+    bits = token.split_contents()
+    if len(bits) < 2:
+        raise TemplateSyntaxError("'%s' takes at least 1 arguments." % bits[0])
+    elif len(bits) > 3:
+        raise TemplateSyntaxError("'%s' takes at most 2 arguments." % bits[0])
+    tags = bits[1]
+    nb_tags = bits[2] if len(bits) == 3 else None
+    return TagsDisplayNode(tags, nb_tags)
 
 
 class ContentInfoNode(Node):
