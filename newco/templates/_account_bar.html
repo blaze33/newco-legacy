@@ -26,7 +26,7 @@
     <li class="btn btn-inverse">
       <a href="{% url 'dash' %}">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
     </li>
-    <li class="btn btn-inverse">
+    <li class="btn btn-inverse" id="reputation-btn">
       <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
     </li>
     <li class="dropdown btn btn-inverse">
