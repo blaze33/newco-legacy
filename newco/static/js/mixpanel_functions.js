@@ -4,21 +4,20 @@ $(function(){
    // $(".one_row").popover({animation:'true', trigger: 'hover', content: 'popover'});
 	
     //Affiliation
-    mixpanel.track_links("#mp_click_store","Go to Store");
-    mixpanel.track_links("#mp_click_price","Go to Product");
+    mixpanel.track_links("#mixpanel_click_store","Click to Store");
+    mixpanel.track_links("#mixpanel_click_price","Click to Product");
     //Signup
     if ($('li').hasClass('non_auth')){mixpanel.track("Page Load User non authenticated");};
-    if ($('div').hasClass('well_auth')){mixpanel.track("Page Load User authenticated");};
+    if ($('li').hasClass('well_auth')){mixpanel.track("Page Load User authenticated");};
     mixpanel.track_links("#mixpanel_signup_page","Signup_Page");
     //Homepage
     mixpanel.track_links("#mixpanel_popular","Click Popular");
-	mixpanel.track_links("#mixpanel_last","Click Last Added");
 	mixpanel.track_links("#mixpanel_questions","Click Unanswered Questions");
 	mixpanel.track_links("#mixpanel_mynewsfeed","Click My Newsfeed");
 	mixpanel.track_links("#mixpanel_image","Click Image Homepage");
     mixpanel.track_links("#mixpanel_tag_home","Click Tag Homepage");
     //Authentification (on Homepage only)
-    if ($('div').hasClass('well_auth')){
+    if ($('li').hasClass('well_auth')){
     var identity=document.getElementById("mixpanel_identity");
 	var user_id=identity.getAttribute("data-user_id");
 	var user_email=identity.getAttribute("data-email");

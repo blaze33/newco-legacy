@@ -10,16 +10,6 @@
     {{ form.media.css }}
 {% endblock %}
 
-{% block extra_script %}
-    {{ block.super }}
-
-	<script type ="text/javascript">
-		$(document).ready(function(){
-	    mixpanel.track("Load_add_question");
-		});
-	</script>
-{% endblock %}
-
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
@@ -67,6 +57,16 @@
         })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
     </script>
     {{ form.media.js }}
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){
+	    mixpanel.track("Load_add_question");
+		});
+	</script>
 {% endblock %}
 
 {# TITLE: Original #}

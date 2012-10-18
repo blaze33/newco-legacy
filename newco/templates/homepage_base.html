@@ -83,11 +83,7 @@
     </div>
   </div>
 
-{% if user.is_authenticated %}
-  <div class="subnav subnav-fixed" rel="subnav" id="mixpanel_identity" data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}">
-{% else %}
-  <div class="subnav subnav-fixed" rel="subnav" id="mixpanel_identity">
-{% endif %}
+  <div class="subnav subnav-fixed" rel="subnav">
   	<ul class="nav nav-pills">
     <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
     <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}" id="mixpanel_popular">{% trans "Popular products" %}</a></li>
