@@ -7,11 +7,11 @@
 
 {% block extra_style %}
     <link href="{% static 'css/global.css' %}" rel="stylesheet">
-<!--
-We may need to use font-awesome. Won't replace glyphicons for the moment
-due to bad pixel fitting of small icons.
-<link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
--->
+    <!--
+    We may need to use font-awesome. Won't replace glyphicons for the moment
+    due to bad pixel fitting of small icons.
+    <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+    -->
     <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
 
@@ -35,9 +35,15 @@ due to bad pixel fitting of small icons.
     </script>
 {% endblock %}
 
+{% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
+
 {% block nav %}
     <ul class="nav">
-        <li id="tab_typeahead"><form class="navbar-search" action="{% url 'content_search' %}" method="POST">{% csrf_token %}<div class="input-append"><input type="text" class="search-query span3" name="item_search" id="main_autocomplete"><button class="btn" type="submit" style="margin:0;height:28px;"><i class="icon-search"></i> {% trans "Search" %}</button></div></form></li>
+        <li class="offset1 span4"><form class="navbar-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
+            <input type="text" autocomplete="off" class="typeahead span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search a product, a user, a tag' %}">
+            <input type="hidden" id="obj_class" name="obj_class"/>
+            <input type="hidden" id="obj_id" name="obj_id"/>
+        </form></li>
     </ul>
 {% endblock %}
 
@@ -55,43 +61,57 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
     <script type="text/javascript">
-    function TriggerMasonry(){
-    	$('#thumbnails_list').masonry({
-			itemSelector : '.content-item',
-	        isAnimated: true,
-	        isFitWidth: true,
-            // columnWidth: 180,
-            columnWidth: function( containerWidth ) {
-                return containerWidth / 40; // Seb: this thing is a mess... Maybe it's a matter of denominator ? (colunms/size of page)...
-            },
-		});
-    }
-    $(document).ready(function() {
-       // simple example, using all default options unless overridden globally
-	  TriggerMasonry();
-      setTimeout(TriggerMasonry,4000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
-	  $('div.expandable').expander({
-				afterExpand:function() {TriggerMasonry();},
-				//Timer to relaunch Masonry after the onCollapse event
-				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
-				}
-	 	});
-    });
+        function TriggerMasonry(){
+        	$('#thumbnails_list').masonry({
+    			itemSelector : '.content-item',
+    	        isAnimated: true,
+    	        isFitWidth: true,
+                // columnWidth: 180,
+                columnWidth: function( containerWidth ) {
+                    return containerWidth / 40; // Seb: this thing is a mess... Maybe it's a matter of denominator ? (colunms/size of page)...
+                },
+    		});
+        }
+        $(document).ready(function() {
+           // simple example, using all default options unless overridden globally
+    	  TriggerMasonry();
+          setTimeout(TriggerMasonry,4000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
+    	  $('div.expandable').expander({
+    				afterExpand:function() {TriggerMasonry();},
+    				//Timer to relaunch Masonry after the onCollapse event
+    				onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
+    				}
+    	 	});
+        });
     </script>
 
-    {% include "autocomplete_light/static.html" %}
+    <script src="{% static 'bootstrap/js/bootstrap-typeahead.js' %}"></script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('input#main_autocomplete').yourlabsAutocomplete({
-            url: "{% url 'autocomplete' %}",
-            zindex: 99999,
-            id: 'main_autocomplete',
-            iterablesSelector: 'li:has(a)',
-            defaultValue: "{% trans 'Search an item, a tag...' %}",
-            placeholder : "{% trans 'What are you looking for?' %}",
+        $(function() {
+            var labels, mapped
+            $("#global_search").typeahead({
+                source: function (query, process) {
+                    $.get('{% url "redis" %}', {q: query}, function (data) {
+                        labels = []
+                        mapped = {}
+
+                        $.each(data, function (i, item) {
+                            mapped[item.title] = item
+                            labels.push(item.title)
+                        })
+                        process(labels)
+                    })
+                }
+                , updater: function (item) {
+                    var obj = mapped[item];
+                    $('#obj_class').val(obj.class);
+                    $('#obj_id').val(obj.id);
+                    return obj.title
+                }
+            });
         });
-    });
     </script>
+    <script src="{% static 'bootstrap/js/bootstrap-popover.js' %}"></script>
 {% endblock %}
 
 {% block extra_body_base %}

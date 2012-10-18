@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 15:30+0200\n"
+"POT-Creation-Date: 2012-10-15 11:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgid "Get information"
 msgstr ""
 
 #: templates/homepage_base.html:38 templates/homepage_base.html.py:45
-msgid "Find products or tags in the search bar"
+msgid "Find products, users or tags in the search bar"
 msgstr ""
 
 #: templates/homepage_base.html:41
@@ -186,15 +186,15 @@ msgstr ""
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
-"i>explore NewCo</em></a>"
+"\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
+"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
 msgstr ""
 
 #: templates/homepage_base.html:53
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:56
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -205,6 +205,15 @@ msgstr ""
 
 #: templates/homepage_base.html:58
 msgid "...and build your reputation from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:61
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-"
+"align: middle;\"></i> contribute</a></em>..."
 msgstr ""
 
 #: templates/homepage_base.html:64
@@ -238,16 +247,8 @@ msgstr ""
 msgid "My newsfeed"
 msgstr ""
 
-#: templates/site_base.html:40
-msgid "Search"
-msgstr ""
-
-#: templates/site_base.html:90
-msgid "Search an item, a tag..."
-msgstr ""
-
-#: templates/site_base.html:91
-msgid "What are you looking for?"
+#: templates/site_base.html:43
+msgid "Search a product, a user, a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6

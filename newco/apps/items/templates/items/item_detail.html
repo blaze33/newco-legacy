@@ -7,21 +7,29 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
-    {{ media.css }}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+  {{ media.css }}
 {% endblock %}
 
 {% block head_title %}{{ item.name }}{% endblock %}
 
 {% block body %}
 
-{% include "items/_data_sheet.html" %}
+<ul class="thumbnails">
+  {% for image in album|slice:":4" %}<li class="span3">
+    <a class="thumbnail" href="{{ image.data.contextLink }}" target="_blank">
+      <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}" height="128px">
+    </a>
+  </li>{% endfor %}
+</ul>
 
-<br>
+</br>
 
 <div class="row">
   <div class="span7">
+    {% include "items/_data_sheet.html" %}
+    <br>
     {% include "items/_question_list.html" %}
 
     {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
@@ -32,17 +40,15 @@
         <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}"><h4>{% trans "Name" %}</h4></div>
         <div class="span1"><h4>{% trans "Price" %}</h4></div>
       </div>
-      {% for ean, prod_list in store_prods_by_ean.items %}
-        {% for prod in prod_list %}
-          <hr>
-          <div class="row">
-            {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
-            <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
-            <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-            <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
-          </div>
-        {% endfor %}
-      {% endfor %}
+      {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
+        <hr>
+        <div class="row">
+          {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
+          <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
+          <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
+          <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+        </div>
+      {% endfor %}{% endfor %}
       <hr>
     </div>{% endwith %}{% endif %}
 
@@ -52,16 +58,16 @@
     </div>
   </div>
 
-  {% if store_prods_by_ean %}<div class="span3">
-    <div class="btn-group"><div class="pull-right">
-      <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b><span class="caret"></span></a>
-      <ul class="dropdown-menu">
+  {% if store_prods_by_ean %}<div class="offset2 span3">
+    <div class="dropdown controls">
+      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+      <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
         {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-          {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}" target="_blank"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp;{% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
+          {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}" target="_blank"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp; {% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
         {% endfor %}<li class="divider"></li>{% endfor %}
         <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
       </ul>
-    </div></div>
+    </div>
 
     <hr>
 
@@ -76,45 +82,45 @@
 {% endblock %}
 
 {% block extra_body_base %}
-    {{ block.super }}
-    <script src="{% static 'js/content.js' %}"></script>
-    {{ media.js }}
-    <script type="text/javascript"> // script can't go to '/static' : needs to translate text
-        $(document).ready( function() {
-            var form = $('#question_form');
-            var icon_change = $('[rel=add_icon]');
-            var text_change = $('[rel=add_q_text]');
-            var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
-            form.on('shown', function () {
-                icon_change.removeClass('icon-plus').addClass('icon-remove');
-                text_change.html("&nbsp;");
-                text_change_no_q_yet.html("{% trans 'Ask a new question:' %}");
-                $('#id_content').focus();
-            })
-            form.on('hidden', function () {
-                icon_change.removeClass('icon-remove').addClass("icon-plus");
-                text_change.html("{% trans 'Ask a new question!' %}");
-                text_change_no_q_yet.html("{% trans 'No question yet! Ask the first one here!' %}");
-            })
-        });
-    </script>
+  {{ block.super }}
+  <script src="{% static 'js/content.js' %}"></script>
+  {{ media.js }}
+  <script type="text/javascript"> // script can't go to '/static' : needs to translate text
+      $(document).ready( function() {
+          var form = $('#question_form');
+          var icon_change = $('[rel=add_icon]');
+          var text_change = $('[rel=add_q_text]');
+          var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
+          form.on('shown', function () {
+              icon_change.removeClass('icon-plus').addClass('icon-remove');
+              text_change.html("&nbsp;");
+              text_change_no_q_yet.html("{% trans 'Ask a new question:' %}");
+              $('#id_content').focus();
+          })
+          form.on('hidden', function () {
+              icon_change.removeClass('icon-remove').addClass("icon-plus");
+              text_change.html("{% trans 'Ask a new question!' %}");
+              text_change_no_q_yet.html("{% trans 'No question yet! Ask the first one here!' %}");
+          })
+      });
+  </script>
 
-    <script type="text/javascript">
-        $(document).ready( function() {
-            var divCollection = $("#[id^='answer\_form\_']");
-            $.each(divCollection, function (i, item) {
-                var bc = $("#controls_" + $(this)[0].id)
-                var icon_change = $('[rel=icon]', bc);
-                var text_change = $('[rel=text]', bc);
-                $(this).on('shown', function () {
-                    icon_change.removeClass('icon-share-alt').addClass('icon-remove');
-                    text_change.html("{% trans 'Close' %}");
-                })
-                $(this).on('hidden', function () {
-                    icon_change.removeClass('icon-remove').addClass('icon-share-alt');
-                    text_change.html("{% trans 'Add an answer' %}");
-                })
-            })
-        });
-    </script>
+  <script type="text/javascript">
+      $(document).ready( function() {
+          var divCollection = $("#[id^='answer\_form\_']");
+          $.each(divCollection, function (i, item) {
+              var bc = $("#controls_" + $(this)[0].id)
+              var icon_change = $('[rel=icon]', bc);
+              var text_change = $('[rel=text]', bc);
+              $(this).on('shown', function () {
+                  icon_change.removeClass('icon-share-alt').addClass('icon-remove');
+                  text_change.html("{% trans 'Close' %}");
+              })
+              $(this).on('hidden', function () {
+                  icon_change.removeClass('icon-remove').addClass('icon-share-alt');
+                  text_change.html("{% trans 'Add an answer' %}");
+              })
+          })
+      });
+  </script>
 {% endblock %}

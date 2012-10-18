@@ -9,6 +9,31 @@ from django.utils.datastructures import SortedDict
 from generic_aggregation import generic_annotate
 from voting.models import Vote
 
+MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
+
+
+def get_class_name(klass):
+    return "%s.%s" % (klass.__module__, klass._meta.object_name)
+
+
+def get_class_from_string(class_string, pattern=MODULE_PATTERN):
+    match_obj = re.match(pattern, class_string)
+    if not match_obj:
+        print "Class string expresion didn't match pattern '%s'" % pattern
+        return None
+    try:
+        module = __import__(match_obj.group("module_name"),
+                            fromlist=[match_obj.group("fromlist")])
+    except ImportError:
+        print "Failed to import module <%s>" % match_obj.group("module_name")
+        return None
+
+    cls = getattr(module, match_obj.group("fromlist"), None)
+    if not cls:
+        print "Module <%s> doesn't have class '%s'" % \
+            (match_obj.group("module_name"), match_obj.group("fromlist"))
+    return cls
+
 
 def load_object(request):
     """

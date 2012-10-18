@@ -14,17 +14,18 @@ from taggit.models import Tag
 
 from items.models import Item
 from profiles.models import Profile
+from utils.tools import get_class_name
 
 PARAMS = {
-    "%s.%s" % (Item.__module__, Item._meta.object_name): {
+    get_class_name(Item): {
         "class": Item, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
-    "%s.%s" % (Profile.__module__, Profile._meta.object_name): {
+    get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
-    "%s.%s" % (Tag.__module__, Tag._meta.object_name): {
+    get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },

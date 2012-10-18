@@ -2,6 +2,6 @@
 
 {% load url from future %}
 
-<a class="label" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
+<a class="label nc-tag" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
 
 {% endspaceless %}
