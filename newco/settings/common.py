@@ -226,7 +226,6 @@ INSTALLED_APPS = [
     "gravatar",
     "tastypie",
     "amazonproduct",
-    "autocomplete_light",
 
     # Tests
     "tests",

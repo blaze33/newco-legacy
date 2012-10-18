@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
-from utils.views.autocomplete import autocomplete
+from utils.views.search import RedisView, TypeaheadSearchView
 
 urlpatterns = patterns('',
-    url(r"^autocomplete/$", autocomplete, name="autocomplete"),
+    url(r"^/redis", RedisView.as_view(), name="redis"),
+    url(r"^/typeahead", TypeaheadSearchView.as_view(), name="search"),
 )
