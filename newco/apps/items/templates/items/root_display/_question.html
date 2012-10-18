@@ -59,6 +59,13 @@
 
 
         <br>
+</div>
+{% if display == "detail" %}      
+</div>
+
+{% include "items/root_display/_edit_bio_question.html" %}
+	
+	<div class="span6">{% else %}<div class="span6 offset1">{% endif %}
 
         <div id="answer_form_{{ question.id }}"{% if display == "list" %} class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"{% endif %}><form method="POST" action="#answer_form_{{ question.id }}">
             {% csrf_token %}
