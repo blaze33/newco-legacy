@@ -26,7 +26,7 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album, sync_products
-from items.models import Item, Content, Question, Link, Feature, Answer
+from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
@@ -76,26 +76,52 @@ class ContentFormMixin(object):
             form = self.get_form(form_class)
         return form
 
-    def post(self, request, *args, **kwargs):
-        print "\n\n\n\n\nHey yo ! I'm hereeee: contentformmixin.post()\n\n\n\n\n"
-        form = self.load_form(request)
-        if "q_add_product" in request.POST:
-            print "\n\n\n\n\nHey yo ! I'm hereeee : 'q_add_product' in POST\n\n\n\n\n"
-            item_form = ItemForm(request.POST, request=request, prefix='item')
-                    ##############add something that brings to item_update to complete the item with image and links
-            if item_form.is_valid():
-                self.item_created = self.form_valid(item_form)
-                POST = request.POST.copy()
-                POST.update({'items': self.item_created.id})
-                question_form = QuestionForm(POST, request=request)
+    def is_complex_form_valid(self):
 
-                if question_form.is_valid():
-                    return self.form_valid(question_form)
-                else:
-                    return self.form_invalid(question_form)
-            else:
-                print "just before form_invalid on item\n\n\n\n\n\n\n"
+        is_cf_valid = True
+
+        if "add_product" in self.request.POST:
+            item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
+            if not item_form.is_valid():
                 self.form_invalid(item_form)
+                is_cf_valid = False
+
+            fake_item = Item(id=1) ## peut etre a faire differemment ?
+            POST = self.request.POST.copy()
+            POST.update({'items': fake_item.id})
+            question_form = QuestionForm(POST, request=self.request)
+        else:
+            question_form = QuestionForm(self.request.POST, request=self.request)
+
+        if not question_form.is_valid():
+            self.form_invalid(question_form)
+            is_cf_valid = False
+
+        if "add_answer" in self.request.POST:
+            answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
+            answer_form.question = question_form
+            if not answer_form.is_valid():
+                self.form_invalid(answer_form)
+                is_cf_valid = False
+
+        return is_cf_valid
+
+    def post(self, request, *args, **kwargs):
+        form = self.load_form(request)
+
+
+        ########################
+        ### Seb s dev ######################################################
+        ##########################################################################################################
+
+        if "is_complex_form" in request.POST:
+            if self.is_complex_form_valid():
+                return self.complex_form_valid(form)
+            else:
+                return self.complex_form_invalid(form)
+        ##########################################################################################################
+        ### end of Seb s dev ######################################################
+        ########################
 
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
@@ -105,16 +131,13 @@ class ContentFormMixin(object):
             if "add_links" in request.POST and self.object:
                 form.link_aff(self.object)
             if "remove_links" in request.POST and self.object:
-                # print "\n\nself.model = item and 'remove_links' in POST \n\n"
                 aff_item_ids = request.POST.getlist("linked_aff")
                 linked_items = self.object.affiliationitem_set.select_related()
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
             if "store_search" in request.POST:
-                print "\n\nself.model = item and 'store_search' in POST \n\n"
                 form.stores_search()
-                print "\n\n after stores_search() \n\n"
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
             return self.form_valid(form)
@@ -145,15 +168,53 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
     def get_context_data(self, **kwargs):
         context = super(ContentCreateView, self).get_context_data(**kwargs)
         request = self.request
-        i_form = ItemForm(request=request, prefix='item')
-        a_form = AnswerForm(request=request, prefix='answer')
-        context.update({"i_form": i_form})
-        context.update({"a_form": a_form})
+        if not "i_form" in context:
+            i_form = ItemForm(request=request, prefix='item')
+            context.update({"i_form": i_form})
+        if not "a_form" in context:
+            a_form = AnswerForm(request=request, prefix='answer')
+            context.update({"a_form": a_form})
         return context
+
+    ########################
+    ### Seb s dev ######################################################
+    ##########################################################################################################
+    def complex_form_valid(self, form):
+        item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
+        answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
+
+        if "add_product" in self.request.POST:
+            item_created = self.form_valid(item_form)
+            POST = self.request.POST.copy()
+            POST.update({'items': item_created.id})
+            question_form = QuestionForm(POST, request=self.request)
+
+        else:
+            question_form = QuestionForm(self.request.POST, request=self.request)
+
+        question_saved = self.form_valid(question_form)
+
+        if "add_product" in self.request.POST:
+            self.success_url = "%(url)s?q_id=%(q_id)d&next=%(next)s" % {
+                "url": reverse(
+                  "item_edit",
+                    args=(item_created._meta.module_name, item_created.id),
+                ),
+                "q_id": question_saved.id,
+                "next": self.get_success_url(),
+            }
+
+        if "add_answer" in self.request.POST:
+            answer_form.question = question_saved
+            self.form_valid(answer_form)
+        return HttpResponseRedirect(self.get_success_url())
+        ##########################################################################################################
+        ### end of Seb s dev ######################################################
+        ########################
+
 
     def form_valid(self, form):
         self.object = form.save()
-
         messages.add_message(
             self.request, self.messages["object_created"]["level"],
             self.messages["object_created"]["text"] % {
@@ -166,44 +227,24 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 "item_edit",
                 args=[self.object._meta.module_name, self.object.id]
             ))
-        ########################
-        ### Seb s dev ######################################################
-        ##########################################################################################################
-        elif self.model == Question:
-            if form.prefix == "item" and "q_add_product" in self.request.POST:
-                #print "\n\nI'm in the form_valid - item ...\n\n"
-                return self.object
 
-            elif "add_answer" in self.request.POST:
-                #print "\n\n\nAnswer has been checked ! - in form_valid\n\n\n"
-                answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
-                answer_form.question = self.object
-                self.model = Answer
-                if answer_form.is_valid():
-                    self.form_valid(answer_form)
-                else:
-                    self.form_invalid(answer_form)
-                ##########################################################################################################
-                ### end of Seb s dev ######################################################
-                ########################
-        if "q_add_product" in self.request.POST:
-            print "\n\n\n\nI am in just bofore the HttpResponseRedirect:\n\nself.object_created :\n\n"
-            print self.item_created
-            url_built =  "%(url)s?question_id=%(q_id)d&next=%(next)s" % {
-                "url": reverse(
-                  "item_edit",
-                    args=(
-                        self.item_created._meta.module_name,
-                        self.item_created.id,
-                    ),
-                ),
-                "q_id": self.object.question.id,
-                "next": self.get_success_url(),
-            }
-            # print "\n\n\n\nurl_built :\n\n"
-            # print url_built
-            return HttpResponseRedirect(url_built)
+        if "is_complex_form" in self.request.POST: # means this form_valid() is not the last thing to be executed => return "nothing" to continue
+            return self.object
         return HttpResponseRedirect(self.get_success_url())
+
+    def complex_form_invalid(self,form, **kwargs):
+        #question_form = QuestionForm(self.request.POST, request=self.request)
+        item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
+        answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
+
+        kwargs.update({
+            "form": form,
+            "i_form": item_form,
+            "a_form": answer_form,
+            "add_product": "add_product" in self.request.POST,
+            "add_answer": "add_answer" in self.request.POST,
+            })
+        return self.render_to_response(self.get_context_data(**kwargs))
 
     def form_invalid(self, form):
         messages.add_message(
@@ -213,16 +254,15 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 "object": form._meta.model._meta.verbose_name
             }
         )
+        if "is_complex_form" in self.request.POST: # means this form_invalid() is not the last thing to be executed => return "nothing" to continue
+            return
         return super(ContentCreateView, self).form_invalid(form)
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
-    # object = None
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        print "\n\nKwargs : \n\n"
-        print kwargs
         return super(ContentUpdateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)

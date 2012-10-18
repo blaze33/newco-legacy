@@ -65,7 +65,7 @@ class QuestionForm(ModelForm):
         fields = ("content", "status", "items")
         widgets = {
             "content": Textarea(attrs={
-                "class": "input-xxlarge",
+                "class": "span6",
                 "placeholder": _("Ask something specific."),
                 "rows": 1,
                 "style": "font-size: 20px; line-height: 1.6;" }),
@@ -92,12 +92,6 @@ class QuestionForm(ModelForm):
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
-
-
-            print "\n\n\n\n\n\n TALAAAAAAAAAAAA : save() in forms.py\n\n\n\n\n"
-
-
-
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
             question.save()
