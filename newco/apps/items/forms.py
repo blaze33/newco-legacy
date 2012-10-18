@@ -1,21 +1,28 @@
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
+from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
+from taggit.forms import TagField
 from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
-from items.models import Item, Question, Answer, Story, Link, Feature
+from items.models import Item, Content, Question, Answer, Story, Link, Feature
 
 
 class ItemForm(ModelForm):
 
     create = False
+    tag_field = Item._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest())
 
     class Meta:
         model = Item
@@ -60,6 +67,11 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
+    tag_field = Content._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest(attrs={"class": "span4"}))
 
     class Meta:
         model = Question
@@ -73,8 +85,7 @@ class QuestionForm(ModelForm):
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
-            ),
-            "tags": TagAutoSuggest(attrs={"class": "span4"})
+            )
         }
 
     def __init__(self, *args, **kwargs):
@@ -84,9 +95,7 @@ class QuestionForm(ModelForm):
             self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields.get("items").help_text = _(
-            "Select one or several products using Enter and the Arrow keys")
-        self.fields.get("tags").help_text = _(
-            "Select/add one or several categories to link your question to")
+            "Select one or several products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -109,8 +118,8 @@ class QuestionForm(ModelForm):
                 raise ValidationError(_("Choose between either products or "
                                         "tags to link your question to."))
             else:
-                raise ValidationError(_("Link your question to at least one "
-                                        "product or one tag."))
+                raise ValidationError(_("Link your question to at least either"
+                                        " one product or one tag."))
         else:
             if len(tags) > 5:
                 tags_msg = _("Pick less than 5 tags")

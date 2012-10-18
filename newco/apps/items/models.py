@@ -16,6 +16,9 @@ from voting.models import Vote
 
 from items.managers import ContentManager
 
+TAG_VERBOSE_NAME = _("Categories/Activities")
+TAG_HELP_TEXT = _("Select/add one or several related categories/activities.")
+
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("name"))
@@ -25,7 +28,8 @@ class Item(models.Model):
                                     verbose_name=_('date published'))
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
-    tags = TaggableManager()
+    tags = TaggableManager(verbose_name=TAG_VERBOSE_NAME,
+                           help_text=TAG_HELP_TEXT)
 
     class Meta:
         verbose_name = _("product")
@@ -64,7 +68,8 @@ class Content(models.Model):
     items = models.ManyToManyField(Item, verbose_name=_("products"),
                                    blank=True)
     votes = generic.GenericRelation(Vote)
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, verbose_name=TAG_VERBOSE_NAME,
+                           help_text=TAG_HELP_TEXT)
 
     public = QueryManager(status=STATUS.public)
 
