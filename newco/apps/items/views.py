@@ -29,6 +29,7 @@ from content.transition import add_images, get_album, sync_products
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
+from items.forms import AnswerFormComplex, QuestionFormComplex, ItemFormComplex
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -174,6 +175,19 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         if not "a_form" in context:
             a_form = AnswerForm(request=request, prefix='answer')
             context.update({"a_form": a_form})
+
+        #### For trial #2
+        if not "q_form_complex" in context:
+            q_form_complex = QuestionFormComplex(request=request, prefix='qfc')
+            context.update({"q_form_complex": q_form_complex})
+        if not "i_form_complex" in context:
+            i_form_complex = ItemFormComplex(request=request, prefix='ifc')
+            context.update({"i_form_complex": i_form_complex})
+        if not "a_form_complex" in context:
+            a_form_complex = AnswerFormComplex(request=request, prefix='afc')
+            context.update({"a_form_complex": a_form_complex})
+        #### For trial #2
+
         return context
 
     ########################
@@ -294,8 +308,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
-                        ProcessVoteView):
-
+    ProcessVoteView):
     messages = {
         "object_created": {
             "level": messages.SUCCESS,
