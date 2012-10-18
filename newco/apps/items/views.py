@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
@@ -34,6 +35,7 @@ from utils.mailtools import mail_question_author, process_asking_for_help
 from utils.follow.views import ProcessFollowView
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
+from utils.multitemplate.views import MultiTemplateMixin
 
 app_name = 'items'
 
@@ -76,6 +78,12 @@ class ContentFormMixin(object):
 
     def post(self, request, *args, **kwargs):
         form = self.load_form(request)
+        if "add_product" in request.POST:
+            print "\n\n\nAdd product has been checked !\n\n\n"
+
+        if "add_answer" in request.POST:
+            print "\n\n\nAnswer has been checked !\n\n\n"
+
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
         if self.model == Item and ("store_search" in request.POST or
@@ -98,7 +106,8 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
 
-class ContentCreateView(ContentView, ContentFormMixin, CreateView):
+class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
+                        CreateView):
 
     messages = {
         "object_created": {
@@ -417,7 +426,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         nb_items = objs.count() if type(objs) is QuerySet else len(objs)
         if nb_items == 0:
             return context
-        qs = Content.objects.filter(question__items__in=objs)
+        qs = Content.objects.filter(question__items__in=objs).distinct()
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         rq = SortedDict()
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})

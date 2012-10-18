@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 13:21+0200\n"
+"POT-Creation-Date: 2012-10-12 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,60 +61,68 @@ msgstr ""
 msgid "We're sorry but that page could not be found."
 msgstr ""
 
-#: templates/404.html:17 templates/_account_bar.html:26
+#: templates/404.html:17
 msgid "or"
 msgstr ""
 
-#: templates/_account_bar.html:9
+#: templates/_account_bar.html:12
 msgid "Your reputation"
 msgstr ""
 
-#: templates/_account_bar.html:12
+#: templates/_account_bar.html:17
 msgid "Dashboard"
 msgstr ""
 
-#: templates/_account_bar.html:13
+#: templates/_account_bar.html:18
 msgid "My profile"
 msgstr ""
 
-#: templates/_account_bar.html:14
+#: templates/_account_bar.html:19
 msgid "Settings"
 msgstr ""
 
-#: templates/_account_bar.html:16
+#: templates/_account_bar.html:21
 msgid "Admin"
 msgstr ""
 
-#: templates/_account_bar.html:19
+#: templates/_account_bar.html:24
 msgid "Log out"
 msgstr ""
 
-#: templates/_account_bar.html:24
+#: templates/_account_bar.html:30
 msgid "Log in"
 msgstr ""
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:32
 msgid "Sign up"
 msgstr ""
 
-#: templates/_account_bar.html:34
+#: templates/_account_bar.html:38
 msgid "Add +"
 msgstr ""
 
-#: templates/_account_bar.html:36
+#: templates/_account_bar.html:40
 msgid "Add a product"
 msgstr ""
 
-#: templates/_account_bar.html:37
+#: templates/_account_bar.html:41
 msgid "Ask a question"
 msgstr ""
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "We are still working on it"
 msgstr ""
 
-#: templates/_account_bar.html:38
+#: templates/_account_bar.html:42
 msgid "Add a story"
+msgstr ""
+
+#: templates/_account_bar.html:47
+msgid "Templates"
+msgstr ""
+
+#: templates/_account_bar.html:47
+msgid ":"
 msgstr ""
 
 #: templates/_footer.html:5
@@ -223,14 +231,10 @@ msgid "Last Added"
 msgstr ""
 
 #: templates/homepage_base.html:76
-msgid "Community"
-msgstr ""
-
-#: templates/homepage_base.html:78
 msgid "Unanswered Questions"
 msgstr ""
 
-#: templates/homepage_base.html:80
+#: templates/homepage_base.html:78
 msgid "My newsfeed"
 msgstr ""
 

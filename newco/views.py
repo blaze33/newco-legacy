@@ -5,12 +5,13 @@ from django.http import HttpResponseRedirect
 
 from taggit.models import Tag
 from items.models import Item, Question
+from utils.multitemplate.views import MultiTemplateMixin
 
 from datetime import datetime, timedelta
 
 import json
 
-class HomepageView(ListView):
+class HomepageView(MultiTemplateMixin, ListView):
 
     paginate_by = 14
 

@@ -131,7 +131,10 @@ class AnswerForm(ModelForm):
             self.object = kwargs["instance"]
             self.question = self.object.question
         super(AnswerForm, self).__init__(*args, **kwargs)
-        self.fields['content'].label = self.user.get_profile().name+", "+ self.user.get_profile().about
+        if self.user.is_active:
+            self.fields['content'].label = self.user.get_profile().name+", "+ self.user.get_profile().about
+        else:
+            self.fields['content'].label = "Please login to answer"
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:

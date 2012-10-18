@@ -310,6 +310,11 @@ img:hover + .img-controls,
        -moz-border-radius: 0;
             border-radius: 0;
   }
+
+  .subnav-moved {
+    position: relative;
+    top: 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -353,6 +358,46 @@ img:hover + .img-controls,
   }
 }
 
-/*body {
-  background-image: url(/site_media/static/img/bg_grey.jpg);
-}*/
+/* Use btn-group and btn styles in a nav */
+.nav.btn-group {
+  padding: 0;
+}
+
+.nav.btn-group > li.btn {
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  border-bottom: 0;
+  text-align: left;
+  text-shadow: none;
+}
+
+.nav.btn-group > li.btn > a {
+  color: #333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+
+.nav.btn-group > li.btn-primary > a,
+.nav.btn-group > li.btn-warning > a,
+.nav.btn-group > li.btn-danger > a,
+.nav.btn-group > li.btn-success > a,
+.nav.btn-group > li.btn-info > a,
+.nav.btn-group > li.btn-inverse > a {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.nav.btn-group > li.btn > a {
+  padding: 9px 10px 11px;
+  line-height: 20px;
+}
+.nav.btn-group > li.navbar-text {
+  padding: 9px 1px 11px;
+  line-height: 20px;
+}
+
+.nav.btn-group > li > a > .gravatar {
+  margin-top: -7px;
+  margin-bottom: -3px;
+  margin-right: 4px;
+}

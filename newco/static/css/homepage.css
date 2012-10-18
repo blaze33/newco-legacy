@@ -8,9 +8,6 @@
   -moz-transition: opacity 1s;
 }
 
-/*.arrow_search_bar_trigger:hover {
-  text-shadow: 0px 0px 1px #AAAAFF;
-}*/
 
 @media (min-width: 768px) and (max-width: 979px) {
   .reduced-margin-navbar{
@@ -33,7 +30,7 @@
   }
 }
 
-@media (min-width: 980px) { /* to be verified : how it should be done regarding window size / "media" ... */
+@media (min-width: 980px) {
   .arrow-search-bar-shown {
     z-index: -1;
     opacity: 1;
