@@ -76,6 +76,21 @@ class ContentFormMixin(object):
 
     def post(self, request, *args, **kwargs):
         form = self.load_form(request)
+        if "add_item_modal" in request.POST:
+            i_form = ItemForm(request.POST, request=request, prefix="item")
+            if i_form.is_valid():
+                self.form_valid(i_form)
+            else:
+                self.form_invalid(i_form)
+                kwargs.update({
+                    "opened_modal": True,
+                    "i_form": i_form,
+                    })
+            form_sans_errors = QuestionForm(request.POST, request=request)
+            print form_sans_errors ## il est deja valide (avec les 'errors') ici, ca marche pas...
+            kwargs.update({"form": form_sans_errors,})
+            return self.render_to_response(self.get_context_data(**kwargs))
+
         if "add_product" in request.POST:
             print "\n\n\nAdd product has been checked !\n\n\n"
 
@@ -123,6 +138,18 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        request = self.request
+        if not "i_form" in context:
+            i_form = ItemForm(request=request, prefix='item')
+            context.update({"i_form": i_form})
+        if not "a_form" in context:
+            a_form = AnswerForm(request=request, prefix='answer')
+            context.update({"a_form": a_form})
+
+        return context
 
     def form_valid(self, form):
         self.object = form.save()
