@@ -77,6 +77,29 @@ class ContentFormMixin(object):
         return form
 
     def post(self, request, *args, **kwargs):
+        if "add_item_modal" in request.POST:
+            i_form = ItemForm(request.POST, request=request, prefix="item")
+            if i_form.is_valid():
+                self.form_valid(i_form)
+            else:
+                self.form_invalid(i_form)
+                kwargs.update({"opened_modal": True, "i_form": i_form})
+            # print "\n\n 'items': request.POST.getlist('items') :\n\n", request.POST.getlist("items")
+            # print "\n\n 'items': request.POST['items'] :\n\n", request.POST["items"]
+            # print "\n\n 'tags': request.POST.getlist('tags') :\n\n", request.POST.getlist("tags")
+            # print "\n\n 'tags': request.POST['tags'] :\n\n", request.POST["tags"]
+            # print "\n\n\nRequest.POST: \n\n", request.POST
+            ini_dict = {
+                "content": request.POST["content"],
+                "status": request.POST["status"],
+                "items": request.POST.getlist("items"),
+                "tags": request.POST.get("tags"),
+            }
+            form_wout_error = QuestionForm(initial=ini_dict, request=request)
+            kwargs.update({"form": form_wout_error,})
+            return self.render_to_response(self.get_context_data(**kwargs))
+
+
         form = self.load_form(request)
         if "add_product" in request.POST:
             print "\n\n\nAdd product has been checked !\n\n\n"
@@ -125,6 +148,18 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        request = self.request
+        if not "i_form" in context:
+            i_form = ItemForm(request=request, prefix='item')
+            context.update({"i_form": i_form})
+        if not "a_form" in context:
+            a_form = AnswerForm(request=request, prefix='answer')
+            context.update({"a_form": a_form})
+
+        return context
 
     def form_valid(self, form):
         self.object = form.save()
