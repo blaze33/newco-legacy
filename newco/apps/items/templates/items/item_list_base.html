@@ -18,13 +18,13 @@
 {% block body %}
 
 <div class="row">
-  <div class="span2"><h1>{% if tag %}<form method="POST" action="">{{ tag }}<div class="pull-right">{% csrf_token %}
-    {% if user.is_authenticated %}{% if tag in user.get_profile.skills.all %}
+  <div class="span2"><h1>{% if tag %}{{ tag }}</h1><div class="pull-right">
+    {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
     {% else %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
-    {% endif %}{% endif %}
-  </div></form>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</h1></div>
+    {% endif %}</form>{% endif %}
+  </div>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
   <div class="span6" align="center">{% if object_list %}
     <div id="carousel_tag" class="carousel slide">
       <div class="carousel-inner">{% for item in object_list %}{% with image=item.node.graph.get_image.data %}
