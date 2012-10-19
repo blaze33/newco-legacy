@@ -29,7 +29,6 @@ from content.transition import add_images, get_album, sync_products
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
-from items.forms import AnswerFormComplex, QuestionFormComplex, ItemFormComplex
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -77,52 +76,8 @@ class ContentFormMixin(object):
             form = self.get_form(form_class)
         return form
 
-    def is_complex_form_valid(self):
-
-        is_cf_valid = True
-
-        if "add_product" in self.request.POST:
-            item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
-            if not item_form.is_valid():
-                self.form_invalid(item_form)
-                is_cf_valid = False
-
-            fake_item = Item(id=1) ## peut etre a faire differemment ?
-            POST = self.request.POST.copy()
-            POST.update({'items': fake_item.id})
-            question_form = QuestionForm(POST, request=self.request)
-        else:
-            question_form = QuestionForm(self.request.POST, request=self.request)
-
-        if not question_form.is_valid():
-            self.form_invalid(question_form)
-            is_cf_valid = False
-
-        if "add_answer" in self.request.POST:
-            answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
-            answer_form.question = question_form
-            if not answer_form.is_valid():
-                self.form_invalid(answer_form)
-                is_cf_valid = False
-
-        return is_cf_valid
-
     def post(self, request, *args, **kwargs):
         form = self.load_form(request)
-
-
-        ########################
-        ### Seb s dev ######################################################
-        ##########################################################################################################
-
-        if "is_complex_form" in request.POST:
-            if self.is_complex_form_valid():
-                return self.complex_form_valid(form)
-            else:
-                return self.complex_form_invalid(form)
-        ##########################################################################################################
-        ### end of Seb s dev ######################################################
-        ########################
 
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
@@ -166,67 +121,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                                                        *args,
                                                        **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(ContentCreateView, self).get_context_data(**kwargs)
-        request = self.request
-        if not "i_form" in context:
-            i_form = ItemForm(request=request, prefix='item')
-            context.update({"i_form": i_form})
-        if not "a_form" in context:
-            a_form = AnswerForm(request=request, prefix='answer')
-            context.update({"a_form": a_form})
-
-        #### For trial #2
-        if not "q_form_complex" in context:
-            q_form_complex = QuestionFormComplex(request=request, prefix='qfc')
-            context.update({"q_form_complex": q_form_complex})
-        if not "i_form_complex" in context:
-            i_form_complex = ItemFormComplex(request=request, prefix='ifc')
-            context.update({"i_form_complex": i_form_complex})
-        if not "a_form_complex" in context:
-            a_form_complex = AnswerFormComplex(request=request, prefix='afc')
-            context.update({"a_form_complex": a_form_complex})
-        #### For trial #2
-
-        return context
-
-    ########################
-    ### Seb s dev ######################################################
-    ##########################################################################################################
-    def complex_form_valid(self, form):
-        item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
-        answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
-
-        if "add_product" in self.request.POST:
-            item_created = self.form_valid(item_form)
-            POST = self.request.POST.copy()
-            POST.update({'items': item_created.id})
-            question_form = QuestionForm(POST, request=self.request)
-
-        else:
-            question_form = QuestionForm(self.request.POST, request=self.request)
-
-        question_saved = self.form_valid(question_form)
-
-        if "add_product" in self.request.POST:
-            self.success_url = "%(url)s?q_id=%(q_id)d&next=%(next)s" % {
-                "url": reverse(
-                  "item_edit",
-                    args=(item_created._meta.module_name, item_created.id),
-                ),
-                "q_id": question_saved.id,
-                "next": self.get_success_url(),
-            }
-
-        if "add_answer" in self.request.POST:
-            answer_form.question = question_saved
-            self.form_valid(answer_form)
-        return HttpResponseRedirect(self.get_success_url())
-        ##########################################################################################################
-        ### end of Seb s dev ######################################################
-        ########################
-
-
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
@@ -241,24 +135,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 "item_edit",
                 args=[self.object._meta.module_name, self.object.id]
             ))
-
-        if "is_complex_form" in self.request.POST: # means this form_valid() is not the last thing to be executed => return "nothing" to continue
-            return self.object
         return HttpResponseRedirect(self.get_success_url())
-
-    def complex_form_invalid(self,form, **kwargs):
-        #question_form = QuestionForm(self.request.POST, request=self.request)
-        item_form = ItemForm(self.request.POST, request=self.request, prefix='item')
-        answer_form = AnswerForm(self.request.POST, request=self.request, prefix='answer')
-
-        kwargs.update({
-            "form": form,
-            "i_form": item_form,
-            "a_form": answer_form,
-            "add_product": "add_product" in self.request.POST,
-            "add_answer": "add_answer" in self.request.POST,
-            })
-        return self.render_to_response(self.get_context_data(**kwargs))
 
     def form_invalid(self, form):
         messages.add_message(
@@ -268,8 +145,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 "object": form._meta.model._meta.verbose_name
             }
         )
-        if "is_complex_form" in self.request.POST: # means this form_invalid() is not the last thing to be executed => return "nothing" to continue
-            return
         return super(ContentCreateView, self).form_invalid(form)
 
 
@@ -308,7 +183,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
-    ProcessVoteView):
+                        ProcessVoteView):
+
     messages = {
         "object_created": {
             "level": messages.SUCCESS,
