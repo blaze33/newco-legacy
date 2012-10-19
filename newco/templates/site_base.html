@@ -75,7 +75,8 @@
         $(document).ready(function() {
            // simple example, using all default options unless overridden globally
     	  TriggerMasonry();
-          setTimeout(TriggerMasonry,4000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
+          setTimeout(TriggerMasonry,500); // trigger quickly after page load
+          setTimeout(TriggerMasonry,3000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
     	  $('div.expandable').expander({
     				afterExpand:function() {TriggerMasonry();},
     				//Timer to relaunch Masonry after the onCollapse event
