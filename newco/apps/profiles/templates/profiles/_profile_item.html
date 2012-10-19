@@ -1,5 +1,6 @@
 {% load account_tags %}
 {% load content_utils %}
+{% load follow_utils %}
 
 <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
   <div class="name">
@@ -16,5 +17,6 @@
       <br>
       {% tags_display profile.skills 3 %}
     </p>
+    {% if disp_follow == "True" %}<br><center>{% follow_form user thumb_user %}</center>{% endif %}
   </div>
 </div>

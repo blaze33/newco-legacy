@@ -82,11 +82,6 @@ class ContentFormMixin(object):
             else:
                 self.form_invalid(i_form)
                 kwargs.update({"opened_modal": True, "i_form": i_form})
-            # print "\n\n 'items': request.POST.getlist('items') :\n\n", request.POST.getlist("items")
-            # print "\n\n 'items': request.POST['items'] :\n\n", request.POST["items"]
-            # print "\n\n 'tags': request.POST.getlist('tags') :\n\n", request.POST.getlist("tags")
-            # print "\n\n 'tags': request.POST['tags'] :\n\n", request.POST["tags"]
-            # print "\n\n\nRequest.POST: \n\n", request.POST
             ini_dict = {
                 "content": request.POST["content"],
                 "status": request.POST["status"],
@@ -98,12 +93,6 @@ class ContentFormMixin(object):
             return self.render_to_response(self.get_context_data(**kwargs))
 
         form = self.load_form(request)
-
-        if "add_product" in request.POST:
-            print "\n\n\nAdd product has been checked !\n\n\n"
-
-        if "add_answer" in request.POST:
-            print "\n\n\nAnswer has been checked !\n\n\n"
 
         if "next" in request.POST:
             self.success_url = request.POST.get("next")

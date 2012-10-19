@@ -1,5 +1,6 @@
 {% load content_utils %}
 {% load url from future %}
+{% load follow_utils %}
 
 {% with class_name=object|to_class_name %}<div class="content-item thumbnail">
   {% with image=object.node.graph.get_image.data %}
@@ -9,4 +10,5 @@
     {% object_display object "thumbnail" "black" %}
   </div>
   {% tags_display object.tags 3 %}
+  {% if disp_follow == "True" %}<br><center>{% follow_form user object %}</center>{% endif %}
 </div>{% endwith %}
