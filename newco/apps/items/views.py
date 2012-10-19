@@ -37,17 +37,17 @@ from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
-app_name = 'items'
+app_name = "items"
 
 
 class ContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
-        if 'model_name' in kwargs:
-            self.model = get_model(app_name, kwargs['model_name'])
+        if "model_name" in kwargs:
+            self.model = get_model(app_name, kwargs["model_name"])
             if self.model is Link or self.model is Feature:
                 raise Http404()
-            form_class_name = self.model._meta.object_name + 'Form'
+            form_class_name = self.model._meta.object_name + "Form"
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
@@ -84,11 +84,6 @@ class ContentFormMixin(object):
             else:
                 self.form_invalid(i_form)
                 kwargs.update({"opened_modal": True, "i_form": i_form})
-            # print "\n\n 'items': request.POST.getlist('items') :\n\n", request.POST.getlist("items")
-            # print "\n\n 'items': request.POST['items'] :\n\n", request.POST["items"]
-            # print "\n\n 'tags': request.POST.getlist('tags') :\n\n", request.POST.getlist("tags")
-            # print "\n\n 'tags': request.POST['tags'] :\n\n", request.POST["tags"]
-            # print "\n\n\nRequest.POST: \n\n", request.POST
             ini_dict = {
                 "content": request.POST["content"],
                 "status": request.POST["status"],
@@ -99,13 +94,7 @@ class ContentFormMixin(object):
             kwargs.update({"form": form_wout_error,})
             return self.render_to_response(self.get_context_data(**kwargs))
 
-
         form = self.load_form(request)
-        if "add_product" in request.POST:
-            print "\n\n\nAdd product has been checked !\n\n\n"
-
-        if "add_answer" in request.POST:
-            print "\n\n\nAnswer has been checked !\n\n\n"
 
         if "next" in request.POST:
             self.success_url = request.POST.get("next")
