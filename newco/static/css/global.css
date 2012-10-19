@@ -399,12 +399,23 @@ img:hover + .img-controls,
   margin-right: 4px;
 }
 
+/* Right column details (ex: question_detail.html and feed.html) */
+.well.nc-right-col-well-span4 { /*Maybe we don't want to limit this to nc-right-col-well-span4 ?*/
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 @media (min-width: 980px) {
   .nc-right-col-well {
     width: 180px;
   }
   .nc-right-col-well-span4 {
-    width: 100%;
+    /*width: 100%;*/
+    padding: 5px;
+  }
+  .nc-right-col-well-span4 .thumbnail {
+    margin: 2px;
   }
 }
 
@@ -414,7 +425,7 @@ img:hover + .img-controls,
     padding: 2px;
   }
   .nc-right-col-well-span4 {
-    width: 220px;
+    /*width: 220px;*/
     /*padding: 2px;*/
   }
 }
