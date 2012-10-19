@@ -31,10 +31,10 @@ class ItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         if "request" in kwargs:
             self.request = kwargs.pop("request")
+            self.user = self.request.user
             self.reload_current_search()
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-            self.user = self.request.user
         return super(ItemForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
@@ -89,10 +89,11 @@ class QuestionForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        if "request" in kwargs:
+            self.request = kwargs.pop("request")
+            self.user = self.request.user
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields.get("items").help_text = _(
             "Select one or several products using Enter and the Arrow keys.")
@@ -150,13 +151,14 @@ class AnswerForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
+        if "request" in kwargs:
             self.request = kwargs.pop("request")
             self.user = self.request.user
             if "question_id" in self.request.REQUEST:
                 self.question_id = self.request.REQUEST["question_id"]
-                self.question = Question.objects.get(pk=self.question_id)
+                self.question = Question.objects.get(id=self.question_id)
+        if "instance" not in kwargs or kwargs["instance"] is None:
+            self.create = True
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question
