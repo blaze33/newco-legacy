@@ -9,7 +9,8 @@ from taggit.models import Tag
 
 from items.models import Item
 from profiles.models import Profile
-from utils.tools import get_class_from_string, load_redis_engine
+from utils.tools import get_class_from_string
+from utils.redistools import load_redis_engine
 
 
 class TypeaheadSearchView(RedirectView):

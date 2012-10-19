@@ -16,13 +16,13 @@
 
 {% block body %}
 
-<div class="row"><div class="span12"><ul class="thumbnails">
+<ul class="thumbnails">
   {% for image in album|slice:":4" %}<li class="span3">
     <a class="thumbnail" href="{{ image.data.contextLink }}" target="_blank">
       <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}" height="128px">
     </a>
   </li>{% endfor %}
-</ul></div></div>
+</ul>
 
 </br>
 
@@ -30,8 +30,7 @@
   <div class="span7">
     {% include "items/_data_sheet.html" %}
     <br>
-
-    <div class="row"><div class="span7">{% include "items/_question_list.html" %}</div></div>
+    {% include "items/_question_list.html" %}
 
     {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
       <h3>{% trans "Where to buy" %}</h3>
@@ -59,7 +58,7 @@
     </div>
   </div>
 
-  <div class="offset2 span3">{% if store_prods_by_ean %}
+  {% if store_prods_by_ean %}<div class="offset2 span3">
     <div class="dropdown controls">
       <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
@@ -77,7 +76,7 @@
       {% include "affiliation/_affiliation_item.html" with prod=prod %}
     {% endfor %}{% endfor %}</div>
 
-  {% endif %}</div>
+  </div>{% endif %}
 </div>
 
 {% endblock %}

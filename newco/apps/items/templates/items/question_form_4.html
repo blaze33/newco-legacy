@@ -1,3 +1,6 @@
+
+{# TITLE: With modal #}
+
 {% extends "site_base.html" %}
 
 {% load url from future %}
@@ -46,12 +49,53 @@
 </div>
 </br>
 
-<form action="" method="POST">{% csrf_token %}
+<form class="form-horizontal" action="" method="POST">{% csrf_token %}
   {{ form|as_bootstrap }}
+
+
+
+  <div class="control-group">
+    {#<label class="control-label" for="inputEmail">Email</label>#}
+    <div class="controls">
+      {#<input type="text" id="inputEmail" placeholder="Email">#}
+
+      <!-- Button to trigger modal -->
+      <small>{% trans "Don't find a product related to your question? Add it here !" %}<small> <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -0px;"></i> {% trans "Add a product" %}</a>
+
+      <!-- Modal -->
+      <div class="modal fade hide" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
+        </div>
+        <div class="modal-body">
+          {{ i_form|as_bootstrap }}
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</button>
+          <input type="submit" name="add_item_modal" class="btn btn-primary" value="{% trans "Add product" %}">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <br>
+  <br>
+
   <input type="submit" name="add_question" class="btn" value="{% trans 'Submit' %}"/>
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
+
 {% endblock %}
 
-{# TITLE: Original #}
+
+
+{% block extra_body_base %}
+    {{ block.super }}
+    <script type="text/javascript">
+        {% if opened_modal %}$('#myModal').modal('show'){% endif %}
+    </script>
+{% endblock %}

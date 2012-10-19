@@ -1,6 +1,5 @@
 import json
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
@@ -20,12 +19,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
-from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
-from content.transition import add_images, get_album, sync_products
+from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
 from items.forms import LinkForm, FeatureForm
@@ -37,17 +35,17 @@ from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
-app_name = 'items'
+app_name = "items"
 
 
 class ContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
-        if 'model_name' in kwargs:
-            self.model = get_model(app_name, kwargs['model_name'])
+        if "model_name" in kwargs:
+            self.model = get_model(app_name, kwargs["model_name"])
             if self.model is Link or self.model is Feature:
                 raise Http404()
-            form_class_name = self.model._meta.object_name + 'Form'
+            form_class_name = self.model._meta.object_name + "Form"
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         return super(ContentView, self).dispatch(request, *args, **kwargs)
@@ -77,6 +75,23 @@ class ContentFormMixin(object):
         return form
 
     def post(self, request, *args, **kwargs):
+        if "add_item_modal" in request.POST:
+            i_form = ItemForm(request.POST, request=request, prefix="item")
+            if i_form.is_valid():
+                self.form_valid(i_form)
+            else:
+                self.form_invalid(i_form)
+                kwargs.update({"opened_modal": True, "i_form": i_form})
+            ini_dict = {
+                "content": request.POST["content"],
+                "status": request.POST["status"],
+                "items": request.POST.getlist("items"),
+                "tags": request.POST.get("tags"),
+            }
+            form_wout_error = QuestionForm(initial=ini_dict, request=request)
+            kwargs.update({"form": form_wout_error,})
+            return self.render_to_response(self.get_context_data(**kwargs))
+
         form = self.load_form(request)
 
         if "next" in request.POST:
@@ -120,6 +135,18 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         return super(ContentCreateView, self).dispatch(request,
                                                        *args,
                                                        **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        request = self.request
+        if not "i_form" in context:
+            i_form = ItemForm(request=request, prefix='item')
+            context.update({"i_form": i_form})
+        if not "a_form" in context:
+            a_form = AnswerForm(request=request, prefix='answer')
+            context.update({"a_form": a_form})
+
+        return context
 
     def form_valid(self, form):
         self.object = form.save()
@@ -219,15 +246,17 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             for key, queryset in querysets.items():
                 contents.update({key: get_sorted_queryset(queryset, user)})
 
-            q_form = QuestionForm(POST, request=request) \
-                if "question" in POST else QuestionForm(request=request)
+            initial = {"status": Content._meta.get_field("status").default,
+                       "items": item.id}
+            q_form = QuestionForm(data=POST, request=request) if "question" \
+                in POST else QuestionForm(initial=initial, request=request)
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
             media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
-                    if q.id != q_id else AnswerForm(POST, request=request)
+                    if q.id != q_id else AnswerForm(data=POST, request=request)
                 answer_qs = Content.objects.filter(
                     Q(answer__question__id=q.id) & public_query)
                 q.answers = get_sorted_queryset(answer_qs, user)
@@ -326,13 +355,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in request.POST or "answer" in request.POST:
-            if "question" in request.POST:
-                POST = request.POST.copy()
-                default_status = Content._meta.get_field('status').default
-                POST.update({'status': default_status})
-                form = QuestionForm(POST, request=request)
-            else:
-                form = AnswerForm(request.POST, request=request)
+            Form = QuestionForm if "question" in request.POST else AnswerForm
+            form = Form(data=request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
@@ -402,7 +426,6 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        context.update({"media": ChosenSelect().media})
         for attr in ["tag", "search_terms", "sort_order"]:
             context.update({attr: getattr(self, attr, "")})
         if not "object_list" in context:
@@ -411,7 +434,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         nb_items = objs.count() if type(objs) is QuerySet else len(objs)
         if nb_items == 0:
             return context
-        qs = Content.objects.filter(question__items__in=objs)
+        qs = Content.objects.filter(question__items__in=objs).distinct()
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         rq = SortedDict()
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
