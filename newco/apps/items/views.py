@@ -67,6 +67,10 @@ class ContentFormMixin(NextMixin):
 
     object = None
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         self.request = request
         return super(ContentFormMixin, self).get(request, *args, **kwargs)
@@ -114,12 +118,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         },
     }
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ContentCreateView, self).dispatch(request,
-                                                       *args,
-                                                       **kwargs)
-
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
@@ -148,12 +146,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ContentUpdateView, self).dispatch(request,
-                                                       *args,
-                                                       **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -368,12 +360,11 @@ class ContentListView(ContentView, SearchMixin, ListView):
         if "tag_slug" in self.kwargs:
             self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
             qs = qs.filter(tags=self.tag)
-        if "q" in self.request.GET:
-            self.search_terms = self.request.GET.get("q", "")
-            if self.search_terms:
-                self.template_name = "items/item_list_text.html"
-                qs = get_search_results(qs, self.search_terms, ["name"])
-                return qs
+        self.search_terms = self.request.GET.get("q", "")
+        if self.search_terms:
+            self.template_name = "items/item_list_text.html"
+            qs = get_search_results(qs, self.search_terms, ["name"])
+            return qs
         POST = self.request.POST
         self.sort_order = POST.get("sort_products")\
             if "sort_products" in POST else "-pub_date"
