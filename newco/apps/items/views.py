@@ -1,6 +1,5 @@
 import json
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
@@ -13,7 +12,6 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
@@ -25,10 +23,9 @@ from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
-from content.transition import add_images, get_album, sync_products
+from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -342,24 +339,25 @@ class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
         return url
 
 
-class ProcessSearchView(RedirectView):
+class SearchMixin(object):
 
     def post(self, request, *args, **kwargs):
-        if "item_search" in request.POST:
-            search = request.POST.get("item_search")
-            item_list = Item.objects.filter(name=search)
-            tag_list = Tag.objects.filter(name=search)
-            if item_list.count() == 1:
-                response = item_list[0].get_absolute_url()
-            elif tag_list.count() == 1:
-                response = reverse("tagged_items", args=[tag_list[0].slug])
-            else:
-                response = "%s?q=%s" % (reverse("content_search"), search)
-            return HttpResponseRedirect(response)
-        return super(ProcessSearchView, self).post(request, *args, **kwargs)
+        search = request.POST.get("item_search", "")
+        if not search:
+            return super(SearchMixin, self).post(request, *args, **kwargs)
+
+        item_list = Item.objects.filter(name=search)
+        tag_list = Tag.objects.filter(name=search)
+        if item_list.count() == 1:
+            response = item_list[0].get_absolute_url()
+        elif tag_list.count() == 1:
+            response = reverse("tagged_items", args=[tag_list[0].slug])
+        else:
+            response = "%s?q=%s" % (reverse("content_search"), search)
+        return HttpResponseRedirect(response)
 
 
-class ContentListView(ContentView, ListView, ProcessSearchView):
+class ContentListView(ContentView, SearchMixin, ListView):
 
     model = Item
     template_name = "items/item_list_image.html"
