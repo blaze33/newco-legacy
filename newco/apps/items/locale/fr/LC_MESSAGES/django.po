@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 00:30+0200\n"
+"POT-Creation-Date: 2012-10-23 01:48+0200\n"
 "PO-Revision-Date: 2012-10-23 00:31\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -58,11 +58,11 @@ msgstr "Choisissez moins de 10 produits"
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:169
+#: forms.py:168
 msgid "Your answer"
 msgstr "Votre réponse"
 
-#: forms.py:224
+#: forms.py:223
 msgid "Link description"
 msgstr "Description du lien"
 
@@ -201,21 +201,21 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
 
-#: views.py:109 views.py:226
+#: views.py:99 views.py:215
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:113 views.py:230
+#: views.py:103 views.py:219
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:326 views.py:444
+#: views.py:309 views.py:427
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:327 views.py:445
+#: views.py:310 views.py:428
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -270,8 +270,6 @@ msgstr "Répondre"
 
 #: templates/items/answer_form.html:23 templates/items/feature_form.html:17
 #: templates/items/link_form.html:16 templates/items/question_form.html:84
-#: templates/items/question_form_1.html:75
-#: templates/items/question_form_4.html:87
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -352,8 +350,6 @@ msgstr "Ajouter une réponse"
 
 #: templates/items/item_form.html:18 templates/items/item_list_base.html:41
 #: templates/items/question_form.html:61
-#: templates/items/question_form_4.html:63
-#: templates/items/question_form_4.html:69
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
@@ -368,7 +364,6 @@ msgstr "Modifier"
 #: templates/items/item_form.html:22 templates/items/item_list_base.html:102
 #: templates/items/question_detail.html:32
 #: templates/items/question_form.html:61
-#: templates/items/question_form_4.html:69
 #: templates/items/feed_display/_feature.html:7
 #: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
@@ -376,8 +371,6 @@ msgid ":"
 msgstr " :"
 
 #: templates/items/item_form.html:27 templates/items/question_form.html:37
-#: templates/items/question_form_1.html:21
-#: templates/items/question_form_4.html:39
 msgid "Tips"
 msgstr "Astuces"
 
@@ -385,21 +378,33 @@ msgstr "Astuces"
 #, python-format
 msgid ""
 "\n"
-"  Here, you can create a new product page in 10 seconds. To do so, you need to:\n"
+"  Here, you can create a new product page in 10 seconds. To do so, you need "
+"to:\n"
 "  <ol>\n"
-"    <li>Fill in the product name and its associated <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here for help on tags\">tags</a></b>.</li>\n"
-"    <i class=\"icon-play\"></i> You want to do more? <b>Add features!</b> You can:\n"
-"    <li>Create the associated Store links using <em>Stores search</em>.</li>\n"
-"    <li>Drag and drop the right corresponding images on the top positions, and trash the irrelevant ones.</li>\n"
+"    <li>Fill in the product name and its associated <b><a href=\"%(url)s\" "
+"class=\"black tooltip-top\" title=\"Click here for help on tags\">tags</a></"
+"b>.</li>\n"
+"    <i class=\"icon-play\"></i> You want to do more? <b>Add features!</b> "
+"You can:\n"
+"    <li>Create the associated Store links using <em>Stores search</em>.</"
+"li>\n"
+"    <li>Drag and drop the right corresponding images on the top positions, "
+"and trash the irrelevant ones.</li>\n"
 "  </ol>\n"
 msgstr ""
 "\n"
-"Ici, vous pouvez créer une page produit en 10 secondes. Pour ce faire, vous devez :\n"
+"Ici, vous pouvez créer une page produit en 10 secondes. Pour ce faire, vous "
+"devez :\n"
 "<ol>\n"
-"<li>Remplir le champ nom ainsi que les <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici pour de l'aide sur les tags\">tags</a></b> associés.</li>\n"
-"<i class=\"icon-play\"></i> Il vous en reste sous le coude ? <b>Ajoutez des caractéristiques !</b> Vous pouvez :\n"
-"<li>Créer les liens vers les sites marchands en utilisant le bouton <em>Recherche chez les e-commerçants</em>.</li>\n"
-"<li>Glissez et déposez les meilleures images correspondantes au début de la liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
+"<li>Remplir le champ nom ainsi que les <b><a href=\"%(url)s\" class=\"black "
+"tooltip-top\" title=\"Cliquez ici pour de l'aide sur les tags\">tags</a></b> "
+"associés.</li>\n"
+"<i class=\"icon-play\"></i> Il vous en reste sous le coude ? <b>Ajoutez des "
+"caractéristiques !</b> Vous pouvez :\n"
+"<li>Créer les liens vers les sites marchands en utilisant le bouton "
+"<em>Recherche chez les e-commerçants</em>.</li>\n"
+"<li>Glissez et déposez les meilleures images correspondantes au début de la "
+"liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
 "</ol>\n"
 
 #: templates/items/item_form.html:46
@@ -460,28 +465,28 @@ msgstr "Ajouter aux compétences"
 #: templates/items/item_list_base.html:55
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a>"
-" are available for search terms <i>\"%(search_terms)s\"</i>."
+"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
+"are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\" "
-"class=\"label\">%(tagname)s</a> correspondant aux termes de recherche "
-"<i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\" class="
+"\"label\">%(tagname)s</a> correspondant aux termes de recherche <i>"
+"\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:58
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a>"
-" are available."
+"No products with tag <a href=\"%(tag_url)s\" class=\"label\">%(tagname)s</a> "
+"are available."
 msgstr ""
-"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\" "
-"class=\"label\">%(tagname)s</a>."
+"Il n'y a pas de produit disponible avec le tag <a href=\"%(tag_url)s\" class="
+"\"label\">%(tagname)s</a>."
 
 #: templates/items/item_list_base.html:60
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
-"Il n'y a pas de produit disponible correspondant aux termes de recherche "
-"<i>\"%(search_terms)s\"</i>."
+"Il n'y a pas de produit disponible correspondant aux termes de recherche <i>"
+"\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:62
 msgid "No products are available."
@@ -499,13 +504,13 @@ msgstr ""
 #: templates/items/item_list_base.html:69
 msgid ""
 "By creating a product product page, you lay the first brick to gather "
-"information about this product: other members will see this page, add things"
-" they know about it, and even answer to you questions if you ask some."
+"information about this product: other members will see this page, add things "
+"they know about it, and even answer to you questions if you ask some."
 msgstr ""
-"En créant une page produit, vous posez la première pierre pour rassembler de"
-" l'information sur celui ci : d'autres membres verront cette page, "
-"ajouteront des choses qu'ils savent sur cet article, et répondront même à "
-"vos questions si vous en posez."
+"En créant une page produit, vous posez la première pierre pour rassembler de "
+"l'information sur celui ci : d'autres membres verront cette page, ajouteront "
+"des choses qu'ils savent sur cet article, et répondront même à vos questions "
+"si vous en posez."
 
 #: templates/items/item_list_base.html:92
 msgid "Newest to Oldest"
@@ -537,36 +542,39 @@ msgid "Related Products"
 msgstr "Produits Associés"
 
 #: templates/items/question_form.html:29
-#: templates/items/question_form_1.html:13
-#: templates/items/question_form_4.html:31
 msgid "Question"
 msgstr "Question"
 
 #: templates/items/question_form.html:32
-#: templates/items/question_form_1.html:16
-#: templates/items/question_form_4.html:34
 msgid "Ask a question:"
 msgstr "Poser une question :"
 
 #: templates/items/question_form.html:39
-#: templates/items/question_form_4.html:41
 #, python-format
 msgid ""
 "\n"
-"    Here, you can ask a question about one or several products already <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
+"    Here, you can ask a question about one or several products already <b><a "
+"href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" "
+"target=\"_blank\">existing</a></b> at NewCo:\n"
 "    <ol>\n"
 "      <li>Write down your question.</li>\n"
-"      <li>Select one or several products to bind that question to, using the search bar.</li>\n"
-"      <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
+"      <li>Select one or several products to bind that question to, using the "
+"search bar.</li>\n"
+"      <li>Once the question submitted, you can wait for an answer or, if you "
+"are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
 "    </ol>\n"
 "  "
 msgstr ""
 "\n"
-"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
+"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui "
+"<b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon"
+"\" target=\"_blank\">existent</a></b> sur NewCo :\n"
 "<ol>\n"
 "<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
+"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en "
+"utilisant le menu déroulant interactif ci-dessous.</li>\n"
+"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si "
+"vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
 "</ol>"
 
 #: templates/items/question_form.html:56
@@ -578,90 +586,16 @@ msgid "Add it"
 msgstr "Ajoutez-le"
 
 #: templates/items/question_form.html:65
-#: templates/items/question_form_4.html:75
 msgid "Cancel"
 msgstr "Annuler"
 
 #: templates/items/question_form.html:66
-#: templates/items/question_form_4.html:76
 msgid "Add product"
 msgstr "Ajouter le produit"
 
 #: templates/items/question_form.html:75
 msgid "Answer your own question"
 msgstr "Répondez à votre propre question."
-
-#: templates/items/question_form_1.html:23
-#, python-format
-msgid ""
-"\n"
-"        Here, you can ask a question about one or several products already <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
-"        <ol>\n"
-"            <li>Write down your question.</li>\n"
-"            <li>Select one or several products to bind that question to, using the search bar.</li>\n"
-"            <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
-"        </ol>\n"
-"    "
-msgstr ""
-"\n"
-"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
-"<ol>\n"
-"<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
-"</ol>"
-
-#: templates/items/question_form_1.html:40
-msgid "I don't find (one of) the product(s) relative to my question"
-msgstr ""
-
-#: templates/items/question_form_1.html:40
-msgid "XXXX"
-msgstr ""
-
-#: templates/items/question_form_1.html:43
-msgid ""
-"\n"
-"            <h3>2nd form, for a new item this time ! </h3>\n"
-"            <ol>\n"
-"                <li>Add the item you want to link your question to</li>\n"
-"                <li>XXXXX</li>\n"
-"                <li> => Faire une template \"_item_form.html\" qu'on pourrait inclure au besoin dans \"question_form\" ou \"item_form\" ?</li>\n"
-"            </ol>\n"
-"        "
-msgstr ""
-
-#: templates/items/question_form_1.html:59
-msgid "Answer your own question, like a Q&A"
-msgstr ""
-
-#: templates/items/question_form_1.html:59
-msgid "Is it a good thing to answer your own questions?"
-msgstr ""
-
-#: templates/items/question_form_1.html:62
-#, fuzzy, python-format
-msgid ""
-"\n"
-"            <h3>3rd form, for the answer this time ! </h3> <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
-"            <ol>\n"
-"                <li>Write the answer to your question, just like an FAQ.</li>\n"
-"                <li>XXXXX</li>\n"
-"                <li>XXXXX</li>\n"
-"            </ol>\n"
-"        "
-msgstr ""
-"\n"
-"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
-"<ol>\n"
-"<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
-"</ol>"
-
-#: templates/items/question_form_4.html:63
-msgid "Don't find a product related to your question? Add it here !"
-msgstr ""
 
 #: templates/items/feed_display/_answer.html:9
 #, python-format
@@ -833,16 +767,20 @@ msgstr "Demandez à quelqu'un de répondre"
 #~ msgstr "Liste des Items"
 
 #~ msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
-#~ msgstr "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos de"
+#~ msgstr ""
+#~ "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos "
+#~ "de"
 
 #~ msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
-#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr ""
+#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "posted a <a href=\"%(url)s\" class=\"black\">link</a> about"
 #~ msgstr "a posté un <a href=\"%(url)s\" class=\"black\">lien</a> à propos de"
 
 #~ msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
-#~ msgstr "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
+#~ msgstr ""
+#~ "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
 
 #~ msgid "Top Questions"
 #~ msgstr "Meilleures questions"
@@ -871,7 +809,8 @@ msgstr "Demandez à quelqu'un de répondre"
 #~ "                    <option value=\"0\">Choose</option>\n"
 #~ "                    <option value=\"1\">Newest to Oldest</option>\n"
 #~ "                    <option value=\"2\">Oldest to Newest</option>\n"
-#~ "                </select><button type=\"submit\" class=\"btn\">Sort</button>\n"
+#~ "                </select><button type=\"submit\" class=\"btn\">Sort</"
+#~ "button>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"
