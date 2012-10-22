@@ -25,7 +25,7 @@ from voting.models import Vote
 
 from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
-from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -70,10 +70,6 @@ class ContentFormMixin(NextMixin):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        self.request = request
-        return super(ContentFormMixin, self).get(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
@@ -143,6 +139,44 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             }
         )
         return super(ContentCreateView, self).form_invalid(form)
+
+    def post(self, request, *args, **kwargs):
+        if self.model == Question and "add_question" in request.POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            cb_answer = request.POST.get("cb_answer", None)
+            ctx = {"cb_answer": cb_answer}
+            if form.is_valid():
+                self.object = form.save(commit=False)
+
+                kwargs = {"request": request}
+                if cb_answer:
+                    kwargs.update({"empty_permitted": False})
+
+                formset = QAFormSet(data=request.POST, instance=self.object,
+                                    **kwargs)
+                if formset.is_valid():
+                    self.object.save()
+                    form.save_m2m()
+                    formset.save()
+                    return HttpResponseRedirect(self.get_success_url())
+                ctx.update({"formset": formset})
+            ctx.update({"form": form})
+            return self.render_to_response(self.get_context_data(**ctx))
+        return super(ContentCreateView, self).post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        if self.model is not Question:
+            return context
+        if "formset" not in context:
+            POST = self.request.POST
+            formset = QAFormSet(data=POST, request=self.request) if POST \
+                else QAFormSet(request=self.request)
+            context.update({"formset": formset})
+        err = any(item for item in context.get("formset").errors)
+        context.update({"formset_errors": err})
+        return context
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
