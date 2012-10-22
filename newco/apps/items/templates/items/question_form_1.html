@@ -31,7 +31,7 @@
 </div>
 </br>
 
-<form action="{% if request.GET.fields %}?fields={{ request.GET.fields }}{% endif %}" method="POST">{% csrf_token %}
+<form action="" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
 
     <br>

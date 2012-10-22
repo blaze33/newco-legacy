@@ -1,6 +1,5 @@
 import json
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.db.models import Q, Sum, Count
@@ -13,7 +12,6 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
@@ -25,10 +23,9 @@ from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
-from content.transition import add_images, get_album, sync_products
+from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm
-from items.forms import LinkForm, FeatureForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -53,39 +50,40 @@ class ContentView(View):
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 
-class ContentFormMixin(object):
+class NextMixin(object):
+
+    def get(self, request, *args, **kwargs):
+        if "next" in request.GET:
+            kwargs.update({"next": request.GET.get("next")})
+        return super(NextMixin, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if "next" in request.POST:
+            self.success_url = request.POST.get("next")
+        return super(NextMixin, self).post(request, *args, **kwargs)
+
+
+class ContentFormMixin(NextMixin):
 
     object = None
 
-    def get(self, request, *args, **kwargs):
-        if self.form_class:
-            form = self.form_class(**{"request": request})
-        else:
-            form_class = self.get_form_class()
-            form = self.get_form(form_class)
-        return self.render_to_response(self.get_context_data(form=form))
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
 
-    def load_form(self, request):
-        if self.form_class and (
-                self.__class__ == ContentCreateView or self.model == Item):
-            form_kwargs = self.get_form_kwargs()
-            form_kwargs.update({"request": request})
-            form = self.form_class(**form_kwargs)
-        else:
-            form_class = self.get_form_class()
-            form = self.get_form(form_class)
-        return form
+    def get(self, request, *args, **kwargs):
+        self.request = request
+        return super(ContentFormMixin, self).get(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(ContentFormMixin, self).get_form_kwargs()
+        kwargs.update({"request": self.request})
+        return kwargs
 
     def post(self, request, *args, **kwargs):
-        form = self.load_form(request)
-        if "add_product" in request.POST:
-            print "\n\n\nAdd product has been checked !\n\n\n"
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
 
-        if "add_answer" in request.POST:
-            print "\n\n\nAnswer has been checked !\n\n\n"
-
-        if "next" in request.POST:
-            self.success_url = request.POST.get("next")
         if self.model == Item and ("store_search" in request.POST or
                                    "add_links" in request.POST or
                                    "remove_links" in request.POST):
@@ -120,12 +118,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         },
     }
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ContentCreateView, self).dispatch(request,
-                                                       *args,
-                                                       **kwargs)
-
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
@@ -155,22 +147,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ContentUpdateView, self).dispatch(request,
-                                                       *args,
-                                                       **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-
-        kwargs = {"form": form}
-        if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
-        return self.render_to_response(self.get_context_data(**kwargs))
-
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.model == Item:
@@ -187,8 +163,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
-                        ProcessVoteView):
+class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
+                        ProcessFollowView, ProcessVoteView):
 
     messages = {
         "object_created": {
@@ -224,15 +200,17 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
             for key, queryset in querysets.items():
                 contents.update({key: get_sorted_queryset(queryset, user)})
 
-            q_form = QuestionForm(POST, request=request) \
-                if "question" in POST else QuestionForm(request=request)
+            initial = {"status": Content._meta.get_field("status").default,
+                       "items": item.id}
+            q_form = QuestionForm(data=POST, request=request) if "question" \
+                in POST else QuestionForm(initial=initial, request=request)
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
             media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
-                    if q.id != q_id else AnswerForm(POST, request=request)
+                    if q.id != q_id else AnswerForm(data=POST, request=request)
                 answer_qs = Content.objects.filter(
                     Q(answer__question__id=q.id) & public_query)
                 q.answers = get_sorted_queryset(answer_qs, user)
@@ -325,19 +303,12 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if "next" in request.POST:
-            self.success_url = request.POST.get("next")
         if "ask" in request.POST:
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in request.POST or "answer" in request.POST:
-            if "question" in request.POST:
-                POST = request.POST.copy()
-                default_status = Content._meta.get_field('status').default
-                POST.update({'status': default_status})
-                form = QuestionForm(POST, request=request)
-            else:
-                form = AnswerForm(request.POST, request=request)
+            Form = QuestionForm if "question" in request.POST else AnswerForm
+            form = Form(data=request.POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
@@ -360,50 +331,47 @@ class ContentDetailView(ContentView, DetailView, FormMixin, ProcessFollowView,
         return url
 
 
-class ProcessSearchView(RedirectView):
+class SearchMixin(object):
 
     def post(self, request, *args, **kwargs):
-        if "item_search" in request.POST:
-            search = request.POST.get("item_search")
-            item_list = Item.objects.filter(name=search)
-            tag_list = Tag.objects.filter(name=search)
-            if item_list.count() == 1:
-                response = item_list[0].get_absolute_url()
-            elif tag_list.count() == 1:
-                response = reverse("tagged_items", args=[tag_list[0].slug])
-            else:
-                response = "%s?q=%s" % (reverse("content_search"), search)
-            return HttpResponseRedirect(response)
-        return super(ProcessSearchView, self).post(request, *args, **kwargs)
+        search = request.POST.get("item_search", "")
+        if not search:
+            return super(SearchMixin, self).post(request, *args, **kwargs)
+
+        item_list = Item.objects.filter(name=search)
+        tag_list = Tag.objects.filter(name=search)
+        if item_list.count() == 1:
+            response = item_list[0].get_absolute_url()
+        elif tag_list.count() == 1:
+            response = reverse("tagged_items", args=[tag_list[0].slug])
+        else:
+            response = "%s?q=%s" % (reverse("content_search"), search)
+        return HttpResponseRedirect(response)
 
 
-class ContentListView(ContentView, ListView, ProcessSearchView):
+class ContentListView(ContentView, SearchMixin, ListView):
 
     model = Item
     template_name = "items/item_list_image.html"
     paginate_by = 9
 
     def get_queryset(self):
-        queryset = super(ContentListView, self).get_queryset()
+        qs = super(ContentListView, self).get_queryset()
         if "tag_slug" in self.kwargs:
             self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            queryset = queryset.filter(tags=self.tag)
-        if "q" in self.request.GET:
-            self.search_terms = self.request.GET.get("q", "")
-            if self.search_terms:
-                self.template_name = "items/item_list_text.html"
-                qs = get_search_results(queryset, self.search_terms, ["name"])
-                return qs
-        if "sort_products" in self.request.POST:
-            self.sort_order = self.request.POST.get("sort_products")
-        else:
-            self.sort_order = "-pub_date"
-        if self.sort_order == "popular":
-            queryset = list(queryset.annotate(
-                score=Count("content__question__id")).order_by("-score"))
-        else:
-            queryset = queryset.order_by(self.sort_order)
-        return queryset
+            qs = qs.filter(tags=self.tag)
+        self.search_terms = self.request.GET.get("q", "")
+        if self.search_terms:
+            self.template_name = "items/item_list_text.html"
+            qs = get_search_results(qs, self.search_terms, ["name"])
+            return qs
+        POST = self.request.POST
+        self.sort_order = POST.get("sort_products")\
+            if "sort_products" in POST else "-pub_date"
+        field = "content__question__id"
+        qs = list(qs.annotate(score=Count(field)).order_by("-score"))\
+            if self.sort_order == "popular" else qs.order_by(self.sort_order)
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
@@ -433,7 +401,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         return super(ContentListView, self).post(request, *args, **kwargs)
 
 
-class ContentDeleteView(ContentView, DeleteView):
+class ContentDeleteView(ContentView, NextMixin, DeleteView):
 
     template_name = "items/confirm_delete.html"
 
@@ -446,7 +414,9 @@ class ContentDeleteView(ContentView, DeleteView):
         return HttpResponseRedirect(success_url)
 
     def get_success_url(self, request):
-        if self.model.__name__ == "Item":
+        if self.success_url:
+            success_url = self.success_url % self.object.__dict__
+        elif self.model.__name__ == "Item":
             success_url = reverse("item_index")
         elif "success_url" in request.GET:
             success_url = request.GET.get("success_url")

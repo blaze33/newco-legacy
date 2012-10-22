@@ -3,30 +3,25 @@
 {% load date_utils %}
 
 {% if display == "mini_feed" %}
-    <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-        <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% object_display author display %} {% blocktrans with url=content.get_absolute_url %}suggested a <a href="{{ url }}">feature</a> on{% endblocktrans %} {% object_display content.items.all.0 display %}{% trans ":" %}</h5>
+  <blockquote{% if content.is_draft %} class="draft"{% endif %}>
+    <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% object_display author display %} {% blocktrans with url=content.get_absolute_url %}suggested a <a href="{{ url }}">feature</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
 
-        <p{% if question.is_draft %} class="draft"{% endif %}>
-            <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i>{% autoescape off %}{{ content.content }}{% endautoescape %}
-            </small>
-            <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
-        </p>
-    </blockquote>
-{% elif display == "thumbnail" %}
-    {% object_display author display "black" %} {% trans "suggested a feature on" %} {% object_display item display "black" %}
+    <p{% if question.is_draft %} class="draft"{% endif %}>
+      <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i>{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
+      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
+    </p>
+  </blockquote>
 {% elif display == "text" %}
-    <div class="row"><div class="span7">
-        <h4>{% object_display author display %} {% trans "suggested a feature on" %} {% object_display content.items.all.0 display %}</h4>
-    </div></div>
+  <div class="row"><div class="span7">
+    <h4>{% object_display author display %} {% trans "suggested a feature" %} {% source_display content display %}</h4>
+  </div></div>
 
-    <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
-        <div class="span4"><p>
-            <a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;{{ content.content }}
-            {% if user.is_superuser or author == user %}
-                {% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}
-            {% endif %}
-        </p></div>
-        <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
-        <div class="span2 right">{% content_info content "signature-author" %}</div>
-    </div>
+  <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
+    <div class="span4"><p>
+      <a href="{{ content.get_absolute_url }}"><i class="icon-thumbs-{% if content.positive %}up{% else %}down{% endif %}"></i></a>&nbsp;{{ content.content }}
+      {% if user.is_superuser or author == user %}{% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}{% endif %}
+    </p></div>
+    <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+    <div class="span2 right">{% content_info content "signature-author" %}</div>
+  </div>
 {% endif %}

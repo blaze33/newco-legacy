@@ -1,20 +1,28 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
+from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 
 from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
+from taggit.forms import TagField
+from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
-from items.models import Item, Question, Answer, Story, Link, Feature
+from items.models import Item, Content, Question, Answer, Story, Link, Feature
 
 
 class ItemForm(ModelForm):
 
     create = False
+    tag_field = Item._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest())
 
     class Meta:
         model = Item
@@ -23,10 +31,10 @@ class ItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         if "request" in kwargs:
             self.request = kwargs.pop("request")
+            self.user = self.request.user
             self.reload_current_search()
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-            self.user = self.request.user
         return super(ItemForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
@@ -59,48 +67,71 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
+    tag_field = Content._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest(attrs={"class": "span4"}))
 
     class Meta:
         model = Question
-        fields = ("content", "status", "items")
+        fields = ("content", "status", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(),
+            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
-            ),
+            )
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] is None:
-            self.create = True
-            self.request = kwargs.pop('request')
+        if "request" in kwargs:
+            self.request = kwargs.pop("request")
             self.user = self.request.user
+        if "instance" not in kwargs or kwargs["instance"] is None:
+            self.create = True
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields["items"].help_text = _(
-            "Select one product using Enter and the Arrow keys")
-        if hasattr(self, "request"):
-            if self.request.GET.get("fields", "") != "add_items":
-                del self.fields["items"]
-        else:
-            del self.fields["items"]
+        self.fields.get("items").help_text = _(
+            "Select one or several products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
             question.save()
-            if "items" in self.fields:
-                self.save_m2m()
-            else:
-                question.items.add(kwargs.pop("pk"))
+            self.save_m2m()
             return question
         else:
             return super(QuestionForm, self).save(commit)
+
+    def clean(self):
+        cleaned_data = super(QuestionForm, self).clean()
+        tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
+
+        if not tags and not items or tags and items:
+            self._errors["tags"] = self.error_class([""])
+            self._errors["items"] = self.error_class([""])
+            if tags:
+                raise ValidationError(_("Choose between either products or "
+                                        "tags to link your question to."))
+            else:
+                raise ValidationError(_("Link your question to at least either"
+                                        " one product or one tag."))
+        else:
+            if len(tags) > 5:
+                tags_msg = _("Pick less than 5 tags")
+                self._errors["tags"] = self.error_class([tags_msg])
+                del cleaned_data["tags"]
+            elif len(items) > 10:
+                items_msg = _("Pick less than 10 items")
+                self._errors["items"] = self.error_class([items_msg])
+                del cleaned_data["items"]
+
+        return cleaned_data
 
 
 class AnswerForm(ModelForm):
@@ -120,13 +151,14 @@ class AnswerForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
+        if "request" in kwargs:
             self.request = kwargs.pop("request")
             self.user = self.request.user
             if "question_id" in self.request.REQUEST:
                 self.question_id = self.request.REQUEST["question_id"]
-                self.question = Question.objects.get(pk=self.question_id)
+                self.question = Question.objects.get(id=self.question_id)
+        if "instance" not in kwargs or kwargs["instance"] is None:
+            self.create = True
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question

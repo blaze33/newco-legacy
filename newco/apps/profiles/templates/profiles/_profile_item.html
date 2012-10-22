@@ -2,17 +2,19 @@
 {% load content_utils %}
 
 <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
-    <div class="name">
-        <a href="{{ profile.get_absolute_url }}"><h4>
-        {% profile_pic profile.user 64 %}
-        {% user_display profile.user %}</h4></a>
-    </div>
-    <div class="details">
-        <h4>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h4><p>
-        {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
-        {% if profile.website %}<a href="{{ profile.website }}"
-        {% if profile.user.reputation.reputation_incremented < 20 %}rel="nofollow"{% endif %}><i class="icon-globe"></i></a>{% endif %}
-        <br>
-        {% if profile.skills %}{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}" class="label">{{ skill.name }}</a> {% endfor %}{% endif %}</p>
-    </div>
+  <div class="name">
+    <a href="{{ profile.get_absolute_url }}"><h4>
+      {% profile_pic profile.user 64 %}
+      {% user_display profile.user %}
+    </h4></a>
+  </div>
+  <div class="details">
+    <h4>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h4>
+    <p>
+      {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
+      {% if profile.website %}<a href="{{ profile.website }}"{% if profile.user.reputation.reputation_incremented < 20 %} rel="nofollow"{% endif %}><i class="icon-globe"></i></a>{% endif %}
+      <br>
+      {% tags_display profile.skills 3 %}
+    </p>
+  </div>
 </div>
