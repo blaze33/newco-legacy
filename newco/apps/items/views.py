@@ -25,7 +25,7 @@ from voting.models import Vote
 
 from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
-from items.forms import QuestionForm, AnswerForm, ItemForm
+from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
@@ -34,46 +34,32 @@ from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
-app_name = 'items'
+app_name = "items"
 
 
 class ContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
-        if 'model_name' in kwargs:
-            self.model = get_model(app_name, kwargs['model_name'])
+        if "model_name" in kwargs:
+            self.model = get_model(app_name, kwargs["model_name"])
             if self.model is Link or self.model is Feature:
                 raise Http404()
-            form_class_name = self.model._meta.object_name + 'Form'
+            form_class_name = self.model._meta.object_name + "Form"
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
+        if "next" in request.GET:
+            kwargs.update({"next": request.GET.get("next")})
+        self.success_url = request.POST.get("next", None)
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 
-class NextMixin(object):
-
-    def get(self, request, *args, **kwargs):
-        if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
-        return super(NextMixin, self).get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if "next" in request.POST:
-            self.success_url = request.POST.get("next")
-        return super(NextMixin, self).post(request, *args, **kwargs)
-
-
-class ContentFormMixin(NextMixin):
+class ContentFormMixin(object):
 
     object = None
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        self.request = request
-        return super(ContentFormMixin, self).get(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
@@ -108,11 +94,11 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                         CreateView):
 
     messages = {
-        "object_created": {
+        "created": {
             "level": messages.SUCCESS,
             "text": _("Thanks %(user)s, %(object)s successfully created.")
         },
-        "creation_failed": {
+        "failed": {
             "level": messages.ERROR,
             "text": _("Warning %(user)s, %(object)s form is invalid.")
         },
@@ -121,28 +107,85 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
     def form_valid(self, form):
         self.object = form.save()
         messages.add_message(
-            self.request, self.messages["object_created"]["level"],
-            self.messages["object_created"]["text"] % {
+            self.request, self.messages["created"]["level"],
+            self.messages["created"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": self.object._meta.verbose_name
             }
         )
         if self.model == Item and "edit" in self.request.POST:
-            return HttpResponseRedirect(reverse(
-                "item_edit",
-                args=[self.object._meta.module_name, self.object.id]
-            ))
+            args = [self.object._meta.module_name, self.object.id]
+            return HttpResponseRedirect(reverse("item_edit", args=args))
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
         messages.add_message(
-            self.request, self.messages["creation_failed"]["level"],
-            self.messages["creation_failed"]["text"] % {
+            self.request, self.messages["failed"]["level"],
+            self.messages["failed"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": form._meta.model._meta.verbose_name
             }
         )
         return super(ContentCreateView, self).form_invalid(form)
+
+    def post(self, request, *args, **kwargs):
+        if self.model is not Question:
+            return super(ContentCreateView, self).post(request, *args,
+                                                       **kwargs)
+
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        ctx = dict()
+        if "add_question" in request.POST:
+            cb_answer = request.POST.get("cb_answer", None)
+            ctx.update({"cb_answer": cb_answer})
+            if form.is_valid():
+                self.object = form.save(commit=False)
+
+                kwargs = {"request": request}
+                if cb_answer:
+                    kwargs.update({"empty_permitted": False})
+
+                formset = QAFormSet(data=request.POST, instance=self.object,
+                                    **kwargs)
+                if formset.is_valid():
+                    self.object.save()
+                    form.save_m2m()
+                    formset.save()
+                    return HttpResponseRedirect(self.get_success_url())
+                ctx.update({"formset": formset})
+        elif "add_item" in request.POST:
+            i_form = ItemForm(data=request.POST, request=request,
+                              prefix="item")
+            if i_form.is_valid():
+                item = i_form.save()
+                args = [item._meta.module_name, item.id]
+                ctx.update({"next": reverse("item_edit", args=args)})
+            else:
+                ctx.update({"i_form": i_form, "show": 1})
+            initial = dict()
+            for name, field in form.fields.items():
+                initial.update({name: request.POST.get(name)})
+            form = form_class(initial=initial, request=request)
+
+        ctx.update({"form": form})
+        return self.render_to_response(self.get_context_data(**ctx))
+
+    def get_context_data(self, **kwargs):
+        context = super(ContentCreateView, self).get_context_data(**kwargs)
+        if self.model is not Question:
+            return context
+        POST = self.request.POST
+        if "formset" not in context:
+            formset = QAFormSet(data=POST, request=self.request) if POST \
+                else QAFormSet(request=self.request)
+            context.update({"formset": formset})
+        if "i_form" not in context:
+            i_form = ItemForm(request=self.request, prefix="item")
+            context.update({"i_form": i_form})
+        err = any(item for item in context.get("formset").errors)
+        context.update({"formset_errors": err})
+        return context
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
@@ -163,15 +206,15 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
+class ContentDetailView(ContentView, DetailView, FormMixin,
                         ProcessFollowView, ProcessVoteView):
 
     messages = {
-        "object_created": {
+        "created": {
             "level": messages.SUCCESS,
             "text": _("Thanks %(user)s, %(object)s successfully created.")
         },
-        "creation_failed": {
+        "failed": {
             "level": messages.WARNING,
             "text": _("Warning %(user)s, %(object)s form is invalid.")
         },
@@ -189,12 +232,6 @@ class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
             querysets = {
                 "questions": content_qs.filter(question__isnull=False),
             }
-            # feat_qs = content_qs.filter(feature__isnull=False)
-            # querysets.update({
-            #     "feat_pos": feat_qs.filter(feature__positive=True),
-            #     "feat_neg": feat_qs.filter(feature__positive=False),
-            #     "links": content_qs.filter(link__isnull=False),
-            # })
 
             contents = dict()
             for key, queryset in querysets.items():
@@ -278,8 +315,8 @@ class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
     def form_invalid(self, form):
         self.object = self.get_object()
         messages.add_message(self.request,
-            self.messages["creation_failed"]["level"],
-            self.messages["creation_failed"]["text"] % {
+            self.messages["failed"]["level"],
+            self.messages["failed"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": form._meta.model._meta.verbose_name
             }
@@ -290,8 +327,8 @@ class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
         self.object = form.save(**kwargs)
         form.save_m2m()
         messages.add_message(self.request,
-            self.messages["object_created"]["level"],
-            self.messages["object_created"]["text"] % {
+            self.messages["created"]["level"],
+            self.messages["created"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": self.object._meta.verbose_name
             }
@@ -401,7 +438,7 @@ class ContentListView(ContentView, SearchMixin, ListView):
         return super(ContentListView, self).post(request, *args, **kwargs)
 
 
-class ContentDeleteView(ContentView, NextMixin, DeleteView):
+class ContentDeleteView(ContentView, DeleteView):
 
     template_name = "items/confirm_delete.html"
 
