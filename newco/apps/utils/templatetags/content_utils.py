@@ -33,6 +33,11 @@ def get_at_index(list, index):
     return list[index]
 
 
+@register.filter
+def getitem(item, string):
+    return item.get(string, '')
+
+
 @register.inclusion_tag('items/_tag_edit.html')
 def edit(item_name, item_id, edit_next=None):
     return {
