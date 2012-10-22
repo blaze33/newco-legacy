@@ -77,8 +77,8 @@
     </div>
     <div class="modal-body">
     	<div class="row" style="margin-left: 50px">
-    	    <div class="span2" align="center"><a href="{% url 'item_create' 'item' %}"><img src="{% static 'img/gears.png' %}" type="image/png"><br><br><h3 class="black">Add a product</h3></a></div>
-    	    <div class="span2" align="center"><a href="{% url 'item_create' 'question' %}"><img src="{% static 'img/bulb.png' %}" type="image/png"><br><br><h3 class="black">Ask a question</h3></a></div>
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'item' %}"><img src="{% static 'img/gears.png' %}" type="image/png"><br><br><h3 class="black">{% trans "Add a product" %}</h3></a></div>
+    	    <div class="span2" align="center"><a href="{% url 'item_create' 'question' %}"><img src="{% static 'img/bulb.png' %}" type="image/png"><br><br><h3 class="black">{% trans "Ask a question" %}</h3></a></div>
     	</div>
     </div>
   </div>

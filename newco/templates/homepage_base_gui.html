@@ -83,7 +83,7 @@
     </div>
   </div>
 
-
+{% comment %}
 <!-- New Template on Homepage  -->
 <div class="row">
     <div class="span4 tutorial" align="center">
@@ -115,6 +115,7 @@
     <li><a class="black" href="{% url 'dash' 'feed' %}" id="mixpanel_mynewsfeed">{% trans "My newsfeed" %}</a></li>
     {% endif %}
   </ul></div>
+{% endcomment %}
 
   {{ block.super }}
 {% endblock %}

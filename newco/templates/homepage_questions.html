@@ -11,8 +11,8 @@
 <br><br><br>  
 <div class="row">
 	<div class="span4 offset1">
-		<h2>Answer questions</h2>
-		<h5> Category {{ category }}</h5>
+		<h2>{% trans "Answer questions" %}</h2>
+		<h5> {% trans "Category" %} {{ category }}</h5>
 		<hr>
 	</div>
     <div class="span4">
@@ -31,12 +31,12 @@
 	</span>
 	{% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
 	<br>
-	<a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">Add Answer</a>
+	<a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
 <hr>
 {% endfor %}
 {% else %}
-No unanswered questions on this category.
-<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">Ask your own awesome question then!</a></h3>
+{% trans "No unanswered questions on this category." %}
+<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
 {% endif %}
 </div></div>
 
