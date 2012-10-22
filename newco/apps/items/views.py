@@ -47,23 +47,13 @@ class ContentView(View):
             form_class_name = self.model._meta.object_name + "Form"
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
+        if "next" in request.GET:
+            kwargs.update({"next": request.GET.get("next")})
+        self.success_url = request.POST.get("next", None)
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
 
-class NextMixin(object):
-
-    def get(self, request, *args, **kwargs):
-        if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
-        return super(NextMixin, self).get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if "next" in request.POST:
-            self.success_url = request.POST.get("next")
-        return super(NextMixin, self).post(request, *args, **kwargs)
-
-
-class ContentFormMixin(NextMixin):
+class ContentFormMixin(object):
 
     object = None
 
@@ -124,16 +114,14 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             }
         )
         if self.model == Item and "edit" in self.request.POST:
-            return HttpResponseRedirect(reverse(
-                "item_edit",
-                args=[self.object._meta.module_name, self.object.id]
-            ))
+            args = [self.object._meta.module_name, self.object.id]
+            return HttpResponseRedirect(reverse("item_edit", args=args))
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
         messages.add_message(
             self.request, self.messages["failed"]["level"],
-            self.messages["failedfailed"]["text"] % {
+            self.messages["failed"]["text"] % {
                 "user": user_display(self.request.user),
                 "object": form._meta.model._meta.verbose_name
             }
@@ -171,6 +159,8 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                               prefix="item")
             if i_form.is_valid():
                 item = i_form.save()
+                args = [item._meta.module_name, item.id]
+                ctx.update({"next": reverse("item_edit", args=args)})
             else:
                 ctx.update({"i_form": i_form, "show": 1})
             initial = dict()
@@ -191,8 +181,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 else QAFormSet(request=self.request)
             context.update({"formset": formset})
         if "i_form" not in context:
-            i_form = ItemForm(data=POST, request=self.request, prefix="item") \
-                if POST else ItemForm(request=self.request, prefix="item")
+            i_form = ItemForm(request=self.request, prefix="item")
             context.update({"i_form": i_form})
         err = any(item for item in context.get("formset").errors)
         context.update({"formset_errors": err})
@@ -217,7 +206,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
+class ContentDetailView(ContentView, DetailView, FormMixin,
                         ProcessFollowView, ProcessVoteView):
 
     messages = {
@@ -243,12 +232,6 @@ class ContentDetailView(ContentView, NextMixin, DetailView, FormMixin,
             querysets = {
                 "questions": content_qs.filter(question__isnull=False),
             }
-            # feat_qs = content_qs.filter(feature__isnull=False)
-            # querysets.update({
-            #     "feat_pos": feat_qs.filter(feature__positive=True),
-            #     "feat_neg": feat_qs.filter(feature__positive=False),
-            #     "links": content_qs.filter(link__isnull=False),
-            # })
 
             contents = dict()
             for key, queryset in querysets.items():
@@ -455,7 +438,7 @@ class ContentListView(ContentView, SearchMixin, ListView):
         return super(ContentListView, self).post(request, *args, **kwargs)
 
 
-class ContentDeleteView(ContentView, NextMixin, DeleteView):
+class ContentDeleteView(ContentView, DeleteView):
 
     template_name = "items/confirm_delete.html"
 

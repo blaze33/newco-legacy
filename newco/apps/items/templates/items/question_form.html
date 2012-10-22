@@ -53,7 +53,7 @@
   <br>
 
   <div class="control-group"><div class="controls">
-    {% trans "Can't find a product related to your question?" %} <a class="btn btn-primary" data-toggle="modal" role="button" href="#itemModal"><i rel="add_icon" class="icon-plus icon-white"></i> {% trans "Add it" %}</a>
+    {% trans "Can't find the product related to your question?" %} <a class="btn btn-primary" data-toggle="modal" role="button" href="#itemModal"><i rel="add_icon" class="icon-plus icon-white"></i> {% trans "Add it" %}</a>
 
     <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
       <div class="modal-header">
@@ -72,9 +72,9 @@
 
   <label class="checkbox">
     <input type="checkbox" name="cb_answer" data-toggle="collapse" data-target="#answer_form"{% if cb_answer %}checked{% endif %}>
-    {% trans "Answer your own question, like a Q&amp;A" %}
+    {% trans "Answer your own question" %}
   </label>
-  <div id="answer_form" class="row collapse {% if formset_errors %}in{% else %}out{% endif %}"><div class="span7">
+  <div id="answer_form" class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}"><div class="span7">
     {{ formset.management_form }}
     {% for form in formset %}
       {{ form|as_bootstrap }}

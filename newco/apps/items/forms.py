@@ -158,7 +158,6 @@ class AnswerForm(ModelForm):
             self.user = self.request.user
             if "question_id" in self.request.REQUEST:
                 self.question_id = self.request.REQUEST.get("question_id")
-                print self.question_id
                 self.question = Question.objects.get(id=self.question_id)
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
