@@ -21,19 +21,7 @@ due to bad pixel fitting of small icons.
 
 {% block extra_head_base %}
     {{ block.super }}
-
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-30326927-1']);
-    _gaq.push(['_setDomainName', 'newco-project.fr']);
-    _gaq.push(['_setAllowLinker', true]);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-    </script>
+    <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
     <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
     <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
 {% endblock %}
@@ -62,6 +50,7 @@ due to bad pixel fitting of small icons.
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ga_testing_functions.js' %}"></script>
     <script type="text/javascript">
     function TriggerMasonry(){
     	$('#thumbnails_list').masonry({
