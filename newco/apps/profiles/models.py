@@ -37,9 +37,8 @@ class Profile(ProfileBase):
     website = models.URLField(_("website"), null=True, blank=True,
                               verify_exists=False)
     skills = TaggableManager(
-        verbose_name=_("skills"),
+        blank=True, verbose_name=_("skills"),
         help_text=_("The list of your main product skills"),
-        blank=True
     )
 
     objects = ProfileManager()

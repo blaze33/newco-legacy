@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.views.generic import ListView
 
+from content.transition import fetch_images
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -12,6 +13,7 @@ class HomepageView(MultiTemplateMixin, ListView):
     def get(self, request, *args, **kwargs):
         self.cat = kwargs.get("cat", "home")
         if self.cat == "home" or self.cat == "last":
+            self.model = Item
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
             if self.cat == "home":
@@ -29,4 +31,7 @@ class HomepageView(MultiTemplateMixin, ListView):
 
     def get_context_data(self, **kwargs):
         kwargs.update({"cat": self.cat})
-        return super(HomepageView, self).get_context_data(**kwargs)
+        ctx = super(HomepageView, self).get_context_data(**kwargs)
+        if self.model == Item:
+            ctx.update({"images": fetch_images(ctx.get("object_list"))})
+        return ctx
