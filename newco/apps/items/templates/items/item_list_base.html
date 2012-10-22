@@ -18,7 +18,7 @@
 {% block body %}
 
 <div class="row">
-  <div class="span2"><h1>{% if tag %}{{ tag }}</h1><div class="pull-right">
+  <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div class="pull-right">
     {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
     {% else %}
