@@ -161,6 +161,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
     "pinax_theme_bootstrap_account.context_processors.theme",
+    "utils.context_processors.settings_mp",
 ]
 
 INSTALLED_APPS = [
@@ -304,3 +305,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN')
+
+# Mixpanel API
+MIXPANEL_KEY_ID = os.environ.get('MIXPANEL_KEY_ID')

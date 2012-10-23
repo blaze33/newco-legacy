@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-18 19:07+0200\n"
-"PO-Revision-Date: 2012-10-18 19:08\n"
+"POT-Creation-Date: 2012-10-23 15:44+0200\n"
+"PO-Revision-Date: 2012-10-23 16:12\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,68 +19,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: forms.py:69
+#: forms.py:70
 msgid "No results matched"
 msgstr "Pas de résultats correspondant à la requête"
 
-#: forms.py:82
+#: forms.py:83
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:87
+#: forms.py:88
 msgid "Pick a product."
 msgstr "Choisissez un produit"
 
-#: forms.py:98
+#: forms.py:100
 msgid "Select one or several products using Enter and the Arrow keys."
 msgstr ""
 "Choisissez un ou plusieurs produits en utilisant la touche Entrée et les "
 "flèches de direction."
 
-#: forms.py:118
+#: forms.py:121
 msgid "Choose between either products or tags to link your question to."
 msgstr "Choisissez soit des produits, soit des tags à lier à votre question."
 
-#: forms.py:121
+#: forms.py:124
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 "Liez votre question à au moins soit un produit, soit une catégorie/activité."
 
-#: forms.py:125
+#: forms.py:128
 msgid "Pick less than 5 tags"
 msgstr "Choisissez moins de 5 tags"
 
-#: forms.py:129
+#: forms.py:132
 msgid "Pick less than 10 items"
 msgstr "Choisissez moins de 10 produits"
 
-#: forms.py:147
+#: forms.py:150
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:164
-msgid "Your answer"
-msgstr "Votre réponse"
+#: forms.py:173
+msgid "Please login before answering."
+msgstr "Connectez-vous avant de répondre."
 
-#: forms.py:193
+#: forms.py:229
 msgid "Link description"
 msgstr "Description du lien"
-
-#: forms.py:247
-msgid "positive"
-msgstr "positive"
-
-#: forms.py:249
-msgid "What feature do you like?"
-msgstr "Quelle caractéristique apprécies-tu ?"
-
-#: forms.py:252
-msgid "negative"
-msgstr "négative"
-
-#: forms.py:254
-msgid "What feature do you dislike?"
-msgstr "Quelle caractéristique te déplait ?"
 
 #: models.py:19
 msgid "Categories/Activities"
@@ -217,21 +201,21 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
 
-#: views.py:115 views.py:196
+#: views.py:99 views.py:215
 #, python-format
 msgid "Thanks %(user)s, %(object)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 
-#: views.py:119 views.py:200
+#: views.py:103 views.py:219
 #, python-format
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:296 views.py:419
+#: views.py:309 views.py:435
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:297 views.py:420
+#: views.py:310 views.py:436
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -280,13 +264,12 @@ msgid "No question yet! Ask the first one here!"
 msgstr "Pas de question pour l'instant ! Soyez le premier à en poser une !"
 
 #: templates/items/answer_form.html:11
-#: templates/items/root_display/_question.html:52
+#: templates/items/root_display/_question.html:57
 msgid "Answer"
 msgstr "Répondre"
 
 #: templates/items/answer_form.html:23 templates/items/feature_form.html:17
-#: templates/items/link_form.html:16 templates/items/question_form.html:51
-#: templates/items/question_form_1.html:75
+#: templates/items/link_form.html:16 templates/items/question_form.html:84
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -366,6 +349,7 @@ msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
 #: templates/items/item_form.html:18 templates/items/item_list_base.html:41
+#: templates/items/question_form.html:61
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
@@ -379,14 +363,14 @@ msgstr "Modifier"
 
 #: templates/items/item_form.html:22 templates/items/item_list_base.html:102
 #: templates/items/question_detail.html:32
+#: templates/items/question_form.html:61
 #: templates/items/feed_display/_feature.html:7
 #: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
 msgid ":"
 msgstr " :"
 
-#: templates/items/item_form.html:27 templates/items/question_form.html:36
-#: templates/items/question_form_1.html:21
+#: templates/items/item_form.html:27 templates/items/question_form.html:37
 msgid "Tips"
 msgstr "Astuces"
 
@@ -545,17 +529,15 @@ msgstr "Ajouter un lien externe à <i>%(item)s</i> :"
 msgid "Related Products"
 msgstr "Produits Associés"
 
-#: templates/items/question_form.html:28
-#: templates/items/question_form_1.html:13
+#: templates/items/question_form.html:29
 msgid "Question"
 msgstr "Question"
 
-#: templates/items/question_form.html:31
-#: templates/items/question_form_1.html:16
+#: templates/items/question_form.html:32
 msgid "Ask a question:"
 msgstr "Poser une question :"
 
-#: templates/items/question_form.html:38
+#: templates/items/question_form.html:39
 #, python-format
 msgid ""
 "\n"
@@ -575,73 +557,25 @@ msgstr ""
 "<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
 "</ol>"
 
-#: templates/items/question_form_1.html:23
-#, python-format
-msgid ""
-"\n"
-"        Here, you can ask a question about one or several products already <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
-"        <ol>\n"
-"            <li>Write down your question.</li>\n"
-"            <li>Select one or several products to bind that question to, using the search bar.</li>\n"
-"            <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
-"        </ol>\n"
-"    "
-msgstr ""
-"\n"
-"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
-"<ol>\n"
-"<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
-"</ol>"
+#: templates/items/question_form.html:56
+msgid "Can't find the product related to your question?"
+msgstr "Vous ne trouvez pas le produit en lien avec votre question ?"
 
-#: templates/items/question_form_1.html:40
-msgid "I don't find (one of) the product(s) relative to my question"
-msgstr ""
+#: templates/items/question_form.html:56
+msgid "Add it"
+msgstr "Ajoutez-le"
 
-#: templates/items/question_form_1.html:40
-msgid "XXXX"
-msgstr ""
+#: templates/items/question_form.html:65
+msgid "Cancel"
+msgstr "Annuler"
 
-#: templates/items/question_form_1.html:43
-msgid ""
-"\n"
-"            <h3>2nd form, for a new item this time ! </h3>\n"
-"            <ol>\n"
-"                <li>Add the item you want to link your question to</li>\n"
-"                <li>XXXXX</li>\n"
-"                <li> => Faire une template \"_item_form.html\" qu'on pourrait inclure au besoin dans \"question_form\" ou \"item_form\" ?</li>\n"
-"            </ol>\n"
-"        "
-msgstr ""
+#: templates/items/question_form.html:66
+msgid "Add product"
+msgstr "Ajouter le produit"
 
-#: templates/items/question_form_1.html:59
-msgid "Answer your own question, like a Q&A"
-msgstr ""
-
-#: templates/items/question_form_1.html:59
-msgid "Is it a good thing to answer your own questions?"
-msgstr ""
-
-#: templates/items/question_form_1.html:62
-#, fuzzy, python-format
-msgid ""
-"\n"
-"            <h3>3rd form, for the answer this time ! </h3> <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Click here if not\" target=\"_blank\">existing</a></b> at NewCo:\n"
-"            <ol>\n"
-"                <li>Write the answer to your question, just like an FAQ.</li>\n"
-"                <li>XXXXX</li>\n"
-"                <li>XXXXX</li>\n"
-"            </ol>\n"
-"        "
-msgstr ""
-"\n"
-"Ici, vous pouvez poser une question à propos d'un ou plusieurs produits qui <b><a href=\"%(url)s\" class=\"black tooltip-top\" title=\"Cliquez ici sinon\" target=\"_blank\">existent</a></b> sur NewCo :\n"
-"<ol>\n"
-"<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez un ou plusieurs produits à lier à cette question, en utilisant le menu déroulant interactif ci-dessous.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
-"</ol>"
+#: templates/items/question_form.html:75
+msgid "Answer your own question"
+msgstr "Répondez à votre propre question."
 
 #: templates/items/feed_display/_answer.html:9
 #, python-format
@@ -713,6 +647,21 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/root_display/_question.html:46
 msgid "Ask someone to answer"
 msgstr "Demandez à quelqu'un de répondre"
+
+#~ msgid "Your answer"
+#~ msgstr "Votre réponse"
+
+#~ msgid "positive"
+#~ msgstr "positive"
+
+#~ msgid "What feature do you like?"
+#~ msgstr "Quelle caractéristique apprécies-tu ?"
+
+#~ msgid "negative"
+#~ msgstr "négative"
+
+#~ msgid "What feature do you dislike?"
+#~ msgstr "Quelle caractéristique te déplait ?"
 
 #~ msgid "Select/add one or several categories to link your question to"
 #~ msgstr ""

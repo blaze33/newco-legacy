@@ -56,7 +56,7 @@ django-heroku-memcacheify==0.2  ## 0.3 "Fixing broken memcachier support"
 
 ## production webserver
 gunicorn==0.14.6
-gevent==0.13.7
+gevent==0.13.8
 greenlet==0.3.4
 
 ## Database backends

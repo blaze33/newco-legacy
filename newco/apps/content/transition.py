@@ -71,3 +71,27 @@ def get_album(instance):
     json = [i.data for i in images]
 
     return json
+
+
+def fetch_images(item_queryset=[]):
+    ids = [i.id for i in item_queryset]
+    if len(ids) == 0:
+        return {}
+    nodes = Item.objects.hfilter({'_class': 'product'}
+        ).extra(where=["(content_item.data -> 'legacy_id') IN (%s)" % ', '.join('%s' for x in ids)],
+                params=map(unicode, ids)).hselect(['legacy_id'])
+    match = (len(nodes) == item_queryset.count())
+    ids_table = {}
+    for obj in item_queryset:
+        if match:
+            obj.node = [n for n in nodes if int(n.legacy_id) == obj.id][0]
+        else:
+            obj.node = obj.node()
+        ids_table[obj.node.id] = obj.id
+    nodes_ids = [k for k in ids_table.iterkeys()]
+    images_qs = Item().graph.get_images(ids=nodes_ids
+                ).extra(select={'item_id': 'T4.from_item_id'})
+    images = {}
+    for i in images_qs:
+        images[ids_table[i.item_id]] = i
+    return images

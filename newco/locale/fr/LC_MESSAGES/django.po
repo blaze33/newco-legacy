@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 15:30+0200\n"
-"PO-Revision-Date: 2012-10-12 15:40\n"
+"POT-Creation-Date: 2012-10-23 17:35+0200\n"
+"PO-Revision-Date: 2012-10-23 17:35\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,65 +66,65 @@ msgstr "Nous sommes confus, la page que vous demandez n'existe pas."
 msgid "or"
 msgstr "ou"
 
-#: templates/_account_bar.html:12
-msgid "Your reputation"
-msgstr "Votre réputation"
-
-#: templates/_account_bar.html:17
-msgid "Dashboard"
-msgstr "Tableau de bord"
-
-#: templates/_account_bar.html:18
-msgid "My profile"
-msgstr "Mon profil"
-
-#: templates/_account_bar.html:19
-msgid "Settings"
-msgstr "Paramètres"
-
-#: templates/_account_bar.html:21
-msgid "Admin"
-msgstr "Admin"
-
-#: templates/_account_bar.html:24
-msgid "Log out"
-msgstr "Se déconnecter"
-
-#: templates/_account_bar.html:30
-msgid "Log in"
-msgstr "Connection"
-
-#: templates/_account_bar.html:32
-msgid "Sign up"
-msgstr "Inscription"
-
-#: templates/_account_bar.html:38
-msgid "Add +"
-msgstr "Ajouter +"
-
-#: templates/_account_bar.html:40
-msgid "Add a product"
-msgstr "Ajouter un produit"
-
-#: templates/_account_bar.html:41
-msgid "Ask a question"
-msgstr "Poser une question"
-
-#: templates/_account_bar.html:42
-msgid "We are still working on it"
-msgstr "Nous travaillons dessus"
-
-#: templates/_account_bar.html:42
-msgid "Add a story"
-msgstr "Ajouter un article"
-
-#: templates/_account_bar.html:47
+#: templates/_account_bar.html:9
 msgid "Templates"
 msgstr "Templates"
 
-#: templates/_account_bar.html:47
+#: templates/_account_bar.html:9
 msgid ":"
 msgstr " :"
+
+#: templates/_account_bar.html:15
+msgid "Add +"
+msgstr "Ajouter +"
+
+#: templates/_account_bar.html:17
+msgid "Add a product"
+msgstr "Ajouter un produit"
+
+#: templates/_account_bar.html:18
+msgid "Ask a question"
+msgstr "Poser une question"
+
+#: templates/_account_bar.html:19
+msgid "We are still working on it"
+msgstr "Nous travaillons dessus"
+
+#: templates/_account_bar.html:19
+msgid "Add a story"
+msgstr "Ajouter un article"
+
+#: templates/_account_bar.html:30
+msgid "Your reputation"
+msgstr "Votre réputation"
+
+#: templates/_account_bar.html:35
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: templates/_account_bar.html:36
+msgid "My profile"
+msgstr "Mon profil"
+
+#: templates/_account_bar.html:37
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/_account_bar.html:39
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/_account_bar.html:42
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: templates/_account_bar.html:48
+msgid "Log in"
+msgstr "Connection"
+
+#: templates/_account_bar.html:50
+msgid "Sign up"
+msgstr "Inscription"
 
 #: templates/_footer.html:5
 msgid "Get started"
@@ -146,39 +146,48 @@ msgstr "L'équipe"
 msgid "&copy; 2012 NewCo"
 msgstr "&copy; 2012 NewCo"
 
-#: templates/homepage_base.html:9
+#: templates/homepage_base.html:9 templates/homepage_base_1.html:9
+#: templates/homepage_base_gui.html:9
 #, python-format
 msgid "Home: %(username)s"
 msgstr "Accueil : %(username)s"
 
-#: templates/homepage_base.html:9
+#: templates/homepage_base.html:9 templates/homepage_base_1.html:9
+#: templates/homepage_base_gui.html:9
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/homepage_base.html:26
+#: templates/homepage_base.html:27 templates/homepage_base_1.html:27
+#: templates/homepage_base_gui.html:27
 msgid "NewCo"
 msgstr "NewCo"
 
-#: templates/homepage_base.html:26
+#: templates/homepage_base.html:27 templates/homepage_base_1.html:27
+#: templates/homepage_base_gui.html:27
 msgid "Empowering you to buy better"
 msgstr "Vous donner le pouvoir de mieux acheter"
 
-#: templates/homepage_base.html:27
+#: templates/homepage_base.html:28 templates/homepage_base_1.html:28
+#: templates/homepage_base_gui.html:28
 msgid ""
 "NewCo helps you choose with confidence and share your advice between users."
 msgstr ""
 "NewCo vous aide à choisir en toute confiance et à partager vos conseils "
 "entre utilisateurs."
 
-#: templates/homepage_base.html:35
+#: templates/homepage_base.html:36 templates/homepage_base_1.html:36
+#: templates/homepage_base_gui.html:36
 msgid "Get information"
 msgstr "Informez-vous"
 
-#: templates/homepage_base.html:38 templates/homepage_base.html.py:45
+#: templates/homepage_base.html:39 templates/homepage_base.html.py:46
+#: templates/homepage_base_1.html:39 templates/homepage_base_1.html.py:46
+#: templates/homepage_base_gui.html:39 templates/homepage_base_gui.html:46
 msgid "Find products or tags in the search bar"
 msgstr "Trouvez des produits ou tags dans la barre de recherche"
 
-#: templates/homepage_base.html:41
+#: templates/homepage_base.html:42 templates/homepage_base_1.html:42
+#: templates/homepage_base_gui.html:42
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
 "style=\"margin-right: 3px; vertical-align:middle;\"></i>explore "
@@ -188,7 +197,8 @@ msgstr ""
 "style=\"margin-right: 3px; vertical-align:middle;\"></i>explorez "
 "NewCo</em></a>"
 
-#: templates/homepage_base.html:47
+#: templates/homepage_base.html:48 templates/homepage_base_1.html:48
+#: templates/homepage_base_gui.html:48
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class"
@@ -200,11 +210,14 @@ msgstr ""
 "=\"icon-play\" style=\"margin-right: 3px; vertical-"
 "align:middle;\"></i>explorez NewCo</em></a>"
 
-#: templates/homepage_base.html:53
+#: templates/homepage_base.html:54 templates/homepage_base_1.html:54
+#: templates/homepage_base_gui.html:54
 msgid "Share knowledge"
 msgstr "Partagez vos connaissances"
 
-#: templates/homepage_base.html:56 templates/homepage_base.html.py:61
+#: templates/homepage_base.html:57 templates/homepage_base.html.py:62
+#: templates/homepage_base_1.html:57 templates/homepage_base_1.html.py:62
+#: templates/homepage_base_gui.html:57 templates/homepage_base_gui.html:62
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -217,11 +230,13 @@ msgstr ""
 "class=\"icon-pencil\" style=\"margin-right: 3px; vertical-align: "
 "middle;\"></i> contributer</a></em>..."
 
-#: templates/homepage_base.html:58
+#: templates/homepage_base.html:59 templates/homepage_base_1.html:59
+#: templates/homepage_base_gui.html:59
 msgid "...and build your reputation from others' votes"
 msgstr "...et construisez votre réputation par les votes des utilisateurs"
 
-#: templates/homepage_base.html:64
+#: templates/homepage_base.html:65 templates/homepage_base_1.html:65
+#: templates/homepage_base_gui.html:65
 #, python-format
 msgid ""
 "...and build your <a id=\"reputation-trigger\" "
@@ -231,39 +246,84 @@ msgstr ""
 "href=\"%(url_faq)s#reputation\">réputation</a> par les votes des "
 "utilisateurs"
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:74 templates/homepage_base_1.html:111
+#: templates/homepage_products_2.html:36
 msgid "Click here to close the tutorial"
 msgstr "Cliquez ici pour fermer le tutoriel"
 
-#: templates/homepage_base.html:73
+#: templates/homepage_base.html:74 templates/homepage_base_1.html:111
+#: templates/homepage_products_2.html:36
 msgid "NewCo empowers you to buy better"
 msgstr "NewCo vous donne le pouvoir de mieux acheter"
 
-#: templates/homepage_base.html:74
-msgid "Popular"
-msgstr "Populaire"
+#: templates/homepage_base.html:75 templates/homepage_base_1.html:112
+#: templates/homepage_products_2.html:37
+msgid "Popular products"
+msgstr "Produits populaires"
 
-#: templates/homepage_base.html:75
+#: templates/homepage_base.html:76
 msgid "Last Added"
 msgstr "Derniers ajouts"
 
-#: templates/homepage_base.html:76
+#: templates/homepage_base.html:77
 msgid "Unanswered Questions"
 msgstr "Questions orphelines"
 
-#: templates/homepage_base.html:78
+#: templates/homepage_base.html:80 templates/homepage_base_1.html:115
+#: templates/homepage_products_2.html:40
 msgid "My newsfeed"
 msgstr "Mon flux"
 
-#: templates/site_base.html:40
+#: templates/homepage_base_1.html:76 templates/homepage_base_gui.html:76
+msgid "Create..."
+msgstr "Créez..."
+
+#: templates/homepage_base_1.html:97 templates/homepage_products_2.html:22
+msgid "Join NewCo"
+msgstr "Rejoignez NewCo"
+
+#: templates/homepage_base_1.html:99 templates/homepage_products_2.html:24
+msgid "Login"
+msgstr "Connectez-vous"
+
+#: templates/homepage_base_1.html:113 templates/homepage_products_2.html:38
+#: templates/homepage_questions.html:14
+msgid "Answer questions"
+msgstr "Répondre aux questions"
+
+#: templates/homepage_questions.html:15
+msgid "Category"
+msgstr "Catégorie"
+
+#: templates/homepage_questions.html:20
+msgid "Filter by Category"
+msgstr "Filtrer par catégorie"
+
+#: templates/homepage_questions.html:21
+msgid "Select"
+msgstr "Sélectionnez"
+
+#: templates/homepage_questions.html:34
+msgid "Add Answer"
+msgstr "Ajoutez une réponse"
+
+#: templates/homepage_questions.html:38
+msgid "No unanswered questions on this category."
+msgstr "Pas de questions sans réponse dans cette catégorie."
+
+#: templates/homepage_questions.html:39
+msgid "Ask your own awesome question then!"
+msgstr "Posez alors votre propre question !"
+
+#: templates/site_base.html:31
 msgid "Search"
 msgstr "Recherche"
 
-#: templates/site_base.html:90
+#: templates/site_base.html:82
 msgid "Search an item, a tag..."
 msgstr "Chercher un produit, un tag..."
 
-#: templates/site_base.html:91
+#: templates/site_base.html:83
 msgid "What are you looking for?"
 msgstr "Que cherchez-vous ?"
 
@@ -335,6 +395,9 @@ msgstr "Tous les utilisateurs"
 #: templates/idios/profiles.html:14
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
+
+#~ msgid "Popular"
+#~ msgstr "Populaire"
 
 #~ msgid "Community"
 #~ msgstr "Communauté"
@@ -482,9 +545,6 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 #~ msgid "Draft"
 #~ msgstr "Brouillons"
 
-#~ msgid "products"
-#~ msgstr "Liste des produits"
-
 #~ msgid "question"
 #~ msgstr "Poser une question"
 
@@ -499,9 +559,6 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "Latest related questions"
 #~ msgstr "Dernières contributions"
-
-#~ msgid "Ask a new question!"
-#~ msgstr "Poser une question"
 
 #~ msgid "Questions"
 #~ msgstr "Poser une question"
@@ -547,16 +604,7 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 #~ msgid "Ask a question:"
 #~ msgstr "Poser une question"
 
-#~ msgid "answered a question about"
-#~ msgstr "Poser une question"
-
-#~ msgid "Add an answer"
-#~ msgstr "Ajouter un article"
-
 #~ msgid "asked a question about"
-#~ msgstr "Poser une question"
-
-#~ msgid "Answer this question"
 #~ msgstr "Poser une question"
 
 #~ msgid "profile"

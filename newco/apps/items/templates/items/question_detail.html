@@ -37,9 +37,16 @@
 </div>
 {% endblock %}
 
-
 {% block extra_body_base %}
     {{ block.super }}
     <script src="{% static 'js/content.js' %}"></script>
     {% if question %}{{ question.answer_form.media.js }}{% endif %}
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script type ="text/javascript">
+	    $(document).ready(function(){mixpanel.track("Load_question_detail");});
+	    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
+    </script>
 {% endblock %}

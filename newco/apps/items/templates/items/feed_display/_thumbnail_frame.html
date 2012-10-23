@@ -2,9 +2,11 @@
 {% load url from future %}
 
 {% with class_name=object|to_class_name %}<div class="content-item thumbnail">
-  {% with image=object.node.graph.get_image.data %}
-    <div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>
-  {% endwith %}
+  {% if image %}
+    {% with image=image.data %}<div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>{% endwith %}
+  {% else %}
+    {% with image=object.node.graph.get_image.data%}<div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>{% endwith %}
+  {% endif %}
   <div class="details" style="font-size:12px;">
     {% object_display object "thumbnail" "black" %}
   </div>

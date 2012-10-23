@@ -1,4 +1,5 @@
-from django.forms import ModelForm, MultiValueField, MultiWidget, CharField
+from __future__ import unicode_literals
+from django.forms import ModelForm, MultiValueField, MultiWidget, CharField, DecimalField
 from content.models import Item, Relation
 
 

@@ -117,3 +117,12 @@
         });
     </script>
 {% endblock %}
+
+{% block extra_script %}
+    {{  block.super  }}
+	<script type ="text/javascript">
+		$(document).ready(function(){
+	    mixpanel.track("Load_tag_page");
+		});
+	</script>
+{% endblock %}

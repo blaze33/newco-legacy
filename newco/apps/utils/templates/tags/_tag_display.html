@@ -2,6 +2,6 @@
 
 {% load url from future %}
 
-<a class="label" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
+<a class="label" id="mixpanel_tag_home" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
 
 {% endspaceless %}
