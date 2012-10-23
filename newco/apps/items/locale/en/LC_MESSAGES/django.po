@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 01:48+0200\n"
+"POT-Creation-Date: 2012-10-23 15:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:168
-msgid "Your answer"
+#: forms.py:173
+msgid "Please login before answering."
 msgstr ""
 
-#: forms.py:223
+#: forms.py:229
 msgid "Link description"
 msgstr ""
 
@@ -206,11 +206,11 @@ msgstr ""
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:309 views.py:427
+#: views.py:309 views.py:435
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:310 views.py:428
+#: views.py:310 views.py:436
 msgid "Latest related questions"
 msgstr ""
 
@@ -259,7 +259,7 @@ msgid "No question yet! Ask the first one here!"
 msgstr ""
 
 #: templates/items/answer_form.html:11
-#: templates/items/root_display/_question.html:52
+#: templates/items/root_display/_question.html:57
 msgid "Answer"
 msgstr ""
 

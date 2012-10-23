@@ -4,8 +4,8 @@ from django.forms.models import (ModelForm, BaseInlineFormSet,
 from django.forms.widgets import Textarea
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 
+from account.utils import user_display
 from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagField
@@ -13,7 +13,7 @@ from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
-from items.models import Item, Content, Question, Answer, Story, Link, Feature
+from items.models import Item, Content, Question, Answer, Story, Link
 
 
 class ItemForm(ModelForm):
@@ -165,7 +165,13 @@ class AnswerForm(ModelForm):
             self.object = kwargs["instance"]
             self.question = self.object.question
         super(AnswerForm, self).__init__(*args, **kwargs)
-        self.fields['content'].label = _("Your answer")
+        if self.user.is_authenticated():
+            profile = self.user.get_profile()
+            label = user_display(self.user)
+            label = label + ", " + profile.about if profile.about else label
+        else:
+            label = _("Please login before answering.")
+        self.fields["content"].label = label
 
     def save(self, commit=True, **kwargs):
         if self.create:

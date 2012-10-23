@@ -1,4 +1,7 @@
+import datetime
+
 from django.db.models import Count
+from django.utils import timezone
 from django.views.generic import ListView
 
 from content.transition import fetch_images
@@ -17,6 +20,9 @@ class HomepageView(MultiTemplateMixin, ListView):
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
             if self.cat == "home":
+                delta = timezone.now() - datetime.timedelta(days=30)
+                self.queryset = self.queryset.filter(
+                    content__pub_date__gt=delta)
                 self.queryset = self.queryset.annotate(
                     Count("content")).order_by("-content__count")
             else:

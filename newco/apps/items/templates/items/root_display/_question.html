@@ -46,12 +46,18 @@
         <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
     {% endif %}
     <br>
-    <div id="answer_form_{{ question.id }}"{% if display == "list" %} class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"{% endif %}><form method="POST" action="#answer_form_{{ question.id }}">
-      {% csrf_token %}
-      {{ question.answer_form|as_bootstrap }}
-      <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
-      <input type="hidden" name="question_id" value="{{ question.id }}"/>
-    </form></div>
+  </div></div>
+
+  <div class="row"><div class="span7">
+      <div id="answer_form_{{ question.id }}"class="row{% if display == "list" %} collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}{% endif %}">
+        {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
+        <div class="span6{% if not user.is_authenticated %} offset1{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
+          {% csrf_token %}
+          {{ question.answer_form|as_bootstrap }}
+          <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+          <input type="hidden" name="question_id" value="{{ question.id }}"/>
+        </form></div>
+      </div>
   </div></div>
 {% endwith %}{% endwith %}</div></div>
 

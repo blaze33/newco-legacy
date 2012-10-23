@@ -66,15 +66,17 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
         }
 
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
+        followers = User.objects.filter(pk__in=fwers_ids)
+        followees = User.objects.filter(pk__in=fwees_ids)
         context.update({
             "empty_msg": empty_msg,
             "reputation": self.page_user.reputation,
-            "fwers": User.objects.filter(pk__in=fwers_ids).order_by(
-                "-reputation__reputation_incremented"),
-            "fwees": User.objects.filter(pk__in=fwees_ids).order_by(
-                "-reputation__reputation_incremented"),
+            "fwers": followers.order_by("-reputation__reputation_incremented"),
+            "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "scores": Vote.objects.get_scores_in_bulk(history),
+            "nb_fwers": followers.count(),
+            "nb_fwees": followers.count(),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both

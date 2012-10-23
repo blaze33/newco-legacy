@@ -340,16 +340,24 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if "ask" in request.POST:
+        POST = request.POST
+        if "ask" in POST:
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
-        elif "question" in request.POST or "answer" in request.POST:
-            Form = QuestionForm if "question" in request.POST else AnswerForm
-            form = Form(data=request.POST, request=request)
+        elif "question" in POST or "answer" in POST:
+            Form = QuestionForm if "question" in POST else AnswerForm
+            form = Form(data=POST, request=request)
             if form.is_valid():
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
+        elif "edit_about" in POST:
+            print POST
+            about = POST.get("about", "")
+            profile = request.user.get_profile()
+            profile.about = about
+            profile.save()
+            return HttpResponseRedirect(request.path)
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
