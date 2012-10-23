@@ -27,3 +27,6 @@ opendiff-w
 
 # Pydev
 .pydevproject
+
+# Redis dumps
+*.rdb

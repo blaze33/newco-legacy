@@ -32,34 +32,36 @@
 
       <div class="row">
         <div class="span6">
-          <div class="well well-large WhyNC-col" id="info" style="margin-bottom: 5px; position: relative;">
+          <div class="well well-large WhyNC-col" id="info" style="position: relative; padding-top: 5px;">
             <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Get information" %}</em></h2>
-            <br>
+
             <p class="lead" style="margin-bottom: 0px; opacity: 0;">
-              <i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}...
+              <i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products, users or tags in the search bar" %}...
               <br><br>
               {% url "item_index" as index_url %}
-              {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
+              {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i> explore NewCo</em></a>{% endblocktrans %}
             </p>
             <img class="arrow-search-bar-hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="arrow_search_bar" style="position: absolute; top: -140px; left: +0px;">
             <p class="lead" style="margin-bottom: 0px; position: absolute; bottom: 24px;">
-              <a class="arrow_search_bar_trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}</a>...
+              <a class="arrow_search_bar_trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products, users or tags in the search bar" %}</a>...
               <br><br>
-              {% blocktrans %}...or <a href="#" class="btn btn-primary" id="explore" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
+              {% blocktrans %}...or <a href="#" class="btn btn-primary" id="explore" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><em><i class="icon-play icon-white" style="margin-right: 3px; vertical-align:middle; position: relative; top: -1px;"></i> explore NewCo</em></a>{% endblocktrans %}
             </p>
           </div>
         </div>
         <div class="span6">
-          <div class="well well-large WhyNC-col" id="contribute" style="position: relative;">
+          <div class="well well-large WhyNC-col" id="contribute" style="position: relative; padding-top: 5px;">
             <h2 style="text-align: center; font-size: 30px;"><em>{% trans "Share knowledge" %}</em></h2>
-            <br>
+
             <p class="lead" style="margin-bottom: 0px; opacity: 0;">
-              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do ?" #}
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}
+              {# change contribution center to a page "give me things to do ?" #}
               <br><br>
               {% blocktrans %}...and build your reputation from others' votes{% endblocktrans %}
             </p>
             <p class="lead" style="margin-bottom: 0px; position:absolute; bottom: 24px; opacity: 1;">
-              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}{# change contribution center to a page "give me things to do" ? #}
+              {% url 'dash' 'contribution' as url_contrib %}{% blocktrans %}Find where to <em><a class="btn btn-primary" href="{{ url_contrib }}" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><i class="icon-pencil icon-white" style="margin-right: 3px; vertical-align: middle;"></i> contribute</a></em>...{% endblocktrans %}
+              {# change contribution center to a page "give me things to do" ? #}
               <br><br>
               {% url 'faq' as url_faq %}
               {% blocktrans %}...and build your <a id="reputation-trigger" href="{{ url_faq }}#reputation">reputation</a> from others' votes{% endblocktrans %}
@@ -128,7 +130,7 @@
                 $('#arrow_search_bar').addClass('arrow-search-bar-hidden');
             });
             $('.arrow_search_bar_trigger').click(function () {
-                $('#main_autocomplete').focus();
+                $('#global_search').focus();
             });
 
             // "explore NewCo"
@@ -159,31 +161,12 @@
     {# ##### Equalize columns height ##### #}
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
-        // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
         $('.WhyNC-col').height(function () {
             var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();
             });
             return $(h).height();
         });
-
-        // $('.Struct_col').height(function () {
-        //     var h = _.max($(this).closest('.row').find('.Struct_col'), function (elem, index, list) {
-        //         return $(elem).height();
-        //     });
-        //     return $(h).height();
-        // });
-
-        // $(window).load(function(){
-        //     var new_css = {
-        //       'position' : 'absolute',
-        //       'bottom' : '',
-        //     }
-        //     $('#know_more').css(new_css);
-        //     //$('#know_more').css("position","absolute");
-        //     //$('#know_more').html("TEXT TEST");
-        //     //alert("test");
-        // });
     </script>
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">
