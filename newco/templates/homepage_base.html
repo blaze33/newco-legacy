@@ -105,6 +105,7 @@
             why_NewCo_div.on('hidden', function () {
                 subnav2move.removeClass('subnav-moved');
                 $('body').removeClass('body-less-padding');
+                setTimeout("$('.tooltip-tutorial').tooltip('hide')", 1500); // in case of double click on 'why_NewCo_div'
             })
 
             $('.tooltip-tutorial').tooltip({
