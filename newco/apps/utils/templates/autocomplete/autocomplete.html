@@ -1,27 +1,16 @@
 {% load i18n %}
 
-{% load humanize %}
-{% load staticfiles %}
 {% load url from future %}
-{% load content_utils %}
-{% load account_tags %}
-{% load pagination_tags %}
 
 <ul class="nav nav-list">
 {% if items %}
-    <li class="nav-header"><em>{% trans 'Items' %}</em></li>
-    {% for item in items %}<li><a href="{{ item.get_absolute_url }}" class="black"><h5>{{ item }}</h5></a></li>{% endfor %}
+  <li class="nav-header"><em>{% trans 'Items' %}</em></li>
+  {% for item in items %}<li><a href="{{ item.get_absolute_url }}" class="black"><h5>{{ item }}</h5></a></li>{% endfor %}
 {% endif %}
 {% if tags %}
-    <li class="nav-header"><em>{% trans 'Tags' %}</em></li>
-    {% for tag in tags %}<li class="tag"><a href="{% url 'tagged_items' tag.slug %}" class="black"><h5>{{ tag }}</h5></a></li>{% endfor %}
+  <li class="nav-header"><em>{% trans 'Tags' %}</em></li>
+  {% for tag in tags %}<li class="tag"><a href="{% url 'tagged_items' tag.slug %}" class="black"><h5>{{ tag }}</h5></a></li>{% endfor %}
 {% endif %}
-{% if options %}
-<hr>
-    <li><em>  <a data-toggle="modal" data-target="#create_typeahead"><h4 style="height:30px;" class="black">{% trans '+ Create a new page' %}</h4></div></em></li>
-{% endif %}
-
-{% if not options %}
-    <li><em>  <a href="#" data-toggle="modal" data-target="#create_typeahead"><h3 style="height:30px;" class="black">{% trans '+ Create a new page' %}</h3></div></em></li>
-{% endif %}
+  <li class="divider"></li>
+  <li><a class="black" href="{% url 'item_create' 'item' %}"><b>{% trans '+ Create a new page' %}</b></a></li>
 </ul>
