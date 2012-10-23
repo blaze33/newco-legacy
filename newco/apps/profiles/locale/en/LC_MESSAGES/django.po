@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 17:24+0200\n"
+"POT-Creation-Date: 2012-10-23 15:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgstr ""
 msgid "The list of your main product skills"
 msgstr ""
 
-#: models.py:48
+#: models.py:47
 msgid "profile"
 msgstr ""
 
-#: models.py:66
+#: models.py:68
 msgid "reputation"
 msgstr ""
 
@@ -73,6 +73,26 @@ msgstr ""
 msgid "Skills"
 msgstr ""
 
+#: templates/profiles/_profile_edit_about.html:4
+msgid "Edit your bio"
+msgstr ""
+
+#: templates/profiles/_profile_edit_about.html:4
+msgid "Tell us about you"
+msgstr ""
+
+#: templates/profiles/_profile_edit_about.html:9
+msgid "I can give a good answer because..."
+msgstr ""
+
+#: templates/profiles/_profile_edit_about.html:12
+msgid "e.g. professional gardener, model, local tennis champion"
+msgstr ""
+
+#: templates/profiles/_profile_edit_about.html:13
+msgid "Submit"
+msgstr ""
+
 #: templates/profiles/_profile_info.html:8
 msgid "About"
 msgstr ""
@@ -89,11 +109,11 @@ msgstr ""
 msgid "Subscription date"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:36
+#: templates/profiles/_profile_info.html:33
 msgid "Following"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:40
+#: templates/profiles/_profile_info.html:37
 msgid "Followers"
 msgstr ""
 

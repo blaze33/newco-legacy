@@ -75,6 +75,8 @@ def get_album(instance):
 
 def fetch_images(item_queryset=[]):
     ids = [i.id for i in item_queryset]
+    if len(ids) == 0:
+        return {}
     nodes = Item.objects.hfilter({'_class': 'product'}
         ).extra(where=["(content_item.data -> 'legacy_id') IN (%s)" % ', '.join('%s' for x in ids)],
                 params=map(unicode, ids)).hselect(['legacy_id'])

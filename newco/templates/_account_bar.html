@@ -15,7 +15,7 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {% trans "Add +" %}</a>
       <ul class="dropdown-menu">
         <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
-        <li><a href="{% url 'item_create' 'question' %}?fields=add_items"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
+        <li><a href="{% url 'item_create' 'question' %}"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
         <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
       </ul>
     </li>
@@ -23,10 +23,10 @@
 
 {% if request.user.is_authenticated %}
   <ul class="nav btn-group" role="navigation">
-    <li class="btn btn-inverse">
+    <li class="btn btn-inverse well_auth">
       <a href="{% url 'dash' %}">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
     </li>
-    <li class="btn btn-inverse">
+    <li class="btn btn-inverse" id="reputation-btn">
       <a href="/about/faq/#reputation" title="{% trans "Your reputation" %}"><strong>{{ request.user.reputation.reputation_incremented }}</strong></a>
     </li>
     <li class="dropdown btn btn-inverse">
@@ -47,7 +47,7 @@
   <ul class="nav btn-group">
     <li class="btn btn-inverse"><a href="{% url 'account_login' %}"><strong>{% trans "Log in" %}</strong></a></li>
     {% if ACCOUNT_OPEN_SIGNUP %}
-    <li class="btn btn-danger"><a href="{% url 'account_signup' %}"><strong>{% trans "Sign up" %}</strong></a></li>
+    <li class="btn btn-danger non_auth"><a href="{% url 'account_signup' %}"id="mixpanel_signup_page"><strong>{% trans "Sign up" %}</strong></a></li>
     {% endif %}
   </ul>
 {% endif %}

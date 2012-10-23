@@ -21,12 +21,12 @@
         <dd>{{ profile.user.date_joined }}</dd>
     {% endif %}
     {% if reputation %}
-        <dt><a href="{% url faq %}#reputation" class="black">{% trans "Reputation" %}</a></dt>
+        <dt><a class="black" href="{% url faq %}#reputation">{% trans "Reputation" %}</a></dt>
         <dd>{{ reputation.reputation_incremented }}</dd>
     {% endif %}
     {% if profile.skills.count > 0 %}
         <dt>{% trans "Skills" %}</dt>
-        <dd>{% for skill in profile.skills.all %}<a href="{% url tagged_items skill.slug %}" class="label">{{ skill.name }}</a> {% endfor %}</dd>
+        <dd>{% tags_display profile.skills %}</dd>
     {% endif %}
     {% if fwees or fwers %}<br>{% endif %}
     {% if fwees %}

@@ -1,20 +1,29 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.forms import ModelForm
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.forms.models import (ModelForm, BaseInlineFormSet,
+                                 inlineformset_factory)
 from django.forms.widgets import Textarea
+from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
 
+from account.utils import user_display
 from chosen.forms import ChosenSelect, ChosenSelectMultiple
 from newco_bw_editor.widgets import BW_small_Widget
+from taggit.forms import TagField
+from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
-from items.models import Item, Question, Answer, Story, Link, Feature
+from items.models import Item, Content, Question, Answer, Story, Link
 
 
 class ItemForm(ModelForm):
 
     create = False
+    tag_field = Item._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest())
 
     class Meta:
         model = Item
@@ -23,10 +32,10 @@ class ItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         if "request" in kwargs:
             self.request = kwargs.pop("request")
+            self.user = self.request.user
             self.reload_current_search()
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-            self.user = self.request.user
         return super(ItemForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
@@ -59,48 +68,72 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
+    tag_field = Content._meta.get_field_by_name('tags')[0]
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TagAutoSuggest(attrs={"class": "span4"}))
 
     class Meta:
         model = Question
-        fields = ("content", "status", "items")
+        fields = ("content", "status", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(),
+            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
-            ),
+            )
         }
 
     def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] is None:
-            self.create = True
-            self.request = kwargs.pop('request')
+        if "request" in kwargs:
+            self.request = kwargs.pop("request")
             self.user = self.request.user
+        if "instance" not in kwargs or kwargs["instance"] is None:
+            self.create = True
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields["items"].help_text = _(
-            "Select one product using Enter and the Arrow keys")
-        if hasattr(self, "request"):
-            if self.request.GET.get("fields", "") != "add_items":
-                del self.fields["items"]
-        else:
-            del self.fields["items"]
+        self.fields.get("items").help_text = _(
+            "Select one or several products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
-        if commit and self.create:
+        if self.create:
             question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
-            question.save()
-            if "items" in self.fields:
+            if commit:
+                question.save()
                 self.save_m2m()
-            else:
-                question.items.add(kwargs.pop("pk"))
             return question
         else:
             return super(QuestionForm, self).save(commit)
+
+    def clean(self):
+        cleaned_data = super(QuestionForm, self).clean()
+        tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
+
+        if not tags and not items or tags and items:
+            self._errors["tags"] = self.error_class([""])
+            self._errors["items"] = self.error_class([""])
+            if tags:
+                raise ValidationError(_("Choose between either products or "
+                                        "tags to link your question to."))
+            else:
+                raise ValidationError(_("Link your question to at least either"
+                                        " one product or one tag."))
+        else:
+            if len(tags) > 5:
+                tags_msg = _("Pick less than 5 tags")
+                self._errors["tags"] = self.error_class([tags_msg])
+                del cleaned_data["tags"]
+            elif len(items) > 10:
+                items_msg = _("Pick less than 10 items")
+                self._errors["items"] = self.error_class([items_msg])
+                del cleaned_data["items"]
+
+        return cleaned_data
 
 
 class AnswerForm(ModelForm):
@@ -120,29 +153,62 @@ class AnswerForm(ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
+        if "request" in kwargs:
             self.request = kwargs.pop("request")
             self.user = self.request.user
             if "question_id" in self.request.REQUEST:
-                self.question_id = self.request.REQUEST["question_id"]
-                self.question = Question.objects.get(pk=self.question_id)
+                self.question_id = self.request.REQUEST.get("question_id")
+                self.question = Question.objects.get(id=self.question_id)
+        if "instance" not in kwargs or kwargs["instance"] is None:
+            self.create = True
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question
         super(AnswerForm, self).__init__(*args, **kwargs)
-        self.fields['content'].label = _("Your answer")
+        if self.user.is_authenticated():
+            profile = self.user.get_profile()
+            label = user_display(self.user)
+            label = label + ", " + profile.about if profile.about else label
+        else:
+            label = _("Please login before answering.")
+        self.fields["content"].label = label
 
     def save(self, commit=True, **kwargs):
-        if commit and self.create:
+        if self.create:
             answer = super(AnswerForm, self).save(commit=False)
             answer.author = self.user
-            answer.question = self.question
-            answer.save()
-            answer.items = answer.question.items.all()
+            if not answer.question and hasattr(self, "question"):
+                answer.question = self.question
+            if commit:
+                answer.save()
+                answer.items = answer.question.items.all()
             return answer
         else:
             return super(AnswerForm, self).save(commit)
+
+
+class BaseQAFormSet(BaseInlineFormSet):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        self.empty_permitted = kwargs.pop("empty_permitted", None)
+        super(BaseQAFormSet, self).__init__(*args, **kwargs)
+
+    def _construct_forms(self):
+        # override method to add request/empty_permitted arguments
+        # for AnswerForm init
+        kwargs = {}
+        for field in ["request", "empty_permitted"]:
+            value = getattr(self, field, None)
+            if value is not None:
+                kwargs.update({field: value})
+        self.forms = []
+        for i in xrange(self.total_form_count()):
+            self.forms.append(self._construct_form(i, **kwargs))
+
+
+QAFormSet = inlineformset_factory(Question, Answer, form=AnswerForm,
+                                  formset=BaseQAFormSet, fk_name="question",
+                                  can_delete=False, extra=1, max_num=1)
 
 
 class StoryForm(ModelForm):
@@ -185,56 +251,6 @@ class LinkForm(ModelForm):
             return link
         else:
             return super(LinkForm, self).save(commit)
-
-
-class FeatureForm(ModelForm):
-
-    create = False
-
-    class Meta:
-        model = Feature
-        fields = ('content', 'status', )
-        widgets = {
-            'content': Textarea(attrs={
-                'class': 'span4',
-                'rows': 1}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] is None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-            self.positive = (self.request.REQUEST['positive'] == 'True')
-            self.item_id = self.request.REQUEST['item_id']
-            self.item = Item.objects.get(pk=self.item_id)
-        else:
-            self.object = kwargs['instance']
-            self.positive = self.object.positive
-            self.item = self.object.items.select_related()[0]
-        if hasattr(self, "positive"):
-            if self.positive:
-                self.way = _("positive")
-                self._meta.widgets['content'].attrs['placeholder'] = ugettext(
-                    'What feature do you like?'
-                )
-            else:
-                self.way = _("negative")
-                self._meta.widgets['content'].attrs['placeholder'] = ugettext(
-                    'What feature do you dislike?'
-                )
-        return super(FeatureForm, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True, **kwargs):
-        if commit and self.create:
-            feature = super(FeatureForm, self).save(commit=False)
-            feature.author = self.user
-            feature.positive = self.positive
-            feature.save()
-            feature.items.add(self.item_id)
-            return feature
-        else:
-            return super(FeatureForm, self).save(commit)
 
 
 def _link_aff(request, item):
