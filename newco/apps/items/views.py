@@ -133,11 +133,12 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             return super(ContentCreateView, self).post(request, *args,
                                                        **kwargs)
 
+        POST = request.POST
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         ctx = dict()
-        if "add_question" in request.POST:
-            cb_answer = request.POST.get("cb_answer", None)
+        if "add_question" in POST:
+            cb_answer = POST.get("cb_answer", None)
             ctx.update({"cb_answer": cb_answer})
             if form.is_valid():
                 self.object = form.save(commit=False)
@@ -146,17 +147,15 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 if cb_answer:
                     kwargs.update({"empty_permitted": False})
 
-                formset = QAFormSet(data=request.POST, instance=self.object,
-                                    **kwargs)
+                formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
                     self.object.save()
                     form.save_m2m()
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
                 ctx.update({"formset": formset})
-        elif "add_item" in request.POST:
-            i_form = ItemForm(data=request.POST, request=request,
-                              prefix="item")
+        elif "add_item" in POST:
+            i_form = ItemForm(data=POST, request=request, prefix="item")
             if i_form.is_valid():
                 item = i_form.save()
                 args = [item._meta.module_name, item.id]
@@ -165,7 +164,8 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 ctx.update({"i_form": i_form, "show": 1})
             initial = dict()
             for name, field in form.fields.items():
-                initial.update({name: request.POST.get(name)})
+                val = POST.get(name) if name != "items" else POST.getlist(name)
+                initial.update({name: val})
             form = form_class(initial=initial, request=request)
 
         ctx.update({"form": form})
