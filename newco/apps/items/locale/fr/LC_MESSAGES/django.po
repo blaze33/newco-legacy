@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-23 15:44+0200\n"
-"PO-Revision-Date: 2012-10-23 15:45\n"
+"PO-Revision-Date: 2012-10-23 16:12\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "Soyez concis et direct."
 
 #: forms.py:173
 msgid "Please login before answering."
-msgstr "Enregistrez-vous avant de répondre."
+msgstr "Connectez-vous avant de répondre."
 
 #: forms.py:229
 msgid "Link description"
