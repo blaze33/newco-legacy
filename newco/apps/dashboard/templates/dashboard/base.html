@@ -7,35 +7,32 @@
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
-    {{ block.super }}
+  {{ block.super }}
 
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
 
-{% block subnav %}
-    {% include "dashboard/_subnav.html" %}
-{% endblock %}
+{% block subnav %}{% include "dashboard/_subnav.html" %}{% endblock %}
 
 {% block head_title %}
-    {% user_display user as username %}
-    {% blocktrans %}{{ username }}'s dashboard | {{ page_name }}{% endblocktrans %}
+  {% user_display user as username %}
+  {% blocktrans %}{{ username }}'s dashboard | {{ page_name }}{% endblocktrans %}
 {% endblock %}
 
 {% block body %}
-    <header class="jumbotron subhead" id="overview">
-        <div class="row">
-            <div class="span8">
-                <h1>{% block title %}{{ page_name }}{% endblock %}</h1>
-                <br>
-                <p class="lead muted">{% block subtitle %}{% endblock %}</p>
-            </div>
-            <div class="span2 pull-right">{% include "profiles/_profile_item.html" with profile=my_profile %}</div>
-        </div>
-        <hr>
-    </header>
+  <header class="jumbotron subhead" id="overview">
+    <div class="row">
+      <div class="span8">
+        <h1>{% block title %}{{ page_name }}{% endblock %}</h1>
+        <br>
+        <p class="lead muted">{% block subtitle %}{% endblock %}</p>
+      </div>
+      <div class="span2 pull-right">{% include "profiles/_profile_item.html" with profile=my_profile %}</div>
+    </div>
+    <hr>
+  </header>
 
-    {% block dashboard %}{% endblock %}
+  {% block dashboard %}{% endblock %}
 
-    {% if is_paginated %}{% paginate %}{% endif %}
-
+  {% if is_paginated %}{% paginate %}{% endif %}
 {% endblock %}
