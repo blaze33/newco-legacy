@@ -27,3 +27,6 @@ opendiff-w
 
 # Pydev
 .pydevproject
+
+# Catalog DB log
+*decathlon_db_log.txt
