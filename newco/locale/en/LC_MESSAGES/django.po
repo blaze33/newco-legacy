@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 16:09+0200\n"
+"POT-Creation-Date: 2012-10-23 17:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -245,10 +245,14 @@ msgid "Popular products"
 msgstr ""
 
 #: templates/homepage_base.html:76
+msgid "Last Added"
+msgstr ""
+
+#: templates/homepage_base.html:77
 msgid "Unanswered Questions"
 msgstr ""
 
-#: templates/homepage_base.html:79 templates/homepage_base_1.html:115
+#: templates/homepage_base.html:80 templates/homepage_base_1.html:115
 #: templates/homepage_products_2.html:40
 msgid "My newsfeed"
 msgstr ""

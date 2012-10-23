@@ -73,6 +73,7 @@
   <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
     <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
     <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}" id="mixpanel_popular">{% trans "Popular products" %}</a></li>
+    <li {% if cat == "last" %} class="active"{% endif %} id="last"><a class="black" href="{% url 'home' 'last' %}">{% trans "Last Added" %}</a></li>
     <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Unanswered Questions" %}</a></li>
     {% if user.is_authenticated %}
     <li class="divider"></li>
