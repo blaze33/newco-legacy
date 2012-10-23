@@ -159,7 +159,6 @@
     {# ##### Equalize columns height ##### #}
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
-        {# Seb: credit: comes from: http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights #}
         $('.WhyNC-col').height(function () {
             var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();

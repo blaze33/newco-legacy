@@ -8,7 +8,7 @@
 
   <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
     <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form question vote request.path|add:"#"|add:anchor_q %}</h3></div>
-    <div class="span4"><h1 style="font-size: 26px;">{# To Do : Seb: c'est le titre de la page: il doit etre en h1 (marqueur du titre de la page), quitte a modifier la classe pour le rapetisser... style a retravailler peut être (et a mettre dans une classe) ... #}
+    <div class="span4"><h1 style="font-size: 26px;">
       {% if display == "detail" %}
         <span itemprop="name">{{ question.content }}</span>
       {% else %}

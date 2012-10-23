@@ -12,7 +12,7 @@
         <div class="span7">{% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" empty_msg=empty_msg %}</div>
         <div class="span3">
             <div class="row">
-                <div class="well well-small pull-right nc-right-col-well" {#style="width: 165px;"#}>
+                <div class="well well-small pull-right nc-right-col-well">
                     <h5>{% trans "Who to follow?" %} (<a href="{% url 'profile_list' %}">{% trans "View all" %}</a>)</h5>
                     <div id="profiles_list2">{% for thumb_user in wtf.users %}{% include "profiles/_profile_item.html" with profile=thumb_user.get_profile disp_follow="True" %}<br>{% endfor %}</div>
                 </div>
