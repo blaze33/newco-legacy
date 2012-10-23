@@ -93,4 +93,14 @@
   <script type="text/javascript">{% if show %}$("#itemModal").modal("show"){% endif %}</script>
 {% endblock %}
 
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){
+	    mixpanel.track("Load_add_question");
+		});
+	</script>
+{% endblock %}
+
 {# TITLE: Original #}

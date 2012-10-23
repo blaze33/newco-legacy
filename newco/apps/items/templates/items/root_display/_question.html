@@ -46,6 +46,14 @@
         <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
     {% endif %}
     <br>
+    </div>
+    {% if display == "detail" and user.is_authenticated %}
+    </div>
+
+    {% include "items/root_display/_edit_bio_question.html" %}
+	
+	<div class="span6">{% else %}<div class="span6 offset1">{% endif %}
+
     <div id="answer_form_{{ question.id }}"{% if display == "list" %} class="collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}"{% endif %}><form method="POST" action="#answer_form_{{ question.id }}">
       {% csrf_token %}
       {{ question.answer_form|as_bootstrap }}

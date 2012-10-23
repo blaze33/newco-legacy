@@ -1,0 +1,45 @@
+{% extends "homepage_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+{% load staticfiles %}
+
+{% block body %}
+<br><br><br>  
+<div class="row">
+	<div class="span4 offset1">
+		<h2>{% trans "Answer questions" %}</h2>
+		<h5> {% trans "Category" %} {{ category }}</h5>
+		<hr>
+	</div>
+    <div class="span4">
+    <form action="" method="POST" class="form-horizontal">{% csrf_token %}
+        <input name="select_category_tag" type="text" autocomplete="off" placeholder="{% trans 'Filter by Category' %}" data-provide="typeahead" data-items="3" data-source="{{ data_source_tags }}" style="width:120px">
+        <button type="submit" class="btn btn-primary" name="cat_tag" value="add">{% trans "Select" %}</button>
+    </form>
+    </div>
+</div>
+<div class="row"><div class="offset1 span8">{% if object_list %}{% for content in object_list %}
+	<span class="content-item-mini">
+        {% with image=content.items.all.0.node.graph.get_image.data %}
+        <a href="{{ content.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 40 %}"src="{{ image.thumbnailLink }}" alt=""></a>
+        {% endwith %}
+	    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
+	</span>
+	{% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
+	<br>
+	<a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
+<hr>
+{% endfor %}
+{% else %}
+{% trans "No unanswered questions on this category." %}
+<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
+{% endif %}
+</div></div>
+
+{% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}

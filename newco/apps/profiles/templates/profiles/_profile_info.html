@@ -31,11 +31,11 @@
     {% if fwees or fwers %}<br>{% endif %}
     {% if fwees %}
         <dt>{% trans "Following" %}</dt>
-        <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
+        <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %} {{ numb_fwees }}</dd>
     {% endif %}
     {% if fwers %}
         <dt>{% trans "Followers" %}</dt>
-        <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
+        <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %} {{ numb_fwers }}</dd>
     {% endif %}
 </dl>
 </div>

@@ -350,6 +350,16 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
+        if "edit_bio" in request.POST:
+            q = Question.objects.get(pk=kwargs.pop("pk"))
+            if "edit_bio" in request.POST:
+                bio = request.POST["edit_bio"]
+                prof = request.user.get_profile()
+                prof.about=bio
+                prof.save()
+            response = q.get_absolute_url()
+            return HttpResponseRedirect(response)
+            
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)

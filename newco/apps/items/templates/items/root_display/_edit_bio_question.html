@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load voting_tags %}
+{% load voting_utils %}
+{% load content_utils %}
+{% load bootstrap_tags %}
+{% load url from future %}
+
+<div class="row">
+	<div class="span1">
+		<form method="POST" action=""><button data-toggle="modal" data-target="#edit_bio" class="btn btn-mini">{% csrf_token %}
+	    <h5>Edit Your Bio</h5></button>
+	
+	<div id="edit_bio" class="modal fade hide" style="width:500px; height:200px;">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>{% trans "Je suis tres bien place pour repondre car..." %}</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="row" style="margin-left: 50px">
+    		<input name="edit_bio" type="text" autocomplete="off" {% if request.user.get_profile.about %} value="{{ request.user.get_profile.about }}"{% endif %} placeholder="{% trans 'Ex: Champion de France junior de squash' %}" class="span4" style="height:30px;">
+    	    <br><button type="submit" class="btn btn-primary" name="bio_user" value="add">{% trans "Submit" %}</button>
+    	</div>
+    </div>
+ </div>
+ </form>
+</div>

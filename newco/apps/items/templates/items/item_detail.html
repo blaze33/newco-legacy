@@ -6,6 +6,7 @@
 {% load format_utils %}
 {% load staticfiles %}
 
+
 {% block extra_style %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
@@ -24,7 +25,7 @@
   <div class="span7">
     {% include "items/_question_list.html" %}
 
-    {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices">
+    {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}<div class="row" id="prices" style="margin-left: 0">
       <h3>{% trans "Where to buy" %}</h3>
       <div class="row">
         {% if nb_ean != 1 %}<div class="span1"><h4>{% trans "EAN" %}</h4></div>{% endif %}
@@ -37,9 +38,9 @@
           <hr>
           <div class="row">
             {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
-            <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
+            <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black" id="mixpanel_click_store">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
             <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-            <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+            <div class="span1"><a href="{{ prod.url }}" target="_blank" id="mixpanel_click_price">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
           </div>
         {% endfor %}
       {% endfor %}
@@ -117,4 +118,15 @@
             })
         });
     </script>
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+
+	<script type ="text/javascript">
+		$(document).ready(function(){mixpanel.track("Load_item_detail");});
+		if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
+	</script>
+	<script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
+
 {% endblock %}

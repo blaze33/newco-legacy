@@ -116,7 +116,7 @@ class Content(models.Model):
 
 class Question(Content):
     content = models.CharField(max_length=200, verbose_name=_("content"))
-
+    
     class Meta:
         verbose_name = _("question")
 
