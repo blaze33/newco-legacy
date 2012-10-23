@@ -42,11 +42,35 @@
 </div>
 
 <div class="row">
-  <div class="offset2 span7">
+  <div class="offset1 span7">
 
     {% if object_list %}
-      {% block itemlist %}
-      {% endblock %}
+      <div class="tabbable {#tabs-left#}">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-products" data-toggle="tab">{% trans "Products" %}</a></li>
+          <li><a href="#tab-questions-tag" data-toggle="tab">{% trans "Questions on tag" %}</a></li>
+          <li><a href="#tab-questions-prod" data-toggle="tab">{% trans "Questions on products with tag" %}</a></li>
+          <li><a href="#tab-answer-questions" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-products">
+            {% block itemlist %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-questions-tag">
+            {% block question_tag_list %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-questions-prod">
+            {% block question_prod_list %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-answer-questions">
+            {% block answer_question %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
       {% if is_paginated %}{% paginate %}{% endif %}
     {% else %}
       <h3>
@@ -70,8 +94,8 @@
       </h3>
     {% endif %}
   </div>
-  <div class="span3">{% if object_list %}
-    <div class="row">
+  <div class="span4">{% if object_list %}
+    <div class="row"><div class="span4">
       <form action="" method="POST">{% csrf_token %}
         <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
           <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
@@ -79,13 +103,13 @@
           <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
         </div>
       </form>
-    </div>
+    </div></div>
 
     {% for title, content_list in related_questions.iteritems %}
-      {% if content_list %}<div class="row well well-small">
+      {% if content_list %}<div class="row"><div class="span4 well well-small nc-right-col-well-span4">
           <h4>{{ title }}{% trans ":" %}</h4>
           <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
-      </div>{% endif %}
+      </div></div>{% endif %}
     {% endfor %}
   {% endif %}</div>
 </div>

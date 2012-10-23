@@ -396,7 +396,8 @@ class ProcessSearchView(RedirectView):
         return super(ProcessSearchView, self).post(request, *args, **kwargs)
 
 
-class ContentListView(ContentView, ListView, ProcessSearchView):
+class ContentListView(ContentView, MultiTemplateMixin, ListView,
+                    ProcessSearchView,):
 
     model = Item
     template_name = "items/item_list_image.html"
@@ -437,6 +438,7 @@ class ContentListView(ContentView, ListView, ProcessSearchView):
         qs = Content.objects.filter(question__items__in=objs).distinct()
         qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
         rq = SortedDict()
+        rq.update({_("Most recommended on this tag"): qss.select_subclasses()[:3]}) # qs_ordered => only for visual trial before having the corresponding queryset
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
         rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
         context.update({"related_questions": rq})
