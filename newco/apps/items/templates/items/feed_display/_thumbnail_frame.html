@@ -2,7 +2,7 @@
 {% load url from future %}
 {% load follow_utils %}
 
-{% with class_name=object|to_class_name %}<div class="content-item thumbnail">
+{% with class_name=object|to_class_name %}<div class="content-item{% if masonry_list == "1" %} masonry-item{% elif masonry_list == "2"  %} masonry-item2{% endif %} thumbnail">
   {% if image %}
     {% with image=image.data %}<div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>{% endwith %}
   {% else %}
