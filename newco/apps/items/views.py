@@ -401,7 +401,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
 
     model = Item
     template_name = "items/item_list_image.html"
-    paginate_by = 9
+    paginate_by = 18
 
     def get_queryset(self):
         queryset = super(ContentListView, self).get_queryset()
@@ -442,6 +442,22 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
         rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
         context.update({"related_questions": rq})
+
+        ##### quick patch to get 'questions in tag XXX'
+        if "tag_slug" in self.kwargs:
+            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+            questions_tag_qs = Question.objects.filter(Q(tags=self.tag))
+            context.update({"questions_on_tag": questions_tag_qs})
+
+            prod_tag_qs = Item.objects.filter(tags=self.tag)
+            questions_on_items_wi_tag = Question.objects.filter(items__in=prod_tag_qs.all())
+            context.update({"questions_on_items_wi_tag": questions_on_items_wi_tag})
+
+            orphan_q_qs = Question.objects.annotate(
+                score=Count("answer")).filter(Q(score__lte=0) , Q(items__in=prod_tag_qs.all()) | Q(tags=self.tag) )
+            context.update({"orphan_q_qs": orphan_q_qs})
+
+        ##############################################
         return context
 
     def post(self, request, *args, **kwargs):

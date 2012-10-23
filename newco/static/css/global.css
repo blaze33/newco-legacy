@@ -351,8 +351,9 @@ img:hover + .img-controls,
 }
 
 .nc-tag {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
+  line-height: 20px;
 }
 
 /* Use btn-group and btn styles in a nav */
