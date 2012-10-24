@@ -16,9 +16,9 @@ def decathlon_product_search(keyword, nb_items=10):
 
     # Exclude from search already linked items
     d4_object_ids = AffiliationItem.objects.filter(
-                        store=decathlon).values_list("object_id", flat=True)
+        store=decathlon).values_list("object_id", flat=True)
     d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon).exclude(
-                            object_id__in=d4_object_ids, store=decathlon)
+        object_id__in=d4_object_ids, store=decathlon)
 
     return get_search_results(d4_prods, keyword, ["name"], nb_items)
 
@@ -45,7 +45,7 @@ def decathlon_db_processing(output_file=None):
     d4_object_ids = list(d4_items.values_list("object_id", flat=True))
 
     d4_csv_url = "http://flux.netaffiliation.com/catalogue.php" + \
-                                            "?maff=A6AB58DCS569B4B545AF92191v3"
+        "?maff=A6AB58DCS569B4B545AF92191v3"
     rows = csv_url2dict(d4_csv_url)
 
     transaction.commit()
@@ -59,7 +59,7 @@ def decathlon_db_processing(output_file=None):
                 item = d4_items.get(object_id=entry.object_id)
             except ObjectDoesNotExist:
                 err_msg = "Couldn't load object %s while updating" \
-                                                            % entry.object_id
+                    % entry.object_id
                 errors.append(err_msg + "\n")
                 output.write(err_msg)
             else:
@@ -80,8 +80,7 @@ def decathlon_db_processing(output_file=None):
                 transaction.commit()
             except IntegrityError:
                 transaction.rollback()
-                err_msg = "Object %s already existing in DB" \
-                                                        % entry.object_id
+                err_msg = "Object %s already existing in DB" % entry.object_id
                 errors.append(err_msg + "\n")
                 output.write(err_msg)
             else:
@@ -101,8 +100,7 @@ def decathlon_db_processing(output_file=None):
             try:
                 entry = d4_items.get(object_id=object_id)
             except ObjectDoesNotExist:
-                err_msg = "Couldn't load object %s while deleting" \
-                                                            % object_id
+                err_msg = "Couldn't load object %s while deleting" % object_id
                 output.write(err_msg)
                 errors.append(err_msg + "\n")
             else:
