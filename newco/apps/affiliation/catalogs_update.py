@@ -12,7 +12,7 @@ def main():
         sys.stdout.write("Decathlon function import failed.\n")
     else:
         errors = decathlon_db_processing(
-                                    settings.PROJECT_ROOT + "/cat_db_log.txt")
+            settings.PROJECT_ROOT + "/decathlon_db_log.txt")
 
         if len(errors) != 0:
             sys.stdout.writelines(errors)

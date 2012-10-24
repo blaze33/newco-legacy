@@ -398,6 +398,7 @@ class ContentListView(ContentView, SearchMixin, ListView):
     model = Item
     template_name = "items/item_list_image.html"
     paginate_by = 9
+    sort_order = "-pub_date"
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
@@ -409,9 +410,6 @@ class ContentListView(ContentView, SearchMixin, ListView):
             self.template_name = "items/item_list_text.html"
             qs = get_search_results(qs, self.search_terms, ["name"])
             return qs
-        POST = self.request.POST
-        self.sort_order = POST.get("sort_products")\
-            if "sort_products" in POST else "-pub_date"
         field = "content__question__id"
         qs = list(qs.annotate(score=Count(field)).order_by("-score"))\
             if self.sort_order == "popular" else qs.order_by(self.sort_order)
@@ -441,6 +439,10 @@ class ContentListView(ContentView, SearchMixin, ListView):
             prof = request.user.get_profile()
             prof.skills.add(tag) if request.POST.get("skills") == "add" \
                 else prof.skills.remove(tag)
+            return self.get(request, *args, **kwargs)
+        elif "sort_products" in request.POST:
+            self.sort_order = self.request.POST.get("sort_products")
+            return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
 

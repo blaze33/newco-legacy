@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from decimal import Decimal
 
 from django.db import models
@@ -39,24 +40,22 @@ class AffiliationItemBase(models.Model):
     name = models.CharField(max_length=200, verbose_name=_("name at store"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(max_length=30,
-                                        verbose_name=_("store object id"))
+                                 verbose_name=_("store object id"))
     ean = models.CharField(max_length=30, verbose_name=_("EAN"))
     url = models.URLField(max_length=1000, verbose_name=_("url"))
     price = models.DecimalField(default=0, max_digits=14, decimal_places=2,
-                                        verbose_name=_("price"))
+                                verbose_name=_("price"))
     currency = models.SmallIntegerField(choices=CURRENCIES,
                                         default=CURRENCIES.euro,
                                         verbose_name=_("currency"))
     creation_date = models.DateTimeField(default=timezone.now, editable=False,
-                                        verbose_name=_("date created"))
+                                         verbose_name=_("date created"))
     update_date = models.DateTimeField(auto_now=True,
-                                        verbose_name=_("last modified"))
-    img_small = models.URLField(max_length=1000,
-                                        verbose_name=_("small image"))
+                                       verbose_name=_("last modified"))
+    img_small = models.URLField(max_length=1000, verbose_name=_("small image"))
     img_medium = models.URLField(max_length=1000,
-                                        verbose_name=_("medium image"))
-    img_large = models.URLField(max_length=1000,
-                                        verbose_name=_("large image"))
+                                 verbose_name=_("medium image"))
+    img_large = models.URLField(max_length=1000, verbose_name=_("large image"))
 
     class Meta:
         abstract = True
@@ -167,8 +166,11 @@ def _decathlon_init(aff_item, decathlon_item):
 
     for key, value in decathlon_item.items():
         if key == "Prix":
-            aff_item.price = Decimal(value.replace(",", ".")).quantize(
-                                                                Decimal('.01'))
+            price = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
+        elif key == "Prix barré":
+            price_2 = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
+        elif key == "Monnaie":
+            currency = unicode(value, "utf-8")
         elif key == "Url":
             aff_item.url = unicode(value)
         elif key == "EAN":
@@ -183,5 +185,12 @@ def _decathlon_init(aff_item, decathlon_item):
             aff_item.img_medium = unicode(value)
         elif key == "Url image grande":
             aff_item.img_large = unicode(value)
+
+    aff_item.price = price if price and price < price_2 else price_2
+
+    if currency == u"€":
+        aff_item.currency = AffiliationItem.CURRENCIES.euro
+    else:
+        aff_item.currency = AffiliationItem.CURRENCIES.dollar
 
     return aff_item
