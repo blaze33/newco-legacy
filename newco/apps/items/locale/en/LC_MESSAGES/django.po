@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 17:29+0200\n"
+"POT-Creation-Date: 2012-10-24 19:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,79 +67,79 @@ msgstr ""
 
 #: models.py:20
 msgid ""
-"Select/add one or several related categories/activities (e.g. hardware, "
-"trekking, sony), using tab or comma key."
-msgstr ""
-
-#: models.py:25
-msgid "name"
+"Add one or several related categories/activities separated by a tab or comma."
+"<br>e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 
 #: models.py:26
+msgid "name"
+msgstr ""
+
+#: models.py:27
 msgid "slug"
 msgstr ""
 
-#: models.py:29 models.py:66
+#: models.py:30 models.py:67
 msgid "date published"
 msgstr ""
 
-#: models.py:31
+#: models.py:32
 msgid "last modified"
 msgstr ""
 
-#: models.py:36
+#: models.py:37
 msgid "product"
 msgstr ""
 
-#: models.py:59
+#: models.py:60
 msgid "Draft"
 msgstr ""
 
-#: models.py:61
+#: models.py:62
 msgid "Public"
 msgstr ""
 
-#: models.py:68
+#: models.py:69
 msgid "status"
 msgstr ""
 
-#: models.py:69
+#: models.py:70
 msgid "products"
 msgstr ""
 
-#: models.py:119 models.py:140 models.py:158 models.py:173 models.py:189
+#: models.py:120 models.py:141 models.py:159 models.py:174 models.py:190
 msgid "content"
 msgstr ""
 
-#: models.py:122
+#: models.py:123
 msgid "question"
 msgstr ""
 
-#: models.py:143
+#: models.py:144
 msgid "answer"
 msgstr ""
 
-#: models.py:159
+#: models.py:160
 msgid "URL"
 msgstr ""
 
-#: models.py:162
+#: models.py:163
 msgid "link"
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 msgid "feature"
 msgstr ""
 
-#: models.py:188
+#: models.py:189
 msgid "title"
 msgstr ""
 
-#: models.py:194
+#: models.py:195
 msgid "story"
 msgstr ""
 
-#: models.py:195
+#: models.py:196
 msgid "stories"
 msgstr ""
 
