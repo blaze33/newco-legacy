@@ -16,8 +16,9 @@ from voting.models import Vote
 
 from items.managers import ContentManager
 
-TAG_VERBOSE_NAME = _("Categories/Activities")
-TAG_HELP_TEXT = _("Select/add one or several related categories/activities.")
+TAG_VERBOSE_NAME = _("Tags")
+TAG_HELP_TEXT = _("Select/add one or several related categories/activities "
+                  "(e.g. hardware, trekking, sony), using tab or comma key.")
 
 
 class Item(models.Model):

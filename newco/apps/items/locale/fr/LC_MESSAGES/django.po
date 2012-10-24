@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 15:44+0200\n"
-"PO-Revision-Date: 2012-10-23 16:12\n"
+"POT-Creation-Date: 2012-10-24 17:29+0200\n"
+"PO-Revision-Date: 2012-10-24 17:31\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -67,82 +67,86 @@ msgid "Link description"
 msgstr "Description du lien"
 
 #: models.py:19
-msgid "Categories/Activities"
-msgstr "Catégories/Activités"
+msgid "Tags"
+msgstr ""
 
 #: models.py:20
-msgid "Select/add one or several related categories/activities."
-msgstr "Selectionnez/ajoutez une ou plusieurs catégories/activités liées."
+msgid ""
+"Select/add one or several related categories/activities (e.g. hardware, "
+"trekking, sony), using tab or comma key."
+msgstr ""
+"Selectionnez/ajoutez une ou plusieurs catégories/activités liées (ex. : "
+"composant, randonnée, sony), en utilisant la touche tabulation ou virgule."
 
-#: models.py:24
+#: models.py:25
 msgid "name"
 msgstr "nom"
 
-#: models.py:25
+#: models.py:26
 msgid "slug"
 msgstr "slug"
 
-#: models.py:28 models.py:65
+#: models.py:29 models.py:66
 msgid "date published"
 msgstr "date de publication"
 
-#: models.py:30
+#: models.py:31
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:35
+#: models.py:36
 msgid "product"
 msgstr "produit"
 
-#: models.py:58
+#: models.py:59
 msgid "Draft"
 msgstr "Brouillon"
 
-#: models.py:60
+#: models.py:61
 msgid "Public"
 msgstr "Public"
 
-#: models.py:67
+#: models.py:68
 msgid "status"
 msgstr "statut"
 
-#: models.py:68
+#: models.py:69
 msgid "products"
 msgstr "produits"
 
-#: models.py:118 models.py:139 models.py:157 models.py:172 models.py:188
+#: models.py:119 models.py:140 models.py:158 models.py:173 models.py:189
 msgid "content"
 msgstr "contenu"
 
-#: models.py:121
+#: models.py:122
 msgid "question"
 msgstr "question"
 
-#: models.py:142
+#: models.py:143
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:158
+#: models.py:159
 msgid "URL"
 msgstr "URL"
 
-#: models.py:161
+#: models.py:162
 msgid "link"
 msgstr "lien"
 
-#: models.py:176
+#: models.py:177
 msgid "feature"
 msgstr "caractéristique"
 
-#: models.py:187
+#: models.py:188
 msgid "title"
 msgstr "titre"
 
-#: models.py:193
+#: models.py:194
 msgid "story"
 msgstr "article"
 
-#: models.py:194
+#: models.py:195
 msgid "stories"
 msgstr "articles"
 
@@ -211,11 +215,11 @@ msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:309 views.py:435
+#: views.py:309 views.py:433
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:310 views.py:436
+#: views.py:310 views.py:434
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -647,6 +651,9 @@ msgstr "Donner une meilleure réponse"
 #: templates/items/root_display/_question.html:46
 msgid "Ask someone to answer"
 msgstr "Demandez à quelqu'un de répondre"
+
+#~ msgid "Categories/Activities"
+#~ msgstr "Catégories/Activités"
 
 #~ msgid "Your answer"
 #~ msgstr "Votre réponse"

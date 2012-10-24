@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 15:44+0200\n"
+"POT-Creation-Date: 2012-10-24 17:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,82 +62,84 @@ msgid "Link description"
 msgstr ""
 
 #: models.py:19
-msgid "Categories/Activities"
+msgid "Tags"
 msgstr ""
 
 #: models.py:20
-msgid "Select/add one or several related categories/activities."
-msgstr ""
-
-#: models.py:24
-msgid "name"
+msgid ""
+"Select/add one or several related categories/activities (e.g. hardware, "
+"trekking, sony), using tab or comma key."
 msgstr ""
 
 #: models.py:25
+msgid "name"
+msgstr ""
+
+#: models.py:26
 msgid "slug"
 msgstr ""
 
-#: models.py:28 models.py:65
+#: models.py:29 models.py:66
 msgid "date published"
 msgstr ""
 
-#: models.py:30
+#: models.py:31
 msgid "last modified"
 msgstr ""
 
-#: models.py:35
+#: models.py:36
 msgid "product"
 msgstr ""
 
-#: models.py:58
+#: models.py:59
 msgid "Draft"
 msgstr ""
 
-#: models.py:60
+#: models.py:61
 msgid "Public"
 msgstr ""
 
-#: models.py:67
+#: models.py:68
 msgid "status"
 msgstr ""
 
-#: models.py:68
+#: models.py:69
 msgid "products"
 msgstr ""
 
-#: models.py:118 models.py:139 models.py:157 models.py:172 models.py:188
+#: models.py:119 models.py:140 models.py:158 models.py:173 models.py:189
 msgid "content"
 msgstr ""
 
-#: models.py:121
+#: models.py:122
 msgid "question"
 msgstr ""
 
-#: models.py:142
+#: models.py:143
 msgid "answer"
 msgstr ""
 
-#: models.py:158
+#: models.py:159
 msgid "URL"
 msgstr ""
 
-#: models.py:161
+#: models.py:162
 msgid "link"
 msgstr ""
 
-#: models.py:176
+#: models.py:177
 msgid "feature"
 msgstr ""
 
-#: models.py:187
+#: models.py:188
 msgid "title"
 msgstr ""
 
-#: models.py:193
+#: models.py:194
 msgid "story"
 msgstr ""
 
-#: models.py:194
+#: models.py:195
 msgid "stories"
 msgstr ""
 
@@ -206,11 +208,11 @@ msgstr ""
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr ""
 
-#: views.py:309 views.py:435
+#: views.py:309 views.py:433
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:310 views.py:436
+#: views.py:310 views.py:434
 msgid "Latest related questions"
 msgstr ""
 
