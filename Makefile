@@ -34,8 +34,8 @@ maintain_off:
 
 
 push:
-	hg bookmarks -f -r $(BRANCH) master
-	hg push -b $(BRANCH) git+ssh://$(REMOTE_URL)
+	hg bookmark -f -r $(BRANCH) master
+	hg --verbose push git+ssh://$(REMOTE_URL)
 
 sync:
 	heroku run '$(SYNC_CMD)' --app $(APP)
