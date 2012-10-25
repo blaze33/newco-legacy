@@ -18,7 +18,7 @@
 {% block body %}
 
 <div class="row">
-  <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div class="pull-right">
+  <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div {#class="pull-right"#}>
     {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
     {% else %}
@@ -37,16 +37,38 @@
       <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
     </div>
   {% else %}&nbsp;{% endif %}</div>
-
-  <div class="span2"><a class="btn" href="{% url 'item_create' 'item' %}"><i class="icon-plus-sign"></i> {% trans "Add a product" %}</a></div>
 </div>
 
 <div class="row">
-  <div class="offset2 span7">
+  <div class="offset1 span7">
 
     {% if object_list %}
-      {% block itemlist %}
-      {% endblock %}
+      <div class="tabbable {#tabs-left#}">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-products" data-toggle="tab">{% trans "Products" %}</a></li>
+          <li><a href="#tab-questions-tag" data-toggle="tab">{% trans "Questions on tag" %}</a></li>
+          <li><a href="#tab-questions-prod" data-toggle="tab">{% trans "Questions on products with tag" %}</a></li>
+          <li><a href="#tab-answer-questions" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-products">
+            {% block itemlist %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-questions-tag">
+            {% block question_tag_list %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-questions-prod">
+            {% block question_prod_list %}
+            {% endblock %}
+          </div>
+          <div class="tab-pane" id="tab-answer-questions">
+            {% block answer_question %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
       {% if is_paginated %}{% paginate %}{% endif %}
     {% else %}
       <h3>
@@ -70,8 +92,8 @@
       </h3>
     {% endif %}
   </div>
-  <div class="span3">{% if object_list %}
-    <div class="row">
+  <div class="span4">{% if object_list %}
+    <div class="row"><div class="span4">
       <form action="" method="POST">{% csrf_token %}
         <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
           <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
@@ -79,13 +101,13 @@
           <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
         </div>
       </form>
-    </div>
+    </div></div>
 
     {% for title, content_list in related_questions.iteritems %}
-      {% if content_list %}<div class="row well well-small">
+      {% if content_list %}<div class="row"><div class="span4 well well-small nc-right-col-well-span4">
           <h4>{{ title }}{% trans ":" %}</h4>
           <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
-      </div>{% endif %}
+      </div></div>{% endif %}
     {% endfor %}
   {% endif %}</div>
 </div>
@@ -101,38 +123,4 @@
             $('#carousel_tag').carousel({ interval: 15000 });
         });
     </script>
-    <script type="text/javascript">
-        function TriggerMasonry(){
-          $('#thumbnails_list').masonry({
-          itemSelector : '.content-item',
-              isAnimated: true,
-              isFitWidth: true,
-                //columnWidth: auto,
-                //columnWidth: function( containerWidth ) {
-                //    return containerWidth / 40; // Seb: this thing is a mess... Maybe it's a matter of denominator ? (colunms/size of page)...
-                //},
-        });
-        }
-        $(document).ready(function() {
-           // simple example, using all default options unless overridden globally
-        TriggerMasonry();
-          setTimeout(TriggerMasonry,500); // trigger quickly after page load
-          setTimeout(TriggerMasonry,3000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
-        $('div.expandable').expander({
-            afterExpand:function() {TriggerMasonry();},
-            //Timer to relaunch Masonry after the onCollapse event
-            onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
-            }
-        });
-        });
-    </script>
-{% endblock %}
-
-{% block extra_script %}
-    {{  block.super  }}
-	<script type ="text/javascript">
-		$(document).ready(function(){
-	    mixpanel.track("Load_tag_page");
-		});
-	</script>
 {% endblock %}

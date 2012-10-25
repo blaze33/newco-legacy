@@ -19,7 +19,7 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% if not item %}{% trans "Add a product:" %}{% else %}{% trans "Edit"%} {{ item }}{% trans ":"%}{% endif %}{% endblock %}</h1>
+<h1>{% block form_header %}{% if not item %}{% trans "Add a product" %}{% trans ":" %}{% else %}{% trans "Edit"%} {{ item }}{% trans ":"%}{% endif %}{% endblock %}</h1>
 <br>
 
 {% url 'faq' as faq %}
@@ -72,26 +72,26 @@
     {% endif %}</div>
   </div>
 
-  <div class="row"><table class="img-selector span12" id="img-selector-1">
-    <tbody>
-    <tr>
-      <td>
-        <ul class="thumbnails connectedSortable selected-list" id="selected-list">
-        </ul>
-      </td>
-      <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
-        <p>Trash <i class="icon-trash"></i></p>
-      </td>
-    </tr>
-    </tbody>
-  </table></div>
-  <input type="hidden" name="img_list" id="img_data">
-  {% if not item %}
-    <input type="submit" class="btn" value="{% trans 'Create' %}"/> or <button type="submit" class="btn" name="edit">{% trans 'Create and add features' %}</button>
-  {% else %}
-    <input type="submit" class="btn" value="{% trans 'Update' %}"/>
-  {% endif %}
-  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+    <div class="row"><table class="img-selector span12" id="img-selector-1">
+      <tbody>
+      <tr>
+        <td>
+          <ul class="thumbnails connectedSortable selected-list" id="selected-list">
+          </ul>
+        </td>
+        <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+          <p>Trash <i class="icon-trash"></i></p>
+        </td>
+      </tr>
+      </tbody>
+    </table></div>
+    <input type="hidden" name="img_list" id="img_data">
+    {% if not item %}
+        <input type="submit" class="btn" value="{% trans 'Create' %}"> {% trans "or" %} <button type="submit" class="btn" name="edit">{% trans 'Create and add features' %}</button>
+    {% else %}
+        <input type="submit" class="btn" value="{% trans 'Update' %}">
+    {% endif %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 </form>
 
 {% endblock %}
