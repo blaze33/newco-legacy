@@ -4,6 +4,7 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Sum
 from django.db.models.loading import get_model
+from django.template.base import TemplateSyntaxError, kwarg_re
 from django.utils.datastructures import SortedDict
 
 from generic_aggregation import generic_annotate
@@ -105,3 +106,31 @@ def get_sorted_queryset(queryset, user):
     votes = Vote.objects.get_for_user_in_bulk(queryset, user)
     return {"queryset": queryset.select_subclasses(),
             "scores": scores, "votes": votes}
+
+
+def get_node_extra_arguments(parser, bits, tag_name, max_args):
+    args = []
+    kwargs = {}
+    asvar = None
+    if len(bits) >= 2 and bits[-2] == 'as':
+        asvar = bits[-1]
+        bits = bits[:-2]
+
+    if len(bits):
+        if len(bits) <= max_args:
+            for bit in bits:
+                match = kwarg_re.match(bit)
+                if not match:
+                    err_msg = "Malformed arguments in '%s'" % tag_name
+                    raise TemplateSyntaxError(err_msg)
+                name, val = match.groups()
+                if name:
+                    kwargs[name] = parser.compile_filter(val)
+                else:
+                    args.append(parser.compile_filter(val))
+        else:
+            err_msg = "'%s' tag takes at most %d extra arguments." \
+                % (tag_name, max_args)
+            raise TemplateSyntaxError(err_msg)
+
+    return [args, kwargs, asvar]

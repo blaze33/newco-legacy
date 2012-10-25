@@ -17,8 +17,9 @@ from voting.models import Vote
 from items.managers import ContentManager
 
 TAG_VERBOSE_NAME = _("Tags")
-TAG_HELP_TEXT = _("Select/add one or several related categories/activities "
-                  "(e.g. hardware, trekking, sony), using tab or comma key.")
+TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
+                  " by a tab or comma.<br>e.g. tennis, trekking, shoes,"
+                  " housework, cooking, GPS, smartphone, etc.")
 
 
 class Item(models.Model):
@@ -137,7 +138,7 @@ class Question(Content):
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=1000, verbose_name=_("content"))
+    content = models.CharField(max_length=10000, verbose_name=_("content"))
 
     class Meta:
         verbose_name = _("answer")

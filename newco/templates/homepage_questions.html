@@ -24,14 +24,13 @@
 </div>
 
 
-<div class="row"><div class="offset1 span8">{% if object_list %}{% for content in object_list %}
-	{% include "items/root_display/_question.html" with display="unanswered_questions" %}
-	
-{% endfor %}
-{% else %}
-{% trans "No unanswered questions on this category." %}
-<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
-{% endif %}
+<div class="row"><div class="offset1 span8">
+	{% if object_list %}
+		{% include "items/feed_display/_content_list.html" with contents=object_list display="unanswered" %}
+	{% else %}
+		{% trans "No unanswered questions on this category." %}
+		<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
+	{% endif %}
 </div></div>
 
 {% if is_paginated %}{% paginate %}{% endif %}

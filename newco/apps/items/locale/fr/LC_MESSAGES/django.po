@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-24 17:29+0200\n"
-"PO-Revision-Date: 2012-10-24 17:31\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-10-24 19:11+0200\n"
+"PO-Revision-Date: 2012-10-24 19:20\n"
+"Last-Translator:   <rouyrre@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,85 +68,87 @@ msgstr "Description du lien"
 
 #: models.py:19
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: models.py:20
 msgid ""
-"Select/add one or several related categories/activities (e.g. hardware, "
-"trekking, sony), using tab or comma key."
+"Add one or several related categories/activities separated by a tab or "
+"comma.<br>e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone,"
+" etc."
 msgstr ""
-"Selectionnez/ajoutez une ou plusieurs catégories/activités liées (ex. : "
-"composant, randonnée, sony), en utilisant la touche tabulation ou virgule."
+"Ajoutez une ou plusieurs catégories/activités en rapport en les séparant "
+"d'une tabulation ou virgule.<br> ex. : tennis, randonnée, chaussures, "
+"ménage, cuisine, GPS, smartphone."
 
-#: models.py:25
+#: models.py:26
 msgid "name"
 msgstr "nom"
 
-#: models.py:26
+#: models.py:27
 msgid "slug"
 msgstr "slug"
 
-#: models.py:29 models.py:66
+#: models.py:30 models.py:67
 msgid "date published"
 msgstr "date de publication"
 
-#: models.py:31
+#: models.py:32
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:36
+#: models.py:37
 msgid "product"
 msgstr "produit"
 
-#: models.py:59
+#: models.py:60
 msgid "Draft"
 msgstr "Brouillon"
 
-#: models.py:61
+#: models.py:62
 msgid "Public"
 msgstr "Public"
 
-#: models.py:68
+#: models.py:69
 msgid "status"
 msgstr "statut"
 
-#: models.py:69
+#: models.py:70
 msgid "products"
 msgstr "produits"
 
-#: models.py:119 models.py:140 models.py:158 models.py:173 models.py:189
+#: models.py:120 models.py:141 models.py:159 models.py:174 models.py:190
 msgid "content"
 msgstr "contenu"
 
-#: models.py:122
+#: models.py:123
 msgid "question"
 msgstr "question"
 
-#: models.py:143
+#: models.py:144
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:159
+#: models.py:160
 msgid "URL"
 msgstr "URL"
 
-#: models.py:162
+#: models.py:163
 msgid "link"
 msgstr "lien"
 
-#: models.py:177
+#: models.py:178
 msgid "feature"
 msgstr "caractéristique"
 
-#: models.py:188
+#: models.py:189
 msgid "title"
 msgstr "titre"
 
-#: models.py:194
+#: models.py:195
 msgid "story"
 msgstr "article"
 
-#: models.py:195
+#: models.py:196
 msgid "stories"
 msgstr "articles"
 
