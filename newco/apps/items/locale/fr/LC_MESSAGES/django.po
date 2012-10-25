@@ -68,7 +68,7 @@ msgstr "Description du lien"
 
 #: models.py:19
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: models.py:20
 msgid ""

@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 01:48+0200\n"
-"PO-Revision-Date: 2012-10-17 17:47\n"
+"POT-Creation-Date: 2012-10-25 14:37+0200\n"
+"PO-Revision-Date: 2012-10-25 14:38\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -77,9 +77,9 @@ msgstr "Produits"
 msgid "Tags"
 msgstr "Tags"
 
-#: templates/autocomplete/autocomplete.html:16
-msgid "No options"
-msgstr "Pas de résultat correspondant à la recherche."
+#: templates/autocomplete/autocomplete.html:15
+msgid "+ Create a new page"
+msgstr "+ Créer une nouvelle page"
 
 #: templates/content/info.html:6
 msgid "by"
@@ -132,15 +132,11 @@ msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 #, python-format
 msgid ""
 "\n"
-"            This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
-"\" >here</a> (available soon).\n"
+"            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon).\n"
 "            "
 msgstr ""
 "\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
 
 #: templates/voting/form.html:7
 msgid ""
@@ -152,24 +148,23 @@ msgstr ""
 
 #: templates/voting/form.html:8
 msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful "
-"or unclear (click again to undo)"
+"Vote down: this contribution does't show effort on quality; it is not useful"
+" or unclear (click again to undo)"
 msgstr ""
 "Vote négatif : cette contribution ne montre pas d'efforts sur la qualité ; "
 "elle n'est pas utile ou pas claire (cliquer à nouveau pour enlever)"
 
-#: templatetags/content_utils.py:150
+#: templatetags/content_utils.py:161
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/content_utils.py:157 templatetags/content_utils.py:161
-#: templatetags/content_utils.py:169
+#: templatetags/content_utils.py:165 templatetags/content_utils.py:272
 msgid "and"
 msgstr "et"
 
-#: templatetags/content_utils.py:162
+#: templatetags/content_utils.py:167
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] "avec le tag"
@@ -235,6 +230,9 @@ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
+
+#~ msgid "No options"
+#~ msgstr "Pas de résultat correspondant à la recherche."
 
 #~ msgid "vous suit maintenant sur NewCo!"
 #~ msgstr "vous suit désormais sur NewCo !"

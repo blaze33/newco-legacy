@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 01:48+0200\n"
+"POT-Creation-Date: 2012-10-25 14:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,8 +74,8 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: templates/autocomplete/autocomplete.html:16
-msgid "No options"
+#: templates/autocomplete/autocomplete.html:15
+msgid "+ Create a new page"
 msgstr ""
 
 #: templates/content/info.html:6
@@ -147,18 +147,17 @@ msgid ""
 "or unclear (click again to undo)"
 msgstr ""
 
-#: templatetags/content_utils.py:150
+#: templatetags/content_utils.py:161
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/content_utils.py:157 templatetags/content_utils.py:161
-#: templatetags/content_utils.py:169
+#: templatetags/content_utils.py:165 templatetags/content_utils.py:272
 msgid "and"
 msgstr ""
 
-#: templatetags/content_utils.py:162
+#: templatetags/content_utils.py:167
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
