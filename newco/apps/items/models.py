@@ -138,7 +138,7 @@ class Question(Content):
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=1000, verbose_name=_("content"))
+    content = models.CharField(max_length=10000, verbose_name=_("content"))
 
     class Meta:
         verbose_name = _("answer")
