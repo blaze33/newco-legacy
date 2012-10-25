@@ -4,6 +4,7 @@
 {% load content_utils %}
 {% load bootstrap_tags %}
 
+{% if display == "detail" or display == "list" %}
 <div class="row question"><div class="span7" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
 
   <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
@@ -66,5 +67,19 @@
 {% include "items/_ask_modal.html" %}
 
 {% if display == "list" %}<hr>{% endif %}
+{% endif %}
+
+{% if display == "unanswered_questions" %}
+<span class="content-item-mini">
+    {% with image=content.items.all.0.node.graph.get_image.data %}
+    <a href="{{ content.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 40 %}"src="{{ image.thumbnailLink }}" alt=""></a>
+    {% endwith %}
+    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
+</span>
+{% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
+<br>
+<a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
+<hr>
+{% endif %}
 
 {# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}
