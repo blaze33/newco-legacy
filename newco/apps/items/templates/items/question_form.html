@@ -29,51 +29,74 @@
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
 {% block body %}
-<h1>{% block form_header %}{% trans "Ask a question:" %}{% endblock %}</h1>
+
+<div class="row">
+    <div class="span10">
+        <h1>{% block form_header %}{% trans "Ask a question" %}{% trans ":" %}{% endblock %}</h1>
+    </div>
+    <div class="span2">
+        <button class="btn btn-mini btn-success" data-toggle="collapse" data-target="#tips_div" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Tips" %}</button>
+    </div>
+</div>
+<div class="row collapse out" id="tips_div">
+    <div class="span10 offset2">
+        <div class="well">
+            {% url "item_create" "item" as url %}{% blocktrans %}
+                <h4>Tips:</h4>
+                Here, you can ask a question about one or several products:
+                <ol>
+                    <li>Write down your question.</li>
+                    <li>Select one or several products to bind that question to, using the search bar.</li>
+                    <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
+                </ol>
+            {% endblocktrans %}
+        </div>
+    </div>
+</div>
+<br>
 <br>
 
-{% url "item_create" "item" as url %}
-
-<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#question_form" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus"></i>{% trans "Tips" %}</button>
-<div id="question_form" class="collapse out">
-  {% blocktrans %}
-    Here, you can ask a question about one or several products already <b><a href="{{ url }}" class="black tooltip-top" title="Click here if not" target="_blank">existing</a></b> at NewCo:
-    <ol>
-      <li>Write down your question.</li>
-      <li>Select one or several products to bind that question to, using the search bar.</li>
-      <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
-    </ol>
-  {% endblocktrans %}
-</div>
-</br>
-
-<form action="" method="POST">{% csrf_token %}
+<form class="form-horizontal" action="" method="POST">{% csrf_token %}
   {{ form|as_bootstrap }}
 
   <br>
-
-  <div class="control-group"><div class="controls">
-    {% trans "Can't find the product related to your question?" %} <a class="btn btn-primary" data-toggle="modal" role="button" href="#itemModal"><i rel="add_icon" class="icon-plus icon-white"></i> {% trans "Add it" %}</a>
-
-    <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
-      </div>
-      <div class="modal-body">{{ i_form|as_bootstrap }}</div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</button>
-        <input type="submit" name="add_item" class="btn btn-primary" value="{% trans 'Add product' %}">
-      </div>
-    </div>
-  </div></div>
-
+  <br>
   <br>
 
-  <label class="checkbox">
-    <input type="checkbox" name="cb_answer" data-toggle="collapse" data-target="#answer_form"{% if cb_answer %}checked{% endif %}>
-    {% trans "Answer your own question" %}
-  </label>
+  <div class="control-group" id="div_submit_q"{% if cb_answer %} style="visibility: hidden;" {% endif %}>
+    <div class="controls">
+      <input type="submit" name="add_question" class="btn btn-primary" value="{% if question.is_public %}{% trans "Save and keep public" %}{% elif question.is_draft %}{% trans "Publish your question" %}{% else %}{% trans "Publish your question" %}{% endif %}">
+      <input type="submit" name="save_as_draft" class="btn" value="{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Save as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}">
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+
+  {% if '/add/' in request.path %}{# purpose: make it invisible when editing a question #}
+    <div class="control-group">
+      <div class="controls">
+        <div class="row">
+          <div class="span4">
+            <label class="checkbox">
+              <input type="checkbox" name="cb_answer" data-toggle="collapse" data-target="#answer_form"{% if cb_answer %} checked{% endif %}>
+              {% trans "Answer your own question" %}
+            </label>
+          </div>
+          <div class="span3 pull-right">
+            <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#why_answer_your_q" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Why is it encouraged?" %}</button>
+          </div>
+        </div>
+        <div id="why_answer_your_q" class="collapse out">
+          <div class="well">
+            {% blocktrans %}
+            <h3>We encourage you to answer your own questions.</h3> Why? On NewCo, giving answers to others is central. And sometimes you know things, but you don't find a question relative to it. We encourage you to document that knowledge, create your own Q&A, like a FAQ, so it can benefit others.
+            {% endblocktrans %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
   <div id="answer_form" class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}"><div class="span7">
     {{ formset.management_form }}
     {% for form in formset %}
@@ -81,8 +104,31 @@
     {% endfor %}
   </div></div>
 
-  <input type="submit" name="add_question" class="btn" value="{% trans 'Submit' %}"/>
-  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+  <div class="control-group" id="div_submit_qa"{% if not cb_answer %} style="display: none;" {% endif %}>
+    <div class="controls">
+      <br>
+      <br>
+      <input type="submit" name="add_question" class="btn btn-primary" value="{% trans "Publish your question and answer" %}">
+      <input type="submit" name="save_as_draft" class="btn" value="{% trans "Save as draft your question and answer" %}" {#title="{% trans "Available soon" %}" disabled#}>
+    </div>
+  </div>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+  {# Modal "add a product" #}
+  {% comment %}{% trans "Can't find the product related to your question?" %} <a class="btn btn-primary" data-toggle="modal" role="button" href="#itemModal"><i rel="add_icon" class="icon-plus icon-white"></i> {% trans "Add it" %}</a>{% endcomment %}
+
+  <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+      <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
+    </div>
+    <div class="modal-body">{{ i_form|as_bootstrap }}</div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
+      <input type="submit" name="add_item" class="btn btn-primary" value="{% trans 'Add product' %}">
+    </div>
+  </div>
+
 </form>
 
 {% endblock %}
@@ -90,7 +136,31 @@
 {% block extra_body_base %}
   {{ block.super }}
   {{ formset.media.js }}
-  <script type="text/javascript">{% if show %}$("#itemModal").modal("show"){% endif %}</script>
+  <script type="text/javascript">
+    {% if show %}$("#itemModal").modal("show"){% endif %}
+    $('#answer_form').on('hide', function () {
+      $('#div_submit_q').css('visibility','visible');
+      $('#div_submit_qa').css('display','none');
+    })
+    $('#answer_form').on('show', function () {
+      $('#div_submit_q').css('visibility','hidden');
+      $('#div_submit_qa').css('display','inline');
+    })
+
+    function hide_tags_show_items() {
+      $('#div_id_items').css('opacity','1');
+      $('#div_id_tags').css('opacity','0.5');
+    }
+    function hide_items_show_tags() {
+      $('#div_id_items').css('opacity','0.5');
+      $('#div_id_tags').css('opacity','1');
+    }
+
+    if($("#id_items_or_tags_1").is(":checked")){hide_tags_show_items();}
+    if($("#id_items_or_tags_2").is(":checked")){hide_items_show_tags();}
+    $('#id_items_or_tags_1').click(function () {hide_tags_show_items();})
+    $('#id_items_or_tags_2').click(function () {hide_items_show_tags();})
+  </script>
 {% endblock %}
 
 {% block extra_script %}

@@ -106,7 +106,7 @@
 	    });
 	</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
-    <script type="text/javascript"> // script can't go to '/static' : needs to do the 'if' , and needs to be after homepage.js
+    <script type="text/javascript"> {# // script can't go to '/static' : needs to do the 'if' , and needs to be after homepage.js #}
         $(function(){
           {% if request.GET.welcome %}
               setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);

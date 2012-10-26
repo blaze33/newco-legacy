@@ -33,7 +33,7 @@
     <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
         <div class="input-append">
             <input type="text" autocomplete="off" class="typeahead span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for product, user or tag' %}">
-            <button type="submit" class="btn btn-inverse" style="position: relative; top: -4px; padding: 4px 5px;"><i class="icon-search icon-white"></i></button>
+            <button type="submit" class="btn btn-inverse" style="position: relative; top: -4px; padding: 4px 5px;"><i class="icon-search {#icon-white#}"></i></button>
         </div>
         <input type="hidden" id="obj_class" name="obj_class"/>
         <input type="hidden" id="obj_id" name="obj_id"/>

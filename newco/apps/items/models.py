@@ -16,9 +16,9 @@ from voting.models import Vote
 
 from items.managers import ContentManager
 
-TAG_VERBOSE_NAME = _("Categories/Activities")
-TAG_HELP_TEXT = _("Select/add one or several related categories/activities.")
-
+TAG_VERBOSE_NAME = _("Tags")
+TAG_HELP_TEXT = _("Select/add one or several related categories/activities "
+                  "(e.g. hardware, trekking, sony), using tab or comma key.")
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("name"))
@@ -115,7 +115,7 @@ class Content(models.Model):
 
 
 class Question(Content):
-    content = models.CharField(max_length=200, verbose_name=_("content"))
+    content = models.CharField(max_length=200, verbose_name=_("question"))
 
     class Meta:
         verbose_name = _("question")
