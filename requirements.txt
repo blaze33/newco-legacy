@@ -101,7 +101,7 @@ django-apptemplates==0.0.1
 ## The following requirements were added by pip --freeze:
 BeautifulSoup==3.2.1
 argparse==1.2.1
-distribute==0.6.24
+distribute==0.6.27
 dj-database-url==0.1.2
 django-appconf==0.5
 django-email-confirmation==0.2

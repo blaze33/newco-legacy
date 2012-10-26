@@ -28,7 +28,7 @@ from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import mail_question_author, process_asking_for_help
-from utils.follow.views import ProcessFollowView
+from utils.follow.views import FollowMixin
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
@@ -211,7 +211,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, FormMixin,
-                        ProcessFollowView, ProcessVoteView):
+                        FollowMixin, ProcessVoteView):
 
     messages = {
         "created": {
@@ -356,7 +356,6 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             else:
                 return self.form_invalid(form)
         elif "edit_about" in POST:
-            print POST
             about = POST.get("about", "")
             profile = request.user.get_profile()
             profile.about = about

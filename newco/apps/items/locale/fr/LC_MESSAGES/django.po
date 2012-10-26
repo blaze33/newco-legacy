@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 16:48+0200\n"
-"PO-Revision-Date: 2012-10-23 16:50\n"
+"POT-Creation-Date: 2012-10-25 15:50+0200\n"
+"PO-Revision-Date: 2012-10-25 15:52\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -67,82 +67,88 @@ msgid "Link description"
 msgstr "Description du lien"
 
 #: models.py:19
-msgid "Categories/Activities"
-msgstr "Catégories/Activités"
+msgid "Tags"
+msgstr "Tags"
 
 #: models.py:20
-msgid "Select/add one or several related categories/activities."
-msgstr "Selectionnez/ajoutez une ou plusieurs catégories/activités liées."
+msgid ""
+"Add one or several related categories/activities separated by a tab or "
+"comma.<br>e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone,"
+" etc."
+msgstr ""
+"Ajoutez une ou plusieurs catégories/activités en rapport en les séparant "
+"d'une tabulation ou virgule.<br> ex. : tennis, randonnée, chaussures, "
+"ménage, cuisine, GPS, smartphone."
 
-#: models.py:24
+#: models.py:26
 msgid "name"
 msgstr "nom"
 
-#: models.py:25
+#: models.py:27
 msgid "slug"
 msgstr "slug"
 
-#: models.py:28 models.py:65
+#: models.py:30 models.py:67
 msgid "date published"
 msgstr "date de publication"
 
-#: models.py:30
+#: models.py:32
 msgid "last modified"
 msgstr "dernière modification"
 
-#: models.py:35
+#: models.py:37
 msgid "product"
 msgstr "produit"
 
-#: models.py:58
+#: models.py:60
 msgid "Draft"
 msgstr "Brouillon"
 
-#: models.py:60
+#: models.py:62
 msgid "Public"
 msgstr "Public"
 
-#: models.py:67
+#: models.py:69
 msgid "status"
 msgstr "statut"
 
-#: models.py:68
+#: models.py:70
 msgid "products"
 msgstr "produits"
 
-#: models.py:118 models.py:139 models.py:157 models.py:172 models.py:188
+#: models.py:120 models.py:141 models.py:159 models.py:174 models.py:190
 msgid "content"
 msgstr "contenu"
 
-#: models.py:121
+#: models.py:123
 msgid "question"
 msgstr "question"
 
-#: models.py:142
+#: models.py:144
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:158
+#: models.py:160
 msgid "URL"
 msgstr "URL"
 
-#: models.py:161
+#: models.py:163
 msgid "link"
 msgstr "lien"
 
-#: models.py:176
+#: models.py:178
 msgid "feature"
 msgstr "caractéristique"
 
-#: models.py:187
+#: models.py:189
 msgid "title"
 msgstr "titre"
 
-#: models.py:193
+#: models.py:195
 msgid "story"
 msgstr "article"
 
-#: models.py:194
+#: models.py:196
 msgid "stories"
 msgstr "articles"
 
@@ -211,11 +217,11 @@ msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
 msgid "Warning %(user)s, %(object)s form is invalid."
 msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
 
-#: views.py:308 views.py:433
+#: views.py:308 views.py:431
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:309 views.py:434
+#: views.py:309 views.py:432
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
@@ -358,6 +364,8 @@ msgid "Add a product"
 msgstr "Ajouter un produit"
 
 #: templates/items/item_form.html:22 templates/items/item_list_base.html:86
+#: templates/items/item_list_base_1.html:108
+#: templates/items/item_list_image_2.html:28
 #: templates/items/question_detail.html:32
 #: templates/items/question_form.html:61
 #: templates/items/question_form_2.html:23
@@ -433,32 +441,49 @@ msgstr "Mettre à jour"
 
 #: templates/items/item_list_base.html:16
 #: templates/items/item_list_base.html:27
+#: templates/items/item_list_base_1.html:16
+#: templates/items/item_list_base_1.html:27
+#: templates/items/item_list_base_1.html:48
+#: templates/items/item_list_base_2.html:16
+#: templates/items/item_list_base_2.html:27
 msgid "Products"
 msgstr "Produits"
 
 #: templates/items/item_list_base.html:16
+#: templates/items/item_list_base_1.html:16
+#: templates/items/item_list_base_2.html:16
 msgid "Tag"
 msgstr "Tag"
 
 #: templates/items/item_list_base.html:23
+#: templates/items/item_list_base_1.html:23
+#: templates/items/item_list_base_2.html:23
 #, python-format
 msgid "Click to remove tag %(tag)s from your skill list"
 msgstr "Cliquez pour enlever le tag %(tag)s de votre liste de compétences"
 
 #: templates/items/item_list_base.html:23
+#: templates/items/item_list_base_1.html:23
+#: templates/items/item_list_base_2.html:23
 msgid "In my skills"
 msgstr "Dans mes compétences"
 
 #: templates/items/item_list_base.html:25
+#: templates/items/item_list_base_1.html:25
+#: templates/items/item_list_base_2.html:25
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
 msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
 
 #: templates/items/item_list_base.html:25
+#: templates/items/item_list_base_1.html:25
+#: templates/items/item_list_base_2.html:25
 msgid "Add to skills"
 msgstr "Ajouter aux compétences"
 
 #: templates/items/item_list_base.html:55
+#: templates/items/item_list_base_1.html:77
+#: templates/items/item_list_base_2.html:82
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label nc-"
@@ -470,6 +495,8 @@ msgstr ""
 " <i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:58
+#: templates/items/item_list_base_1.html:80
+#: templates/items/item_list_base_2.html:85
 #, python-format
 msgid ""
 "No products with tag <a href=\"%(tag_url)s\" class=\"label nc-"
@@ -479,6 +506,8 @@ msgstr ""
 "class=\"label nc-tag\">%(tagname)s</a>."
 
 #: templates/items/item_list_base.html:60
+#: templates/items/item_list_base_1.html:82
+#: templates/items/item_list_base_2.html:87
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
@@ -486,10 +515,14 @@ msgstr ""
 "<i>\"%(search_terms)s\"</i>."
 
 #: templates/items/item_list_base.html:62
+#: templates/items/item_list_base_1.html:84
+#: templates/items/item_list_base_2.html:89
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
 #: templates/items/item_list_base.html:67
+#: templates/items/item_list_base_1.html:89
+#: templates/items/item_list_base_2.html:94
 #, python-format
 msgid ""
 "Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">create a "
@@ -499,6 +532,8 @@ msgstr ""
 "\">créer un produit</a> vous-même ?"
 
 #: templates/items/item_list_base.html:69
+#: templates/items/item_list_base_1.html:91
+#: templates/items/item_list_base_2.html:96
 msgid ""
 "By creating a product product page, you lay the first brick to gather "
 "information about this product: other members will see this page, add things"
@@ -510,16 +545,64 @@ msgstr ""
 "vos questions si vous en posez."
 
 #: templates/items/item_list_base.html:77
+#: templates/items/item_list_base_1.html:99
+#: templates/items/item_list_image_2.html:20
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
 #: templates/items/item_list_base.html:78
+#: templates/items/item_list_base_1.html:100
+#: templates/items/item_list_image_2.html:21
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
 #: templates/items/item_list_base.html:79
+#: templates/items/item_list_base_1.html:101
+#: templates/items/item_list_image_2.html:22
 msgid "Most popular"
 msgstr "Plus populaire"
+
+#: templates/items/item_list_base_1.html:49
+msgid "Questions on tag"
+msgstr "Questions sur le tag"
+
+#: templates/items/item_list_base_1.html:50
+msgid "Questions on products with tag"
+msgstr "Questions sur les produits avec le tag"
+
+#: templates/items/item_list_base_1.html:51
+#: templates/items/item_list_base_2.html:52
+msgid "Answer questions"
+msgstr "Répondre à des questions"
+
+#: templates/items/item_list_base_2.html:48
+msgid "Home - "
+msgstr "Accueil -"
+
+#: templates/items/item_list_base_2.html:49
+msgid "All products"
+msgstr "Tous les produits"
+
+#: templates/items/item_list_base_2.html:50
+msgid "Questions on"
+msgstr "Questions sur"
+
+#: templates/items/item_list_base_2.html:51
+msgid "Questions on products in"
+msgstr "Question sur le produit dans"
+
+#: templates/items/item_list_image_1.html:15
+msgid "Questions most recommended on this tag:"
+msgstr "Questions les plus recommandées sur ce tag :"
+
+#: templates/items/item_list_image_1.html:19
+msgid "Questions most recommended on products with this tag:"
+msgstr "Questions les plus recommandées sur les produits avec ce tag :"
+
+#: templates/items/item_list_image_1.html:23
+#: templates/items/item_list_image_2.html:59
+msgid "Lastest unanswered questions:"
+msgstr "Dernières questions sans réponses"
 
 #: templates/items/link_form.html:6
 msgid "Link"
@@ -717,9 +800,6 @@ msgstr "Demandez à quelqu'un de répondre"
 #~ msgstr ""
 #~ "Selectionnez/ajoutez une ou plusieurs catégories à lier à votre question"
 
-#~ msgid "Questions"
-#~ msgstr "Questions"
-
 #~ msgid "Links"
 #~ msgstr "Liens"
 
@@ -865,9 +945,6 @@ msgstr "Demandez à quelqu'un de répondre"
 
 #~ msgid "Sandbox"
 #~ msgstr "Bac à sable"
-
-#~ msgid "List of items with tag"
-#~ msgstr "Liste des items avec le tag"
 
 #~ msgid "List of items in database:"
 #~ msgstr "Liste des items en base :"

@@ -1,3 +1,5 @@
+import string
+
 from django.template.base import Node, Library, Variable
 from django.template.base import TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import render_to_string
@@ -10,6 +12,7 @@ from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
 
 from items.models import Item, Content
+from utils.tools import get_node_extra_arguments, resolve_template_args
 
 register = Library()
 
@@ -84,18 +87,18 @@ class ObjectDisplayNode(Node):
                 return ""
             display = self.display.resolve(context)
             color = self.color.resolve(context) if self.color else None
+            ctx = {"object": obj, "display": display, "color": color}
             if obj.__class__ is Item:
                 template = "items/_product_display.html"
-                ctx = {"tag_qs": obj.tags.all()}
             elif obj.__class__ is User:
                 template = "profiles/_profile_display.html"
-                tag_qs = obj.get_profile().skills.all()
-                ctx = {"tag_qs": tag_qs, "username": user_display(obj)}
+                skills = obj.get_profile().skills
+                ctx.update({"username": user_display(obj)})
+                if skills.count():
+                    ctx.update({"skills": skills})
             else:
                 raise TemplateSyntaxError("'object_display' only renders Item "
                                           "and User instances")
-
-            ctx.update({"object": obj, "display": display, "color": color})
             return render_to_string(template, ctx, context_instance=context)
 
 
@@ -142,34 +145,30 @@ class SourceDisplayNode(Node):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        ctx = {"display": display, "color": color}
-        item_tpl = "items/_product_display.html"
-        tag_tpl = "tags/_tag_display.html"
-        nb_items, nb_tags = [obj.items.count(), obj.tags.count()]
+        nb = [obj.items.count(), obj.tags.count()]
+        prods_kwargs = {
+            "obj_qs": obj.items.all(), "obj_tpl_name": "object", "sep": "text",
+            "obj_tpl": "items/_product_display.html",
+            "obj_tpl_ctx": {"display": display, "color": color},
+        }
+        tags_kwargs = {
+            "obj_qs": obj.tags.all(), "obj_tpl_name": "tag",
+            "obj_tpl": "tags/_tag_display.html", "sep": "text"
+        }
 
-        sentence = ungettext("about the product", "about the products",
-                             nb_items) if nb_items > 0 else ""
-        for index, item in enumerate(obj.items.all()):
-            ctx.update({"object": item, "tag_qs": item.tags.all()})
-            s = render_to_string(item_tpl, ctx, context_instance=context)
-            sep = ""
-            if index:
-                sep = "," if index + 1 != nb_items else " " + _("and")
-            sentence = sentence + sep + " " + s
+        words = list()
+        if nb[0]:
+            s = ungettext("about the product", "about the products", nb[0])\
+                + " " + generate_objs_sentence(context, **prods_kwargs)
+            words.append(s)
+        if all(n for n in nb):
+            words.append(" " + _("and") + " ")
+        if nb[1]:
+            s = ungettext("with the tag", "with the tags", nb[1])\
+                + " " + generate_objs_sentence(context, **tags_kwargs)
+            words.append(s)
 
-        if nb_tags and nb_items:
-            sentence = sentence + " " + _("and") + " "
-        sentence = sentence + ungettext("with the tag", "with the tags",
-                                        nb_tags) if nb_tags > 0 else sentence
-        for index, tag in enumerate(obj.tags.all()):
-            ctx = {"tag": tag}
-            s = render_to_string(tag_tpl, ctx, context_instance=context)
-            sep = ""
-            if index:
-                sep = "," if index + 1 != nb_tags else " " + _("and")
-            sentence = sentence + sep + " " + s
-
-        return sentence
+        return string.join(words, "")
 
 
 @register.tag
@@ -197,9 +196,11 @@ def source_display(parser, token):
 
 
 class TagsDisplayNode(Node):
-    def __init__(self, tags, nb_tags=None):
+    def __init__(self, tags, args, kwargs, asvar):
         self.tags = Variable(tags)
-        self.nb_tags = Variable(nb_tags) if nb_tags else None
+        self.args = args
+        self.kwargs = kwargs
+        self.asvar = asvar
 
     def render(self, context):
         try:
@@ -209,37 +210,76 @@ class TagsDisplayNode(Node):
         except VariableDoesNotExist:
             return ""
 
-        nb_tags = int(self.nb_tags.var) if self.nb_tags else tags.count()
-        tag_tpl, tag_list, sep = ["tags/_tag_display.html", "", " "]
-        for index, tag in enumerate(tags.all()):
-            ctx = {"tag": tag}
-            s = render_to_string(tag_tpl, ctx, context_instance=context)
-            tag_list = tag_list + sep + s if index else s
-            if index + 1 == nb_tags:
-                break
-        return tag_list
+        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
+
+        f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
+                    "obj_tpl_name": "tag"}
+        fields = ["max_nb", "quote_type", "sep", "extra_class"]
+        for index, field in enumerate(fields):
+            value = kwargs.get(field, None)
+            value = args[index] if not value and len(args) > index else value
+            if field != "extra_class" and value:
+                f_kwargs.update({field: value})
+            elif value:
+                f_kwargs.update({"obj_tpl_ctx": {field: value}})
+
+        return generate_objs_sentence(context, **f_kwargs)
 
 
 @register.tag
 def tags_display(parser, token):
     """
     Renders the tags contained in a TaggableManager using tag_display template.
-    Can add a max number of tags displayed condition
+    Can add a max number of tags displayed condition, a quote type (single or
+    double), an extra class parameter for the tag template, a separator
+    displayed between tags
 
     Usage::
 
         {% tags_display tags %}
-        {% tags_display tags nb_tags %}
+        {% tags_display tags max_nb=None quote_type="double" sep=" "
+            extra_class="" %}
 
     """
     bits = token.split_contents()
     if len(bits) < 2:
         raise TemplateSyntaxError("'%s' takes at least 1 arguments." % bits[0])
-    elif len(bits) > 3:
-        raise TemplateSyntaxError("'%s' takes at most 2 arguments." % bits[0])
+    elif len(bits) > 6:
+        raise TemplateSyntaxError("'%s' takes at most 5 arguments." % bits[0])
+    tag_name = bits[0]
     tags = bits[1]
-    nb_tags = bits[2] if len(bits) == 3 else None
-    return TagsDisplayNode(tags, nb_tags)
+    bits = bits[2:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 4)
+
+    return TagsDisplayNode(tags, args, kwargs, asvar)
+
+
+def generate_objs_sentence(context, obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
+                           quote_type="double", sep=" ", obj_tpl_ctx={}):
+
+    qs_length = obj_qs.count()
+    if not qs_length:
+        return ""
+    max_nb = qs_length if not max_nb else max_nb
+
+    if sep == "text":
+        sep_list = [", "] * qs_length
+        sep_list[-1] = " " + _("and") + " "
+    else:
+        sep_list = [sep] * qs_length
+
+    sentence = ""
+    for index, obj in enumerate(obj_qs):
+        obj_tpl_ctx.update({obj_tpl_name: obj})
+        s = render_to_string(obj_tpl, obj_tpl_ctx, context_instance=context)
+        sentence = sentence + sep_list[index] + s if index else s
+        if index + 1 == max_nb:
+            break
+
+    if quote_type == "single":
+        sentence = sentence.replace("\"", "\'")
+    return sentence
 
 
 class ContentInfoNode(Node):

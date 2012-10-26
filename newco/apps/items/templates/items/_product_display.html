@@ -2,11 +2,11 @@
 
 {% load url from future %}
 {% load i18n %}
-{% load account_tags %}
+{% load content_utils %}
 {% load follow_utils %}
 
 {% if display == "text" %}
-  <span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form user object %}</td></tr></table>" data-content="{% for tag in tag_qs %}<a class='label nc-tag' href='{% url 'tagged_items' tag.slug %}'>{{ tag.name }}</a>{% if not forloop.last %}&nbsp; {% endif %}{% endfor %}" itemscope itemtype="http://schema.org/Product">
+  <span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='64' height='64' alt='{{ object }}'></td><td align='right'>{% follow_form user object %}</td></tr></table>" data-content="{% tags_display object.tags quote_type='single' sep='&nbsp; ' %}" itemscope itemtype="http://schema.org/Product">
     <a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a>
   </span>
 {% elif display == "thumbnail" or display == "mini_feed" %}
