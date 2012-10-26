@@ -1,6 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import MultipleObjectMixin
 
@@ -16,30 +15,7 @@ from profiles.models import Profile
 from utils.follow.views import FollowMixin
 
 
-class ProcessProfileSearchView(object):
-
-    def post(self, request, *args, **kwargs):
-        if "pf_pick" in request.POST:
-            name = request.POST["pf_pick"]
-            profile_list = Profile.objects.filter(name=name)
-            if profile_list.count() == 1:
-                response = profile_list[0].get_absolute_url()
-            else:
-                response = reverse("profile_list") + "?search=" + name
-            return HttpResponseRedirect(response)
-        else:
-            return super(ProcessProfileSearchView, self).post(request,
-                                                              *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({
-            "data_source_profile": Profile.objects.get_all_names()
-        })
-        return super(ProcessProfileSearchView, self).get_context_data(**kwargs)
-
-
-class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
-                        MultipleObjectMixin, FollowMixin):
+class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
 
     paginate_by = 10
 
@@ -92,7 +68,7 @@ class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
         return context
 
 
-class ProfileListView(ProcessProfileSearchView, ProfileListView):
+class ProfileListView(ProfileListView):
 
     paginate_by = 15
 
