@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 14:37+0200\n"
-"PO-Revision-Date: 2012-10-25 14:38\n"
+"POT-Creation-Date: 2012-10-26 13:19+0200\n"
+"PO-Revision-Date: 2012-10-26 13:21\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,18 +68,6 @@ msgstr "%(user)s, vous ne suivez plus %(object)s."
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
 msgstr "%(user)s, vous ne pouvez pas vous suivre !"
-
-#: templates/autocomplete/autocomplete.html:7
-msgid "Items"
-msgstr "Produits"
-
-#: templates/autocomplete/autocomplete.html:11
-msgid "Tags"
-msgstr "Tags"
-
-#: templates/autocomplete/autocomplete.html:15
-msgid "+ Create a new page"
-msgstr "+ Créer une nouvelle page"
 
 #: templates/content/info.html:6
 msgid "by"
@@ -160,7 +148,7 @@ msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/content_utils.py:165 templatetags/content_utils.py:272
+#: templatetags/content_utils.py:165 templatetags/content_utils.py:268
 msgid "and"
 msgstr "et"
 
@@ -203,11 +191,17 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/follow_utils.py:51
-msgid "Unfollow"
+#: templatetags/follow_utils.py:42
+msgctxt "Follow button"
+msgid "Following"
 msgstr "Abonné"
 
-#: templatetags/follow_utils.py:54
+#: templatetags/follow_utils.py:44
+msgid "Click to unfollow"
+msgstr "Cliquez pour vous désabonner"
+
+#: templatetags/follow_utils.py:50
+msgctxt "Follow button"
 msgid "Follow"
 msgstr "Suivre"
 
@@ -230,6 +224,18 @@ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
+
+#~ msgid "Items"
+#~ msgstr "Produits"
+
+#~ msgid "Tags"
+#~ msgstr "Tags"
+
+#~ msgid "+ Create a new page"
+#~ msgstr "+ Créer une nouvelle page"
+
+#~ msgid "Unfollow"
+#~ msgstr "Abonné"
 
 #~ msgid "No options"
 #~ msgstr "Pas de résultat correspondant à la recherche."

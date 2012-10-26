@@ -27,7 +27,6 @@ class SignupView(SignupView):
         while True:
             try:
                 username = random_username()
-                print username
                 User.objects.get(username=username)
             except User.DoesNotExist:
                 break

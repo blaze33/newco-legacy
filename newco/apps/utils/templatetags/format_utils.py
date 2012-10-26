@@ -4,7 +4,7 @@ from django.utils.encoding import smart_str
 from babel.numbers import format_currency
 
 from affiliation.models import AffiliationItemBase
-from utils.tools import get_node_extra_arguments
+from utils.tools import get_node_extra_arguments, resolve_template_args
 
 register = Library()
 
@@ -18,9 +18,7 @@ class PriceNode(Node):
 
     def render(self, context):
         value = self.value.resolve(context)
-        args = [arg.resolve(context) for arg in self.args]
-        kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
-                       for k, v in self.kwargs.items()])
+        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
 
         currency = kwargs.get("currency", "")
         language_code = kwargs.get("language_code", "")

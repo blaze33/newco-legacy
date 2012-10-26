@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 14:37+0200\n"
+"POT-Creation-Date: 2012-10-26 13:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,18 +64,6 @@ msgstr ""
 #: follow/tools.py:27
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
-msgstr ""
-
-#: templates/autocomplete/autocomplete.html:7
-msgid "Items"
-msgstr ""
-
-#: templates/autocomplete/autocomplete.html:11
-msgid "Tags"
-msgstr ""
-
-#: templates/autocomplete/autocomplete.html:15
-msgid "+ Create a new page"
 msgstr ""
 
 #: templates/content/info.html:6
@@ -153,7 +141,7 @@ msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/content_utils.py:165 templatetags/content_utils.py:272
+#: templatetags/content_utils.py:165 templatetags/content_utils.py:268
 msgid "and"
 msgstr ""
 
@@ -196,11 +184,17 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/follow_utils.py:51
-msgid "Unfollow"
+#: templatetags/follow_utils.py:42
+msgctxt "Follow button"
+msgid "Following"
 msgstr ""
 
-#: templatetags/follow_utils.py:54
+#: templatetags/follow_utils.py:44
+msgid "Click to unfollow"
+msgstr ""
+
+#: templatetags/follow_utils.py:50
+msgctxt "Follow button"
 msgid "Follow"
 msgstr ""
 

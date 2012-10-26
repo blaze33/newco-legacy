@@ -37,19 +37,19 @@ def process_following(request, obj, success_url):
         if follow.target._meta.object_name == "User":
             if is_following:
                 mail_followee(follow.target, request.user,
-                                                request.META.get('HTTP_HOST'))
+                              request.META.get('HTTP_HOST'))
             object_unicode = user_display(follow.target)
         else:
             object_unicode = unicode(follow.target)
 
         msg = "follow" if is_following else "unfollow"
-        messages.add_message(request,
-            msgs[msg]["level"],
+        messages.add_message(
+            request, msgs[msg]["level"],
             msgs[msg]["text"] % {"user": username, "object": object_unicode}
         )
     else:
-        messages.add_message(request,
-            msgs["warning"]["level"],
+        messages.add_message(
+            request, msgs["warning"]["level"],
             msgs["warning"]["text"] % {"user": username}
         )
 
@@ -61,12 +61,13 @@ def mail_followee(fwee, fwer, site):
     fwer_name = user_display(fwer)
 
     msg_subject = "%s, %s vous suit maintenant sur NewCo !" % \
-                            (fwee_name, fwer_name)
+                  (fwee_name, fwer_name)
 
     txt_template = get_template("mail/_follow_notification_email.txt")
     html_template = get_template("mail/_follow_notification_email.html")
 
-    context = Context({"followee": fwee_name, "follower": fwer_name,
+    context = Context({
+        "followee": fwee_name, "follower": fwer_name,
         "followee_url": "http://%s%s" % (site, fwee.get_absolute_url()),
         "follower_url": "http://%s%s" % (site, fwer.get_absolute_url()),
         "message_subject": msg_subject

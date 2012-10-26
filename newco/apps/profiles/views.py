@@ -13,7 +13,7 @@ from voting.models import Vote
 
 from items.models import Item, Content
 from profiles.models import Profile
-from utils.follow.views import ProcessFollowView
+from utils.follow.views import FollowMixin
 
 
 class ProcessProfileSearchView(object):
@@ -39,7 +39,7 @@ class ProcessProfileSearchView(object):
 
 
 class ProfileDetailView(ProcessProfileSearchView, ProfileDetailView,
-                        MultipleObjectMixin, ProcessFollowView):
+                        MultipleObjectMixin, FollowMixin):
 
     paginate_by = 10
 

@@ -12,7 +12,7 @@ from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
 
 from items.models import Item, Content
-from utils.tools import get_node_extra_arguments
+from utils.tools import get_node_extra_arguments, resolve_template_args
 
 register = Library()
 
@@ -210,22 +210,18 @@ class TagsDisplayNode(Node):
         except VariableDoesNotExist:
             return ""
 
-        args = [arg.resolve(context) for arg in self.args]
-        kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
-                       for k, v in self.kwargs.items()])
+        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
 
         f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
                     "obj_tpl_name": "tag"}
         fields = ["max_nb", "quote_type", "sep", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
-            if not value and len(args) > index:
-                value = args[index]
-            if value:
-                if field != "extra_class":
-                    f_kwargs.update({field: value})
-                else:
-                    f_kwargs.update({"obj_tpl_ctx": {field: value}})
+            value = args[index] if not value and len(args) > index else value
+            if field != "extra_class" and value:
+                f_kwargs.update({field: value})
+            elif value:
+                f_kwargs.update({"obj_tpl_ctx": {field: value}})
 
         return generate_objs_sentence(context, **f_kwargs)
 

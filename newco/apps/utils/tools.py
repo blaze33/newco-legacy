@@ -6,6 +6,7 @@ from django.db.models import Q, Sum
 from django.db.models.loading import get_model
 from django.template.base import TemplateSyntaxError, kwarg_re
 from django.utils.datastructures import SortedDict
+from django.utils.encoding import smart_str
 
 from generic_aggregation import generic_annotate
 from voting.models import Vote
@@ -159,3 +160,10 @@ def get_node_extra_arguments(parser, bits, tag_name, max_args):
             raise TemplateSyntaxError(err_msg)
 
     return [args, kwargs, asvar]
+
+
+def resolve_template_args(context, in_args, in_kwargs):
+    args = [arg.resolve(context) for arg in in_args]
+    kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
+                   for k, v in in_kwargs.items()])
+    return [args, kwargs]

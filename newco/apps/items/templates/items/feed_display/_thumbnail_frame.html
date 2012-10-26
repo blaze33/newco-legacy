@@ -10,7 +10,8 @@
   {% endif %}
   <div class="details" style="font-size:12px;">
     {% object_display object "thumbnail" "black" %}
+    <br>
+    {% tags_display object.tags 3 %}
+    {% if disp_follow %}<div class="right">{% follow_form user object extra_class="btn-mini" %}</div>{% endif %}
   </div>
-  {% tags_display object.tags 3 %}
-  {% if disp_follow %}<br><center>{% follow_form user object %}</center>{% endif %}
 </div>
