@@ -14,7 +14,7 @@ from model_utils.managers import QueryManager
 from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
 
-from items.managers import ContentManager
+from items.managers import ContentManager, ItemManager
 
 TAG_VERBOSE_NAME = _("Tags")
 TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
@@ -33,8 +33,15 @@ class Item(models.Model):
     tags = TaggableManager(verbose_name=TAG_VERBOSE_NAME,
                            help_text=TAG_HELP_TEXT)
 
+    objects = ItemManager()
+
     class Meta:
         verbose_name = _("product")
+
+    def __init__(self, *args, **kwargs):
+        super(Item, self).__init__(*args, **kwargs)
+        self._image = None
+        self._node = None
 
     def __unicode__(self):
         return u"%s" % (self.name)
@@ -50,8 +57,26 @@ class Item(models.Model):
                                       "pk": self.id,
                                       "slug": self.slug})
 
-    def node(self):
-        return sync_products(Item, self)
+    def get_image(self):
+        return self._image if self._image \
+            else getattr(self.node.graph.get_image(), "data", None)
+
+    def set_image(self, value):
+        self._image = value
+
+    def del_image(self):
+        del self._image
+    image = property(get_image, set_image, del_image, "Image property")
+
+    def get_node(self):
+        return self._node if self._node else sync_products(Item, self)
+
+    def set_node(self, value):
+        self._node = value
+
+    def del_node(self):
+        del self._node
+    node = property(get_node, set_node, del_node, "Node property")
 register(Item)
 
 

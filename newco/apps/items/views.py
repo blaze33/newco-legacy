@@ -274,7 +274,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
                     "cheapest_prod": cheapest_prod
                 })
 
-            albums = self.object.node().graph.image_set
+            albums = self.object.node.graph.image_set
             if albums:
                 # This is a way to order by values of an hstore key
                 images = albums[0].successors.extra(

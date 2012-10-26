@@ -27,12 +27,12 @@
   </div>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
   <div class="span6" align="center">{% if object_list %}
     <div id="carousel_tag" class="carousel slide">
-      <div class="carousel-inner">{% for item in object_list %}{% with image=item.node.graph.get_image.data %}
+      <div class="carousel-inner">{% for item in object_list %}
         <div class="{% if forloop.first %}active {% endif %}item">
-          <a href="{{ item.get_absolute_url }}"><img src="{{ image.link }}" alt=""></a>
+          <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.data.link }}" alt=""></a>
           <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
         </div>
-      {% endwith %}{% endfor %}</div>
+      {% endfor %}</div>
       <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
       <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
     </div>
@@ -51,15 +51,15 @@
     {% else %}
       <h3>
         {% if tag and search_terms %}
-            {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+          {% url 'tagged_items' tag.slug as tag_url %}
+          {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% elif tag and not search_terms %}
-            {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
+          {% url 'tagged_items' tag.slug as tag_url %}
+          {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
         {% elif not tag and search_terms %}
-            {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+          {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
         {% else %}
-            {% blocktrans %}No products are available.{% endblocktrans %}
+          {% blocktrans %}No products are available.{% endblocktrans %}
         {% endif %}
         <br><br>
         {% url "item_create" "item" as add_item_url %}
@@ -83,8 +83,8 @@
 
     {% for title, content_list in related_questions.iteritems %}
       {% if content_list %}<div class="row well well-small">
-          <h4>{{ title }}{% trans ":" %}</h4>
-          <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
+        <h4>{{ title }}{% trans ":" %}</h4>
+        <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
       </div>{% endif %}
     {% endfor %}
   {% endif %}</div>
