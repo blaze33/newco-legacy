@@ -17,6 +17,7 @@
 
 {% block body %}
 
+{% block carousel %}
 <div class="row">
   <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div class="pull-right">
     {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
@@ -40,7 +41,9 @@
 
   <div class="span2"><a class="btn" href="{% url 'item_create' 'item' %}"><i class="icon-plus-sign"></i> {% trans "Add a product" %}</a></div>
 </div>
+{% endblock %}
 
+{% block content %}
 <div class="row">
   <div class="offset2 span7">
 
@@ -89,6 +92,8 @@
     {% endfor %}
   {% endif %}</div>
 </div>
+{% endblock %}
+
 {% endblock %}
 
 {% block extra_body_base %}

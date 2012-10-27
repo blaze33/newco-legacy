@@ -1,43 +1,10 @@
-{% extends "site_base.html" %}
+{% extends "items/item_list_base.html" %}
 
 {% load url from future %}
 {% load i18n %}
-{% load account_tags %}
-{% load content_utils %}
 {% load pagination_tags %}
 
-{% block extra_style %}
-    {{ block.super }}
-    {{ media.css }}
-{% endblock %}
-
-{% block body_class %}index{% endblock %}
-
-{% block head_title %}{% trans "Products" %}{% if tag %} | {% trans "Tag" %} {{ tag }}{% endif %}{% endblock %}
-
-{% block body %}
-
-<div class="row">
-  <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div {#class="pull-right"#}>
-    {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
-    {% else %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
-    {% endif %}</form>{% endif %}
-  </div>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
-  <div class="span6" align="center">{% if object_list %}
-    <div id="carousel_tag" class="carousel slide">
-      <div class="carousel-inner">{% for item in object_list %}{% with image=item.node.graph.get_image.data %}
-        <div class="{% if forloop.first %}active {% endif %}item">
-          <a href="{{ item.get_absolute_url }}"><img src="{{ image.link }}" alt=""></a>
-          <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
-        </div>
-      {% endwith %}{% endfor %}</div>
-      <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
-      <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
-    </div>
-  {% else %}&nbsp;{% endif %}</div>
-</div>
+{% block content %}
 
 <div class="row">
   <div class="offset1 span11">
@@ -98,49 +65,4 @@
     {% endif %}
   </div>
 </div>
-{% endblock %}
-
-{% block extra_body_base %}
-    {{ block.super }}
-    {{ media.js }}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#carousel_tag').carousel({ interval: 4000 });
-        });
-    </script>
-
-    <script type="text/javascript">
-        function masonry_list1(){
-          $('#thumbnails_list').masonry({
-            itemSelector : '.masonry-item',
-            isAnimated: true,
-            isFitWidth: true,
-          });
-        }
-
-        function masonry_list2(){
-          $('#thumbnails_list2').masonry({
-            itemSelector : '.masonry-item2',
-            isAnimated: true,
-            isFitWidth: true,
-          });
-        }
-
-        function TriggerMasonry(){
-          //masonry_list1();
-          //masonry_list2();
-          setTimeout(masonry_list1,500);
-          setTimeout(masonry_list2,500);
-          setTimeout(masonry_list1,3000);
-          setTimeout(masonry_list2,3000);
-        }
-
-        $(document).ready(function() {
-          TriggerMasonry();
-        });
-        $(".tabbable").click(function() {
-          TriggerMasonry();
-        });
-    </script>
 {% endblock %}

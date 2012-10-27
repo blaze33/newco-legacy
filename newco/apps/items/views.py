@@ -392,7 +392,7 @@ class SearchMixin(object):
         return HttpResponseRedirect(response)
 
 
-class ContentListView(ContentView, SearchMixin, ListView):
+class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
 
     model = Item
     template_name = "items/item_list_image.html"
