@@ -59,7 +59,7 @@ class Item(models.Model):
 
     def get_image(self):
         return self._image if self._image \
-            else getattr(self.node.graph.get_image(), "data", None)
+            else self.node.graph.get_image()
 
     def set_image(self, value):
         self._image = value
