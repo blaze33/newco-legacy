@@ -42,10 +42,9 @@ class ItemForm(ModelForm):
 
     def __init__(self, request, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
-        self.request = request
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
         self.reload_current_search()
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
@@ -108,13 +107,11 @@ class QuestionForm(ModelForm):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.request = request
-        self.object = kwargs.get("instance", None)
-        if not self.object:
-            self.create = True
-        else:
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
+        if self.object:
             self.fields.get("parents").initial = self.PARENTS.products \
-                if kwargs.get("instance").items.count() else self.PARENTS.tags
+                if self.object.items.count() else self.PARENTS.tags
         self.fields.get("items").help_text = PRODUCT_HELP_TEXT
 
     def save(self, commit=True, **kwargs):
@@ -181,11 +178,10 @@ class AnswerForm(ModelForm):
         self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
         question_id = request.POST.get("question_id", 0)
         self.question = Question.objects.get(id=question_id) if question_id \
             else getattr(self.object, "question", None)
-        if not self.object:
-            self.create = True
 
         if self.request.user.is_authenticated():
             profile = self.request.user.get_profile()
