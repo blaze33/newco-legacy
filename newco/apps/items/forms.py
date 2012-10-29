@@ -1,12 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea
+from django.forms.widgets import Textarea, RadioSelect
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
 from account.utils import user_display
-from chosen.forms import ChosenSelect, ChosenSelectMultiple
+from chosen.forms import ChosenSelectMultiple
+from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagField
 from taggit_autosuggest.widgets import TagAutoSuggest
@@ -14,6 +16,15 @@ from taggit_autosuggest.widgets import TagAutoSuggest
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
+
+PRODUCT_HELP_TEXT = _(
+    "Select one or up to 5 products using Enter and the Arrow keys.<br>"
+    "<small>You may consider a tag for a group of products.</small><br><br>"
+    "<small>Can't find a product related to your question?</small>"
+    " <a class='btn btn-primary btn-mini' data-toggle='modal' role='button' "
+    "href='#itemModal'><i rel='add_icon' class='icon-plus icon-white' "
+    "style='margin-right: 3px; position: relative; top: -2px;'></i> Add it</a>"
+)
 
 
 class ItemForm(ModelForm):
@@ -66,6 +77,11 @@ class ItemForm(ModelForm):
 
 class QuestionForm(ModelForm):
 
+    PARENTS = Choices(
+        (0, "products", _("Products")),
+        (1, "tags", _("Tags"))
+    )
+
     create = False
     no_results = _("No results matched")
     tag_field = Content._meta.get_field_by_name('tags')[0]
@@ -73,16 +89,17 @@ class QuestionForm(ModelForm):
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
                     widget=TagAutoSuggest(attrs={"class": "span4"}))
+    parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
+                          label=_("My question refers to:"))
 
     class Meta:
         model = Question
-        fields = ("content", "status", "items", "tags")
+        fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
@@ -93,25 +110,37 @@ class QuestionForm(ModelForm):
         if "request" in kwargs:
             self.request = kwargs.pop("request")
             self.user = self.request.user
+        default_status = Content._meta.get_field("status").default
+        self.status = kwargs.pop("status", default_status)
+        super(QuestionForm, self).__init__(*args, **kwargs)
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-        super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields.get("items").help_text = _(
-            "Select one or several products using Enter and the Arrow keys.")
+        else:
+            self.object = kwargs["instance"]
+            self.fields.get("parents").initial = self.PARENTS.products \
+                if self.object.items.count() else self.PARENTS.tags
+        self.fields.get("items").help_text = PRODUCT_HELP_TEXT
 
     def save(self, commit=True, **kwargs):
+        question = super(QuestionForm, self).save(commit=False)
         if self.create:
-            question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
-            if commit:
-                question.save()
-                self.save_m2m()
-            return question
-        else:
-            return super(QuestionForm, self).save(commit)
+        question.status = self.status
+
+        if commit:
+            question.save()
+            self.save_m2m()
+        return question
 
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
+        parents = cleaned_data.get("parents")
+        parents = int(parents) if parents else parents
+
+        if parents == self.PARENTS.tags:
+            cleaned_data["items"] = []
+        elif parents == self.PARENTS.products:
+            cleaned_data["tags"] = []
         tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
 
         if not tags and not items or tags and items:
@@ -132,7 +161,6 @@ class QuestionForm(ModelForm):
                 items_msg = _("Pick less than 10 items")
                 self._errors["items"] = self.error_class([items_msg])
                 del cleaned_data["items"]
-
         return cleaned_data
 
 
@@ -142,7 +170,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ("content", "status", )
+        fields = ("content", )
         widgets = {
             "content": BW_small_Widget(attrs={
                 "rows": 10,
@@ -164,6 +192,8 @@ class AnswerForm(ModelForm):
         else:
             self.object = kwargs["instance"]
             self.question = self.object.question
+        default_status = Content._meta.get_field("status").default
+        self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
         if self.user.is_authenticated():
             profile = self.user.get_profile()
@@ -174,30 +204,35 @@ class AnswerForm(ModelForm):
         self.fields["content"].label = label
 
     def save(self, commit=True, **kwargs):
+        answer = super(AnswerForm, self).save(commit=False)
+
         if self.create:
-            answer = super(AnswerForm, self).save(commit=False)
             answer.author = self.user
             if not answer.question and hasattr(self, "question"):
                 answer.question = self.question
-            if commit:
-                answer.save()
-                answer.items = answer.question.items.all()
-            return answer
-        else:
-            return super(AnswerForm, self).save(commit)
+        answer.status = self.status
+
+        if commit:
+            answer.save()
+            self.save_m2m()
+            answer.items = answer.question.items.all()
+
+        return answer
 
 
 class BaseQAFormSet(BaseInlineFormSet):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
+        default_status = Content._meta.get_field("status").default
+        self.status = kwargs.pop("status", default_status)
         self.empty_permitted = kwargs.pop("empty_permitted", None)
         super(BaseQAFormSet, self).__init__(*args, **kwargs)
 
     def _construct_forms(self):
-        # override method to add request/empty_permitted arguments
+        # override method to add request/empty_permitted/status arguments
         # for AnswerForm init
         kwargs = {}
-        for field in ["request", "empty_permitted"]:
+        for field in ["request", "empty_permitted", "status"]:
             value = getattr(self, field, None)
             if value is not None:
                 kwargs.update({field: value})

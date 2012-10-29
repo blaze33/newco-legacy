@@ -63,6 +63,11 @@ class ContentFormMixin(object):
     def get_form_kwargs(self):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
         kwargs.update({"request": self.request})
+        for field in ["add_question", "add_answer"]:
+            status = self.request.POST.get(field, None)
+            if status:
+                kwargs.update({"status": status})
+                break
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -87,6 +92,10 @@ class ContentFormMixin(object):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({"status": Content.STATUS})
+        return super(ContentFormMixin, self).get_context_data(**kwargs)
 
 
 class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
@@ -135,22 +144,24 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         POST = request.POST
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        ctx = dict()
+        cb_answer = POST.get("cb_answer", None)
+        ctx = {"cb_answer": cb_answer}
         if "add_question" in POST:
-            cb_answer = POST.get("cb_answer", None)
-            ctx.update({"cb_answer": cb_answer})
             if form.is_valid():
                 self.object = form.save(commit=False)
-
-                kwargs = {"request": request}
+                kwargs = {"request": request, "status": self.object.status}
                 if cb_answer:
                     kwargs.update({"empty_permitted": False})
-
                 formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
                     self.object.save()
                     form.save_m2m()
                     formset.save()
+                    if self.success_url:
+                        self.success_url = "%(url)s?next=%(next)s" % {
+                            "url": self.success_url,
+                            "next": self.object.get_absolute_url(),
+                        }
                     return HttpResponseRedirect(self.get_success_url())
                 ctx.update({"formset": formset})
         elif "add_item" in POST:
@@ -430,6 +441,27 @@ class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
         rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
         context.update({"related_questions": rq})
+
+        ###### Seb's : for trial template on tags page
+        if "tag_slug" in self.kwargs:
+            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+
+            questions_on_tag = Question.objects.filter(tags=self.tag)[:3]
+            context.update({"questions_on_tag": questions_on_tag})
+            ### To do : sort these questions by vote
+
+            items_wi_tag = Item.objects.filter(tags=self.tag)
+            questions_on_items_wi_tag = Question.objects.filter(items__in=items_wi_tag)[:3]
+            context.update({"questions_on_items_wi_tag": questions_on_items_wi_tag})
+            ## To Do : sort these questions by vote
+
+            unanswered_q_wi_tag = Question.objects.annotate(
+                    score=Count("answer")
+                ).filter( Q(score__lte=0),
+                    Q(tags=self.tag) | Q(items__in=items_wi_tag)
+                )[:3]
+            context.update({"unanswered_q_wi_tag": unanswered_q_wi_tag})
+        ###### end of Seb's
         return context
 
     def post(self, request, *args, **kwargs):

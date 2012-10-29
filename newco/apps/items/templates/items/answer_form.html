@@ -20,7 +20,8 @@
 
 <form action="" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
-    <input type="submit" name="add_answer" class="btn" value='{% trans "Submit" %}'/>
+    <button type="submit" class="btn btn-primary" name="add_answer" value="{{ status.public }}">{% if answer.is_public %}{% trans "Update" %}{% else %}{% trans "Publish" %}{% endif %}</button>
+    <button type="submit" class="btn" name="add_answer" value="{{ status.draft }}">{% if answer.is_public %}{% trans "Unpublish and save as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
     <input type="hidden" name="question_id" value="{{ form.question.id }}"/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
