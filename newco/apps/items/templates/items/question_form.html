@@ -39,8 +39,8 @@
 
       <div class="control-group" id="div_submit_q"{% if cb_answer %} style="visibility: hidden;" {% endif %}>
         <div class="controls">
-          <button type="submit" class="btn btn-primary" name="add_question" value="{{ status.public }}">{% if question.is_public %}{% trans "Save and keep public" %}{% elif question.is_draft %}{% trans "Publish your question" %}{% else %}{% trans "Publish your question" %}{% endif %}</button>
-          <button type="submit" class="btn" name="add_question" value="{{ status.draft }}">{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Save as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
+          <button type="submit" class="btn btn-primary" name="add_question" value="{{ status.public }}">{% if question.is_public %}{% trans "Update and keep public" %}{% elif question.is_draft %}{% trans "Update and publish" %}{% else %}{% trans "Publish your question" %}{% endif %}</button>
+          <button type="submit" class="btn" name="add_question" value="{{ status.draft }}">{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Update and keep as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
         </div>
       </div>
 
@@ -70,7 +70,7 @@
         <div class="control-group" id="div_submit_qa"{% if not cb_answer %} style="display: none;"{% endif %}>
           <div class="controls">
             <button type="submit" class="btn btn-primary" name="add_question" value="{{ status.public }}">{% trans "Publish your question and answer" %}</button>
-            <button type="submit" class="btn" name="add_question" value="{{ status.draft }}">{% trans "Save as draft your question and answer" %}</button>
+            <button type="submit" class="btn" name="add_question" value="{{ status.draft }}">{% trans "Save as draft" %}</button>
           </div>
         </div>
       {% endif %}

@@ -4,7 +4,7 @@ from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
 from django.forms.widgets import Textarea, RadioSelect
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, pgettext
 
 from account.utils import user_display
 from chosen.forms import ChosenSelectMultiple
@@ -75,8 +75,8 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     PARENTS = Choices(
-        (0, "products", _("Products")),
-        (1, "tags", _("Tags"))
+        (0, "products", pgettext("parent", "products")),
+        (1, "tags", pgettext("parent", "tags"))
     )
 
     create = False
@@ -87,7 +87,7 @@ class QuestionForm(ModelForm):
                     label=capfirst(tag_field.verbose_name),
                     widget=TagAutoSuggest(attrs={"class": "span4"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
-                          label=_("My question refers to:"))
+                          label=_("My question refers to"))
 
     class Meta:
         model = Question
