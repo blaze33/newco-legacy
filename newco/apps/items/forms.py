@@ -180,13 +180,13 @@ class AnswerForm(ModelForm):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
-        self.request = request
-        if "question_id" in request.REQUEST:
-            self.question_id = request.REQUEST.get("question_id")
-            self.question = Question.objects.get(id=self.question_id)
-        self.object = kwargs.get("instance", None)
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        question_id = request.POST.get("question_id", 0)
+        self.question = Question.objects.get(id=q_id) if question_id \
+            else getattr(self.object, "question", None)
         if not self.object:
             self.create = True
+
         if self.request.user.is_authenticated():
             profile = self.request.user.get_profile()
             label = user_display(self.request.user)
@@ -200,8 +200,8 @@ class AnswerForm(ModelForm):
 
         if self.create:
             answer.author = self.request.user
-            if not answer.question and hasattr(self.object, "question"):
-                answer.question = self.object.question
+            if not answer.question and hasattr(self, "question"):
+                answer.question = self.question
         answer.status = self.status
 
         if commit:
