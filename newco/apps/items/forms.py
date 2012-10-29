@@ -1,7 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea
+from django.forms.widgets import Textarea, RadioSelect
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
@@ -15,6 +16,10 @@ from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
 
+PRODUCT_HELP_TEXT = _(
+                    "Select one or several products using Enter and the Arrow keys.<br>Max 5. <small>You may consider a tag for a group of products.</small><br><br>"
+                    "<small>Can't find a product related to your question?</small> <a class=\"btn btn-primary btn-mini\" data-toggle=\"modal\" role=\"button\" href=\"#itemModal\"><i rel=\"add_icon\" class=\"icon-plus icon-white\" style=\"margin-right: 3px; position: relative; top: -2px;\"></i>Add it </a>"
+                    )
 
 class ItemForm(ModelForm):
 
@@ -74,15 +79,18 @@ class QuestionForm(ModelForm):
                     label=capfirst(tag_field.verbose_name),
                     widget=TagAutoSuggest(attrs={"class": "span4"}))
 
+    items_or_tags = ChoiceField(required=False,
+        widget=RadioSelect, choices=(("products", _("Products")), ("tags", _("Tags"))),
+        label=_("My question refers to:"))
+
     class Meta:
         model = Question
-        fields = ("content", "status", "items", "tags")
+        fields = ("content", "items_or_tags", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
@@ -96,23 +104,35 @@ class QuestionForm(ModelForm):
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.fields.get("items").help_text = _(
-            "Select one or several products using Enter and the Arrow keys.")
+        self.fields.get("items").help_text = PRODUCT_HELP_TEXT
 
     def save(self, commit=True, **kwargs):
+        question = super(QuestionForm, self).save(commit=False)
         if self.create:
-            question = super(QuestionForm, self).save(commit=False)
             question.author = self.user
-            if commit:
-                question.save()
-                self.save_m2m()
-            return question
+
+        if "save_as_draft" in self.request.POST:
+            question.status = Content.STATUS.draft
         else:
-            return super(QuestionForm, self).save(commit)
+            question.status = Content.STATUS.public
+
+        if commit:
+            question.save()
+            self.save_m2m()
+        return question
 
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
         tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
+
+        if "items_or_tags" in self.request.POST:
+            if self.request.POST["items_or_tags"] == "tags":
+                del cleaned_data["items"]
+                items = ""
+
+            elif self.request.POST["items_or_tags"] == "products":
+                del cleaned_data["tags"]
+                tags = ""
 
         if not tags and not items or tags and items:
             self._errors["tags"] = self.error_class([""])
@@ -142,7 +162,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ("content", "status", )
+        fields = ("content", )
         widgets = {
             "content": BW_small_Widget(attrs={
                 "rows": 10,
@@ -174,18 +194,23 @@ class AnswerForm(ModelForm):
         self.fields["content"].label = label
 
     def save(self, commit=True, **kwargs):
+        answer = super(AnswerForm, self).save(commit=False)
+
         if self.create:
-            answer = super(AnswerForm, self).save(commit=False)
             answer.author = self.user
             if not answer.question and hasattr(self, "question"):
                 answer.question = self.question
-            if commit:
-                answer.save()
-                answer.items = answer.question.items.all()
-            return answer
-        else:
-            return super(AnswerForm, self).save(commit)
 
+        if "save_as_draft" in self.request.POST:
+            answer.status = Content.STATUS.draft
+        else:
+            answer.status = Content.STATUS.public
+
+        if commit:
+            answer.save()
+            answer.items = answer.question.items.all()
+
+        return answer
 
 class BaseQAFormSet(BaseInlineFormSet):
     def __init__(self, *args, **kwargs):

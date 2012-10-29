@@ -136,9 +136,9 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         ctx = dict()
-        if "add_question" in POST:
-            cb_answer = POST.get("cb_answer", None)
-            ctx.update({"cb_answer": cb_answer})
+        cb_answer = POST.get("cb_answer", None)
+        ctx.update({"cb_answer": cb_answer})
+        if "add_question" in POST or "save_as_draft" in POST:
             if form.is_valid():
                 self.object = form.save(commit=False)
 
@@ -151,6 +151,11 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     self.object.save()
                     form.save_m2m()
                     formset.save()
+                    if self.success_url: # cas: on vient d'ajouter un produit et 'edit item' est dans le success_url, on veut ajouter la question en GET pour y retourner apres edition de l'item
+                        self.success_url = "%(url)s?next=%(next)s" % {
+                            "url": self.success_url,
+                            "next": self.object.get_absolute_url(),
+                        }
                     return HttpResponseRedirect(self.get_success_url())
                 ctx.update({"formset": formset})
         elif "add_item" in POST:
@@ -393,11 +398,11 @@ class SearchMixin(object):
         return HttpResponseRedirect(response)
 
 
-class ContentListView(ContentView, SearchMixin, ListView):
+class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
 
     model = Item
     template_name = "items/item_list_image.html"
-    paginate_by = 9
+    paginate_by = 18
     sort_order = "-pub_date"
 
     def get_queryset(self):
@@ -431,6 +436,27 @@ class ContentListView(ContentView, SearchMixin, ListView):
         rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
         rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
         context.update({"related_questions": rq})
+
+        ###### Seb's : for trial template on tags page
+        if "tag_slug" in self.kwargs:
+            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+
+            questions_on_tag = Question.objects.filter(tags=self.tag)[:3]
+            context.update({"questions_on_tag": questions_on_tag})
+            ### To do : sort these questions by vote
+
+            items_wi_tag = Item.objects.filter(tags=self.tag)
+            questions_on_items_wi_tag = Question.objects.filter(items__in=items_wi_tag)[:3]
+            context.update({"questions_on_items_wi_tag": questions_on_items_wi_tag})
+            ## To Do : sort these questions by vote
+
+            unanswered_q_wi_tag = Question.objects.annotate(
+                    score=Count("answer")
+                ).filter( Q(score__lte=0),
+                    Q(tags=self.tag) | Q(items__in=items_wi_tag)
+                )[:3]
+            context.update({"unanswered_q_wi_tag": unanswered_q_wi_tag})
+        ###### end of Seb's
         return context
 
     def post(self, request, *args, **kwargs):

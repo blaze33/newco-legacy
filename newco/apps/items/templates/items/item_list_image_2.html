@@ -57,6 +57,6 @@
 {% block answer_question %}
   <div class="row"><div class="span7">
   	<h4>{% trans "Lastest unanswered questions:" %}</h4>
-		{% include "items/feed_display/_content_list.html" with contents=orphan_q_qs display="text" %}
+		{% include "items/feed_display/_content_list.html" with contents=unanswered_q_wi_tag display="text" %}
   </div></div>
 {% endblock %}

@@ -19,7 +19,7 @@
 
 {% block body %}
 
-<h1>{% block form_header %}{% if not item %}{% trans "Add a product" %}{% trans ":" %}{% else %}{% trans "Edit"%} {{ item }}{% trans ":"%}{% endif %}{% endblock %}</h1>
+<h1>{% block form_header %}{% if 'question' in request.GET.next %}{% trans "Complete some informations about" %}{% trans ":" %} {{ item }}{% elif not item %}{% trans "Add a product" %}{% trans ":" %}{% else %}{% trans "Edit"%} {{ item }}{% trans ":"%}{% endif %}{% endblock %}</h1>
 <br>
 
 {% url 'faq' as faq %}
@@ -86,12 +86,14 @@
       </tbody>
     </table></div>
     <input type="hidden" name="img_list" id="img_data">
-    {% if not item %}
-        <input type="submit" class="btn" value="{% trans 'Create' %}"> {% trans "or" %} <button type="submit" class="btn" name="edit">{% trans 'Create and add features' %}</button>
+    {% if '/question/' in request.GET.next %} {# case: we come from a question page and have added a product there#}
+        <input type="submit" class="btn btn-primary" value="{% trans 'Save product' %}">
+    {% elif not item %}
+        <input type="submit" class="btn btn-primary" value="{% trans 'Create' %}"> {% trans "or" %} <button type="submit" class="btn" name="edit">{% trans 'Create and add features' %}</button>
     {% else %}
-        <input type="submit" class="btn" value="{% trans 'Update' %}">
+        <input type="submit" class="btn btn-primary" value="{% trans 'Update' %}">
     {% endif %}
-    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% elif request.GET.next %}<input type="hidden" name="next" value="{{ request.GET.next }}">{% endif %}
 </form>
 
 {% endblock %}
