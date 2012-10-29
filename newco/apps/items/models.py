@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify, truncatechars
@@ -173,7 +174,8 @@ class Answer(Content):
 
     def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
-            (anchor_pattern % self.__dict__)
+            (anchor_pattern % self.__dict__) if self.is_public() else \
+            reverse("dash", args=["draft"])
 
     def get_product_related_url(self, item,
                                 anchor_pattern="?answer=%(id)s#a-%(id)s"):
