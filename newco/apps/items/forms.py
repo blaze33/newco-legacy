@@ -209,7 +209,8 @@ class AnswerForm(ModelForm):
 
 
 class BaseQAFormSet(BaseInlineFormSet):
-    def __init__(self, request, status, empty_permitted=True, *args, **kwargs):
+    def __init__(self, request, status=None, empty_permitted=True,
+                 *args, **kwargs):
         self.request, self.status = [request, status]
         self.empty_permitted = empty_permitted
         super(BaseQAFormSet, self).__init__(*args, **kwargs)
