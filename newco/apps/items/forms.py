@@ -40,19 +40,17 @@ class ItemForm(ModelForm):
         model = Item
         exclude = ("author")
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
-            self.reload_current_search()
+    def __init__(self, request, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+        self.request = request
+        self.reload_current_search()
         if "instance" not in kwargs or kwargs["instance"] is None:
             self.create = True
-        return super(ItemForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             item = super(ItemForm, self).save(commit=False)
-            item.author = self.user
+            item.author = self.request.user
             item.save()
             self.save_m2m()
         else:
@@ -106,25 +104,23 @@ class QuestionForm(ModelForm):
             )
         }
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
+    def __init__(self, request, *args, **kwargs):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if "instance" not in kwargs or kwargs["instance"] is None:
+        self.request = request
+        self.object = kwargs.get("instance", None)
+        if not self.object:
             self.create = True
         else:
-            self.object = kwargs["instance"]
             self.fields.get("parents").initial = self.PARENTS.products \
-                if self.object.items.count() else self.PARENTS.tags
+                if kwargs.get("instance").items.count() else self.PARENTS.tags
         self.fields.get("items").help_text = PRODUCT_HELP_TEXT
 
     def save(self, commit=True, **kwargs):
         question = super(QuestionForm, self).save(commit=False)
         if self.create:
-            question.author = self.user
+            question.author = self.request.user
         question.status = self.status
 
         if commit:
@@ -180,24 +176,20 @@ class AnswerForm(ModelForm):
             }),
         }
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
-            if "question_id" in self.request.REQUEST:
-                self.question_id = self.request.REQUEST.get("question_id")
-                self.question = Question.objects.get(id=self.question_id)
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
-        else:
-            self.object = kwargs["instance"]
-            self.question = self.object.question
+    def __init__(self, request, *args, **kwargs):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
-        if self.user.is_authenticated():
-            profile = self.user.get_profile()
-            label = user_display(self.user)
+        self.request = request
+        if "question_id" in request.REQUEST:
+            self.question_id = request.REQUEST.get("question_id")
+            self.question = Question.objects.get(id=self.question_id)
+        self.object = kwargs.get("instance", None)
+        if not self.object:
+            self.create = True
+        if self.request.user.is_authenticated():
+            profile = self.request.user.get_profile()
+            label = user_display(self.request.user)
             label = label + ", " + profile.about if profile.about else label
         else:
             label = _("Please login before answering.")
@@ -207,9 +199,9 @@ class AnswerForm(ModelForm):
         answer = super(AnswerForm, self).save(commit=False)
 
         if self.create:
-            answer.author = self.user
-            if not answer.question and hasattr(self, "question"):
-                answer.question = self.question
+            answer.author = self.request.user
+            if not answer.question and hasattr(self.object, "question"):
+                answer.question = self.object.question
         answer.status = self.status
 
         if commit:
@@ -221,11 +213,9 @@ class AnswerForm(ModelForm):
 
 
 class BaseQAFormSet(BaseInlineFormSet):
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop("request", None)
-        default_status = Content._meta.get_field("status").default
-        self.status = kwargs.pop("status", default_status)
-        self.empty_permitted = kwargs.pop("empty_permitted", None)
+    def __init__(self, request, status, empty_permitted=True, *args, **kwargs):
+        self.request, self.status = [request, status]
+        self.empty_permitted = empty_permitted
         super(BaseQAFormSet, self).__init__(*args, **kwargs)
 
     def _construct_forms(self):

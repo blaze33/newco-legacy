@@ -247,8 +247,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             for key, queryset in querysets.items():
                 contents.update({key: get_sorted_queryset(queryset, user)})
 
-            initial = {"status": Content._meta.get_field("status").default,
-                       "items": item.id}
+            initial = {"items": item.id,
+                       "parents": QuestionForm.PARENTS.products}
             q_form = QuestionForm(data=POST, request=request) if "question" \
                 in POST else QuestionForm(initial=initial, request=request)
             q_id = int(POST["question_id"]) \
