@@ -121,9 +121,6 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 "object": self.object._meta.verbose_name
             }
         )
-        if self.model == Item and "edit" in self.request.POST:
-            args = [self.object._meta.module_name, self.object.id]
-            return HttpResponseRedirect(reverse("item_edit", args=args))
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form):
@@ -194,6 +191,9 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         return context
 
     def get_success_url(self, next=None):
+        if self.model == Item and "edit" in self.request.POST:
+            args = [self.object._meta.module_name, self.object.id]
+            self.success_url = reverse("item_edit", args=args)
         url = self.success_url
         self.success_url = url + "?next=" + next if url and next else url
 
@@ -510,3 +510,7 @@ class ContentDeleteView(ContentView, DeleteView):
             except:
                 pass
         raise ImproperlyConfigured
+
+
+def display_message(type, request, user, object):
+    pass
