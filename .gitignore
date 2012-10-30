@@ -1,4 +1,35 @@
+# use glob syntax.
+syntax: glob
+
+# Mercurial
 .hg
-.settings
+
+# Temp files
 *~
 *.pyc
+*.swp
+
+#dev file
+*.db
+
+#IDE files
+.settings/**
+.settings
+
+#setup files
+build/
+
+# Apple relou
+.DS_Store
+
+# Opendiff
+opendiff-w
+
+# Pydev
+.pydevproject
+
+# Redis dumps
+*.rdb
+
+# D4 Catalog update log
+*decathlon_db_log.txt
