@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-26 13:19+0200\n"
-"PO-Revision-Date: 2012-10-26 13:21\n"
+"POT-Creation-Date: 2012-10-30 16:38+0100\n"
+"PO-Revision-Date: 2012-10-30 16:38\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,40 +19,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: mailtools.py:50
+#: mailtools.py:49
 #, python-format
-msgid "answered your question \"%(question)s\""
-msgstr "a répondu à votre question \"%(question)s\""
+msgid "answered your question '%(question)s'"
+msgstr "a répondu à votre question '%(question)s'"
 
-#: mailtools.py:57 mailtools.py:147 mailtools.py:154
+#: mailtools.py:56 mailtools.py:146 mailtools.py:153
 #, python-format
 msgid "about the product %(product)s."
 msgstr "à propos du produit %(product)s."
 
-#: mailtools.py:61 mailtools.py:158
+#: mailtools.py:60 mailtools.py:157
 msgid "on"
 msgstr "sur"
 
-#: mailtools.py:92
+#: mailtools.py:93
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr "%(user)s, votre requête a été envoyée à %(receiver)s !"
 
-#: mailtools.py:97
+#: mailtools.py:98
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 "%(user)s, vous ne pouvez pas vous proposer de répondre à une question !"
 
-#: mailtools.py:138
+#: mailtools.py:137
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help!"
 msgstr "%(receiver)s, %(requester)s a besoin de vous !"
 
-#: mailtools.py:144
+#: mailtools.py:143
 #, python-format
-msgid "would like you to answer this question \"%(question)s\""
-msgstr "aimerait que vous répondiez à cette question \"%(question)s\""
+msgid "would like you to answer this question '%(question)s'"
+msgstr "aimerait que vous répondiez à cette question '%(question)s'"
 
 #: follow/tools.py:19
 #, python-format
@@ -200,7 +200,7 @@ msgstr "Abonné"
 msgid "Click to unfollow"
 msgstr "Cliquez pour vous désabonner"
 
-#: templatetags/follow_utils.py:50
+#: templatetags/follow_utils.py:51
 msgctxt "Follow button"
 msgid "Follow"
 msgstr "Suivre"

@@ -15,13 +15,13 @@ from account.utils import user_display
 #from utils.models import LastMail
 
 
-def send_mail(message_subject, receiver, txt_template, html_template, context):
+def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
     msg_txt = txt_template.render(context)
     msg_html = html_template.render(context)
 
-    msg = EmailMultiAlternatives(message_subject, msg_txt,
-        '"NewCo" <notifications@newco-project.fr>', [receiver.email]
-    )
+    email = receiver.email if not settings.DEBUG else sender.email
+    newco = '"NewCo" <notifications@newco-project.fr>'
+    msg = EmailMultiAlternatives(msg_sub, msg_txt, newco, [email])
     msg.attach_alternative(msg_html, "text/html")
 
 #    waiting_time = datetime.timedelta(minutes=1)
@@ -29,8 +29,7 @@ def send_mail(message_subject, receiver, txt_template, html_template, context):
 #    diff = timezone.now() - last_mail.modified
 #    if diff > waiting_time or created:
 #        last_mail.save()
-    if not settings.DEBUG:
-        msg.send()
+    msg.send()
 
 
 def mail_question_author(site, answer):
@@ -42,20 +41,20 @@ def mail_question_author(site, answer):
     helper_name = user_display(helper)
 
     msg_subject = "%s, %s a repondu a votre question !" % \
-                            (receiver_name, helper_name)
+                  (receiver_name, helper_name)
 
     txt_template = get_template('mail/_answer_notification_email.txt')
     html_template = get_template('mail/_answer_notification_email.html')
 
-    txt_req = _('answered your question "%(question)s"') % \
-                                                {"question": question.content}
+    txt_req = _("answered your question '%(question)s'" %
+                {"question": question.content})
 
     items = question.items.select_related()
     nb_items = items.count()
     if nb_items == 1:
         item = items[0]
         txt_req = txt_req + " " + _("about the product %(product)s.") % \
-                                                {"product": item.name}
+            {"product": item.name}
     elif nb_items > 1:
         print nb_items
         txt_req = txt_req + " " + ugettext("on")
@@ -69,7 +68,8 @@ def mail_question_author(site, answer):
                     txt_req = txt_req + "..."
                 break
 
-    context = Context({'answeree': receiver_name, 'answerer': helper_name,
+    context = Context({
+        'answeree': receiver_name, 'answerer': helper_name,
         'answeree_url': "http://%s%s" % (site, receiver.get_absolute_url()),
         'answerer_url': "http://%s%s" % (site, helper.get_absolute_url()),
         'message_subject': msg_subject,
@@ -81,7 +81,8 @@ def mail_question_author(site, answer):
         'answer_object': unicode(answer)
     })
 
-    send_mail(msg_subject, receiver, txt_template, html_template, context)
+    send_mail(msg_subject, receiver, txt_template, html_template, context,
+              helper)
 
 
 def process_asking_for_help(request, question, success_url, item=None):
@@ -116,15 +117,13 @@ def process_asking_for_help(request, question, success_url, item=None):
 
         if receiver != request.user:
             mail_helper(receiver, request.user, site, question, item)
-            messages.add_message(request, msgs["ask"]["level"],
-                msgs["ask"]["text"] % {
-                    "user": username, "receiver": receiver_name
-                }
+            messages.add_message(
+                request, msgs["ask"]["level"], msgs["ask"]["text"] % {
+                    "user": username, "receiver": receiver_name}
             )
         else:
             messages.add_message(request, msgs["warning"]["level"],
-                msgs["warning"]["text"] % {"user": username}
-            )
+                                 msgs["warning"]["text"] % {"user": username})
 
     return HttpResponseRedirect(success_url)
 
@@ -135,24 +134,24 @@ def mail_helper(receiver, requester, site, question, item):
     receiver_name = user_display(receiver)
     requester_name = user_display(requester)
 
-    msg_subject = _("%(receiver)s, %(requester)s needs your help!") % \
-                    {"receiver": receiver_name, "requester": requester_name}
+    msg_subject = _("%(receiver)s, %(requester)s needs your help!" %
+                    {"receiver": receiver_name, "requester": requester_name})
 
     txt_template = get_template("mail/_ask_notification_email.txt")
     html_template = get_template("mail/_ask_notification_email.html")
 
-    txt_req = _('would like you to answer this question "%(question)s"') % \
-                                                {"question": question.content}
+    txt_req = _("would like you to answer this question '%(question)s'" %
+                {"question": question.content})
     if item:
-        txt_req = txt_req + " " + _("about the product %(product)s.") % \
-                                                        {"product": item.name}
+        txt_req = txt_req + " " + _("about the product %(product)s." %
+                                    {"product": item.name})
     else:
         items = question.items.select_related()
         nb_items = items.count()
         if nb_items == 1:
             item = items[0]
-            txt_req = txt_req + " " + _("about the product %(product)s.") % \
-                                                    {"product": item.name}
+            txt_req = txt_req + " " + _("about the product %(product)s." %
+                                        {"product": item.name})
         elif nb_items > 1:
             item = items[0]
             txt_req = txt_req + " " + ugettext("on")
@@ -166,7 +165,8 @@ def mail_helper(receiver, requester, site, question, item):
                         txt_req = txt_req + "..."
                     break
 
-    context = Context({"receiver": receiver_name, "requester": requester_name,
+    context = Context({
+        "receiver": receiver_name, "requester": requester_name,
         "askee_url": "http://%s%s" % (site, receiver.get_absolute_url()),
         "asker_url": "http://%s%s" % (site, requester.get_absolute_url()),
         "message_subject": msg_subject,
@@ -178,4 +178,5 @@ def mail_helper(receiver, requester, site, question, item):
         "settings_url": "http://%s%s" % (site, reverse("account_settings"))
     })
 
-    send_mail(msg_subject, receiver, txt_template, html_template, context)
+    send_mail(msg_subject, receiver, txt_template, html_template, context,
+              requester)
