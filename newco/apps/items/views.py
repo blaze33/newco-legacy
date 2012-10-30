@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import ModelFormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -27,7 +27,7 @@ from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from profiles.models import Profile
 from utils.apiservices import search_images
-from utils.mailtools import mail_question_author, process_asking_for_help
+from utils.mailtools import process_asking_for_help
 from utils.follow.views import FollowMixin
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
@@ -192,7 +192,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, FormMixin,
+class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                         FollowMixin, ProcessVoteView):
 
     def get_context_data(self, **kwargs):
@@ -261,8 +261,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
 
         elif self.model == Question:
             q = context.get("question")
-            q.answer_form = AnswerForm(POST, request=request) \
-                if "answer" in POST else AnswerForm(request=request)
+            q.answer_form = AnswerForm(request, data=POST) \
+                if "answer" in POST else AnswerForm(request)
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
@@ -287,13 +287,6 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             })
         return context
 
-    def form_valid(self, form, request, **kwargs):
-        self.object = form.save(**kwargs)
-        form.save_m2m()
-        if self.object._meta.object_name == "Answer":
-            mail_question_author(request.META.get('HTTP_HOST'), self.object)
-        return HttpResponseRedirect(self.get_success_url())
-
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -303,11 +296,11 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             return process_asking_for_help(request, obj, request.path)
         elif "question" in POST or "answer" in POST:
             Form = QuestionForm if "question" in POST else AnswerForm
-            form = Form(data=POST, request=request)
+            form = Form(request, data=POST)
             if form.is_valid():
                 display_message("created", self.request,
                                 Form._meta.model._meta.verbose_name)
-                return self.form_valid(form, request, **kwargs)
+                return self.form_valid(form)
             else:
                 return self.form_invalid(form)
         elif "edit_about" in POST:
@@ -320,19 +313,6 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
-
-    def get_success_url(self):
-        if self.success_url:
-            url = self.success_url % self.object.__dict__
-        else:
-            try:
-                url = self.object.get_absolute_url()
-            except AttributeError:
-                raise ImproperlyConfigured(
-                    "No URL to redirect to. Either provide a url or define"
-                    " a get_absolute_url method on the Model."
-                )
-        return url
 
 
 class SearchMixin(object):
