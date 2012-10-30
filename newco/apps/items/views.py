@@ -66,7 +66,7 @@ class ContentFormMixin(object):
         for field in ["add_question", "add_answer"]:
             status = self.request.POST.get(field, None)
             if status:
-                kwargs.update({"status": status})
+                kwargs.update({"status": int(status)})
                 break
         return kwargs
 
@@ -89,6 +89,8 @@ class ContentFormMixin(object):
                 form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
+            msg = "updated" if self.object else "created"
+            display_message(msg, self.request, self.model._meta.verbose_name)
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -100,38 +102,6 @@ class ContentFormMixin(object):
 
 class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                         CreateView):
-
-    messages = {
-        "created": {
-            "level": messages.SUCCESS,
-            "text": _("Thanks %(user)s, %(object)s successfully created.")
-        },
-        "failed": {
-            "level": messages.ERROR,
-            "text": _("Warning %(user)s, %(object)s form is invalid.")
-        },
-    }
-
-    def form_valid(self, form):
-        self.object = form.save()
-        messages.add_message(
-            self.request, self.messages["created"]["level"],
-            self.messages["created"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": self.object._meta.verbose_name
-            }
-        )
-        return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        messages.add_message(
-            self.request, self.messages["failed"]["level"],
-            self.messages["failed"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": form._meta.model._meta.verbose_name
-            }
-        )
-        return super(ContentCreateView, self).form_invalid(form)
 
     def post(self, request, *args, **kwargs):
         if self.model is not Question:
@@ -151,6 +121,8 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     kwargs.update({"empty_permitted": False})
                 formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
+                    display_message("created", self.request,
+                                    self.object._meta.verbose_name)
                     self.object.save()
                     form.save_m2m()
                     formset.save()
@@ -161,6 +133,8 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             i_form = ItemForm(data=POST, request=request, prefix="item")
             if i_form.is_valid():
                 item = i_form.save()
+                display_message("created", self.request,
+                                item._meta.verbose_name)
                 args = [item._meta.module_name, item.id]
                 ctx.update({"next": reverse("item_edit", args=args)})
             else:
@@ -220,17 +194,6 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 class ContentDetailView(ContentView, DetailView, FormMixin,
                         FollowMixin, ProcessVoteView):
-
-    messages = {
-        "created": {
-            "level": messages.SUCCESS,
-            "text": _("Thanks %(user)s, %(object)s successfully created.")
-        },
-        "failed": {
-            "level": messages.WARNING,
-            "text": _("Warning %(user)s, %(object)s form is invalid.")
-        },
-    }
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -324,27 +287,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             })
         return context
 
-    def form_invalid(self, form):
-        self.object = self.get_object()
-        messages.add_message(self.request,
-            self.messages["failed"]["level"],
-            self.messages["failed"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": form._meta.model._meta.verbose_name
-            }
-        )
-        return self.render_to_response(self.get_context_data(form=form))
-
     def form_valid(self, form, request, **kwargs):
         self.object = form.save(**kwargs)
         form.save_m2m()
-        messages.add_message(self.request,
-            self.messages["created"]["level"],
-            self.messages["created"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": self.object._meta.verbose_name
-            }
-        )
         if self.object._meta.object_name == "Answer":
             mail_question_author(request.META.get('HTTP_HOST'), self.object)
         return HttpResponseRedirect(self.get_success_url())
@@ -360,6 +305,8 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             Form = QuestionForm if "question" in POST else AnswerForm
             form = Form(data=POST, request=request)
             if form.is_valid():
+                display_message("created", self.request,
+                                Form._meta.model._meta.verbose_name)
                 return self.form_valid(form, request, **kwargs)
             else:
                 return self.form_invalid(form)
@@ -368,6 +315,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             profile = request.user.get_profile()
             profile.about = about
             profile.save()
+            display_message("about", self.request)
             return HttpResponseRedirect(request.path)
         else:
             return super(ContentDetailView, self).post(request, *args,
@@ -512,5 +460,31 @@ class ContentDeleteView(ContentView, DeleteView):
         raise ImproperlyConfigured
 
 
-def display_message(type, request, user, object):
-    pass
+MESSAGES = {
+    "created": {
+        "level": messages.SUCCESS,
+        "text": _("Thanks %(user)s, %(object_name)s successfully created.")
+    },
+    "updated": {
+        "level": messages.INFO,
+        "text": _("Thanks %(user)s, %(object_name)s successfully updated.")
+    },
+    "about": {
+        "level": messages.INFO,
+        "text": _("Thanks %(user)s, your bio has been successfully updated.")
+    },
+    "failed": {
+        "level": messages.ERROR,
+        "text": _("Warning %(user)s, %(object_name)s form is invalid.")
+    },
+}
+
+
+def display_message(msg_type, request, object_name=""):
+    messages.add_message(
+        request, MESSAGES[msg_type]["level"],
+        MESSAGES[msg_type]["text"] % {
+            "user": user_display(request.user),
+            "object_name": object_name
+        }
+    )

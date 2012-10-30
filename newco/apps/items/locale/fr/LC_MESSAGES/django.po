@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 18:23+0100\n"
-"PO-Revision-Date: 2012-10-29 18:25\n"
+"POT-Creation-Date: 2012-10-30 12:38+0100\n"
+"PO-Revision-Date: 2012-10-30 12:42\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr ""
 #: forms.py:78
 msgctxt "parent"
 msgid "products"
-msgstr "produits"
+msgstr "des produits"
 
 #: forms.py:79
 msgctxt "parent"
@@ -225,23 +225,34 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
 
-#: views.py:107 views.py:225
-#, python-format
-msgid "Thanks %(user)s, %(object)s successfully created."
-msgstr "Merci %(user)s, l'objet %(object)s a été créé avec succès."
-
-#: views.py:111 views.py:229
-#, python-format
-msgid "Warning %(user)s, %(object)s form is invalid."
-msgstr "Attention %(user)s, le formulaire de l'objet %(object)s est invalide."
-
-#: views.py:319 views.py:441
+#: views.py:284 views.py:391
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:320 views.py:442
+#: views.py:285 views.py:392
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
+
+#: views.py:466
+#, python-format
+msgid "Thanks %(user)s, %(object_name)s successfully created."
+msgstr "Merci %(user)s, l'objet %(object_name)s a été créé avec succès."
+
+#: views.py:470
+#, python-format
+msgid "Thanks %(user)s, %(object_name)s successfully updated."
+msgstr "Merci %(user)s, l'objet %(object_name)s a été mis à jour."
+
+#: views.py:474
+#, python-format
+msgid "Thanks %(user)s, your bio has been successfully updated."
+msgstr "Merci %(user)s, votre bio a été mise à jour."
+
+#: views.py:478
+#, python-format
+msgid "Warning %(user)s, %(object_name)s form is invalid."
+msgstr ""
+"Attention %(user)s, le formulaire de l'objet %(object_name)s est invalide."
 
 #: templates/items/_ask_modal.html:8
 msgid "Ask..."
