@@ -157,12 +157,8 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     self.object.save()
                     form.save_m2m()
                     formset.save()
-                    if self.success_url:
-                        self.success_url = "%(url)s?next=%(next)s" % {
-                            "url": self.success_url,
-                            "next": self.object.get_absolute_url(),
-                        }
-                    return HttpResponseRedirect(self.get_success_url())
+                    next = self.object.get_absolute_url()
+                    return HttpResponseRedirect(self.get_success_url(next))
                 ctx.update({"formset": formset})
         elif "add_item" in POST:
             i_form = ItemForm(data=POST, request=request, prefix="item")
@@ -196,6 +192,12 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         err = any(item for item in context.get("formset").errors)
         context.update({"formset_errors": err})
         return context
+
+    def get_success_url(self, next=None):
+        url = self.success_url
+        self.success_url = url + "?next=" + next if url and next else url
+
+        return super(ContentCreateView, self).get_success_url()
 
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
