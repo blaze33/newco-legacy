@@ -16,6 +16,7 @@ from taggit_autosuggest.widgets import TagAutoSuggest
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
+from utils.mailtools import mail_question_author
 
 PRODUCT_HELP_TEXT = _(
     "Select one or up to 5 products using Enter and the Arrow keys.<br>"
@@ -202,6 +203,9 @@ class AnswerForm(ModelForm):
 
         if commit:
             answer.save()
+            if self.create:
+                mail_question_author(
+                    self.request.META.get('HTTP_HOST'), answer)
             self.save_m2m()
             answer.items = answer.question.items.all()
 
