@@ -3,7 +3,10 @@ import datetime
 from django.db.models import Count
 from django.utils import timezone
 from django.views.generic import ListView
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
+from taggit.models import Tag
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -27,9 +30,16 @@ class HomepageView(MultiTemplateMixin, ListView):
             else:
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
+            self.model = Question
             self.queryset = Question.objects.annotate(
                 score=Count("answer")).filter(score__lte=0)
-            self.template_name = "homepage_contents.html"
+            if "category" in self.request.GET:
+                self.search_terms = self.request.GET.get("category", "")
+                category=self.search_terms
+                self.queryset=self.queryset.filter(tags__name__contains=category)
+                if self.search_terms:
+                    self.template_name = "homepage_questions.html"
+            self.template_name = "homepage_questions.html"
         else:
             pass
         return super(HomepageView, self).get(request, *args, **kwargs)
@@ -39,4 +49,20 @@ class HomepageView(MultiTemplateMixin, ListView):
         ctx = super(HomepageView, self).get_context_data(**kwargs)
         if self.model == Item:
             ctx.get("object_list").fetch_images()
-        return ctx
+            return ctx
+        if self.model == Question:
+            question_qs = Question.objects.all().values('items')
+            item_qs = Item.objects.filter(id__in=question_qs.values_list("items", flat=True))
+            item_qs.fetch_images()
+        if "category" in self.request.GET:
+            self.search_terms = self.request.GET.get("category", "")
+            category_name=self.search_terms
+            kwargs.update({"category_name":category_name,})
+        return super(HomepageView, self).get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if "select_category" in request.POST:
+            select_category = request.POST["select_category"]
+            response = "%s?category=%s" % (reverse("home", kwargs={"cat":"questions"}), select_category)
+            return HttpResponseRedirect(response)
+        return super(HomepageView, self).post(request, *args, **kwargs)

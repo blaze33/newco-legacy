@@ -44,11 +44,16 @@ class RedisView(View):
         limit = int(request.GET.get("limit", -1))
 
         filters = list()
-        filtered_fields = ["class"]
-        for field in filtered_fields:
-            if field in request.GET:
-                filtered_values = request.GET.getlist(field)
-                filters.append(lambda i: i[field] in filtered_values)
+        self.redis_cat = kwargs.get("redis_cat", "redis")
+        if self.redis_cat == "tags":
+            filtered_values = "taggit.models.Tag"
+            filters.append(lambda i: i["class"] in filtered_values)
+        else:
+            filtered_fields = ["class"]
+            for field in filtered_fields:
+                if field in request.GET:
+                    filtered_values = request.GET.getlist(field)
+                    filters.append(lambda i: i[field] in filtered_values)
 
         data = json.dumps(engine.search_json(q, limit=limit, filters=filters))
 

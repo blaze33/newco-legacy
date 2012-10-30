@@ -16,23 +16,38 @@
 		<hr>
 	</div>
     <div class="span4">
-    <form action="" method="POST" class="form-horizontal">{% csrf_token %}
-        <input name="select_category_tag" type="text" autocomplete="off" placeholder="{% trans 'Filter by Category' %}" data-provide="typeahead" data-items="3" data-source="{{ data_source_tags }}" style="width:120px">
-        <button type="submit" class="btn btn-primary" name="cat_tag" value="add">{% trans "Select" %}</button>
-    </form>
+        <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
+            <div class="input-append">
+                <input type="text" autocomplete="off" class="typeahead span2 search-query" name="select_category" id="global_search_cat" placeholder="{% trans 'Filter by category' %}">
+                <button type="submit" class="btn btn-primary">{% trans "Select" %}</button>
+            </div>
+        </form>
     </div>
 </div>
 
 
-<div class="row"><div class="offset1 span8">
-	{% if object_list %}
-		{% include "items/feed_display/_content_list.html" with contents=object_list display="unanswered" %}
+<div class="row"><div class="offset2 span9">{% if object_list %}{% for content in object_list %}
+    
+    <div class="row">
+    {% if content.items.all %}
+    {% include "items/feed_display/_question.html" with display="unanswered_questions" %}
+	    {% for item in content.items.all %}
+	    <div class="span1" align="right" style="margin-right: 0">
+		{% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
+	    </div>
+	    {% endfor %}
+	   
 	{% else %}
-		{% trans "No unanswered questions on this category." %}
-		<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
-	{% endif %}
+	{% include "items/feed_display/_question.html" with display="unanswered_questions" %}
+    {% endif %}
+    </div>
+    
+{% endfor %}
+{% else %}
+{% trans "No unanswered questions on this category." %}
+<h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
+{% endif %}
 </div></div>
-
 {% if is_paginated %}{% paginate %}{% endif %}
 
 {% endblock %}
