@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="span4 offset1">
 		<h2>{% trans "Answer questions" %}</h2>
-		<h5> {% trans "Category" %} {{ category }}</h5>
+		<h5> {% trans "Category" %} {{ category_name }}</h5>
 		<hr>
 	</div>
     <div class="span4">
@@ -29,16 +29,14 @@
 <div class="row"><div class="offset2 span9">{% if object_list %}{% for content in object_list %}
     
     <div class="row">
-    {% if content.items.all %}
     {% include "items/feed_display/_question.html" with display="unanswered_questions" %}
+    {% if content.items.all %}
 	    {% for item in content.items.all %}
 	    <div class="span1" align="right" style="margin-right: 0">
 		{% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
 	    </div>
 	    {% endfor %}
-	   
-	{% else %}
-	{% include "items/feed_display/_question.html" with display="unanswered_questions" %}
+
     {% endif %}
     </div>
     
