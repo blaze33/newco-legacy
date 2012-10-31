@@ -29,7 +29,7 @@
 <div class="row"><div class="offset2 span9">{% if object_list %}{% for content in object_list %}
     
     <div class="row">
-    {% include "items/feed_display/_question.html" with display="unanswered_questions" %}
+    {% include "items/feed_display/_question.html" with display="unanswered" %}
     {% if content.items.all %}
 	    {% for item in content.items.all %}
 	    <div class="span1" align="right" style="margin-right: 0">
