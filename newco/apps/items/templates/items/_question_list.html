@@ -21,8 +21,6 @@
       {% include "bootstrap/_field_errors.html" %}
       {% include "bootstrap/_field_help_text.html" %}
     </div></div>{% endwith %}
-    <input type="hidden" name="items" value="{{ q_form.items.value }}">
-    <input type="hidden" name="parents" value="{{ q_form.parents.value }}">
     <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
   </form>
 </div></div>

@@ -25,6 +25,7 @@ from voting.models import Vote
 from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
+from items.forms import PartialQuestionForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
@@ -212,10 +213,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             for key, queryset in querysets.items():
                 contents.update({key: get_sorted_queryset(queryset, user)})
 
-            initial = {"items": item.id,
-                       "parents": QuestionForm.PARENTS.products}
-            q_form = QuestionForm(data=POST, request=request) if "question" \
-                in POST else QuestionForm(initial=initial, request=request)
+            q_form = PartialQuestionForm(request, item, data=POST) \
+                if "question" in POST else PartialQuestionForm(request, item)
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
@@ -295,8 +294,13 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in POST or "answer" in POST:
-            Form = QuestionForm if "question" in POST else AnswerForm
-            form = Form(request, data=POST)
+            if "question" in POST:
+                kwargs = {"item": self.object}
+                Form = PartialQuestionForm
+            else:
+                kwargs = dict()
+                Form = AnswerForm
+            form = Form(request, data=POST, **kwargs)
             if form.is_valid():
                 display_message("created", self.request,
                                 Form._meta.model._meta.verbose_name)

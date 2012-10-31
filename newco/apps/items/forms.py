@@ -158,6 +158,31 @@ class QuestionForm(ModelForm):
         return cleaned_data
 
 
+class PartialQuestionForm(ModelForm):
+
+    class Meta:
+        model = Question
+        fields = ("content", )
+        widgets = {"content": Textarea(attrs={
+            "class": "span4",
+            "placeholder": _("Ask something specific."),
+            "rows": 1})}
+
+    def __init__(self, request, item, *args, **kwargs):
+        super(PartialQuestionForm, self).__init__(*args, **kwargs)
+        self.request, self.item = [request, item]
+
+    def save(self, commit=True, **kwargs):
+        question = super(PartialQuestionForm, self).save(commit=False)
+        question.author = self.request.user
+
+        if commit:
+            question.save()
+            self.save_m2m()
+            question.items.add(self.item.id)
+        return question
+
+
 class AnswerForm(ModelForm):
 
     create = False
