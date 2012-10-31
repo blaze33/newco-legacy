@@ -29,11 +29,13 @@
 
 
 {% elif display == "unanswered" %}
-    <div class="span6" align="left">
+    <div class="span7" align="left">
     <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
-    {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
-    <br>
-    <a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
+    <div class="q_categories">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
+    {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
+    {% endif %}
+    </div>
+    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
     <hr>
     </div>
 {% endif %}
