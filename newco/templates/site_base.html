@@ -82,31 +82,6 @@
             });
         });
     </script>
-    <script type="text/javascript">
-        $(function() {
-            var labels, mapped
-            $("#global_search_cat").typeahead({
-                source: function (query, process) {
-                    $.get('{% url "redis" "tags" %}', {q: query}, function (data) {
-                        labels = []
-                        mapped = {}
-
-                        $.each(data, function (i, item) {
-                            mapped[item.title] = item
-                            labels.push(item.title)
-                        })
-                        process(labels)
-                    })
-                }
-                , updater: function (item) {
-                    var obj = mapped[item];
-                    $('#obj_class').val(obj.class);
-                    $('#obj_id').val(obj.id);
-                    return obj.title
-                }
-            });
-        });
-    </script>
     <script src="{% static 'bootstrap/js/bootstrap-popover.js' %}"></script>
 {% endblock %}
 
