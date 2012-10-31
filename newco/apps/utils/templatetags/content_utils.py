@@ -195,6 +195,72 @@ def source_display(parser, token):
     return SourceDisplayNode(obj, display, link_color)
 
 
+class TagDisplayNode(Node):
+    def __init__(self, tags, args, kwargs, asvar):
+        self.tag = Variable(tags)
+        self.args = args
+        self.kwargs = kwargs
+        self.asvar = asvar
+
+    def render(self, context):
+        try:
+            tag = self.tag.resolve(context)
+            if not tag:
+                return ""
+        except VariableDoesNotExist:
+            return ""
+
+        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
+
+        template = "tags/_tag_display.html"
+        ctx = {"tag": tag}
+        fields = ["quote_type", "extra_class"]
+        for index, field in enumerate(fields):
+            value = kwargs.get(field, None)
+            value = args[index] if not value and len(args) > index else value
+            if value and field == "extra_class":
+                ctx.update({field: value})
+            elif field == "quote_type":
+                quote_type = value if value else "double"
+
+        html = render_to_string(template, ctx, context_instance=context)
+
+        if quote_type == "single":
+            html = html.replace("\"", "\'")
+
+        if self.asvar:
+            context[self.asvar] = html
+            return ""
+        else:
+            return html
+
+
+@register.tag
+def tag_display(parser, token):
+    """
+    Renders a tag using tag_display template.
+    Can add a quote type (single or double), and an extra class parameter
+    for the tag template. Can store the html in a variable.
+
+    Usage::
+
+        {% tag_display tag %}
+        {% tag_display tag quote_type="double" extra_class="" %}
+        {% tag_display tag "simple" extra_class="" as tag_html %}
+
+    """
+    bits = token.split_contents()
+    if len(bits) < 2:
+        raise TemplateSyntaxError("'%s' takes at least 1 arguments." % bits[0])
+    tag_name = bits[0]
+    tag = bits[1]
+    bits = bits[2:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)
+
+    return TagDisplayNode(tag, args, kwargs, asvar)
+
+
 class TagsDisplayNode(Node):
     def __init__(self, tags, args, kwargs, asvar):
         self.tags = Variable(tags)
@@ -223,7 +289,13 @@ class TagsDisplayNode(Node):
             elif value:
                 f_kwargs.update({"obj_tpl_ctx": {field: value}})
 
-        return generate_objs_sentence(context, **f_kwargs)
+        sentence = generate_objs_sentence(context, **f_kwargs)
+
+        if self.asvar:
+            context[self.asvar] = sentence
+            return ""
+        else:
+            return sentence
 
 
 @register.tag
@@ -239,13 +311,12 @@ def tags_display(parser, token):
         {% tags_display tags %}
         {% tags_display tags max_nb=None quote_type="double" sep=" "
             extra_class="" %}
+        {% tags_display tags 4 sep=" " as tags_html %}
 
     """
     bits = token.split_contents()
     if len(bits) < 2:
         raise TemplateSyntaxError("'%s' takes at least 1 arguments." % bits[0])
-    elif len(bits) > 6:
-        raise TemplateSyntaxError("'%s' takes at most 5 arguments." % bits[0])
     tag_name = bits[0]
     tags = bits[1]
     bits = bits[2:]
