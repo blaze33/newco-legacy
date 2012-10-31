@@ -295,15 +295,12 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             return process_asking_for_help(request, obj, request.path)
         elif "question" in POST or "answer" in POST:
             if "question" in POST:
-                kwargs = {"item": self.object}
-                Form = PartialQuestionForm
+                form = PartialQuestionForm(request, self.object, data=POST)
             else:
-                kwargs = dict()
-                Form = AnswerForm
-            form = Form(request, data=POST, **kwargs)
+                form = AnswerForm(request, data=POST)
             if form.is_valid():
                 display_message("created", self.request,
-                                Form._meta.model._meta.verbose_name)
+                                form._meta.model._meta.verbose_name)
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
