@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 12:38+0100\n"
+"POT-Creation-Date: 2012-10-31 15:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:21
+#: forms.py:22
 msgid ""
 "Select one or up to 5 products using Enter and the Arrow keys.<br><small>You "
 "may consider a tag for a group of products.</small><br><br><small>Can't find "
@@ -27,57 +27,57 @@ msgid ""
 "top: -2px;'></i> Add it</a>"
 msgstr ""
 
-#: forms.py:78
+#: forms.py:79
 msgctxt "parent"
 msgid "products"
 msgstr ""
 
-#: forms.py:79
+#: forms.py:80
 msgctxt "parent"
 msgid "tags"
 msgstr ""
 
-#: forms.py:83
+#: forms.py:84
 msgid "No results matched"
 msgstr ""
 
-#: forms.py:90
+#: forms.py:91
 msgid "My question refers to"
 msgstr ""
 
-#: forms.py:98
+#: forms.py:99
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:102
+#: forms.py:103
 msgid "Pick a product."
 msgstr ""
 
-#: forms.py:143
+#: forms.py:144
 msgid "Choose between either products or tags to link your question to."
 msgstr ""
 
-#: forms.py:146
+#: forms.py:147
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 
-#: forms.py:150
+#: forms.py:151
 msgid "Pick less than 5 tags"
 msgstr ""
 
-#: forms.py:154
+#: forms.py:155
 msgid "Pick less than 10 items"
 msgstr ""
 
-#: forms.py:171
+#: forms.py:172
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:191
+#: forms.py:192
 msgid "Please login before answering."
 msgstr ""
 
-#: forms.py:251
+#: forms.py:255
 msgid "Link description"
 msgstr ""
 
@@ -218,30 +218,30 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:284 views.py:391
+#: views.py:284 views.py:371
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:285 views.py:392
+#: views.py:285 views.py:372
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:466
+#: views.py:446
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:470
+#: views.py:450
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:474
+#: views.py:454
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:478
+#: views.py:458
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -401,8 +401,8 @@ msgstr ""
 msgid "Fill in some information about"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:89
-#: templates/items/item_list_base_1.html:75
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:87
+#: templates/items/item_list_base_1.html:74
 #: templates/items/item_list_image_2.html:28
 #: templates/items/question_detail.html:32
 #: templates/items/question_form.html:83
@@ -499,69 +499,67 @@ msgstr ""
 msgid "Add to skills"
 msgstr ""
 
-#: templates/items/item_list_base.html:58
+#: templates/items/item_list_base.html:57
 #: templates/items/item_list_base_1.html:44
 #: templates/items/item_list_base_2.html:49
 #, python-format
 msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label nc-tag\">"
-"%(tagname)s</a> are available for search terms <i>\"%(search_terms)s\"</i>."
+"No products with tag %(tag_html)s are available for search terms <i>"
+"\"%(search_terms)s\"</i>."
+msgstr ""
+
+#: templates/items/item_list_base.html:59
+#: templates/items/item_list_base_1.html:46
+#: templates/items/item_list_base_2.html:51
+#, python-format
+msgid "No products with tag %(tag_html)s are available."
 msgstr ""
 
 #: templates/items/item_list_base.html:61
-#: templates/items/item_list_base_1.html:47
-#: templates/items/item_list_base_2.html:52
-#, python-format
-msgid ""
-"No products with tag <a href=\"%(tag_url)s\" class=\"label nc-tag\">"
-"%(tagname)s</a> are available."
-msgstr ""
-
-#: templates/items/item_list_base.html:63
-#: templates/items/item_list_base_1.html:49
-#: templates/items/item_list_base_2.html:54
+#: templates/items/item_list_base_1.html:48
+#: templates/items/item_list_base_2.html:53
 #, python-format
 msgid "No products are available for search terms <i>\"%(search_terms)s\"</i>."
 msgstr ""
 
-#: templates/items/item_list_base.html:65
-#: templates/items/item_list_base_1.html:51
-#: templates/items/item_list_base_2.html:56
+#: templates/items/item_list_base.html:63
+#: templates/items/item_list_base_1.html:50
+#: templates/items/item_list_base_2.html:55
 msgid "No products are available."
 msgstr ""
 
-#: templates/items/item_list_base.html:70
-#: templates/items/item_list_base_1.html:56
-#: templates/items/item_list_base_2.html:61
+#: templates/items/item_list_base.html:68
+#: templates/items/item_list_base_1.html:55
+#: templates/items/item_list_base_2.html:60
 #, python-format
 msgid ""
 "Why not <a href=\"%(add_item_url)s\" class=\"btn btn-primary \">create a "
 "product</a> yourself?"
 msgstr ""
 
-#: templates/items/item_list_base.html:72
-#: templates/items/item_list_base_1.html:58
-#: templates/items/item_list_base_2.html:63
+#: templates/items/item_list_base.html:70
+#: templates/items/item_list_base_1.html:57
+#: templates/items/item_list_base_2.html:62
 msgid ""
 "By creating a product product page, you lay the first brick to gather "
 "information about this product: other members will see this page, add things "
 "they know about it, and even answer to you questions if you ask some."
 msgstr ""
 
-#: templates/items/item_list_base.html:80
-#: templates/items/item_list_base_1.html:66
+#: templates/items/item_list_base.html:78
+#: templates/items/item_list_base_1.html:65
 #: templates/items/item_list_image_2.html:20
 msgid "Newest to Oldest"
 msgstr ""
 
-#: templates/items/item_list_base.html:81
-#: templates/items/item_list_base_1.html:67
+#: templates/items/item_list_base.html:79
+#: templates/items/item_list_base_1.html:66
 #: templates/items/item_list_image_2.html:21
 msgid "Oldest to Newest"
 msgstr ""
 
-#: templates/items/item_list_base.html:82
-#: templates/items/item_list_base_1.html:68
+#: templates/items/item_list_base.html:80
+#: templates/items/item_list_base_1.html:67
 #: templates/items/item_list_image_2.html:22
 msgid "Most popular"
 msgstr ""
