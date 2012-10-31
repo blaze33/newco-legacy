@@ -8,38 +8,34 @@
 {% load staticfiles %}
 
 {% block body %}
-<br><br><br>  
+<br><br> 
 <div class="row">
-	<div class="span4 offset1">
+	<div class="span6 offset1">
 		<h2>{% trans "Answer questions" %}</h2>
-		<h5> {% trans "Category" %} {{ category_name }}</h5>
-		<hr>
-	</div>
-    <div class="span4">
-        <form class="navbar-search form-horizontal" action="" method="POST">{% csrf_token %}
-            <div>
+		{% if category_name %}<h5>{% trans "Category" %} {{ category_name }}</h5>{% endif %}
+		<form class="navbar-search form-horizontal" action="" method="POST">{% csrf_token %}
+            <span>
                 <input type="text" autocomplete="off" class="typeahead span2 search-query" name="select_category" id="global_search_cat" placeholder="{% trans 'Filter by category' %}">
                 <button type="submit" class="btn btn-primary">{% trans "Select" %}</button>
-            </div>
+            </span> 
         </form>
-    </div>
+		<br><br><br>
+		<hr>
+	</div>
 </div>
 
 
 <div class="row"><div class="offset1 span10">{% if object_list %}{% for content in object_list %}
     
-    <div class="row">
     {% include "items/feed_display/_question.html" with display="unanswered" %}
     {% if content.items.all %}
 	    {% for item in content.items.all %}
-	    <div class="span1" align="right" style="margin-right: 0">
+	    <div class="span1 content-item-mini">
 		{% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
 	    </div>
 	    {% endfor %}
 
     {% endif %}
-    </div>
-    
 {% endfor %}
 {% else %}
 {% trans "No unanswered questions on this category." %}

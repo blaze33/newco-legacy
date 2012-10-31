@@ -8,7 +8,7 @@
 {% load staticfiles %}
 
 {% block body %}
-<br><br><br>  
+<br><br>
 <div class="row">
 	<div class="span4 offset1">
 		<h2>{% trans "Answer questions" %}</h2>
@@ -39,7 +39,7 @@
             {% if content.items.all %}
                 {% include "items/feed_display/_question_1.html" with display="unanswered products" %}
 	            {% for item in content.items.all %}
-	            <div class="span1" align="right" style="margin-right: 0">
+	            <div class="span1 content-item-mini">
 		        {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
 	            </div>
 	            {% endfor %}
