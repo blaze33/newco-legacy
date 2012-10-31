@@ -16,8 +16,8 @@
 		<hr>
 	</div>
     <div class="span4">
-        <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
-            <div class="input-append">
+        <form class="navbar-search form-horizontal" action="" method="POST">{% csrf_token %}
+            <div>
                 <input type="text" autocomplete="off" class="typeahead span2 search-query" name="select_category" id="global_search_cat" placeholder="{% trans 'Filter by category' %}">
                 <button type="submit" class="btn btn-primary">{% trans "Select" %}</button>
             </div>
@@ -26,7 +26,7 @@
 </div>
 
 
-<div class="row"><div class="offset2 span9">{% if object_list %}{% for content in object_list %}
+<div class="row"><div class="offset1 span10">{% if object_list %}{% for content in object_list %}
     
     <div class="row">
     {% include "items/feed_display/_question.html" with display="unanswered" %}
