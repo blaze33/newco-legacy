@@ -13,20 +13,21 @@ from utils.multitemplate.views import MultiTemplateMixin
 class HomepageView(MultiTemplateMixin, ListView):
 
     paginate_by = 14
+    sort_order = "popular"
 
     def get(self, request, *args, **kwargs):
         self.cat = kwargs.get("cat", "home")
-        if self.cat == "home" or self.cat == "last":
+        if self.cat == "home":
             self.model = Item
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
-            if self.cat == "home":
+            if self.sort_order == "popular":
                 delta = timezone.now() - datetime.timedelta(days=30)
                 self.queryset = self.queryset.filter(
                     content__pub_date__gt=delta)
                 self.queryset = self.queryset.annotate(
                     Count("content")).order_by("-content__count")
-            else:
+            elif self.sort_order == "last":
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
             self.model = Question
@@ -44,7 +45,7 @@ class HomepageView(MultiTemplateMixin, ListView):
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"cat": self.cat})
+        kwargs.update({"cat": self.cat, "sort_order":self.sort_order})
         ctx = super(HomepageView, self).get_context_data(**kwargs)
         if self.model == Item:
             ctx.get("object_list").fetch_images()
@@ -64,4 +65,7 @@ class HomepageView(MultiTemplateMixin, ListView):
             select_category = request.POST["select_category"]
             response = "%s?category=%s" % (reverse("home", kwargs={"cat":"questions"}), select_category)
             return HttpResponseRedirect(response)
+        elif "sort_products" in request.POST:
+            self.sort_order = self.request.POST.get("sort_products")
+            return self.get(request, *args, **kwargs)
         return super(HomepageView, self).post(request, *args, **kwargs)
