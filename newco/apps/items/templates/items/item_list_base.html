@@ -34,8 +34,12 @@
           <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
         </div>
       {% endfor %}</div>
+      
+      <!-- Buttons not displayed while not working -->
+      {% comment %}
       <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
       <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
+      {% endcomment %}
     </div>
   {% else %}&nbsp;{% endif %}</div>
 
@@ -99,11 +103,9 @@
 {% block extra_body_base %}
     {{ block.super }}
     {{ media.js }}
-    <script type="text/javascript">$(".chzn-select").chosen();</script>
-
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#carousel_tag').carousel({ interval: 15000 });
+            $('#carousel_tag').carousel({ interval: 5000 });
         });
     </script>
     <script type="text/javascript">
@@ -134,9 +136,9 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{  block.super  }}
+  {{ block.super }}
 	<script type ="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 	    mixpanel.track("Load_tag_page");
 		});
 	</script>
