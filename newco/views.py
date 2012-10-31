@@ -6,7 +6,6 @@ from django.views.generic import ListView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from taggit.models import Tag
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
 
