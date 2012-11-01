@@ -15,9 +15,6 @@ v1_api = Api(api_name='v1')
 v1_api.register(ItemResource())
 v1_api.register(RelationResource())
 
-handler500 = "pinax.views.server_error"
-
-
 urlpatterns = patterns("",
     url(r"^$", HomepageView.as_view(), name="home"),
     url(r"^(?P<cat>last|questions)$", HomepageView.as_view(), name="home"),

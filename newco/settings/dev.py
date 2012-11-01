@@ -6,7 +6,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ### other development-specific stuff
 
-# tells Pinax to serve media through the staticfiles app.
+# tells Django to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
 # add development applications
