@@ -36,7 +36,7 @@ lxml==3.0.1
 
 ## pinax-theme-bootstrap
 # pinax-theme-bootstrap==2.0.4
-pinax-theme-bootstrap==2.2.0
+pinax-theme-bootstrap==2.2.1
 pinax-theme-bootstrap-account==1.0b2
 
 ## schema and data migrations
