@@ -16,10 +16,10 @@
 
 {% block body %}
 
-<ul class="thumbnails">
+<ul class="thumbnails album">
   {% for image in album|slice:":4" %}<li class="span3">
     <a class="thumbnail" href="{{ image.data.contextLink }}" target="_blank">
-      <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}" height="128px">
+      <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}">
     </a>
   </li>{% endfor %}
 </ul>
