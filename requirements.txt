@@ -65,7 +65,7 @@ greenlet==0.4.0
 psycopg2==2.4.5
 ## Database configuration for heroku
 django-heroku-postgresify==0.2
-git+git://github.com/aino/django-hstore.git
+git+git://github.com/aino/django-hstore.git@688f19f177#egg=django-hstore
 
 ## monitoring
 newrelic==1.6.0.13
