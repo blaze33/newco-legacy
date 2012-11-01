@@ -108,7 +108,7 @@
 
   <script type="text/javascript">
       $(document).ready( function() {
-          var divCollection = $("#[id^='answer\_form\_']");
+          var divCollection = $('div[id^="answer_form_"]');
           $.each(divCollection, function (i, item) {
               var bc = $("#controls_" + $(this)[0].id)
               var icon_change = $('[rel=icon]', bc);
