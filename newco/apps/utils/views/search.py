@@ -7,7 +7,7 @@ from django.views.generic.base import RedirectView
 
 from taggit.models import Tag
 
-from items.models import Item
+from items.models import Item, Question
 from profiles.models import Profile
 from utils.tools import get_class_from_string
 from utils.redistools import load_redis_engine
@@ -24,7 +24,7 @@ class TypeaheadSearchView(RedirectView):
             if cls and obj_id:
                 obj = cls.objects.get(id=obj_id)
 
-                if cls is Item or cls is Profile:
+                if cls is Item or cls is Profile or cls is Question:
                     response = obj.get_absolute_url()
                 elif cls is Tag:
                     response = reverse("tagged_items", args=[obj.slug])
