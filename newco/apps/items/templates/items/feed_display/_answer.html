@@ -37,6 +37,11 @@
   {% if user != author %}
     <div class="row"><div class="span4 offset3"><a href="{{ question.get_absolute_url }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
   {% endif %}
+{% elif display == "email" %}
+  <p><small><a href="{{ question.get_absolute_url }}" style="color: #000000; text-decoration: none;">{% autoescape off %}{{ question.content }}{% endautoescape %}</a></small></p>
+  <p><a href="{{ content.get_absolute_url }}" style="color: #000000; text-decoration: none;">{% autoescape off %}{{ content.content }}{% endautoescape %}</a></p>
+{% elif display == "email_txt" %}
+  {% autoescape off %}{{ content.content }}{% endautoescape %}
 {% endif %}
 
 {% endwith %}

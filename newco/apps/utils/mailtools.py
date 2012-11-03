@@ -29,8 +29,8 @@ def send_mail(message_subject, receiver, txt_template, html_template, context):
 #    diff = timezone.now() - last_mail.modified
 #    if diff > waiting_time or created:
 #        last_mail.save()
-    if not settings.DEBUG:
-        msg.send()
+    #if not settings.DEBUG:
+    msg.send()
 
 
 def mail_question_author(site, answer):
@@ -38,47 +38,68 @@ def mail_question_author(site, answer):
     question = answer.question
     receiver = question.author
     receiver_name = user_display(receiver)
-    helper = answer.author
-    helper_name = user_display(helper)
+    receiver_url = "http://%s%s" % (site, receiver.get_absolute_url())
+    answerer = answer.author
+    answerer_name = user_display(answerer)
+    answerer_url = "http://%s%s" % (site, answerer.get_absolute_url())
 
-    msg_subject = "%s, %s a repondu a votre question !" % \
-                            (receiver_name, helper_name)
+    msg_subject = _("%s, %s has answered your question!") % \
+                            (receiver_name, answerer_name)
 
-    txt_template = get_template('mail/_answer_notification_email.txt')
-    html_template = get_template('mail/_answer_notification_email.html')
+    txt_template = get_template("mail/_answer_notification_email.txt")
+    html_template = get_template("mail/_answer_notification_email.html")
 
-    txt_req = _('answered your question "%(question)s"') % \
-                                                {"question": question.content}
+    title_txt = _('<a href="%(receiver_url)s">%(receiver)s</a>,<br>'
+        '<a href="%(answerer_url)s">%(answerer)s</a> has answered your '
+        'question about the '
+        ) % \
+        {"receiver_url": receiver_url,
+        "receiver": receiver_name,
+        "answerer_url": answerer_url,
+        "answerer": answerer_name,
+        }
 
     items = question.items.select_related()
     nb_items = items.count()
-    if nb_items == 1:
-        item = items[0]
-        txt_req = txt_req + " " + _("about the product %(product)s.") % \
-                                                {"product": item.name}
-    elif nb_items > 1:
-        print nb_items
-        txt_req = txt_req + " " + ugettext("on")
-        for i, item in enumerate(items):
-            print i
-            txt_req = txt_req + " " + item.name
-            if i < 4 and i != (nb_items - 1):
-                txt_req = txt_req + ","
-            elif i == 4:
-                if nb_items > 4:
-                    txt_req = txt_req + "..."
-                break
+    if nb_items >= 1:
+        if nb_items == 1:
+            title_txt += unicode(_('product '))
+        else:
+            title_txt += unicode(_('products '))
 
-    context = Context({'answeree': receiver_name, 'answerer': helper_name,
-        'answeree_url': "http://%s%s" % (site, receiver.get_absolute_url()),
-        'answerer_url': "http://%s%s" % (site, helper.get_absolute_url()),
-        'message_subject': msg_subject,
-        'question_object': unicode(question),
-        "product_object": items[0].name,
-        'question_url': "http://%s%s" % (site, question.get_absolute_url()),
-        "product_url": "http://%s%s" % (site, item.get_absolute_url()),
-        "txt_request": txt_req,
-        'answer_object': unicode(answer)
+        for i, item in enumerate(items):
+            title_txt += _('<a href="%(product_url)s">%(product)s</a>') % \
+                {"product_url": "http://%s%s" % (site, item.get_absolute_url()),
+                "product": item.name,}
+            if i < (nb_items - 2):
+                title_txt += unicode(_(", "))
+            elif i == (nb_items - 2):
+                title_txt += unicode(_(" and "))
+        title_txt += unicode(_(":")) # _(":")
+
+    elif nb_items == 0:
+        tags = question.tags
+        nb_tags = tags.all().count()
+        if nb_tags == 1:
+            title_txt += unicode(_("tag "))
+        else:
+            title_txt += unicode(_("tags "))
+        for i, tag in enumerate(tags.all()):
+            title_txt += _('<a href="%(tag_url)s">%(tag)s</a>') % \
+                {"tag_url": "http://%s%s" % \
+                    (site, reverse("tagged_items", args=[tag.slug])),
+                "tag": tag.name,
+                }
+            if i < (nb_tags - 2):
+                title_txt += unicode(_(", "))
+            elif i == (nb_tags - 2):
+                title_txt += unicode(_(" and "))
+
+        title_txt += unicode(_(":"))
+
+    context = Context({
+        "title_txt": title_txt,
+        "answer": answer,
     })
 
     send_mail(msg_subject, receiver, txt_template, html_template, context)

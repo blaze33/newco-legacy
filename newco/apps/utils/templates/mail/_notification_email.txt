@@ -6,15 +6,15 @@
 		<td style="width: 65px; vertical-align: top;">
 			<a href="http://www.newco-project.fr/"><h3>NewCo</h3></a>
     	</td>
-    	<td style="width: 500px; vertical-align: top;background-color: #e8e8e8">
+    	<td style="width: 500px; vertical-align: top; background-color: #e8e8e8;">
 			{% block body_title %}{% endblock %}
 		</td>
 	</tr>
 	<tr>
-   		<td style="width: 65px; ">
+   		<td style="width: 65px;">
         	&nbsp;
     	</td>
-    	<td style="width:500px; padding: 5px 0 10px 10px; vertical-align: top;background-color: #f2f2f2">
+    	<td style="width:500px; padding: 5px 0 10px 10px; vertical-align: top;background-color: #f2f2f2;">
 	    	<br><div style="font-family:verdana,serif;">{% block body_answer %}{% endblock %}</div>
 	    	<br><br>Thanks.<br>The NewCo Project team
 		</td>
