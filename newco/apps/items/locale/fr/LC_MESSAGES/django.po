@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-31 15:56+0100\n"
+"POT-Creation-Date: 2012-11-05 19:01+0100\n"
 "PO-Revision-Date: 2012-10-31 15:47\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgstr "Pas de résultats correspondant à la requête"
 msgid "My question refers to"
 msgstr "Ma question concerne"
 
-#: forms.py:99
+#: forms.py:99 forms.py:168
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
@@ -72,15 +72,15 @@ msgstr "Choisissez moins de 5 tags"
 msgid "Pick less than 10 items"
 msgstr "Choisissez moins de 10 produits"
 
-#: forms.py:172
+#: forms.py:197
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:192
+#: forms.py:217
 msgid "Please login before answering."
 msgstr "Connectez-vous avant de répondre."
 
-#: forms.py:255
+#: forms.py:280
 msgid "Link description"
 msgstr "Description du lien"
 
@@ -224,30 +224,30 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée :"
 
-#: views.py:284 views.py:371
+#: views.py:283 views.py:372
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:285 views.py:372
+#: views.py:284 views.py:373
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:446
+#: views.py:447
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été créé avec succès."
 
-#: views.py:450
+#: views.py:451
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été mis à jour."
 
-#: views.py:454
+#: views.py:455
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr "Merci %(user)s, votre bio a été mise à jour."
 
-#: views.py:458
+#: views.py:459
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -298,23 +298,23 @@ msgid "No question yet! Ask the first one here!"
 msgstr "Pas de question pour l'instant ! Soyez le premier à en poser une !"
 
 #: templates/items/answer_form.html:11
-#: templates/items/root_display/_question.html:57
+#: templates/items/root_display/_question.html:58
 msgid "Answer"
 msgstr "Répondre"
 
-#: templates/items/answer_form.html:23 templates/items/item_form.html:94
+#: templates/items/answer_form.html:20 templates/items/item_form.html:94
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: templates/items/answer_form.html:23
+#: templates/items/answer_form.html:20
 msgid "Publish"
 msgstr "Publier"
 
-#: templates/items/answer_form.html:24 templates/items/question_form.html:43
+#: templates/items/answer_form.html:21 templates/items/question_form.html:43
 msgid "Unpublish and save as draft"
 msgstr "Dépublier et sauvegarder dans les brouillons"
 
-#: templates/items/answer_form.html:24 templates/items/question_form.html:43
+#: templates/items/answer_form.html:21 templates/items/question_form.html:43
 #: templates/items/question_form.html:73
 msgid "Save as draft"
 msgstr "Sauvegarder dans les brouillons"
@@ -399,7 +399,7 @@ msgid "Add an answer"
 msgstr "Ajouter une réponse"
 
 #: templates/items/item_form.html:18 templates/items/item_form.html.py:22
-#: templates/items/item_list_base.html:42
+#: templates/items/item_list_base.html:47
 #: templates/items/question_form.html:83
 msgid "Add a product"
 msgstr "Ajouter un produit"
@@ -408,7 +408,7 @@ msgstr "Ajouter un produit"
 msgid "Fill in some information about"
 msgstr "Remplissez des informations sur"
 
-#: templates/items/item_form.html:22 templates/items/item_list_base.html:87
+#: templates/items/item_form.html:22 templates/items/item_list_base.html:92
 #: templates/items/item_list_base_1.html:74
 #: templates/items/item_list_image_2.html:28
 #: templates/items/question_detail.html:32
@@ -520,7 +520,7 @@ msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
 msgid "Add to skills"
 msgstr "Ajouter aux compétences"
 
-#: templates/items/item_list_base.html:57
+#: templates/items/item_list_base.html:62
 #: templates/items/item_list_base_1.html:44
 #: templates/items/item_list_base_2.html:49
 #, python-format
@@ -531,14 +531,14 @@ msgstr ""
 "Il n'y a pas de produit disponible avec le tag %(tag_html)s, correspondant "
 "aux termes de recherche <i>\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:59
+#: templates/items/item_list_base.html:64
 #: templates/items/item_list_base_1.html:46
 #: templates/items/item_list_base_2.html:51
 #, python-format
 msgid "No products with tag %(tag_html)s are available."
 msgstr "Pas de produits disponibles avec le tag %(tag_html)s."
 
-#: templates/items/item_list_base.html:61
+#: templates/items/item_list_base.html:66
 #: templates/items/item_list_base_1.html:48
 #: templates/items/item_list_base_2.html:53
 #, python-format
@@ -547,13 +547,13 @@ msgstr ""
 "Il n'y a pas de produit disponible correspondant aux termes de recherche <i>"
 "\"%(search_terms)s\"</i>."
 
-#: templates/items/item_list_base.html:63
+#: templates/items/item_list_base.html:68
 #: templates/items/item_list_base_1.html:50
 #: templates/items/item_list_base_2.html:55
 msgid "No products are available."
 msgstr "Pas de produits disponibles."
 
-#: templates/items/item_list_base.html:68
+#: templates/items/item_list_base.html:73
 #: templates/items/item_list_base_1.html:55
 #: templates/items/item_list_base_2.html:60
 #, python-format
@@ -564,7 +564,7 @@ msgstr ""
 "Pourquoi ne pas <a href=\"%(add_item_url)s\" class=\"btn btn-primary "
 "\">créer un produit</a> vous-même ?"
 
-#: templates/items/item_list_base.html:70
+#: templates/items/item_list_base.html:75
 #: templates/items/item_list_base_1.html:57
 #: templates/items/item_list_base_2.html:62
 msgid ""
@@ -577,19 +577,19 @@ msgstr ""
 "des choses qu'ils savent sur cet article, et répondront même à vos questions "
 "si vous en posez."
 
-#: templates/items/item_list_base.html:78
+#: templates/items/item_list_base.html:83
 #: templates/items/item_list_base_1.html:65
 #: templates/items/item_list_image_2.html:20
 msgid "Newest to Oldest"
 msgstr "Plus récent au plus vieux"
 
-#: templates/items/item_list_base.html:79
+#: templates/items/item_list_base.html:84
 #: templates/items/item_list_base_1.html:66
 #: templates/items/item_list_image_2.html:21
 msgid "Oldest to Newest"
 msgstr "Plus vieux au plus récent"
 
-#: templates/items/item_list_base.html:80
+#: templates/items/item_list_base.html:85
 #: templates/items/item_list_base_1.html:67
 #: templates/items/item_list_image_2.html:22
 msgid "Most popular"
@@ -786,24 +786,26 @@ msgid "asked a question"
 msgstr "a posé une question"
 
 #: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:42
 msgid "Answer this question"
 msgstr "Répondre à cette question"
 
 #: templates/items/feed_display/_question.html:39
+#: templates/items/feed_display/_question.html:52
+#: templates/items/root_display/_question.html:82
 msgid "Add Answer"
 msgstr "Ajouter une réponse"
 
-#: templates/items/root_display/_question.html:19
+#: templates/items/root_display/_question.html:20
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr "Cette question est un brouillon.<br>Elle est anonyme."
 
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:42
 msgid "Add a better answer"
 msgstr "Donner une meilleure réponse"
 
-#: templates/items/root_display/_question.html:42
-#: templates/items/root_display/_question.html:46
+#: templates/items/root_display/_question.html:43
+#: templates/items/root_display/_question.html:47
 msgid "Ask someone to answer"
 msgstr "Demandez à quelqu'un de répondre"
 

@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
-from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib import messages
@@ -43,8 +42,8 @@ def mail_question_author(request, answer):
     answerer_name = user_display(answerer)
     answerer_url = request.build_absolute_uri(answerer.get_absolute_url())
 
-    msg_subject = _("%s, %s has answered your question!" %
-                    (receiver_name, answerer_name))
+    msg_subject = _("%(receiver)s, %(answerer)s has answered your question!" %
+                    {"receiver": receiver_name, "answerer": answerer_name})
 
     txt_template = get_template("mail/_answer_notification_email.txt")
     html_template = get_template("mail/_answer_notification_email.html")
