@@ -11,7 +11,7 @@
         {% if prof_list.count > 0 %}
             <h4>{% trans "...an expert:" %}</h4>
             {% for prof in prof_list %}<br /><div class="row">
-                <div class="span2 left"><a href="{{ prof.user.get_absolute_url }}" target="_blank" class="label label-success nc-tag">{% user_display prof.user %}</a></div>
+                <div class="span2 left"><a href="{{ prof.user.get_absolute_url }}" target="_blank" class="label label-success">{% user_display prof.user %}</a></div>
                 <div class="span3 right"><form action="" method="POST">{% csrf_token %}
                     <button class="btn" type="submit" name="ask" value="{{ prof.user.id }}">{% trans "Ask" %}</button>
                     <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
