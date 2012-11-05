@@ -36,8 +36,7 @@ def process_following(request, obj, success_url):
 
         if follow.target._meta.object_name == "User":
             if is_following:
-                mail_followee(follow.target, request.user,
-                              request.META.get('HTTP_HOST'))
+                mail_followee(request, follow.target, request.user)
             object_unicode = user_display(follow.target)
         else:
             object_unicode = unicode(follow.target)
@@ -56,7 +55,7 @@ def process_following(request, obj, success_url):
     return HttpResponseRedirect(success_url)
 
 
-def mail_followee(fwee, fwer, site):
+def mail_followee(request, fwee, fwer):
     fwee_name = user_display(fwee)
     fwer_name = user_display(fwer)
 
@@ -68,9 +67,9 @@ def mail_followee(fwee, fwer, site):
 
     context = Context({
         "followee": fwee_name, "follower": fwer_name,
-        "followee_url": "http://%s%s" % (site, fwee.get_absolute_url()),
-        "follower_url": "http://%s%s" % (site, fwer.get_absolute_url()),
+        "followee_url": request.build_absolute_uri(fwee.get_absolute_url()),
+        "follower_url": request.build_absolute_uri(fwer.get_absolute_url()),
         "message_subject": msg_subject
     })
 
-    send_mail(msg_subject, fwee, txt_template, html_template, context)
+    send_mail(msg_subject, fwee, txt_template, html_template, context, fwer)
