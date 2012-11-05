@@ -3,8 +3,7 @@
 {% load i18n %}
 
 {% block body_title %}
-    {{ asker }}</a> {% trans "would like you to answer this question" %} "{{ question_object }}".
-    {% trans "About the product" %} "{{ product_object }}".
+    {{ asker }}</a> {% trans "would like you to answer the question" %} '{{ question_content }}' {{ source }}.
 {% endblock %}
 
 {% block go_to_urls %}

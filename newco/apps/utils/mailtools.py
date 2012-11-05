@@ -65,7 +65,7 @@ def mail_question_author(request, answer):
               answerer)
 
 
-def process_asking_for_help(request, question, success_url, item=None):
+def process_asking_for_help(request, question, success_url):
     msgs = {
         "ask": {
             "level": messages.INFO,
@@ -80,7 +80,6 @@ def process_asking_for_help(request, question, success_url, item=None):
     }
 
     username = user_display(request.user)
-    site = request.META.get('HTTP_HOST')
 
     if "ask" in request.POST:
         receiver = User.objects.get(id=request.POST["ask"])
@@ -96,7 +95,7 @@ def process_asking_for_help(request, question, success_url, item=None):
 #            pass
 
         if receiver != request.user:
-            mail_helper(receiver, request.user, site, question, item)
+            mail_helper(request, receiver, request.user, question)
             messages.add_message(
                 request, msgs["ask"]["level"], msgs["ask"]["text"] % {
                     "user": username, "receiver": receiver_name}
@@ -108,7 +107,7 @@ def process_asking_for_help(request, question, success_url, item=None):
     return HttpResponseRedirect(success_url)
 
 
-def mail_helper(receiver, requester, site, question, item):
+def mail_helper(request, receiver, requester, question):
     #TODO: add links to question and item
 
     receiver_name = user_display(receiver)
@@ -120,42 +119,16 @@ def mail_helper(receiver, requester, site, question, item):
     txt_template = get_template("mail/_ask_notification_email.txt")
     html_template = get_template("mail/_ask_notification_email.html")
 
-    txt_req = _("would like you to answer this question '%(question)s'" %
-                {"question": question.content})
-    if item:
-        txt_req = txt_req + " " + _("about the product %(product)s." %
-                                    {"product": item.name})
-    else:
-        items = question.items.select_related()
-        nb_items = items.count()
-        if nb_items == 1:
-            item = items[0]
-            txt_req = txt_req + " " + _("about the product %(product)s." %
-                                        {"product": item.name})
-        elif nb_items > 1:
-            item = items[0]
-            txt_req = txt_req + " " + ugettext("on")
-            for i, item in enumerate(items):
-                print i
-                txt_req = txt_req + " " + item.name
-                if i < 4 and i != (nb_items - 1):
-                    txt_req = txt_req + ","
-                elif i == 4:
-                    if nb_items > 4:
-                        txt_req = txt_req + "..."
-                    break
-
     context = Context({
         "receiver": receiver_name, "requester": requester_name,
-        "askee_url": "http://%s%s" % (site, receiver.get_absolute_url()),
-        "asker_url": "http://%s%s" % (site, requester.get_absolute_url()),
+        "askee_url": request.build_absolute_uri(receiver.get_absolute_url()),
+        "asker_url": request.build_absolute_uri(requester.get_absolute_url()),
         "message_subject": msg_subject,
-        "question_object": unicode(question),
-        "product_object": item.name,
-        "question_url": "http://%s%s" % (site, question.get_absolute_url()),
-        "product_url": "http://%s%s" % (site, item.get_absolute_url()),
-        "txt_request": txt_req,
-        "settings_url": "http://%s%s" % (site, reverse("account_settings"))
+        "question_content": unicode(question),
+        "question_url": request.build_absolute_uri(
+            question.get_absolute_url()),
+        "source": get_content_source(question, "email", request=request),
+        "settings_url": request.build_absolute_uri(reverse("account_settings"))
     })
 
     send_mail(msg_subject, receiver, txt_template, html_template, context,
