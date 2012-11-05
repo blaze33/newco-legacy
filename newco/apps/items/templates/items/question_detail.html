@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load staticfiles %}
+{% load content_utils %}
 
 {% block extra_style %}
     {{ block.super }}
@@ -21,10 +22,22 @@
     <div class="span4 pull-right">
         <div class="row">
             <div class="span4 well well-small nc-right-col-well-span4">
-                <h3>{% trans "Related Products" %}:</h3>
-                <div id="thumbnails_list">{% for item in question.items.all %}
-                    {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
-                {% endfor %}</div>
+                {% if question.items.all %}
+                    <h3>{% trans "Related products" %}:</h3>
+                    <div id="thumbnails_list">{% for item in question.items.all %}
+                        {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+                    {% endfor %}</div>
+                {% else %}
+                    <h3>{% trans "Related tags" %}:</h3>
+                    {% tags_display question.tags %}
+
+                    {% comment %} {# Seb: Todo?: when we'll have images for tags, display "related tags" in thumbnails ? #}
+                        <div id="thumbnails_list">{% for item in question.items.all %}
+                            {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+                        {% endfor %}</div>
+                    {% endcomment %}
+
+                {% endif %}
             </div>
         </div>
         {% for title, content_list in related_questions.iteritems %}
