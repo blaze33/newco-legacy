@@ -1,10 +1,7 @@
-import string
-
 from django.template.base import Node, Library, Variable
 from django.template.base import TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
-from django.utils.translation import ugettext as _, ungettext
 
 from django.contrib.auth.models import User
 
@@ -12,7 +9,8 @@ from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
 
 from items.models import Item, Content
-from utils.tools import get_node_extra_arguments, resolve_template_args
+from utils.tools import (get_node_extra_arguments, resolve_template_args,
+                         generate_objs_sentence, get_content_source)
 
 register = Library()
 
@@ -336,70 +334,6 @@ def tags_display(parser, token):
     args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 4)
 
     return TagsDisplayNode(tags, args, kwargs, asvar)
-
-
-def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
-                           quote_type="double", sep=" ", obj_tpl_ctx={},
-                           context=None):
-
-    words = []
-    for index, obj in enumerate(obj_qs):
-        obj_tpl_ctx.update({obj_tpl_name: obj})
-        words.append(render_to_string(obj_tpl, obj_tpl_ctx,
-                     context_instance=context))
-
-    sentence = ""
-    if words:
-        if sep == "text":
-            if len(words) == 1:
-                sentence = words[0]
-            elif max_nb and len(words) > max_nb:
-                sentence = ", ".join(words[:max_nb]) + "..."
-            else:
-                sentence = ", ".join(words[:-1]) + \
-                    " " + _("and") + " " + words[-1]
-        else:
-            sentence = sep.join(words)
-
-    if quote_type == "single":
-        sentence = sentence.replace("\"", "\'")
-    print sentence
-    return sentence
-
-
-def get_content_source(content, display, color=None, context=None,
-                       request=None):
-    nb = [content.items.count(), content.tags.count()]
-    prods_kwargs = {
-        "obj_qs": content.items.all(), "obj_tpl_name": "object", "sep": "text",
-        "obj_tpl": "items/_product_display.html", "context": context,
-        "obj_tpl_ctx": {"display": display}
-    }
-    tags_kwargs = {
-        "obj_qs": content.tags.all(), "obj_tpl_name": "tag",
-        "obj_tpl": "tags/_tag_display.html", "sep": "text", "context": context,
-        "obj_tpl_ctx": {"display": display}
-    }
-
-    if request:
-        prods_kwargs.get("obj_tpl_ctx").update({"request": request})
-        tags_kwargs.get("obj_tpl_ctx").update({"request": request})
-    if color:
-        prods_kwargs.get("obj_tpl_ctx").update({"color": color})
-
-    words = list()
-    if nb[0]:
-        s = ungettext("about the product", "about the products", nb[0])\
-            + " " + generate_objs_sentence(**prods_kwargs)
-        words.append(s)
-    if all(n for n in nb):
-        words.append(" " + _("and") + " ")
-    if nb[1]:
-        s = ungettext("with the tag", "with the tags", nb[1])\
-            + " " + generate_objs_sentence(**tags_kwargs)
-        words.append(s)
-
-    return string.join(words, "")
 
 
 class ContentInfoNode(Node):
