@@ -49,11 +49,6 @@ collectstatic:
 heroku_bash:
 	heroku run bash --app $(APP)
 
-migrate_pinax_1: maintain_on push
-	heroku run python newco/apps/utils/scripts/migrate-pinax-accounts.py --app $(APP)
-
-migrate_pinax: migrate_pinax_1 sync maintain_off
-
 simple_deploy:
 	@echo 'Check for uncommited changes:'
 	hg summary | grep -q 'commit: (clean)'

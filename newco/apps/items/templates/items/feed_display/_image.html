@@ -1,0 +1,6 @@
+
+
+
+{% with image=image.data %}
+    <a href="{{ content.get_absolute_url }}"><img style="margin-bottom: 0" height="{% widthratio image.thumbnailHeight image.thumbnailWidth 60 %}"src="{{ image.thumbnailLink }}" alt=""></a>
+{% endwith %}

@@ -57,6 +57,7 @@
 }
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
+.content-item .details { line-height: 20px; }
 
 
 .content-item-small img {
@@ -362,9 +363,7 @@ img:hover + .img-controls,
 }
 
 .nc-tag {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
+  font-weight: normal;
 }
 
 /* Use btn-group and btn styles in a nav */
