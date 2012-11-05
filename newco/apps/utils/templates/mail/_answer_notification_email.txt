@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block body_title %}
-    {% autoescape off %}{{ title_txt }}{% endautoescape %}
+    {% autoescape off %}{{ title }}{% endautoescape %}
 {% endblock %}
 
 {% block body_answer %}

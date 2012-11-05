@@ -58,17 +58,52 @@ def profile_pic(user, size=None, quote_type="double"):
 
     Syntax::
 
-        {% profile_pic_for_user <user> [size] %}
+        {% profile_pic <user> [size] %}
 
     Example::
 
-        {% profile_pic_for_user request.user 48 %}
-        {% profile_pic_for_user 'max' 48 %}
+        {% profile_pic request.user 48 %}
+        {% profile_pic 'max' 48 %}
     """
     img = gravatar_img_for_user(user, size, rating=None)
     if quote_type == "single":
         img = img.replace("\"", "\'")
     return img
+
+
+class URINode(Node):
+    def __init__(self, obj, request):
+        self.obj = Variable(obj)
+        self.request = Variable(request)
+
+    def render(self, context):
+        try:
+            obj = self.obj.resolve(context)
+            request = self.request.resolve(context)
+        except:
+            return ""
+        return request.build_absolute_uri(obj.get_absolute_url())
+
+
+@register.tag
+def get_absolute_uri(parser, token):
+    """
+    Returns the full uri of an object.
+
+    Syntax::
+
+        {% get_absolute_uri object request %}
+
+    Example::
+
+        {% get_absolute_uri answer request %}
+    """
+    bits = token.split_contents()
+    if len(bits) != 3:
+        raise TemplateSyntaxError("'%s' takes 2 arguments." % bits[0])
+    obj = bits[1]
+    request = bits[2]
+    return URINode(obj, request)
 
 
 class ObjectDisplayNode(Node):
@@ -145,30 +180,7 @@ class SourceDisplayNode(Node):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        nb = [obj.items.count(), obj.tags.count()]
-        prods_kwargs = {
-            "obj_qs": obj.items.all(), "obj_tpl_name": "object", "sep": "text",
-            "obj_tpl": "items/_product_display.html",
-            "obj_tpl_ctx": {"display": display, "color": color},
-        }
-        tags_kwargs = {
-            "obj_qs": obj.tags.all(), "obj_tpl_name": "tag",
-            "obj_tpl": "tags/_tag_display.html", "sep": "text"
-        }
-
-        words = list()
-        if nb[0]:
-            s = ungettext("about the product", "about the products", nb[0])\
-                + " " + generate_objs_sentence(context, **prods_kwargs)
-            words.append(s)
-        if all(n for n in nb):
-            words.append(" " + _("and") + " ")
-        if nb[1]:
-            s = ungettext("with the tag", "with the tags", nb[1])\
-                + " " + generate_objs_sentence(context, **tags_kwargs)
-            words.append(s)
-
-        return string.join(words, "")
+        return get_content_source(obj, display, color=color, context=context)
 
 
 @register.tag
@@ -279,7 +291,7 @@ class TagsDisplayNode(Node):
         args, kwargs = resolve_template_args(context, self.args, self.kwargs)
 
         f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
-                    "obj_tpl_name": "tag"}
+                    "obj_tpl_name": "tag", "context": context}
         fields = ["max_nb", "quote_type", "sep", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
@@ -289,7 +301,7 @@ class TagsDisplayNode(Node):
             elif value:
                 f_kwargs.update({"obj_tpl_ctx": {field: value}})
 
-        sentence = generate_objs_sentence(context, **f_kwargs)
+        sentence = generate_objs_sentence(**f_kwargs)
 
         if self.asvar:
             context[self.asvar] = sentence
@@ -326,25 +338,68 @@ def tags_display(parser, token):
     return TagsDisplayNode(tags, args, kwargs, asvar)
 
 
-def generate_objs_sentence(context, obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
-                           quote_type="double", sep=" ", obj_tpl_ctx={}):
+def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
+                           quote_type="double", sep=" ", obj_tpl_ctx={},
+                           context=None):
 
     words = []
     for index, obj in enumerate(obj_qs):
         obj_tpl_ctx.update({obj_tpl_name: obj})
-        words.append(render_to_string(obj_tpl, obj_tpl_ctx, context_instance=context))
+        words.append(render_to_string(obj_tpl, obj_tpl_ctx,
+                     context_instance=context))
 
     sentence = ""
     if words:
         if sep == "text":
-            sentence = ", ".join(words[:max_nb - 1 if max_nb else -1]) + \
-                       " " + _("and") + " " + words[-1]
+            if len(words) == 1:
+                sentence = words[0]
+            elif max_nb and len(words) > max_nb:
+                sentence = ", ".join(words[:max_nb]) + "..."
+            else:
+                sentence = ", ".join(words[:-1]) + \
+                    " " + _("and") + " " + words[-1]
         else:
             sentence = sep.join(words)
 
     if quote_type == "single":
         sentence = sentence.replace("\"", "\'")
+    print sentence
     return sentence
+
+
+def get_content_source(content, display, color=None, context=None,
+                       request=None):
+    nb = [content.items.count(), content.tags.count()]
+    prods_kwargs = {
+        "obj_qs": content.items.all(), "obj_tpl_name": "object", "sep": "text",
+        "obj_tpl": "items/_product_display.html", "context": context,
+        "obj_tpl_ctx": {"display": display}
+    }
+    tags_kwargs = {
+        "obj_qs": content.tags.all(), "obj_tpl_name": "tag",
+        "obj_tpl": "tags/_tag_display.html", "sep": "text", "context": context,
+        "obj_tpl_ctx": {"display": display}
+    }
+
+    if request:
+        prods_kwargs.get("obj_tpl_ctx").update({"request": request})
+        tags_kwargs.get("obj_tpl_ctx").update({"request": request})
+    if color:
+        prods_kwargs.get("obj_tpl_ctx").update({"color": color})
+
+    words = list()
+    if nb[0]:
+        s = ungettext("about the product", "about the products", nb[0])\
+            + " " + generate_objs_sentence(**prods_kwargs)
+        words.append(s)
+    if all(n for n in nb):
+        words.append(" " + _("and") + " ")
+    if nb[1]:
+        s = ungettext("with the tag", "with the tags", nb[1])\
+            + " " + generate_objs_sentence(**tags_kwargs)
+        words.append(s)
+
+    return string.join(words, "")
 
 
 class ContentInfoNode(Node):

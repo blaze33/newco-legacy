@@ -228,11 +228,11 @@ class AnswerForm(ModelForm):
 
         if commit:
             answer.save()
-            if self.create:
-                mail_question_author(
-                    self.request.META.get('HTTP_HOST'), answer)
             self.save_m2m()
             answer.items = answer.question.items.all()
+            answer.tags = answer.question.tags.all()
+            if self.create:
+                mail_question_author(self.request, answer)
 
         return answer
 

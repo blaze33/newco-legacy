@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from account.utils import user_display
 
 #from utils.models import LastMail
+from utils.templatetags.content_utils import get_content_source
 
 
 def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
@@ -32,74 +33,33 @@ def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
     msg.send()
 
 
-def mail_question_author(site, answer):
+def mail_question_author(request, answer):
 
     question = answer.question
     receiver = question.author
     receiver_name = user_display(receiver)
-    receiver_url = "http://%s%s" % (site, receiver.get_absolute_url())
+    receiver_url = request.build_absolute_uri(receiver.get_absolute_url())
     answerer = answer.author
     answerer_name = user_display(answerer)
-    answerer_url = "http://%s%s" % (site, answerer.get_absolute_url())
+    answerer_url = request.build_absolute_uri(answerer.get_absolute_url())
 
-    msg_subject = _("%s, %s has answered your question!") % \
-                            (receiver_name, answerer_name)
+    msg_subject = _("%s, %s has answered your question!" %
+                    (receiver_name, answerer_name))
 
     txt_template = get_template("mail/_answer_notification_email.txt")
     html_template = get_template("mail/_answer_notification_email.html")
 
-    title_txt = _('<a href="%(receiver_url)s">%(receiver)s</a>,<br>'
-        '<a href="%(answerer_url)s">%(answerer)s</a> has answered your '
-        'question about the '
-        ) % \
-        {"receiver_url": receiver_url,
-        "receiver": receiver_name,
-        "answerer_url": answerer_url,
-        "answerer": answerer_name,
-        }
+    title = _(
+        "<a href='%(receiver_url)s'>%(receiver)s</a>,<br>"
+        "<a href='%(answerer_url)s'>%(answerer)s</a> has answered your "
+        "question " % {
+            "receiver_url": receiver_url, "receiver": receiver_name,
+            "answerer_url": answerer_url, "answerer": answerer_name,
+        })
 
-    items = question.items.select_related()
-    nb_items = items.count()
-    if nb_items >= 1:
-        if nb_items == 1:
-            title_txt += unicode(_('product '))
-        else:
-            title_txt += unicode(_('products '))
+    title = title + get_content_source(answer, "email", request=request)
 
-        for i, item in enumerate(items):
-            title_txt += _('<a href="%(product_url)s">%(product)s</a>') % \
-                {"product_url": "http://%s%s" % (site, item.get_absolute_url()),
-                "product": item.name,}
-            if i < (nb_items - 2):
-                title_txt += unicode(_(", "))
-            elif i == (nb_items - 2):
-                title_txt += unicode(_(" and "))
-        title_txt += unicode(_(":")) # _(":")
-
-    elif nb_items == 0:
-        tags = question.tags
-        nb_tags = tags.all().count()
-        if nb_tags == 1:
-            title_txt += unicode(_("tag "))
-        else:
-            title_txt += unicode(_("tags "))
-        for i, tag in enumerate(tags.all()):
-            title_txt += _('<a href="%(tag_url)s">%(tag)s</a>') % \
-                {"tag_url": "http://%s%s" % \
-                    (site, reverse("tagged_items", args=[tag.slug])),
-                "tag": tag.name,
-                }
-            if i < (nb_tags - 2):
-                title_txt += unicode(_(", "))
-            elif i == (nb_tags - 2):
-                title_txt += unicode(_(" and "))
-
-        title_txt += unicode(_(":"))
-
-    context = Context({
-        "title_txt": title_txt,
-        "answer": answer,
-    })
+    context = Context({"title": title, "answer": answer, "request": request})
 
     send_mail(msg_subject, receiver, txt_template, html_template, context,
               answerer)
