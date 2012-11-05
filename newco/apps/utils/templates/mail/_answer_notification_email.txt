@@ -3,8 +3,11 @@
 {% load i18n %}
 
 {% block body_title %}
-    {{ answerer }}</a> {% trans "answered your question" %} "{{ question_object }}".
-    {% trans "About the product" %} "{{ product_object }}".
+    {% autoescape off %}{{ title_txt }}{% endautoescape %}
+{% endblock %}
+
+{% block body_answer %}
+	{% include "items/feed_display/_answer.html" with display="email_txt" content=answer %}
 {% endblock %}
 
 {% block go_to_urls %}
