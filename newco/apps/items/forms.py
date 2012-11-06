@@ -76,8 +76,8 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     PARENTS = Choices(
-        (0, "products", pgettext("parent", "products")),
-        (1, "tags", pgettext("parent", "tags"))
+        ("0", "products", pgettext("parent", "products")),
+        ("1", "tags", pgettext("parent", "tags"))
     )
 
     create = False
