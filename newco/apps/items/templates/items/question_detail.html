@@ -15,51 +15,46 @@
 
 {% block body %}
 <div class="row">
-    <div class="span7">
-        {% include "items/root_display/_question.html" with question=question vote=question.vote score=question.score answers=question.answers display="detail" %}
+  <div class="span7">{% include "items/root_display/_question.html" with question=question vote=question.vote score=question.score answers=question.answers display="detail" %}</div>
+
+  <div class="span4 pull-right">
+    <div class="row">
+      <div class="span4 well well-small nc-right-col-well-span4">
+        {% if question.items.count %}
+          <h3>{% trans "Related products" %}</h3>
+          <div id="thumbnails_list">{% for item in question.items.all %}
+            {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+          {% endfor %}</div>
+        {% elif question.tags.count %}
+          <h3>{% trans "Related tags" %}</h3>
+          {% tags_display question.tags %}
+        {% endif %}
+      </div>
     </div>
-
-    <div class="span4 pull-right">
-        <div class="row">
-            <div class="span4 well well-small nc-right-col-well-span4">
-                {% if question.items.all %}
-                    <h3>{% trans "Related products" %}:</h3>
-                    <div id="thumbnails_list">{% for item in question.items.all %}
-                        {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
-                    {% endfor %}</div>
-                {% else %}
-                    <h3>{% trans "Related tags" %}:</h3>
-                    {% tags_display question.tags %}
-
-                    {% comment %} {# Seb: Todo?: when we'll have images for tags, display "related tags" in thumbnails ? #}
-                        <div id="thumbnails_list">{% for item in question.items.all %}
-                            {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
-                        {% endfor %}</div>
-                    {% endcomment %}
-
-                {% endif %}
-            </div>
-        </div>
-        {% for title, content_list in related_questions.iteritems %}
-            {% if content_list %}<div class="row"><div class="span4 well well-small nc-right-col-well-span4">
-                <h3>{{ title }}{% trans ":" %}</h3>
-                <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
-            </div></div>{% endif %}
-        {% endfor %}
-    </div>
+    {% for title, content_list in related_questions.iteritems %}
+      {% if content_list %}<div class="row"><div class="span4 well well-small nc-right-col-well-span4">
+          <h3>{{ title }}</h3>
+          <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
+      </div></div>{% endif %}
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
 
 {% block extra_body_base %}
-    {{ block.super }}
-    <script src="{% static 'js/content.js' %}"></script>
-    {% if question %}{{ question.answer_form.media.js }}{% endif %}
+  {{ block.super }}
+  <script src="{% static 'js/content.js' %}"></script>
+  {% if question %}{{ question.answer_form.media.js }}{% endif %}
 {% endblock %}
 
 {% block extra_script %}
-    {{ block.super }}
-    <script type ="text/javascript">
-	    $(document).ready(function(){mixpanel.track("Load_question_detail");});
-	    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
-    </script>
+  {{ block.super }}
+  <script type ="text/javascript">
+      $(document).ready(function() {
+          mixpanel.track("Load_question_detail");
+      });
+      if ($('div').hasClass('alert-success')) {
+          mixpanel.track("Event Success on Question Page");
+      };
+  </script>
 {% endblock %}
