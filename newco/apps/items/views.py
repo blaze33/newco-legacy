@@ -65,9 +65,8 @@ class ContentFormMixin(object):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
         kwargs.update({"request": self.request})
         for field in ["add_question", "add_answer"]:
-            status = self.request.POST.get(field, None)
-            if status:
-                kwargs.update({"status": int(status)})
+            if field in self.request.POST:
+                kwargs.update({"status": int(self.request.POST.get(field))})
                 break
         return kwargs
 
