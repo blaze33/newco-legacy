@@ -15,14 +15,6 @@
 		<div class="span7"><div {#class="pull-right"#} id="thumbnails_list">{% for item in object_list %}{% include "items/feed_display/_thumbnail_frame.html" with object=item masonry_list="1" only %}{% endfor %}</div></div>
 		<div class="span4">
 			{% if object_list %}<div class="row"><div class="span4">
-	      <form action="" method="POST">{% csrf_token %}
-	        <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
-	          <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
-	          <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
-	          <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
-	        </div>
-	      </form>
-
 	      {% for title, content_list in related_questions.iteritems %}
 	        {% if content_list %}<div class="row"><div class="span4 well well-small nc-right-col-well-span4">
 	      	  <h4>{{ title }}{% trans ":" %}</h4>
@@ -35,28 +27,57 @@
 {% endblock %}
 
 
-{% block itemlist %}
-  <div class="row"><div class="span7" id="thumbnails_list2">{% for item in object_list %}{% include "items/feed_display/_thumbnail_frame.html" with object=item masonry_list="2" only %}{% endfor %}</div></div>
+{% block products %}
+  <div class="tabbable row">
+    <div class="span7">
+      <div class="tab-content">
+          <div class="tab-pane active" id="tab-popular-p">...Todo: Include popular products... <br>example (not sorted):
+					  <div class="row">
+					  	<div class="span7" id="thumbnails_list2">{% for item in object_list %}{% include "items/feed_display/_thumbnail_frame.html" with object=item masonry_list="2" only %}{% endfor %}</div>
+					  </div>
+          </div>
+          <div class="tab-pane" id="tab-last-p">...Todo: include last added ...</div>
+          <div class="tab-pane" id="tab-search-p">...Todo: include "all products"? or "search" ? ...</div>
+      </div>
+    </div>
+    <div class="span3">
+      <ul class="nav nav-pills nav-stacked{#-tabs -pills nav-stacked#}">
+        <li class="active"><a href="#tab-popular-p" data-toggle="tab">{% trans "Populars in " %}{{ tag|capfirst }}</a></li>
+        <li><a href="#tab-last-p" data-toggle="tab">{% trans "Last added in " %}{{ tag|capfirst }}</a></li>
+        <li><a href="#tab-search-p" data-toggle="tab">{% trans "Search products in " %}{{ tag|capfirst }}</a></li>
+      </ul>
+    </div>
+  </div>
 {% endblock %}
 
 
-{% block question_tag_list %}
-  <div class="row"><div class="span7">
-		{% include "items/feed_display/_content_list.html" with contents=questions_on_tag display="text" %}
-  </div></div>
-{% endblock %}
+{% block questions %}
 
+	<div class="tabbable row">
+	  <div class="span7">
 
-{% block question_prod_list %}
-  <div class="row"><div class="span7">
-		{% include "items/feed_display/_content_list.html" with contents=questions_on_items_wi_tag display="text" %}
-  </div></div>
-{% endblock %}
+	    <div class="tab-content">
+	        <div class="tab-pane active" id="tab-q-tag">...Include questions on tag (most votes first)...</div>
+	        <div class="tab-pane" id="tab-q-prod">...Include questions on products (most votes first ?)...</div>
+	        <div class="tab-pane" id="tab-answer-q">{#...Include (latest first)...#}{% include "items/feed_display/_content_list.html" with contents=unanswered_q_wi_tag display="text" %}</div>
+	    </div>
+	  </div>
+	  <div class="span3">
+	    <div class="well" style="max-width: 340px; padding: 8px 0;">
+	      <ul class="nav nav-list">
+	      		<li class="active"><a href="#tab-q-tag" data-toggle="tab">{% trans "Questions in " %}{{ tag|capfirst }}</a></li>
+			      <li><a href="#tab-q-prod" data-toggle="tab">{% trans "Questions on products in " %}{{ tag|capfirst }}</a></li>
+			      <li><a href="#tab-answer-q" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+	      </ul>
+	    </div>
+	    <!-- For demo -->
+	    <br><br><hr><br><br>
 
-
-{% block answer_question %}
-  <div class="row"><div class="span7">
-  	<h4>{% trans "Lastest unanswered questions:" %}</h4>
-		{% include "items/feed_display/_content_list.html" with contents=unanswered_q_wi_tag display="text" %}
-  </div></div>
+	    <ul class="nav nav-pills nav-stacked{#-tabs -pills nav-stacked#}">
+	      <li class="active"><a href="#tab-q-tag" data-toggle="tab">{% trans "Questions in " %}{{ tag|capfirst }}</a></li>
+	      <li><a href="#tab-q-prod" data-toggle="tab">{% trans "Questions on products in " %}{{ tag|capfirst }}</a></li>
+	      <li><a href="#tab-answer-q" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+	    </ul>
+	  </div>
+  </div>
 {% endblock %}

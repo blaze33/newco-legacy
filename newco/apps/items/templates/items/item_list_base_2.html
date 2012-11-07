@@ -6,17 +6,13 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="offset1 span11">
-
-    {% if object_list %}
-      <div class="tabbable {#tabs-left#}">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-home" data-toggle="tab">{% trans "Home - " %}{{ tag|capfirst }}</a></li>
-          <li><a href="#tab-products" data-toggle="tab">{% trans "All products" %}</a></li>
-          <li><a href="#tab-questions-tag" data-toggle="tab">{% trans "Questions on" %} {{ tag|capfirst }}</a></li>
-          <li><a href="#tab-questions-prod" data-toggle="tab">{% trans "Questions on products in" %} {{ tag|capfirst }}</a></li>
-          <li><a href="#tab-answer-questions" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+<div class="row"><div class="span11 offset1">
+  {% if object_list %}
+    <div class="tabbable">
+        <ul class="nav nav-tabs" id="main-tab">
+          <li class="active"><a href="#tab-home" data-toggle="tab">{% trans "Home - " %} {{ tag|capfirst }}</a></li>
+          <li><a href="#tab-products" data-toggle="tab">{% trans "Products" %}</a></li>
+          <li><a href="#tab-questions" data-toggle="tab">{% trans "Questions" %}</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-home">
@@ -24,45 +20,36 @@
             {% endblock %}
           </div>
           <div class="tab-pane" id="tab-products">
-            {% block itemlist %}
+            {% block products %}
             {% endblock %}
           </div>
-          <div class="tab-pane" id="tab-questions-tag">
-            {% block question_tag_list %}
-            {% endblock %}
-          </div>
-          <div class="tab-pane" id="tab-questions-prod">
-            {% block question_prod_list %}
-            {% endblock %}
-          </div>
-          <div class="tab-pane" id="tab-answer-questions">
-            {% block answer_question %}
+          <div class="tab-pane" id="tab-questions">
+            {% block questions %}
             {% endblock %}
           </div>
         </div>
-      </div>
-      {% if is_paginated %}{% paginate %}{% endif %}
-    {% else %}
-      <h3>
-        {% if tag and search_terms %}
-            {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-        {% elif tag and not search_terms %}
-            {% url 'tagged_items' tag.slug as tag_url %}
-            {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
-        {% elif not tag and search_terms %}
-            {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-        {% else %}
-            {% blocktrans %}No products are available.{% endblocktrans %}
-        {% endif %}
-        <br><br>
-        {% url "item_create" "item" as add_item_url %}
+    </div>
+  {% else %}
+    <h3>
+      {% if tag and search_terms %}
+          {% url 'tagged_items' tag.slug as tag_url %}
+          {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+      {% elif tag and not search_terms %}
+          {% url 'tagged_items' tag.slug as tag_url %}
+          {% blocktrans with tagname=tag.name %}No products with tag <a href="{{ tag_url }}" class="label nc-tag">{{ tagname }}</a> are available.{% endblocktrans %}
+      {% elif not tag and search_terms %}
+          {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
+      {% else %}
+          {% blocktrans %}No products are available.{% endblocktrans %}
+      {% endif %}
+      <br><br>
+      {% url "item_create" "item" as add_item_url %}
 
-        {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">create a product</a> yourself?{% endblocktrans %}
-        <br>
-        <small>{% trans "By creating a product product page, you lay the first brick to gather information about this product: other members will see this page, add things they know about it, and even answer to you questions if you ask some." %}</small>
-      </h3>
-    {% endif %}
-  </div>
-</div>
+      {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">create a product</a> yourself?{% endblocktrans %}
+      <br>
+      <small>{% trans "By creating a product product page, you lay the first brick to gather information about this product: other members will see this page, add things they know about it, and even answer to you questions if you ask some." %}</small>
+    </h3>
+  {% endif %}
+</div></div>
+
 {% endblock %}
