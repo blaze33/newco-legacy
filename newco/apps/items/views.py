@@ -48,7 +48,8 @@ class ContentView(View):
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
+            self.next = request.GET.get("next")
+            kwargs.update({"next": self.next})
         self.success_url = request.POST.get("next", None)
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
@@ -169,7 +170,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             args = [self.object._meta.module_name, self.object.id]
             self.success_url = reverse("item_edit", args=args)
         url = self.success_url
-        self.success_url = url + "?next=" + next if url and next else url
+        self.success_url = "%s?next=%s" % (url, next) if url and next else url
 
         return super(ContentCreateView, self).get_success_url()
 
@@ -183,6 +184,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
         context = super(ContentUpdateView, self).get_context_data(**kwargs)
         if self.model == Item:
             album = get_album(self.object)
@@ -415,29 +418,21 @@ class ContentDeleteView(ContentView, DeleteView):
         self.object = self.get_object()
         if not request.user.has_perm("can_manage", self.object):
             raise PermissionDenied
-        success_url = self.get_success_url(request)
         self.object.delete()
-        return HttpResponseRedirect(success_url)
+        return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self, request):
+    def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
+        return super(ContentDeleteView, self).get_context_data(**kwargs)
+
+    def get_success_url(self):
         if self.success_url:
-            success_url = self.success_url % self.object.__dict__
-        elif self.model.__name__ == "Item":
-            success_url = reverse("item_index")
-        elif "success_url" in request.GET:
-            success_url = request.GET.get("success_url")
+            return self.success_url
         else:
-            success_url = None
+            return "/"
 
-        obj = self.object
-        if success_url != obj.get_absolute_url() and success_url is not None:
-            return success_url
-        else:
-            try:
-                return obj.items.all()[0].get_absolute_url()
-            except:
-                pass
-        raise ImproperlyConfigured
+
 
 
 MESSAGES = {

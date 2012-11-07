@@ -1,3 +1,6 @@
+import string
+
+from django.core.urlresolvers import reverse
 from django.template.base import Node, Library, Variable
 from django.template.base import TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import render_to_string
@@ -41,12 +44,84 @@ def getitem(item, string):
 
 
 @register.inclusion_tag('items/_tag_edit.html')
-def edit(item_name, item_id, edit_next=None):
+def edit(item_name, item_id, edit_next=None, delete_next=None):
     return {
         'item_name': item_name,
         'item_id': item_id,
         'edit_next': edit_next,
     }
+
+
+class EditButtonsNode(Node):
+    def __init__(self, user, obj, args, kwargs, asvar):
+        self.user = Variable(user)
+        self.obj = Variable(obj)
+        self.args = args
+        self.kwargs = kwargs
+        self.asvar = asvar
+
+    def render(self, context):
+        try:
+            user = self.user.resolve(context)
+            obj = self.obj.resolve(context)
+        except:
+            return ""
+
+        #TODO: More generically, implement a 'can_manage' permission
+        if not (user.is_superuser or getattr(obj, "author", None) == user):
+            return ""
+
+        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
+
+        url_args = [obj._meta.module_name, obj.id]
+        ctx = {"edit_url": reverse("item_edit", args=url_args),
+               "delete_url": reverse("item_delete", args=url_args)}
+
+        template = "items/_edit_buttons.html"
+
+        fields = ["edit_next", "delete_next"]
+        for index, field in enumerate(fields):
+            value = kwargs.get(field, None)
+            value = args[index] if not value and len(args) > index else value
+            if value:
+                key = string.replace(field, "next", "url")
+                ctx.update({key: "%s?next=%s" % (ctx.get(key), value)})
+
+        html = render_to_string(template, ctx, context_instance=context)
+
+        if self.asvar:
+            context[self.asvar] = html
+            return ""
+        else:
+            return html
+
+
+@register.tag
+def edit_buttons(parser, token):
+    """
+    Renders two buttons (edit and delete), using _edit_buttons template,
+    given a user (client side) and an editable object.
+    Can add redirection paths after success. Can store the html in a variable.
+
+    Usage::
+
+        {% edit_buttons user obj %}
+        {% edit_buttons user obj edit_next="" delete_next="" %}
+        {% edit_buttons user obj "/content" delete_next="/" %}
+        {% edit_buttons user obj edit_next={{ var1 }} as var2 %}
+
+    """
+    bits = token.split_contents()
+    if len(bits) < 3:
+        raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
+    tag_name = bits[0]
+    user = bits[1]
+    obj = bits[2]
+    bits = bits[3:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)
+
+    return EditButtonsNode(user, obj, args, kwargs, asvar)
 
 
 @register.simple_tag

@@ -19,7 +19,7 @@
   <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
     <div class="span4"><p>
       <a class="black" href="{{ content.get_absolute_url }}">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
-      {% if user.is_superuser or author == user %}{% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}{% endif %}
+      {% edit_buttons user content edit_next=path delete_next=path %}
     </p></div>
     <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
     <div class="span2 right">{% content_info content "signature-author" %}</div>
