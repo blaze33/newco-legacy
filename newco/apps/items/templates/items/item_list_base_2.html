@@ -10,22 +10,28 @@
   {% if object_list %}
     <div class="tabbable">
         <ul class="nav nav-tabs" id="main-tab">
-          <li class="active"><a href="#tab-home" data-toggle="tab">{% trans "Home - " %} {{ tag|capfirst }}</a></li>
-          <li><a href="#tab-products" data-toggle="tab">{% trans "Products" %}</a></li>
-          <li><a href="#tab-questions" data-toggle="tab">{% trans "Questions" %}</a></li>
+          <li{% if not cat %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Home - " %} {{ tag|capfirst }}</a></li>
+          <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Products" %}</a></li>
+          <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Questions" %}</a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-home">
-            {% block home %}
-            {% endblock %}
+          <div class="tab-pane{% if not cat %} active{% endif %}" id="tab-home">
+            {% if not cat %}
+              {% block home %}
+              {% endblock %}
+            {% endif %}
           </div>
-          <div class="tab-pane" id="tab-products">
-            {% block products %}
-            {% endblock %}
+          <div class="tab-pane{% if cat == "products" %} active{% endif %}" id="tab-products">
+            {% if cat == "products" %}
+              {% block products %}
+              {% endblock %}
+            {% endif %}
           </div>
-          <div class="tab-pane" id="tab-questions">
-            {% block questions %}
-            {% endblock %}
+          <div class="tab-pane{% if cat == "questions" %} active{% endif %}" id="tab-questions">
+            {% if cat == "questions" %}
+              {% block questions %}
+              {% endblock %}
+            {% endif %}
           </div>
         </div>
     </div>
