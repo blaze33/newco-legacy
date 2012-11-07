@@ -1,7 +1,7 @@
 import json
 
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.db.models.query import QuerySet
@@ -431,8 +431,6 @@ class ContentDeleteView(ContentView, DeleteView):
             return self.success_url
         else:
             return "/"
-
-
 
 
 MESSAGES = {
