@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from account.utils import user_display
 
 #from utils.models import LastMail
-from utils.templatetags.content_utils import get_content_source
+from utils.templatetags.tools import get_content_source
 
 
 def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):

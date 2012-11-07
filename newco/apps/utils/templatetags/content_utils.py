@@ -2,9 +2,8 @@ import string
 
 from django.core.urlresolvers import reverse
 from django.template.base import Node, Library, Variable
-from django.template.base import TemplateSyntaxError, VariableDoesNotExist
+from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
-from django.utils.encoding import smart_str
 
 from django.contrib.auth.models import User
 
@@ -12,8 +11,9 @@ from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
 
 from items.models import Item, Content
-from utils.tools import (get_node_extra_arguments, resolve_template_args,
-                         generate_objs_sentence, get_content_source)
+from utils.templatetags.tools import (GenericNode, get_node_extra_arguments,
+                                      generate_objs_sentence,
+                                      get_content_source)
 
 register = Library()
 
@@ -52,32 +52,29 @@ def edit(item_name, item_id, edit_next=None, delete_next=None):
     }
 
 
-class EditButtonsNode(Node):
-    def __init__(self, user, obj, args, kwargs, asvar):
+class EditButtonsNode(GenericNode):
+
+    template = "items/_edit_buttons.html"
+
+    def __init__(self, user, obj, *args, **kwargs):
         self.user = Variable(user)
         self.obj = Variable(obj)
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
+        super(EditButtonsNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
             user = self.user.resolve(context)
             obj = self.obj.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
         except:
             return ""
 
         #TODO: More generically, implement a 'can_manage' permission
         if not (user.is_superuser or getattr(obj, "author", None) == user):
             return ""
-
-        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
-
         url_args = [obj._meta.module_name, obj.id]
         ctx = {"edit_url": reverse("item_edit", args=url_args),
                "delete_url": reverse("item_delete", args=url_args)}
-
-        template = "items/_edit_buttons.html"
 
         fields = ["edit_next", "delete_next"]
         for index, field in enumerate(fields):
@@ -87,13 +84,9 @@ class EditButtonsNode(Node):
                 key = string.replace(field, "next", "url")
                 ctx.update({key: "%s?next=%s" % (ctx.get(key), value)})
 
-        html = render_to_string(template, ctx, context_instance=context)
+        html = render_to_string(self.template, ctx, context_instance=context)
 
-        if self.asvar:
-            context[self.asvar] = html
-            return ""
-        else:
-            return html
+        return self.render_output(context, html)
 
 
 @register.tag
@@ -108,7 +101,7 @@ def edit_buttons(parser, token):
         {% edit_buttons user obj %}
         {% edit_buttons user obj edit_next="" delete_next="" %}
         {% edit_buttons user obj "/content" delete_next="/" %}
-        {% edit_buttons user obj edit_next={{ var1 }} as var2 %}
+        {% edit_buttons user obj edit_next=var as html_var %}
 
     """
     bits = token.split_contents()
@@ -144,10 +137,11 @@ def profile_pic(user, size=None, quote_type="double"):
     return img
 
 
-class URINode(Node):
-    def __init__(self, obj, request):
+class URINode(GenericNode):
+    def __init__(self, obj, request, *args, **kwargs):
         self.obj = Variable(obj)
         self.request = Variable(request)
+        super(URINode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
@@ -155,13 +149,14 @@ class URINode(Node):
             request = self.request.resolve(context)
         except:
             return ""
-        return request.build_absolute_uri(obj.get_absolute_url())
+        url = request.build_absolute_uri(obj.get_absolute_url())
+        return self.render_output(context, url)
 
 
 @register.tag
 def get_absolute_uri(parser, token):
     """
-    Returns the full uri of an object.
+    Returns the full uri of an object. Value can be pasted in var.
 
     Syntax::
 
@@ -169,91 +164,108 @@ def get_absolute_uri(parser, token):
 
     Example::
 
-        {% get_absolute_uri answer request %}
+        {% get_absolute_uri answer request as my_uri %}
     """
     bits = token.split_contents()
     if len(bits) != 3:
         raise TemplateSyntaxError("'%s' takes 2 arguments." % bits[0])
+    tag_name = bits[0]
     obj = bits[1]
     request = bits[2]
-    return URINode(obj, request)
+    bits = bits[3:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 0)
+
+    return URINode(obj, request, args, kwargs, asvar)
 
 
-class ObjectDisplayNode(Node):
-    def __init__(self, obj, display, color=None):
+class ObjectDisplayNode(GenericNode):
+    def __init__(self, obj, display, *args, **kwargs):
         self.obj = Variable(obj)
         self.display = Variable(display)
-        self.color = Variable(color) if color else None
+        super(ObjectDisplayNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
             obj = self.obj.resolve(context)
-        except VariableDoesNotExist:
-            return ""
-        else:
-            if not obj:
-                return ""
             display = self.display.resolve(context)
-            color = self.color.resolve(context) if self.color else None
-            ctx = {"object": obj, "display": display, "color": color}
-            if obj.__class__ is Item:
-                template = "items/_product_display.html"
-            elif obj.__class__ is User:
-                template = "profiles/_profile_display.html"
-                skills = obj.get_profile().skills
-                ctx.update({"username": user_display(obj)})
-                if skills.count():
-                    ctx.update({"skills": skills})
-            else:
-                raise TemplateSyntaxError("'object_display' only renders Item "
-                                          "and User instances")
-            return render_to_string(template, ctx, context_instance=context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
+            return ""
+
+        ctx = {"object": obj, "display": display}
+
+        color = kwargs.get("color", None)
+        color = args[0] if not color and len(args) > 0 else color
+        if color:
+            ctx.update({"color": color})
+
+        if obj.__class__ is Item:
+            template = "items/_product_display.html"
+        elif obj.__class__ is User:
+            template = "profiles/_profile_display.html"
+            skills = obj.get_profile().skills
+            ctx.update({"username": user_display(obj)})
+            if skills.count():
+                ctx.update({"skills": skills})
+        else:
+            raise TemplateSyntaxError("'object_display' only renders Item "
+                                      "and User instances")
+        html = render_to_string(template, ctx, context_instance=context)
+
+        return self.render_output(context, html)
 
 
 @register.tag
 def object_display(parser, token):
     """
     Renders the item link with or without its popover, depending on display.
-    Can add a css defined color
+    Can add a css defined color and paste html in a variable.
 
     Usage::
 
         {% object_display object display %}
-        {% object_display object display color %}
+        {% object_display object display color="blue" %}
+        {% object_display object "list" "black" as user_popover %}
 
     """
     bits = token.split_contents()
     if len(bits) < 3:
         raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
-    elif len(bits) > 4:
-        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    tag_name = bits[0]
     obj = bits[1]
     display = bits[2]
-    link_color = bits[3] if len(bits) == 4 else None
-    return ObjectDisplayNode(obj, display, link_color)
+    bits = bits[3:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 1)
+
+    return ObjectDisplayNode(obj, display, args, kwargs, asvar)
 
 
-class SourceDisplayNode(Node):
-    def __init__(self, obj, display, color=None):
+class SourceDisplayNode(GenericNode):
+    def __init__(self, obj, display, *args, **kwargs):
         self.obj = Variable(obj)
         self.display = Variable(display)
-        self.color = Variable(color) if color else None
+        super(SourceDisplayNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
             obj = self.obj.resolve(context)
-            if not obj:
-                return ""
-        except VariableDoesNotExist:
+            display = self.display.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
             return ""
 
-        display = self.display.resolve(context)
-        color = self.color.resolve(context) if self.color else None
+        color = kwargs.get("color", None)
+        color = args[0] if not color and len(args) > 0 else color
+
         if not (obj.__class__ is Content or hasattr(obj, "content_ptr")):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        return get_content_source(obj, display, color=color, context=context)
+        html = get_content_source(obj, display, color=color, context=context)
+
+        return self.render_output(context, html)
 
 
 @register.tag
@@ -261,63 +273,56 @@ def source_display(parser, token):
     """
     Renders the sources of a content object whether it be
     one or several products and/or one or several tags.
-    Can add a css defined color
+    Can add a css defined color and paste html in a variable.
 
     Usage::
 
         {% source_display content display %}
-        {% source_display content display color %}
+        {% source_display content display color="green" %}
+        {% object_display content "list" "black" as source %}
 
     """
     bits = token.split_contents()
     if len(bits) < 3:
         raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
-    elif len(bits) > 4:
-        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    tag_name = bits[0]
     obj = bits[1]
     display = bits[2]
-    link_color = bits[3] if len(bits) == 4 else None
-    return SourceDisplayNode(obj, display, link_color)
+    bits = bits[3:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 1)
+
+    return SourceDisplayNode(obj, display, args, kwargs, asvar)
 
 
-class TagDisplayNode(Node):
-    def __init__(self, tags, args, kwargs, asvar):
-        self.tag = Variable(tags)
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
+class TagDisplayNode(GenericNode):
+    def __init__(self, tag, *args, **kwargs):
+        self.tag = Variable(tag)
+        super(TagDisplayNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
             tag = self.tag.resolve(context)
-            if not tag:
-                return ""
-        except VariableDoesNotExist:
+            args, kwargs = self.resolve_template_args(context)
+        except:
             return ""
 
-        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
-
-        template = "tags/_tag_display.html"
-        ctx = {"tag": tag}
+        template, ctx = ["tags/_tag_display.html", {"tag": tag}]
         fields = ["quote_type", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
-            if value and field == "extra_class":
-                ctx.update({field: value})
-            elif field == "quote_type":
+            if field == "quote_type":
                 quote_type = value if value else "double"
+            elif value and field == "extra_class":
+                ctx.update({field: value})
 
         html = render_to_string(template, ctx, context_instance=context)
 
         if quote_type == "single":
             html = html.replace("\"", "\'")
 
-        if self.asvar:
-            context[self.asvar] = html
-            return ""
-        else:
-            return html
+        return self.render_output(context, html)
 
 
 @register.tag
@@ -346,22 +351,17 @@ def tag_display(parser, token):
     return TagDisplayNode(tag, args, kwargs, asvar)
 
 
-class TagsDisplayNode(Node):
-    def __init__(self, tags, args, kwargs, asvar):
+class TagsDisplayNode(GenericNode):
+    def __init__(self, tags, *args, **kwargs):
         self.tags = Variable(tags)
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
+        super(TagsDisplayNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
         try:
             tags = self.tags.resolve(context)
-            if not tags:
-                return ""
-        except VariableDoesNotExist:
+            args, kwargs = self.resolve_template_args(context)
+        except:
             return ""
-
-        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
 
         f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
                     "obj_tpl_name": "tag", "context": context}
@@ -374,13 +374,9 @@ class TagsDisplayNode(Node):
             elif value:
                 f_kwargs.update({"obj_tpl_ctx": {field: value}})
 
-        sentence = generate_objs_sentence(**f_kwargs)
+        html = generate_objs_sentence(**f_kwargs)
 
-        if self.asvar:
-            context[self.asvar] = sentence
-            return ""
-        else:
-            return sentence
+        return self.render_output(context, html)
 
 
 @register.tag
@@ -411,21 +407,24 @@ def tags_display(parser, token):
     return TagsDisplayNode(tags, args, kwargs, asvar)
 
 
-class ContentInfoNode(Node):
-    def __init__(self, content, display, pic_size=None):
+class ContentInfoNode(GenericNode):
+    def __init__(self, content, display, *args, **kwargs):
         self.content = Variable(content)
-        self.display = display
-        self.pic_size = pic_size
-        self.template = "content/info.html"
+        self.display = Variable(display)
+        super(ContentInfoNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
-        content = self.content.resolve(context)
-        display = smart_str(self.display.resolve(context), 'ascii')
-        if self.pic_size:
-            pic_size = self.pic_size.resolve(context)
-        else:
-            pic_size = None
-        author = content.author
+        try:
+            content = self.content.resolve(context)
+            display = self.display.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
+            return ""
+
+        pic_size = kwargs.get("pic_size", None)
+        pic_size = args[0] if not pic_size and len(args) > 0 else pic_size
+
+        template, author = ["content/info.html", content.author]
         if "signature" in display:
             ctx = {"pub_date": content.pub_date, "signature": True}
             if display == "signature":
@@ -458,7 +457,7 @@ class ContentInfoNode(Node):
             }
         else:
             raise TemplateSyntaxError("'content_info': wrong display value.")
-        return render_to_string(self.template, ctx, context_instance=context)
+        return render_to_string(template, ctx, context_instance=context)
 
 
 @register.tag
@@ -476,17 +475,16 @@ def content_info(parser, token):
 
     """
     bits = token.split_contents()
-    if len(bits) < 3:
+    if len(bits) < 2:
         raise TemplateSyntaxError("'%s' takes at least 2 arguments." % bits[0])
-    elif len(bits) > 4:
-        raise TemplateSyntaxError("'%s' takes at most 3 arguments." % bits[0])
+    tag_name = bits[0]
     content = bits[1]
-    display = parser.compile_filter(bits[2])
-    if len(bits) == 4:
-        pic_size = parser.compile_filter(bits[3])
-    else:
-        pic_size = None
-    return ContentInfoNode(content, display, pic_size)
+    display = bits[2]
+    bits = bits[3:]
+
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 1)
+
+    return ContentInfoNode(content, display, args, kwargs, asvar)
 
 
 class RangeNode(Node):
