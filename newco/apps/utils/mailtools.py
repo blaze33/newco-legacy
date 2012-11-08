@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.utils import translation
 
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -39,6 +40,8 @@ def mail_question_author(request, answer):
     answerer = answer.author
     answerer_name = user_display(answer.author)
 
+    translation.activate(receiver.account.language)
+
     msg_subject = _("%(receiver)s, %(answerer)s has answered your question!") % \
                 {"receiver": receiver_name, "answerer": answerer_name}
 
@@ -56,6 +59,7 @@ def mail_question_author(request, answer):
     })
     send_mail(msg_subject, receiver, txt_template, html_template, context,
               answerer)
+    translation.deactivate()
 
 
 def process_asking_for_help(request, question, success_url):
