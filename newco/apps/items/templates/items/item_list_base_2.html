@@ -3,41 +3,36 @@
 {% load url from future %}
 {% load i18n %}
 {% load pagination_tags %}
+{% load content_utils %}
 
 {% block content %}
 
-<div class="row">
-  <div class="offset1 span11">
-
-    {% if object_list %}
-      <div class="tabbable {#tabs-left#}">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-home" data-toggle="tab">{% trans "Home - " %}{{ tag|capfirst }}</a></li>
-          <li><a href="#tab-products" data-toggle="tab">{% trans "All products" %}</a></li>
-          <li><a href="#tab-questions-tag" data-toggle="tab">{% trans "Questions on" %} {{ tag|capfirst }}</a></li>
-          <li><a href="#tab-questions-prod" data-toggle="tab">{% trans "Questions on products in" %} {{ tag|capfirst }}</a></li>
-          <li><a href="#tab-answer-questions" data-toggle="tab">{% trans "Answer questions" %}</a></li>
+<div class="row"><div class="span11 offset1">
+  {% if object_list %}
+    <div class="tabbable">
+        <ul class="nav nav-tabs" id="main-tab">
+          <li{% if not cat %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Home - " %} {{ tag|capfirst }}</a></li>
+          <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Products" %}</a></li>
+          <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}{% if request.GET.template %}?template={{ request.GET.template }}{% endif %}">{% trans "Questions" %}</a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-home">
-            {% block home %}
-            {% endblock %}
+          <div class="tab-pane{% if not cat %} active{% endif %}" id="tab-home">
+            {% if not cat %}
+              {% block home %}
+              {% endblock %}
+            {% endif %}
           </div>
-          <div class="tab-pane" id="tab-products">
-            {% block itemlist %}
-            {% endblock %}
+          <div class="tab-pane{% if cat == "products" %} active{% endif %}" id="tab-products">
+            {% if cat == "products" %}
+              {% block products %}
+              {% endblock %}
+            {% endif %}
           </div>
-          <div class="tab-pane" id="tab-questions-tag">
-            {% block question_tag_list %}
-            {% endblock %}
-          </div>
-          <div class="tab-pane" id="tab-questions-prod">
-            {% block question_prod_list %}
-            {% endblock %}
-          </div>
-          <div class="tab-pane" id="tab-answer-questions">
-            {% block answer_question %}
-            {% endblock %}
+          <div class="tab-pane{% if cat == "questions" %} active{% endif %}" id="tab-questions">
+            {% if cat == "questions" %}
+              {% block questions %}
+              {% endblock %}
+            {% endif %}
           </div>
         </div>
       </div>

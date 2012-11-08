@@ -343,6 +343,10 @@ class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
     paginate_by = 9
     sort_order = "-pub_date"
 
+    def get(self, request, *args, **kwargs):
+        self.cat = kwargs.get("cat", None)
+        return super(ContentListView, self).get(request, *args, **kwargs)
+
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
         if "tag_slug" in self.kwargs:
@@ -394,6 +398,9 @@ class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
                     Q(tags=self.tag) | Q(items__in=items_wi_tag)
                 )[:3]
             context.update({"unanswered_q_wi_tag": unanswered_q_wi_tag})
+        if self.cat:
+            context.update({"cat": self.cat})
+
         ###### end of Seb's
         return context
 

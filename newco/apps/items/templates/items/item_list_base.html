@@ -106,37 +106,37 @@
             $('#carousel_tag').carousel({ interval: 5000 });
         });
     </script>
+
     <script type="text/javascript">
-        function TriggerMasonry(){
-          $('#thumbnails_list').masonry({
-          itemSelector : '.content-item',
-              isAnimated: true,
-              isFitWidth: true,
-                //columnWidth: auto,
-                //columnWidth: function( containerWidth ) {
-                //    return containerWidth / 40; // Seb: this thing is a mess... Maybe it's a matter of denominator ? (colunms/size of page)...
-                //},
+      function apply_masonry(list_container, list_items){
+        $(list_container).masonry({ //'#thumbnails_list'
+          itemSelector : list_items, //'.masonry-item'
+          isAnimated: true,
+          isFitWidth: true,
         });
-        }
-        $(document).ready(function() {
-           // simple example, using all default options unless overridden globally
+      }
+
+      function TriggerMasonry(){
+        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 500);
+        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 500);
+        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 2000);
+        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 2000);
+      }
+
+      $(document).ready(function() {
         TriggerMasonry();
-          setTimeout(TriggerMasonry,500); // trigger quickly after page load
-          setTimeout(TriggerMasonry,3000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
-        $('div.expandable').expander({
-            afterExpand:function() {TriggerMasonry();},
-            //Timer to relaunch Masonry after the onCollapse event
-            onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
-            }
-        });
-        });
+      });
+
+      $('a[data-toggle="tab"]').on('shown', function (e) {
+        TriggerMasonry();
+      });
     </script>
 {% endblock %}
 
 {% block extra_script %}
-  {{ block.super }}
+    {{ block.super }}
 	<script type ="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(function(){
 	    mixpanel.track("Load_tag_page");
 		});
 	</script>
