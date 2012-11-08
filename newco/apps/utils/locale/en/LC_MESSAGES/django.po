@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 19:07+0100\n"
+"POT-Creation-Date: 2012-11-08 11:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,29 +17,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:46
+#: mailtools.py:43
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:53
-#, python-format
-msgid ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> has answered your question "
-msgstr ""
-
-#: mailtools.py:73
+#: mailtools.py:66
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr ""
 
-#: mailtools.py:78
+#: mailtools.py:71
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 
-#: mailtools.py:116
+#: mailtools.py:109
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help!"
 msgstr ""
@@ -79,12 +72,16 @@ msgstr ""
 msgid "by"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.txt:14
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
+msgstr ""
+
+#: templates/mail/_answer_notification_email.txt:15
 #, python-format
 msgid "To see %(answerer)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.txt:16
+#: templates/mail/_answer_notification_email.txt:17
 #: templates/mail/_ask_notification_email.txt:12
 #, python-format
 msgid "To see %(question)s, go there"
@@ -110,7 +107,11 @@ msgstr ""
 msgid "To see %(follower)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_notification_email.html:39
+#: templates/mail/_notification_email.html:35
+msgid "Thanks,<br>The NewCo Project team"
+msgstr ""
+
+#: templates/mail/_notification_email.html:38
 #, python-format
 msgid ""
 "\n"
@@ -119,6 +120,19 @@ msgid ""
 "\"%(settings_url)s\" >here</a> (available soon, please forgive us for the "
 "emails you didn't want in the mean time).\n"
 "                "
+msgstr ""
+
+#: templates/mail/_notification_email.txt:27
+#, python-format
+msgid ""
+"\n"
+"---\n"
+"This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go there: %(settings_url)s "
+"(available soon).\n"
+"---\n"
+"Thanks !\n"
+"The NewCo Project team\n"
 msgstr ""
 
 #: templates/voting/form.html:7

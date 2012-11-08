@@ -33,33 +33,27 @@ def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
 
 
 def mail_question_author(request, answer):
-
     question = answer.question
     receiver = question.author
-    receiver_name = user_display(receiver)
-    receiver_url = request.build_absolute_uri(receiver.get_absolute_url())
+    receiver_name = user_display(question.author)
     answerer = answer.author
-    answerer_name = user_display(answerer)
-    answerer_url = request.build_absolute_uri(answerer.get_absolute_url())
+    answerer_name = user_display(answer.author)
 
-    msg_subject = _("%(receiver)s, %(answerer)s has answered your question!" %
-                    {"receiver": receiver_name, "answerer": answerer_name})
+    msg_subject = _("%(receiver)s, %(answerer)s has answered your question!") % \
+                {"receiver": receiver_name, "answerer": answerer_name}
 
     txt_template = get_template("mail/_answer_notification_email.txt")
     html_template = get_template("mail/_answer_notification_email.html")
 
-    title = _(
-        "<a href='%(receiver_url)s'>%(receiver)s</a>,<br>"
-        "<a href='%(answerer_url)s'>%(answerer)s</a> has answered your "
-        "question " % {
-            "receiver_url": receiver_url, "receiver": receiver_name,
-            "answerer_url": answerer_url, "answerer": answerer_name,
-        })
-
-    title = title + get_content_source(answer, "email", request=request)
-
-    context = Context({"title": title, "answer": answer, "request": request})
-
+    context = Context({
+        "answer": answer,
+        "request": request,
+        "receiver": receiver_name,
+        "receiver_url": request.build_absolute_uri(receiver.get_absolute_url()),
+        "answerer": answerer_name,
+        "answerer_url": request.build_absolute_uri(answerer.get_absolute_url()),
+        "message_subject": msg_subject,
+    })
     send_mail(msg_subject, receiver, txt_template, html_template, context,
               answerer)
 

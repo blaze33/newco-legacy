@@ -1,9 +1,10 @@
 {% extends "mail/_notification_email.txt" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body_title %}
-    {% autoescape off %}{{ title }}{% endautoescape %}
+    <a href="{{ receiver_url }}">{{ receiver }}</a>, <a href="{{ answerer_url }}">{{ answerer }}</a> has answered your question {% source_display answer "email" %}
 {% endblock %}
 
 {% block body_answer %}

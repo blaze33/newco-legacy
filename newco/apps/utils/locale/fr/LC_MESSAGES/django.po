@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 19:07+0100\n"
-"PO-Revision-Date: 2012-11-05 19:04\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2012-11-08 11:47+0100\n"
+"PO-Revision-Date: 2012-11-08 10:40\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,32 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: mailtools.py:46
+#: mailtools.py:43
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
-msgstr "%(receiver)s, %(answerer)s répondu a votre question !"
+msgstr "%(receiver)s, %(answerer)s a répondu à votre question !"
 
-#: mailtools.py:53
-#, python-format
-msgid ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> has answered your question "
-msgstr ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> a répondu a votre question"
-
-#: mailtools.py:73
+#: mailtools.py:66
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr "%(user)s, votre requête a été envoyée à %(receiver)s !"
 
-#: mailtools.py:78
+#: mailtools.py:71
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 "%(user)s, vous ne pouvez pas vous proposer de répondre à une question !"
 
-#: mailtools.py:116
+#: mailtools.py:109
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help!"
 msgstr "%(receiver)s, %(requester)s a besoin de vous !"
@@ -84,12 +75,16 @@ msgstr "%(user)s, vous ne pouvez pas vous suivre !"
 msgid "by"
 msgstr "par"
 
-#: templates/mail/_answer_notification_email.txt:14
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
+msgstr "a répondu à votre question"
+
+#: templates/mail/_answer_notification_email.txt:15
 #, python-format
 msgid "To see %(answerer)s's profile, go there"
 msgstr "Pour voir le profil de %(answerer)s, rendez-vous ici"
 
-#: templates/mail/_answer_notification_email.txt:16
+#: templates/mail/_answer_notification_email.txt:17
 #: templates/mail/_ask_notification_email.txt:12
 #, python-format
 msgid "To see %(question)s, go there"
@@ -115,7 +110,11 @@ msgstr "vous suit désormais sur NewCo !"
 msgid "To see %(follower)s's profile, go there"
 msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 
-#: templates/mail/_notification_email.html:39
+#: templates/mail/_notification_email.html:35
+msgid "Thanks,<br>The NewCo Project team"
+msgstr "Merci,<br> L'équipe NewCo Project"
+
+#: templates/mail/_notification_email.html:38
 #, python-format
 msgid ""
 "\n"
@@ -129,6 +128,27 @@ msgstr ""
 "Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
 "vos notifications. Si vous voulez les changer, rendez-vous <a href="
 "\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+
+#: templates/mail/_notification_email.txt:27
+#, python-format
+msgid ""
+"\n"
+"---\n"
+"This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go there: %(settings_url)s "
+"(available soon).\n"
+"---\n"
+"Thanks !\n"
+"The NewCo Project team\n"
+msgstr ""
+"\n"
+"---\n"
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
+"vos notifications. Si vous voulez les changer, rendez-vous <a href="
+"\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
+"---\n"
+"Thanks !\n"
+"L'équipe NewCo Project\n"
 
 #: templates/voting/form.html:7
 msgid ""
@@ -213,6 +233,16 @@ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
 
+#~ msgid "Product"
+#~ msgstr "Produit"
+
+#~ msgid ""
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
+#~ "s'>%(answerer)s</a> has answered your question "
+#~ msgstr ""
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
+#~ "s'>%(answerer)s</a> a répondu a votre question"
+
 #~ msgid "answered your question '%(question)s'"
 #~ msgstr "a répondu à votre question '%(question)s'"
 
@@ -224,9 +254,6 @@ msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
 
 #~ msgid "would like you to answer this question '%(question)s'"
 #~ msgstr "aimerait que vous répondiez à cette question '%(question)s'"
-
-#~ msgid "answered your question"
-#~ msgstr "a répondu à votre question"
 
 #~ msgid "About the product"
 #~ msgstr "A propos du produit"
