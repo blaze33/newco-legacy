@@ -3,16 +3,14 @@
 {% load i18n %}
 
 {% block body_title %}
-    {% autoescape off %}{{ title }}{% endautoescape %}
+  {% autoescape off %}{{ title }}{% endautoescape %}
 {% endblock %}
 
 {% block body_answer %}
-	{% include "items/feed_display/_answer.html" with display="email_txt" content=answer %}
+  {% include "items/feed_display/_answer.html" with display="email_txt" content=answer %}
 {% endblock %}
 
 {% block go_to_urls %}
-    {% blocktrans %}To see {{ answerer }}'s profile, go there{% endblocktrans %}:
-        {{ answerer_url }}
-    {% blocktrans %}To see {{ question }}, go there{% endblocktrans %}:
-        {{ question_url }}
+  {% blocktrans %}To see {{ answerer }}'s profile, go there:{% endblocktrans %} {{ answerer_url }}
+  {% blocktrans %}To see {{ question }}, go there:{% endblocktrans %} {{ question_url }}
 {% endblock %}

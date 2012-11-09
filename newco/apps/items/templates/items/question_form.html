@@ -1,3 +1,5 @@
+{# TITLE: Default #}
+
 {% extends "site_base.html" %}
 
 {% load url from future %}
@@ -142,11 +144,9 @@
 
 {% block extra_script %}
   {{ block.super }}
-	<script type ="text/javascript">
-		$(document).ready(function(){
-	    mixpanel.track("Load_add_question");
-		});
-	</script>
+  <script type ="text/javascript">
+    $(document).ready(function(){
+        mixpanel.track("Load_add_question");
+    });
+  </script>
 {% endblock %}
-
-{# TITLE: Default #}
