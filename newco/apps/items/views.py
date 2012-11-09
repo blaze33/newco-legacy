@@ -30,7 +30,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
 from utils.follow.views import FollowMixin
-from utils.tools import load_object, get_sorted_queryset
+from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -213,7 +213,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             contents = dict()
             for key, queryset in querysets.items():
-                contents.update({key: get_sorted_queryset(queryset, user)})
+                contents.update({key: queryset.get_qs_tools("popular", user)})
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -224,9 +224,9 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                answer_qs = Content.objects.filter(
-                    Q(answer__question__id=q.id) & public_query)
-                q.answers = get_sorted_queryset(answer_qs, user)
+                answer_query = Q(answer__question__id=q.id)
+                q.answers = Content.objects.filter(
+                    answer_query & public_query).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -267,9 +267,9 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            answer_qs = Content.objects.filter(
-                Q(answer__question__id=q.id) & public_query)
-            q.answers = get_sorted_queryset(answer_qs, user)
+            answer_query = Q(answer__question__id=q.id)
+            q.answers = Content.objects.filter(
+                answer_query & public_query).get_qs_tools("popular", user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
@@ -356,8 +356,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            order = "vote" if self.qs_option == "popular" else self.qs_option
-            res = get_sorted_queryset(qs, self.request.user, order)
+            res = qs.get_qs_tools(self.qs_option, self.request.user)
             qs = res.get("queryset")
             self.scores, self.votes = [res.get("scores"), res.get("votes")]
         return qs
