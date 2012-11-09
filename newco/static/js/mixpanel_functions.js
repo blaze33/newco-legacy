@@ -4,8 +4,18 @@ $(function(){
    // $(".one_row").popover({animation:'true', trigger: 'hover', content: 'popover'});
 	
     //Affiliation
-    mixpanel.track_links("#mixpanel_click_store","Click to Store");
-    mixpanel.track_links("#mixpanel_click_price","Click to Product");
+    $(".mixpanel-product").each(function (index) {
+		var product=$(this);
+		var data = {
+					ean: product.data("ean"),
+					payload: {
+							  'product':product.data("name"),
+							  'store':product.data("store")
+							  }
+					};
+	    mixpanel.track_links("#"+data.ean,"Click to Product", data.payload);
+	});
+      
     //Signup
     if ($('li').hasClass('non_auth')){mixpanel.track("Page Load User non authenticated");};
     if ($('li').hasClass('well_auth')){mixpanel.track("Page Load User authenticated");};

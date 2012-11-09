@@ -42,11 +42,11 @@
       </div>
       {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
         <hr>
-        <div class="row">
+        <div class="row mixpanel-product" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
           {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
           <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
           <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-          <div class="span1"><a href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+          <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}"> {% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
         </div>
       {% endfor %}{% endfor %}
       <hr>
@@ -133,5 +133,4 @@
         $(document).ready(function(){mixpanel.track("Load_item_detail");});
         if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
     </script>
-    <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
 {% endblock %}
