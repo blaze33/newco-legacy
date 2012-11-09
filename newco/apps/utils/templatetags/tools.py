@@ -7,6 +7,9 @@ from django.utils.translation import ugettext as _, ungettext
 
 
 class GenericNode(Node):
+
+    quote_type = "double"
+
     def __init__(self, args, kwargs, asvar):
         self.args = args
         self.kwargs = kwargs
@@ -19,6 +22,8 @@ class GenericNode(Node):
         return [args, kwargs]
 
     def render_output(self, context, value):
+        if self.quote_type == "single":
+            value = value.replace("\"", "\'")
         if self.asvar:
             context[self.asvar] = value
             return ""
@@ -54,9 +59,8 @@ def get_node_extra_arguments(parser, bits, tag_name, max_args):
     return [args, kwargs, asvar]
 
 
-def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
-                           quote_type="double", sep=" ", obj_tpl_ctx={},
-                           context=None):
+def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None, sep=" ",
+                           obj_tpl_ctx={}, context=None):
 
     words = []
     for index, obj in enumerate(obj_qs):
@@ -76,9 +80,6 @@ def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
                     " " + _("and") + " " + words[-1]
         else:
             sentence = sep.join(words)
-
-    if quote_type == "single":
-        sentence = sentence.replace("\"", "\'")
     return sentence
 
 
