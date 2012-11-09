@@ -72,36 +72,6 @@
 .content-item-small .details p { margin: 0; }*/
 
 
-/*
- Remove the image when screen is too small (<800px).
- Rather than getting a bad positionment.
- */
-@media (min-width: 800px) {
-.content-item-mini { line-height: 1px; width: 60px; margin: 3px }
-.content-item-mini img {
-    float: left;
-    margin-left: 3px;
-    width: 60px;
-    border-radius: 3px;
-    margin-right:5px;
-    margin-top: 2px;
-    margin-bottom: 40px;
-}
-}
-
-@media (max-width: 800px) {
-.content-item-mini { line-height: 0px; width: 0px; margin: 0px }
-.content-item-mini img {
-    float: left;
-    margin-left: 0px;
-    width: 0px;
-    border-radius: 0px;
-    margin-right:0px;
-    margin-top: 0px;
-    margin-bottom: 00px;
-}
-}
-
 .content-item-products { line-height: 1px; width: 25px; margin: 3px }
 .content-item-products img {
     float: left;
