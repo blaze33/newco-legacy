@@ -43,6 +43,11 @@ def getitem(item, string):
     return item.get(string, "")
 
 
+@register.filter
+def feed_template(value):
+    return "items/feed_display/_%s.html" % value._meta.module_name
+
+
 @register.inclusion_tag('items/_tag_edit.html')
 def edit(item_name, item_id, edit_next=None, delete_next=None):
     return {
