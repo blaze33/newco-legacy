@@ -4,9 +4,9 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
-from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -30,7 +30,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
 from utils.follow.views import FollowMixin
-from utils.tools import load_object, get_sorted_queryset, get_search_results
+from utils.tools import load_object, get_sorted_queryset
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -318,101 +318,79 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                                                        **kwargs)
 
 
-class SearchMixin(object):
+class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
-    def post(self, request, *args, **kwargs):
-        search = request.POST.get("item_search", "")
-        if not search:
-            return super(SearchMixin, self).post(request, *args, **kwargs)
-
-        item_list = Item.objects.filter(name=search)
-        tag_list = Tag.objects.filter(name=search)
-        if item_list.count() == 1:
-            response = item_list[0].get_absolute_url()
-        elif tag_list.count() == 1:
-            response = reverse("tagged_items", args=[tag_list[0].slug])
-        else:
-            response = "%s?q=%s" % (reverse("content_search"), search)
-        return HttpResponseRedirect(response)
-
-
-class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
-
-    model = Item
-    template_name = "items/item_list_image.html"
     paginate_by = 9
-    sort_order = "-pub_date"
+    qs_option = "-pub_date"
 
     def get(self, request, *args, **kwargs):
-        self.cat = kwargs.get("cat", None)
+        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+        self.cat = kwargs.get("cat", "home")
+        self.template_name = "items/item_list_%s.html" % self.cat
+        self.qs_option = self.request.GET.get("qs_option", self.qs_option)
+
+        if self.cat == "home" or self.cat == "products":
+            self.model, self.pill = [Item, kwargs.get("pill", "browse")]
+            self.queryset = Item.objects.filter(tags=self.tag)
+            msg = _("No products with tag %s")
+        elif self.cat == "questions":
+            self.model, self.pill = [Question, kwargs.get("pill", "tag")]
+            self.queryset = Content.objects.filter(question__isnull=False)
+            if self.pill == "tag":
+                self.queryset = self.queryset.filter(tags=self.tag)
+                msg = _("No questions with tag %s")
+            elif self.pill == "products":
+                item_ids = Item.objects.filter(tags=self.tag).values_list(
+                    "id", flat=True)
+                self.queryset = self.queryset.filter(items__in=item_ids)
+                msg = _("No questions about products with tag %s")
+
+        tpl = "tags/_tag_display.html"
+        self.empty_msg = msg % render_to_string(tpl, {"tag": self.tag})
         return super(ContentListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
-        if "tag_slug" in self.kwargs:
-            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            qs = qs.filter(tags=self.tag)
-        self.search_terms = self.request.GET.get("q", "")
-        if self.search_terms:
-            self.template_name = "items/item_list_text.html"
-            qs = get_search_results(qs, self.search_terms, ["name"])
-            return qs
-        field = "content__question__id"
-        qs = list(qs.annotate(score=Count(field)).order_by("-score"))\
-            if self.sort_order == "popular" else qs.order_by(self.sort_order)
+        if self.cat == "products":
+            field = "content__question__id"
+            qs = qs.annotate(score=Count(field)).order_by("-score") \
+                if self.qs_option == "popular" else qs.order_by(self.qs_option)
+        elif self.cat == "questions":
+            order = "vote" if self.qs_option == "popular" else self.qs_option
+            res = get_sorted_queryset(qs, self.request.user, order)
+            qs = res.get("queryset")
+            self.scores, self.votes = [res.get("scores"), res.get("votes")]
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "search_terms", "sort_order"]:
-            context.update({attr: getattr(self, attr, "")})
-        if not "object_list" in context:
-            return context
-        objs = context.get("object_list")
-        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
-        if nb_items == 0:
-            return context
-        qs = Content.objects.filter(question__items__in=objs).distinct()
-        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
-        rq = SortedDict()
-        rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
-        rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
-        context.update({"related_questions": rq})
-
-        ###### Seb's : for trial template on tags page
-        if "tag_slug" in self.kwargs:
-            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-
-            questions_on_tag = Question.objects.filter(tags=self.tag)[:3]
-            context.update({"questions_on_tag": questions_on_tag})
-            ### To do : sort these questions by vote
-
-            items_wi_tag = Item.objects.filter(tags=self.tag)
-            questions_on_items_wi_tag = Question.objects.filter(items__in=items_wi_tag)[:3]
-            context.update({"questions_on_items_wi_tag": questions_on_items_wi_tag})
-            ## To Do : sort these questions by vote
-
-            unanswered_q_wi_tag = Question.objects.annotate(
-                    score=Count("answer")
-                ).filter( Q(score__lte=0),
-                    Q(tags=self.tag) | Q(items__in=items_wi_tag)
-                )[:3]
-            context.update({"unanswered_q_wi_tag": unanswered_q_wi_tag})
-        if self.cat:
-            context.update({"cat": self.cat})
-
-        ###### end of Seb's
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
+            if hasattr(self, attr):
+                context.update({attr: getattr(self, attr)})
+        if self.cat == "home" and context.get("object_list"):
+            qs = Content.objects.filter(
+                question__items__in=context.get("object_list")).distinct()
+            field = "votes__vote"
+            qss = generic_annotate(qs, Vote, Sum(field)).order_by("-score")
+            rq = SortedDict()
+            rq.update({
+                _("Top related questions"): qss.select_subclasses()[:3],
+                _("Latest related questions"): qs.select_subclasses()[:3]
+            })
+            context.update({"related_questions": rq})
+        if self.model is Item:
+            context.get("object_list").fetch_images()
+        else:
+            context.update({"item_list": Item.objects.filter(tags=self.tag)})
+            context.get("item_list").fetch_images()
         return context
 
     def post(self, request, *args, **kwargs):
-        if "tag_slug" in self.kwargs and "skills" in request.POST:
-            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            prof = request.user.get_profile()
-            prof.skills.add(tag) if request.POST.get("skills") == "add" \
-                else prof.skills.remove(tag)
-            return self.get(request, *args, **kwargs)
-        elif "sort_products" in request.POST:
-            self.sort_order = self.request.POST.get("sort_products")
+        if "skills" in request.POST:
+            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+            profile = request.user.get_profile()
+            profile.skills.add(tag) if request.POST.get("skills") == "add" \
+                else profile.skills.remove(tag)
             return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 

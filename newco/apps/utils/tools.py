@@ -2,7 +2,7 @@ import itertools
 import re
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.utils.datastructures import SortedDict
 
@@ -123,9 +123,15 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
     return results
 
 
-def get_sorted_queryset(queryset, user):
-    queryset = generic_annotate(
-        queryset, Vote, Sum('votes__vote')).order_by("-score")
+def get_sorted_queryset(queryset, user, order_by="vote"):
+    if order_by == "vote":
+        queryset = generic_annotate(
+            queryset, Vote, Sum('votes__vote')).order_by("-score")
+    elif "pub_date" in order_by:
+        queryset = queryset.order_by(order_by)
+    elif order_by == "no_answers":
+        queryset = queryset.annotate(
+            score=Count("answer")).filter(score__lte=0)
     scores = Vote.objects.get_scores_in_bulk(queryset)
     votes = Vote.objects.get_for_user_in_bulk(queryset, user)
     return {"queryset": queryset.select_subclasses(),

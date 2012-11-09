@@ -19,27 +19,24 @@
 
 {% block carousel %}
 <div class="row">
-  <div class="span2"><h1>{% if tag %}{{ tag|capfirst }}</h1><div class="pull-right">
+  <div class="span3"><h1>{% if tag %}{{ tag|capfirst }}</h1><div class="pull-right">
     {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
     {% else %}
       <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
     {% endif %}</form>{% endif %}
   </div>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
-  <div class="span6" align="center">{% if object_list %}
+  <div class="span7" align="center">{% if item_list.count %}
     <div id="carousel_tag" class="carousel slide">
-      <div class="carousel-inner">{% for item in object_list %}
+      <div class="carousel-inner">{% for item in item_list %}
         <div class="{% if forloop.first %}active {% endif %}item">
           <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.data.link }}" alt=""></a>
           <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
         </div>
       {% endfor %}</div>
       
-      <!-- Buttons not displayed while not working -->
-      {% comment %}
       <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
       <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
-      {% endcomment %}
     </div>
   {% else %}&nbsp;{% endif %}</div>
 
@@ -48,52 +45,16 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="offset2 span7">
-    {% if object_list %}
-      {% block itemlist %}
-      {% endblock %}
-      {% if is_paginated %}{% paginate %}{% endif %}
-    {% else %}
-      {% if tag %}{% tag_display tag as tag_html %}{% endif %}
-      <h3>
-        {% if tag and search_terms %}
-          {% blocktrans %}No products with tag {{ tag_html }} are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-        {% elif tag and not search_terms %}
-          {% blocktrans %}No products with tag {{ tag_html }} are available.{% endblocktrans %}
-        {% elif not tag and search_terms %}
-          {% blocktrans %}No products are available for search terms <i>"{{ search_terms }}"</i>.{% endblocktrans %}
-        {% else %}
-          {% blocktrans %}No products are available.{% endblocktrans %}
-        {% endif %}
-        <br><br>
-        {% url "item_create" "item" as add_item_url %}
 
-        {% blocktrans %}Why not <a href="{{ add_item_url }}" class="btn btn-primary ">create a product</a> yourself?{% endblocktrans %}
-        <br>
-        <small>{% trans "By creating a product product page, you lay the first brick to gather information about this product: other members will see this page, add things they know about it, and even answer to you questions if you ask some." %}</small>
-      </h3>
-    {% endif %}
-  </div>
-  <div class="span3">{% if object_list %}
-    <div class="row">
-      <form action="" method="POST">{% csrf_token %}
-        <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
-          <button class="btn{% if sort_order == '-pub_date' %} btn-primary{% endif %}" name="sort_products" value="-pub_date" {% if sort_order == "-pub_date" %}disabled="disabled"{% endif %}>{% trans "Newest to Oldest" %}</button>
-          <button class="btn{% if sort_order == 'pub_date' %} btn-primary{% endif %}" name="sort_products" value="pub_date" {% if sort_order == "pub_date" %}disabled="disabled"{% endif %}>{% trans "Oldest to Newest" %}</button>
-          <button class="btn{% if sort_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Most popular" %}</button>
-        </div>
-      </form>
-    </div>
-
-    {% for title, content_list in related_questions.iteritems %}
-      {% if content_list %}<div class="row well well-small">
-        <h4>{{ title }}{% trans ":" %}</h4>
-        <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
-      </div>{% endif %}
-    {% endfor %}
-  {% endif %}</div>
+<div class="tabbable">
+  <div class="row"><ul class="offset3 span7 nav nav-tabs" id="main-tab">
+    <li{% if cat == "home" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug %}">{% trans "Home" %} - {{ tag|capfirst }}</a></li>
+    <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}">{% trans "Products" %}</a></li>
+    <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}">{% trans "Questions" %}</a></li>
+  </ul></div>
+  {% block list %}{% endblock %}
 </div>
+{% if is_paginated %}{% paginate %}{% endif %}
 {% endblock %}
 
 {% endblock %}
@@ -103,7 +64,7 @@
     {{ media.js }}
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#carousel_tag').carousel({ interval: 5000 });
+            $('#carousel_tag').carousel({ interval: 10000 });
         });
     </script>
 
@@ -135,9 +96,9 @@
 
 {% block extra_script %}
     {{ block.super }}
-	<script type ="text/javascript">
-		$(document).ready(function(){
-	    mixpanel.track("Load_tag_page");
-		});
-	</script>
+  <script type ="text/javascript">
+    $(document).ready(function(){
+      mixpanel.track("Load_tag_page");
+    });
+  </script>
 {% endblock %}
