@@ -50,8 +50,7 @@ def load_object(request):
                                                 lookup_kwargs))
 
 
-def normalize_query(query_string,
-                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
     """
     Splits the query string in invidual keywords, getting rid of unecessary
@@ -63,8 +62,7 @@ def normalize_query(query_string,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ',
-                      (t[0] or t[1]).strip()) for t in findterms(query_string)]
+    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
 
 
 def get_query(query_string, search_fields, terms=None):

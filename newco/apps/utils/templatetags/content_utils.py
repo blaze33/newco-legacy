@@ -317,15 +317,14 @@ class TagDisplayNode(GenericNode):
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
+            if not value:
+                continue
             if field == "quote_type":
-                quote_type = value if value else "double"
-            elif value and field == "extra_class":
+                setattr(self, field, value)
+            elif field == "extra_class":
                 ctx.update({field: value})
 
         html = render_to_string(template, ctx, context_instance=context)
-
-        if quote_type == "single":
-            html = html.replace("\"", "\'")
 
         return self.render_output(context, html)
 
@@ -374,10 +373,14 @@ class TagsDisplayNode(GenericNode):
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
-            if field != "extra_class" and value:
-                f_kwargs.update({field: value})
-            elif value:
+            if not value:
+                continue
+            if field == "extra_class":
                 f_kwargs.update({"obj_tpl_ctx": {field: value}})
+            elif field == "quote_type":
+                setattr(self, field, value)
+            else:
+                f_kwargs.update({field: value})
 
         html = generate_objs_sentence(**f_kwargs)
 
