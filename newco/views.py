@@ -33,8 +33,6 @@ class HomepageView(MultiTemplateMixin, ListView):
             self.queryset = Question.objects.annotate(
                 score=Count("answer")).filter(score__lte=0)
             self.template_name = "homepage_contents.html"
-        else:
-            pass
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
