@@ -7,6 +7,11 @@
 {% load pagination_tags %}
 {% load staticfiles %}
 
+{% block extra_style %}
+    {{ block.super }}
+    <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 <br><br>
 <div class="row">
@@ -19,7 +24,7 @@
         <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
             <div class="input-append">
                 <input type="text" autocomplete="off" class="typeahead span2 search-query" name="select_category" id="global_search_cat" placeholder="{% trans 'Filter by category' %}">
-                <button type="submit" class="btn btn-primary">{% trans "Select" %}</button>
+                <button type="submit" class="btn btn-primary" style="position:relative;top:2px">{% trans "Select" %}</button>
             </div>
         </form>
     </div>
@@ -47,8 +52,15 @@
             {% endfor %}
           </div>
           <div class="tab-pane" id="tab-q-categories">
-            {% for content in object_list %}{% if content.tags.all %}
+            {% for content in object_list %}
+            {% if content.tags.all %}
             {% include "items/feed_display/_question_1.html" with display="unanswered categories" %}
+            {% for tag in content.tags.all %}
+	            <div class="span1 content-item-mini">
+		        <a href="{{ content.get_absolute_url }}"><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
+	    	    <h6 class="black" align="center">{{ tag.name }}</h6></a>
+	            </div>
+	            {% endfor %}
             {% endif %}
             {% endfor %}
           </div>
@@ -85,3 +97,5 @@
         });
     </script>
 {% endblock %}
+
+{# TITLE: Split Questions on products & on Categories #}

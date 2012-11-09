@@ -13,7 +13,8 @@ from utils.multitemplate.views import MultiTemplateMixin
 class HomepageView(MultiTemplateMixin, ListView):
 
     paginate_by = 14
-    sort_order = "popular"
+    sort_p_order = "popular"
+    sort_q_order = "unanswered"
 
     def get(self, request, *args, **kwargs):
         self.cat = kwargs.get("cat", "home")
@@ -21,18 +22,22 @@ class HomepageView(MultiTemplateMixin, ListView):
             self.model = Item
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
-            if self.sort_order == "popular":
+            if self.sort_p_order == "popular":
                 delta = timezone.now() - datetime.timedelta(days=30)
                 self.queryset = self.queryset.filter(
                     content__pub_date__gt=delta)
                 self.queryset = self.queryset.annotate(
                     Count("content")).order_by("-content__count")
-            elif self.sort_order == "last":
+            elif self.sort_p_order == "last":
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
             self.model = Question
-            self.queryset = Question.objects.annotate(
-                score=Count("answer")).filter(score__lte=0)
+            if self.sort_q_order == "unanswered":
+                self.queryset = Question.objects.annotate(
+                    score=Count("answer")).filter(score__lte=0)
+            elif self.sort_q_order == "last_answered":
+                self.queryset = Question.objects.annotate(
+                    score=Count("answer")).filter(score__gt=0)
             if "category" in self.request.GET:
                 self.search_terms = self.request.GET.get("category", "")
                 category=self.search_terms
@@ -45,7 +50,7 @@ class HomepageView(MultiTemplateMixin, ListView):
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"cat": self.cat, "sort_order":self.sort_order})
+        kwargs.update({"cat": self.cat, "sort_p_order":self.sort_p_order, "sort_q_order":self.sort_q_order})
         ctx = super(HomepageView, self).get_context_data(**kwargs)
         if self.model == Item:
             ctx.get("object_list").fetch_images()
@@ -66,6 +71,9 @@ class HomepageView(MultiTemplateMixin, ListView):
             response = "%s?category=%s" % (reverse("home", kwargs={"cat":"questions"}), select_category)
             return HttpResponseRedirect(response)
         elif "sort_products" in request.POST:
-            self.sort_order = self.request.POST.get("sort_products")
+            self.sort_p_order = self.request.POST.get("sort_products")
+            return self.get(request, *args, **kwargs)
+        elif "sort_questions" in request.POST:
+            self.sort_q_order = self.request.POST.get("sort_questions")
             return self.get(request, *args, **kwargs)
         return super(HomepageView, self).post(request, *args, **kwargs)
