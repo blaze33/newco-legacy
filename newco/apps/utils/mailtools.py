@@ -17,6 +17,8 @@ from utils.templatetags.content_utils import get_content_source
 
 
 def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
+    # ToDo : make the subject of email translated in "send_mail", to factorize the translation in this function ? (only thing that make it not possible )
+    # translation.activate(receiver.account.language)
     msg_txt = txt_template.render(context)
     msg_html = html_template.render(context)
 
@@ -31,6 +33,7 @@ def send_mail(msg_sub, receiver, txt_template, html_template, context, sender):
 #    if diff > waiting_time or created:
 #        last_mail.save()
     msg.send()
+    # translation.deactivate()
 
 
 def mail_question_author(request, answer):
@@ -105,28 +108,54 @@ def process_asking_for_help(request, question, success_url):
 
 
 def mail_helper(request, receiver, requester, question):
-    #TODO: add links to question and item
+    translation.activate(receiver.account.language)
 
     receiver_name = user_display(receiver)
     requester_name = user_display(requester)
 
-    msg_subject = _("%(receiver)s, %(requester)s needs your help!" %
-                    {"receiver": receiver_name, "requester": requester_name})
+    msg_subject = _("%(receiver)s, %(requester)s needs your help!") % \
+                    {"receiver": receiver_name, "requester": requester_name}
 
     txt_template = get_template("mail/_ask_notification_email.txt")
     html_template = get_template("mail/_ask_notification_email.html")
 
     context = Context({
-        "receiver": receiver_name, "requester": requester_name,
-        "askee_url": request.build_absolute_uri(receiver.get_absolute_url()),
+        "receiver": receiver_name,
+        "receiver_url": request.build_absolute_uri(receiver.get_absolute_url()),
+        "asker": requester_name,
         "asker_url": request.build_absolute_uri(requester.get_absolute_url()),
+        "request": request,
         "message_subject": msg_subject,
-        "question_content": unicode(question),
+        "question": question,
         "question_url": request.build_absolute_uri(
             question.get_absolute_url()),
-        "source": get_content_source(question, "email", request=request),
         "settings_url": request.build_absolute_uri(reverse("account_settings"))
     })
 
     send_mail(msg_subject, receiver, txt_template, html_template, context,
               requester)
+    translation.activate(requester.account.language)
+
+
+def mail_followee(request, fwee, fwer):
+    translation.activate(fwee.account.language)
+    fwee_name = user_display(fwee)
+    fwer_name = user_display(fwer)
+
+    msg_subject = "%s, %s is now following you on NewCo!" % \
+                  (fwee_name, fwer_name)
+
+    txt_template = get_template("mail/_follow_notification_email.txt")
+    html_template = get_template("mail/_follow_notification_email.html")
+
+    context = Context({
+        "followee": fwee,
+        "follower": fwer,
+        "followee_url": request.build_absolute_uri(fwee.get_absolute_url()),
+        "follower_url": request.build_absolute_uri(fwer.get_absolute_url()),
+        "request": request,
+        "message_subject": msg_subject
+    })
+
+    send_mail(msg_subject, fwee, txt_template, html_template, context, fwer)
+    translation.activate(fwer.account.language)

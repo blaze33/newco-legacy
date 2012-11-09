@@ -12,7 +12,7 @@
 {% elif display == "thumbnail" or display == "mini_feed" %}
   <span itemscope itemtype="http://schema.org/Product"><a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a></span>
 {% elif display == "email" %}
-  <a {% if color %}class="{{ color }}" {% endif %}href="{% get_absolute_uri object request %}">{{ object }}</a>
+  <a {% if color %}style="color: {{ color }};" {% endif %}href="{% get_absolute_uri object request %}">{{ object }}</a>
 {% endif %}
 
 {% endspaceless %}
