@@ -298,6 +298,7 @@ class ContentInfoNode(Node):
                     "signature_author": True,
                     "signature_pic": True,
                     "author_name": user_display(author),
+                    "author_reputation": author.reputation.reputation_incremented,
                     "author_url": author.get_absolute_url(),
                     "profile_pic": profile_pic(author, size=pic_size)
                 })
@@ -305,6 +306,7 @@ class ContentInfoNode(Node):
                 ctx.update({
                     "signature_author": True,
                     "author_name": user_display(author),
+                    "author_reputation": author.reputation.reputation_incremented,
                     "author_url": author.get_absolute_url()
                 })
             elif display == "signature-pic":
@@ -319,6 +321,7 @@ class ContentInfoNode(Node):
                 "header": True,
                 "author_name": user_display(author),
                 "author_url": author.get_absolute_url(),
+                "author_reputation": author.reputation.reputation_incremented,
                 "about": author.get_profile().about
             }
         else:
