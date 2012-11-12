@@ -39,23 +39,9 @@
       <a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
     </div>
   </div>
-{% endif %}
-
-{% if display == "unanswered_questions" %}
-
-
-    <div class="span6" align="left" style="margin-left: 10px">
-    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
-
-    {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
-    <br>
-    <a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
-    <hr>
-    </div>
 {% elif display == "email_html" %}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
   <br>
-  {#<p><small>{% trans "You could improve your reputation if you write a good answer, " %}</small></p>#}
 {% elif display == "email_txt" %}
   {% autoescape off %}{{ question.content }}{% endautoescape %}
 {% endif %}
