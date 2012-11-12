@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-09 16:34+0100\n"
+"POT-Creation-Date: 2012-11-12 13:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,11 +218,11 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:285 views.py:377
+#: views.py:285 views.py:376
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:286 views.py:378
+#: views.py:286 views.py:377
 msgid "Latest related questions"
 msgstr ""
 
@@ -241,22 +241,22 @@ msgstr ""
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:424
+#: views.py:423
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:428
+#: views.py:427
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:432
+#: views.py:431
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:436
+#: views.py:435
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -289,7 +289,7 @@ msgstr ""
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: templates/items/answer_form.html:11
+#: templates/items/answer_form.html:11 templates/items/item_detail.html:122
 #: templates/items/root_display/_question.html:58
 msgid "Answer"
 msgstr ""
@@ -302,12 +302,12 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: templates/items/answer_form.html:21 templates/items/question_form.html:43
+#: templates/items/answer_form.html:21 templates/items/question_form.html:45
 msgid "Unpublish and save as draft"
 msgstr ""
 
-#: templates/items/answer_form.html:21 templates/items/question_form.html:43
-#: templates/items/question_form.html:73
+#: templates/items/answer_form.html:21 templates/items/question_form.html:45
+#: templates/items/question_form.html:75
 msgid "Save as draft"
 msgstr ""
 
@@ -372,14 +372,9 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: templates/items/item_detail.html:122
-#: templates/items/feed_display/_answer.html:38
-msgid "Add an answer"
-msgstr ""
-
 #: templates/items/item_form.html:18 templates/items/item_form.html.py:22
 #: templates/items/item_list_base.html:43
-#: templates/items/question_form.html:83
+#: templates/items/question_form.html:85
 msgid "Add a product"
 msgstr ""
 
@@ -387,7 +382,7 @@ msgstr ""
 msgid "Fill in some information about"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/question_form.html:83
+#: templates/items/item_form.html:22 templates/items/question_form.html:85
 #: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
 msgid ":"
@@ -397,7 +392,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:27 templates/items/question_form.html:95
+#: templates/items/item_form.html:27 templates/items/question_form.html:97
 msgid "Tips"
 msgstr ""
 
@@ -544,43 +539,43 @@ msgstr ""
 msgid "Related tags"
 msgstr ""
 
-#: templates/items/question_form.html:29
+#: templates/items/question_form.html:31
 msgid "Question"
 msgstr ""
 
-#: templates/items/question_form.html:35
+#: templates/items/question_form.html:37
 msgid "Ask a question"
 msgstr ""
 
-#: templates/items/question_form.html:35
+#: templates/items/question_form.html:37
 msgid "Edit your question"
 msgstr ""
 
-#: templates/items/question_form.html:42
+#: templates/items/question_form.html:44
 msgid "Update and keep public"
 msgstr ""
 
-#: templates/items/question_form.html:42
+#: templates/items/question_form.html:44
 msgid "Update and publish"
 msgstr ""
 
-#: templates/items/question_form.html:42
+#: templates/items/question_form.html:44
 msgid "Publish your question"
 msgstr ""
 
-#: templates/items/question_form.html:43
+#: templates/items/question_form.html:45
 msgid "Update and keep as draft"
 msgstr ""
 
-#: templates/items/question_form.html:50
+#: templates/items/question_form.html:52
 msgid "Why is it encouraged?"
 msgstr ""
 
-#: templates/items/question_form.html:54
+#: templates/items/question_form.html:56
 msgid "Answer your own question"
 msgstr ""
 
-#: templates/items/question_form.html:59
+#: templates/items/question_form.html:61
 msgid ""
 "<h3>We encourage you to answer your own questions.</h3> Why? On NewCo, "
 "giving answers to others is central. And sometimes you know things, but you "
@@ -589,19 +584,19 @@ msgid ""
 "              "
 msgstr ""
 
-#: templates/items/question_form.html:72
+#: templates/items/question_form.html:74
 msgid "Publish your question and answer"
 msgstr ""
 
-#: templates/items/question_form.html:87
+#: templates/items/question_form.html:89
 msgid "Cancel"
 msgstr ""
 
-#: templates/items/question_form.html:88
+#: templates/items/question_form.html:90
 msgid "Add product"
 msgstr ""
 
-#: templates/items/question_form.html:98
+#: templates/items/question_form.html:100
 msgid ""
 "\n"
 "        <h4>Tips:</h4>\n"
@@ -634,8 +629,12 @@ msgstr ""
 msgid "A:"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:23
-msgid "Sorry... This newsfeed is empty."
+#: templates/items/feed_display/_answer.html:38
+msgid "Add an answer"
+msgstr ""
+
+#: templates/items/feed_display/_content_list.html:16
+msgid "Sorry, this feed is empty."
 msgstr ""
 
 #: templates/items/feed_display/_link.html:7
@@ -667,7 +666,6 @@ msgstr ""
 
 #: templates/items/feed_display/_question.html:39
 #: templates/items/feed_display/_question.html:52
-#: templates/items/root_display/_question.html:82
 msgid "Add Answer"
 msgstr ""
 
