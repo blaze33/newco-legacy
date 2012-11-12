@@ -283,7 +283,7 @@ msgstr "Demander"
 
 #: templates/items/_data_sheet.html:11
 msgid "Maybe they can help you?"
-msgstr "Peut-être peuvent-ils vous aider&#8239;?"
+msgstr "Peut-être peuvent-ils vous aider&#x202F;?"
 
 #: templates/items/_link_list.html:8
 msgid "Publish an external link"
@@ -291,13 +291,13 @@ msgstr "Publier un lien externe"
 
 #: templates/items/_question_list.html:12 templates/items/item_detail.html:102
 msgid "Ask a new question!"
-msgstr "Poser une nouvelle question&#8239;!"
+msgstr "Poser une nouvelle question&#x202F;!"
 
 #: templates/items/_question_list.html:13 templates/items/item_detail.html:103
 msgid "No question yet! Ask the first one here!"
 msgstr ""
-"Pas de question pour l'instant&#8239;! Soyez le premier à en poser "
-"une&#8239;!"
+"Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
+"une&#x202F;!"
 
 #: templates/items/answer_form.html:11
 #: templates/items/root_display/_question.html:58

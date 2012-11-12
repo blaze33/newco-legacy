@@ -345,7 +345,7 @@ msgstr "Pas de questions sans réponse dans cette catégorie."
 
 #: templates/homepage_questions.html:32
 msgid "Ask your own awesome question then!"
-msgstr "Poser alors votre propre question&#8239;!"
+msgstr "Poser alors votre propre question&#x202F;!"
 
 #: templates/site_base.html:35
 msgid "Search for a product, a user or a tag"

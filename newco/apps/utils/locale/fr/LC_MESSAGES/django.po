@@ -22,7 +22,7 @@ msgstr ""
 #: mailtools.py:46
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
-msgstr "%(receiver)s, %(answerer)s répondu a votre question&#8239;!"
+msgstr "%(receiver)s, %(answerer)s répondu a votre question&#x202F;!"
 
 #: mailtools.py:53
 #, python-format
@@ -36,19 +36,19 @@ msgstr ""
 #: mailtools.py:73
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
-msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#8239;!"
+msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#x202F;!"
 
 #: mailtools.py:78
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 "%(user)s, vous ne pouvez pas vous proposer de répondre à une "
-"question&#8239;!"
+"question&#x202F;!"
 
 #: mailtools.py:116
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help!"
-msgstr "%(receiver)s, %(requester)s a besoin de vous&#8239;!"
+msgstr "%(receiver)s, %(requester)s a besoin de vous&#x202F;!"
 
 #: tools.py:194 tools.py:229
 msgid "and"
@@ -79,7 +79,7 @@ msgstr "%(user)s, vous ne suivez plus %(object)s."
 #: follow/tools.py:27
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
-msgstr "%(user)s, vous ne pouvez pas vous suivre&#8239;!"
+msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
 
 #: templates/content/info.html:6
 msgid "by"
@@ -109,7 +109,7 @@ msgstr "Pour voir le profil de %(asker)s, rendez-vous ici"
 #: templates/mail/_follow_notification_email.html:5
 #: templates/mail/_follow_notification_email.txt:6
 msgid "is now following you on NewCo!"
-msgstr "vous suit désormais sur NewCo&#8239;!"
+msgstr "vous suit désormais sur NewCo&#x202F;!"
 
 #: templates/mail/_follow_notification_email.txt:11
 #, python-format
@@ -132,7 +132,7 @@ msgid ""
 "(click again to undo)"
 msgstr ""
 "Vote positif&nbsp;: cette contribution montre des efforts sur la "
-"qualité&#8239;; elle est utile et claire (cliquer à nouveau pour enlever)"
+"qualité&#x202F;; elle est utile et claire (cliquer à nouveau pour enlever)"
 
 #: templates/voting/form.html:8
 msgid ""
@@ -140,7 +140,7 @@ msgid ""
 " or unclear (click again to undo)"
 msgstr ""
 "Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
-"qualité&#8239;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
+"qualité&#x202F;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
 "enlever)"
 
 #: templatetags/date_utils.py:33

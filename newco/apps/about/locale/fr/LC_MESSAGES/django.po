@@ -22,7 +22,7 @@ msgstr ""
 #: templates/about/contribute.html:5 templates/about/contribute.html.py:8
 #: templates/about/faq.html:49
 msgid "How to contribute?"
-msgstr "Comment contribuer&#8239;?"
+msgstr "Comment contribuer&#x202F;?"
 
 #: templates/about/faq.html:6 templates/about/faq.html.py:23
 msgid "FAQ"
@@ -30,7 +30,7 @@ msgstr "FAQ"
 
 #: templates/about/faq.html:26 templates/about/get_started.html:177
 msgid "Why NewCo?"
-msgstr "Pourquoi NewCo&#8239;?"
+msgstr "Pourquoi NewCo&#x202F;?"
 
 #: templates/about/faq.html:26
 msgid ""
@@ -60,13 +60,13 @@ msgstr "&nbsp;:"
 
 #: templates/about/faq.html:49
 msgid "How can I contribute to NewCo?"
-msgstr "Comment contribuer&#8239;?"
+msgstr "Comment contribuer&#x202F;?"
 
 #: templates/about/faq.html:51
 msgid "How do you ensure to have quality content on the platform?"
 msgstr ""
 "Comment vous assurez-vous d'avoir du contenu de qualité sur la "
-"plateforme&#8239;?"
+"plateforme&#x202F;?"
 
 #: templates/about/faq.html:51
 msgid ""
@@ -77,13 +77,13 @@ msgid ""
 msgstr ""
 "La qualité du contenu est, avec l'expérience utilisateur, notre première "
 "préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en"
-" oeuvre pour&#8239;:<ul><li>guider les contributeurs et les inciter à "
+" oeuvre pour&#x202F;:<ul><li>guider les contributeurs et les inciter à "
 "collaborer entre eux.</li><li>favoriser l'émergence du bon contenu via notre"
 " système d'intelligence collective."
 
 #: templates/about/faq.html:54
 msgid "How to earn reputation points?"
-msgstr "Comment gagner des points de réputation&#8239;?"
+msgstr "Comment gagner des points de réputation&#x202F;?"
 
 #: templates/about/faq.html:54
 msgid ""
@@ -95,7 +95,7 @@ msgstr ""
 
 #: templates/about/faq.html:56
 msgid "What are the tags for?"
-msgstr "A quoi servent les tags&#8239;?"
+msgstr "A quoi servent les tags&#x202F;?"
 
 #: templates/about/faq.html:56
 msgid ""
@@ -136,7 +136,7 @@ msgstr "Ou découvrez-en plus sur NewCo"
 
 #: templates/about/get_started.html:117
 msgid "How it works?"
-msgstr "Comment est structuré NewCo&#8239;?"
+msgstr "Comment est structuré NewCo&#x202F;?"
 
 #: templates/about/get_started.html:131
 msgid "Public space"
@@ -148,8 +148,8 @@ msgid ""
 "Product information? Go this way, Explore through the <a "
 "href=\"%(url_home)s\">homepage</a> or the search bar!"
 msgstr ""
-"Les informations produits&#8239;? C'est par ici, passez par la page d'<a "
-"href=\"%(url_home)s\">accueil</a> ou la barre de recherche&#8239;!"
+"Les informations produits&#x202F;? C'est par ici, passez par la page d'<a "
+"href=\"%(url_home)s\">accueil</a> ou la barre de recherche&#x202F;!"
 
 #: templates/about/get_started.html:136
 msgid ""
@@ -167,8 +167,8 @@ msgstr "Espace personnel"
 msgid ""
 "Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
 msgstr ""
-"Les pages rien que pour vous&#8239;? Votre sélection de flux, vos "
-"brouillons, votre profil... c'est ici&#8239;!"
+"Les pages rien que pour vous&#x202F;? Votre sélection de flux, vos "
+"brouillons, votre profil... c'est ici&#x202F;!"
 
 #: templates/about/get_started.html:152
 msgid ""
@@ -181,14 +181,14 @@ msgstr ""
 
 #: templates/about/get_started.html:162
 msgid "tell me more!"
-msgstr "dites m'en plus&#8239;!"
+msgstr "dites m'en plus&#x202F;!"
 
 #: templates/about/get_started.html:179
 msgid ""
 "NewCo empowers you to buy better.<br>How? We enable you to get the "
 "information you look for, and share your knowledge back to the community."
 msgstr ""
-"NewCo vous donne le pouvoir de mieux acheter.<br>Comment&#8239;? En vous "
+"NewCo vous donne le pouvoir de mieux acheter.<br>Comment&#x202F;? En vous "
 "permettant de vous informer et de partager vos connaissances à la "
 "communauté."
 
@@ -236,12 +236,12 @@ msgid ""
 "towards our partners!"
 msgstr ""
 "<b>Nouveauté&nbsp;:</b> Nous venons de mettre en place un outil pour créer "
-"<b>simplement</b> les liens d'affiliation vers nos sites partenaires&#8239;!"
+"<b>simplement</b> les liens d'affiliation vers nos sites partenaires&#x202F;!"
 " "
 
 #: templates/about/get_started.html:208
 msgid "<i>Check this out</i></a>!"
-msgstr "Allez voir</a>&#8239;!"
+msgstr "Allez voir</a>&#x202F;!"
 
 #: templates/about/team.html:6
 msgid "Team"
@@ -249,11 +249,11 @@ msgstr "Equipe"
 
 #: templates/about/team.html:10
 msgid "Who are we?"
-msgstr "Qui sommes nous&#8239;?"
+msgstr "Qui sommes nous&#x202F;?"
 
 #: templates/about/what_next.html:6 templates/about/what_next.html.py:9
 msgid "What Next?"
-msgstr "Que faire maintenant&#8239;?"
+msgstr "Que faire maintenant&#x202F;?"
 
 #: templates/about/what_next.html:35
 #, python-format
