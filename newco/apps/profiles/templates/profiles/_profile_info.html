@@ -41,50 +41,11 @@
     </dl>
   </div>
 {% elif display == "email_html" %}
-
-  {% if profile.about %}
-
-    {% trans "About" %}{% trans ":" %}
-    {{ profile.about }}
-    <br>
-  {% endif %}
-
-  {% comment %}{% if profile.location %}
-
-    {% trans "Location" %}{% trans ":" %}
-    {{ profile.location }}
-    <br>
-  {% endif %} {% endcomment %}
-
-  {% if profile.website %}
-
-    {% trans "Website" %}{% trans ":" %}
-    <a href="{{ profile.website }}" itemprop="url">{{ profile.website }}</a>
-    <br>
-  {% endif %}
-
-  {% if profile.user.date_joined %}
-
-    {% trans "Subscription date" %}{% trans ":" %}
-    {{ profile.user.date_joined }}
-    <br>
-  {% endif %}
-
-  {% if profile.user.reputation.reputation_incremented %}
-    {% trans "Reputation" %}{% trans ":" %}
-    {{ profile.user.reputation.reputation_incremented }}
-    <br>
-  {% endif %}
-
-  {% if profile.skills.count > 0 %}
-
-    {% trans "Skills" %}{% trans ":" %}
-    {% tags_display profile.skills 3 %}
-    <br>
-  {% endif %}
-
-  {# ToDo : add followers and followees , or at least a count  => to do with a templatetag ? #}
-
-{% elif display == "email_txt" %}
-  {# Should not happen, in email_txt version, we have not decided to display _profile_info.html #}
+  {% if profile.about %}{% trans "About" %}{% trans ":" %}{{ profile.about }}<br>{% endif %}
+  {% comment %}{% if profile.location %}{% trans "Location" %}{% trans ":" %} {{ profile.location }}<br>{% endif %}{% endcomment %}
+  {% if profile.website %}{% trans "Website" %}{% trans ":" %} <a href="{{ profile.website }}" itemprop="url">{{ profile.website }}</a><br>{% endif %}
+  {% if profile.user.date_joined %}{% trans "Subscription date" %}{% trans ":" %} {{ profile.user.date_joined }}<br>{% endif %}
+  {% if profile.user.reputation.reputation_incremented %}{% trans "Reputation" %}{% trans ":" %} {{ profile.user.reputation.reputation_incremented }}<br>{% endif %}
+  {% if profile.skills.count > 0 %}{% trans "Skills" %}{% trans ":" %} {% tags_display profile.skills 3 %}<br>{% endif %}
+  {# TODO: add followers and followees, or at least a count. Templatetag? #}
 {% endif %}
