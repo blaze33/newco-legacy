@@ -2,7 +2,11 @@
 {% load content_utils %}
 {% load follow_utils %}
 
-{% if not display %}
+{% if display == "email_html" %}
+  <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>
+
+  {% include "profiles/_profile_info.html" with display="email_html" %}
+{% else %}
   <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
     <div class="name">
       <a href="{{ profile.get_absolute_url }}"><h5>
@@ -21,12 +25,4 @@
       {% if disp_follow %}<br><center>{% follow_form user thumb_user extra_class="btn-mini" %}</center>{% endif %}
     </div>
   </div>
-{% elif display == "email_html" %}
-  <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>
-
-  {% include "profiles/_profile_info.html" with display="email_html" %}
-
-  {#<br><center>{% follow_form followee profile.user extra_class="btn-mini" %}</center> ToDo : faire un bouton pour pouvoir "follow back" a partie de l'email ? (cf quora, il faut faire un lien vers une page, pas un formulaire car un <form> ça marche pas dans un email)#}
-{% elif display == "email_html" %}
-  {# Should not happen, in email_txt version, we have not decided to display _profile_item.html #}
 {% endif %}

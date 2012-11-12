@@ -4,16 +4,14 @@
 {% load content_utils %}
 
 {% block body_title %}
-    {{ asker }}</a> {% trans "would like you to answer the question" %} {% source_display question "email" "#010101" %}{% trans ":" %}
+  {{ asker }}</a> {% trans "would like you to answer the question" %} {% source_display question "email" "#010101" %}{% trans ":" %}
 {% endblock %}
 
 {% block body_answer %}
-	{% include "items/feed_display/_question.html" with display="email_txt" content=question %}
+  {% include "items/feed_display/_question.html" with display="email_txt" content=question %}
 {% endblock %}
 
 {% block go_to_urls %}
-    {% blocktrans %}To see {{ asker }}'s profile, go there{% endblocktrans %}:
-        {{ asker_url }}
-    {% blocktrans %}To see {{ question }}, go there{% endblocktrans %}:
-        {{ question_url }}
+  {% blocktrans %}To see {{ asker }}'s profile, go there{% endblocktrans %}: {{ asker_url }}
+  {% blocktrans %}To see {{ question }}, go there{% endblocktrans %}: {{ question_url }}
 {% endblock %}

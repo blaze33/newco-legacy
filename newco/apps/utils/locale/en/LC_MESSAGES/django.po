@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-09 21:26+0100\n"
+"POT-Creation-Date: 2012-11-12 20:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,41 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:48
+#: mailtools.py:44
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:73
+#: mailtools.py:68
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr ""
 
-#: mailtools.py:78
+#: mailtools.py:73
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 
-#: mailtools.py:116
+#: mailtools.py:109
 #, python-format
-msgid "%(receiver)s, %(requester)s needs your help!"
+msgid "%(receiver)s, %(requester)s needs your help."
 msgstr ""
 
-#: tools.py:194 tools.py:229
-msgid "and"
+#: mailtools.py:136
+#, python-format
+msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
-
-#: tools.py:225
-msgid "about the product"
-msgid_plural "about the products"
-msgstr[0] ""
-msgstr[1] ""
-
-#: tools.py:231
-msgid "with the tag"
-msgid_plural "with the tags"
-msgstr[0] ""
-msgstr[1] ""
 
 #: follow/tools.py:19
 #, python-format
@@ -84,13 +73,12 @@ msgstr ""
 
 #: templates/mail/_answer_notification_email.txt:15
 #, python-format
-msgid "To see %(answerer)s's profile, go there"
+msgid "To see %(answerer)s's profile, go there:"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.txt:17
-#: templates/mail/_ask_notification_email.txt:17
+#: templates/mail/_answer_notification_email.txt:16
 #, python-format
-msgid "To see %(question)s, go there"
+msgid "To see %(question)s, go there:"
 msgstr ""
 
 #: templates/mail/_ask_notification_email.html:7
@@ -106,12 +94,17 @@ msgstr ""
 msgid "To see %(asker)s's profile, go there"
 msgstr ""
 
+#: templates/mail/_ask_notification_email.txt:16
+#, python-format
+msgid "To see %(question)s, go there"
+msgstr ""
+
 #: templates/mail/_follow_notification_email.html:7
 #: templates/mail/_follow_notification_email.txt:7
 msgid "is now following you on NewCo!"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.html:15
+#: templates/mail/_follow_notification_email.html:14
 #, python-format
 msgid ""
 "To follow back <a href=\"%(follower_url)s\">%(follower)s</a>, go on his "
@@ -127,15 +120,15 @@ msgstr ""
 msgid "Thanks,<br>The NewCo Project team"
 msgstr ""
 
-#: templates/mail/_notification_email.html:38
+#: templates/mail/_notification_email.html:37
 #, python-format
 msgid ""
 "\n"
-"                    This email has been sent because you allowed it in your "
-"account configuration. If you want to change it, please go <a href="
-"\"%(settings_url)s\" >here</a> (available soon, please forgive us for the "
-"emails you didn't want in the mean time).\n"
-"                "
+"        This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
+"\" >here</a> (available soon, please forgive us for the emails you didn't "
+"want in the mean time).\n"
+"      "
 msgstr ""
 
 #: templates/mail/_notification_email.txt:27
@@ -196,19 +189,35 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/follow_utils.py:42
+#: templatetags/follow_utils.py:43
 msgctxt "Follow button"
 msgid "Following"
 msgstr ""
 
-#: templatetags/follow_utils.py:44
+#: templatetags/follow_utils.py:45
 msgid "Click to unfollow"
 msgstr ""
 
-#: templatetags/follow_utils.py:51
+#: templatetags/follow_utils.py:52
 msgctxt "Follow button"
 msgid "Follow"
 msgstr ""
+
+#: templatetags/tools.py:80 templatetags/tools.py:112
+msgid "and"
+msgstr ""
+
+#: templatetags/tools.py:108
+msgid "about the product"
+msgid_plural "about the products"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templatetags/tools.py:114
+msgid "with the tag"
+msgid_plural "with the tags"
+msgstr[0] ""
+msgstr[1] ""
 
 #: vote/tools.py:17
 #, python-format
