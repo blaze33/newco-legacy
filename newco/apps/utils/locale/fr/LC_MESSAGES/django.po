@@ -2,52 +2,53 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-05 19:07+0100\n"
-"PO-Revision-Date: 2012-11-05 19:04\n"
+"PO-Revision-Date: 2012-11-12 11:58\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
 #: mailtools.py:46
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
-msgstr "%(receiver)s, %(answerer)s répondu a votre question !"
+msgstr "%(receiver)s, %(answerer)s répondu a votre question&#8239;!"
 
 #: mailtools.py:53
 #, python-format
 msgid ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> has answered your question "
+"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+"href='%(answerer_url)s'>%(answerer)s</a> has answered your question "
 msgstr ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> a répondu a votre question"
+"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+"href='%(answerer_url)s'>%(answerer)s</a> a répondu a votre question"
 
 #: mailtools.py:73
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
-msgstr "%(user)s, votre requête a été envoyée à %(receiver)s !"
+msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#8239;!"
 
 #: mailtools.py:78
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
-"%(user)s, vous ne pouvez pas vous proposer de répondre à une question !"
+"%(user)s, vous ne pouvez pas vous proposer de répondre à une "
+"question&#8239;!"
 
 #: mailtools.py:116
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help!"
-msgstr "%(receiver)s, %(requester)s a besoin de vous !"
+msgstr "%(receiver)s, %(requester)s a besoin de vous&#8239;!"
 
 #: tools.py:194 tools.py:229
 msgid "and"
@@ -78,7 +79,7 @@ msgstr "%(user)s, vous ne suivez plus %(object)s."
 #: follow/tools.py:27
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
-msgstr "%(user)s, vous ne pouvez pas vous suivre !"
+msgstr "%(user)s, vous ne pouvez pas vous suivre&#8239;!"
 
 #: templates/content/info.html:6
 msgid "by"
@@ -108,7 +109,7 @@ msgstr "Pour voir le profil de %(asker)s, rendez-vous ici"
 #: templates/mail/_follow_notification_email.html:5
 #: templates/mail/_follow_notification_email.txt:6
 msgid "is now following you on NewCo!"
-msgstr "vous suit désormais sur NewCo !"
+msgstr "vous suit désormais sur NewCo&#8239;!"
 
 #: templates/mail/_follow_notification_email.txt:11
 #, python-format
@@ -119,32 +120,28 @@ msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 #, python-format
 msgid ""
 "\n"
-"                    This email has been sent because you allowed it in your "
-"account configuration. If you want to change it, please go <a href="
-"\"%(settings_url)s\" >here</a> (available soon, please forgive us for the "
-"emails you didn't want in the mean time).\n"
+"                    This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon, please forgive us for the emails you didn't want in the mean time).\n"
 "                "
 msgstr ""
 "\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
 
 #: templates/voting/form.html:7
 msgid ""
 "Vote up: this contribution shows effort on quality; it is usefull and clear "
 "(click again to undo)"
 msgstr ""
-"Vote positif : cette contribution montre des efforts sur la qualité ; elle "
-"est utile et claire (cliquer à nouveau pour enlever)"
+"Vote positif&nbsp;: cette contribution montre des efforts sur la "
+"qualité&#8239;; elle est utile et claire (cliquer à nouveau pour enlever)"
 
 #: templates/voting/form.html:8
 msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful "
-"or unclear (click again to undo)"
+"Vote down: this contribution does't show effort on quality; it is not useful"
+" or unclear (click again to undo)"
 msgstr ""
-"Vote négatif : cette contribution ne montre pas d'efforts sur la qualité ; "
-"elle n'est pas utile ou pas claire (cliquer à nouveau pour enlever)"
+"Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
+"qualité&#8239;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
+"enlever)"
 
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
