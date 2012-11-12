@@ -9,7 +9,7 @@ from account.utils import user_display
 from follow.utils import toggle
 from follow.models import Follow
 
-from utils.mailtools import send_mail
+from utils.mailtools import mail_followee
 
 
 def process_following(request, obj, success_url):
@@ -53,23 +53,3 @@ def process_following(request, obj, success_url):
         )
 
     return HttpResponseRedirect(success_url)
-
-
-def mail_followee(request, fwee, fwer):
-    fwee_name = user_display(fwee)
-    fwer_name = user_display(fwer)
-
-    msg_subject = "%s, %s vous suit maintenant sur NewCo !" % \
-                  (fwee_name, fwer_name)
-
-    txt_template = get_template("mail/_follow_notification_email.txt")
-    html_template = get_template("mail/_follow_notification_email.html")
-
-    context = Context({
-        "followee": fwee_name, "follower": fwer_name,
-        "followee_url": request.build_absolute_uri(fwee.get_absolute_url()),
-        "follower_url": request.build_absolute_uri(fwer.get_absolute_url()),
-        "message_subject": msg_subject
-    })
-
-    send_mail(msg_subject, fwee, txt_template, html_template, context, fwer)

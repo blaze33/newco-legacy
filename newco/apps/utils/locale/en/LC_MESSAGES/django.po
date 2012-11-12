@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-05 19:07+0100\n"
+"POT-Creation-Date: 2012-11-09 21:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:46
+#: mailtools.py:48
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
-msgstr ""
-
-#: mailtools.py:53
-#, python-format
-msgid ""
-"<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)s'>"
-"%(answerer)s</a> has answered your question "
 msgstr ""
 
 #: mailtools.py:73
@@ -79,38 +72,62 @@ msgstr ""
 msgid "by"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.txt:14
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
+msgstr ""
+
+#: templates/mail/_answer_notification_email.html:7
+#: templates/mail/_ask_notification_email.html:7
+#: templates/mail/_ask_notification_email.txt:7
+msgid ":"
+msgstr ""
+
+#: templates/mail/_answer_notification_email.txt:15
 #, python-format
 msgid "To see %(answerer)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.txt:16
-#: templates/mail/_ask_notification_email.txt:12
+#: templates/mail/_answer_notification_email.txt:17
+#: templates/mail/_ask_notification_email.txt:17
 #, python-format
 msgid "To see %(question)s, go there"
 msgstr ""
 
-#: templates/mail/_ask_notification_email.html:6
-#: templates/mail/_ask_notification_email.txt:6
+#: templates/mail/_ask_notification_email.html:7
+msgid "would like you to answer a question"
+msgstr ""
+
+#: templates/mail/_ask_notification_email.txt:7
 msgid "would like you to answer the question"
 msgstr ""
 
-#: templates/mail/_ask_notification_email.txt:10
+#: templates/mail/_ask_notification_email.txt:15
 #, python-format
 msgid "To see %(asker)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.html:5
-#: templates/mail/_follow_notification_email.txt:6
+#: templates/mail/_follow_notification_email.html:7
+#: templates/mail/_follow_notification_email.txt:7
 msgid "is now following you on NewCo!"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.txt:11
+#: templates/mail/_follow_notification_email.html:15
+#, python-format
+msgid ""
+"To follow back <a href=\"%(follower_url)s\">%(follower)s</a>, go on his "
+"profile."
+msgstr ""
+
+#: templates/mail/_follow_notification_email.txt:12
 #, python-format
 msgid "To see %(follower)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_notification_email.html:39
+#: templates/mail/_notification_email.html:35
+msgid "Thanks,<br>The NewCo Project team"
+msgstr ""
+
+#: templates/mail/_notification_email.html:38
 #, python-format
 msgid ""
 "\n"
@@ -119,6 +136,19 @@ msgid ""
 "\"%(settings_url)s\" >here</a> (available soon, please forgive us for the "
 "emails you didn't want in the mean time).\n"
 "                "
+msgstr ""
+
+#: templates/mail/_notification_email.txt:27
+#, python-format
+msgid ""
+"\n"
+"---\n"
+"This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go there: %(settings_url)s "
+"(available soon).\n"
+"---\n"
+"Thanks !\n"
+"The NewCo Project team\n"
 msgstr ""
 
 #: templates/voting/form.html:7

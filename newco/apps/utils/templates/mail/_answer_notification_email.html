@@ -1,9 +1,10 @@
 {% extends "mail/_notification_email.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body_title %}
-    <h4>{% autoescape off %}{{ title }}{% endautoescape %}</h4>
+    <h4><a href="{{ receiver_url }}" style="color: #010101;">{{ receiver }}</a>,<br><a href="{{ answerer_url }}" style="color: #010101;">{{ answerer }}</a> {% trans "has answered your question" %} {% source_display answer "email" "#010101"%}{% trans ":" %}</h4>
 {% endblock %}
 
 {% block body_answer %}

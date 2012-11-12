@@ -2,40 +2,89 @@
 {% load account_tags %}
 {% load content_utils %}
 
-<div class="profile_info">
-<dl class="dl-horizontal">
-    {% if profile.about %}
+{% if not display %}
+  <div class="profile_info">
+    <dl class="dl-horizontal">
+      {% if profile.about %}
         <dt>{% trans "About" %}</dt>
         <dd itemprop="description">{{ profile.about }}</dd>
-    {% endif %}
-    {% if profile.location %}
+      {% endif %}
+      {% if profile.location %}
         <dt>{% trans "Location" %}</dt>
         <dd>{{ profile.location }}</dd>
-    {% endif %}
-    {% if profile.website %}
+      {% endif %}
+      {% if profile.website %}
         <dt>{% trans "Website" %}</dt>
         <dd><a href="{{ profile.website }}" itemprop="url">{{ profile.website }}</a></dd>
-    {% endif %}
-    {% if profile.user.date_joined %}
+      {% endif %}
+      {% if profile.user.date_joined %}
         <dt>{% trans "Subscription date" %}</dt>
         <dd>{{ profile.user.date_joined }}</dd>
-    {% endif %}
-    {% if reputation %}
+      {% endif %}
+      {% if reputation %}
         <dt><a class="black" href="{% url faq %}#reputation">{% trans "Reputation" %}</a></dt>
         <dd>{{ reputation.reputation_incremented }}</dd>
-    {% endif %}
-    {% if profile.skills.count > 0 %}
+      {% endif %}
+      {% if profile.skills.count > 0 %}
         <dt>{% trans "Skills" %}</dt>
         <dd>{% tags_display profile.skills %}</dd>
-    {% endif %}
-    {% if fwees or fwers %}<br>{% endif %}
-    {% if fwees %}
+      {% endif %}
+      {% if fwees or fwers %}<br>{% endif %}
+      {% if fwees %}
         <dt>{% trans "Following" %}</dt>
         <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
-    {% endif %}
-    {% if fwers %}
+      {% endif %}
+      {% if fwers %}
         <dt>{% trans "Followers" %}</dt>
         <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}</dd>
-    {% endif %}
-</dl>
-</div>
+      {% endif %}
+    </dl>
+  </div>
+{% elif display == "email_html" %}
+
+  {% if profile.about %}
+
+    {% trans "About" %}{% trans ":" %}
+    {{ profile.about }}
+    <br>
+  {% endif %}
+
+  {% comment %}{% if profile.location %}
+
+    {% trans "Location" %}{% trans ":" %}
+    {{ profile.location }}
+    <br>
+  {% endif %} {% endcomment %}
+
+  {% if profile.website %}
+
+    {% trans "Website" %}{% trans ":" %}
+    <a href="{{ profile.website }}" itemprop="url">{{ profile.website }}</a>
+    <br>
+  {% endif %}
+
+  {% if profile.user.date_joined %}
+
+    {% trans "Subscription date" %}{% trans ":" %}
+    {{ profile.user.date_joined }}
+    <br>
+  {% endif %}
+
+  {% if profile.user.reputation.reputation_incremented %}
+    {% trans "Reputation" %}{% trans ":" %}
+    {{ profile.user.reputation.reputation_incremented }}
+    <br>
+  {% endif %}
+
+  {% if profile.skills.count > 0 %}
+
+    {% trans "Skills" %}{% trans ":" %}
+    {% tags_display profile.skills 3 %}
+    <br>
+  {% endif %}
+
+  {# ToDo : add followers and followees , or at least a count  => to do with a templatetag ? #}
+
+{% elif display == "email_txt" %}
+  {# Should not happen, in email_txt version, we have not decided to display _profile_info.html #}
+{% endif %}

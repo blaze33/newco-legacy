@@ -1,8 +1,12 @@
 {% extends "mail/_notification_email.html" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body_title %}
-    <h4><a href="{{ asker_url }}">{{ asker }}</a> {% trans "would like you to answer the question" %} <a href="{{ question_url }}">"{{ question_content }}"</a> {% autoescape off %}{{ source }}{% endautoescape %}</h4>
+    <h4><a href="{{ receiver_url }}" style="color: #010101;">{{ receiver }}</a>,<br><a href="{{ asker_url }}" style="color: #010101;">{{ asker }}</a> {% trans "would like you to answer a question" %} {% source_display question "email" "#010101" %}{% trans ":" %}</h4>
 {% endblock %}
 
+{% block body_answer %}
+	{% include "items/feed_display/_question.html" with display="email_html" content=question %}
+{% endblock %}

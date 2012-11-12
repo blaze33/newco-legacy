@@ -28,8 +28,8 @@
     {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
       <div class="span1"><h3 class="right">{% if score %}{{ score.score }}{% else %}0{% endif %}{% vote_form answer vote request.path|add:"#"|add:anchor %}</h3></div>
       <div class="span4"><p>
-        {% if display == "detail" %}{% content_info answer "header" %}<br>{% endif %}
-        <span itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
+        {% if display == "detail" %}{% content_info answer "header" %}{% endif %}
+        <div itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
         {% edit_buttons user answer delete_next=request.path %}
       </p></div>
       <div class="span2 right">{% if display == "list" %}{% content_info answer "signature-author" %}{% elif display == "detail" %}{% content_info answer "signature-pic" 30 %}{% endif %}</div>

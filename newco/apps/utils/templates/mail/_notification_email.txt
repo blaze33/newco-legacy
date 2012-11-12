@@ -24,8 +24,10 @@
 
 {% endblock %}
 
+{% blocktrans %}
 ---
 This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: {{ settings_url }} (available soon).
 ---
 Thanks !
 The NewCo Project team
+{% endblocktrans %}

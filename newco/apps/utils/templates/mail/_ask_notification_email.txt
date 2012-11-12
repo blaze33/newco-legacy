@@ -1,9 +1,14 @@
 {% extends "mail/_notification_email.txt" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body_title %}
-    {{ asker }}</a> {% trans "would like you to answer the question" %} '{{ question_content }}' {{ source }}.
+    {{ asker }}</a> {% trans "would like you to answer the question" %} {% source_display question "email" "#010101" %}{% trans ":" %}
+{% endblock %}
+
+{% block body_answer %}
+	{% include "items/feed_display/_question.html" with display="email_txt" content=question %}
 {% endblock %}
 
 {% block go_to_urls %}
