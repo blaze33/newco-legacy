@@ -70,11 +70,28 @@
 
     .right {
         text-align: right;
+        float: right;
      }
 
-    .right .signature {
-        padding-right: 5px;
+    .signature {
+        float: right;
+        padding: 0 0 5px 5px;
         margin: 0;
+    }
+
+    .question-content .signature {
+        font-size: 80%;
+        font-weight: normal;
+    }
+
+    .signature .author img {
+        float: left;
+        margin-right: 3px;
+    }
+
+    .signature .author div {
+        margin-left: 40px;
+        line-height: 140%
     }
 
     .controls_2.vote {
