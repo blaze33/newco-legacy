@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 20:02+0100\n"
+"POT-Creation-Date: 2012-11-13 00:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,17 +58,18 @@ msgid "%(user)s, you can't follow yourself!"
 msgstr ""
 
 #: templates/content/info.html:6
-msgid "by"
+msgid "Posted"
 msgstr ""
 
-#: templates/mail/_answer_notification_email.html:7
-msgid "has answered your question"
-msgstr ""
-
+#: templates/content/info.html:6
 #: templates/mail/_answer_notification_email.html:7
 #: templates/mail/_ask_notification_email.html:7
 #: templates/mail/_ask_notification_email.txt:7
 msgid ":"
+msgstr ""
+
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
 msgstr ""
 
 #: templates/mail/_answer_notification_email.txt:15

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-12 20:02+0100\n"
-"PO-Revision-Date: 2012-11-12 20:02\n"
+"POT-Creation-Date: 2012-11-13 00:39+0100\n"
+"PO-Revision-Date: 2012-11-13 00:39\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,18 +62,19 @@ msgid "%(user)s, you can't follow yourself!"
 msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
 
 #: templates/content/info.html:6
-msgid "by"
-msgstr "par"
+msgid "Posted"
+msgstr "Posté"
 
-#: templates/mail/_answer_notification_email.html:7
-msgid "has answered your question"
-msgstr "a répondu à votre question"
-
+#: templates/content/info.html:6
 #: templates/mail/_answer_notification_email.html:7
 #: templates/mail/_ask_notification_email.html:7
 #: templates/mail/_ask_notification_email.txt:7
 msgid ":"
 msgstr "&nbsp;:"
+
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
+msgstr "a répondu à votre question"
 
 #: templates/mail/_answer_notification_email.txt:15
 #, python-format
@@ -252,6 +253,9 @@ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
+
+#~ msgid "by"
+#~ msgstr "par"
 
 #~ msgid ""
 #~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
