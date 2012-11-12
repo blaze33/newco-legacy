@@ -52,14 +52,33 @@
         box-sizing: border-box;
     }
 
-    .right { 
+    .question-content {
+        font-size: 130%;
+        font-weight: bold;
+        line-height: 140%;
+    }
+
+    .answer-content {
+        line-height: 150%;
+    }
+
+    .vote-controls {
+        font-size: 180%;
+        font-weight: bold;
+        line-height: 180%;
+    }
+
+    .right {
         text-align: right;
      }
 
-     .right .signature { padding-right: 5px; }
+    .right .signature {
+        padding-right: 5px;
+        margin: 0;
+    }
 
     .controls_2.vote {
-        vertical-align: -6px;
+        vertical-align: middle;
     }
 
     button[type="submit"][class*="icon-"] {
@@ -108,4 +127,8 @@
 
 .album img {
     height: 128px;
+}
+
+.product-name h1 {
+    margin: 0;
 }

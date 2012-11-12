@@ -5,7 +5,7 @@
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
-<div class="row"><div class="span7{% if questions.queryset %} nc_transition_add{% endif %}" data-toggle="collapse" data-target="#question_form" style="position: relative; left: -5px; top: -15px;">
+<div class="row"><div class="span9{% if questions.queryset %} nc_transition_add{% endif %}" data-toggle="collapse" data-target="#question_form" style="position: relative; left: -5px; top: -15px;">
   <i rel="add_icon" class="icon-plus" style="opacity: 0.1; z-index: -1; position: relative; left: 25px; top: +2px;"></i>
   <span>
     <button class="btn btn-mini btn-success " style="z-index: 0;"><i rel="add_icon" class="icon-plus"></i></button>
@@ -13,7 +13,7 @@
   </span>{% if not questions.queryset %}<h2 style="display:inline; opacity:0.2; position:relative; left:60px; top:+5px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2>{% endif %}
 </div></div>
 
-<div class="row"><div id="question_form" class="span7 offset1 collapse out" style="position: relative; top: -55px;">
+<div class="row"><div id="question_form" class="span9 offset1 collapse out" style="position: relative; top: -55px;">
   <form method="POST" action="" class="form-inline">{% if not questions.queryset %}<br><br><br>{% endif %}
     {% csrf_token %}
     {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
