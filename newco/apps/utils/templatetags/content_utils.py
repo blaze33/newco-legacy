@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 from account.utils import user_display
 from gravatar.templatetags.gravatar import gravatar_img_for_user
+from taggit.models import Tag
 
 from items.models import Item, Content
 from utils.templatetags.tools import (GenericNode, get_node_extra_arguments,
@@ -154,8 +155,12 @@ class URINode(GenericNode):
             request = self.request.resolve(context)
         except:
             return ""
-        url = request.build_absolute_uri(obj.get_absolute_url())
-        return self.render_output(context, url)
+        if obj.__class__ is not Tag:
+            url = obj.get_absolute_url()
+        else:
+            # Dirty. Check coop-tag
+            url = reverse("tagged_items", args=[obj.slug])
+        return self.render_output(context, request.build_absolute_uri(url))
 
 
 @register.tag
