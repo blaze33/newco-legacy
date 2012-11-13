@@ -2,12 +2,34 @@ import itertools
 import re
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, Sum
+from django.db.models import Q
 from django.db.models.loading import get_model
 from django.utils.datastructures import SortedDict
 
-from generic_aggregation import generic_annotate
-from voting.models import Vote
+MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
+
+
+def get_class_name(klass):
+    return "%s.%s" % (klass.__module__, klass._meta.object_name)
+
+
+def get_class_from_string(class_string, pattern=MODULE_PATTERN):
+    match_obj = re.match(pattern, class_string)
+    if not match_obj:
+        print "Class string expresion didn't match pattern '%s'" % pattern
+        return None
+    try:
+        module = __import__(match_obj.group("module_name"),
+                            fromlist=[match_obj.group("fromlist")])
+    except ImportError:
+        print "Failed to import module <%s>" % match_obj.group("module_name")
+        return None
+
+    cls = getattr(module, match_obj.group("fromlist"), None)
+    if not cls:
+        print "Module <%s> doesn't have class '%s'" % \
+            (match_obj.group("module_name"), match_obj.group("fromlist"))
+    return cls
 
 
 def load_object(request):
@@ -28,8 +50,7 @@ def load_object(request):
                                                 lookup_kwargs))
 
 
-def normalize_query(query_string,
-                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
     """
     Splits the query string in invidual keywords, getting rid of unecessary
@@ -41,8 +62,7 @@ def normalize_query(query_string,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ',
-                      (t[0] or t[1]).strip()) for t in findterms(query_string)]
+    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
 
 
 def get_query(query_string, search_fields, terms=None):
@@ -96,12 +116,3 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
             break
     results = results[:nb_items] if nb_items else results
     return results
-
-
-def get_sorted_queryset(queryset, user):
-    queryset = generic_annotate(
-        queryset, Vote, Sum('votes__vote')).order_by("-score")
-    scores = Vote.objects.get_scores_in_bulk(queryset)
-    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
-    return {"queryset": queryset.select_subclasses(),
-            "scores": scores, "votes": votes}

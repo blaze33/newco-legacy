@@ -52,14 +52,59 @@
         box-sizing: border-box;
     }
 
-    .right { 
+    .question-content {
+        font-size: 130%;
+        font-weight: bold;
+        line-height: 140%;
+    }
+
+    .answer-content .content {
+        padding-top: .5em;
+    }
+
+    .answer-content {
+        line-height: 150%;
+    }
+
+    .vote-controls {
+        font-size: 180%;
+        font-weight: bold;
+        line-height: 180%;
+    }
+
+    .right {
         text-align: right;
+        float: right;
      }
 
-     .right .signature { padding-right: 5px; }
+    .signature {
+        float: right;
+        padding: 0 0 5px 5px;
+        margin: 0;
+    }
+
+    .signature-header {
+        display: inline;
+        margin-bottom: 1em;
+    }
+
+    .question-content .signature {
+        font-size: 80%;
+        font-weight: normal;
+    }
+
+    .signature .author img {
+        float: left;
+        margin-right: 3px;
+    }
+
+    .signature .author div {
+        margin-left: 40px;
+        line-height: 140%
+    }
 
     .controls_2.vote {
-        vertical-align: -6px;
+        vertical-align: middle;
     }
 
     button[type="submit"][class*="icon-"] {
@@ -105,3 +150,11 @@
     .nc_transition_add:hover {
         background-color: #eee;
     }
+
+.album img {
+    height: 128px;
+}
+
+.product-name h1 {
+    margin: 0;
+}

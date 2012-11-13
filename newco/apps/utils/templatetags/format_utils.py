@@ -1,57 +1,49 @@
-from django.template.base import Node, Library, TemplateSyntaxError, kwarg_re
-from django.utils.encoding import smart_str
+from django.template.base import Variable, Library, TemplateSyntaxError
 
 from babel.numbers import format_currency
 
 from affiliation.models import AffiliationItemBase
+from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
 
 
-class PriceNode(Node):
-    def __init__(self, value, args, kwargs, asvar):
-        self.value = value
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
+class PriceNode(GenericNode):
+    def __init__(self, value, *args, **kwargs):
+        self.value = Variable(value)
+        super(PriceNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
-        value = self.value.resolve(context)
-        args = [arg.resolve(context) for arg in self.args]
-        kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
-                       for k, v in self.kwargs.items()])
+        try:
+            value = self.value.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
+            return ""
 
-        currency = kwargs.get("currency")
-        language_code = kwargs.get("language_code")
-        if not currency and len(args) >= 1:
-            currency = args[0]
-        if not language_code and len(args) == 2:
-            language_code = args[1]
+        fields = ["currency", "language_code"]
+        for index, field in enumerate(fields):
+            val = kwargs.get(field, None)
+            val = args[index] if not val and len(args) > index else val
+            setattr(self, field, val)
 
-        kwargs = dict()
-
-        currencies = AffiliationItemBase.CURRENCIES
-        if currency == currencies.euro:
+        kwargs, currencies = [dict(), AffiliationItemBase.CURRENCIES]
+        if self.currency == currencies.euro:
             kwargs.update({"currency": "EUR"})
-        elif currency == currencies.dollar:
+        elif self.currency == currencies.dollar:
             kwargs.update({"currency": "USD"})
-        elif currency == currencies.pound:
+        elif self.currency == currencies.pound:
             kwargs.update({"currency": "GBP"})
         else:
             kwargs.update({"currency": "EUR"})
 
-        if language_code == "fr":
+        if self.language_code == "fr":
             kwargs.update({"locale": "fr_FR"})
-        elif language_code == "en":
+        elif self.language_code == "en":
             kwargs.update({"locale": "en_US"})
 
         formatted_price = format_currency(value, **kwargs)
 
-        if self.asvar:
-            context[self.asvar] = formatted_price
-            return ''
-        else:
-            return formatted_price
+        return self.render_output(context, formatted_price)
 
 
 @register.tag
@@ -88,28 +80,10 @@ def price(parser, token):
     if len(bits) < 2:
         raise TemplateSyntaxError("'%s' takes at least one argument"
                                   " (price to display)" % bits[0])
-    value = parser.compile_filter(bits[1])
-    args = []
-    kwargs = {}
-    asvar = None
+    tag_name = bits[0]
+    value = bits[1]
     bits = bits[2:]
-    if len(bits) >= 2 and bits[-2] == 'as':
-        asvar = bits[-1]
-        bits = bits[:-2]
 
-    if len(bits):
-        if len(bits) <= 2:
-            for bit in bits:
-                match = kwarg_re.match(bit)
-                if not match:
-                    raise TemplateSyntaxError("Malformed arguments in 'price'")
-                name, val = match.groups()
-                if name:
-                    kwargs[name] = parser.compile_filter(val)
-                else:
-                    args.append(parser.compile_filter(val))
-        else:
-            raise TemplateSyntaxError("'price' tag takes at most three"
-                                    " arguments (price value, currency, and"
-                                    " language_code).")
+    args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)
+
     return PriceNode(value, args, kwargs, asvar)

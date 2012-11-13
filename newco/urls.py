@@ -2,24 +2,18 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.views.generic.simple import redirect_to
 
-import autocomplete_light
-autocomplete_light.autodiscover()
-
 from django.contrib import admin
 admin.autodiscover()
 
-from views import HomepageView
-from tastypie.api import Api
 from content.api import ItemResource, RelationResource
 from sitemaps import all_sitemaps as sitemaps
+from tastypie.api import Api
+from views import HomepageView
 
 
 v1_api = Api(api_name='v1')
 v1_api.register(ItemResource())
 v1_api.register(RelationResource())
-
-handler500 = "pinax.views.server_error"
-
 
 urlpatterns = patterns("",
     url(r"^$", HomepageView.as_view(), name="home"),
@@ -36,8 +30,7 @@ urlpatterns = patterns("",
     url(r'^api/', include(v1_api.urls)),
     url(r"^profiles/", include("profiles.urls")),
     url(r"^taggit_autosuggest/", include("taggit_autosuggest.urls")),
-    url(r"^autocomplete/", include("autocomplete_light.urls")),
-    url(r"^utils/", include("utils.urls")),
+    url(r"^utils", include("utils.urls")),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 

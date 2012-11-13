@@ -1,24 +1,23 @@
 import json
 
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
-from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import ModelFormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
-from chosen.forms import ChosenSelect
 from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
@@ -26,11 +25,12 @@ from voting.models import Vote
 from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
+from items.forms import PartialQuestionForm
 from profiles.models import Profile
 from utils.apiservices import search_images
-from utils.mailtools import mail_question_author, process_asking_for_help
-from utils.follow.views import ProcessFollowView
-from utils.tools import load_object, get_sorted_queryset, get_search_results
+from utils.mailtools import process_asking_for_help
+from utils.follow.views import FollowMixin
+from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -48,7 +48,8 @@ class ContentView(View):
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
+            self.next = request.GET.get("next")
+            kwargs.update({"next": self.next})
         self.success_url = request.POST.get("next", None)
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
@@ -64,6 +65,10 @@ class ContentFormMixin(object):
     def get_form_kwargs(self):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
         kwargs.update({"request": self.request})
+        for field in ["add_question", "add_answer"]:
+            if field in self.request.POST:
+                kwargs.update({"status": int(self.request.POST.get(field))})
+                break
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -85,48 +90,19 @@ class ContentFormMixin(object):
                 form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
+            msg = "updated" if self.object else "created"
+            display_message(msg, self.request, self.model._meta.verbose_name)
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        kwargs.update({"status": Content.STATUS})
+        return super(ContentFormMixin, self).get_context_data(**kwargs)
+
 
 class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                         CreateView):
-
-    messages = {
-        "created": {
-            "level": messages.SUCCESS,
-            "text": _("Thanks %(user)s, %(object)s successfully created.")
-        },
-        "failed": {
-            "level": messages.ERROR,
-            "text": _("Warning %(user)s, %(object)s form is invalid.")
-        },
-    }
-
-    def form_valid(self, form):
-        self.object = form.save()
-        messages.add_message(
-            self.request, self.messages["created"]["level"],
-            self.messages["created"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": self.object._meta.verbose_name
-            }
-        )
-        if self.model == Item and "edit" in self.request.POST:
-            args = [self.object._meta.module_name, self.object.id]
-            return HttpResponseRedirect(reverse("item_edit", args=args))
-        return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        messages.add_message(
-            self.request, self.messages["failed"]["level"],
-            self.messages["failed"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": form._meta.model._meta.verbose_name
-            }
-        )
-        return super(ContentCreateView, self).form_invalid(form)
 
     def post(self, request, *args, **kwargs):
         if self.model is not Question:
@@ -136,28 +112,30 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         POST = request.POST
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        ctx = dict()
+        cb_answer = POST.get("cb_answer", None)
+        ctx = {"cb_answer": cb_answer}
         if "add_question" in POST:
-            cb_answer = POST.get("cb_answer", None)
-            ctx.update({"cb_answer": cb_answer})
             if form.is_valid():
                 self.object = form.save(commit=False)
-
-                kwargs = {"request": request}
+                kwargs = {"request": request, "status": self.object.status}
                 if cb_answer:
                     kwargs.update({"empty_permitted": False})
-
                 formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
+                    display_message("created", self.request,
+                                    self.object._meta.verbose_name)
                     self.object.save()
                     form.save_m2m()
                     formset.save()
-                    return HttpResponseRedirect(self.get_success_url())
+                    next = self.object.get_absolute_url()
+                    return HttpResponseRedirect(self.get_success_url(next))
                 ctx.update({"formset": formset})
         elif "add_item" in POST:
             i_form = ItemForm(data=POST, request=request, prefix="item")
             if i_form.is_valid():
                 item = i_form.save()
+                display_message("created", self.request,
+                                item._meta.verbose_name)
                 args = [item._meta.module_name, item.id]
                 ctx.update({"next": reverse("item_edit", args=args)})
             else:
@@ -187,6 +165,15 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
         context.update({"formset_errors": err})
         return context
 
+    def get_success_url(self, next=None):
+        if self.model == Item and "edit" in self.request.POST:
+            args = [self.object._meta.module_name, self.object.id]
+            self.success_url = reverse("item_edit", args=args)
+        url = self.success_url
+        self.success_url = "%s?next=%s" % (url, next) if url and next else url
+
+        return super(ContentCreateView, self).get_success_url()
+
 
 class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
@@ -197,6 +184,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
         context = super(ContentUpdateView, self).get_context_data(**kwargs)
         if self.model == Item:
             album = get_album(self.object)
@@ -206,19 +195,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, FormMixin,
-                        ProcessFollowView, ProcessVoteView):
-
-    messages = {
-        "created": {
-            "level": messages.SUCCESS,
-            "text": _("Thanks %(user)s, %(object)s successfully created.")
-        },
-        "failed": {
-            "level": messages.WARNING,
-            "text": _("Warning %(user)s, %(object)s form is invalid.")
-        },
-    }
+class ContentDetailView(ContentView, DetailView, ModelFormMixin,
+                        FollowMixin, ProcessVoteView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -235,12 +213,10 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
 
             contents = dict()
             for key, queryset in querysets.items():
-                contents.update({key: get_sorted_queryset(queryset, user)})
+                contents.update({key: queryset.get_qs_tools("popular", user)})
 
-            initial = {"status": Content._meta.get_field("status").default,
-                       "items": item.id}
-            q_form = QuestionForm(data=POST, request=request) if "question" \
-                in POST else QuestionForm(initial=initial, request=request)
+            q_form = PartialQuestionForm(request, item, data=POST) \
+                if "question" in POST else PartialQuestionForm(request, item)
             q_id = int(POST["question_id"]) \
                 if "answer" in POST and "question_id" in POST else -1
 
@@ -248,9 +224,9 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                answer_qs = Content.objects.filter(
-                    Q(answer__question__id=q.id) & public_query)
-                q.answers = get_sorted_queryset(answer_qs, user)
+                answer_query = Q(answer__question__id=q.id)
+                q.answers = Content.objects.filter(
+                    answer_query & public_query).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -275,7 +251,7 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
                     "cheapest_prod": cheapest_prod
                 })
 
-            albums = self.object.node().graph.image_set
+            albums = self.object.node.graph.image_set
             if albums:
                 # This is a way to order by values of an hstore key
                 images = albums[0].successors.extra(
@@ -286,14 +262,14 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
 
         elif self.model == Question:
             q = context.get("question")
-            q.answer_form = AnswerForm(POST, request=request) \
-                if "answer" in POST else AnswerForm(request=request)
+            q.answer_form = AnswerForm(request, data=POST) \
+                if "answer" in POST else AnswerForm(request)
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            answer_qs = Content.objects.filter(
-                Q(answer__question__id=q.id) & public_query)
-            q.answers = get_sorted_queryset(answer_qs, user)
+            answer_query = Q(answer__question__id=q.id)
+            q.answers = Content.objects.filter(
+                answer_query & public_query).get_qs_tools("popular", user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
@@ -312,31 +288,6 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             })
         return context
 
-    def form_invalid(self, form):
-        self.object = self.get_object()
-        messages.add_message(self.request,
-            self.messages["failed"]["level"],
-            self.messages["failed"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": form._meta.model._meta.verbose_name
-            }
-        )
-        return self.render_to_response(self.get_context_data(form=form))
-
-    def form_valid(self, form, request, **kwargs):
-        self.object = form.save(**kwargs)
-        form.save_m2m()
-        messages.add_message(self.request,
-            self.messages["created"]["level"],
-            self.messages["created"]["text"] % {
-                "user": user_display(self.request.user),
-                "object": self.object._meta.verbose_name
-            }
-        )
-        if self.object._meta.object_name == "Answer":
-            mail_question_author(request.META.get('HTTP_HOST'), self.object)
-        return HttpResponseRedirect(self.get_success_url())
-
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -345,105 +296,100 @@ class ContentDetailView(ContentView, DetailView, FormMixin,
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in POST or "answer" in POST:
-            Form = QuestionForm if "question" in POST else AnswerForm
-            form = Form(data=POST, request=request)
+            if "question" in POST:
+                form = PartialQuestionForm(request, self.object, data=POST)
+            else:
+                form = AnswerForm(request, data=POST)
             if form.is_valid():
-                return self.form_valid(form, request, **kwargs)
+                display_message("created", self.request,
+                                form._meta.model._meta.verbose_name)
+                return self.form_valid(form)
             else:
                 return self.form_invalid(form)
         elif "edit_about" in POST:
-            print POST
             about = POST.get("about", "")
             profile = request.user.get_profile()
             profile.about = about
             profile.save()
+            display_message("about", self.request)
             return HttpResponseRedirect(request.path)
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
 
-    def get_success_url(self):
-        if self.success_url:
-            url = self.success_url % self.object.__dict__
-        else:
-            try:
-                url = self.object.get_absolute_url()
-            except AttributeError:
-                raise ImproperlyConfigured(
-                    "No URL to redirect to. Either provide a url or define"
-                    " a get_absolute_url method on the Model."
-                )
-        return url
 
+class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
-class SearchMixin(object):
-
-    def post(self, request, *args, **kwargs):
-        search = request.POST.get("item_search", "")
-        if not search:
-            return super(SearchMixin, self).post(request, *args, **kwargs)
-
-        item_list = Item.objects.filter(name=search)
-        tag_list = Tag.objects.filter(name=search)
-        if item_list.count() == 1:
-            response = item_list[0].get_absolute_url()
-        elif tag_list.count() == 1:
-            response = reverse("tagged_items", args=[tag_list[0].slug])
-        else:
-            response = "%s?q=%s" % (reverse("content_search"), search)
-        return HttpResponseRedirect(response)
-
-
-class ContentListView(ContentView, SearchMixin, ListView):
-
-    model = Item
-    template_name = "items/item_list_image.html"
     paginate_by = 9
-    sort_order = "-pub_date"
+    qs_option = "-pub_date"
+
+    def get(self, request, *args, **kwargs):
+        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+        self.cat = kwargs.get("cat", "home")
+        self.template_name = "items/item_list_%s.html" % self.cat
+        self.qs_option = self.request.GET.get("qs_option", self.qs_option)
+
+        if self.cat == "home" or self.cat == "products":
+            self.model, self.pill = [Item, kwargs.get("pill", "browse")]
+            self.queryset = Item.objects.filter(tags=self.tag)
+            msg = _("No products with tag %s")
+        elif self.cat == "questions":
+            self.model, self.pill = [Question, kwargs.get("pill", "tag")]
+            self.queryset = Content.objects.filter(question__isnull=False)
+            if self.pill == "tag":
+                self.queryset = self.queryset.filter(tags=self.tag)
+                msg = _("No questions with tag %s")
+            elif self.pill == "products":
+                item_ids = Item.objects.filter(tags=self.tag).values_list(
+                    "id", flat=True)
+                self.queryset = self.queryset.filter(items__in=item_ids)
+                msg = _("No questions about products with tag %s")
+
+        tpl = "tags/_tag_display.html"
+        self.empty_msg = msg % render_to_string(tpl, {"tag": self.tag})
+        return super(ContentListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
-        if "tag_slug" in self.kwargs:
-            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            qs = qs.filter(tags=self.tag)
-        self.search_terms = self.request.GET.get("q", "")
-        if self.search_terms:
-            self.template_name = "items/item_list_text.html"
-            qs = get_search_results(qs, self.search_terms, ["name"])
-            return qs
-        field = "content__question__id"
-        qs = list(qs.annotate(score=Count(field)).order_by("-score"))\
-            if self.sort_order == "popular" else qs.order_by(self.sort_order)
+        if self.cat == "products":
+            field = "content__question__id"
+            qs = qs.annotate(score=Count(field)).order_by("-score") \
+                if self.qs_option == "popular" else qs.order_by(self.qs_option)
+        elif self.cat == "questions":
+            res = qs.get_qs_tools(self.qs_option, self.request.user)
+            qs = res.get("queryset")
+            self.scores, self.votes = [res.get("scores"), res.get("votes")]
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        context.update({"media": ChosenSelect().media})
-        for attr in ["tag", "search_terms", "sort_order"]:
-            context.update({attr: getattr(self, attr, "")})
-        if not "object_list" in context:
-            return context
-        objs = context.get("object_list")
-        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
-        if nb_items == 0:
-            return context
-        qs = Content.objects.filter(question__items__in=objs).distinct()
-        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
-        rq = SortedDict()
-        rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
-        rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
-        context.update({"related_questions": rq})
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
+            if hasattr(self, attr):
+                context.update({attr: getattr(self, attr)})
+        if self.cat == "home" and context.get("object_list"):
+            qs = Content.objects.filter(
+                question__items__in=context.get("object_list")).distinct()
+            field = "votes__vote"
+            qss = generic_annotate(qs, Vote, Sum(field)).order_by("-score")
+            rq = SortedDict()
+            rq.update({
+                _("Top related questions"): qss.select_subclasses()[:3],
+                _("Latest related questions"): qs.select_subclasses()[:3]
+            })
+            context.update({"related_questions": rq})
+        if self.model is Item:
+            context.get("object_list").fetch_images()
+        else:
+            context.update({"item_list": Item.objects.filter(tags=self.tag)})
+            context.get("item_list").fetch_images()
         return context
 
     def post(self, request, *args, **kwargs):
-        if "tag_slug" in self.kwargs and "skills" in request.POST:
-            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            prof = request.user.get_profile()
-            prof.skills.add(tag) if request.POST.get("skills") == "add" \
-                else prof.skills.remove(tag)
-            return self.get(request, *args, **kwargs)
-        elif "sort_products" in request.POST:
-            self.sort_order = self.request.POST.get("sort_products")
+        if "skills" in request.POST:
+            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+            profile = request.user.get_profile()
+            profile.skills.add(tag) if request.POST.get("skills") == "add" \
+                else profile.skills.remove(tag)
             return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
@@ -456,26 +402,46 @@ class ContentDeleteView(ContentView, DeleteView):
         self.object = self.get_object()
         if not request.user.has_perm("can_manage", self.object):
             raise PermissionDenied
-        success_url = self.get_success_url(request)
         self.object.delete()
-        return HttpResponseRedirect(success_url)
+        return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self, request):
+    def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
+        return super(ContentDeleteView, self).get_context_data(**kwargs)
+
+    def get_success_url(self):
         if self.success_url:
-            success_url = self.success_url % self.object.__dict__
-        elif self.model.__name__ == "Item":
-            success_url = reverse("item_index")
-        elif "success_url" in request.GET:
-            success_url = request.GET.get("success_url")
+            return self.success_url
         else:
-            success_url = None
+            return "/"
 
-        obj = self.object
-        if success_url != obj.get_absolute_url() and success_url is not None:
-            return success_url
-        else:
-            try:
-                return obj.items.all()[0].get_absolute_url()
-            except:
-                pass
-        raise ImproperlyConfigured
+
+MESSAGES = {
+    "created": {
+        "level": messages.SUCCESS,
+        "text": _("Thanks %(user)s, %(object_name)s successfully created.")
+    },
+    "updated": {
+        "level": messages.INFO,
+        "text": _("Thanks %(user)s, %(object_name)s successfully updated.")
+    },
+    "about": {
+        "level": messages.INFO,
+        "text": _("Thanks %(user)s, your bio has been successfully updated.")
+    },
+    "failed": {
+        "level": messages.ERROR,
+        "text": _("Warning %(user)s, %(object_name)s form is invalid.")
+    },
+}
+
+
+def display_message(msg_type, request, object_name=""):
+    messages.add_message(
+        request, MESSAGES[msg_type]["level"],
+        MESSAGES[msg_type]["text"] % {
+            "user": user_display(request.user),
+            "object_name": object_name
+        }
+    )

@@ -11,13 +11,12 @@
 .profile-item img {
     float: right;
     margin-left: 5px;
-    width: 64px;
     height: 64px;
     border-radius: 4px;
 }
 
-.profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; }
-.profile-item .details h4 { display: run-in; }
+.profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; background-color: white; }
+.profile-item h5 { display: run-in; margin: 0px; }
 .profile-item .details p { margin: 0; }
 
 #profile-follow {
@@ -48,9 +47,16 @@
     border-radius: 4px;
 }
 
-.content-item { line-height: 18px; width: 165px; margin: 9px; background-color: white; }
+@media (min-width: 980px) {
+  .content-item { line-height: 18px; width: 165px; margin: 9px; background-color: white; }
+}
+
+@media (max-width: 979px) {
+  .content-item { line-height: 18px; width: 165px; margin: 9px 0px; background-color: white; }
+}
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
+.content-item .details { line-height: 20px; }
 
 
 .content-item-small img {
@@ -70,7 +76,7 @@
 .content-item-mini img {
     float: left;
     margin-left: 3px;
-    width: 40px;
+    width: 60px;
     border-radius: 3px;
     margin-right:5px;
     margin-top: 2px;
@@ -201,12 +207,9 @@ img:hover + .img-controls,
     width: 38px;
 }
 
-    .myClassPopover{
-        position: relative;
-    }
-    .myClassPopoverProfile{
-        position: relative;
-    }
+.myClassPopover{
+    position: relative;
+}
 
 /* twitter aditional stuff */
 /* supporting docs pages */
@@ -288,7 +291,7 @@ img:hover + .img-controls,
     top: 40px;
     left: 0;
     /*right: 0; */ /* shouldn't we only define left OR right ? */
-    z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
+    z-index: 999; /* 10 less than .navbar-fixed to prevent any overlap */
     border-color: #d5d5d5;
     border-width: 0 0 1px; /* drop the border on the fixed edges */
     -webkit-border-radius: 0;
@@ -358,6 +361,10 @@ img:hover + .img-controls,
   }
 }
 
+.nc-tag {
+  font-weight: normal;
+}
+
 /* Use btn-group and btn styles in a nav */
 .nav.btn-group {
   padding: 0;
@@ -401,3 +408,51 @@ img:hover + .img-controls,
   margin-bottom: -3px;
   margin-right: 4px;
 }
+
+/* Right column details (ex: question_detail.html and feed.html) */
+.well.nc-right-col-well-span4 { /*Maybe we don't want to limit this to nc-right-col-well-span4 ?*/
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+@media (min-width: 980px) {
+  .nc-right-col-well {
+    width: 180px;
+  }
+  .nc-right-col-well-span4 {
+    /*width: 100%;*/
+    padding: 5px;
+  }
+  .nc-right-col-well-span4 .thumbnail {
+    margin: 2px;
+  }
+}
+
+@media (max-width: 979px) {
+  .nc-right-col-well {
+    width: 172px;
+    padding: 2px;
+  }
+  .nc-right-col-well-span4 {
+    /*width: 220px;*/
+    /*padding: 2px;*/
+  }
+}
+
+/*
+div, span {
+  box-shadow:
+     inset -1px 0   0 red,
+     inset 1px 0   0 red,
+     inset  0  -1px 0 red,
+     inset  0   1px 0 red;
+}
+img {
+  box-shadow:
+     -1px 0   0 orange,
+     1px 0   0 orange,
+      0  -1px 0 orange,
+      0   1px 0 orange;
+}
+*/

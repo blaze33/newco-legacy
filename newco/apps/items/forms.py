@@ -1,12 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea
+from django.forms.widgets import Textarea, RadioSelect
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, pgettext
 
 from account.utils import user_display
-from chosen.forms import ChosenSelect, ChosenSelectMultiple
+from chosen.forms import ChosenSelectMultiple
+from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagField
 from taggit_autosuggest.widgets import TagAutoSuggest
@@ -14,6 +16,7 @@ from taggit_autosuggest.widgets import TagAutoSuggest
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
+from utils.mailtools import mail_question_author
 
 
 class ItemForm(ModelForm):
@@ -29,19 +32,16 @@ class ItemForm(ModelForm):
         model = Item
         exclude = ("author")
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
-            self.reload_current_search()
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
-        return super(ItemForm, self).__init__(*args, **kwargs)
+    def __init__(self, request, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
+        self.reload_current_search()
 
     def save(self, commit=True, **kwargs):
         if commit and self.create:
             item = super(ItemForm, self).save(commit=False)
-            item.author = self.user
+            item.author = self.request.user
             item.save()
             self.save_m2m()
         else:
@@ -66,6 +66,11 @@ class ItemForm(ModelForm):
 
 class QuestionForm(ModelForm):
 
+    PARENTS = Choices(
+        ("0", "products", pgettext("parent", "products")),
+        ("1", "tags", pgettext("parent", "tags"))
+    )
+
     create = False
     no_results = _("No results matched")
     tag_field = Content._meta.get_field_by_name('tags')[0]
@@ -73,45 +78,55 @@ class QuestionForm(ModelForm):
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
                     widget=TagAutoSuggest(attrs={"class": "span4"}))
+    parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
+                          label=_("My question refers to"))
 
     class Meta:
         model = Question
-        fields = ("content", "status", "items", "tags")
+        fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "status": ChosenSelect(attrs={"class": "span4"}),
             "items": ChosenSelectMultiple(
                 attrs={"class": "span4", "rows": 1},
                 overlay=_("Pick a product."),
             )
         }
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
+    def __init__(self, request, *args, **kwargs):
+        default_status = Content._meta.get_field("status").default
+        self.status = kwargs.pop("status", default_status)
         super(QuestionForm, self).__init__(*args, **kwargs)
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
+        if self.object:
+            self.fields.get("parents").initial = self.PARENTS.products \
+                if self.object.items.count() else self.PARENTS.tags
         self.fields.get("items").help_text = _(
-            "Select one or several products using Enter and the Arrow keys.")
+            "Select up to 5 products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
+        question = super(QuestionForm, self).save(commit=False)
         if self.create:
-            question = super(QuestionForm, self).save(commit=False)
-            question.author = self.user
-            if commit:
-                question.save()
-                self.save_m2m()
-            return question
-        else:
-            return super(QuestionForm, self).save(commit)
+            question.author = self.request.user
+        question.status = self.status
+
+        if commit:
+            question.save()
+            self.save_m2m()
+        return question
 
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
+        parents = cleaned_data.get("parents")
+        parents = int(parents) if parents else parents
+
+        if parents == self.PARENTS.tags:
+            cleaned_data["items"] = []
+        elif parents == self.PARENTS.products:
+            cleaned_data["tags"] = []
         tags, items = [cleaned_data.get("tags"), cleaned_data.get("items")]
 
         if not tags and not items or tags and items:
@@ -132,8 +147,32 @@ class QuestionForm(ModelForm):
                 items_msg = _("Pick less than 10 items")
                 self._errors["items"] = self.error_class([items_msg])
                 del cleaned_data["items"]
-
         return cleaned_data
+
+
+class PartialQuestionForm(ModelForm):
+
+    class Meta:
+        model = Question
+        fields = ("content", )
+        widgets = {"content": Textarea(attrs={
+            "class": "span4",
+            "placeholder": _("Ask something specific."),
+            "rows": 1})}
+
+    def __init__(self, request, item, *args, **kwargs):
+        super(PartialQuestionForm, self).__init__(*args, **kwargs)
+        self.request, self.item = [request, item]
+
+    def save(self, commit=True, **kwargs):
+        question = super(PartialQuestionForm, self).save(commit=False)
+        question.author = self.request.user
+
+        if commit:
+            question.save()
+            self.save_m2m()
+            question.items.add(self.item.id)
+        return question
 
 
 class AnswerForm(ModelForm):
@@ -142,7 +181,7 @@ class AnswerForm(ModelForm):
 
     class Meta:
         model = Answer
-        fields = ("content", "status", )
+        fields = ("content", )
         widgets = {
             "content": BW_small_Widget(attrs={
                 "rows": 10,
@@ -152,52 +191,56 @@ class AnswerForm(ModelForm):
             }),
         }
 
-    def __init__(self, *args, **kwargs):
-        if "request" in kwargs:
-            self.request = kwargs.pop("request")
-            self.user = self.request.user
-            if "question_id" in self.request.REQUEST:
-                self.question_id = self.request.REQUEST.get("question_id")
-                self.question = Question.objects.get(id=self.question_id)
-        if "instance" not in kwargs or kwargs["instance"] is None:
-            self.create = True
-        else:
-            self.object = kwargs["instance"]
-            self.question = self.object.question
+    def __init__(self, request, *args, **kwargs):
+        default_status = Content._meta.get_field("status").default
+        self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
-        if self.user.is_authenticated():
-            profile = self.user.get_profile()
-            label = user_display(self.user)
+        self.request, self.object = [request, kwargs.get("instance", None)]
+        self.create = True if not self.object else False
+        question_id = request.POST.get("question_id", 0)
+        self.question = Question.objects.get(id=question_id) if question_id \
+            else getattr(self.object, "question", None)
+
+        if self.request.user.is_authenticated():
+            profile = self.request.user.get_profile()
+            label = user_display(self.request.user)
             label = label + ", " + profile.about if profile.about else label
         else:
             label = _("Please login before answering.")
         self.fields["content"].label = label
 
     def save(self, commit=True, **kwargs):
+        answer = super(AnswerForm, self).save(commit=False)
+
         if self.create:
-            answer = super(AnswerForm, self).save(commit=False)
-            answer.author = self.user
+            answer.author = self.request.user
             if not answer.question and hasattr(self, "question"):
                 answer.question = self.question
-            if commit:
-                answer.save()
-                answer.items = answer.question.items.all()
-            return answer
-        else:
-            return super(AnswerForm, self).save(commit)
+        answer.status = self.status
+
+        if commit:
+            answer.save()
+            self.save_m2m()
+            answer.items = answer.question.items.all()
+            answer.tags = answer.question.tags.all()
+            if self.create:
+                mail_question_author(self.request, answer)
+
+        return answer
 
 
 class BaseQAFormSet(BaseInlineFormSet):
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop("request", None)
-        self.empty_permitted = kwargs.pop("empty_permitted", None)
+    def __init__(self, request, status=None, empty_permitted=True,
+                 *args, **kwargs):
+        self.request, self.status = [request, status]
+        self.empty_permitted = empty_permitted
         super(BaseQAFormSet, self).__init__(*args, **kwargs)
 
     def _construct_forms(self):
-        # override method to add request/empty_permitted arguments
+        # override method to add request/empty_permitted/status arguments
         # for AnswerForm init
         kwargs = {}
-        for field in ["request", "empty_permitted"]:
+        for field in ["request", "empty_permitted", "status"]:
             value = getattr(self, field, None)
             if value is not None:
                 kwargs.update({field: value})

@@ -28,5 +28,8 @@ opendiff-w
 # Pydev
 .pydevproject
 
+# Redis dumps
+*.rdb
+
 # Catalog DB log
 *decathlon_db_log.txt

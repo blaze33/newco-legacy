@@ -1,13 +1,14 @@
 {% extends "mail/_notification_email.txt" %}
 
 {% load i18n %}
+{% load account_tags %}
 
 {% block body_title %}
-    {{ follower }} {% trans "is now following you on NewCo!" %}
+    {% user_display follower %} {% trans "is now following you on NewCo!" %}
 
 {% endblock %}
 
 {% block go_to_urls %}
-    {% blocktrans %}To see {{ follower }}'s profile, go there{% endblocktrans %}:
+    {% user_display follower as follower %}{% blocktrans %}To see {{ follower }}'s profile, go there{% endblocktrans %}:
         {{ follower_url }}
 {% endblock %}

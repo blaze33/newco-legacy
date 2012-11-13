@@ -28,7 +28,7 @@
     <div class="span1"><p><a href="{{ content.get_absolute_url }}" class="black">{% trans "A:" %}</a></p></div>
     <div class="span3"><p>
       {% autoescape off %}{{ content.content }}{% endautoescape %}
-      {% if user.is_superuser or author == user %}{% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}{% endif %}
+      {% edit_buttons user content edit_next=path delete_next=path %}
     </p></div>
     <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
     <div class="span2 right">{% content_info content "signature-author" %}</div>
@@ -37,10 +37,13 @@
   {% if user != author %}
     <div class="row"><div class="span4 offset3"><a href="{{ question.get_absolute_url }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Add an answer" %}</a></div></div>
   {% endif %}
+{% elif display == "email_html" %}
+  <p><small><b><a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ question.content }}{% endautoescape %}</a></b></small></p>
+  <p><a href="{% get_absolute_uri content request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ content.content }}{% endautoescape %}</a></p>
+{% elif display == "email_txt" %}
+  {% autoescape off %}{{ content.content }}{% endautoescape %}
 {% endif %}
 
 {% endwith %}
 
 {# TODO : set the styles in a .css #}
-
-{# Note from Seb: Seems the "!important" tag is not the cleanest way to override styles (here: inside the `answer.content` , we don't want it to appear very large in this particular "mini_feed" thus we want to force it to use the small font-size of the span container). A javascript changing the styles dynamically inside this container should be the best option. For more info, see: http://stackoverflow.com/questions/104485/is-there-a-way-to-force-a-style-to-a-div-element-which-already-has-a-style-at #}

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-### default.py
-### Django settings for basic pinax project.
-
+### common.py
 import sys
 import os.path
 import posixpath
@@ -23,7 +21,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ########## END DEBUG CONFIGURATION
 
-# tells Pinax to serve media through the staticfiles app.
+# tells Django to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
 # django-compressor is turned off by default due to deployment overhead for
@@ -134,7 +132,6 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
-    "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -157,11 +154,10 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "staticfiles.context_processors.static",
 
-    "pinax.core.context_processors.pinax_settings",
-
     "account.context_processors.account",
     "pinax_theme_bootstrap_account.context_processors.theme",
     "utils.context_processors.settings_mp",
+    "utils.context_processors.site_settings",
 ]
 
 INSTALLED_APPS = [
@@ -179,8 +175,6 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "account",
 
-    "pinax.templatetags",
-
     # theme
     "django_forms_bootstrap",
     "pinax_theme_bootstrap_account",
@@ -196,6 +190,7 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "django_select2",
     "chosen",
 
     # Deployment
@@ -227,7 +222,6 @@ INSTALLED_APPS = [
     "gravatar",
     "tastypie",
     "amazonproduct",
-    "autocomplete_light",
 
     # Tests
     "tests",
@@ -240,8 +234,8 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%d/%s" % \
-                                    (o.get_profile().pk, o.get_profile().slug),
+    "auth.user": lambda o: "/profiles/profile/%d/%s" %
+                           (o.get_profile().pk, o.get_profile().slug),
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -299,6 +293,9 @@ VOTING_ZERO_VOTES_ALLOWED = True
 # Taggit autosuggest
 TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
 TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
+
+# Select2
+AUTO_RENDER_SELECT2_STATICS = True
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

@@ -9,7 +9,7 @@ from account.utils import user_display
 from follow.utils import toggle
 from follow.models import Follow
 
-from utils.mailtools import send_mail
+from utils.mailtools import mail_followee
 
 
 def process_following(request, obj, success_url):
@@ -36,40 +36,20 @@ def process_following(request, obj, success_url):
 
         if follow.target._meta.object_name == "User":
             if is_following:
-                mail_followee(follow.target, request.user,
-                                                request.META.get('HTTP_HOST'))
+                mail_followee(request, follow.target, request.user)
             object_unicode = user_display(follow.target)
         else:
             object_unicode = unicode(follow.target)
 
         msg = "follow" if is_following else "unfollow"
-        messages.add_message(request,
-            msgs[msg]["level"],
+        messages.add_message(
+            request, msgs[msg]["level"],
             msgs[msg]["text"] % {"user": username, "object": object_unicode}
         )
     else:
-        messages.add_message(request,
-            msgs["warning"]["level"],
+        messages.add_message(
+            request, msgs["warning"]["level"],
             msgs["warning"]["text"] % {"user": username}
         )
 
     return HttpResponseRedirect(success_url)
-
-
-def mail_followee(fwee, fwer, site):
-    fwee_name = user_display(fwee)
-    fwer_name = user_display(fwer)
-
-    msg_subject = "%s, %s vous suit maintenant sur NewCo !" % \
-                            (fwee_name, fwer_name)
-
-    txt_template = get_template("mail/_follow_notification_email.txt")
-    html_template = get_template("mail/_follow_notification_email.html")
-
-    context = Context({"followee": fwee_name, "follower": fwer_name,
-        "followee_url": "http://%s%s" % (site, fwee.get_absolute_url()),
-        "follower_url": "http://%s%s" % (site, fwer.get_absolute_url()),
-        "message_subject": msg_subject
-    })
-
-    send_mail(msg_subject, fwee, txt_template, html_template, context)

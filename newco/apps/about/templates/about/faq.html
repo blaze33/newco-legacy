@@ -1,7 +1,6 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
-{% load ifsetting_tag %}
 
 {% block head_title %}{% trans "FAQ" %}{% endblock %}
 
@@ -56,20 +55,3 @@
     <div class="content_row" id="tags"><h3>{% trans "What are the tags for?" %}</h3><p>{% trans "Tags are used for two things: tag products, and tag skills. Tags can both be used for skills and products, but the use is different: tags on products is a way to categorize, tags on skills is a way to identify someone's area of competence." %}</li></ul></p></div>
     {#  description des tags à réecrire quand on aura réorganisé  #}
 {% endblock %}
-
-
-{% comment %}
-    {% block extra_script %}
-        {{ block.super }}
-        
-        {# ##### offset window position for anchor to take navbar into account ##### #}
-        <script type="text/javascript">
-            // doesn't seem to work : source : https://github.com/twitter/bootstrap/issues/1768
-
-    	    // var shiftWindow = function() { scrollBy(0, -50) };
-    	    // if (location.hash) shiftWindow();
-    	    // window.addEventListener("hashchange", shiftWindow);
-        </script>
-        {# ##### End of offset window position for anchor to take navbar into account ##### #}
-    {% endblock %}
-{% endcomment %}

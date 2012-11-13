@@ -12,8 +12,7 @@ from voting.models import Vote
 
 from items.models import Content, Item
 from profiles.models import Profile
-from profiles.views import ProcessProfileSearchView
-from utils.follow.views import ProcessFollowView
+from utils.follow.views import FollowMixin
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
@@ -67,7 +66,7 @@ WHAT_TO_FOLLOW_PARAMS = {
 }
 
 
-class DashboardView(ListView, ProcessProfileSearchView, ProcessFollowView):
+class DashboardView(ListView, FollowMixin):
 
     queryset = Content.objects.all()
 
