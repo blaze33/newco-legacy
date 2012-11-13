@@ -63,6 +63,7 @@ def update_redis_db(sender, request, user, **kwargs):
     engine = load_redis_engine()
     if not engine:
         return
+    engine.flush(everything=True)
     for key, value in PARAMS.iteritems():
         cls = value["class"]
         ctype = ContentType.objects.get_for_model(cls)
