@@ -18,15 +18,6 @@ from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
 from utils.mailtools import mail_question_author
 
-PRODUCT_HELP_TEXT = _(
-    "Select one or up to 5 products using Enter and the Arrow keys.<br>"
-    "<small>You may consider a tag for a group of products.</small><br><br>"
-    "<small>Can't find a product related to your question?</small>"
-    " <a class='btn btn-primary btn-mini' data-toggle='modal' role='button' "
-    "href='#itemModal'><i rel='add_icon' class='icon-plus icon-white' "
-    "style='margin-right: 3px; position: relative; top: -2px;'></i> Add it</a>"
-)
-
 
 class ItemForm(ModelForm):
 
@@ -113,7 +104,8 @@ class QuestionForm(ModelForm):
         if self.object:
             self.fields.get("parents").initial = self.PARENTS.products \
                 if self.object.items.count() else self.PARENTS.tags
-        self.fields.get("items").help_text = PRODUCT_HELP_TEXT
+        self.fields.get("items").help_text = _(
+            "Select up to 5 products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
         question = super(QuestionForm, self).save(commit=False)
