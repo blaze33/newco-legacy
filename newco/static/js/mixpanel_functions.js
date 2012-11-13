@@ -25,8 +25,6 @@ $(function(){
     mixpanel.track_links("#mixpanel_popular","Click Popular");
 	mixpanel.track_links("#mixpanel_questions","Click Unanswered Questions");
 	mixpanel.track_links("#mixpanel_mynewsfeed","Click My Newsfeed");
-	mixpanel.track_links("#mixpanel_image","Click Image Homepage");
-    mixpanel.track_links("#mixpanel_tag_home","Click Tag Homepage");
     //Authentification (on Homepage only)
     if ($('li').hasClass('well_auth')){
     var identity=document.getElementById("mixpanel_identity");
