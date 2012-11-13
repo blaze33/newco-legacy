@@ -2,22 +2,21 @@
 {% load date_utils %}
 
 {% if signature %}
-  <div class="signature"><small>
-    <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
-    <br>
-    <div class="author">
-      {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
-      {% if signature_author %}<div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-        <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
-        <br>
-        <b>{{ reputation }}</b>
-      </div>{% endif %}
+<div class="signature"><small>
+  <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
+  {% if signature_author %}<br><div class="author">
+    {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
+    <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+      <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
+      <br>
+      <b>{{ author_reputation }}</b>
     </div>
-  </small></div>
+  </div>{% endif %}
+</small></div>
 {% elif header %}
-  <div>
-    <span itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a> <b>{{ reputation }}</b>{% if about %}, {{ about }}{% endif %}</span>
-  </div>
+<div class="signature-header">
+  <b itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, {{ about }}{% endif %}</b>
+</div>
 {% endif %}
 
 {#Seb: (about 'itemprop') I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#}

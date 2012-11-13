@@ -58,6 +58,10 @@
         line-height: 140%;
     }
 
+    .answer-content .content {
+        padding-top: .5em;
+    }
+
     .answer-content {
         line-height: 150%;
     }
@@ -77,6 +81,11 @@
         float: right;
         padding: 0 0 5px 5px;
         margin: 0;
+    }
+
+    .signature-header {
+        display: inline;
+        margin-bottom: 1em;
     }
 
     .question-content .signature {
