@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 15:24+0100\n"
-"PO-Revision-Date: 2012-11-13 15:33\n"
+"POT-Creation-Date: 2012-11-13 18:13+0100\n"
+"PO-Revision-Date: 2012-11-13 18:14\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -281,6 +281,14 @@ msgstr "Demander"
 msgid "Maybe they can help you?"
 msgstr "Peut-être peuvent-ils vous aider&#x202F;?"
 
+#: templates/items/_edit_buttons.html:4
+msgid "Edit this post"
+msgstr "Editer ce post"
+
+#: templates/items/_edit_buttons.html:5
+msgid "Delete this post"
+msgstr "Supprimer ce post"
+
 #: templates/items/_link_list.html:8
 msgid "Publish an external link"
 msgstr "Publier un lien externe"
@@ -296,7 +304,7 @@ msgstr ""
 "une&#x202F;!"
 
 #: templates/items/answer_form.html:11 templates/items/item_detail.html:120
-#: templates/items/root_display/_question.html:57
+#: templates/items/root_display/_question.html:61
 msgid "Answer"
 msgstr "Répondre"
 
@@ -674,7 +682,7 @@ msgid "asked a question"
 msgstr "a posé une question"
 
 #: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:45
 msgid "Answer this question"
 msgstr "Répondre à cette question"
 
@@ -682,16 +690,16 @@ msgstr "Répondre à cette question"
 msgid "Add Answer"
 msgstr "Ajouter une réponse"
 
-#: templates/items/root_display/_question.html:13
+#: templates/items/root_display/_question.html:16
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr "Cette question est un brouillon.<br>Elle est anonyme."
 
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:45
 msgid "Add a better answer"
 msgstr "Donner une meilleure réponse"
 
-#: templates/items/root_display/_question.html:42
 #: templates/items/root_display/_question.html:46
+#: templates/items/root_display/_question.html:50
 msgid "Ask someone to answer"
 msgstr "Demandez à quelqu'un de répondre"
 
