@@ -18,8 +18,8 @@
   </small>
 </div>
 {% elif header %}
-<div class="signature">
-  <span itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a> <b>{{ author_reputation }}</b>{% if about %}, {{ about }}{% endif %}</span>
+<div class="signature-header">
+  <b itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, {{ about }}{% endif %}</b>
 </div>
 {% endif %}
 

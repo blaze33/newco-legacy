@@ -8,15 +8,16 @@
 <div class="row question"><div class="span9" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
 
   <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
-    <div class="span1 vote-controls">{% vote_form question vote request.path|add:"#"|add:anchor_q %}{% if score %}{{ score.score }}{% else %}0{% endif %}</div>
+    <div class="span1 vote-controls">{% vote_form question vote request.path|add:"#"|add:anchor_q %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+    {% if user.is_superuser or question.author == request.user %}{% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}{% endif %}
+    </div>
     <div class="span8 question-content">
       {% if question.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% if display == "list" %}{% content_info question "signature" 32 %}{% elif display == "detail" %}{% content_info question "signature" 30 %}{% endif %}{% endif %}
       {% if display == "detail" %}
-        <span itemprop="name">{{ question.content }}</span>
+        <div class="content" itemprop="name">{{ question.content }}</div>
       {% else %}
         <a href="{{ question.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ question.content }}</span></a>
       {% endif %}
-      {% if user.is_superuser or question.author == request.user %}{% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}{% endif %}
     </div>
   </div>
 
@@ -26,12 +27,13 @@
     {% dict_entry_for_item answer from answers.scores as score %}
     <br>
     {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
-      <div class="span1 vote-controls">{% vote_form answer vote request.path|add:"#"|add:anchor %}{% if score %}{{ score.score }}{% else %}0{% endif %}</div>
+      <div class="span1 vote-controls">{% vote_form answer vote request.path|add:"#"|add:anchor %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+      {% if user.is_superuser or answer.author == request.user %}{% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}{% endif %}
+      </div>
       <div class="span8 answer-content">
-        {% if display == "detail" %}{% content_info answer "header" %}<br>{% endif %}
-        {% if display == "list" %}{% content_info answer "signature" 32 %}{% elif display == "detail" %}{% content_info answer "signature-pic" 30 %}{% endif %}
-        <span itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</span>
-        {% if user.is_superuser or answer.author == request.user %}{% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}{% endif %}
+        {% content_info answer "signature" 32 %}
+        {% if display == "detail" %}{% content_info answer "header" %}{% endif %}
+        <div class="content" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
       </div>
     </div>{% endwith %}{% endwith %}
   {% endfor %}
