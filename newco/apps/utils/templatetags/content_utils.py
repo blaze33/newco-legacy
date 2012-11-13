@@ -258,24 +258,18 @@ def tags_display(parser, token):
 def generate_objs_sentence(context, obj_qs, obj_tpl, obj_tpl_name, max_nb=None,
                            quote_type="double", sep=" ", obj_tpl_ctx={}):
 
-    qs_length = obj_qs.count()
-    if not qs_length:
-        return ""
-    max_nb = qs_length if not max_nb else max_nb
-
-    if sep == "text":
-        sep_list = [", "] * qs_length
-        sep_list[-1] = " " + _("and") + " "
-    else:
-        sep_list = [sep] * qs_length
-
-    sentence = ""
+    words = []
     for index, obj in enumerate(obj_qs):
         obj_tpl_ctx.update({obj_tpl_name: obj})
-        s = render_to_string(obj_tpl, obj_tpl_ctx, context_instance=context)
-        sentence = sentence + sep_list[index] + s if index else s
-        if index + 1 == max_nb:
-            break
+        words.append(render_to_string(obj_tpl, obj_tpl_ctx, context_instance=context))
+
+    sentence = ""
+    if words:
+        if sep == "text":
+            sentence = ", ".join(words[:max_nb - 1 if max_nb else -1]) + \
+                       " " + _("and") + " " + words[-1]
+        else:
+            sentence = sep.join(words)
 
     if quote_type == "single":
         sentence = sentence.replace("\"", "\'")
@@ -304,6 +298,7 @@ class ContentInfoNode(Node):
                     "signature_author": True,
                     "signature_pic": True,
                     "author_name": user_display(author),
+                    "author_reputation": author.reputation.reputation_incremented,
                     "author_url": author.get_absolute_url(),
                     "profile_pic": profile_pic(author, size=pic_size)
                 })
@@ -311,6 +306,7 @@ class ContentInfoNode(Node):
                 ctx.update({
                     "signature_author": True,
                     "author_name": user_display(author),
+                    "author_reputation": author.reputation.reputation_incremented,
                     "author_url": author.get_absolute_url()
                 })
             elif display == "signature-pic":
@@ -325,6 +321,7 @@ class ContentInfoNode(Node):
                 "header": True,
                 "author_name": user_display(author),
                 "author_url": author.get_absolute_url(),
+                "author_reputation": author.reputation.reputation_incremented,
                 "about": author.get_profile().about
             }
         else:

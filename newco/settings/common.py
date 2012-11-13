@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-### default.py
-### Django settings for basic pinax project.
-
+### common.py
 import sys
 import os.path
 import posixpath
@@ -23,7 +21,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 ########## END DEBUG CONFIGURATION
 
-# tells Pinax to serve media through the staticfiles app.
+# tells Django to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
 # django-compressor is turned off by default due to deployment overhead for
@@ -134,7 +132,6 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
-    "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -157,11 +154,10 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "staticfiles.context_processors.static",
 
-    "pinax.core.context_processors.pinax_settings",
-
     "account.context_processors.account",
     "pinax_theme_bootstrap_account.context_processors.theme",
     "utils.context_processors.settings_mp",
+    "utils.context_processors.site_settings",
 ]
 
 INSTALLED_APPS = [
@@ -178,8 +174,6 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.sitemaps",
     "account",
-
-    "pinax.templatetags",
 
     # theme
     "django_forms_bootstrap",

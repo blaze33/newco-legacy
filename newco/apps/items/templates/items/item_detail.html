@@ -16,18 +16,16 @@
 
 {% block body %}
 
-<ul class="thumbnails">
+<ul class="thumbnails album">
   {% for image in album|slice:":4" %}<li class="span3">
     <a class="thumbnail" href="{{ image.data.contextLink }}" target="_blank">
-      <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}" height="128px">
+      <img src="{{ image.data.thumbnailLink }}" alt="{{ image.data.snippet }}">
     </a>
   </li>{% endfor %}
 </ul>
 
-</br>
-
 <div class="row">
-  <div class="span7">
+  <div class="span9">
     {% include "items/_data_sheet.html" %}
     <br>
     {% include "items/_question_list.html" %}
@@ -58,7 +56,7 @@
     </div>
   </div>
 
-  {% if store_prods_by_ean %}<div class="offset2 span3">
+  {% if store_prods_by_ean %}<div class="span3">
     <div class="dropdown controls">
       <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
@@ -108,7 +106,7 @@
 
   <script type="text/javascript">
       $(document).ready( function() {
-          var divCollection = $("#[id^='answer\_form\_']");
+          var divCollection = $('div[id^="answer_form_"]');
           $.each(divCollection, function (i, item) {
               var bc = $("#controls_" + $(this)[0].id)
               var icon_change = $('[rel=icon]', bc);

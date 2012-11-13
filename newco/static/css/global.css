@@ -11,7 +11,6 @@
 .profile-item img {
     float: right;
     margin-left: 5px;
-    width: 64px;
     height: 64px;
     border-radius: 4px;
 }
@@ -57,6 +56,7 @@
 }
 .content-item .details h4 { display: run-in; }
 .content-item .details p { margin: 0; }
+.content-item .details { line-height: 20px; }
 
 
 .content-item-small img {
@@ -351,9 +351,7 @@ img:hover + .img-controls,
 }
 
 .nc-tag {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
+  font-weight: normal;
 }
 
 /* Use btn-group and btn styles in a nav */
@@ -430,3 +428,20 @@ img:hover + .img-controls,
     /*padding: 2px;*/
   }
 }
+
+/*
+div, span {
+  box-shadow:
+     inset -1px 0   0 red,
+     inset 1px 0   0 red,
+     inset  0  -1px 0 red,
+     inset  0   1px 0 red;
+}
+img {
+  box-shadow:
+     -1px 0   0 orange,
+     1px 0   0 orange,
+      0  -1px 0 orange,
+      0   1px 0 orange;
+}
+*/
