@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-13 15:24+0100\n"
-"PO-Revision-Date: 2012-11-13 15:25\n"
+"PO-Revision-Date: 2012-11-13 15:33\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -577,7 +577,7 @@ msgstr "Mettre à jour et laisser dans les brouillons"
 
 #: templates/items/question_form.html:57
 msgid "Why is it encouraged?"
-msgstr "Pourquoi cette incitation ?"
+msgstr "Pourquoi cette incitation&#x202F;?"
 
 #: templates/items/question_form.html:61
 msgid "Answer your own question"
