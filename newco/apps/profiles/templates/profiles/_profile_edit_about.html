@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form method="POST" action="" class="form-inline">{% csrf_token %}
+<div class="form-inline">
   <button class="btn btn-mini" data-toggle="modal" data-target="#edit_about"><b>{% if user.get_profile.about %}{% trans "Edit your bio" %}{% else %}{% trans "Tell us about you" %}{% endif %}</b></button>
 
   <div id="edit_about" class="modal fade hide">
@@ -13,4 +13,4 @@
       <input type="submit" class="btn btn-primary" name="edit_about" value="{% trans 'Submit' %}">
     </div>
   </div>
-</form>
+</div>
