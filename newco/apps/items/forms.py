@@ -121,7 +121,6 @@ class QuestionForm(ModelForm):
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
         parents = cleaned_data.get("parents")
-        parents = int(parents) if parents else parents
 
         if parents == self.PARENTS.tags:
             cleaned_data["items"] = []
