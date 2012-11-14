@@ -39,13 +39,7 @@
         <div class="span1"><h4>{% trans "Price" %}</h4></div>
       </div>
       {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-        <hr>
-        <div class="row mixpanel-product" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
-          {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
-          <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
-          <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-          <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}"> {% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
-        </div>
+        {% include "affiliation/_affiliation_item.html" with prod=prod display="list" %}
       {% endfor %}{% endfor %}
       <hr>
     </div>{% endwith %}{% endif %}
@@ -61,7 +55,7 @@
       <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
         {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-          {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<li><a href="{{ prod.url }}" target="_blank"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp; {% price prod.price prod.currency LANGUAGE_CODE %}</a></li>{% endwith %}
+          {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
         {% endfor %}<li class="divider"></li>{% endfor %}
         <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
       </ul>
@@ -71,7 +65,7 @@
 
     <h4>{% trans "Where to buy" %}</h4>
     <div>{% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
-      {% include "affiliation/_affiliation_item.html" with prod=prod %}
+      {% include "affiliation/_affiliation_item.html" with prod=prod display="thumbnail" %}
     {% endfor %}{% endfor %}</div>
 
   </div>{% endif %}

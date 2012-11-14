@@ -4,7 +4,7 @@ $(function(){
    // $(".one_row").popover({animation:'true', trigger: 'hover', content: 'popover'});
 	
     //Affiliation
-    $(".mixpanel-product").each(function (index) {
+    $(".click-to-product-row").each(function (index) {
 		var product=$(this);
 		var data = {
 					ean: product.data("ean"),
@@ -16,6 +16,29 @@ $(function(){
 	    mixpanel.track_links("#"+data.ean,"Click to Product", data.payload);
 	});
       
+    $(".click-to-product-thumb").each(function (index) {
+		var product=$(this);
+		var data = {
+					ean: product.data("ean"),
+					payload: {
+							  'product':product.data("name"),
+							  'store':product.data("store")
+							  }
+					};
+	    mixpanel.track_links("#"+data.ean+"-thumb","Click to Product", data.payload);
+	});
+	
+	$(".click-to-product-drop").each(function (index) {
+		var product=$(this);
+		var data = {
+					ean: product.data("ean"),
+					payload: {
+							  'product':product.data("name"),
+							  'store':product.data("store")
+							  }
+					};
+	    mixpanel.track_links("#"+data.ean+"-drop","Click to Product", data.payload);
+	});
     //Signup
     if ($('li').hasClass('non_auth')){mixpanel.track("Page Load User non authenticated");};
     if ($('li').hasClass('well_auth')){mixpanel.track("Page Load User authenticated");};
