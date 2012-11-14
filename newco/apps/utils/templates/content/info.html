@@ -3,7 +3,7 @@
 
 {% if signature %}
 <div class="signature">
-  <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
+  <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
   {% if signature_author %}<br><div class="author">
     {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
     <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
