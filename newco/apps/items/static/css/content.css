@@ -81,6 +81,7 @@
         float: right;
         padding: 0 0 5px 5px;
         margin: 0;
+        line-height: 100%;
     }
 
     .signature-header {
