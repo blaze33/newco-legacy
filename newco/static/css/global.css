@@ -8,6 +8,10 @@
     text-align:center
 }
 
+.no-display {
+    display:none
+}
+
 .profile-item img {
     float: right;
     margin-left: 5px;
