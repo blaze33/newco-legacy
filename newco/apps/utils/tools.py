@@ -65,14 +65,16 @@ def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
 
 
-def get_query(query_string, search_fields, terms=None):
+def get_query(query_string, search_fields, terms=None, min_len=1):
     """
     Returns a query, that is a combination of Q objects. That combination
     aims to search keywords within a model by testing the given search fields.
     """
 
     if not terms:
-        terms = normalize_query(query_string)
+        kwargs = {"findterms": re.compile(
+            r'"([^"]+)"|(\S{%d,})' % min_len).findall} if min_len > 1 else {}
+        terms = normalize_query(query_string, **kwargs)
     query = None
     for term in terms:
         or_query = None
@@ -83,14 +85,16 @@ def get_query(query_string, search_fields, terms=None):
     return query
 
 
-def get_queries_by_score(query_string, search_fields):
+def get_queries_by_score(query_string, search_fields, min_len=1):
     """
     Returns a list of queries, with each element being a combination of
     Q objects. That combination aims to search keywords within a model
     by testing the given search fields.
     """
 
-    terms = normalize_query(query_string)
+    kwargs = {"findterms": re.compile(
+        r'"([^"]+)"|(\S{%d,})' % min_len).findall} if min_len > 1 else {}
+    terms = normalize_query(query_string, **kwargs)
     query_dict = SortedDict()
     for score in range(len(terms), 0, -1):
         queries = None
@@ -102,8 +106,8 @@ def get_queries_by_score(query_string, search_fields):
     return query_dict
 
 
-def get_search_results(qs, keyword, search_fields, nb_items=None):
-    query_dict = get_queries_by_score(keyword, search_fields)
+def get_search_results(qs, keyword, search_fields, min_len, nb_items=None):
+    query_dict = get_queries_by_score(keyword, search_fields, min_len)
     results = list()
     for score, query in query_dict.items():
         #TODO: better implementation, meaning find a way to use qs
