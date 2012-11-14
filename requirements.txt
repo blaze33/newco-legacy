@@ -9,7 +9,7 @@ django-user-accounts==1.0b7
 django-extensions==1.0.0
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
-django-compressor==1.2a1
+django-compressor==1.2
 
 django-timezones==0.2
 pytz==2012h
@@ -45,7 +45,7 @@ South==0.7.6
 boto==2.6.0
 django-storages==1.1.5
 ## dateutil needed to only upload updated files
-python-dateutil==2.1
+python-dateutil==1.5
 
 ## memcache interface
 pylibmc==1.2.3
