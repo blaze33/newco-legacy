@@ -79,19 +79,15 @@
 
     .signature {
         float: right;
-        padding: 0 0 5px 5px;
+        padding: 2px 2px 5px 5px;
         margin: 0;
-        line-height: 100%;
+        font-size: 14px;
+        font-weight: normal;
     }
 
     .signature-header {
         display: inline;
         margin-bottom: 1em;
-    }
-
-    .question-content .signature {
-        font-size: 80%;
-        font-weight: normal;
     }
 
     .signature .author img {
@@ -101,7 +97,7 @@
 
     .signature .author div {
         margin-left: 40px;
-        line-height: 140%
+        line-height: 110%
     }
 
     .controls_2.vote {

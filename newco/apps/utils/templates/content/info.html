@@ -2,7 +2,7 @@
 {% load date_utils %}
 
 {% if signature %}
-<div class="signature"><small>
+<div class="signature">
   <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
   {% if signature_author %}<br><div class="author">
     {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
@@ -12,7 +12,7 @@
       <b>{{ reputation }}</b>
     </div>
   </div>{% endif %}
-</small></div>
+</div>
 {% elif header %}
 <div class="signature-header">
   <b itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, {{ about }}{% endif %}</b>
