@@ -217,8 +217,11 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
-            q_id = int(POST["question_id"]) \
-                if "answer" in POST and "question_id" in POST else -1
+            q_id = -1
+            if ("answer" in POST or "edit_about" in POST) \
+                    and "question_id" in POST:
+                q_id = int(POST.get("question_id"))
+                context.update({"q_id": q_id})
 
             media = None
             for q in contents.get("questions").get("queryset"):
@@ -263,7 +266,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         elif self.model == Question:
             q = context.get("question")
             q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST else AnswerForm(request)
+                if "answer" in POST or "edit_about" in POST \
+                else AnswerForm(request)
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
@@ -312,7 +316,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            return HttpResponseRedirect(request.path)
+            return self.render_to_response(self.get_context_data())
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)

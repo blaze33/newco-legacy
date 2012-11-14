@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 15:24+0100\n"
+"POT-Creation-Date: 2012-11-13 18:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,6 +271,14 @@ msgstr ""
 msgid "Maybe they can help you?"
 msgstr ""
 
+#: templates/items/_edit_buttons.html:4
+msgid "Edit this post"
+msgstr ""
+
+#: templates/items/_edit_buttons.html:5
+msgid "Delete this post"
+msgstr ""
+
 #: templates/items/_link_list.html:8
 msgid "Publish an external link"
 msgstr ""
@@ -284,7 +292,7 @@ msgid "No question yet! Ask the first one here!"
 msgstr ""
 
 #: templates/items/answer_form.html:11 templates/items/item_detail.html:120
-#: templates/items/root_display/_question.html:57
+#: templates/items/root_display/_question.html:61
 msgid "Answer"
 msgstr ""
 
@@ -651,7 +659,7 @@ msgid "asked a question"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:45
 msgid "Answer this question"
 msgstr ""
 
@@ -659,15 +667,15 @@ msgstr ""
 msgid "Add Answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:13
+#: templates/items/root_display/_question.html:16
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
 
-#: templates/items/root_display/_question.html:41
+#: templates/items/root_display/_question.html:45
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:42
 #: templates/items/root_display/_question.html:46
+#: templates/items/root_display/_question.html:50
 msgid "Ask someone to answer"
 msgstr ""
