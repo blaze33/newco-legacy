@@ -62,7 +62,8 @@ def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
+    terms = [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
+    return uniquify_sequence(terms)
 
 
 def get_query(query_string, search_fields, terms=None, min_len=1):
@@ -120,3 +121,9 @@ def get_search_results(qs, keyword, search_fields, min_len, nb_items=None):
             break
     results = results[:nb_items] if nb_items else results
     return results
+
+
+def uniquify_sequence(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if x not in seen and not seen_add(x)]
