@@ -26,6 +26,7 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 AWS_QUERYSTRING_AUTH = False  # Don't include auth in every url
+AWS_PRELOAD_METADATA = True  # fast sync, cf. http://stackoverflow.com/a/8440276/343834
 
 # e-mail settings for sendgrid
 EMAIL_HOST = 'smtp.sendgrid.net'
