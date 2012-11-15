@@ -10,9 +10,6 @@
 
 {% block extra_style %}
   {{ block.super }}
-  <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'pinax/js/jquery.js' %}"></script>
 
   {% comment %}
   <script type="text/javascript">
@@ -27,7 +24,7 @@
       })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
   </script>
   {% endcomment %}
-  {{ form.media }}
+  {{ form.media.css }}
   {{ formset.media.css }}
 {% endblock %}
 
@@ -112,8 +109,6 @@
 
 {% block extra_body_base %}
   {{ block.super }}
-  {{ form.media.js }}
-  {{ formset.media.js }}
   <script type="text/javascript">
     {% if show %}$("#itemModal").modal("show"){% endif %}
     $('#answer_form').on('hide', function () {
@@ -143,6 +138,8 @@
 
 {% block extra_script %}
   {{ block.super }}
+  {{ form.media.js }}
+  {{ formset.media.js }}
   <script type ="text/javascript">
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
