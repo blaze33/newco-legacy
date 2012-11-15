@@ -10,6 +10,7 @@ from account.utils import user_display
 from chosen.forms import ChosenSelectMultiple
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
+from django_select2.fields import ModelSelect2MultipleField
 from taggit.forms import TagField
 from taggit_autosuggest.widgets import TagAutoSuggest
 
@@ -80,6 +81,7 @@ class QuestionForm(ModelForm):
                     widget=TagAutoSuggest(attrs={"class": "span4"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
+    items = ModelSelect2MultipleField(queryset=Item.objects.all())
 
     class Meta:
         model = Question
@@ -89,10 +91,10 @@ class QuestionForm(ModelForm):
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            "items": ChosenSelectMultiple(
-                attrs={"class": "span4", "rows": 1},
-                overlay=_("Pick a product."),
-            )
+            # "items": ChosenSelectMultiple(
+            #     attrs={"class": "span4", "rows": 1},
+            #     overlay=_("Pick a product."),
+            # )
         }
 
     def __init__(self, request, *args, **kwargs):
