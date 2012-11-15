@@ -22,6 +22,8 @@ class HomepageView(MultiTemplateMixin, ListView):
             self.model = Item
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
+            
+        #### the variable "sort_p_order" can be changed from "popular"(by default) to "last" with buttons on template homepage_products_3 #####
             if self.sort_p_order == "popular":
                 delta = timezone.now() - datetime.timedelta(days=30)
                 self.queryset = self.queryset.filter(
@@ -30,8 +32,15 @@ class HomepageView(MultiTemplateMixin, ListView):
                     Count("content")).order_by("-content__count")
             elif self.sort_p_order == "last":
                 self.queryset = self.queryset.order_by("-pub_date")
+        if self.cat == "last":
+            self.model = Item
+            self.queryset = Item.objects.all()
+            self.template_name = "homepage_products.html"
+            self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
             self.model = Question
+            
+        #### the variable "sort_q_order" can be changed from "unanswered"(by default) to "last_answered" with buttons on template homepage_questions_2 #####
             if self.sort_q_order == "unanswered":
                 self.queryset = Question.objects.annotate(
                     score=Count("answer")).filter(score__lte=0)
@@ -70,9 +79,11 @@ class HomepageView(MultiTemplateMixin, ListView):
             select_category = request.POST["select_category"]
             response = "%s?category=%s" % (reverse("home", kwargs={"cat":"questions"}), select_category)
             return HttpResponseRedirect(response)
+        ##### From homepage_products_3.html #####
         elif "sort_products" in request.POST:
             self.sort_p_order = self.request.POST.get("sort_products")
             return self.get(request, *args, **kwargs)
+        ##### From homepage_questions_2.html -> questions.subnav.html #####
         elif "sort_questions" in request.POST:
             self.sort_q_order = self.request.POST.get("sort_questions")
             return self.get(request, *args, **kwargs)
