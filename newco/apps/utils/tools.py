@@ -2,14 +2,9 @@ import itertools
 import re
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, Sum
+from django.db.models import Q
 from django.db.models.loading import get_model
-from django.template.base import TemplateSyntaxError, kwarg_re
 from django.utils.datastructures import SortedDict
-from django.utils.encoding import smart_str
-
-from generic_aggregation import generic_annotate
-from voting.models import Vote
 
 MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
 
@@ -55,8 +50,7 @@ def load_object(request):
                                                 lookup_kwargs))
 
 
-def normalize_query(query_string,
-                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
+def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
     """
     Splits the query string in invidual keywords, getting rid of unecessary
@@ -68,18 +62,20 @@ def normalize_query(query_string,
         ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     """
 
-    return [normspace(' ',
-                      (t[0] or t[1]).strip()) for t in findterms(query_string)]
+    terms = [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(str)]
+    return uniquify_sequence(terms)
 
 
-def get_query(query_string, search_fields, terms=None):
+def get_query(query_string, search_fields, terms=None, min_len=1):
     """
     Returns a query, that is a combination of Q objects. That combination
     aims to search keywords within a model by testing the given search fields.
     """
 
     if not terms:
-        terms = normalize_query(query_string)
+        kwargs = {"findterms": re.compile(
+            r'"([^"]+)"|(\S{%d,})' % min_len).findall} if min_len > 1 else {}
+        terms = normalize_query(query_string, **kwargs)
     query = None
     for term in terms:
         or_query = None
@@ -90,14 +86,16 @@ def get_query(query_string, search_fields, terms=None):
     return query
 
 
-def get_queries_by_score(query_string, search_fields):
+def get_queries_by_score(query_string, search_fields, min_len=1):
     """
     Returns a list of queries, with each element being a combination of
     Q objects. That combination aims to search keywords within a model
     by testing the given search fields.
     """
 
-    terms = normalize_query(query_string)
+    kwargs = {"findterms": re.compile(
+        r'"([^"]+)"|(\S{%d,})' % min_len).findall} if min_len > 1 else {}
+    terms = normalize_query(query_string, **kwargs)
     query_dict = SortedDict()
     for score in range(len(terms), 0, -1):
         queries = None
@@ -109,8 +107,8 @@ def get_queries_by_score(query_string, search_fields):
     return query_dict
 
 
-def get_search_results(qs, keyword, search_fields, nb_items=None):
-    query_dict = get_queries_by_score(keyword, search_fields)
+def get_search_results(qs, keyword, search_fields, min_len, nb_items=None):
+    query_dict = get_queries_by_score(keyword, search_fields, min_len)
     results = list()
     for score, query in query_dict.items():
         #TODO: better implementation, meaning find a way to use qs
@@ -125,45 +123,7 @@ def get_search_results(qs, keyword, search_fields, nb_items=None):
     return results
 
 
-def get_sorted_queryset(queryset, user):
-    queryset = generic_annotate(
-        queryset, Vote, Sum('votes__vote')).order_by("-score")
-    scores = Vote.objects.get_scores_in_bulk(queryset)
-    votes = Vote.objects.get_for_user_in_bulk(queryset, user)
-    return {"queryset": queryset.select_subclasses(),
-            "scores": scores, "votes": votes}
-
-
-def get_node_extra_arguments(parser, bits, tag_name, max_args):
-    args = []
-    kwargs = {}
-    asvar = None
-    if len(bits) >= 2 and bits[-2] == 'as':
-        asvar = bits[-1]
-        bits = bits[:-2]
-
-    if len(bits):
-        if len(bits) <= max_args:
-            for bit in bits:
-                match = kwarg_re.match(bit)
-                if not match:
-                    err_msg = "Malformed arguments in '%s'" % tag_name
-                    raise TemplateSyntaxError(err_msg)
-                name, val = match.groups()
-                if name:
-                    kwargs[name] = parser.compile_filter(val)
-                else:
-                    args.append(parser.compile_filter(val))
-        else:
-            err_msg = "'%s' tag takes at most %d extra arguments." \
-                % (tag_name, max_args)
-            raise TemplateSyntaxError(err_msg)
-
-    return [args, kwargs, asvar]
-
-
-def resolve_template_args(context, in_args, in_kwargs):
-    args = [arg.resolve(context) for arg in in_args]
-    kwargs = dict([(smart_str(k, 'ascii'), v.resolve(context))
-                   for k, v in in_kwargs.items()])
-    return [args, kwargs]
+def uniquify_sequence(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if x not in seen and not seen_add(x)]

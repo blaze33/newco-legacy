@@ -1,8 +1,11 @@
+{# TITLE: Default #}
+
 {% extends "site_base.html" %}
 
 {% load url from future %}
 {% load i18n %}
 {% load bootstrap_tags %}
+{% load form_utils %}
 {% load staticfiles %}
 
 {% block extra_style %}
@@ -30,12 +33,16 @@
 
 {% block body %}
 
+<div>
+  <span class="pull-right"><button class="btn btn-success" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Tips" %}</button></span>
+  <h1>{% if not question %}{% trans "Ask a question" %}{% else %}{% trans "Edit your question" %}{% endif %}</h1>
+</div>
+
 <div class="row">
   <div class="span8">
-    <h1>{% block form_header %}{% if not question %}{% trans "Ask a question" %}{% else %}{% trans "Edit your question" %}{% endif %}{% endblock %}</h1>
     <br>
-    <form class="form-horizontal" action="" method="POST">{% csrf_token %}
-      {{ form|as_bootstrap }}
+    <form class="form-horizontal" method="POST">{% csrf_token %}
+      {{ form|as_bootstrap_question_form }}
 
       <div class="control-group" id="div_submit_q"{% if cb_answer %} style="visibility: hidden;" {% endif %}>
         <div class="controls">
@@ -47,19 +54,12 @@
       {% if formset %}
         <div class="control-group"><div class="controls">
           <span class="pull-right">
-            <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#why_answer_your_q" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Why is it encouraged?" %}</button>
+            <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
           </span>
           <label class="checkbox">
             <input type="checkbox" name="cb_answer" data-toggle="collapse" data-target="#answer_form"{% if cb_answer %} checked{% endif %}>
             {% trans "Answer your own question" %}
           </label>
-          <br>
-          <div id="why_answer_your_q" class="collapse out">
-            <div class="well well-small">
-              {% blocktrans %}<h3>We encourage you to answer your own questions.</h3> Why? On NewCo, giving answers to others is central. And sometimes you know things, but you don't find a question relative to it. We encourage you to document that knowledge, create your own Q&A, like a FAQ, so it can benefit others.
-              {% endblocktrans %}
-            </div>
-          </div>
         </div></div>
         <div id="answer_form" class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}"><div class="span7">
           {{ formset.management_form }}
@@ -91,21 +91,19 @@
 
     </form>
   </div>
-  <div class="span4">
-    <span class="pull-right"><button class="btn btn-mini btn-success" data-toggle="collapse" data-target="#div_tips" style="z-index: 0 ;"><i rel="add_icon" class="icon-plus icon-white" style="margin-right: 3px; position: relative; top: -2px;"></i>{% trans "Tips" %}</button></span>
-    <br><br>
-    <div class="row collapse out" id="div_tips"><div class="well well-small">
-      {% blocktrans %}
-        <h4>Tips:</h4>
-        Here, you can ask a question about one or several products:
-        <ol>
-          <li>Write down your question.</li>
-          <li>Select products or tags to bind that question to, using the search bars.</li>
-          <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
-        </ol>
-      {% endblocktrans %}
-    </div></div>
-  </div>
+
+  <div class="span4"><div class="collapse out" id="div_tips"><div class="well well-small">
+    <p>{% blocktrans %}
+      Here, you can ask a question about one or several products:
+      <ol>
+        <li>Write down your question.</li>
+        <li>Select products or tags to bind that question to, using the search bars.</li>
+        <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>
+      </ol>
+    {% endblocktrans %}</p>
+    <hr>
+    <p>{% trans "You can also answer your own question if there is something you would like to share and you haven't found the related question. That way, you document your knowledge so it can help others." %}</p>
+  </div></div></div>
 </div>
 
 {% endblock %}
@@ -142,11 +140,9 @@
 
 {% block extra_script %}
   {{ block.super }}
-	<script type ="text/javascript">
-		$(document).ready(function(){
-	    mixpanel.track("Load_add_question");
-		});
-	</script>
+  <script type ="text/javascript">
+    $(document).ready(function(){
+        mixpanel.track("Load_add_question");
+    });
+  </script>
 {% endblock %}
-
-{# TITLE: Default #}

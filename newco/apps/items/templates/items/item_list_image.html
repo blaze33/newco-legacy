@@ -1,5 +1,0 @@
-{% extends "items/item_list_base.html" %}
-
-{% block itemlist %}
-    <div class="row" id="thumbnails_list">{% for item in object_list %}{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}{% endfor %}</div>
-{% endblock %}

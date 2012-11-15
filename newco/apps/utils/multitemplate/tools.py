@@ -18,14 +18,13 @@ def get_template(template_name):
         if loader is not None:
             loaders.append(loader)
     template_source_loaders = tuple(loaders)
-
     for loader in template_source_loaders:
         try:
             return loader.load_template_source(template_name)
         except TemplateDoesNotExist:
             pass
 
-    return None
+    return ["", ""]
 
 
 def get_similar_templates(local_template_path, file_pattern="[1-999]"):

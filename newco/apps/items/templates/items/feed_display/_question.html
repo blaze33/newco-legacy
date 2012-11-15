@@ -19,7 +19,7 @@
   <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
     <div class="span4"><p>
       <a class="black" href="{{ content.get_absolute_url }}">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
-      {% if user.is_superuser or author == user %}{% with name=content|to_class_name %}{% edit name content.id path %}{% endwith %}{% endif %}
+      {% edit_buttons user content edit_next=path delete_next=path %}
     </p></div>
     <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
     <div class="span2 right">{% content_info content "signature-author" %}</div>
@@ -27,15 +27,21 @@
 
   {% if user != author %}<div class="row block_controls"><div class="span4 offset3"><a href="{% url 'item_create' 'answer' %}?question_id={{ content.id }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>{% endif %}
 
-
 {% elif display == "unanswered" %}
-    <div class="span7" align="left">
+  <div class="span7" align="left">
     <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
-    <div class="q_categories">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
-    {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
-    {% endif %}
+    <div class="q_categories">
+      {% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
+      {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
+      {% endif %}
     </div>
     <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
     <hr>
-    </div>
+  </div>
+
+{% elif display == "email_html" %}
+  <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
+  <br>
+{% elif display == "email_txt" %}
+  {% autoescape off %}{{ question.content }}{% endautoescape %}
 {% endif %}

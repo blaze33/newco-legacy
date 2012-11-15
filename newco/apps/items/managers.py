@@ -1,9 +1,11 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Sum, Count
 from django.db.models.query import QuerySet
 
 from follow.models import Follow
+from generic_aggregation import generic_annotate
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
+from voting.models import Vote
 
 from content.models import Item
 
@@ -64,8 +66,41 @@ class ContentQuerySet(InheritanceQuerySet):
         item_qs = item_qs.filter(tags__in=profile.skills.all())
         return self.filter(items__in=item_qs)
 
+    def order_queryset(self, option):
+        if option == "popular":
+            return generic_annotate(
+                self, Vote, Sum('votes__vote')).order_by("-score")
+        elif "pub_date" in option:
+            return self.order_by(option)
+        elif option == "no_answers":
+            return self.annotate(score=Count("answer")).filter(score__lte=0)
+        return self
+
+    def get_scores_and_votes(self, user):
+        scores = Vote.objects.get_scores_in_bulk(self)
+        votes = Vote.objects.get_for_user_in_bulk(self, user)
+        return [scores, votes]
+
+    def get_qs_tools(self, option, user):
+        qs = self.order_queryset(option)
+        scores, votes = qs.get_scores_and_votes(user)
+        return {"queryset": qs.select_subclasses(),
+                "scores": scores, "votes": votes}
+
 
 class ContentManager(InheritanceManager):
     def get_query_set(self):
         qs = ContentQuerySet(self.model)
         return qs.filter(Q(link__isnull=True) & Q(feature__isnull=True))
+
+    def get_feed(self, user):
+        return self.get_query_set().get_feed(user)
+
+    def get_related_contributions(self, user, item_qs):
+        return self.get_query_set().get_related_contributions(user, item_qs)
+
+    def order_queryset(self, option):
+        return self.get_query_set().order_queryset(option)
+
+    def get_scores_and_votes(self, user):
+        return self.get_query_set().get_scores_and_votes(user)

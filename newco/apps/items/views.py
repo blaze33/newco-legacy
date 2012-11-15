@@ -1,12 +1,12 @@
 import json
 
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
-from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -25,11 +25,12 @@ from voting.models import Vote
 from content.transition import add_images, get_album
 from items.models import Item, Content, Question, Link, Feature
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
+from items.forms import PartialQuestionForm
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
 from utils.follow.views import FollowMixin
-from utils.tools import load_object, get_sorted_queryset, get_search_results
+from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
 
@@ -47,7 +48,8 @@ class ContentView(View):
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]
         if "next" in request.GET:
-            kwargs.update({"next": request.GET.get("next")})
+            self.next = request.GET.get("next")
+            kwargs.update({"next": self.next})
         self.success_url = request.POST.get("next", None)
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
@@ -64,9 +66,8 @@ class ContentFormMixin(object):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
         kwargs.update({"request": self.request})
         for field in ["add_question", "add_answer"]:
-            status = self.request.POST.get(field, None)
-            if status:
-                kwargs.update({"status": int(status)})
+            if field in self.request.POST:
+                kwargs.update({"status": int(self.request.POST.get(field))})
                 break
         return kwargs
 
@@ -169,7 +170,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             args = [self.object._meta.module_name, self.object.id]
             self.success_url = reverse("item_edit", args=args)
         url = self.success_url
-        self.success_url = url + "?next=" + next if url and next else url
+        self.success_url = "%s?next=%s" % (url, next) if url and next else url
 
         return super(ContentCreateView, self).get_success_url()
 
@@ -183,6 +184,8 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return super(ContentUpdateView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
         context = super(ContentUpdateView, self).get_context_data(**kwargs)
         if self.model == Item:
             album = get_album(self.object)
@@ -210,22 +213,23 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             contents = dict()
             for key, queryset in querysets.items():
-                contents.update({key: get_sorted_queryset(queryset, user)})
+                contents.update({key: queryset.get_qs_tools("popular", user)})
 
-            initial = {"items": item.id,
-                       "parents": QuestionForm.PARENTS.products}
-            q_form = QuestionForm(data=POST, request=request) if "question" \
-                in POST else QuestionForm(initial=initial, request=request)
-            q_id = int(POST["question_id"]) \
-                if "answer" in POST and "question_id" in POST else -1
+            q_form = PartialQuestionForm(request, item, data=POST) \
+                if "question" in POST else PartialQuestionForm(request, item)
+            q_id = -1
+            if ("answer" in POST or "edit_about" in POST) \
+                    and "question_id" in POST:
+                q_id = int(POST.get("question_id"))
+                context.update({"q_id": q_id})
 
             media = None
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                answer_qs = Content.objects.filter(
-                    Q(answer__question__id=q.id) & public_query)
-                q.answers = get_sorted_queryset(answer_qs, user)
+                answer_query = Q(answer__question__id=q.id)
+                q.answers = Content.objects.filter(
+                    answer_query & public_query).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -262,13 +266,14 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         elif self.model == Question:
             q = context.get("question")
             q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST else AnswerForm(request)
+                if "answer" in POST or "edit_about" in POST \
+                else AnswerForm(request)
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            answer_qs = Content.objects.filter(
-                Q(answer__question__id=q.id) & public_query)
-            q.answers = get_sorted_queryset(answer_qs, user)
+            answer_query = Q(answer__question__id=q.id)
+            q.answers = Content.objects.filter(
+                answer_query & public_query).get_qs_tools("popular", user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
@@ -295,11 +300,13 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             obj = load_object(request)
             return process_asking_for_help(request, obj, request.path)
         elif "question" in POST or "answer" in POST:
-            Form = QuestionForm if "question" in POST else AnswerForm
-            form = Form(request, data=POST)
+            if "question" in POST:
+                form = PartialQuestionForm(request, self.object, data=POST)
+            else:
+                form = AnswerForm(request, data=POST)
             if form.is_valid():
                 display_message("created", self.request,
-                                Form._meta.model._meta.verbose_name)
+                                form._meta.model._meta.verbose_name)
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
@@ -309,100 +316,84 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            return HttpResponseRedirect(request.path)
+            return self.render_to_response(self.get_context_data())
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
 
 
-class SearchMixin(object):
+class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
-    def post(self, request, *args, **kwargs):
-        search = request.POST.get("item_search", "")
-        if not search:
-            return super(SearchMixin, self).post(request, *args, **kwargs)
-
-        item_list = Item.objects.filter(name=search)
-        tag_list = Tag.objects.filter(name=search)
-        if item_list.count() == 1:
-            response = item_list[0].get_absolute_url()
-        elif tag_list.count() == 1:
-            response = reverse("tagged_items", args=[tag_list[0].slug])
-        else:
-            response = "%s?q=%s" % (reverse("content_search"), search)
-        return HttpResponseRedirect(response)
-
-
-class ContentListView(ContentView, SearchMixin, MultiTemplateMixin, ListView):
-
-    model = Item
-    template_name = "items/item_list_image.html"
     paginate_by = 9
-    sort_order = "-pub_date"
+    qs_option = "-pub_date"
+
+    def get(self, request, *args, **kwargs):
+        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+        self.cat = kwargs.get("cat", "home")
+        self.template_name = "items/item_list_%s.html" % self.cat
+        self.qs_option = self.request.GET.get("qs_option", self.qs_option)
+
+        if self.cat == "home" or self.cat == "products":
+            self.model, self.pill = [Item, kwargs.get("pill", "browse")]
+            self.queryset = Item.objects.filter(tags=self.tag)
+            msg = _("No products with tag %s")
+        elif self.cat == "questions":
+            self.model, self.pill = [Question, kwargs.get("pill", "tag")]
+            self.queryset = Content.objects.filter(question__isnull=False)
+            if self.pill == "tag":
+                self.queryset = self.queryset.filter(tags=self.tag)
+                msg = _("No questions with tag %s")
+            elif self.pill == "products":
+                item_ids = Item.objects.filter(tags=self.tag).values_list(
+                    "id", flat=True)
+                self.queryset = self.queryset.filter(items__in=item_ids)
+                msg = _("No questions about products with tag %s")
+
+        tpl = "tags/_tag_display.html"
+        self.empty_msg = msg % render_to_string(tpl, {"tag": self.tag})
+        return super(ContentListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
-        if "tag_slug" in self.kwargs:
-            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            qs = qs.filter(tags=self.tag)
-        self.search_terms = self.request.GET.get("q", "")
-        if self.search_terms:
-            self.template_name = "items/item_list_text.html"
-            qs = get_search_results(qs, self.search_terms, ["name"])
-            return qs
-        field = "content__question__id"
-        qs = list(qs.annotate(score=Count(field)).order_by("-score"))\
-            if self.sort_order == "popular" else qs.order_by(self.sort_order)
+        if self.cat == "products":
+            field = "content__question__id"
+            qs = qs.annotate(score=Count(field)).order_by("-score") \
+                if self.qs_option == "popular" else qs.order_by(self.qs_option)
+        elif self.cat == "questions":
+            res = qs.get_qs_tools(self.qs_option, self.request.user)
+            qs = res.get("queryset")
+            self.scores, self.votes = [res.get("scores"), res.get("votes")]
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "search_terms", "sort_order"]:
-            context.update({attr: getattr(self, attr, "")})
-        if not "object_list" in context:
-            return context
-        objs = context.get("object_list")
-        nb_items = objs.count() if type(objs) is QuerySet else len(objs)
-        if nb_items == 0:
-            return context
-        qs = Content.objects.filter(question__items__in=objs).distinct()
-        qss = generic_annotate(qs, Vote, Sum('votes__vote')).order_by("-score")
-        rq = SortedDict()
-        rq.update({_("Top related questions"): qss.select_subclasses()[:3]})
-        rq.update({_("Latest related questions"): qs.select_subclasses()[:3]})
-        context.update({"related_questions": rq})
-
-        ###### Seb's : for trial template on tags page
-        if "tag_slug" in self.kwargs:
-            self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-
-            questions_on_tag = Question.objects.filter(tags=self.tag)[:3]
-            context.update({"questions_on_tag": questions_on_tag})
-            ### To do : sort these questions by vote
-
-            items_wi_tag = Item.objects.filter(tags=self.tag)
-            questions_on_items_wi_tag = Question.objects.filter(items__in=items_wi_tag)[:3]
-            context.update({"questions_on_items_wi_tag": questions_on_items_wi_tag})
-            ## To Do : sort these questions by vote
-
-            unanswered_q_wi_tag = Question.objects.annotate(
-                    score=Count("answer")
-                ).filter( Q(score__lte=0),
-                    Q(tags=self.tag) | Q(items__in=items_wi_tag)
-                )[:3]
-            context.update({"unanswered_q_wi_tag": unanswered_q_wi_tag})
-        ###### end of Seb's
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
+            if hasattr(self, attr):
+                context.update({attr: getattr(self, attr)})
+        if self.cat == "home" and context.get("object_list"):
+            qs = Content.objects.filter(
+                question__items__in=context.get("object_list")).distinct()
+            field = "votes__vote"
+            qss = generic_annotate(qs, Vote, Sum(field)).order_by("-score")
+            rq = SortedDict()
+            rq.update({
+                _("Top related questions"): qss.select_subclasses()[:3],
+                _("Latest related questions"): qs.select_subclasses()[:3]
+            })
+            context.update({"related_questions": rq})
+        if self.model is Item:
+            context.get("object_list").fetch_images()
+        else:
+            context.update({"item_list": Item.objects.filter(tags=self.tag)})
+            context.get("item_list").fetch_images()
         return context
 
     def post(self, request, *args, **kwargs):
-        if "tag_slug" in self.kwargs and "skills" in request.POST:
-            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
-            prof = request.user.get_profile()
-            prof.skills.add(tag) if request.POST.get("skills") == "add" \
-                else prof.skills.remove(tag)
-            return self.get(request, *args, **kwargs)
-        elif "sort_products" in request.POST:
-            self.sort_order = self.request.POST.get("sort_products")
+        if "skills" in request.POST:
+            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
+            profile = request.user.get_profile()
+            profile.skills.add(tag) if request.POST.get("skills") == "add" \
+                else profile.skills.remove(tag)
             return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
@@ -415,29 +406,19 @@ class ContentDeleteView(ContentView, DeleteView):
         self.object = self.get_object()
         if not request.user.has_perm("can_manage", self.object):
             raise PermissionDenied
-        success_url = self.get_success_url(request)
         self.object.delete()
-        return HttpResponseRedirect(success_url)
+        return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self, request):
+    def get_context_data(self, **kwargs):
+        if hasattr(self, "next"):
+            kwargs.update({"next": self.next})
+        return super(ContentDeleteView, self).get_context_data(**kwargs)
+
+    def get_success_url(self):
         if self.success_url:
-            success_url = self.success_url % self.object.__dict__
-        elif self.model.__name__ == "Item":
-            success_url = reverse("item_index")
-        elif "success_url" in request.GET:
-            success_url = request.GET.get("success_url")
+            return self.success_url
         else:
-            success_url = None
-
-        obj = self.object
-        if success_url != obj.get_absolute_url() and success_url is not None:
-            return success_url
-        else:
-            try:
-                return obj.items.all()[0].get_absolute_url()
-            except:
-                pass
-        raise ImproperlyConfigured
+            return "/"
 
 
 MESSAGES = {

@@ -1,6 +1,0 @@
-{% load i18n %}
-
-<div class="controls_2 pull-right">
-    <a title="{% trans 'Edit this post' %}" href="{% url item_edit item_name item_id %}{% if edit_next %}?next={{ edit_next }}{% endif %}"><i class="icon-edit"></i></a>
-    <a title="{% trans 'Delete this post' %}" href="{% url item_delete item_name item_id %}"><i class="icon-trash"></i></a>
-</div>

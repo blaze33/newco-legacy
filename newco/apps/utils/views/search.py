@@ -29,7 +29,8 @@ class TypeaheadSearchView(RedirectView):
                 elif cls is Tag:
                     response = reverse("tagged_items", args=[obj.slug])
             else:
-                response = "%s?q=%s" % (reverse("content_search"), q)
+                # TODO: handle no results
+                response = "/"
             return HttpResponseRedirect(response)
         return super(TypeaheadSearchView, self).post(request, *args, **kwargs)
 

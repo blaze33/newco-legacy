@@ -32,8 +32,7 @@
 <ul class="nav pull-left">
     <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
         <div class="input-append">
-            <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for product, user or tag' %}">
-            <button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+            <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for a product, a user or a tag' %}"><button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
         </div>
         <input type="hidden" id="obj_class" name="obj_class"/>
         <input type="hidden" id="obj_id" name="obj_id"/>
@@ -41,11 +40,7 @@
 </ul>
 {% endblock %}
 
-{% block footer %}
-    {% include "_footer.html" %}
-
-    {{ block.super }}
-{% endblock %}
+{% block footer %}{% include "_footer.html" %}{% endblock %}
 
 {% block extra_script %}
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
@@ -79,7 +74,6 @@
             });
         });
     </script>
-    
 {% endblock %}
 
 {% block extra_body_base %}

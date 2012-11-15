@@ -1,30 +1,31 @@
-from django.template.base import Node, Library, Variable
+from django.template.base import Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
 from django.utils.translation import pgettext
 from django.utils.translation import ugettext_lazy as _
 
 from follow.models import Follow
-from utils.tools import get_node_extra_arguments, resolve_template_args
+from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
 
 
-class FollowFormNode(Node):
+class FollowFormNode(GenericNode):
 
     template = "follow/form.html"
 
-    def __init__(self, user, obj, args, kwargs):
+    def __init__(self, user, obj, *args, **kwargs):
         self.user = Variable(user)
         self.obj = Variable(obj)
-        self.args = args
-        self.kwargs = kwargs
+        super(FollowFormNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
-        user = self.user.resolve(context)
-        obj = self.obj.resolve(context)
-
-        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
+        try:
+            user = self.user.resolve(context)
+            obj = self.obj.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
+            return ""
 
         fields = ["next", "extra_class", "tooltip_class"]
         for index, field in enumerate(fields):
@@ -53,7 +54,10 @@ class FollowFormNode(Node):
         ctx.update({"object": obj, "btn": btn})
         if self.next:
             ctx.update({"next": self.next})
-        return render_to_string(self.template, ctx, context_instance=context)
+
+        html = render_to_string(self.template, ctx, context_instance=context)
+
+        return self.render_output(context, html)
 
 
 @register.tag
@@ -67,16 +71,13 @@ def follow_form(parser, token):
 
         {% follow_form user object %}
         {% follow_form user object next="" extra_class=""
-                                           tooltip_class="tooltip-top" %}
+                tooltip_class="tooltip-top" %}
 
     """
     bits = token.split_contents()
     if len(bits) < 3:
         raise TemplateSyntaxError("'%s' takes at least two arguments"
                                   " (user and object to follow)" % bits[0])
-    elif len(bits) > 5:
-        raise TemplateSyntaxError("'%s' takes at most four arguments."
-                                  % bits[0])
     tag_name = bits[0]
     user = bits[1]
     obj = bits[2]
@@ -84,4 +85,4 @@ def follow_form(parser, token):
 
     args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)
 
-    return FollowFormNode(user, obj, args, kwargs)
+    return FollowFormNode(user, obj, args, kwargs, asvar)

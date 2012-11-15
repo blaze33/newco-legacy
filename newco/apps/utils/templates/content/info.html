@@ -3,19 +3,15 @@
 
 {% if signature %}
 <div class="signature">
-  <small>
-    <span class="right" itemprop="dateModified">{% trans "Posted:" %} <b>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
-    {% if signature_author %}
-      <br><div class="author">
-{% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
-      <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-        <a href="{{ author_url }}" itemprop="url">
-          <span itemprop="name">{{ author_name }}</span>
-        </a><br>
-        <b>{{ author_reputation }}</b>
-      </div></div>
-    {% endif %}
-  </small>
+  <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
+  {% if signature_author %}<br><div class="author">
+    {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
+    <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+      <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
+      <br>
+      <b>{{ reputation }}</b>
+    </div>
+  </div>{% endif %}
 </div>
 {% elif header %}
 <div class="signature-header">

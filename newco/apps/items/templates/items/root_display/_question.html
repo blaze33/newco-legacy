@@ -8,8 +8,9 @@
 <div class="row question"><div class="span9" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
 
   <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
-    <div class="span1 vote-controls">{% vote_form question vote request.path|add:"#"|add:anchor_q %}{% if score %}{{ score.score }}{% else %}0{% endif %}
-    {% if user.is_superuser or question.author == request.user %}{% with name=question|to_class_name %}{% edit name question.id %}{% endwith %}{% endif %}
+    <div class="span1 vote-controls">
+      {% vote_form question vote request.path|add:"#"|add:anchor_q %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+      {% edit_buttons user question delete_next=request.path %}
     </div>
     <div class="span8 question-content">
       {% if question.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% if display == "list" %}{% content_info question "signature" 32 %}{% elif display == "detail" %}{% content_info question "signature" 30 %}{% endif %}{% endif %}
@@ -21,14 +22,14 @@
     </div>
   </div>
 
-
   {% for answer in answers.queryset %}
     {% dict_entry_for_item answer from answers.votes as vote %}
     {% dict_entry_for_item answer from answers.scores as score %}
     <br>
     {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
-      <div class="span1 vote-controls">{% vote_form answer vote request.path|add:"#"|add:anchor %}{% if score %}{{ score.score }}{% else %}0{% endif %}
-      {% if user.is_superuser or answer.author == request.user %}{% with name=answer|to_class_name %}{% edit name answer.id %}{% endwith %}{% endif %}
+      <div class="span1 vote-controls">
+        {% vote_form answer vote request.path|add:"#"|add:anchor %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+        {% edit_buttons user answer delete_next=request.path %}
       </div>
       <div class="span8 answer-content">
         {% content_info answer "signature" 32 %}
@@ -38,11 +39,11 @@
     </div>{% endwith %}{% endwith %}
   {% endfor %}
 
-  <div class="row"><div class="span6 offset1">
+  <div class="row"><div class="span8 offset1">
     {% if display == "list" %}
       <div class="block_controls row" id="controls_answer_form_{{ question.id }}">
-        <div class="span3"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if question.answers.queryset %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
-        <div class="span3 right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+        <div class="span4"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if question.answers.queryset %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
+        <div class="span4 right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
       </div>
     {% elif display == "detail" %}
         <hr>
@@ -51,16 +52,16 @@
     <br>
   </div></div>
 
-  <div class="row"><div class="span7">
-      <div id="answer_form_{{ question.id }}"class="row{% if display == "list" %} collapse {% if question.answer_form.errors %}in{% else %}out{% endif %}{% endif %}">
-        {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
-        <div class="span6{% if not user.is_authenticated %} offset1{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
-          {% csrf_token %}
-          {{ question.answer_form|as_bootstrap }}
-          <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
-          <input type="hidden" name="question_id" value="{{ question.id }}"/>
-        </form></div>
+  <div class="row"><div class="span9">
+    <div id="answer_form_{{ question.id }}"class="row{% if display == 'list' %} collapse {% if question.answer_form.errors or question.id == q_id %}in{% else %}out{% endif %}{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
+      {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
+      <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
+        {% csrf_token %}
+        {{ question.answer_form|as_bootstrap }}
+        <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+        <input type="hidden" name="question_id" value="{{ question.id }}"/>
       </div>
+    </form></div>
   </div></div>
 {% endwith %}{% endwith %}</div></div>
 
@@ -68,23 +69,3 @@
 
 {% if display == "list" %}<hr>{% endif %}
 {% endif %}
-
-{% if display == "unanswered_questions" %}
-<div class="row">
-	<div class="span1" align="right" style="margin-right: 0">
-		{% with image=content.items.all.0.node.graph.get_image.data %}
-        <a href="{{ content.get_absolute_url }}"><img style="margin-bottom: 0" height="{% widthratio image.thumbnailHeight image.thumbnailWidth 60 %}"src="{{ image.thumbnailLink }}" alt=""></a>
-        {% endwith %}
-	</div>
-    <div class="span7" align="left" style="margin-left: 10px">
-    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
-
-    {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a>. {% endfor %}
-    <br>
-    <a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
-    <hr>
-    </div>
-</div>
-{% endif %}
-
-{# Seb: I took 1 question as an "article"/"name" and answers as "description" for SEO/schema.org ... maybe it s not the best ... #}

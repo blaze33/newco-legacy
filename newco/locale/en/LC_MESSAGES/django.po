@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 15:52+0200\n"
+"POT-Creation-Date: 2012-11-05 19:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings/common.py:65
+#: settings/common.py:63
 msgid "English"
 msgstr ""
 
-#: settings/common.py:66
+#: settings/common.py:64
 msgid "French"
 msgstr ""
 
@@ -125,23 +125,23 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: templates/_footer.html:5
+#: templates/_footer.html:4
 msgid "Get started"
 msgstr ""
 
-#: templates/_footer.html:6
+#: templates/_footer.html:5
 msgid "FAQ"
 msgstr ""
 
-#: templates/_footer.html:7
+#: templates/_footer.html:6
 msgid "How to contribute?"
 msgstr ""
 
-#: templates/_footer.html:8
+#: templates/_footer.html:7
 msgid "Team"
 msgstr ""
 
-#: templates/_footer.html:9
+#: templates/_footer.html:8
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
@@ -311,20 +311,16 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: templates/homepage_questions.html:34
-msgid "Add Answer"
-msgstr ""
-
-#: templates/homepage_questions.html:38
+#: templates/homepage_questions.html:31
 msgid "No unanswered questions on this category."
 msgstr ""
 
-#: templates/homepage_questions.html:39
+#: templates/homepage_questions.html:32
 msgid "Ask your own awesome question then!"
 msgstr ""
 
 #: templates/site_base.html:35
-msgid "Search for product, user or tag"
+msgid "Search for a product, a user or a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
