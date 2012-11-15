@@ -7,25 +7,25 @@
 
 <br>
 <div class="row">
-    <ul class="nav nav-list">
-    	    <li class="nav-header">{% trans "Choose a Category" %}</li>
-            <li>
-            <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
-            <div class="input-append">
-                <input type="text" autocomplete="off" class="span2 search-query" style="height:40px; font-size: 20px;" name="select_category" id="global_search_cat" placeholder="{% trans 'Ex. tennis, ...' %}">
-                <button type="submit" class="btn btn-primary category-button">{% trans "Select" %}</button>
-            </div> 
-            </form>
-            </li>
-            <li><br><br><br><br></li>
-    	    <li class="nav-header">{% trans "Filter by" %}</li>
-            <li>
-            <form action="" method="POST">{% csrf_token %}
-	            <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
-	            <button class="btn{% if sort_q_order == 'unanswered' %} btn-primary{% endif %}" name="sort_questions" value="unanswered" {% if sort_q_order == "unanswered" %}disabled="disabled"{% endif %}>{% trans "Unanswered" %}</button>
-	            <button class="btn{% if sort_q_order == 'last_answered' %} btn-primary{% endif %}" name="sort_questions" value="last_answered" {% if sort_q_order == "last_answered" %}disabled="disabled"{% endif %}>{% trans "Recently answered" %}</button>
-	            </div>
-            </form>
-            </li>
-    </ul>
+  <ul class="nav nav-list">
+    <li class="nav-header">{% trans "Choose a Category" %}</li>
+    <li>
+    <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
+      <div class="input-append">
+        <input type="text" autocomplete="off" class="span2 search-query" style="height:40px; font-size: 20px;" name="select_category" id="global_search_cat" placeholder="{% trans 'Ex. tennis, ...' %}">
+        <button type="submit" class="btn btn-primary category-button">{% trans "Select" %}</button>
+      </div> 
+    </form>
+    </li>
+    <li><br><br><br><br></li>
+    <li class="nav-header">{% trans "Filter by" %}</li>
+    <li>
+    <form action="" method="POST">{% csrf_token %}
+      <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
+        <button class="btn{% if sort_q_order == 'unanswered' %} btn-primary{% endif %}" name="sort_questions" value="unanswered" {% if sort_q_order == "unanswered" %}disabled="disabled"{% endif %}>{% trans "Unanswered" %}</button>
+        <button class="btn{% if sort_q_order == 'last_answered' %} btn-primary{% endif %}" name="sort_questions" value="last_answered" {% if sort_q_order == "last_answered" %}disabled="disabled"{% endif %}>{% trans "Recently answered" %}</button>
+      </div>
+    </form>
+    </li>
+  </ul>
 </div>
