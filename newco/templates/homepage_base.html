@@ -81,7 +81,7 @@
         Todo: Put together "Products" with the dropdown in 1 group -->
     <li class="dropdown">
   	  <a class="dropdown-toggle" data-toggle=dropdown data-target="#" title="Choice" href="">
-      <b class="caret"></b>
+      <b class="caret"></b></a>
       <ul class="dropdown-menu pull-right">
         <li{% if cat == "home" %} class="active"{% endif %}><a href="{% url 'home' %}"><i class="icon-star"></i> <b>{% trans "Popular products" %}</b> </a></li>
         <li{% if cat == "last" %} class="active"{% endif %}><a href="{% url 'home' 'last' %}"><i class="icon-plus"></i> <b>{% trans "Last products added" %}</b> </a></li>
