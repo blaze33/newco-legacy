@@ -1,0 +1,24 @@
+{% load url from future %}
+{% load i18n %}
+{% load content_utils %}
+{% load date_utils %}
+
+
+{% if display == "unanswered products" %}
+    <div class="span7" align="left">
+    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
+    <div class="q_categories">{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
+    </div>
+    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
+    <hr>
+    </div>
+{% endif %}
+
+{% if display == "unanswered categories" %}
+    <div class="span7" align="left">
+    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
+    <div class="q_categories">{% trans "Category" %} {% tags_display content.tags 3 %}</div>
+    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
+    <hr>
+    </div>
+{% endif %}
