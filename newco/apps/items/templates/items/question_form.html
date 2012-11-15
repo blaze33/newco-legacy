@@ -143,6 +143,7 @@
   <script type ="text/javascript">
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
+        $("#id_items").select2({'closeOnSelect': false, 'placeholder': ''});
     });
   </script>
 {% endblock %}
