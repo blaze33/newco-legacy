@@ -1,0 +1,53 @@
+/* ↓ css defs for homepage_questions */
+
+/*
+ Remove the image when screen is too small (<800px).
+ Rather than getting a bad positionment.
+ */
+@media (min-width: 800px) {
+.content-item-mini { line-height: 1px; width: 60px; margin: 3px }
+.content-item-mini img {
+    float: left;
+    width: 60px;
+    border-radius: 3px;
+    margin-right:5px;
+    margin-top: 2px;
+    margin-bottom: 0px;
+}
+}
+
+@media (max-width: 800px) {
+.content-item-mini { display:none; }
+.content-item-mini img {
+   display:none;
+}
+}
+
+
+.q_categories {
+  font-size: 11px;
+
+}
+
+.q_add_answer {
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+.category-button {
+  height:50px; 
+  position: relative; 
+  top: 0px; 
+  padding: 4px 5px;
+}
+}
+
+@media (max-width: 768px) {
+.category-button {
+  height:40px; 
+  position: relative; 
+  top: 0px; 
+  padding: 4px 5px;
+}
+}

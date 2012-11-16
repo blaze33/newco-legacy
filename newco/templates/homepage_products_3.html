@@ -1,0 +1,32 @@
+{% extends "homepage_base.html" %}
+
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block body %}
+
+<div class="row">
+  <div class="span1 homepage_sort">
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Filter" %}</li>
+      <li>
+		<form action="" method="POST">{% csrf_token %}
+	      <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
+	        <button class="btn{% if sort_p_order == 'popular' %} btn-primary{% endif %}" name="sort_products" value="popular" {% if sort_order == "popular" %}disabled="disabled"{% endif %}>{% trans "Popular" %}</button>
+	        <button class="btn{% if sort_p_order == 'last' %} btn-primary{% endif %}" name="sort_products" value="last" {% if sort_order == "last" %}disabled="disabled"{% endif %}>{% trans "Last added" %}</button>
+	      </div>
+	    </form>
+      </li>
+    </ul>
+  </div>
+  <div class="span10 offset1"><div id="thumbnails_list">{% for item in object_list %}
+    {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+{% endfor %}</div></div></div>
+
+{% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}
+
+{# TITLE: Sort_products #}

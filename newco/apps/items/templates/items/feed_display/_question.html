@@ -26,19 +26,19 @@
   </div>
 
   {% if user != author %}<div class="row block_controls"><div class="span4 offset3"><a href="{% url 'item_create' 'answer' %}?question_id={{ content.id }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>{% endif %}
-{% elif display == "unanswered" %}
-  <div class="row">
-    <div class="span1" align="right" style="margin-right: 0">{% with image=content.items.all.0.node.graph.get_image.data %}
-        <a href="{{ content.get_absolute_url }}"><img style="margin-bottom: 0" height="{% widthratio image.thumbnailHeight image.thumbnailWidth 60 %}"src="{{ image.thumbnailLink }}" alt=""></a>
-    {% endwith %}</div>
-    <div class="span7" align="left" style="margin-left: 10px">
-      <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
 
-      {% for item in content.items.all %}<a href="{{ item.get_absolute_url }}" class="black" style="font-size: 11px">{{ item.name }}</a> {% endfor %}
-      <br>
-      <a href="{{ content.get_absolute_url }}" class="black" style="opacity:0.5;font-size: 11px">{% trans "Add Answer" %}</a>
+{% elif display == "unanswered" %}
+  <div class="span7" align="left">
+    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
+    <div class="q_categories">
+      {% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
+      {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
+      {% endif %}
     </div>
+    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
+    <hr>
   </div>
+
 {% elif display == "email_html" %}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
   <br>

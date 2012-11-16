@@ -90,16 +90,12 @@
     <a href="#" data-toggle="collapse" data-target="#why_NewCo">
     	<img src="{% static 'img/arrow_tutorial.png' %}" type="image/png"></a>
     </div>
-
-    <div class="span8" style="margin-top: 0px; margin-left:0px; background-color: #FFF9B1; text-align: center;">
+    <div class="span8" style="margin-top: 0px; margin-left:0px; height: 120px; background-color: #FFF9B1; text-align: center;">
         <h3>Discover the NewCo community</h3>
-
-        <br><a href="{% url 'account_signup' %}" id="mixpanel_signup_page"><button class="btn btn-danger" style="height:30px; width:160px; font-color:#FFF"><h3> {% trans "Join NewCo" %}<i class="icon-forward" style="margin-left:5px; "></i></h3></button></a>
-
-        <a href="{% url 'account_login' %}"><button class="btn btn-default" style="margin-left:10px; height:30px; width:100px;"><h3> {% trans "Login" %}</h3></button></a>
+        <br><a href="{% url 'account_signup' %}" id="mixpanel_signup_page"><button class="btn btn-danger" style="height:40px; width:160px; font-color:#FFF"><h3> {% trans "Join NewCo" %}<i class="icon-forward" style="margin-left:5px; "></i></h3></button></a>
+        <a href="{% url 'account_login' %}"><button class="btn btn-default" style="margin-left:10px; height:40px; width:100px;"><h3> {% trans "Login" %}</h3></button></a>
     </div>
 </div>
-
 
 
 {% if user.is_authenticated %}
@@ -121,111 +117,31 @@
 
 {% block extra_script %}
     {{ block.super }}
-    <script type="text/javascript"> // script can't go to '/static' : needs to translate text
-        $(function(){
-            var why_NewCo_div = $('#why_NewCo');
-            var subnav2move = $('.subnav-fixed');
-
-            why_NewCo_div.on('show', function () {
-                subnav2move.addClass('subnav-moved');
-                $('body').addClass('body-less-padding');
-            })
-
-            why_NewCo_div.on('shown', function () {
-                // Give time to load for subnav displacement : slow sometimes
-                setTimeout("$('.tooltip-tutorial').tooltip('show')", 1500);
-            })
-
-            why_NewCo_div.on('hide', function () {
-                $('.tooltip-tutorial').tooltip('hide');
-            })
-
-            why_NewCo_div.on('hidden', function () {
-                subnav2move.removeClass('subnav-moved');
-                $('body').removeClass('body-less-padding');
-            })
-
-            $('.tooltip-tutorial').tooltip({
-                trigger: 'manual',
-                placement: 'top',
-                animate: true,
-                // delay: 500,
-            });
-
-            $('.navbar-fixed-top').addClass('reduced-margin-navbar');
-
-            //"Find products or tags in the search bar... "
-            $('.arrow_search_bar_trigger').mouseover(function () {
-                $('#arrow_search_bar').removeClass('arrow-search-bar-hidden');
-                $('#arrow_search_bar').addClass('arrow-search-bar-shown');
-            });
-            $('.arrow_search_bar_trigger').mouseout(function () {
-                $('#arrow_search_bar').removeClass('arrow-search-bar-shown');
-                $('#arrow_search_bar').addClass('arrow-search-bar-hidden');
-            });
-            $('.arrow_search_bar_trigger').click(function () {
-                $('#main_autocomplete').focus();
-            });
-
-            // "explore NewCo"
-            $('#explore').click(function(){
-                why_NewCo_div.collapse('hide');
-                return false;
-            });
-
-            // "build your reputation ..."
-            $('#reputation-trigger').mouseover(function () {
-                $('#reputation-btn').addClass('btn-glow');
-            });
-
-            $('#reputation-trigger').mouseout(function () {
-                $('#reputation-btn').removeClass('btn-glow');
-            });
-
-        {% if request.GET.welcome %}
-            setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
-            subnav2move.addClass('subnav-moved');
-            $('body').addClass('body-less-padding');
-        {% endif %}
-
-        });
-
-    </script>
 
     {# ##### Equalize columns height ##### #}
     <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script type="text/javascript">
-        // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
         $('.WhyNC-col').height(function () {
             var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
                 return $(elem).height();
             });
             return $(h).height();
         });
-
-        // $('.Struct_col').height(function () {
-        //     var h = _.max($(this).closest('.row').find('.Struct_col'), function (elem, index, list) {
-        //         return $(elem).height();
-        //     });
-        //     return $(h).height();
-        // });
-
-        // $(window).load(function(){
-        //     var new_css = {
-        //       'position' : 'absolute',
-        //       'bottom' : '',
-        //     }
-        //     $('#know_more').css(new_css);
-        //     //$('#know_more').css("position","absolute");
-        //     //$('#know_more').html("TEXT TEST");
-        //     //alert("test");
-        // });
     </script>
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">
-	$(document).ready(function(){
-	if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
-	});
+	    $(document).ready(function(){
+	        if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
+	    });
 	</script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
+    <script type="text/javascript">
+        $(function(){
+          {% if request.GET.welcome %}
+              setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
+              subnav2move.addClass('subnav-moved');
+              $('body').addClass('body-less-padding');
+          {% endif %}
+        });
+    </script>
 {% endblock %}
