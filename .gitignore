@@ -33,3 +33,6 @@ opendiff-w
 
 # D4 Catalog update log
 *decathlon_db_log.txt
+
+# static files
+*/site_media/*
