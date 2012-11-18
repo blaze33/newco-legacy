@@ -102,14 +102,11 @@
     {{ block.super }}
 
     {# ##### Equalize columns height ##### #}
-    <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-    <script type="text/javascript">
-        $('.WhyNC-col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
-                return $(elem).height();
-            });
-            return $(h).height();
-        });
+    <script>
+      var heights = $(".WhyNC-col").map(function () {
+                                          return $(this).height();
+                                        }).get();
+      $('.WhyNC-col').height(Math.max.apply(null, heights));
     </script>
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">
