@@ -137,3 +137,28 @@ $(function(){
   });
 
 });
+
+// typeahead javascript
+$(function() {
+    var labels, mapped
+    $("#global_search").typeahead({
+        source: function (query, process) {
+            $.get('{% url "redis" %}', {q: query}, function (data) {
+                labels = []
+                mapped = {}
+
+                $.each(data, function (i, item) {
+                    mapped[item.title] = item
+                    labels.push(item.title)
+                })
+                process(labels)
+            })
+        },
+        updater: function (item) {
+            var obj = mapped[item];
+            $('#obj_class').val(obj.class);
+            $('#obj_id').val(obj.id);
+            return obj.title
+        }
+    });
+});
