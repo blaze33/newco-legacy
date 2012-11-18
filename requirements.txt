@@ -43,7 +43,8 @@ South==0.7.6
 
 ## AWS interface & storage backend
 boto==2.6.0
-django-storages==1.1.5
+# django-storages==1.1.5
+hg+https://bitbucket.org/david/django-storages@1574890
 ## dateutil needed to only upload updated files
 python-dateutil==1.5
 

@@ -23,10 +23,11 @@ STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False  # Don't include auth in every url
-# AWS_PRELOAD_METADATA = True  # fast sync, cf. http://stackoverflow.com/a/8440276/343834
+AWS_PRELOAD_METADATA = True  # fast sync, cf. http://stackoverflow.com/a/8440276/343834
 # wait for release bump, cf. issue https://bitbucket.org/david/django-storages/issue/134/
 
 # e-mail settings for sendgrid
@@ -42,3 +43,10 @@ if HEROKU_DATABASES:
     DATABASES['default']['OPTIONS'] = {'autocommit': True}
     DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
+
+# Django compressor settings
+AWS_IS_GZIPPED = True
+STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_URL = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE
