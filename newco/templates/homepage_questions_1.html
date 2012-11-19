@@ -82,7 +82,7 @@
             var labels, mapped
             $("#global_search_cat").typeahead({
                 source: function (query, process) {
-                    $.get('{% url "redis" "tags" %}', {q: query}, function (data) {
+                    $.get('{% url "redis" "tag" %}', {q: query}, function (data) {
                         labels = []
                         mapped = {}
 
