@@ -63,6 +63,8 @@ $(function(){
 	});
 	mixpanel.name_tag(user_name);
     };
-
+    
+    //Landing Page
+    if ($('li').hasClass('non_auth')){mixpanel.register_once({ 'landing page': window.location.href });};
 
 });
