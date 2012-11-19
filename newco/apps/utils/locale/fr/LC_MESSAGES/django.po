@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 15:12+0100\n"
-"PO-Revision-Date: 2012-11-13 15:13\n"
+"POT-Creation-Date: 2012-11-19 16:21+0100\n"
+"PO-Revision-Date: 2012-11-19 16:22\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,44 +19,44 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: mailtools.py:44
+#: mailtools.py:45
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr "%(receiver)s, %(answerer)s répondu a votre question&#x202F;!"
 
-#: mailtools.py:68
+#: mailtools.py:69
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#x202F!"
 
-#: mailtools.py:73
+#: mailtools.py:74
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 "%(user)s, vous ne pouvez pas vous proposer de répondre à une "
 "question&#x202F;!"
 
-#: mailtools.py:109
+#: mailtools.py:111
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help."
 msgstr "%(receiver)s, %(requester)s a besoin de vous."
 
-#: mailtools.py:136
+#: mailtools.py:138
 #, python-format
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr "%(followee)s, %(follower)s vous suit désormais sur NewCo."
 
-#: follow/tools.py:19
+#: follow/tools.py:18
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr "%(user)s, vous suivez désormais %(object)s."
 
-#: follow/tools.py:23
+#: follow/tools.py:22
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr "%(user)s, vous ne suivez plus %(object)s."
 
-#: follow/tools.py:27
+#: follow/tools.py:26
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
 msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
@@ -230,41 +230,42 @@ msgctxt "Follow button"
 msgid "Follow"
 msgstr "Suivre"
 
-#: templatetags/tools.py:80 templatetags/tools.py:112
+#: templatetags/tools.py:81 templatetags/tools.py:113
 msgid "and"
 msgstr "et"
 
-#: templatetags/tools.py:108
+#: templatetags/tools.py:109
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/tools.py:114
+#: templatetags/tools.py:115
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] "avec le tag"
 msgstr[1] "avec les tags"
 
-#: vote/tools.py:17
+#: vote/tools.py:18
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
 msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
 
-#: vote/tools.py:21
+#: vote/tools.py:22
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
 msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
 
-#: vote/tools.py:25
+#: vote/tools.py:26
 #, python-format
 msgid "%(user)s, your vote on %(object)s has been cancelled."
 msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 
-#: vote/tools.py:29
+#: vote/tools.py:30
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
-msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
+msgstr ""
+"%(user)s, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
 
 #~ msgid "Add one"
 #~ msgstr "Ajouter un produit"

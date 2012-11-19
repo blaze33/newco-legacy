@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 
@@ -91,13 +92,12 @@ def process_asking_for_help(request, question, success_url):
 
         if receiver != request.user:
             mail_helper(request, receiver, request.user, question)
-            messages.add_message(
-                request, msgs["ask"]["level"], msgs["ask"]["text"] % {
-                    "user": username, "receiver": receiver_name}
-            )
+            kwargs = {"user": username, "receiver": receiver_name}
+            messages.add_message(request, msgs["ask"]["level"], mark_safe(
+                msgs["ask"]["text"] % kwargs))
         else:
-            messages.add_message(request, msgs["warning"]["level"],
-                                 msgs["warning"]["text"] % {"user": username})
+            messages.add_message(request, msgs["warning"]["level"], mark_safe(
+                msgs["warning"]["text"] % {"user": username}))
 
     return HttpResponseRedirect(success_url)
 

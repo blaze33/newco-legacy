@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.template.loader import get_template
-from django.template import Context
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib import messages
@@ -37,19 +36,15 @@ def process_following(request, obj, success_url):
         if follow.target._meta.object_name == "User":
             if is_following:
                 mail_followee(request, follow.target, request.user)
-            object_unicode = user_display(follow.target)
+            title = user_display(follow.target)
         else:
-            object_unicode = unicode(follow.target)
+            title = unicode(follow.target)
 
         msg = "follow" if is_following else "unfollow"
-        messages.add_message(
-            request, msgs[msg]["level"],
-            msgs[msg]["text"] % {"user": username, "object": object_unicode}
-        )
+        messages.add_message(request, msgs[msg]["level"], mark_safe(
+            msgs[msg]["text"] % {"user": username, "object": title}))
     else:
-        messages.add_message(
-            request, msgs["warning"]["level"],
-            msgs["warning"]["text"] % {"user": username}
-        )
+        messages.add_message(request, msgs["warning"]["level"], mark_safe(
+            msgs["warning"]["text"] % {"user": username}))
 
     return HttpResponseRedirect(success_url)
