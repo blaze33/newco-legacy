@@ -11,6 +11,7 @@ from items.models import Item, Question
 from profiles.models import Profile
 from utils.tools import get_class_from_string
 from utils.redistools import load_redis_engine
+engine = load_redis_engine()
 
 
 class TypeaheadSearchView(RedirectView):
@@ -38,7 +39,6 @@ class TypeaheadSearchView(RedirectView):
 class RedisView(View):
 
     def get(self, request, *args, **kwargs):
-        engine = load_redis_engine()
         if not "q" in request.GET or not engine:
             return HttpResponse(json.dumps(list()))
         q = request.GET.get("q")
