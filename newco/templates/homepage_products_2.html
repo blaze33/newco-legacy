@@ -1,47 +1,15 @@
-{% extends "homepage_base_gui.html" %}
+{% extends "homepage_base_1.html" %}
 
-{% load url from future %}
 {% load i18n %}
 {% load content_utils %}
 {% load account_tags %}
 {% load pagination_tags %}
-{% load staticfiles %}
 
 {% block body %}
 
-<!-- New Template on Homepage  -->
 <div class="row">
-    <div class="span4 tutorial" align="center">
-    <a href="#" data-toggle="collapse" data-target="#why_NewCo">
-    	<img src="{% static 'img/arrow_tutorial.png' %}" type="image/png"></a>
-    </div>
-
-    <div class="span8" style="margin-top: 0px; margin-left:0px; background-color: #FFF9B1; text-align: center;">
-        <h3>Discover the NewCo community</h3>
-
-        <br><a href="{% url 'account_signup' %}" id="mixpanel_signup_page"><button class="btn btn-danger" style="height:30px; width:160px; font-color:#FFF"><h3> {% trans "Join NewCo" %}<i class="icon-forward" style="margin-left:5px; "></i></h3></button></a>
-
-        <a href="{% url 'account_login' %}"><button class="btn btn-default" style="margin-left:10px; height:30px; width:100px;"><h3> {% trans "Login" %}</h3></button></a>
-    </div>
-</div>
-
-
-
-{% if user.is_authenticated %}
-  <div class="subnav" rel="subnav">
-{% else %}
-  <div class="subnav subnav-fixed" rel="subnav">
-{% endif %}
-  	<ul class="nav nav-pills">
-    <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans "Click here to close the tutorial" %}" data-toggle="collapse" data-target="#why_NewC" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
-    <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}" id="mixpanel_popular">{% trans "Popular products" %}</a></li>
-    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Answer questions" %}</a></li>
-    {% if user.is_authenticated %}
-    <li><a class="black" href="{% url 'dash' 'feed' %}" id="mixpanel_mynewsfeed">{% trans "My newsfeed" %}</a></li>
-    {% endif %}
-  </ul></div>
-
-<div class="row" style="margin-top: 30px"><div class="offset1 span10"><div id="thumbnails_list">{% for item in object_list %}
+	
+	<div class="span10 offset1"><div id="thumbnails_list">{% for item in object_list %}
     {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
 {% endfor %}</div></div></div>
 

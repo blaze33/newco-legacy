@@ -6,7 +6,7 @@
 {% if display == "email" %}
   <a style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-decoration: none; display: inline-block; padding: 2px 4px; font-size: 11.844px; font-weight: bold; line-height: 14px; color: white; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); white-space: nowrap; vertical-align: baseline; background-color: #999; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" href="{% get_absolute_uri tag request %}">{{ tag.name }}</a>
 {% else %}
-  <a class="label{% if extra_class %} {{ extra_class }}{% endif %}" id="mixpanel_tag_home" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
+  <a class="label{% if extra_class %} {{ extra_class }}{% endif %}" href="{% url 'tagged_items' tag.slug %}">{{ tag.name }}</a>
 {% endif %}
 
 {% endspaceless %}

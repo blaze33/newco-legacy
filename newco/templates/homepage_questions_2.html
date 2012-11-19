@@ -14,7 +14,12 @@
 
 {% block body %}
 <br>
-<div class="row"><div class="span10 offset1">
+<div class="row">
+<div class="span3">
+  {% include "questions_subnav.html" %}
+</div>
+
+<div class="span9">
   <div class="row">
     <div class="span6">
       <h2>{% trans "Answer questions" %}</h2>
@@ -22,15 +27,15 @@
       <br><hr>
     </div>
   </div>
-
+  
   <div class="row">
-    <div class="span10">
+    <div class="span9">
       {% if object_list %}{% for content in object_list %}
         {% include "items/feed_display/_question.html" with display="unanswered" %}
         {% if content.items.all %}
           {% for item in content.items.all %}
             <div class="span1 content-item-mini">
-              {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
+            {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
             </div>
           {% endfor %}
         {% elif content.tags.all %}
@@ -43,8 +48,8 @@
         {% endif %}
       {% endfor %}
       {% else %}
-        {% trans "No unanswered questions on this category." %}
-        <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
+      {% trans "No unanswered questions on this category." %}
+      <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
       {% endif %}
     </div>
   </div>
@@ -77,4 +82,4 @@
     </script>
 {% endblock %}
 
-{# TITLE: Original #}
+{# TITLE: Sort Questions with Subnav #}

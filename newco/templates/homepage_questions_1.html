@@ -1,0 +1,101 @@
+{% extends "homepage_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+{% load pagination_tags %}
+{% load staticfiles %}
+
+{% block extra_style %}
+    {{ block.super }}
+    <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<br><br>
+<div class="row">
+  <div class="span4 offset1">
+    <h2>{% trans "Answer questions" %}</h2>
+    <h5> {% trans "Category" %} {{ category_name }}</h5>
+    <hr>
+  </div>
+  <div class="span4">
+    <form class="navbar-search form-search" action="" method="POST">{% csrf_token %}
+      <div class="input-append">
+        <input type="text" autocomplete="off" class="typeahead span2 search-query" name="select_category" id="global_search_cat" placeholder="{% trans 'Filter by category' %}">
+        <button type="submit" class="btn btn-primary" style="position:relative;top:2px">{% trans "Select" %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="row"><div class="offset1 span10">
+  {% if object_list %}
+    <div class="tabbable {#tabs-left#}">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-q-products" data-toggle="tab">{% trans "Questions on Products" %}</a></li>
+        <li><a href="#tab-q-categories" data-toggle="tab">{% trans "Questions on Categories" %}</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-q-products">
+          {% for content in object_list %}
+            {% if content.items.all %}
+              {% include "items/feed_display/_question_1.html" with display="unanswered products" %}
+              {% for item in content.items.all %}
+	            <div class="span1 content-item-mini">
+		          {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
+	            </div>
+	          {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="tab-pane" id="tab-q-categories">
+          {% for content in object_list %}
+            {% if content.tags.all %}
+              {% include "items/feed_display/_question_1.html" with display="unanswered categories" %}
+              {% for tag in content.tags.all %}
+                <div class="span1 content-item-mini">
+    	          <a href="{{ content.get_absolute_url }}"><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
+        	      <h6 class="black" align="center">{{ tag.name }}</h6></a>
+	            </div>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    {% trans "No unanswered questions on this category." %}
+    <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
+  {% endif %}
+</div></div>
+{% if is_paginated %}{% paginate %}{% endif %}
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function() {
+            var labels, mapped
+            $("#global_search_cat").typeahead({
+                source: function (query, process) {
+                    $.get('{% url "redis" "tags" %}', {q: query}, function (data) {
+                        labels = []
+                        mapped = {}
+
+                        $.each(data, function (i, item) {
+                            mapped[item.title] = item
+                            labels.push(item.title)
+                        })
+                        process(labels)
+                    })
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{# TITLE: Split Questions on products & on Categories #}
