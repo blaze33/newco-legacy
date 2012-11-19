@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 
 from account.utils import user_display
 
+from utils.tools import unescape
+
 
 def send_mail(subject, subject_kwargs, receiver, txt_template, html_template,
               context, sender):
@@ -23,7 +25,7 @@ def send_mail(subject, subject_kwargs, receiver, txt_template, html_template,
 
     email = receiver.email if not settings.DEBUG else sender.email
     newco = '"NewCo" <notifications@newco-project.fr>'
-    msg = EmailMultiAlternatives(subject, msg_txt, newco, [email])
+    msg = EmailMultiAlternatives(unescape(subject), msg_txt, newco, [email])
     msg.attach_alternative(msg_html, "text/html")
 
 #    waiting_time = datetime.timedelta(minutes=1)
