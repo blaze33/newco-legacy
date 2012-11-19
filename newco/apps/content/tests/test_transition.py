@@ -1,6 +1,5 @@
 from django.utils import unittest
-from ..transition import fetch_images
-from ..models import Item
+from items.models import Item
 
 
 class SimpleTest(unittest.TestCase):
@@ -13,4 +12,4 @@ class SimpleTest(unittest.TestCase):
         Content|transition: test fetch_images
         '''
         empty_qs = Item.objects.filter(pk=-1)
-        self.assertEqual(fetch_images(empty_qs), {})
+        self.assertEqual(empty_qs.fetch_images(), {})
