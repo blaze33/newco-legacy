@@ -51,3 +51,9 @@ COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL
 COMPRESS_STORAGE = STATICFILES_STORAGE
 # COMPRESS_OFFLINE = True
+
+# S3 content expires 28 days later.
+delay = 3600 * 24 * 28
+AWS_HEADERS = {
+    'Cache-Control': 'max-age={0}'.format(delay),
+}
