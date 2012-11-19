@@ -63,6 +63,7 @@
     {% compress js %}
         <script src="{% static 'pinax/js/theme.js' %}"></script>
         <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
+        <script>var URL_TYPEAHEAD='{% url "redis" %}';</script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/expand.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
