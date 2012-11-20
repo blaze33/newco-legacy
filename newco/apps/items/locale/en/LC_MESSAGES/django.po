@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 18:14+0100\n"
+"POT-Creation-Date: 2012-11-20 17:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr ""
 msgid "My question refers to"
 msgstr ""
 
-#: forms.py:90 forms.py:160
+#: forms.py:90 forms.py:159
 msgid "Ask something specific."
 msgstr ""
 
@@ -47,31 +47,31 @@ msgstr ""
 msgid "Select up to 5 products using Enter and the Arrow keys."
 msgstr ""
 
-#: forms.py:136
+#: forms.py:135
 msgid "Choose between either products or tags to link your question to."
 msgstr ""
 
-#: forms.py:139
+#: forms.py:138
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 
-#: forms.py:143
+#: forms.py:142
 msgid "Pick less than 5 tags"
 msgstr ""
 
-#: forms.py:147
+#: forms.py:146
 msgid "Pick less than 10 items"
 msgstr ""
 
-#: forms.py:189
+#: forms.py:188
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:209
+#: forms.py:208
 msgid "Please login before answering."
 msgstr ""
 
-#: forms.py:272
+#: forms.py:271
 msgid "Link description"
 msgstr ""
 
@@ -212,45 +212,45 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:285 views.py:376
+#: views.py:291 views.py:384
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:286 views.py:377
+#: views.py:292 views.py:385
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:335
+#: views.py:342
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:341
+#: views.py:348
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:346
+#: views.py:353
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:423
+#: views.py:431
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:427
+#: views.py:435
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:431
+#: views.py:439
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:435
+#: views.py:443
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -283,16 +283,15 @@ msgstr ""
 msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/_question_list.html:12 templates/items/item_detail.html:100
+#: templates/items/_question_list.html:12 templates/items/item_detail.html:95
 msgid "Ask a new question!"
 msgstr ""
 
-#: templates/items/_question_list.html:13 templates/items/item_detail.html:101
+#: templates/items/_question_list.html:13 templates/items/item_detail.html:96
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: templates/items/answer_form.html:11 templates/items/item_detail.html:120
-#: templates/items/root_display/_question.html:61
+#: templates/items/answer_form.html:11 templates/items/item_detail.html:115
 msgid "Answer"
 msgstr ""
 
@@ -310,6 +309,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:21 templates/items/question_form.html:50
 #: templates/items/question_form.html:73
+#: templates/items/root_display/_question.html:62
 msgid "Save as draft"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:34 templates/items/item_detail.html:72
+#: templates/items/item_detail.html:34 templates/items/item_detail.html:67
 msgid "Where to buy"
 msgstr ""
 
@@ -350,27 +350,27 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: templates/items/item_detail.html:54
+#: templates/items/item_detail.html:49
 msgid "Edit Item"
 msgstr ""
 
-#: templates/items/item_detail.html:55
+#: templates/items/item_detail.html:50
 msgid "Delete Item"
 msgstr ""
 
-#: templates/items/item_detail.html:61
+#: templates/items/item_detail.html:55
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:66
+#: templates/items/item_detail.html:61
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:95
+#: templates/items/item_detail.html:90
 msgid "Ask a new question:"
 msgstr ""
 
-#: templates/items/item_detail.html:116
+#: templates/items/item_detail.html:111
 msgid "Close"
 msgstr ""
 
@@ -663,7 +663,19 @@ msgstr ""
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:39
+#: templates/items/feed_display/_question.html:34
+#: templates/items/feed_display/_question_1.html:10
+msgid "Products related"
+msgstr ""
+
+#: templates/items/feed_display/_question.html:35
+#: templates/items/feed_display/_question_1.html:20
+msgid "Category"
+msgstr ""
+
+#: templates/items/feed_display/_question.html:38
+#: templates/items/feed_display/_question_1.html:12
+#: templates/items/feed_display/_question_1.html:21
 msgid "Add Answer"
 msgstr ""
 
@@ -678,4 +690,8 @@ msgstr ""
 #: templates/items/root_display/_question.html:46
 #: templates/items/root_display/_question.html:50
 msgid "Ask someone to answer"
+msgstr ""
+
+#: templates/items/root_display/_question.html:61
+msgid "Answer and publish"
 msgstr ""

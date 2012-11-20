@@ -201,6 +201,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
+        context.update({"status": Content.STATUS})
         request = self.request
         POST, user = [request.POST, request.user]
         public_query = Q(status=Content.STATUS.public)
@@ -304,7 +305,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             if "question" in POST:
                 form = PartialQuestionForm(request, self.object, data=POST)
             else:
-                form = AnswerForm(request, data=POST)
+                status = int(POST.get("answer"))
+                form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
                 display_message("created", self.request,
                                 form._meta.model._meta.verbose_name)

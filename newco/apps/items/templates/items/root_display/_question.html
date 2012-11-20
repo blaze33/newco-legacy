@@ -42,23 +42,24 @@
   <div class="row"><div class="span8 offset1">
     {% if display == "list" %}
       <div class="block_controls row" id="controls_answer_form_{{ question.id }}">
-        <div class="span4"><button class="btn btn-mini" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if question.answers.queryset %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
-        <div class="span4 right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+        <div class="span4"><button class="btn btn-small" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if question.answers.queryset %}{% trans "Add a better answer" %}{% else %}{% trans "Answer this question" %}{% endif %}</span></button></div>
+        <div class="span4 right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
       </div>
     {% elif display == "detail" %}
-        <hr>
-        <div class="right"><button class="btn btn-mini" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+        <br>
+        <div class="right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
     {% endif %}
-    <br>
   </div></div>
 
   <div class="row"><div class="span9">
     <div id="answer_form_{{ question.id }}"class="row{% if display == 'list' %} collapse {% if question.answer_form.errors or question.id == q_id %}in{% else %}out{% endif %}{% endif %}"><form method="POST" action="#answer_form_{{ question.id }}">
+      <br>
       {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
       <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
         {% csrf_token %}
         {{ question.answer_form|as_bootstrap }}
-        <button type="submit" class="btn btn-mini" name="answer"><i class="icon-share-alt"></i> {% trans "Answer" %}</button>
+        <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ status.public }}"><i class="icon-share-alt"></i> {% trans "Answer and publish" %}</button>
+        <button type="submit" class="btn btn-small" name="answer" value="{{ status.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
         <input type="hidden" name="question_id" value="{{ question.id }}"/>
       </div>
     </form></div>
