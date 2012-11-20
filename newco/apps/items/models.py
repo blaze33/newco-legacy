@@ -59,8 +59,9 @@ class Item(models.Model):
                                       "slug": self.slug})
 
     def get_image(self):
-        return self._image if self._image \
-            else self.node.graph.get_image()
+        if self._image is None:
+            self._image = self.node.graph.get_image()
+        return self._image
 
     def set_image(self, value):
         self._image = value
