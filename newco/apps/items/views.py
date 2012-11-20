@@ -24,9 +24,10 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album
-from items.models import Item, Content, Question, Link, Feature
+from items import STATUS
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from items.forms import PartialQuestionForm
+from items.models import Item, Content, Question, Link, Feature
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
@@ -98,7 +99,7 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"status": Content.STATUS})
+        kwargs.update({"status": STATUS})
         return super(ContentFormMixin, self).get_context_data(**kwargs)
 
 
@@ -201,10 +202,10 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        context.update({"status": Content.STATUS})
+        context.update({"status": STATUS})
         request = self.request
         POST, user = [request.POST, request.user]
-        public_query = Q(status=Content.STATUS.public)
+        public_query = Q(status=STATUS.public)
         if self.model == Item:
             item = context.get("item")
             item_query = Q(items__id=item.id)

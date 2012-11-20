@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from follow.models import Follow
 from voting.models import Vote
 
+from items import STATUS
 from items.models import Content, Item
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
@@ -111,7 +112,7 @@ class DashboardView(ListView, FollowMixin):
                 self.queryset = self.queryset.filter(author=self.user)
                 if self.page == "draft":
                     self.queryset = self.queryset.filter(
-                        status=Content.STATUS.draft)
+                        status=STATUS.draft)
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
             self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
@@ -124,7 +125,7 @@ class DashboardView(ListView, FollowMixin):
 
         if self.page == "dashboard":
             drafts = self.queryset.filter(
-                Q(author=self.user) & Q(status=Content.STATUS.draft)
+                Q(author=self.user) & Q(status=STATUS.draft)
             )
             feed = self.queryset.get_feed(self.user)
             all_my_contrib = self.queryset.filter(author=self.user)

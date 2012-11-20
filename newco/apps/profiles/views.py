@@ -10,6 +10,7 @@ from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
 from voting.models import Vote
 
+from items import STATUS
 from items.models import Item, Content
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
@@ -30,7 +31,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
 
     def get_context_data(self, **kwargs):
         history = Content.objects.filter(
-            Q(author=self.page_user) & Q(status=Content.STATUS.public))
+            Q(author=self.page_user) & Q(status=STATUS.public))
         fwers_ids = Follow.objects.get_follows(
             self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)

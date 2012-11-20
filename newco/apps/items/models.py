@@ -10,11 +10,11 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from follow.utils import register
-from model_utils import Choices
 from model_utils.managers import QueryManager
 from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
 
+from items import STATUS
 from items.managers import ContentManager, ItemManager
 
 TAG_VERBOSE_NAME = _("Tags")
@@ -83,12 +83,6 @@ register(Item)
 
 
 class Content(models.Model):
-    STATUS = Choices(
-        (0, "draft", _("Draft")),
-#        (1, "sandbox", _("Sandbox")),
-        (2, "public", _("Public"))
-    )
-
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                     verbose_name=_("date published"))
@@ -123,11 +117,11 @@ class Content(models.Model):
 
     @property
     def is_public(self):
-        return self.status == self.STATUS.public
+        return self.status == STATUS.public
 
     @property
     def is_draft(self):
-        return self.status == self.STATUS.draft
+        return self.status == STATUS.draft
 
     def select_subclass(self):
         subclasses = ["answer", "question", "feature", "link"]

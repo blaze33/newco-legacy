@@ -8,6 +8,7 @@ from model_utils.managers import InheritanceQuerySet, InheritanceManager
 from voting.models import Vote
 
 from content.models import Item
+from items import STATUS
 
 
 class ItemQuerySet(QuerySet):
@@ -58,7 +59,7 @@ class ContentQuerySet(InheritanceQuerySet):
 
         return self.filter(
             Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
-            ~Q(author=user), status=self.model.STATUS.public
+            ~Q(author=user), status=STATUS.public
         )
 
     def get_related_contributions(self, user, item_qs):
