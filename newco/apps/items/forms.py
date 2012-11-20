@@ -222,7 +222,7 @@ class AnswerForm(ModelForm):
             self.save_m2m()
             answer.items = answer.question.items.all()
             answer.tags = answer.question.tags.all()
-            if self.create:
+            if self.create and answer.is_public():
                 mail_question_author(self.request, answer)
 
         return answer
