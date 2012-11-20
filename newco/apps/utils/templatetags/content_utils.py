@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.template.base import Node, Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from django.contrib.auth.models import User
 
@@ -140,7 +141,7 @@ def profile_pic(user, size=None, quote_type="double"):
     img = gravatar_img_for_user(user, size, rating=None)
     if quote_type == "single":
         img = img.replace("\"", "\'")
-    return img
+    return mark_safe(img)
 
 
 class URINode(GenericNode):

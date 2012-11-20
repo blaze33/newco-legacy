@@ -12,7 +12,7 @@ from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 from taggit.models import Tag
 
-from items.models import Item, Question
+from items.models import Item
 from profiles.models import Profile
 from utils.tools import get_class_name
 
@@ -28,10 +28,6 @@ PARAMS = {
     get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
-    },
-    get_class_name(Question): {
-        "class": Question, "pk": "id", "title_field": "content",
-        "recorded_fields": ["id", "content"]
     },
 }
 

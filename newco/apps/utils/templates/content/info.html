@@ -5,7 +5,7 @@
 <div class="signature">
   <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
   {% if signature_author %}<br><div class="author">
-    {% if signature_pic %}{% autoescape off %}{{ profile_pic }}{% endautoescape %}{% endif %}
+    {% if signature_pic %}{{ profile_pic }}{% endif %}
     <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
       <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
       <br>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 15:12+0100\n"
+"POT-Creation-Date: 2012-11-19 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:44
+#: mailtools.py:45
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:68
+#: mailtools.py:69
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr ""
 
-#: mailtools.py:73
+#: mailtools.py:74
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 
-#: mailtools.py:109
+#: mailtools.py:111
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help."
 msgstr ""
 
-#: mailtools.py:136
+#: mailtools.py:138
 #, python-format
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
 
-#: follow/tools.py:19
+#: follow/tools.py:18
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr ""
 
-#: follow/tools.py:23
+#: follow/tools.py:22
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr ""
 
-#: follow/tools.py:27
+#: follow/tools.py:26
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
 msgstr ""
@@ -214,38 +214,38 @@ msgctxt "Follow button"
 msgid "Follow"
 msgstr ""
 
-#: templatetags/tools.py:80 templatetags/tools.py:112
+#: templatetags/tools.py:81 templatetags/tools.py:113
 msgid "and"
 msgstr ""
 
-#: templatetags/tools.py:108
+#: templatetags/tools.py:109
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:114
+#: templatetags/tools.py:115
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: vote/tools.py:17
+#: vote/tools.py:18
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
 msgstr ""
 
-#: vote/tools.py:21
+#: vote/tools.py:22
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
 msgstr ""
 
-#: vote/tools.py:25
+#: vote/tools.py:26
 #, python-format
 msgid "%(user)s, your vote on %(object)s has been cancelled."
 msgstr ""
 
-#: vote/tools.py:29
+#: vote/tools.py:30
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr ""
