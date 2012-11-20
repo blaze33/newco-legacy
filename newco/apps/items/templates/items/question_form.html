@@ -9,24 +9,16 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-  {{ block.super }}
-
-  {% comment %}
-  <script type="text/javascript">
-      (function ($) {
-          $(function () {
-              $(".chzn-select").each(function(i, select) {
-                  var $select = $(select);
-                  $select.chosen({max_selected_options: 1, no_results_text: "{{ form.no_results }}"});
-                  $select.bind("liszt:maxselected", function () {});
-              });
-          });
-      })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
-  </script>
-  {% endcomment %}
   {{ form.media.css }}
   {{ formset.media.css }}
+  <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block extra_head_script %}
+  {{ form.media.js }}
+ 
+{% endblock %}
+
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
@@ -143,7 +135,74 @@
   <script type ="text/javascript">
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
-        $("#id_items").select2({'closeOnSelect': false, 'placeholder': ''});
     });
+  </script>
+  <script src="{% static 'external/select2/select2.js' %}"></script>
+  <script>
+
+    function movieFormatResult(movie) {
+        var markup = "<table class='movie-result'><tr>";
+        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
+            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
+        }
+        markup += "<td class='movie-info'><div class='movie-title'>" + movie.name + movie.title + "</div>";
+        if (movie.critics_consensus !== undefined) {
+            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
+        }
+        else if (movie.synopsis !== undefined) {
+            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
+        }
+        markup += "</td></tr></table>"
+        return markup;
+    }
+
+    function movieFormatSelection(movie) {
+        return movie.name;
+    }
+
+</script>
+  <script>
+    $("#id_tags").select2({
+            placeholder: "Search for a tag",
+            multiple:true,
+            minimumInputLength: 2,
+            initSelection: function (element, callback) {
+              // reload tags
+              var data = [];
+              $(element.val().split(",")).each(function () {
+                  data.push({id: this, text: this});
+              });
+              callback(data);
+            },
+            ajax: {
+                url: '{% url "redis" "tag" %}',
+                dataType: 'json',
+                quietMillis: 100,
+                data: function (term, page) { // page is the one-based page number tracked by Select2
+                    return {
+                        q: term, //search term
+                        limit: 20, // page size
+                    };
+                },
+                results: function (data, page) {
+                  // console.log(data);
+                  $.each(data, function(i){
+                    // console.log(i, data[i]);
+                    data[i].id = data[i].name;
+                    data[i].text = data[i].name;
+                  });
+                  // console.log(data);
+                    var more = (page * 10) < data.total; // whether or not there are more results available
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data, more: more};
+                }
+            },
+            formatResult: movieFormatSelection, // omitted for brevity, see the source of this page
+            // formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
+            // dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
+        });
+$("#id_items").select2({
+  placeholder: "Search for an item",
+});
   </script>
 {% endblock %}

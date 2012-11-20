@@ -2,15 +2,13 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea, RadioSelect
+from django.forms.widgets import Textarea, RadioSelect, SelectMultiple, TextInput
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _, pgettext
 
 from account.utils import user_display
-from chosen.forms import ChosenSelectMultiple
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
-from django_select2.fields import ModelSelect2MultipleField
 from taggit.forms import TagField
 from taggit_autosuggest.widgets import TagAutoSuggest
 
@@ -74,14 +72,14 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
-    tag_field = Content._meta.get_field_by_name('tags')[0]
-    tags = TagField(required=not(tag_field.blank),
-                    help_text=tag_field.help_text,
-                    label=capfirst(tag_field.verbose_name),
-                    widget=TagAutoSuggest(attrs={"class": "span4"}))
+    tags = TagField(widget=TextInput(attrs={"class": "span4"}))
+    # tag_field = Content._meta.get_field_by_name('tags')[0]
+    # tags = TagField(required=not(tag_field.blank),
+    #                 help_text=tag_field.help_text,
+    #                 label=capfirst(tag_field.verbose_name),
+    #                 widget=Textarea(attrs={"class": "span4"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
-    items = ModelSelect2MultipleField(queryset=Item.objects.all())
 
     class Meta:
         model = Question
@@ -91,10 +89,10 @@ class QuestionForm(ModelForm):
                 "class": "span4",
                 "placeholder": _("Ask something specific."),
                 "rows": 1}),
-            # "items": ChosenSelectMultiple(
-            #     attrs={"class": "span4", "rows": 1},
-            #     overlay=_("Pick a product."),
-            # )
+            "items": SelectMultiple(
+                attrs={"class": "span4", "rows": 1},
+                # overlay=_("Pick a product."),
+            )
         }
 
     def __init__(self, request, *args, **kwargs):

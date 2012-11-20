@@ -5,25 +5,38 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load account_tags %}
+{% load compress %}
 
-{% block extra_style %}
-    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+{% block style_base %}
+    <link href="{% static "pinax/css/theme.css" %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <!--
-    We may need to use font-awesome. Won't replace glyphicons for the moment
-    due to bad pixel fitting of small icons.
-    <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap-responsive.css" %}" rel="stylesheet">
     -->
     <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-
-    {% include "feedback/header.html" %}
+    {% compress css %}
+        <link href="{% static 'css/global.css' %}" rel="stylesheet">
+        {% include "feedback/header.html" %}
+        <!--
+            We may need to use font-awesome. Won't replace glyphicons for the moment
+            due to bad pixel fitting of small icons.
+            <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+        -->
+        {% block extra_style %}
+        {% endblock %}
+    {% endcompress %}
 {% endblock %}
 
 {% block extra_head_base %}
+    {% compress js %}
     {{ block.super }}
     <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
     <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
     <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+    {% block extra_head_script %}{% endblock%}
+    {% endcompress %}
 {% endblock %}
 
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
@@ -42,38 +55,21 @@
 
 {% block footer %}{% include "_footer.html" %}{% endblock %}
 
-{% block extra_script %}
+
+{% block script_base %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
-
-    <script type="text/javascript">
-        $(function() {
-            var labels, mapped
-            $("#global_search").typeahead({
-                source: function (query, process) {
-                    $.get('{% url "redis" %}', {q: query}, function (data) {
-                        labels = []
-                        mapped = {}
-
-                        $.each(data, function (i, item) {
-                            mapped[item.title] = item
-                            labels.push(item.title)
-                        })
-                        process(labels)
-                    })
-                }
-                , updater: function (item) {
-                    var obj = mapped[item];
-                    $('#obj_class').val(obj.class);
-                    $('#obj_id').val(obj.id);
-                    return obj.title
-                }
-            });
-        });
-    </script>
+    {% compress js %}
+        <script src="{% static 'pinax/js/theme.js' %}"></script>
+        <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
+        <script>var URL_TYPEAHEAD='{% url "redis" %}';</script>
+        <script src="{% static 'js/global.js' %}"></script>
+        <script src="{% static 'js/expand.js' %}"></script>
+        <script src="{% static 'js/mixpanel_functions.js' %}"></script>
+        {% block extra_script %}
+        {% endblock %}
+    {% endcompress %}
 {% endblock %}
 
 {% block extra_body_base %}
