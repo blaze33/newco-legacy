@@ -18,7 +18,7 @@
 
 
 {% block body_base %}
-  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/apple_bg_linen_light_grey.jpeg' %});">
+  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/sp/subtle-grey.jpg' %});">
     <div class="container" style="position: relative; z-index: +2;">
 
       <header class="jumbotron subhead" id="newco" style="border-top: 30px solid transparent;">
@@ -102,14 +102,11 @@
     {{ block.super }}
 
     {# ##### Equalize columns height ##### #}
-    <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-    <script type="text/javascript">
-        $('.WhyNC-col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
-                return $(elem).height();
-            });
-            return $(h).height();
-        });
+    <script>
+      var heights = $(".WhyNC-col").map(function () {
+                                          return $(this).height();
+                                        }).get();
+      $('.WhyNC-col').height(Math.max.apply(null, heights));
     </script>
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">

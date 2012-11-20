@@ -196,7 +196,7 @@ class AnswerForm(ModelForm):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
-        question_id = request.POST.get("question_id", 0)
+        question_id = request.REQUEST.get("question_id", 0)
         self.question = Question.objects.get(id=question_id) if question_id \
             else getattr(self.object, "question", None)
 
