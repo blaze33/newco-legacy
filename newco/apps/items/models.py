@@ -121,9 +121,11 @@ class Content(models.Model):
             pass
         super(Content, self).delete()
 
+    @property
     def is_public(self):
         return self.status == self.STATUS.public
 
+    @property
     def is_draft(self):
         return self.status == self.STATUS.draft
 
@@ -175,7 +177,7 @@ class Answer(Content):
 
     def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
-            (anchor_pattern % self.__dict__) if self.is_public() else \
+            (anchor_pattern % self.__dict__) if self.is_public else \
             reverse("dash", args=["draft"])
 
     def get_product_related_url(self, item,
