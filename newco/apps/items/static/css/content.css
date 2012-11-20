@@ -121,11 +121,11 @@
     .controls_2 .icon-chevron-up {
         background-position: -284px -120px;
     }
-    
+
     .controls_2 .icon-chevron-down {
         background-position: -309px -119px;
     }
-    
+
     .nc_qna_list_div .nc_transition_add {
         opacity: 0;
         -webkit-transition: opacity 0.6s;
@@ -137,7 +137,7 @@
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
-    
+
     .nc_transition_add {
         padding-bottom:10px;
         cursor: pointer; 
@@ -148,8 +148,19 @@
         background-color: #eee;
     }
 
-.album img {
+.album a {
     height: 128px;
+    background-position: center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+/* only display album's first image on small screens */
+@media (max-width: 767px) {
+    .album :not(:first-child) {
+        display: none;
+    }
 }
 
 .product-name h1 {

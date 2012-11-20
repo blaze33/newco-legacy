@@ -11,7 +11,7 @@
   </div></div>
 {% empty %}
   {% if empty_msg %}
-    <p>{% autoescape off %}{{ empty_msg }}{% endautoescape %}</p>
+    <p>{{ empty_msg }}</p>
   {% else %}
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}

@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
@@ -350,7 +351,8 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
                 msg = _("No questions about products with tag %s")
 
         tpl = "tags/_tag_display.html"
-        self.empty_msg = msg % render_to_string(tpl, {"tag": self.tag})
+        self.empty_msg = mark_safe(
+            msg % render_to_string(tpl, {"tag": self.tag}))
         return super(ContentListView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
