@@ -3,6 +3,7 @@ import string
 from django.template.base import Node, TemplateSyntaxError, kwarg_re
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _, ungettext
 
 
@@ -25,10 +26,10 @@ class GenericNode(Node):
         if self.quote_type == "single":
             value = value.replace("\"", "\'")
         if self.asvar:
-            context[self.asvar] = value
+            context[self.asvar] = mark_safe(value)
             return ""
         else:
-            return value
+            return mark_safe(value)
 
 
 def get_node_extra_arguments(parser, bits, tag_name, max_args):

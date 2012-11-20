@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 
@@ -11,6 +12,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from account.utils import user_display
+
+from utils.tools import unescape
 
 
 def send_mail(subject, subject_kwargs, receiver, txt_template, html_template,
@@ -22,7 +25,7 @@ def send_mail(subject, subject_kwargs, receiver, txt_template, html_template,
 
     email = receiver.email if not settings.DEBUG else sender.email
     newco = '"NewCo" <notifications@newco-project.fr>'
-    msg = EmailMultiAlternatives(subject, msg_txt, newco, [email])
+    msg = EmailMultiAlternatives(unescape(subject), msg_txt, newco, [email])
     msg.attach_alternative(msg_html, "text/html")
 
 #    waiting_time = datetime.timedelta(minutes=1)
@@ -91,13 +94,12 @@ def process_asking_for_help(request, question, success_url):
 
         if receiver != request.user:
             mail_helper(request, receiver, request.user, question)
-            messages.add_message(
-                request, msgs["ask"]["level"], msgs["ask"]["text"] % {
-                    "user": username, "receiver": receiver_name}
-            )
+            kwargs = {"user": username, "receiver": receiver_name}
+            messages.add_message(request, msgs["ask"]["level"], mark_safe(
+                msgs["ask"]["text"] % kwargs))
         else:
-            messages.add_message(request, msgs["warning"]["level"],
-                                 msgs["warning"]["text"] % {"user": username})
+            messages.add_message(request, msgs["warning"]["level"], mark_safe(
+                msgs["warning"]["text"] % {"user": username}))
 
     return HttpResponseRedirect(success_url)
 
