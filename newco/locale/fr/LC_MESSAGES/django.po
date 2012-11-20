@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-15 20:19+0100\n"
-"PO-Revision-Date: 2012-11-15 20:29\n"
+"PO-Revision-Date: 2012-11-20 11:33\n"
 "Last-Translator:   <rouyrre@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -216,7 +216,7 @@ msgstr ""
 "Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
 "=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
 "class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-align: "
-"middle;\"></i> contributer</a></em>..."
+"middle;\"></i> contribuer</a></em>..."
 
 #: templates/homepage_base.html:60 templates/homepage_base_1.html:59
 msgid "...and build your reputation from others' votes"
@@ -233,7 +233,7 @@ msgstr ""
 "Trouvez où <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" style"
 "=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;\"><i "
 "class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-align: "
-"middle;\"></i> contributer</a></em>..."
+"middle;\"></i> contribuer</a></em>..."
 
 #: templates/homepage_base.html:67 templates/homepage_base_1.html:65
 #, python-format
