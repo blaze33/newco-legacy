@@ -27,7 +27,7 @@
 
 {% elif display == "dropdown" %}
 {% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}
-<li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">>
+<li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
   <a href="{{ prod.url }}" target="_blank" id="{{ ean }}-drop"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp; {% price prod.price prod.currency LANGUAGE_CODE %}</a>
 </li>
 {% endwith %}
