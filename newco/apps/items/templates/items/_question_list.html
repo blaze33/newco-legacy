@@ -29,5 +29,7 @@
   {% dict_entry_for_item question from questions.votes as vote %}
   {% dict_entry_for_item question from questions.scores as score %}
 
-  {% include "items/root_display/_question.html" with question=question vote=vote score=score answers=question.answers display="list" %}
+  <div class="question" itemscope itemtype="http://schema.org/Article">{% include "items/root_display/_question.html" with item=item question=question vote=vote score=score answers=question.answers display="list" %}</div>
+
+  {% if not forloop.last %}<hr>{% endif %}
 {% endfor %}
