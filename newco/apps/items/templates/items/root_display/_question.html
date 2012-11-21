@@ -34,7 +34,7 @@
       <div class="span8 answer-content">
         {% content_info answer "signature" 32 %}
         {% if display == "detail" %}{% content_info answer "header" %}{% endif %}
-        <div class="content" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
+        <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
       </div>
     </div>{% endwith %}{% endwith %}
   {% endfor %}
@@ -58,8 +58,8 @@
       <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
         {% csrf_token %}
         {{ question.answer_form|as_bootstrap }}
-        <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ status.public }}"><i class="icon-share-alt"></i> {% trans "Answer and publish" %}</button>
-        <button type="submit" class="btn btn-small" name="answer" value="{{ status.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+        <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ statuses.public }}"><i class="icon-share-alt"></i> {% trans "Answer and publish" %}</button>
+        <button type="submit" class="btn btn-small" name="answer" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
         <input type="hidden" name="question_id" value="{{ question.id }}"/>
       </div>
     </form></div>

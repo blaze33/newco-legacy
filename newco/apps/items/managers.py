@@ -8,7 +8,7 @@ from model_utils.managers import InheritanceQuerySet, InheritanceManager
 from voting.models import Vote
 
 from content.models import Item
-from items import STATUS
+from items import STATUSES
 
 
 class ItemQuerySet(QuerySet):
@@ -57,10 +57,8 @@ class ContentQuerySet(InheritanceQuerySet):
         fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
         items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
 
-        return self.filter(
-            Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids),
-            ~Q(author=user), status=STATUS.public
-        )
+        return self.public().exclude(author=user).filter(
+            Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids))
 
     def get_related_contributions(self, user, item_qs):
         profile = user.get_profile()
@@ -88,6 +86,20 @@ class ContentQuerySet(InheritanceQuerySet):
         return {"queryset": qs.select_subclasses(),
                 "scores": scores, "votes": votes}
 
+    def public(self):
+        return self.filter(status=STATUSES.public)
+
+    def draft(self):
+        return self.filter(status=STATUSES.draft)
+
+    def can_view(self, user):
+        if user.is_superuser:
+            return self
+        query = Q(status=STATUSES.public)
+        if user.is_authenticated():
+            query = query | Q(author=user)
+        return self.filter(query)
+
 
 class ContentManager(InheritanceManager):
     def get_query_set(self):
@@ -105,3 +117,12 @@ class ContentManager(InheritanceManager):
 
     def get_scores_and_votes(self, user):
         return self.get_query_set().get_scores_and_votes(user)
+
+    def public(self):
+        return self.get_query_set().public()
+
+    def draft(self):
+        return self.get_query_set().draft()
+
+    def can_view(self, user):
+        return self.get_query_set().can_view(user)

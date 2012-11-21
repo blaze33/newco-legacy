@@ -1,5 +1,4 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify, truncatechars
@@ -10,11 +9,10 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from follow.utils import register
-from model_utils.managers import QueryManager
 from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
 
-from items import STATUS
+from items import STATUSES
 from items.managers import ContentManager, ItemManager
 
 TAG_VERBOSE_NAME = _("Tags")
@@ -88,15 +86,13 @@ class Content(models.Model):
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                     verbose_name=_("date published"))
-    status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                      verbose_name=_("status"))
+    status = models.SmallIntegerField(
+        choices=STATUSES, default=STATUSES.public, verbose_name=_("status"))
     items = models.ManyToManyField(Item, verbose_name=_("products"),
                                    blank=True)
     votes = generic.GenericRelation(Vote)
     tags = TaggableManager(blank=True, verbose_name=TAG_VERBOSE_NAME,
                            help_text=TAG_HELP_TEXT)
-
-    public = QueryManager(status=STATUS.public)
 
     objects = ContentManager()
 
@@ -119,11 +115,11 @@ class Content(models.Model):
 
     @property
     def is_public(self):
-        return self.status == STATUS.public
+        return self.status == STATUSES.public
 
     @property
     def is_draft(self):
-        return self.status == STATUS.draft
+        return self.status == STATUSES.draft
 
     def select_subclass(self):
         subclasses = ["answer", "question", "feature", "link"]
@@ -173,8 +169,7 @@ class Answer(Content):
 
     def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
         return self.question.get_absolute_url() + \
-            (anchor_pattern % self.__dict__) if self.is_public else \
-            reverse("dash", args=["draft"])
+            (anchor_pattern % self.__dict__)
 
     def get_product_related_url(self, item,
                                 anchor_pattern="?answer=%(id)s#a-%(id)s"):
