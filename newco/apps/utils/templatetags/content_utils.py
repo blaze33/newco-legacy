@@ -50,15 +50,6 @@ def feed_template(value):
     return "items/feed_display/_%s.html" % value._meta.module_name
 
 
-@register.inclusion_tag('items/_tag_edit.html')
-def edit(item_name, item_id, edit_next=None, delete_next=None):
-    return {
-        'item_name': item_name,
-        'item_id': item_id,
-        'edit_next': edit_next,
-    }
-
-
 class EditButtonsNode(GenericNode):
 
     template = "items/_edit_buttons.html"
