@@ -49,7 +49,7 @@
         </div></div>
         {% for i in item.affiliationitem_set.all %}
           <div class="row"><div >
-            <div class="span2">{% include "affiliation/_affiliation_item.html" with prod=i %}</div>
+            <div class="span2">{% include "affiliation/_affiliation_item.html" with prod=i display="thumbnail" %}</div>
             <div class="span1"><span style="vertical-align:-30px"><input type="checkbox" name="linked_aff" value="{{ i.id }}" checked></span></div>
           </div></div>
         {% endfor %}
