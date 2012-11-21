@@ -5,11 +5,12 @@
 {% load bootstrap_tags %}
 
 {% if display == "detail" or display == "list" %}
-<div class="row question"><div class="span9" itemscope itemtype="http://schema.org/Article">{% with obj_id_q=question.id|slugify %}{% with anchor_q="q-"|add:obj_id_q %}
+<div class="row question"><div class="span9" itemscope itemtype="http://schema.org/Article">
 
-  <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ anchor_q }}">
+  <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ question.anchor }}">
     <div class="span1 vote-controls">
-      {% vote_form question vote request.path|add:"#"|add:anchor_q %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+      {% get_content_url question display item as next %}
+      {% vote_form question vote next %}{% if score %}{{ score.score }}{% else %}0{% endif %}
       {% edit_buttons user question delete_next=request.path %}
     </div>
     <div class="span8 question-content">
@@ -26,9 +27,10 @@
     {% dict_entry_for_item answer from answers.votes as vote %}
     {% dict_entry_for_item answer from answers.scores as score %}
     <br>
-    {% with obj_id=answer.id|slugify %}{% with anchor="a-"|add:obj_id %}<div class="row one_row" id="{{ anchor }}">
+    <div class="row one_row" id="{{ answer.anchor }}">
       <div class="span1 vote-controls">
-        {% vote_form answer vote request.path|add:"#"|add:anchor %}{% if score %}{{ score.score }}{% else %}0{% endif %}
+        {% get_content_url answer display item as next %}
+        {% vote_form answer vote next %}{% if score %}{{ score.score }}{% else %}0{% endif %}
         {% edit_buttons user answer delete_next=request.path %}
       </div>
       <div class="span8 answer-content">
@@ -36,7 +38,7 @@
         {% if display == "detail" %}{% content_info answer "header" %}{% endif %}
         <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
       </div>
-    </div>{% endwith %}{% endwith %}
+    </div>
   {% endfor %}
 
   <div class="row"><div class="span8 offset1">
@@ -64,7 +66,7 @@
       </div>
     </form></div>
   </div></div>
-{% endwith %}{% endwith %}</div></div>
+</div></div>
 
 {% include "items/_ask_modal.html" %}
 

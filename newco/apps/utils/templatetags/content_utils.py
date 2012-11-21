@@ -50,6 +50,15 @@ def feed_template(value):
     return "items/feed_display/_%s.html" % value._meta.module_name
 
 
+@register.assignment_tag
+def get_content_url(content, display, item=None):
+    if display == "detail":
+        return content.get_absolute_url()
+    elif display == "list" and item is not None:
+        return content.get_product_related_url(item)
+    return ""
+
+
 class EditButtonsNode(GenericNode):
 
     template = "items/_edit_buttons.html"
