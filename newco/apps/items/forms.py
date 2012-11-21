@@ -72,12 +72,11 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
-    tags = TagField(widget=TextInput(attrs={"class": "span4"}))
-    # tag_field = Content._meta.get_field_by_name('tags')[0]
-    # tags = TagField(required=not(tag_field.blank),
-    #                 help_text=tag_field.help_text,
-    #                 label=capfirst(tag_field.verbose_name),
-    #                 widget=Textarea(attrs={"class": "span4"}))
+    tag_field = Content._meta.get_field('tags')
+    tags = TagField(required=not(tag_field.blank),
+                    help_text=tag_field.help_text,
+                    label=capfirst(tag_field.verbose_name),
+                    widget=TextInput(attrs={"class": "input-block-level"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
 
@@ -86,11 +85,11 @@ class QuestionForm(ModelForm):
         fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
-                "class": "span4",
+                "class": "input-block-level",
                 "placeholder": _("Ask something specific."),
-                "rows": 1}),
+                "rows": 2}),
             "items": SelectMultiple(
-                attrs={"class": "span4", "rows": 1},
+                attrs={"class": "input-block-level", "rows": 1},
                 # overlay=_("Pick a product."),
             )
         }

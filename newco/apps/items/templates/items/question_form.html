@@ -12,6 +12,19 @@
   {{ form.media.css }}
   {{ formset.media.css }}
   <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
+  <style>
+  #id_content {
+    resize:vertical;
+  }
+  .select2-no-results button {
+    float: right;
+  }
+  .select2-no-results > span {
+    display: inline-block;
+    padding: 5px 12px;
+  }
+
+</style>
 {% endblock %}
 
 {% block extra_head_script %}
@@ -160,8 +173,6 @@
         return movie.name;
     }
 
-</script>
-  <script>
     $("#id_tags").select2({
             placeholder: "Search for a tag",
             multiple:true,
@@ -173,6 +184,11 @@
                   data.push({id: this, text: this});
               });
               callback(data);
+            },
+            createSearchChoice:function(term, data) {
+              if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+                return {id:term, text:term};
+              }
             },
             ajax: {
                 url: '{% url "redis" "tag" %}',
@@ -197,12 +213,27 @@
                     return {results: data, more: more};
                 }
             },
-            formatResult: movieFormatSelection, // omitted for brevity, see the source of this page
+            // formatResult: movieFormatSelection, // omitted for brevity, see the source of this page
             // formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
             // dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
         });
+function addProduct(term) {
+  $("#id_items").select2("close");
+  $("#id_tags").select2("close");
+  $("#id_item-name").val(term);
+  $('#itemModal').modal('show');
+};
+
 $("#id_items").select2({
   placeholder: "Search for an item",
+  formatNoMatches: function (term) {
+              // return term + ' is not found. <button class="btn">Add it</button>'
+              result =  '<span><span id="tag_query">' + term + '</span> not found.</span>' +
+                        '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
+                        'title="{% trans 'Click here if you can&#39;t find the product you want to link your question to' %}">' +
+                        '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
+              return result;
+            },
 });
   </script>
 {% endblock %}
