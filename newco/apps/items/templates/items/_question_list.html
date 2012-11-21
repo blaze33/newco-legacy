@@ -5,16 +5,17 @@
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
-<div class="row"><div class="span9{% if questions.queryset %} nc_transition_add{% endif %}" data-toggle="collapse" data-target="#question_form" style="position: relative; left: -5px; top: -15px;">
-  <i rel="add_icon" class="icon-plus" style="opacity: 0.1; z-index: -1; position: relative; left: 25px; top: +2px;"></i>
-  <span>
-    <button class="btn btn-mini btn-success " style="z-index: 0;"><i rel="add_icon" class="icon-plus"></i></button>
-    {% if questions.queryset %}<h2 style="display:inline; opacity:0.2; position:relative; left:55px; top:4px;" rel="add_q_text">{% trans "Ask a new question!" %}</h2>{% endif %}
-  </span>{% if not questions.queryset %}<h2 style="display:inline; opacity:0.2; position:relative; left:60px; top:+5px;" rel="add_q_text_no_q_yet">{% trans "No question yet! Ask the first one here!" %}</h2>{% endif %}
-</div></div>
+{% if questions.queryset %}
+  <div class="row nc_transition_add" data-toggle="collapse" data-target="#question_form">
+    <div class="span1" style="line-height: 60px;"><button class="btn btn-small btn-success"><i rel="add_icon" class="icon-plus"></i></button></div>
+    <div class="span8"><h2 class="muted" rel="add_q_text">{% trans "Ask a new question!" %}</h2></div>
+  </div>
+{% else %}
+  <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
+{% endif %}
 
-<div class="row"><div id="question_form" class="span9 offset1 collapse out" style="position: relative; top: -70px;">
-  <form method="POST" action="" class="form-inline"><br>{% if not questions.queryset %}<br><br><br>{% endif %}
+<div class="row"><div id="question_form" class="span8 offset1{% if questions.queryset %} collapse out{% endif %}"{% if questions.queryset %} style="position: relative; top: -75px;"{% endif %}>
+  <form method="POST" action="" class="form-inline"><br>
     {% csrf_token %}
     {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
       <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
