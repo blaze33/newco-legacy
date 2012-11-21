@@ -12,9 +12,10 @@ from follow.utils import register
 from taggit_autosuggest.managers import TaggableManager
 from voting.models import Vote
 
-from items import STATUSES
+from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
 from items.managers import ContentManager, ItemManager
 
+CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")
 TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
                   " by a tab or comma.<br>e.g. tennis, trekking, shoes,"
@@ -121,6 +122,14 @@ class Content(models.Model):
     def is_draft(self):
         return self.status == STATUSES.draft
 
+    @property
+    def anchor(self):
+        return ANCHOR_PATTERNS.get(self.__class__.__name__) % self.__dict__
+
+    @property
+    def query_string(self):
+        return QUERY_STR_PATTERNS.get(self.__class__.__name__) % self.__dict__
+
     def select_subclass(self):
         subclasses = ["answer", "question", "feature", "link"]
         for subclass in subclasses:
@@ -152,9 +161,11 @@ class Question(Content):
                                     "pk": self.id,
                                     "slug": slugify(unicode(self))})
 
-    def get_product_related_url(self, item,
-                                anchor_pattern="?question=%(id)s#q-%(id)s"):
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+    def get_product_related_url(self, item):
+        return CONTENT_URL_PATTERN % {
+            "path": item.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
 
 
 class Answer(Content):
@@ -167,13 +178,17 @@ class Answer(Content):
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
-    def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
-        return self.question.get_absolute_url() + \
-            (anchor_pattern % self.__dict__)
+    def get_absolute_url(self):
+        return CONTENT_URL_PATTERN % {
+            "path": self.question.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
 
-    def get_product_related_url(self, item,
-                                anchor_pattern="?answer=%(id)s#a-%(id)s"):
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+    def get_product_related_url(self, item):
+        return CONTENT_URL_PATTERN % {
+            "path": item.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
 
 
 class Link(Content):
