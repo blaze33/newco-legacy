@@ -71,7 +71,9 @@ class Item(models.Model):
     image = property(get_image, set_image, del_image, "Image property")
 
     def get_node(self):
-        return self._node if self._node else sync_products(Item, self)
+        if self._node is None:
+            self._node = sync_products(Item, self)
+        return self._node
 
     def set_node(self, value):
         self._node = value
