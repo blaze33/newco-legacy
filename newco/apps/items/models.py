@@ -180,6 +180,7 @@ class Answer(Content):
 
     class Meta:
         verbose_name = _("answer")
+        order_with_respect_to = "question"
 
     def __unicode__(self):
         return truncatechars(self.content, 50)
