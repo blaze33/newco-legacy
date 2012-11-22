@@ -56,11 +56,11 @@ def load_redis_engine():
                              % settings.REDISTOGO_URL)
         else:
             return None
+engine = load_redis_engine()
 
 
 @receiver(user_logged_in)
 def update_redis_db(sender, request, user, **kwargs):
-    engine = load_redis_engine()
     if not engine:
         return
     engine.flush(everything=True)
@@ -76,7 +76,6 @@ def redis_post_save(sender, instance=None, raw=False, **kwargs):
     key = "%s.%s" % (instance.__module__, instance._meta.object_name)
     if not key in PARAMS:
         return
-    engine = load_redis_engine()
     if not engine:
         return
     value = PARAMS.get(key)
@@ -104,7 +103,6 @@ def redis_post_delete(sender, instance=None, **kwargs):
     key = "%s.%s" % (instance.__module__, instance._meta.object_name)
     if not key in PARAMS:
         return
-    engine = load_redis_engine()
     if not engine:
         return
     value = PARAMS[key]
