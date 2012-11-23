@@ -17,6 +17,7 @@
     <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
     {% compress css %}
+        <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
         <link href="{% static 'css/global.css' %}" rel="stylesheet">
         {% include "feedback/header.html" %}
         <!--
@@ -63,7 +64,11 @@
     {% compress js %}
         <script src="{% static 'pinax/js/theme.js' %}"></script>
         <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
-        <script>var URL_TYPEAHEAD='{% url "redis" %}';</script>
+        <script src="{% static 'external/select2/select2.js' %}"></script>
+        <script>
+          var URL_TYPEAHEAD='{% url "redis" %}';
+          var URL_REDIS_TAG='{% url "redis" "tag" %}'
+        </script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/expand.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
