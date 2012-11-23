@@ -155,6 +155,12 @@ class Question(Content):
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
+    def save(self):
+        super(Question, self).save()
+        for answer in self.answer_set.all():
+            answer.items = self.items.values_list("id", flat=True)
+            answer.tags.set(*self.tags.all())
+
     @permalink
     def get_absolute_url(self):
         return ("item_detail", [], {"model_name": self._meta.module_name,
@@ -177,6 +183,11 @@ class Answer(Content):
 
     def __unicode__(self):
         return truncatechars(self.content, 50)
+
+    def save(self):
+        super(Answer, self).save()
+        self.items = self.question.items.values_list("id", flat=True)
+        self.tags.set(*self.question.tags.all())
 
     def get_absolute_url(self):
         return CONTENT_URL_PATTERN % {

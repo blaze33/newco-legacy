@@ -219,9 +219,6 @@ class AnswerForm(ModelForm):
 
         if commit:
             answer.save()
-            self.save_m2m()
-            answer.items = answer.question.items.all()
-            answer.tags = answer.question.tags.all()
             if self.create and answer.is_public:
                 mail_question_author(self.request, answer)
 
