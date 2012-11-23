@@ -13,9 +13,10 @@ from voting.models import Vote
 from items.models import Item, Content
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
+from utils.tutorial.views import TutoMixin
 
 
-class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
+class ProfileDetailView(TutoMixin, ProfileDetailView, MultipleObjectMixin, FollowMixin):
 
     paginate_by = 10
 
@@ -68,7 +69,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
         return context
 
 
-class ProfileListView(ProfileListView):
+class ProfileListView(TutoMixin, ProfileListView):
 
     paginate_by = 15
 

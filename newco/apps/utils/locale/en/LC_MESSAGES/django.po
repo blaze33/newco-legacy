@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-26 13:19+0200\n"
+"POT-Creation-Date: 2012-11-23 19:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,8 +66,8 @@ msgstr ""
 msgid "%(user)s, you can't follow yourself!"
 msgstr ""
 
-#: templates/content/info.html:6
-msgid "by"
+#: templates/content/info.html:7
+msgid "Posted:"
 msgstr ""
 
 #: templates/mail/_answer_notification_email.html:5
@@ -141,7 +141,7 @@ msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/content_utils.py:165 templatetags/content_utils.py:268
+#: templatetags/content_utils.py:165 templatetags/content_utils.py:270
 msgid "and"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "Click to unfollow"
 msgstr ""
 
-#: templatetags/follow_utils.py:50
+#: templatetags/follow_utils.py:51
 msgctxt "Follow button"
 msgid "Follow"
 msgstr ""

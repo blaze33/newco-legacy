@@ -12,11 +12,18 @@
       {% endfor %}</ul>
     </li>{% endif %}
     <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Add +" %}</a>
+      <a class="dropdown-toggle" id="add-dropdown" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Add +" %}</a>
       <ul class="dropdown-menu pull-right" role="menu">
         <li><a href="{% url 'item_create' 'item' %}"><i class="icon-list-alt"></i> {% trans "Add a product" %}</a></li>
         <li><a href="{% url 'item_create' 'question' %}"><i class="icon-question-sign"></i> {% trans "Ask a question" %}</a></li>
         <li><a class="tooltip-left" title="{% trans 'We are still working on it' %}"><span class="muted"><i class="icon-file"></i> {% trans "Add a story" %}</span></a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a class="dropdown-toggle tooltip-help" id="help-dropdown" data-toggle="dropdown" role="button" data-target="#" data-original-title="{% trans "Reload the tutorial here" %}" href=""> ?</a>
+      <ul class="dropdown-menu pull-right" role="menu">
+        <li><a id="link-tuto" href="#"><i class="icon-comment"></i> {% trans "Intro tutorial" %}</a></li>
+        <li><a href="{% url 'faq' %}"><i class="icon-question-sign"></i> {% trans "FAQ" %}</a></li>
       </ul>
     </li>
   </ul>

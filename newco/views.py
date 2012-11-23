@@ -6,9 +6,9 @@ from django.views.generic import ListView
 
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
+from utils.tutorial.views import TutoMixin
 
-
-class HomepageView(MultiTemplateMixin, ListView):
+class HomepageView(MultiTemplateMixin, TutoMixin, ListView):
 
     paginate_by = 14
 

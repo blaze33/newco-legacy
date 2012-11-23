@@ -7,87 +7,138 @@
 {% load account_tags %}
 
 {% block extra_style %}
-    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+  <link href="{% static 'css/global.css' %}" rel="stylesheet">
+  <link href="{% static 'css/joyride-2.0.2.css' %}" rel="stylesheet">
+  <style type="text/css">
+    .joyride-tip-guide {
+      z-index: 1001; /* NewCo's subnav is z-index: 999; */
+    }
+  </style>
+
     <!--
     We may need to use font-awesome. Won't replace glyphicons for the moment
     due to bad pixel fitting of small icons.
     <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
-    -->
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+  -->
+  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
-    {% include "feedback/header.html" %}
+  {% include "feedback/header.html" %}
 {% endblock %}
 
 {% block extra_head_base %}
-    {{ block.super }}
-    <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
-    <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-    <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
+  <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+  <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
 {% endblock %}
 
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
 
 {% block nav %}
-<ul class="nav pull-left" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
+  <ul class="nav pull-left" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
     <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
-        <div class="input-append">
-            <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for product, user or tag' %}">
-            <button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
-        </div>
-        <input type="hidden" id="obj_class" name="obj_class"/>
-        <input type="hidden" id="obj_id" name="obj_id"/>
+      <div class="input-append">
+        <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for product, user or tag' %}">
+        <button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+      </div>
+      <input type="hidden" id="obj_class" name="obj_class">
+      <input type="hidden" id="obj_id" name="obj_id">
     </form></li>
-</ul>
+  </ul>
 {% endblock %}
 
 {% block footer %}
-    {% include "_footer.html" %}
+  {% include "_footer.html" %}
 
-    {{ block.super }}
+  {{ block.super }}
 {% endblock %}
 
 {% block extra_script %}
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
+  <script type="text/javascript">
+    // *** Joyride tutorial ***
 
-    <script type="text/javascript">
-        $(function() {
-            var labels, mapped
-            $("#global_search").typeahead({
-                source: function (query, process) {
-                    $.get('{% url "redis" %}', {q: query}, function (data) {
-                        labels = []
-                        mapped = {}
+    function launchJoyride(){
+      $("#joyRideContent").joyride({
+        'tipContainer': '.navbar',
+        postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+          $('#help-dropdown').tooltip('show');
+          setTimeout("$('#help-dropdown').tooltip('hide')", 3000);
+        },
+      });
+    };
 
-                        $.each(data, function (i, item) {
-                            mapped[item.title] = item
-                            labels.push(item.title)
-                        })
-                        process(labels)
-                    })
-                }
-                , updater: function (item) {
-                    var obj = mapped[item];
-                    $('#obj_class').val(obj.class);
-                    $('#obj_id').val(obj.id);
-                    return obj.title
-                }
-            });
-        });
-    </script>
-    
+    {% if not visited and not '/dashboard' in request.path and not '/about/' in request.path %} {# Seb: exclude "/about" temporarily because pages are generated with "direct_to_template()" => no way to use TutoMixin... #}
+    $(window).load(function() {
+      launchJoyride();
+    });
+    {% endif %}
+
+    $('#link-tuto').click(function () {
+      launchJoyride();
+    });
+
+    $('.tooltip-help').tooltip({
+      trigger: 'manual',
+      placement: 'bottom',
+    });
+
+    // *** End of Joyride tutorial ***
+
+    $(function() {
+      var labels, mapped
+      $("#global_search").typeahead({
+        source: function (query, process) {
+          $.get('{% url "redis" %}', {q: query}, function (data) {
+            labels = []
+            mapped = {}
+
+            $.each(data, function (i, item) {
+              mapped[item.title] = item
+              labels.push(item.title)
+            })
+            process(labels)
+          })
+        }
+        , updater: function (item) {
+          var obj = mapped[item];
+          $('#obj_class').val(obj.class);
+          $('#obj_id').val(obj.id);
+          return obj.title
+        }
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block extra_body_base %}
-    {{ block.super }}
+  {{ block.super }}
 
-    {% analytics %}
+  <ol id="joyRideContent" style="display:none">
+    <li data-class="brand" data-button="{% trans "Tell me more!" %}">
+      <p>{% trans "NewCo is a product information webapp organized around Q&amp;A." %}</p>
+    </li>
+    <li data-id="global_search" data-button="{% trans "... what if I don&#39;t find?" %}">
+      <p>{% trans "Find what you are looking for by product, tag, question or user." %}</p>
+    </li>
+    <li data-id="add-dropdown" data-button="{% trans "Thank you!" %}">
+      <p>{% trans "NewCo is a collaborative webapp:" %}<br>{% trans "If you don't find, ask!" %}{#<br>{% trans "...and help others when you know the answer ;)" %}</p>#}
+    </li>{% comment %} Seb: excluded until a solution to avoid the "tip" to go out of the window is found
+    <li data-class="non_auth" data-button="{% trans "Next" %}">
+      <p>{% trans "Sign up to build your reputation with your contributions." %}</p>
+    </li>{% endcomment %}
+  </ol>
 
-    {% block extra_body %}{% endblock %}
 
-    {% include "feedback/button.html" %}
+  {% analytics %}
+
+  {% block extra_body %}{% endblock %}
+
+  {% include "feedback/button.html" %}
 {% endblock %}

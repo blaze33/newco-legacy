@@ -32,11 +32,12 @@ from utils.follow.views import FollowMixin
 from utils.tools import load_object, get_sorted_queryset, get_search_results
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
+from utils.tutorial.views import TutoMixin
 
 app_name = "items"
 
 
-class ContentView(View):
+class ContentView(TutoMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
