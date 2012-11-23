@@ -7,82 +7,82 @@
 {% load account_tags %}
 
 {% block extra_style %}
-    <link href="{% static 'css/global.css' %}" rel="stylesheet">
-    <!--
-    We may need to use font-awesome. Won't replace glyphicons for the moment
-    due to bad pixel fitting of small icons.
-    <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
-    -->
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+  <link href="{% static 'css/global.css' %}" rel="stylesheet">
+  <!--
+  We may need to use font-awesome. Won't replace glyphicons for the moment
+  due to bad pixel fitting of small icons.
+  <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+  -->
+  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
 
-    {% include "feedback/header.html" %}
+  {% include "feedback/header.html" %}
 {% endblock %}
 
 {% block extra_head_base %}
-    {{ block.super }}
-    <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
-    <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-    <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
+  <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+  <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
 {% endblock %}
 
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
 
 {% block nav %}
 <ul class="nav pull-left">
-    <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
-        <div class="input-append">
-            <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for a product, a user or a tag' %}"><button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
-        </div>
-        <input type="hidden" id="obj_class" name="obj_class"/>
-        <input type="hidden" id="obj_id" name="obj_id"/>
-    </form></li>
+  <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
+    <div class="input-append">
+      <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for a product, a user or a tag' %}"><button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+    </div>
+    <input type="hidden" id="obj_class" name="obj_class"/>
+    <input type="hidden" id="obj_id" name="obj_id"/>
+  </form></li>
 </ul>
 {% endblock %}
 
 {% block footer %}{% include "_footer.html" %}{% endblock %}
 
 {% block extra_script %}
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
 
-    <script type="text/javascript">
-        $(function() {
-            var labels, mapped
-            $("#global_search").typeahead({
-                source: function (query, process) {
-                    $.get('{% url "redis" %}', {q: query}, function (data) {
-                        labels = []
-                        mapped = {}
+  <script type="text/javascript">
+    $(function() {
+      var labels, mapped
+      $("#global_search").typeahead({
+        source: function (query, process) {
+          $.get('{% url "redis" %}', {q: query}, function (data) {
+            labels = []
+            mapped = {}
 
-                        $.each(data, function (i, item) {
-                            mapped[item.title] = item
-                            labels.push(item.title)
-                        })
-                        process(labels)
-                    })
-                }
-                , updater: function (item) {
-                    var obj = mapped[item];
-                    $('#obj_class').val(obj.class);
-                    $('#obj_id').val(obj.id);
-                    return obj.title
-                }
-            });
-        });
-    </script>
+            $.each(data, function (i, item) {
+                mapped[item.title] = item
+                labels.push(item.title)
+            })
+            process(labels)
+          })
+        }
+        , updater: function (item) {
+          var obj = mapped[item];
+          $('#obj_class').val(obj.class);
+          $('#obj_id').val(obj.id);
+          return obj.title
+        }
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block extra_body_base %}
-    {{ block.super }}
-<div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
-</div>
-    {% analytics %}
+  {{ block.super }}
+  <div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
+  </div>
+  {% analytics %}
 
-    {% block extra_body %}{% endblock %}
+  {% block extra_body %}{% endblock %}
 
-    {% include "feedback/button.html" %}
+  {% include "feedback/button.html" %}
 {% endblock %}

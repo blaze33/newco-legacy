@@ -6,9 +6,9 @@
 <div class="pull-right">
   <ul class="nav" role="navigation">
     {% if debug and templates %}<li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
-      <ul class="dropdown-menu pull-right" role="menu">{% for name, title in templates.items %}
-        <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == 'template' %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
+    <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
+    <ul class="dropdown-menu pull-right" role="menu">{% for name, title in templates.items %}
+      <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == 'template' %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
       {% endfor %}</ul>
     </li>{% endif %}
     <li class="dropdown">
@@ -21,7 +21,7 @@
     </li>
   </ul>
 
-{% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated %}
   <ul class="nav btn-group" role="navigation">
     <li class="btn btn-inverse well_auth">
       <a href="{% url 'dash' %}" style="font-size: 12px;">{% profile_pic request.user 26 %} {% user_display request.user %}</a>
@@ -43,12 +43,12 @@
       </ul>
     </li>
   </ul>
-{% else %}
+  {% else %}
   <ul class="nav btn-group">
     <li class="btn btn-inverse"><a href="{% url 'account_login' %}"><strong>{% trans "Log in" %}</strong></a></li>
     {% if ACCOUNT_OPEN_SIGNUP %}
     <li class="btn btn-danger non_auth"><a href="{% url 'account_signup' %}"><strong>{% trans "Sign up" %}</strong></a></li>
     {% endif %}
   </ul>
-{% endif %}
+  {% endif %}
 </div>
