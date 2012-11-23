@@ -99,15 +99,15 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{ block.super }}
-    <script type="text/javascript">
+  <script>
+    $("#id_tags").select2(select2TagsParameters);
+
         pics = {{ img_album|safe }};
         results = {{ img_search|safe }};
         if (pics.length == 0) {
             pics.push.apply(pics, results);
         }
-    </script>
-    <script type="text/javascript">
+
     $(document).ready(function(){
     var item_form=document.getElementById("item_test");
     var is_item=item_form.getAttribute("data-item");
