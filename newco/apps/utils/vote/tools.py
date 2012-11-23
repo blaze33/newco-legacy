@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib import messages
@@ -45,14 +46,10 @@ def process_voting(request, obj, success_url):
             obj = obj.content_ptr
         Vote.objects.record_vote(obj, request.user, vote)
 
-        messages.add_message(request,
-            msgs[direction]["level"],
-            msgs[direction]["text"] % {"user": username, "object": obj}
-        )
+        messages.add_message(request, msgs[direction]["level"], mark_safe(
+            msgs[direction]["text"] % {"user": username, "object": obj}))
     else:
-        messages.add_message(request,
-            msgs["warning"]["level"],
-            msgs["warning"]["text"] % {"user": username}
-        )
+        messages.add_message(request, msgs["warning"]["level"], mark_safe(
+            msgs["warning"]["text"] % {"user": username}))
 
     return HttpResponseRedirect(success_url)

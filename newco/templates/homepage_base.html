@@ -18,7 +18,7 @@
 
 
 {% block body_base %}
-  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/apple_bg_linen_light_grey.jpeg' %});">
+  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/sp/subtle-grey.jpg' %});">
     <div class="container" style="position: relative; z-index: +2;">
 
       <header class="jumbotron subhead" id="newco" style="border-top: 30px solid transparent;">
@@ -74,12 +74,18 @@
 
   <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
     <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans 'Click here to close the tutorial' %}" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
-    <li{% if cat == "home" %} class="active"{% endif %} id="popular"><a class="black" href="{% url 'home' %}" id="mixpanel_popular">{% trans "Popular products" %}</a></li>
-    <li {% if cat == "last" %} class="active"{% endif %} id="last"><a class="black" href="{% url 'home' 'last' %}">{% trans "Last Added" %}</a></li>
-    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Unanswered Questions" %}</a></li>
+    <li class="{% if cat == 'home' or cat == 'last' %}active {% endif %}dropdown">
+  	  <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Products" %} <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li{% if cat == "home" %} class="active"{% endif %}><a href="{% url 'home' %}" id="mixpanel_popular"><i class="icon-star"></i> <b>{% trans "Popular" %}</b></a></li>
+        <li{% if cat == "last" %} class="active"{% endif %}><a href="{% url 'home' 'last' %}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
+      </ul>
+    </li>
+    
+    <li {% if cat == "questions" %}class="active"{% endif %}><a class="black" href="{% url 'home' 'questions' %}" id="mixpanel_questions">{% trans "Questions" %}</a></li>
     {% if user.is_authenticated %}
-    <li class="divider"></li>
-    <li><a class="black" href="{% url 'dash' 'feed' %}" id="mixpanel_mynewsfeed">{% trans "My newsfeed" %}</a></li>
+      <li class="divider"></li>
+      <li><a class="black" href="{% url 'dash' 'feed' %}" id="mixpanel_mynewsfeed">{% trans "My newsfeed" %}</a></li>
     {% endif %}
   </ul></div>
 
@@ -90,29 +96,26 @@
     {{ block.super }}
 
     {# ##### Equalize columns height ##### #}
-    <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-    <script type="text/javascript">
-        $('.WhyNC-col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
-                return $(elem).height();
-            });
-            return $(h).height();
-        });
+    <script>
+      var heights = $(".WhyNC-col").map(function () {
+          return $(this).height();
+      }).get();
+      $('.WhyNC-col').height(Math.max.apply(null, heights));
     </script>
     {# ##### End of Equalize columns height ##### #}
     <script type ="text/javascript">
-	    $(document).ready(function(){
-	        if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
-	    });
-	</script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/homepage.js"></script>
+      $(document).ready(function(){
+          if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
+      });
+    </script>
+    <script type="text/javascript" src="{% static 'js/homepage.js' %}"></script>
     <script type="text/javascript">
-        $(function(){
-          {% if request.GET.welcome %}
-              setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
-              subnav2move.addClass('subnav-moved');
-              $('body').addClass('body-less-padding');
-          {% endif %}
-        });
+      $(function(){
+        {% if request.GET.welcome %}
+            setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
+            subnav2move.addClass('subnav-moved');
+            $('body').addClass('body-less-padding');
+        {% endif %}
+      });
     </script>
 {% endblock %}

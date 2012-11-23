@@ -4,38 +4,40 @@
 <head><title>{{ message_subject }}</title></head>
 
 <body>
-	
-<table style="width: 565px; ">
-	<tr style="height: 50px">
-		<td style="width: 65px; vertical-align: top;">
-			<a href="http://www.newco-project.fr/"><h3>NewCo</h3></a>
-        </td>
-        <td style="width: 500px; vertical-align: top;background-color: #e8e8e8">
-		    {% block body_title %}{% endblock %}
-		    <br><br>
-	    </td>
-    </tr>
-    <tr>
-   		<td style="width: 65px; ">
-            &nbsp;
-        </td>
-        <td style="width:500px; padding: 5px 0 10px 10px; vertical-align: top;background-color: #f2f2f2">
-	    <br><div style="font-family:verdana,serif;">{% block body_answer %}{% endblock %}</div>
-	    <br><br>Thanks.<br>The NewCo Project team
-	    </td>
-    </tr>
-</table>
-<table style="width: 565px;>
-    <tr>
-    	<td style="width: 5px; ">
-            &nbsp;
-        </td>
-    	<td style="width:560px; padding: 10px 0 0 10px; border-top: 1px = solid #EAEAEA">
-	    <br><br><hr><small>{% blocktrans %}
-            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href="{{ settings_url }}" >here</a> (available soon).
-            {% endblocktrans %}
-	    </small>
-	    </td>
-    </tr>
+
+<table style="width: 595px;">
+  <tr>
+    <td style="width: 95px; vertical-align: middle; padding: 10px; background-color: #000000;">
+      <table style="width: 95px; height: 37px;">
+        <tr>
+          <td style="width: 95px; padding: 10px; vertical-align: middle; background-color: #000000;">
+            <center><a href="http://www.newco-project.fr/" style="color: #ffffff; text-decoration: none; font-size: 20px; font-weight: 200; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">NewCo</a></center>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td style="width: 500px; padding: 0 10px 0 10px; vertical-align: top; background-color: #e8e8e8;">
+        {% block body_title %}{% endblock %}
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 95px;">
+    </td>
+    <td style="width: 500px; padding: 5px 0 10px 10px; vertical-align: top; background-color: #f2f2f2;">
+      <div style="font-family: verdana,serif;">{% block body_answer %}{% endblock %}</div>
+    </td>
+  </tr>
+  <tr>
+  	<td style="width: 95px;">
+    </td>
+  	<td style="width:585px; padding: 10px 0 0 10px; border-top: 1px = solid #EAEAEA">
+	  <br>
+      {% trans "Thanks,<br>The NewCo Project team" %}<br>
+      <hr>
+      <small>{% blocktrans %}
+        This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href="{{ settings_url }}" >here</a> (available soon, please forgive us for the emails you didn't want in the mean time).
+      {% endblocktrans %}</small>
+    </td>
+  </tr>
 </table>
 </body></html>

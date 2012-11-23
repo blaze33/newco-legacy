@@ -234,8 +234,8 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%d/%s" % \
-                                    (o.get_profile().pk, o.get_profile().slug),
+    "auth.user": lambda o: "/profiles/profile/%d/%s" %
+                           (o.get_profile().pk, o.get_profile().slug),
 }
 
 AUTHENTICATION_BACKENDS = [

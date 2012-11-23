@@ -1,6 +1,16 @@
 {% extends "mail/_notification_email.html" %}
 
 {% load i18n %}
+{% load account_tags %}
+
 {% block body_title %}
-    <h4><a href="{{ follower_url }}">{{ follower }}</a> {% trans "is now following you on NewCo!" %}
+    <h4><a href="{{ follower_url }}">{% user_display follower %}</a> {% trans "is now following you on NewCo!" %}
+{% endblock %}
+
+{% block body_answer %}
+	{% include "profiles/_profile_item.html" with display="email_html" profile=follower.get_profile followee=followee %}
+	<br>
+	<br>
+	{% user_display follower as follower %}{% blocktrans %}To follow back <a href="{{ follower_url }}">{{ follower }}</a>, go on his profile.{% endblocktrans %}
+
 {% endblock %}

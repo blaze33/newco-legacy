@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-26 13:19+0200\n"
-"PO-Revision-Date: 2012-10-26 13:21\n"
+"POT-Creation-Date: 2012-11-19 16:21+0100\n"
+"PO-Revision-Date: 2012-11-19 17:54\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,144 +19,169 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: mailtools.py:50
+#: mailtools.py:45
 #, python-format
-msgid "answered your question \"%(question)s\""
-msgstr "a répondu à votre question \"%(question)s\""
+msgid "%(receiver)s, %(answerer)s has answered your question!"
+msgstr "%(receiver)s, %(answerer)s répondu a votre question&#x202F;!"
 
-#: mailtools.py:57 mailtools.py:147 mailtools.py:154
-#, python-format
-msgid "about the product %(product)s."
-msgstr "à propos du produit %(product)s."
-
-#: mailtools.py:61 mailtools.py:158
-msgid "on"
-msgstr "sur"
-
-#: mailtools.py:92
+#: mailtools.py:69
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
-msgstr "%(user)s, votre requête a été envoyée à %(receiver)s !"
+msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#x202F;!"
 
-#: mailtools.py:97
+#: mailtools.py:74
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
-"%(user)s, vous ne pouvez pas vous proposer de répondre à une question !"
+"%(user)s, vous ne pouvez pas vous proposer de répondre à une "
+"question&#x202F;!"
+
+#: mailtools.py:111
+#, python-format
+msgid "%(receiver)s, %(requester)s needs your help."
+msgstr "%(receiver)s, %(requester)s a besoin de vous."
 
 #: mailtools.py:138
 #, python-format
-msgid "%(receiver)s, %(requester)s needs your help!"
-msgstr "%(receiver)s, %(requester)s a besoin de vous !"
+msgid "%(followee)s, %(follower)s is now following you on NewCo."
+msgstr "%(followee)s, %(follower)s vous suit désormais sur NewCo."
 
-#: mailtools.py:144
-#, python-format
-msgid "would like you to answer this question \"%(question)s\""
-msgstr "aimerait que vous répondiez à cette question \"%(question)s\""
-
-#: follow/tools.py:19
+#: follow/tools.py:18
 #, python-format
 msgid "%(user)s, you are now following %(object)s."
 msgstr "%(user)s, vous suivez désormais %(object)s."
 
-#: follow/tools.py:23
+#: follow/tools.py:22
 #, python-format
 msgid "%(user)s, you are not following %(object)s anymore."
 msgstr "%(user)s, vous ne suivez plus %(object)s."
 
-#: follow/tools.py:27
+#: follow/tools.py:26
 #, python-format
 msgid "%(user)s, you can't follow yourself!"
-msgstr "%(user)s, vous ne pouvez pas vous suivre !"
+msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
 
 #: templates/content/info.html:6
-msgid "by"
-msgstr "par"
+msgid "Posted"
+msgstr "Posté"
 
-#: templates/mail/_answer_notification_email.html:5
-#: templates/mail/_answer_notification_email.txt:6
-msgid "answered your question"
+#: templates/content/info.html:6
+#: templates/mail/_answer_notification_email.html:7
+#: templates/mail/_ask_notification_email.html:7
+#: templates/mail/_ask_notification_email.txt:7
+msgid ":"
+msgstr "&nbsp;:"
+
+#: templates/form/question_form.html:18
+msgid ""
+"Click here if you can&#39;t find the product you want to link your question "
+"to"
+msgstr ""
+"Cliquez ici si vous ne trouvez pas le produit que vous souhaitez lier à "
+"votre question"
+
+#: templates/form/question_form.html:18
+msgid "Add a product"
+msgstr "Ajouter un produit"
+
+#: templates/mail/_answer_notification_email.html:7
+msgid "has answered your question"
 msgstr "a répondu à votre question"
 
-#: templates/mail/_answer_notification_email.html:6
-#: templates/mail/_answer_notification_email.txt:7
-#: templates/mail/_ask_notification_email.html:6
+#: templates/mail/_answer_notification_email.txt:15
+#, python-format
+msgid "To see %(answerer)s's profile, go there:"
+msgstr "Pour voir le profil de %(answerer)s, rendez-vous ici&nbsp;:"
+
+#: templates/mail/_answer_notification_email.txt:16
+#, python-format
+msgid "To see %(question)s, go there:"
+msgstr "Pour voir %(question)s, rendez-vous ici&nbsp;:"
+
+#: templates/mail/_ask_notification_email.html:7
+msgid "would like you to answer a question"
+msgstr "aimerait que vous répondiez à une question"
+
 #: templates/mail/_ask_notification_email.txt:7
-msgid "About the product"
-msgstr "A propos du produit"
+msgid "would like you to answer the question"
+msgstr "aimerait que vous répondiez à la question"
 
-#: templates/mail/_answer_notification_email.txt:11
-#, python-format
-msgid "To see %(answerer)s's profile, go there"
-msgstr "Pour voir le profil de %(answerer)s, rendez-vous ici"
-
-#: templates/mail/_answer_notification_email.txt:13
-#: templates/mail/_ask_notification_email.txt:13
-#, python-format
-msgid "To see %(question)s, go there"
-msgstr "Pour voir %(question)s, rendez-vous ici"
-
-#: templates/mail/_ask_notification_email.html:5
-#: templates/mail/_ask_notification_email.txt:6
-msgid "would like you to answer this question"
-msgstr "aimerait que vous répondiez à cette question"
-
-#: templates/mail/_ask_notification_email.txt:11
+#: templates/mail/_ask_notification_email.txt:15
 #, python-format
 msgid "To see %(asker)s's profile, go there"
 msgstr "Pour voir le profil de %(asker)s, rendez-vous ici"
 
-#: templates/mail/_follow_notification_email.html:5
-#: templates/mail/_follow_notification_email.txt:6
-msgid "is now following you on NewCo!"
-msgstr "vous suit désormais sur NewCo !"
+#: templates/mail/_ask_notification_email.txt:16
+#, python-format
+msgid "To see %(question)s, go there"
+msgstr "Pour voir %(question)s, rendez-vous ici"
 
-#: templates/mail/_follow_notification_email.txt:11
+#: templates/mail/_follow_notification_email.html:7
+#: templates/mail/_follow_notification_email.txt:7
+msgid "is now following you on NewCo!"
+msgstr "vous suit désormais sur NewCo&#x202F;!"
+
+#: templates/mail/_follow_notification_email.html:14
+#, python-format
+msgid ""
+"To follow back <a href=\"%(follower_url)s\">%(follower)s</a>, go on his "
+"profile."
+msgstr ""
+"Pour suivre <a href=\"%(follower_url)s\">%(follower)s</a> en retour, allez "
+"sur son profile."
+
+#: templates/mail/_follow_notification_email.txt:12
 #, python-format
 msgid "To see %(follower)s's profile, go there"
 msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 
-#: templates/mail/_notification_email.html:34
+#: templates/mail/_notification_email.html:35
+msgid "Thanks,<br>The NewCo Project team"
+msgstr "Merci,<br> L'équipe NewCo Project"
+
+#: templates/mail/_notification_email.html:37
 #, python-format
 msgid ""
 "\n"
-"            This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon).\n"
-"            "
+"        This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon, please forgive us for the emails you didn't want in the mean time).\n"
+"      "
 msgstr ""
 "\n"
 "Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+
+#: templates/mail/_notification_email.txt:27
+#, python-format
+msgid ""
+"\n"
+"---\n"
+"This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: %(settings_url)s (available soon).\n"
+"---\n"
+"Thanks !\n"
+"The NewCo Project team\n"
+msgstr ""
+"\n"
+"---\n"
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
+"---\n"
+"Merci,\n"
+"L'équipe de NewCo\n"
 
 #: templates/voting/form.html:7
 msgid ""
 "Vote up: this contribution shows effort on quality; it is usefull and clear "
 "(click again to undo)"
 msgstr ""
-"Vote positif : cette contribution montre des efforts sur la qualité ; elle "
-"est utile et claire (cliquer à nouveau pour enlever)"
+"Vote positif&nbsp;: cette contribution montre des efforts sur la "
+"qualité&#x202F;; elle est utile et claire (cliquer à nouveau pour enlever)"
 
 #: templates/voting/form.html:8
 msgid ""
 "Vote down: this contribution does't show effort on quality; it is not useful"
 " or unclear (click again to undo)"
 msgstr ""
-"Vote négatif : cette contribution ne montre pas d'efforts sur la qualité ; "
-"elle n'est pas utile ou pas claire (cliquer à nouveau pour enlever)"
-
-#: templatetags/content_utils.py:161
-msgid "about the product"
-msgid_plural "about the products"
-msgstr[0] "à propos du produit"
-msgstr[1] "à propos des produits"
-
-#: templatetags/content_utils.py:165 templatetags/content_utils.py:268
-msgid "and"
-msgstr "et"
-
-#: templatetags/content_utils.py:167
-msgid "with the tag"
-msgid_plural "with the tags"
-msgstr[0] "avec le tag"
-msgstr[1] "avec les tags"
+"Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
+"qualité&#x202F;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
+"enlever)"
 
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
@@ -191,39 +216,84 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/follow_utils.py:42
+#: templatetags/follow_utils.py:43
 msgctxt "Follow button"
 msgid "Following"
 msgstr "Abonné"
 
-#: templatetags/follow_utils.py:44
+#: templatetags/follow_utils.py:45
 msgid "Click to unfollow"
 msgstr "Cliquez pour vous désabonner"
 
-#: templatetags/follow_utils.py:50
+#: templatetags/follow_utils.py:52
 msgctxt "Follow button"
 msgid "Follow"
 msgstr "Suivre"
 
-#: vote/tools.py:17
+#: templatetags/tools.py:81 templatetags/tools.py:113
+msgid "and"
+msgstr "et"
+
+#: templatetags/tools.py:109
+msgid "about the product"
+msgid_plural "about the products"
+msgstr[0] "à propos du produit"
+msgstr[1] "à propos des produits"
+
+#: templatetags/tools.py:115
+msgid "with the tag"
+msgid_plural "with the tags"
+msgstr[0] "avec le tag"
+msgstr[1] "avec les tags"
+
+#: vote/tools.py:18
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
 msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
 
-#: vote/tools.py:21
+#: vote/tools.py:22
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
 msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
 
-#: vote/tools.py:25
+#: vote/tools.py:26
 #, python-format
 msgid "%(user)s, your vote on %(object)s has been cancelled."
 msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 
-#: vote/tools.py:29
+#: vote/tools.py:30
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
-msgstr "%(user)s, vous ne pouvez pas voter sur votre propre contribution."
+msgstr ""
+"%(user)s, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
+
+#~ msgid "Add one"
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "by"
+#~ msgstr "par"
+
+#~ msgid ""
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+#~ "href='%(answerer_url)s'>%(answerer)s</a> has answered your question "
+#~ msgstr ""
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+#~ "href='%(answerer_url)s'>%(answerer)s</a> a répondu a votre question"
+
+#~ msgid "Product"
+#~ msgstr "Produit"
+
+#~ msgid "answered your question '%(question)s'"
+#~ msgstr "a répondu à votre question '%(question)s'"
+
+#~ msgid "about the product %(product)s."
+#~ msgstr "à propos du produit %(product)s."
+
+#~ msgid "on"
+#~ msgstr "sur"
+
+#~ msgid "would like you to answer this question '%(question)s'"
+#~ msgstr "aimerait que vous répondiez à cette question '%(question)s'"
 
 #~ msgid "Items"
 #~ msgstr "Produits"

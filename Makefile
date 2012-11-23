@@ -1,5 +1,6 @@
 ##! make
 # A Makefile to automate things
+SHELL := /bin/bash
 
 all:
 
@@ -66,6 +67,7 @@ simple_deploy:
 
 pg_backup2dropbox:
 	curl -o ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
+	cp  ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/{$(DATE).dump,latest.dump}
 
 # TODO: add additional commands to manage stuff.
 # Static stuff

@@ -3,7 +3,7 @@
 {% load follow_utils %}
 
 <div class="content-item{% if masonry_list == "1" %} masonry-item{% elif masonry_list == "2"  %} masonry-item2{% endif %} thumbnail">
-  {% with image=object.image.data %}<div class="name"><a href="{{ object.get_absolute_url }}" id="mixpanel_image"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>{% endwith %}
+  {% with image=object.image.data %}<div class="name"><a href="{{ object.get_absolute_url }}"><img height="{% widthratio image.thumbnailHeight image.thumbnailWidth 164 %}" src="{{ image.thumbnailLink }}" alt=""></a></div>{% endwith %}
   <div class="details" style="font-size:12px;">
     {% object_display object "thumbnail" "black" %}
     <br>

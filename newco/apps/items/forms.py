@@ -18,15 +18,6 @@ from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
 from utils.mailtools import mail_question_author
 
-PRODUCT_HELP_TEXT = _(
-    "Select one or up to 5 products using Enter and the Arrow keys.<br>"
-    "<small>You may consider a tag for a group of products.</small><br><br>"
-    "<small>Can't find a product related to your question?</small>"
-    " <a class='btn btn-primary btn-mini' data-toggle='modal' role='button' "
-    "href='#itemModal'><i rel='add_icon' class='icon-plus icon-white' "
-    "style='margin-right: 3px; position: relative; top: -2px;'></i> Add it</a>"
-)
-
 
 class ItemForm(ModelForm):
 
@@ -76,8 +67,8 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     PARENTS = Choices(
-        (0, "products", pgettext("parent", "products")),
-        (1, "tags", pgettext("parent", "tags"))
+        ("0", "products", pgettext("parent", "products")),
+        ("1", "tags", pgettext("parent", "tags"))
     )
 
     create = False
@@ -113,7 +104,8 @@ class QuestionForm(ModelForm):
         if self.object:
             self.fields.get("parents").initial = self.PARENTS.products \
                 if self.object.items.count() else self.PARENTS.tags
-        self.fields.get("items").help_text = PRODUCT_HELP_TEXT
+        self.fields.get("items").help_text = _(
+            "Select up to 5 products using Enter and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
         question = super(QuestionForm, self).save(commit=False)
@@ -129,7 +121,6 @@ class QuestionForm(ModelForm):
     def clean(self):
         cleaned_data = super(QuestionForm, self).clean()
         parents = cleaned_data.get("parents")
-        parents = int(parents) if parents else parents
 
         if parents == self.PARENTS.tags:
             cleaned_data["items"] = []
@@ -158,6 +149,31 @@ class QuestionForm(ModelForm):
         return cleaned_data
 
 
+class PartialQuestionForm(ModelForm):
+
+    class Meta:
+        model = Question
+        fields = ("content", )
+        widgets = {"content": Textarea(attrs={
+            "class": "span4",
+            "placeholder": _("Ask something specific."),
+            "rows": 1})}
+
+    def __init__(self, request, item, *args, **kwargs):
+        super(PartialQuestionForm, self).__init__(*args, **kwargs)
+        self.request, self.item = [request, item]
+
+    def save(self, commit=True, **kwargs):
+        question = super(PartialQuestionForm, self).save(commit=False)
+        question.author = self.request.user
+
+        if commit:
+            question.save()
+            self.save_m2m()
+            question.items.add(self.item.id)
+        return question
+
+
 class AnswerForm(ModelForm):
 
     create = False
@@ -180,7 +196,7 @@ class AnswerForm(ModelForm):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
-        question_id = request.POST.get("question_id", 0)
+        question_id = request.REQUEST.get("question_id", 0)
         self.question = Question.objects.get(id=question_id) if question_id \
             else getattr(self.object, "question", None)
 
@@ -203,11 +219,8 @@ class AnswerForm(ModelForm):
 
         if commit:
             answer.save()
-            if self.create:
-                mail_question_author(
-                    self.request.META.get('HTTP_HOST'), answer)
-            self.save_m2m()
-            answer.items = answer.question.items.all()
+            if self.create and answer.is_public:
+                mail_question_author(self.request, answer)
 
         return answer
 

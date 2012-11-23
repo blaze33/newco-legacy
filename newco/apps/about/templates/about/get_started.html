@@ -73,13 +73,13 @@
 <br><br>
 <div class="row">
     <div class="span4">
-        <center><a href="{% url 'home' %}" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_explore_gs">{% trans "Explore" %}</a></center>
+        <center><a href="{% url 'home' %}" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Explore" %}</a></center>
     </div>
     <div class="span4">
-        <center><a href="{% url 'item_create' 'question' %}" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_question_gs">{% trans "Ask a question" %}</a></center>
+        <center><a href="{% url 'item_create' 'question' %}" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Ask a question" %}</a></center>
     </div>
     <div class="span4">
-        <center><a href="{% url 'item_create' 'item' %}" class="btn btn-large btn-block btn-primary call2action_btn" id="mixpanel_product_gs">{% trans "Add a product" %}</a></center>
+        <center><a href="{% url 'item_create' 'item' %}" class="btn btn-large btn-block btn-primary call2action_btn">{% trans "Add a product" %}</a></center>
     </div>
 </div>
 
@@ -136,7 +136,7 @@
                             <p><i class="icon-star" style=" vertical-align: middle;"></i> {% trans "Here, you will see what each visitor can see. This is the part of the website shared by everyone." %}</p>
                         </div>
                     </p>
-            </div></br>
+            </div><br>
             </div>
 
         </div>
@@ -153,7 +153,7 @@
 
                     </div>
                 </p>
-            </div></br>
+            </div><br>
             </div>
         </div>
     </div>
@@ -196,7 +196,7 @@
                     </ul></p>
                 </div>
             </p>
-        </div></br>
+        </div><br>
     </div>
     <div class="span6">
         <div class="well well-large WhyNC-col" id="contribute"><h1 style="text-align: center; font-size: 50px;"><em>{% trans "Share knowledge" %}{# Share your knowledge #}</em>
@@ -209,7 +209,7 @@
                 </div>
             </p>
         </div>
-        </br>
+        <br>
     </div>
 </div>
 
@@ -220,33 +220,15 @@
     {{ block.super }}
 
     {# ##### Equalize columns height ##### #}
-    <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
-    <script type="text/javascript">
-        // credit: comes from:http://stackoverflow.com/questions/9143971/using-twitter-bootstrap-2-0-how-to-make-equal-column-heights
-        $('.WhyNC-col').height(function () {
-            var h = _.max($(this).closest('.row').find('.WhyNC-col'), function (elem, index, list) {
-                return $(elem).height();
-            });
-            return $(h).height();
-        });
-
-        $('.Struct_col').height(function () {
-            var h = _.max($(this).closest('.row').find('.Struct_col'), function (elem, index, list) {
-                return $(elem).height();
-            });
-            return $(h).height();
-        });
-
-        // $(window).load(function(){
-        //     var new_css = {
-        //       'position' : 'absolute',
-        //       'bottom' : '',
-        //     }
-        //     $('#know_more').css(new_css);
-        //     //$('#know_more').css("position","absolute");
-        //     //$('#know_more').html("TEXT TEST");
-        //     //alert("test");
-        // });
+    <script>
+      var heights = $(".WhyNC-col").map(function () {
+                                          return $(this).height();
+                                        }).get();
+      $('.WhyNC-col').height(Math.max.apply(null, heights));
+      heights = $(".Struct-col").map(function () {
+                                          return $(this).height();
+                                        }).get();
+      $('.WhyNC-col').height(Math.max.apply(null, heights));
     </script>
     {# ##### End of Equalize columns height ##### #}
 {% endblock %}
