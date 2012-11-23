@@ -60,20 +60,22 @@
       {% endif %}
 
       <input type="hidden" name="next" {% if next %}value="{{ next }}"{% endif %}>
+    </form>
 
       <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-header">
           <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
           <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
         </div>
-        <div class="modal-body">{{ i_form|as_bootstrap }}</div>
-        <div class="modal-footer">
-          <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
-          <input type="button" class="btn btn-primary" name="add_item" id="add-item" value="{% trans 'Add product' %}">
-        </div>
+        <form class="form-horizontal">
+          <div class="modal-body">{{ i_form|as_bootstrap }}</div>
+          <div class="modal-footer">
+            <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
+            <input type="button" class="btn btn-primary" name="add_item" id="add-item" value="{% trans 'Add product' %}">
+          </div>
+        </form>
       </div>
 
-    </form>
   </div>
 
   <div class="span4"><div class="collapse out" id="div_tips"><div class="well well-small">
@@ -153,7 +155,7 @@ $(function() {
       $('#itemModal').modal('hide');
       $.ajax({
           type: "post",
-          data: $("form").serialize()+'&add_item=add_item',
+          data: $("#itemModal form").serialize()+'&add_item=add_item',
           success: function(data, status, xhr) {
             console.log(data);
             $("#id_items").append('<option value='+data.id+'>'+data.name+'</name>')
