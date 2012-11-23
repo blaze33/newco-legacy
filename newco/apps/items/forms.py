@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _, pgettext
 from account.utils import user_display
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
-from taggit.forms import TagField
+from taggit.forms import TagField, TagWidget
 from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
@@ -25,7 +25,7 @@ class ItemForm(ModelForm):
     tags = TagField(required=not(tag_field.blank),
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
-                    widget=TextInput(attrs={"class": "input-block-level"}))
+                    widget=TagWidget(attrs={"class": "input-block-level"}))
 
     class Meta:
         model = Item
@@ -76,7 +76,7 @@ class QuestionForm(ModelForm):
     tags = TagField(required=not(tag_field.blank),
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
-                    widget=TextInput(attrs={"class": "input-block-level"}))
+                    widget=TagWidget(attrs={"class": "input-block-level"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
 
