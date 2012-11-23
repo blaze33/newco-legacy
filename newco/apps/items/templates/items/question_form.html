@@ -100,7 +100,7 @@
         </div>
       {% endif %}
 
-      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+      <input type="hidden" name="next" {% if next %}value="{{ next }}"{% endif %}>
 
       <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-header">
@@ -110,7 +110,7 @@
         <div class="modal-body">{{ i_form|as_bootstrap }}</div>
         <div class="modal-footer">
           <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
-          <input type="submit" class="btn btn-primary" name="add_item" value="{% trans 'Add product' %}">
+          <input type="button" class="btn btn-primary" name="add_item" id="add-item" value="{% trans 'Add product' %}">
         </div>
       </div>
 
@@ -171,6 +171,7 @@
       placeholder: "Search for a tag",
       multiple:true,
       minimumInputLength: 2,
+      tokenSeparators: [","],
       initSelection: function (element, callback) {
               // reload tags
               var data = [];
@@ -199,7 +200,7 @@
             data[i].id = data[i].name;
             data[i].text = data[i].name;
           });
-          console.log(data);
+          // console.log(data);
           var more = (page * 10) < data.total; // whether or not there are more results available
           // notice we return the value of more so Select2 knows if more results can be loaded
           return {results: data, more: more};
@@ -230,5 +231,27 @@ $("#id_items").select2({
             },
   containerCssClass: 'select2-bootstrap',
 });
+
+$(function() {
+    $("#add-item").click(function(event) {
+      event.preventDefault();
+      $('#itemModal').modal('hide');
+      $.ajax({
+          type: "post",
+          data: $("form").serialize()+'&add_item=add_item',
+          success: function(data, status, xhr) {
+            console.log(data);
+            $("#id_items").append('<option value='+data.id+'>'+data.name+'</name>')
+                .select2("val", [].concat($("#id_items").val(), [String(data.id)]));
+            $('input[name="next"]').val(data.next);
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr, status, error);
+          }
+      });
+      return false;
+    });
+});
+
   </script>
 {% endblock %}
