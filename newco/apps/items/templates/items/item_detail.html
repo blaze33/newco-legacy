@@ -20,7 +20,7 @@
   {% for image in album|slice:":4" %}<li class="span3">
     <div class="thumbnail">
       <a href="{{ image.data.contextLink }}" target="_blank" style="background-image: url('{{ image.data.thumbnailLink }}')" title="{{ image.data.snippet }}"></a>
-  </div>
+    </div>
   </li>{% endfor %}
 </ul>
 
@@ -87,13 +87,11 @@
           form.on('shown', function () {
               icon_change.removeClass('icon-plus').addClass('icon-remove');
               text_change.html("&nbsp;");
-              text_change_no_q_yet.html("{% trans 'Ask a new question:' %}");
               $('#id_content').focus();
           })
           form.on('hidden', function () {
               icon_change.removeClass('icon-remove').addClass("icon-plus");
               text_change.html("{% trans 'Ask a new question!' %}");
-              text_change_no_q_yet.html("{% trans 'No question yet! Ask the first one here!' %}");
           })
           {% if not questions.queryset %}form.collapse('show');{% endif %}
       });

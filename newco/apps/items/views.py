@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Sum, Count
+from django.db.models import Sum, Count
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
@@ -24,9 +24,10 @@ from taggit.models import Tag
 from voting.models import Vote
 
 from content.transition import add_images, get_album
-from items.models import Item, Content, Question, Link, Feature
+from items import STATUSES
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from items.forms import PartialQuestionForm
+from items.models import Item, Content, Question, Link, Feature
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
@@ -98,7 +99,7 @@ class ContentFormMixin(object):
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"status": Content.STATUS})
+        kwargs.update({"statuses": STATUSES})
         return super(ContentFormMixin, self).get_context_data(**kwargs)
 
 
@@ -201,15 +202,15 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
+        context.update({"statuses": STATUSES})
         request = self.request
         POST, user = [request.POST, request.user]
-        public_query = Q(status=Content.STATUS.public)
+        content_qs = Content.objects.can_view(user)
         if self.model == Item:
             item = context.get("item")
-            item_query = Q(items__id=item.id)
-            content_qs = Content.objects.filter(public_query & item_query)
+            item_related_qs = content_qs.filter(items=item)
             querysets = {
-                "questions": content_qs.filter(question__isnull=False),
+                "questions": item_related_qs.filter(question__isnull=False),
             }
 
             contents = dict()
@@ -228,9 +229,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             for q in contents.get("questions").get("queryset"):
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                answer_query = Q(answer__question__id=q.id)
-                q.answers = Content.objects.filter(
-                    answer_query & public_query).get_qs_tools("popular", user)
+                q.answers = content_qs.filter(
+                    answer__question__id=q.id).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
             context.update(contents)
@@ -272,9 +272,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             q.score = Vote.objects.get_score(q.content_ptr)
             q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            answer_query = Q(answer__question__id=q.id)
-            q.answers = Content.objects.filter(
-                answer_query & public_query).get_qs_tools("popular", user)
+            q.answers = content_qs.filter(
+                answer__question__id=q.id).get_qs_tools("popular", user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
@@ -304,7 +303,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             if "question" in POST:
                 form = PartialQuestionForm(request, self.object, data=POST)
             else:
-                form = AnswerForm(request, data=POST)
+                status = int(POST.get("answer"))
+                form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
                 display_message("created", self.request,
                                 form._meta.model._meta.verbose_name)

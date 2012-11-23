@@ -1,5 +1,4 @@
 from django.core.urlresolvers import reverse_lazy
-from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -105,13 +104,12 @@ class DashboardView(ListView, FollowMixin):
                 self.queryset = self.queryset.get_feed(self.user)
             elif self.page == "contribution":
                 self.queryset = self.queryset.get_related_contributions(
-                    self.user, Item.objects.all())
+                    self.user, Item.objects.all()).exclude(author=self.user)
 #            elif self.page == "collaboration":
             elif self.page == "draft" or self.page == "all":
                 self.queryset = self.queryset.filter(author=self.user)
                 if self.page == "draft":
-                    self.queryset = self.queryset.filter(
-                        status=Content.STATUS.draft)
+                    self.queryset = self.queryset.draft()
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
             self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
@@ -123,13 +121,11 @@ class DashboardView(ListView, FollowMixin):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         if self.page == "dashboard":
-            drafts = self.queryset.filter(
-                Q(author=self.user) & Q(status=Content.STATUS.draft)
-            )
             feed = self.queryset.get_feed(self.user)
             all_my_contrib = self.queryset.filter(author=self.user)
+            drafts = all_my_contrib.draft()
             contrib_feed = self.queryset.get_related_contributions(
-                self.user, Item.objects.all())
+                self.user, Item.objects.all()).exclude(author=self.user)
 
             boxes = BOXES
             boxes.get("feed").update({"feed": feed.select_subclasses()[:4]})

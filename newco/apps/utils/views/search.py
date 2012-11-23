@@ -9,10 +9,8 @@ from taggit.models import Tag
 
 from items.models import Item
 from profiles.models import Profile
-from utils.redistools import load_redis_engine
+from utils.redistools import engine
 from utils.tools import get_class_from_string, get_class_name
-
-engine = load_redis_engine()
 
 CLASS_MAP = {
     "item": get_class_name(Item),
