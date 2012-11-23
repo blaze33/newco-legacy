@@ -24,14 +24,35 @@
     padding: 5px 12px;
   }
 
+  .select2-bootstrap .select2-choices {
+    background-color: white;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s;
+
+    border-radius: 4px;
+    border: 1px solid #CCC;
+    background-image: none;
+  }
+
+  .select2-bootstrap.select2-container-active .select2-choices {
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted 9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  }
+  .select2-bootstrap.select2-dropdown-open .select2-choices {
+    border-radius: 4px 4px 0 0;
+  }
+
 </style>
 {% endblock %}
-
-{% block extra_head_script %}
-  {{ form.media.js }}
- 
-{% endblock %}
-
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
 
@@ -112,8 +133,9 @@
 
 {% endblock %}
 
-{% block extra_body_base %}
-  {{ block.super }}
+{% block extra_script %}
+  {{ form.media.js }}
+  {{ formset.media.js }}
   <script type="text/javascript">
     {% if show %}$("#itemModal").modal("show"){% endif %}
     $('#answer_form').on('hide', function () {
@@ -138,85 +160,57 @@
     if($("#id_parents_2").is(":checked")){hide_items_show_tags();}
     $('#id_parents_1').click(function () {hide_tags_show_items();})
     $('#id_parents_2').click(function () {hide_items_show_tags();})
-  </script>
-{% endblock %}
 
-{% block extra_script %}
-  {{ block.super }}
-  {{ form.media.js }}
-  {{ formset.media.js }}
-  <script type ="text/javascript">
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
     });
   </script>
   <script src="{% static 'external/select2/select2.js' %}"></script>
   <script>
-
-    function movieFormatResult(movie) {
-        var markup = "<table class='movie-result'><tr>";
-        if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
-            markup += "<td class='movie-image'><img src='" + movie.posters.thumbnail + "'/></td>";
-        }
-        markup += "<td class='movie-info'><div class='movie-title'>" + movie.name + movie.title + "</div>";
-        if (movie.critics_consensus !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.critics_consensus + "</div>";
-        }
-        else if (movie.synopsis !== undefined) {
-            markup += "<div class='movie-synopsis'>" + movie.synopsis + "</div>";
-        }
-        markup += "</td></tr></table>"
-        return markup;
-    }
-
-    function movieFormatSelection(movie) {
-        return movie.name;
-    }
-
-    $("#id_tags").select2({
-            placeholder: "Search for a tag",
-            multiple:true,
-            minimumInputLength: 2,
-            initSelection: function (element, callback) {
+    var select2TagsParameters = {
+      placeholder: "Search for a tag",
+      multiple:true,
+      minimumInputLength: 2,
+      initSelection: function (element, callback) {
               // reload tags
               var data = [];
               $(element.val().split(",")).each(function () {
-                  data.push({id: this, text: this});
+                data.push({id: this, text: this});
               });
               callback(data);
             },
-            createSearchChoice:function(term, data) {
-              if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-                return {id:term, text:term};
-              }
-            },
-            ajax: {
-                url: '{% url "redis" "tag" %}',
-                dataType: 'json',
-                quietMillis: 100,
-                data: function (term, page) { // page is the one-based page number tracked by Select2
-                    return {
-                        q: term, //search term
-                        limit: 20, // page size
-                    };
-                },
-                results: function (data, page) {
-                  // console.log(data);
-                  $.each(data, function(i){
-                    // console.log(i, data[i]);
-                    data[i].id = data[i].name;
-                    data[i].text = data[i].name;
-                  });
-                  // console.log(data);
-                    var more = (page * 10) < data.total; // whether or not there are more results available
-                    // notice we return the value of more so Select2 knows if more results can be loaded
-                    return {results: data, more: more};
-                }
-            },
-            // formatResult: movieFormatSelection, // omitted for brevity, see the source of this page
-            // formatSelection: movieFormatSelection, // omitted for brevity, see the source of this page
-            // dropdownCssClass: "bigdrop" // apply css that makes the dropdown taller
-        });
+      createSearchChoice:function(term, data) {
+        if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+          return {id:term, text:term};
+        }
+      },
+      ajax: {
+        url: '{% url "redis" "tag" %}',
+        dataType: 'json',
+        quietMillis: 100,
+        data: function (term, page) { // page is the one-based page number tracked by Select2
+          return {
+                q: term, //search term
+                limit: 20, // page size
+              };
+        },
+        results: function (data, page) {
+          $.each(data, function(i){
+            data[i].id = data[i].name;
+            data[i].text = data[i].name;
+          });
+          console.log(data);
+          var more = (page * 10) < data.total; // whether or not there are more results available
+          // notice we return the value of more so Select2 knows if more results can be loaded
+          return {results: data, more: more};
+        }
+      },
+      containerCssClass: 'select2-bootstrap',
+    };
+
+  $("#id_tags").select2(select2TagsParameters);
+  $("#id_item-tags").select2(select2TagsParameters);
+
 function addProduct(term) {
   $("#id_items").select2("close");
   $("#id_tags").select2("close");
@@ -228,12 +222,13 @@ $("#id_items").select2({
   placeholder: "Search for an item",
   formatNoMatches: function (term) {
               // return term + ' is not found. <button class="btn">Add it</button>'
-              result =  '<span><span id="tag_query">' + term + '</span> not found.</span>' +
+              result =  '<span><span id="tag_query">' + term + '</span> not found</span>' +
                         '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
                         'title="{% trans 'Click here if you can&#39;t find the product you want to link your question to' %}">' +
                         '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
               return result;
             },
+  containerCssClass: 'select2-bootstrap',
 });
   </script>
 {% endblock %}

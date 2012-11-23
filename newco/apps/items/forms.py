@@ -25,7 +25,7 @@ class ItemForm(ModelForm):
     tags = TagField(required=not(tag_field.blank),
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
-                    widget=TagAutoSuggest())
+                    widget=TextInput(attrs={"class": "input-block-level"}))
 
     class Meta:
         model = Item
