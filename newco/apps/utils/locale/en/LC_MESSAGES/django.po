@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 16:21+0100\n"
+"POT-Creation-Date: 2012-11-23 21:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:45
+#: mailtools.py:47
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:69
+#: mailtools.py:71
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr ""
 
-#: mailtools.py:74
+#: mailtools.py:76
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
