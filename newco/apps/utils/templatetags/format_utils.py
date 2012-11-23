@@ -1,56 +1,49 @@
-from django.template.base import Node, Library, TemplateSyntaxError
-from django.utils.encoding import smart_str
+from django.template.base import Variable, Library, TemplateSyntaxError
 
 from babel.numbers import format_currency
 
 from affiliation.models import AffiliationItemBase
-from utils.tools import get_node_extra_arguments, resolve_template_args
+from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
 
 
-class PriceNode(Node):
-    def __init__(self, value, args, kwargs, asvar):
-        self.value = value
-        self.args = args
-        self.kwargs = kwargs
-        self.asvar = asvar
+class PriceNode(GenericNode):
+    def __init__(self, value, *args, **kwargs):
+        self.value = Variable(value)
+        super(PriceNode, self).__init__(*args, **kwargs)
 
     def render(self, context):
-        value = self.value.resolve(context)
-        args, kwargs = resolve_template_args(context, self.args, self.kwargs)
+        try:
+            value = self.value.resolve(context)
+            args, kwargs = self.resolve_template_args(context)
+        except:
+            return ""
 
-        currency = kwargs.get("currency", "")
-        language_code = kwargs.get("language_code", "")
-        if not currency and len(args) >= 1:
-            currency = args[0]
-        if not language_code and len(args) == 2:
-            language_code = args[1]
+        fields = ["currency", "language_code"]
+        for index, field in enumerate(fields):
+            val = kwargs.get(field, None)
+            val = args[index] if not val and len(args) > index else val
+            setattr(self, field, val)
 
-        kwargs = dict()
-
-        currencies = AffiliationItemBase.CURRENCIES
-        if currency == currencies.euro:
+        kwargs, currencies = [dict(), AffiliationItemBase.CURRENCIES]
+        if self.currency == currencies.euro:
             kwargs.update({"currency": "EUR"})
-        elif currency == currencies.dollar:
+        elif self.currency == currencies.dollar:
             kwargs.update({"currency": "USD"})
-        elif currency == currencies.pound:
+        elif self.currency == currencies.pound:
             kwargs.update({"currency": "GBP"})
         else:
             kwargs.update({"currency": "EUR"})
 
-        if language_code == "fr":
+        if self.language_code == "fr":
             kwargs.update({"locale": "fr_FR"})
-        elif language_code == "en":
+        elif self.language_code == "en":
             kwargs.update({"locale": "en_US"})
 
         formatted_price = format_currency(value, **kwargs)
 
-        if self.asvar:
-            context[self.asvar] = formatted_price
-            return ""
-        else:
-            return formatted_price
+        return self.render_output(context, formatted_price)
 
 
 @register.tag
@@ -88,7 +81,7 @@ def price(parser, token):
         raise TemplateSyntaxError("'%s' takes at least one argument"
                                   " (price to display)" % bits[0])
     tag_name = bits[0]
-    value = parser.compile_filter(bits[1])
+    value = bits[1]
     bits = bits[2:]
 
     args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)

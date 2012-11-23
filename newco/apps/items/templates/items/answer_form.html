@@ -4,34 +4,29 @@
 {% load bootstrap_tags %}
 
 {% block extra_style %}
-    {{ block.super }}
-    {{ form.media.css }}
+  {{ block.super }}
+  {{ form.media.css }}
 {% endblock %}
 
 {% block head_title %}{% trans "Answer" %}{% endblock %}
 
 {% block body %}
 
-<div class="span8 offset1">
-
-<h1>{% block form_header %}<i>{{ form.question.content }}</i>{% endblock %}</h1>
-
-<br>
-
-<form action="" method="POST">{% csrf_token %}
+<div class="row"><div class="span8 offset1">
+  <h1>{% block form_header %}<i>{{ form.question.content }}</i>{% endblock %}</h1>
+  <br>
+  <form action="" method="POST">{% csrf_token %}
     {{ form|as_bootstrap }}
-    <button type="submit" class="btn btn-primary" name="add_answer" value="{{ status.public }}">{% if answer.is_public %}{% trans "Update" %}{% else %}{% trans "Publish" %}{% endif %}</button>
-    <button type="submit" class="btn" name="add_answer" value="{{ status.draft }}">{% if answer.is_public %}{% trans "Unpublish and save as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
+    <button type="submit" class="btn btn-primary" name="add_answer" value="{{ statuses.public }}">{% if answer.is_public %}{% trans "Update" %}{% else %}{% trans "Publish" %}{% endif %}</button>
+    <button type="submit" class="btn" name="add_answer" value="{{ statuses.draft }}">{% if answer.is_public %}{% trans "Unpublish and save as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
     <input type="hidden" name="question_id" value="{{ form.question.id }}"/>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
-</form>
-
-</div>
+  </form>
+</div></div>
 
 {% endblock %}
 
 {% block extra_body_base %}
-    {{ block.super }}
-    {{ form.media.js }}
+  {{ block.super }}
+  {{ form.media.js }}
 {% endblock %}
-

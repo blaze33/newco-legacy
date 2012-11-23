@@ -9,7 +9,7 @@ django-user-accounts==1.0b7
 django-extensions==1.0.0
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
-django-compressor==1.2a1
+django-compressor==1.2
 
 django-timezones==0.2
 pytz==2012h
@@ -31,11 +31,10 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 # Amazon
 python-amazon-product-api==0.2.5
 
-# lxml required by amazon api (3.0 alpha 2 released)
+# lxml required by amazon api
 lxml==3.0.1
 
 ## pinax-theme-bootstrap
-# pinax-theme-bootstrap==2.0.4
 pinax-theme-bootstrap==2.2.1
 pinax-theme-bootstrap-account==1.0b2
 
@@ -46,7 +45,7 @@ South==0.7.6
 boto==2.6.0
 django-storages==1.1.5
 ## dateutil needed to only upload updated files
-python-dateutil==2.1
+python-dateutil==1.5
 
 ## memcache interface
 pylibmc==1.2.3
@@ -55,7 +54,7 @@ django-pylibmc-sasl==0.2.4
 django-heroku-memcacheify==0.3
 
 ## production webserver
-gunicorn==0.15.0
+gunicorn==0.16.1
 gevent==0.13.8
 greenlet==0.4.0
 
@@ -91,7 +90,7 @@ git+git://github.com/theatlantic/django-chosen.git@b230dd5fe2d42c0bae9b4c3c61ae0
 # django-chosen==0.1
 
 ## Select2
-Django-Select2==3.1.2
+django_select2==3.1.2
 
 ## Redis + complete
 redis==2.7.1

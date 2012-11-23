@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.utils import timezone
 from django.views.generic import ListView
 
@@ -23,15 +23,16 @@ class HomepageView(MultiTemplateMixin, TutoMixin, ListView):
                 self.queryset = self.queryset.filter(
                     content__pub_date__gt=delta)
                 self.queryset = self.queryset.annotate(
-                    Count("content")).order_by("-content__count")
+                    count=Count("content__votes__vote"),
+                    score=Sum("content__votes__vote")
+                ).filter(count__gt=0).order_by("-score")
+
             else:
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
             self.queryset = Question.objects.annotate(
                 score=Count("answer")).filter(score__lte=0)
-            self.template_name = "homepage_contents.html"
-        else:
-            pass
+            self.template_name = "homepage_questions.html"
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

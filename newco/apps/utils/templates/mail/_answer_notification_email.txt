@@ -1,15 +1,17 @@
 {% extends "mail/_notification_email.txt" %}
 
 {% load i18n %}
+{% load content_utils %}
 
 {% block body_title %}
-    {{ answerer }}</a> {% trans "answered your question" %} "{{ question_object }}".
-    {% trans "About the product" %} "{{ product_object }}".
+  <a href="{{ receiver_url }}">{{ receiver }}</a>, <a href="{{ answerer_url }}">{{ answerer }}</a> has answered your question {% source_display answer "email" %}
+{% endblock %}
+
+{% block body_answer %}
+  {% include "items/feed_display/_answer.html" with display="email_txt" content=answer %}
 {% endblock %}
 
 {% block go_to_urls %}
-    {% blocktrans %}To see {{ answerer }}'s profile, go there{% endblocktrans %}:
-        {{ answerer_url }}
-    {% blocktrans %}To see {{ question }}, go there{% endblocktrans %}:
-        {{ question_url }}
+  {% blocktrans %}To see {{ answerer }}'s profile, go there:{% endblocktrans %} {{ answerer_url }}
+  {% blocktrans %}To see {{ question }}, go there:{% endblocktrans %} {{ question_url }}
 {% endblock %}

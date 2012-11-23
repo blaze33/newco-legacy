@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
 from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.db.models.loading import get_model
@@ -121,8 +124,9 @@ class ContentListView(ContentView, ListView):
     def get_queryset(self):
         if self.kwargs.get('index', False):
             G = GraphQuery()
-            self.queryset = [(Item.__name__, 'class', G.values('class', Item)),
-                  (Item.__name__, '_class', G.values('_class', Item)),
+            self.queryset = [  ##(Item.__name__, 'class', G.values('class', Item)),
+                  (Item.__name__, '_class', G.values('_class', Item) +
+                   (('_isolated', G.isolated().count()),)),
                   (Relation.__name__, 'relationship', G.values('relationship', Relation))]
         q = super(ContentListView, self).get_queryset()
         if "kvquery" in self.kwargs:

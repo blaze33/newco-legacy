@@ -20,7 +20,9 @@ def decathlon_product_search(keyword, nb_items=10):
     d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon).exclude(
         object_id__in=d4_object_ids, store=decathlon)
 
-    return get_search_results(d4_prods, keyword, ["name"], nb_items)
+    # Mininum length for words that are used for the search
+    min_len = 3
+    return get_search_results(d4_prods, keyword, ["name"], min_len, nb_items)
 
 
 @transaction.commit_manually

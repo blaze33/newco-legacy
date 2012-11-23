@@ -30,8 +30,7 @@ class ProfileDetailView(TutoMixin, ProfileDetailView, MultipleObjectMixin, Follo
                                                        *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        history = Content.objects.filter(
-            Q(author=self.page_user) & Q(status=Content.STATUS.public))
+        history = Content.objects.public().filter(author=self.page_user)
         fwers_ids = Follow.objects.get_follows(
             self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)

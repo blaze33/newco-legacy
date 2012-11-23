@@ -1,11 +1,12 @@
 {% extends "mail/_notification_email.html" %}
 
 {% load i18n %}
+{% load content_utils %}
+
 {% block body_title %}
-    <h4><a href="{{ answerer_url }}">{{ answerer }}</a> {% trans "answered your question" %} <a href="{{ question_url }}">"{{ question_object }}"</a>.</h4>
-    <br>{% trans "About the product" %} <a href="{{ product_url }}">{{ product_object }}</a>.
+  <h4><a href="{{ receiver_url }}" style="color: #010101;">{{ receiver }}</a>,<br><a href="{{ answerer_url }}" style="color: #010101;">{{ answerer }}</a> {% trans "has answered your question" %} {% source_display answer "email" "#010101"%}{% trans ":" %}</h4>
 {% endblock %}
 
 {% block body_answer %}
-    {% autoescape off %}{{ answer_object }}{% endautoescape %}
+  {% include "items/feed_display/_answer.html" with display="email_html" content=answer %}
 {% endblock %}

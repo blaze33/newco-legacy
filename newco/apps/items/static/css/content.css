@@ -58,6 +58,10 @@
         line-height: 140%;
     }
 
+    .answer-content .content {
+        padding-top: .5em;
+    }
+
     .answer-content {
         line-height: 150%;
     }
@@ -75,13 +79,15 @@
 
     .signature {
         float: right;
-        padding: 0 0 5px 5px;
+        padding: 2px 2px 5px 5px;
         margin: 0;
+        font-size: 14px;
+        font-weight: normal;
     }
 
-    .question-content .signature {
-        font-size: 80%;
-        font-weight: normal;
+    .signature-header {
+        display: inline;
+        margin-bottom: 1em;
     }
 
     .signature .author img {
@@ -91,7 +97,7 @@
 
     .signature .author div {
         margin-left: 40px;
-        line-height: 140%
+        line-height: 110%
     }
 
     .controls_2.vote {
@@ -115,11 +121,11 @@
     .controls_2 .icon-chevron-up {
         background-position: -284px -120px;
     }
-    
+
     .controls_2 .icon-chevron-down {
         background-position: -309px -119px;
     }
-    
+
     .nc_qna_list_div .nc_transition_add {
         opacity: 0;
         -webkit-transition: opacity 0.6s;
@@ -131,7 +137,7 @@
         -webkit-transition: opacity 0.6s;
         -moz-transition: opacity 0.6s;
     }
-    
+
     .nc_transition_add {
         padding-bottom:10px;
         cursor: pointer; 
@@ -142,8 +148,19 @@
         background-color: #eee;
     }
 
-.album img {
+.album a {
     height: 128px;
+    background-position: center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+/* only display album's first image on small screens */
+@media (max-width: 767px) {
+    .album :not(:first-child) {
+        display: none;
+    }
 }
 
 .product-name h1 {

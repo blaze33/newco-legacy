@@ -1,0 +1,35 @@
+{# TITLE: Default #}
+
+{% extends "items/item_list_base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block list %}
+<div class="tabbable row">
+  <div class="span3"><ul class="nav nav-pills nav-stacked">
+    <li{% if pill == "browse" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat %}">{% trans "Browse products with tag" %} {{ tag|capfirst }}</a></li>
+    <li{% if pill == "search" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat 'search' %}">{% trans "Search products with tag" %} {{ tag|capfirst }}</a></li>
+  </ul></div>
+  <div class="span7">
+    {% if pill == "browse" %}
+      <div id="thumbnails_list2">
+        {% for item in object_list %}
+          {% include "items/feed_display/_thumbnail_frame.html" with object=item masonry_list="2" only %}
+        {% empty %}
+          {{ empty_msg }}
+        {% endfor %}
+      </div>
+    {% elif pill == "search" %}
+      Search me
+    {% endif %}
+  </div>
+  <div class="span2">{% csrf_token %}
+    <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
+      <a class="btn{% if qs_option == 'popular' %} btn-primary{% endif %}" href="?qs_option=popular"{% if qs_option == "popular" %} disabled{% endif %}>{% trans "Popular" %}</a>
+      <a class="btn{% if qs_option == '-pub_date' %} btn-primary{% endif %}" href="?qs_option=-pub_date"{% if qs_option == "-pub_date" %} disabled{% endif %}>{% trans "Last added" %}</a>
+      <a class="btn{% if qs_option == 'pub_date' %} btn-primary{% endif %}" href="?qs_option=pub_date"{% if qs_option == "pub_date" %} disabled{% endif %}>{% trans "Old" %}</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
