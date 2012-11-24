@@ -2,17 +2,11 @@
 class TutoMixin(object):
 
     def get(self, request, *args, **kwargs):
-        if request.session.get('visited', False):
-            self.visited = True
-        else:
-            request.session['visited'] = True
-            self.visited = False
+        self.visited = request.session.get("visited", False)
+        if not self.visited:
+            request.session["visited"] = True
         return super(TutoMixin, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        if self.visited:
-            kwargs.update({"visited": True})
-        else:
-            kwargs.update({"visited": False})
-        ctx = super(TutoMixin, self).get_context_data(**kwargs)
-        return ctx
+        kwargs.update({"visited": self.visited})
+        return super(TutoMixin, self).get_context_data(**kwargs)

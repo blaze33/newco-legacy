@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-23 21:13+0100\n"
-"PO-Revision-Date: 2012-11-23 21:20\n"
+"PO-Revision-Date: 2012-11-24 12:14\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "Templates"
 
 #: templates/_account_bar.html:9
 msgid ":"
-msgstr " :"
+msgstr "&nbsp;:"
 
 #: templates/_account_bar.html:15
 msgid "Add +"
@@ -157,7 +157,7 @@ msgstr "&copy; 2012 NewCo"
 #: templates/homepage_base.html:9 templates/homepage_base_1.html:9
 #, python-format
 msgid "Home: %(username)s"
-msgstr "Accueil : %(username)s"
+msgstr "Accueil&nbsp;: %(username)s"
 
 #: templates/homepage_base.html:9 templates/homepage_base_1.html:9
 msgid "Home"
@@ -413,11 +413,11 @@ msgstr "Merci&#x202F;!"
 
 #: templates/site_base.html:129
 msgid "NewCo is a collaborative webapp:"
-msgstr "NewCo est une webapp collaborative&#x202F;:"
+msgstr "NewCo est une webapp collaborative&nbsp;:"
 
 #: templates/site_base.html:129
 msgid "If you don't find, ask!"
-msgstr "Si vous ne trouvez pas&#x202F;: demandez&#x202F;!"
+msgstr "Si vous ne trouvez pas&nbsp;: demandez&#x202F;!"
 
 #: templates/account/email/email_confirmation_message.txt:6
 #, python-format
@@ -462,7 +462,7 @@ msgid ""
 "change it!"
 msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
-"service pour pouvoir la modifier !"
+"service pour pouvoir la modifier&#x202F;!"
 
 #: templates/idios/profile.html:53
 msgid "History"
