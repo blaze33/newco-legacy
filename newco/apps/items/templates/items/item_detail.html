@@ -93,7 +93,7 @@
               icon_change.removeClass('icon-remove').addClass("icon-plus");
               text_change.html("{% trans 'Ask a new question!' %}");
           })
-          {% if not questions.queryset %}form.collapse('show');{% endif %}
+          {% if not questions %}form.collapse('show');{% endif %}
       });
   </script>
 

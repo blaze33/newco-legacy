@@ -1,11 +1,9 @@
 {% load i18n %}
-{% load voting_tags %}
-{% load voting_utils %}
 {% load content_utils %}
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
-{% if questions.queryset %}
+{% if questions %}
   <div class="row nc_transition_add" data-toggle="collapse" data-target="#question_form">
     <div class="span1" style="line-height: 60px;"><button class="btn btn-small btn-success"><i rel="add_icon" class="icon-plus"></i></button></div>
     <div class="span8"><h2 class="muted" rel="add_q_text">{% trans "Ask a new question!" %}</h2></div>
@@ -14,7 +12,7 @@
   <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
 {% endif %}
 
-<div class="row"><div id="question_form" class="span8 offset1{% if questions.queryset %} collapse out{% endif %}"{% if questions.queryset %} style="position: relative; top: -75px;"{% endif %}>
+<div class="row"><div id="question_form" class="span8 offset1{% if questions %} collapse out{% endif %}"{% if questions %} style="position: relative; top: -75px;"{% endif %}>
   <form method="POST" action="" class="form-inline"><br>
     {% csrf_token %}
     {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
@@ -26,11 +24,9 @@
   </form>
 </div></div>
 
-{% for question in questions.queryset %}
-  {% dict_entry_for_item question from questions.votes as vote %}
-  {% dict_entry_for_item question from questions.scores as score %}
+{% for question in questions %}
 
-  <div class="question" itemscope itemtype="http://schema.org/Article">{% include "items/root_display/_question.html" with item=item question=question vote=vote score=score answers=question.answers display="list" %}</div>
+  <div class="question" itemscope itemtype="http://schema.org/Article">{% include "items/root_display/_question.html" with item=item question=question vote=vote score=score display="list" %}</div>
 
   {% if not forloop.last %}<hr>{% endif %}
 {% endfor %}

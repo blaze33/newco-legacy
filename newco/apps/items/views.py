@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Sum, Count
+from django.db.models import Q, Sum, Count
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -217,16 +217,15 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         request = self.request
         POST, user = [request.POST, request.user]
         content_qs = Content.objects.can_view(user)
+        empty_score = {"num_votes": 0, "score": 0}
         if self.model == Item:
             item = context.get("item")
             item_related_qs = content_qs.filter(items=item)
-            querysets = {
-                "questions": item_related_qs.filter(question__isnull=False),
-            }
-
-            contents = dict()
-            for key, queryset in querysets.items():
-                contents.update({key: queryset.get_qs_tools("popular", user)})
+            scores, votes = item_related_qs.get_scores_and_votes(user)
+            question_qs = item_related_qs.filter(
+                question__isnull=False).select_subclasses()
+            questions = sorted(question_qs, key=lambda c: scores.get(
+                c.id, empty_score).get("score"), reverse=True)
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -237,18 +236,18 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 context.update({"q_id": q_id})
 
             media = None
-            for q in contents.get("questions").get("queryset"):
+            for q in questions:
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                q.answers = content_qs.filter(
-                    answer__question__id=q.id).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
-            context.update(contents)
-            context.update({"media": media})
 
-            p_list = Profile.objects.filter(skills__in=self.object.tags.all())
-            context.update({"q_form": q_form, "prof_list": p_list.distinct()})
+            p_qs = Profile.objects.filter(skills__in=item.tags.all())
+
+            context.update({
+                "questions": questions, "scores": scores, "votes": votes,
+                "media": media, "q_form": q_form, "profile_qs": p_qs.distinct()
+            })
 
             # Linked affiliated products
             store_prods = item.affiliationitem_set.select_related()
@@ -280,22 +279,20 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             q.answer_form = AnswerForm(request, data=POST) \
                 if "answer" in POST or "edit_about" in POST \
                 else AnswerForm(request)
-            q.score = Vote.objects.get_score(q.content_ptr)
-            q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            q.answers = content_qs.filter(
-                answer__question__id=q.id).get_qs_tools("popular", user)
+            qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
+            scores, votes = qna_qs.get_scores_and_votes(user)
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
-            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
-            context.update({"question": q, "prof_list": p_list})
+            p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
             qs = Content.objects.filter(question__items__in=q.items.all())
             qs = qs.exclude(id=q.id)
             qs_ordered = generic_annotate(qs, Vote, Sum('votes__vote'))
             qs_ordered = qs_ordered.order_by("-score").select_subclasses()
             context.update({
-                "question": q, "prof_list": p_list, "item_list": q.items.all(),
+                "question": q, "scores": scores, "votes": votes,
+                "profile_qs": p_qs,
                 "related_questions": {
                     _("Top related questions"): qs_ordered[:3],
                     _("Latest related questions"): qs.select_subclasses()[:3]
