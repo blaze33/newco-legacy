@@ -46,10 +46,12 @@ if HEROKU_DATABASES:
 
 # Django compressor settings
 AWS_IS_GZIPPED = True
-STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
+# STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL
 COMPRESS_STORAGE = STATICFILES_STORAGE
+# COMPRESS_VERBOSE = True
+# COMPRESS_ENABLED = True
 # COMPRESS_OFFLINE = True
 
 # S3 content expires 28 days later.
