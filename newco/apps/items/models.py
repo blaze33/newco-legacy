@@ -173,6 +173,11 @@ class Question(Content):
             "query_string": self.query_string, "anchor": self.anchor
         }
 
+    def sort_related_answers(self, option="popular"):
+        answer_qs = Content.objects.filter(answer__question=self)
+        ids = [a._get_pk_val() for a in answer_qs.order_queryset(option)]
+        self.set_answer_order(ids)
+
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
