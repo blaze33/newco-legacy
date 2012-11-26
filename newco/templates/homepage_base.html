@@ -11,7 +11,6 @@
 
 
 {% block extra_style %}
-    {{ block.super }}
     <link type="text/css" href="{{ STATIC_URL }}css/global.css" rel="stylesheet">
     <link href="{% static 'css/homepage.css' %}" rel="stylesheet">
 {% endblock %}
@@ -93,23 +92,19 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{ block.super }}
-
-    {# ##### Equalize columns height ##### #}
-    <script>
+    <script type="text/javascript" src="{% static 'js/homepage.js' %}"></script>
+    <script type="text/javascript">
+    // ##### Equalize columns height #####
       var heights = $(".WhyNC-col").map(function () {
           return $(this).height();
       }).get();
       $('.WhyNC-col').height(Math.max.apply(null, heights));
-    </script>
-    {# ##### End of Equalize columns height ##### #}
-    <script type ="text/javascript">
+    // ##### End of Equalize columns height #####
+
       $(document).ready(function(){
           if ($('div').hasClass('alert-success')){mixpanel.track("Signup Success");};
       });
-    </script>
-    <script type="text/javascript" src="{% static 'js/homepage.js' %}"></script>
-    <script type="text/javascript">
+
       $(function(){
         {% if request.GET.welcome %}
             setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);

@@ -6,13 +6,8 @@
 {% load staticfiles %}
 {% load format_utils %}
 
-{% block extra_head_base %}
-  {{ block.super }}
-
-  <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-
-  {{ form.media }}
+{% block extra_style %}
+  {{ form.media.css }}
 {% endblock %}
 
 {% block head_title %}{% trans "Add a product" %}{% endblock %}
@@ -98,6 +93,7 @@
 {% endblock %}
 
 {% block extra_script %}
+  {{ form.media.js }}
   <script>
     $("#id_tags").select2(select2TagsParameters);
 
