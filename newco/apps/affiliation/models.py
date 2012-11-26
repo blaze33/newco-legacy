@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from babel.numbers import parse_decimal
-from model_utils import Choices
 
+from affiliation import CURRENCIES
 from items.models import Item
 
 
@@ -31,12 +31,6 @@ class Store(models.Model):
 
 
 class AffiliationItemBase(models.Model):
-    CURRENCIES = Choices(
-        (0, "euro", _("Euro")),
-        (1, "dollar", _("Dollar")),
-        (2, "pound", _("Pound"))
-    )
-
     name = models.CharField(max_length=200, verbose_name=_("name at store"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(max_length=30,
@@ -137,9 +131,9 @@ def _amazon_init(aff_item, amazon_item):
 
     if Price is not None:
         if Price.CurrencyCode == "EUR":
-            aff_item.currency = AffiliationItem.CURRENCIES.euro
+            aff_item.currency = CURRENCIES.euro
         elif Price.CurrencyCode == "USD":
-            aff_item.currency = AffiliationItem.CURRENCIES.dollar
+            aff_item.currency = CURRENCIES.dollar
 
         price_str = Price.FormattedPrice.pyval.split(" ")
         # fr_FR locale won't recognize the thousand dot separator !?!
@@ -189,8 +183,8 @@ def _decathlon_init(aff_item, decathlon_item):
     aff_item.price = price if price and price < price_2 else price_2
 
     if currency == u"€":
-        aff_item.currency = AffiliationItem.CURRENCIES.euro
+        aff_item.currency = CURRENCIES.euro
     else:
-        aff_item.currency = AffiliationItem.CURRENCIES.dollar
+        aff_item.currency = CURRENCIES.dollar
 
     return aff_item

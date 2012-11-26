@@ -2,7 +2,7 @@ from django.template.base import Variable, Library, TemplateSyntaxError
 
 from babel.numbers import format_currency
 
-from affiliation.models import AffiliationItemBase
+from affiliation import CURRENCIES
 from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
@@ -27,12 +27,11 @@ class PriceNode(GenericNode):
             setattr(self, field, val)
 
         price_kwargs = {}
-        currencies = AffiliationItemBase.CURRENCIES
-        if self.currency == currencies.euro:
+        if self.currency == CURRENCIES.euro:
             price_kwargs.update({"currency": "EUR"})
-        elif self.currency == currencies.dollar:
+        elif self.currency == CURRENCIES.dollar:
             price_kwargs.update({"currency": "USD"})
-        elif self.currency == currencies.pound:
+        elif self.currency == CURRENCIES.pound:
             price_kwargs.update({"currency": "GBP"})
         else:
             price_kwargs.update({"currency": "EUR"})
@@ -60,7 +59,7 @@ def price(parser, token):
     The first argument is a decimal number.
 
     Other arguments are space-separated values. 'currency' is a
-    AffiliationItemBase.CURRENCIES choice associated with the price value.
+    affiliation.CURRENCIES choice associated with the price value.
     'language_code' is the language convention used for the display.
     Don't mix positional and keyword arguments.
 
