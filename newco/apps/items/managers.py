@@ -68,7 +68,7 @@ class ContentQuerySet(InheritanceQuerySet):
     def order_queryset(self, option):
         if option == "popular":
             return generic_annotate(
-                self, Vote, Sum('votes__vote')).order_by("-score")
+                self, Vote, Sum('votes__vote')).order_by("-score", "-pub_date")
         elif "pub_date" in option:
             return self.order_by(option)
         elif option == "no_answers":
