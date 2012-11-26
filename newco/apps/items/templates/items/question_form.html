@@ -9,23 +9,7 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-  {{ block.super }}
-  <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-
-  <script type="text/javascript">
-      (function ($) {
-          $(function () {
-              $(".chzn-select").each(function(i, select) {
-                  var $select = $(select);
-                  $select.chosen({max_selected_options: 1, no_results_text: "{{ form.no_results }}"});
-                  $select.bind("liszt:maxselected", function () {});
-              });
-          });
-      })((typeof window.django != 'undefined') ? django.jQuery : jQuery);
-  </script>
-
-  {{ form.media }}
+  {{ form.media.css }}
   {{ formset.media.css }}
 {% endblock %}
 
@@ -75,21 +59,23 @@
         </div>
       {% endif %}
 
-      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+      <input type="hidden" name="next" {% if next %}value="{{ next }}"{% endif %}>
+    </form>
 
       <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-header">
           <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
           <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
         </div>
-        <div class="modal-body">{{ i_form|as_bootstrap }}</div>
-        <div class="modal-footer">
-          <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
-          <input type="submit" class="btn btn-primary" name="add_item" value="{% trans 'Add product' %}">
-        </div>
+        <form class="form-horizontal">
+          <div class="modal-body">{{ i_form|as_bootstrap }}</div>
+          <div class="modal-footer">
+            <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
+            <input type="button" class="btn btn-primary" name="add_item" id="add-item" value="{% trans 'Add product' %}">
+          </div>
+        </form>
       </div>
 
-    </form>
   </div>
 
   <div class="span4"><div class="collapse out" id="div_tips"><div class="well well-small">
@@ -108,8 +94,8 @@
 
 {% endblock %}
 
-{% block extra_body_base %}
-  {{ block.super }}
+{% block extra_script %}
+  {{ form.media.js }}
   {{ formset.media.js }}
   <script type="text/javascript">
     {% if show %}$("#itemModal").modal("show"){% endif %}
@@ -135,14 +121,54 @@
     if($("#id_parents_2").is(":checked")){hide_items_show_tags();}
     $('#id_parents_1').click(function () {hide_tags_show_items();})
     $('#id_parents_2').click(function () {hide_items_show_tags();})
-  </script>
-{% endblock %}
 
-{% block extra_script %}
-  {{ block.super }}
-  <script type ="text/javascript">
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
     });
+
+  $("#id_tags").select2(select2TagsParameters);
+  $("#id_item-tags").select2(select2TagsParameters);
+
+function addProduct(term) {
+  $("#id_items").select2("close");
+  $("#id_tags").select2("close");
+  $("#id_item-name").val(term);
+  $('#itemModal').modal('show');
+};
+
+$("#id_items").select2({
+  placeholder: "Search for an item",
+  formatNoMatches: function (term) {
+              // return term + ' is not found. <button class="btn">Add it</button>'
+              result =  '<span><span id="tag_query">' + term + '</span> not found</span>' +
+                        '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
+                        'title="{% trans 'Click here if you can&#39;t find the product you want to link your question to' %}">' +
+                        '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
+              return result;
+            },
+  containerCssClass: 'select2-bootstrap',
+});
+
+$(function() {
+    $("#add-item").click(function(event) {
+      event.preventDefault();
+      $('#itemModal').modal('hide');
+      $.ajax({
+          type: "post",
+          data: $("#itemModal form").serialize()+'&add_item=add_item',
+          success: function(data, status, xhr) {
+            console.log(data);
+            $("#id_items").append('<option value='+data.id+'>'+data.name+'</name>')
+                .select2("val", [].concat($("#id_items").val(), [String(data.id)]));
+            $('input[name="next"]').val(data.next);
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr, status, error);
+          }
+      });
+      return false;
+    });
+});
+
   </script>
 {% endblock %}

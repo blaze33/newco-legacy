@@ -13,11 +13,5 @@
 {% endif %}
 
 {% for field in form %}
-	{% if field.name == "items" %}
-    	<div class="pull-right">
-    		<a class="btn tooltip-top" title="{% trans 'Click here if you can&#39;t find the product you want to link your question to' %}" data-toggle="modal" role="button" href="#itemModal"><i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</a>
-    	</div>
-    {% endif %}
-
     {% include "bootstrap/field.html" %}
 {% endfor %}
