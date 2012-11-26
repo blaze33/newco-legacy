@@ -142,7 +142,7 @@ class DashboardView(ListView, FollowMixin):
             if self.page == "feed":
                 # "Who to follow": For now, random on not followed people/items
                 objects_followed = Follow.objects.filter(user=self.user)
-                wtf = dict()
+                wtf = {}
                 for key, value in WHAT_TO_FOLLOW_PARAMS.items():
                     ids = filter(None, objects_followed.values_list(
                         value.get("fieldname"), flat=True))

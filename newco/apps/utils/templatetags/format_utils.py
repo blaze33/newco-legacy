@@ -26,22 +26,23 @@ class PriceNode(GenericNode):
             val = args[index] if not val and len(args) > index else val
             setattr(self, field, val)
 
-        kwargs, currencies = [dict(), AffiliationItemBase.CURRENCIES]
+        price_kwargs = {}
+        currencies = AffiliationItemBase.CURRENCIES
         if self.currency == currencies.euro:
-            kwargs.update({"currency": "EUR"})
+            price_kwargs.update({"currency": "EUR"})
         elif self.currency == currencies.dollar:
-            kwargs.update({"currency": "USD"})
+            price_kwargs.update({"currency": "USD"})
         elif self.currency == currencies.pound:
-            kwargs.update({"currency": "GBP"})
+            price_kwargs.update({"currency": "GBP"})
         else:
-            kwargs.update({"currency": "EUR"})
+            price_kwargs.update({"currency": "EUR"})
 
         if self.language_code == "fr":
-            kwargs.update({"locale": "fr_FR"})
+            price_kwargs.update({"locale": "fr_FR"})
         elif self.language_code == "en":
-            kwargs.update({"locale": "en_US"})
+            price_kwargs.update({"locale": "en_US"})
 
-        formatted_price = format_currency(value, **kwargs)
+        formatted_price = format_currency(value, **price_kwargs)
 
         return self.render_output(context, formatted_price)
 

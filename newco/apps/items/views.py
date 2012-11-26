@@ -153,7 +153,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 ctx.update({"next": reverse("item_edit", args=args)})
             else:
                 ctx.update({"i_form": i_form, "show": 1})
-            initial = dict()
+            initial = {}
             for name, field in form.fields.items():
                 val = POST.get(name) if name != "items" else POST.getlist(name)
                 initial.update({name: val})
@@ -224,7 +224,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 "questions": item_related_qs.filter(question__isnull=False),
             }
 
-            contents = dict()
+            contents = {}
             for key, queryset in querysets.items():
                 contents.update({key: queryset.get_qs_tools("popular", user)})
 
@@ -256,7 +256,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 store_prods = store_prods.order_by("price")
                 cheapest_prod = store_prods[0]
                 ean_set = set(store_prods.values_list("ean", flat=True))
-                store_prods_by_ean = dict()
+                store_prods_by_ean = {}
                 for ean in ean_set:
                     store_prods_by_ean.update({
                         ean: store_prods.filter(ean=ean)
