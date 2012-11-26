@@ -137,3 +137,26 @@ $(function(){
   });
 
 });
+
+
+// *** Joyride tutorial ***
+
+function launchJoyride(){
+    $("#joyRideContent").joyride({
+        'tipContainer': '.navbar',
+        postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+            $('#help-dropdown').tooltip('show');
+            setTimeout("$('#help-dropdown').tooltip('hide')", 3000);
+        },
+    });
+};
+
+$('#link-tuto').click(function () {
+    launchJoyride();
+});
+
+$('.tooltip-help').tooltip({
+    trigger: 'manual',
+    placement: 'bottom',
+});
+// *** End of Joyride tutorial ***
