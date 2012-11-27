@@ -4,7 +4,6 @@
 {% load bootstrap_tags %}
 
 {% block extra_style %}
-  {{ block.super }}
   {{ form.media.css }}
 {% endblock %}
 
@@ -26,7 +25,6 @@
 
 {% endblock %}
 
-{% block extra_body_base %}
-  {{ block.super }}
+{% block extra_script %}
   {{ form.media.js }}
 {% endblock %}
