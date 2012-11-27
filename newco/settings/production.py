@@ -44,15 +44,19 @@ if HEROKU_DATABASES:
     DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
 
-# Django compressor settings
+########## Django compressor settings
 AWS_IS_GZIPPED = True
 # STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
-COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL
 COMPRESS_STORAGE = STATICFILES_STORAGE
 # COMPRESS_VERBOSE = True
 # COMPRESS_ENABLED = True
 # COMPRESS_OFFLINE = True
+
+# use PROJECT_ROOT because django_compressor CssAbsoluteFilter works
+# for files being in COMPRESS_ROOT
+COMPRESS_ROOT = PROJECT_ROOT
+# COMPRESS_ROOT = STATIC_ROOT
 
 # S3 content expires 28 days later.
 delay = 3600 * 24 * 28
