@@ -53,17 +53,41 @@
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
   <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
-  <script type="text/javascript">var url_redis = "{% url "redis" %}";</script>
   <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
-  {% if not visited and not '/dashboard' in request.path and not '/about/' in request.path %} {# Seb: exclude "/about" temporarily because pages are generated with "direct_to_template()" => no way to use TutoMixin... #}
   <script type="text/javascript">
+
+      {% if not visited and not '/dashboard' in request.path and not '/about/' in request.path %} {# Seb: exclude "/about" temporarily because pages are generated with "direct_to_template()" => no way to use TutoMixin... #}
       $(window).load(function() {
           launchJoyride();
       });
+      {% endif %}
+
+      $(function() {
+          var labels, mapped
+          $("#global_search").typeahead({
+              source: function (query, process) {
+                  $.get('{% url "redis" %}', {q: query}, function (data) {
+                      labels = []
+                      mapped = {}
+
+                      $.each(data, function (i, item) {
+                          mapped[item.title] = item
+                          labels.push(item.title)
+                      })
+                      process(labels)
+                  })
+              }
+              , updater: function (item) {
+                  var obj = mapped[item];
+                  $('#obj_class').val(obj.class);
+                  $('#obj_id').val(obj.id);
+                  return obj.title
+              }
+          });
+      });
   </script>
-  {% endif %}
 {% endblock %}
 
 {% block extra_body_base %}
