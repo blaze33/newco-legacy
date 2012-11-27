@@ -138,6 +138,73 @@ $(function(){
 
 });
 
+// typeahead javascript
+$(function() {
+    var labels, mapped
+    $("#global_search").typeahead({
+        source: function (query, process) {
+            $.get(URL_TYPEAHEAD, {q: query}, function (data) {
+                labels = []
+                mapped = {}
+
+                $.each(data, function (i, item) {
+                    mapped[item.title] = item
+                    labels.push(item.title)
+                })
+                process(labels)
+            })
+        },
+        updater: function (item) {
+            var obj = mapped[item];
+            $('#obj_class').val(obj.class);
+            $('#obj_id').val(obj.id);
+            return obj.title
+        }
+    });
+});
+
+// select2 tags default parameters
+var select2TagsParameters = {
+  placeholder: "Search for a tag",
+  multiple:true,
+  minimumInputLength: 2,
+  tokenSeparators: [","],
+  initSelection: function (element, callback) {
+          // reload tags
+          var data = [];
+          $(element.val().split(",")).each(function () {
+            data.push({id: this, text: this});
+          });
+          callback(data);
+        },
+  createSearchChoice: function(term, data) {
+    if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+      return {id:term, text:term};
+    }
+  },
+  ajax: {
+    url: URL_REDIS_TAG,
+    dataType: 'json',
+    quietMillis: 100,
+    data: function (term, page) { // page is the one-based page number tracked by Select2
+      return {
+            q: term, //search term
+            limit: 20, // page size
+          };
+    },
+    results: function (data, page) {
+      $.each(data, function(i){
+        data[i].id = data[i].name;
+        data[i].text = data[i].name;
+      });
+      // console.log(data);
+      var more = (page * 10) < data.total; // whether or not there are more results available
+      // notice we return the value of more so Select2 knows if more results can be loaded
+      return {results: data, more: more};
+    }
+  },
+  containerCssClass: 'select2-bootstrap',
+};
 
 // *** Joyride tutorial ***
 

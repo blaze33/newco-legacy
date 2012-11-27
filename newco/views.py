@@ -4,6 +4,7 @@ from django.db.models import Count, Sum
 from django.utils import timezone
 from django.views.generic import ListView
 
+from items import STATUSES
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.tutorial.views import TutoMixin
@@ -30,8 +31,8 @@ class HomepageView(MultiTemplateMixin, TutoMixin, ListView):
             else:
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":
-            self.queryset = Question.objects.annotate(
-                score=Count("answer")).filter(score__lte=0)
+            self.queryset = Question.objects.annotate(Count("answer")).filter(
+                answer__count__lte=0, status=STATUSES.public)
             self.template_name = "homepage_questions.html"
         return super(HomepageView, self).get(request, *args, **kwargs)
 

@@ -2,15 +2,14 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea, RadioSelect
+from django.forms.widgets import Textarea, RadioSelect, SelectMultiple, TextInput
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _, pgettext
 
 from account.utils import user_display
-from chosen.forms import ChosenSelectMultiple
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
-from taggit.forms import TagField
+from taggit.forms import TagField, TagWidget
 from taggit_autosuggest.widgets import TagAutoSuggest
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
@@ -26,7 +25,7 @@ class ItemForm(ModelForm):
     tags = TagField(required=not(tag_field.blank),
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
-                    widget=TagAutoSuggest())
+                    widget=TagWidget(attrs={"class": "input-block-level"}))
 
     class Meta:
         model = Item
@@ -73,11 +72,11 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
-    tag_field = Content._meta.get_field_by_name('tags')[0]
+    tag_field = Content._meta.get_field('tags')
     tags = TagField(required=not(tag_field.blank),
                     help_text=tag_field.help_text,
                     label=capfirst(tag_field.verbose_name),
-                    widget=TagAutoSuggest(attrs={"class": "span4"}))
+                    widget=TagWidget(attrs={"class": "input-block-level"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
 
@@ -86,12 +85,12 @@ class QuestionForm(ModelForm):
         fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
-                "class": "span4",
+                "class": "input-block-level",
                 "placeholder": _("Ask something specific."),
-                "rows": 1}),
-            "items": ChosenSelectMultiple(
-                attrs={"class": "span4", "rows": 1},
-                overlay=_("Pick a product."),
+                "rows": 2}),
+            "items": SelectMultiple(
+                attrs={"class": "input-block-level", "rows": 1},
+                # overlay=_("Pick a product."),
             )
         }
 
