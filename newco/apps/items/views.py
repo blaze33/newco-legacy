@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Sum, Count
+from django.db.models import Q, Count
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -19,7 +19,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
-from generic_aggregation import generic_annotate
 from taggit.models import Tag
 from voting.models import Vote
 
@@ -217,15 +216,13 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         request = self.request
         POST, user = [request.POST, request.user]
         content_qs = Content.objects.can_view(user)
-        empty_score = {"num_votes": 0, "score": 0}
         if self.model == Item:
             item = context.get("item")
             item_related_qs = content_qs.filter(items=item)
             scores, votes = item_related_qs.get_scores_and_votes(user)
             question_qs = item_related_qs.filter(
-                question__isnull=False).select_subclasses()
-            questions = sorted(question_qs, key=lambda c: scores.get(
-                c.id, empty_score).get("score"), reverse=True)
+                question__isnull=False)
+            questions = question_qs.order_queryset("popular", scores)
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -282,22 +279,20 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
             scores, votes = qna_qs.get_scores_and_votes(user)
+            context.update({"question": q, "scores": scores, "votes": votes})
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
-            qs = Content.objects.filter(question__items__in=q.items.all())
-            qs = qs.exclude(id=q.id)
-            qs_ordered = generic_annotate(qs, Vote, Sum('votes__vote'))
-            qs_ordered = qs_ordered.order_by("-score").select_subclasses()
-            context.update({
-                "question": q, "scores": scores, "votes": votes,
-                "profile_qs": p_qs,
-                "related_questions": {
-                    _("Top related questions"): qs_ordered[:3],
-                    _("Latest related questions"): qs.select_subclasses()[:3]
-                }
-            })
+            related_questions = Content.objects.filter(
+                question__items__in=q.items.all()).exclude(id=q.id)
+            top_questions = related_questions.order_queryset("popular")
+            related_questions = related_questions.select_subclasses()
+
+            context.update({"profile_qs": p_qs, "related_questions": {
+                _("Top related questions"): top_questions[:3],
+                _("Latest related questions"): related_questions[:3]
+            }})
         return context
 
     @method_decorator(login_required)
@@ -370,9 +365,8 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            res = qs.get_qs_tools(self.qs_option, self.request.user)
-            qs = res.get("queryset")
-            self.scores, self.votes = [res.get("scores"), res.get("votes")]
+            self.scores = qs.get_scores()
+            qs = qs.order_queryset(self.qs_option, self.scores)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -381,16 +375,15 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
-            qs = Content.objects.filter(
+            related_questions = Content.objects.filter(
                 question__items__in=context.get("object_list")).distinct()
-            field = "votes__vote"
-            qss = generic_annotate(qs, Vote, Sum(field)).order_by("-score")
-            rq = SortedDict()
-            rq.update({
-                _("Top related questions"): qss.select_subclasses()[:3],
-                _("Latest related questions"): qs.select_subclasses()[:3]
-            })
-            context.update({"related_questions": rq})
+            top_questions = related_questions.order_queryset("popular")
+            related_questions = related_questions.select_subclasses()
+
+            context.update({"related_questions": SortedDict({
+                _("Top related questions"): top_questions[:3],
+                _("Latest related questions"): related_questions[:3]
+            })})
         if self.model is Item:
             context.get("object_list").fetch_images()
         else:

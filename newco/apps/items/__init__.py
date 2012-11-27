@@ -18,3 +18,5 @@ STATUSES = Choices(
     # (1, "sandbox", _("Sandbox")),
     (2, "public", _("Public"))
 )
+
+EMPTY_SCORE = {"num_votes": 0, "score": 0}

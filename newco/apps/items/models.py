@@ -100,13 +100,6 @@ class Content(models.Model):
     class Meta:
         ordering = ["-pub_date"]
 
-    def save(self):
-        super(Content, self).save()
-        obj = self.select_parent()
-        if obj.votes.count() == 0:
-            user1 = User.objects.get(id=2)
-            Vote.objects.record_vote(obj, user1, 0)
-
     def delete(self):
         try:
             self.votes.all().delete()
