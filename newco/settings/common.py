@@ -137,7 +137,7 @@ MIDDLEWARE_CLASSES = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-HTML_MINIFY = True
+HTML_MINIFY = False
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
