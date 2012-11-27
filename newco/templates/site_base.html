@@ -25,6 +25,8 @@
             due to bad pixel fitting of small icons.
             <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
         -->
+    {% endcompress %}
+    {% compress css %}
         {% block extra_style %}{% endblock %}
     {% endcompress %}
 {% endblock %}
@@ -70,8 +72,9 @@
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/expand.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
-        {% block extra_script %}
-        {% endblock %}
+    {% endcompress %}
+    {% compress js %}
+        {% block extra_script %}{% endblock %}
     {% endcompress %}
 {% endblock %}
 
