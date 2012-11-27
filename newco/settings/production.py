@@ -42,3 +42,5 @@ if HEROKU_DATABASES:
     DATABASES['default']['OPTIONS'] = {'autocommit': True}
     DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
+
+COMPRESS_ENABLED = False
