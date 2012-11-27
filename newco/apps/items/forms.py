@@ -310,7 +310,7 @@ def _link_aff(request, item):
 
 
 def _reload_current_search(item_form):
-    product_list_by_store = dict()
+    product_list_by_store = {}
     for key in item_form.request.POST.keys():
         if "current_search_" in key:
             store = unicode.replace(key, "current_search_", "")

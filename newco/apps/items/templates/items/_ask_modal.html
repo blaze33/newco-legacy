@@ -10,7 +10,7 @@
   <div class="modal-body">
     {% if profile_qs.count > 0 %}
       <h4>{% trans "...an expert:" %}</h4>
-      {% for prof in profile_qs %}<br /><div class="row">
+      {% for prof in profile_qs %}<br><div class="row">
         <div class="span2 left"><a href="{{ prof.user.get_absolute_url }}" target="_blank" class="label label-success">{% user_display prof.user %}</a></div>
         <div class="span3 right"><form action="" method="POST">{% csrf_token %}
           <button class="btn" type="submit" name="ask" value="{{ prof.user.id }}">{% trans "Ask" %}</button>
