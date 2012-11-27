@@ -8,7 +8,6 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-    {{ block.super }}
     <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -76,7 +75,6 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{ block.super }}
     <script type="text/javascript">
         $(function() {
             var labels, mapped

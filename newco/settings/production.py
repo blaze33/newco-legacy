@@ -3,12 +3,7 @@
 from common import *
 from postgresify import postgresify
 from memcacheify import memcacheify
-import django_pylibmc
 ### other production-specific stuff
-
-# serving gzipped content
-MIDDLEWARE_CLASSES = ["django.middleware.gzip.GZipMiddleware"] + \
-                         MIDDLEWARE_CLASSES
 
 # memcache settings
 if os.environ.get('USE_MEMCACHE'):
@@ -23,10 +18,11 @@ STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False  # Don't include auth in every url
-# AWS_PRELOAD_METADATA = True  # fast sync, cf. http://stackoverflow.com/a/8440276/343834
+AWS_PRELOAD_METADATA = True  # fast sync, cf. http://stackoverflow.com/a/8440276/343834
 # wait for release bump, cf. issue https://bitbucket.org/david/django-storages/issue/134/
 
 # e-mail settings for sendgrid
@@ -43,4 +39,22 @@ if HEROKU_DATABASES:
     DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
 
-COMPRESS_ENABLED = False
+########## Django compressor settings
+AWS_IS_GZIPPED = True
+# STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
+COMPRESS_URL = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE
+# COMPRESS_VERBOSE = True
+# COMPRESS_ENABLED = True
+# COMPRESS_OFFLINE = True
+
+# use PROJECT_ROOT because django_compressor CssAbsoluteFilter works
+# for files being in COMPRESS_ROOT
+COMPRESS_ROOT = PROJECT_ROOT
+# COMPRESS_ROOT = STATIC_ROOT
+
+# S3 content expires 28 days later.
+delay = 3600 * 24 * 28
+AWS_HEADERS = {
+    'Cache-Control': 'max-age={0}'.format(delay),
+}

@@ -7,8 +7,6 @@
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
-  {{ block.super }}
-
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
 

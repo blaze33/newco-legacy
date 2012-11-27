@@ -7,7 +7,6 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-  {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
   {{ media.css }}
 {% endblock %}
@@ -74,12 +73,12 @@
 
 {% endblock %}
 
-{% block extra_body_base %}
-  {{ block.super }}
+{% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
-  <script type="text/javascript"> // script can't go to '/static' : needs to translate text
-      $(document).ready( function() {
+  <script> // script can't go to '/static' : needs to translate text
+    // ask a new question form
+    $(document).ready( function() {
           var form = $('#question_form');
           var icon_change = $('[rel=add_icon]');
           var text_change = $('[rel=add_q_text]');
@@ -95,33 +94,26 @@
           })
           {% if not questions %}form.collapse('show');{% endif %}
       });
+
+    // answer form
+    $(document).ready( function() {
+      var divCollection = $('div[id^="answer_form_"]');
+      $.each(divCollection, function (i, item) {
+        var bc = $("#controls_" + $(this)[0].id)
+        var icon_change = $('[rel=icon]', bc);
+        var text_change = $('[rel=text]', bc);
+        $(this).on('shown', function () {
+          icon_change.removeClass('icon-share-alt').addClass('icon-remove');
+          text_change.html("{% trans 'Close' %}");
+        })
+        $(this).on('hidden', function () {
+          icon_change.removeClass('icon-remove').addClass('icon-share-alt');
+          text_change.html("{% trans 'Answer' %}");
+        })
+      })
+    });
+
+    $(document).ready(function(){mixpanel.track("Load_item_detail");});
+    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
   </script>
-
-  <script type="text/javascript">
-      $(document).ready( function() {
-          var divCollection = $('div[id^="answer_form_"]');
-          $.each(divCollection, function (i, item) {
-              var bc = $("#controls_" + $(this)[0].id)
-              var icon_change = $('[rel=icon]', bc);
-              var text_change = $('[rel=text]', bc);
-              $(this).on('shown', function () {
-                  icon_change.removeClass('icon-share-alt').addClass('icon-remove');
-                  text_change.html("{% trans 'Close' %}");
-              })
-              $(this).on('hidden', function () {
-                  icon_change.removeClass('icon-remove').addClass('icon-share-alt');
-                  text_change.html("{% trans 'Answer' %}");
-              })
-          })
-      });
-  </script>
-{% endblock %}
-
-{% block extra_script %}
-    {{ block.super }}
-
-    <script type ="text/javascript">
-        $(document).ready(function(){mixpanel.track("Load_item_detail");});
-        if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
-    </script>
 {% endblock %}

@@ -146,7 +146,6 @@ $(function() {
             $.get(URL_TYPEAHEAD, {q: query}, function (data) {
                 labels = []
                 mapped = {}
-
                 $.each(data, function (i, item) {
                     mapped[item.title] = item
                     labels.push(item.title)
