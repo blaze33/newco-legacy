@@ -165,37 +165,37 @@ $(function() {
 
 // select2 tags default parameters
 var select2TagsParameters = {
-  placeholder: "Search for a tag",
+  placeholder: TAG_PLACEHOLDER,
   multiple:true,
   minimumInputLength: 2,
   tokenSeparators: [","],
   initSelection: function (element, callback) {
-          // reload tags
-          var data = [];
-          $(element.val().split(",")).each(function () {
-            data.push({id: this, text: this});
-          });
-          callback(data);
-        },
+      // reload tags
+      var data = [];
+      $(element.val().split(",")).each(function () {
+          data.push({id: this, text: this});
+      });
+      callback(data);
+  },
   createSearchChoice: function(term, data) {
-    if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-      return {id:term, text:term};
-    }
+      if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+          return {id:term, text:term};
+      }
   },
   ajax: {
     url: URL_REDIS_TAG,
     dataType: 'json',
     quietMillis: 100,
     data: function (term, page) { // page is the one-based page number tracked by Select2
-      return {
+        return {
             q: term, //search term
             limit: 20, // page size
-          };
+        };
     },
     results: function (data, page) {
       $.each(data, function(i){
-        data[i].id = data[i].name;
-        data[i].text = data[i].name;
+          data[i].id = data[i].name;
+          data[i].text = data[i].name;
       });
       // console.log(data);
       var more = (page * 10) < data.total; // whether or not there are more results available

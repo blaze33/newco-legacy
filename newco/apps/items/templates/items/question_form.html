@@ -130,23 +130,23 @@
   $("#id_item-tags").select2(select2TagsParameters);
 
 function addProduct(term) {
-  $("#id_items").select2("close");
-  $("#id_tags").select2("close");
-  $("#id_item-name").val(term);
-  $('#itemModal').modal('show');
+    $("#id_items").select2("close");
+    $("#id_tags").select2("close");
+    $("#id_item-name").val(term);
+    $('#itemModal').modal('show');
 };
 
 $("#id_items").select2({
-  placeholder: "Search for an item",
-  formatNoMatches: function (term) {
-              // return term + ' is not found. <button class="btn">Add it</button>'
-              result =  '<span><span id="tag_query">' + term + '</span> not found</span>' +
-                        '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
-                        'title="{% trans 'Click here if you can&#39;t find the product you want to link your question to' %}">' +
-                        '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
-              return result;
-            },
-  containerCssClass: 'select2-bootstrap',
+    placeholder: "{% trans 'Search for a product' %}",
+    formatNoMatches: function (term) {
+        // return term + ' is not found. <button class="btn">Add it</button>'
+        result = '<span><span id="tag_query">' + term + '</span> {% trans 'not found' %}</span>' +
+            '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
+            'title="{% trans 'Click here if you cannot find the product you want to link your question to' %}">' +
+            '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
+        return result;
+    },
+    containerCssClass: 'select2-bootstrap',
 });
 
 $(function() {

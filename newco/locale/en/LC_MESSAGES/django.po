@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 20:19+0100\n"
+"POT-Creation-Date: 2012-11-27 23:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,23 +232,23 @@ msgstr ""
 msgid "NewCo empowers you to buy better"
 msgstr ""
 
-#: templates/homepage_base.html:77
+#: templates/homepage_base.html:78
 msgid "Products"
 msgstr ""
 
-#: templates/homepage_base.html:86 templates/homepage_base_1.html:108
-msgid "Popular products"
+#: templates/homepage_base.html:80 templates/homepage_products_3.html:17
+msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:87
-msgid "Last products added"
+#: templates/homepage_base.html:81 templates/homepage_products_3.html:18
+msgid "Last added"
 msgstr ""
 
-#: templates/homepage_base.html:91
-msgid "Answer Questions"
+#: templates/homepage_base.html:85
+msgid "Questions"
 msgstr ""
 
-#: templates/homepage_base.html:94 templates/homepage_base_1.html:111
+#: templates/homepage_base.html:88 templates/homepage_base_1.html:111
 msgid "My newsfeed"
 msgstr ""
 
@@ -283,6 +283,10 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: templates/homepage_base_1.html:108
+msgid "Popular products"
+msgstr ""
+
 #: templates/homepage_base_1.html:109 templates/homepage_questions.html:20
 #: templates/homepage_questions_1.html:19
 #: templates/homepage_questions_2.html:25
@@ -291,14 +295,6 @@ msgstr ""
 
 #: templates/homepage_products_3.html:13
 msgid "Filter"
-msgstr ""
-
-#: templates/homepage_products_3.html:17
-msgid "Popular"
-msgstr ""
-
-#: templates/homepage_products_3.html:18
-msgid "Last added"
 msgstr ""
 
 #: templates/homepage_questions.html:21 templates/homepage_questions_1.html:20
@@ -352,8 +348,12 @@ msgstr ""
 msgid "Recently answered"
 msgstr ""
 
-#: templates/site_base.html:35
+#: templates/site_base.html:49
 msgid "Search for a product, a user or a tag"
+msgstr ""
+
+#: templates/site_base.html:71
+msgid "Search for a tag"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
