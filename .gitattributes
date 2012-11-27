@@ -1,0 +1,3 @@
+*.html    diff=html
+*.po      diff=html
+*.py      diff=python
