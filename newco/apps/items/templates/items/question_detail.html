@@ -5,8 +5,6 @@
 {% load content_utils %}
 
 {% block extra_style %}
-    {{ block.super }}
-
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
     {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
@@ -39,14 +37,9 @@
 </div>
 {% endblock %}
 
-{% block extra_body_base %}
-  {{ block.super }}
+{% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>
   {% if question %}{{ question.answer_form.media.js }}{% endif %}
-{% endblock %}
-
-{% block extra_script %}
-  {{ block.super }}
   <script type ="text/javascript">
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};

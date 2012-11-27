@@ -124,6 +124,8 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "django.middleware.gzip.GZipMiddleware",
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -134,6 +136,8 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+HTML_MINIFY = False
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 

@@ -7,7 +7,6 @@
 {% load pagination_tags %}
 
 {% block extra_style %}
-    {{ block.super }}
     {{ media.css }}
 {% endblock %}
 
@@ -59,16 +58,13 @@
 
 {% endblock %}
 
-{% block extra_body_base %}
-    {{ block.super }}
-    {{ media.js }}
-    <script type="text/javascript">
+{% block extra_script %}
+  {{ media.js }}
+  <script type="text/javascript">
         $(document).ready(function() {
             $('#carousel_tag').carousel({ interval: 10000 });
         });
-    </script>
 
-    <script type="text/javascript">
       function apply_masonry(list_container, list_items){
         $(list_container).masonry({ //'#thumbnails_list'
           itemSelector : list_items, //'.masonry-item'
@@ -91,12 +87,7 @@
       $('a[data-toggle="tab"]').on('shown', function (e) {
         TriggerMasonry();
       });
-    </script>
-{% endblock %}
 
-{% block extra_script %}
-    {{ block.super }}
-  <script type ="text/javascript">
     $(document).ready(function(){
       mixpanel.track("Load_tag_page");
     });
