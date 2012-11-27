@@ -6,7 +6,6 @@ from django.utils import unittest
 from django.test.client import RequestFactory, Client
 from django.core.urlresolvers import reverse, RegexURLResolver, NoReverseMatch
 from django.contrib.auth.models import AnonymousUser
-import pycallgraph
 from fnmatch import fnmatch
 
 
@@ -63,9 +62,12 @@ class UrlTest(unittest.TestCase):
         except:
             pass
         if graph:
-            pycallgraph.start_trace(filter_func=pycall_django_filter)
-        # for i in range(n):
-        #     self.client.get(reverse('home'))
+            try:
+                import pycallgraph
+                pycallgraph.start_trace(filter_func=pycall_django_filter)
+            except:
+                print "install pycallgraph to draw profiling graph"
+                graph = None
         t = timeit.timeit(self.test_homepage, setup=self.setUp, number=self.n)
         if graph:
             pycallgraph.make_dot_graph('test_homepage_bench.png')
