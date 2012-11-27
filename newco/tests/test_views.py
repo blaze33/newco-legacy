@@ -6,6 +6,25 @@ from django.utils import unittest
 from django.test.client import RequestFactory, Client
 from django.core.urlresolvers import reverse, RegexURLResolver, NoReverseMatch
 from django.contrib.auth.models import AnonymousUser
+import pycallgraph
+from fnmatch import fnmatch
+
+
+def pycall_django_filter(call_stack, module_name, class_name, func_name, full_name):
+    exclude = ['pycallgraph.*', 'django.*']
+    include = ['compressor.base*', 'storages.*', 'boto.*']
+    for pattern in include:
+        if fnmatch(full_name, pattern):
+            return True
+    for pattern in exclude:
+        if fnmatch(full_name, pattern):
+            return False
+    return False
+
+
+def print_progress(step=0, number=1, padding=''):
+    sys.stdout.write('\r{0}{1:>4.0%} {2}/{3}'.format(padding, float(step) / number, step, number))
+    sys.stdout.flush()
 
 
 class UrlTest(unittest.TestCase):
@@ -21,20 +40,37 @@ class UrlTest(unittest.TestCase):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response._is_rendered, True)
+        if hasattr(self, 'n'):
+            self.i += 1
+            print_progress(self.i, self.n, "Homepage: benchmark ... ")
 
     def test_homepage_bench(self):
         ''' Homepage: benchmark '''
         n = os.environ.get('BENCHMARK')
+        graph = os.environ.get('GRAPH')
         if not n:
             print 'no benchmark ',
             sys.stdout.flush()
             return
         try:
-            n = int(n)
+            self.n = int(n)
+            self.i = 0
         except Exception, err:
             print err
-        t = timeit.timeit(self.test_homepage, setup=self.setUp, number=n)
-        print 'Homepage rendered', n, 'times:', (t / n) * 1000, 'ms/view'
+        try:
+            from compressor.storage import default_storage
+            default_storage.entries
+        except:
+            pass
+        if graph:
+            pycallgraph.start_trace(filter_func=pycall_django_filter)
+        # for i in range(n):
+        #     self.client.get(reverse('home'))
+        t = timeit.timeit(self.test_homepage, setup=self.setUp, number=self.n)
+        if graph:
+            pycallgraph.make_dot_graph('test_homepage_bench.png')
+        print ' ... {0:.1f} ms/view '.format((t / self.n) * 1000),
+        sys.stdout.flush()
 
     def runTest(self):
         pass
