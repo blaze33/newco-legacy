@@ -81,9 +81,8 @@ class DashboardView(ListView, FollowMixin):
         })
         BOXES.get("all").update({"empty_msg": mark_safe(_(
             "You haven't contributed yet. Have you checked the "
-            "<a href='%(url_get)s'>Get Started</a> or <a href='%(url_cont)s'>"
-            "How to contribute</a> pages?") % {
-                "url_get": reverse_lazy("get_started"),
+            "<a href='%(url_cont)s'>"
+            "How to contribute</a> page?") % {
                 "url_cont": reverse_lazy("contribute")})
         })
 
