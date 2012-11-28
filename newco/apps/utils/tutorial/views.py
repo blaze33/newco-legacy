@@ -8,5 +8,6 @@ class TutoMixin(object):
         return super(TutoMixin, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"visited": self.visited})
+        if self.visited == False and not "welcome" in self.request.GET:
+            kwargs.update({"launch_tutorial": True})
         return super(TutoMixin, self).get_context_data(**kwargs)
