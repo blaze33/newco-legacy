@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-28 16:52+0100\n"
+"POT-Creation-Date: 2012-11-28 17:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgid "Reload the tutorial here"
 msgstr ""
 
 #: templates/_account_bar.html:25
-msgid "Intro tutorial"
+msgid "Tutorial"
 msgstr ""
 
 #: templates/_account_bar.html:26 templates/_footer.html:4
@@ -357,7 +357,7 @@ msgid "Search for a product, a user or a tag"
 msgstr ""
 
 #: templates/site_base.html:72
-msgid "Search for a tag"
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 
 #: templates/site_base.html:90
@@ -369,11 +369,13 @@ msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
 
 #: templates/site_base.html:93
-msgid "... what if I don&#39;t find?"
+msgid "But what if I don&#39;t find it?"
 msgstr ""
 
 #: templates/site_base.html:94
-msgid "Find what you are looking for by product, tag, question or user."
+msgid ""
+"Looking for some information or advice? See if you can find here the related "
+"product, tag or user."
 msgstr ""
 
 #: templates/site_base.html:96
@@ -381,11 +383,9 @@ msgid "Thank you!"
 msgstr ""
 
 #: templates/site_base.html:97
-msgid "NewCo is a collaborative webapp:"
-msgstr ""
-
-#: templates/site_base.html:97
-msgid "If you don't find, ask!"
+msgid ""
+"NewCo is a collaborative webapp: if you can't find what you're looking for, "
+"create it and ask something!"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
