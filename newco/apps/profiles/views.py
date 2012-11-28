@@ -11,10 +11,11 @@ from idios.views import ProfileDetailView, ProfileListView
 from items.models import Item, Content
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
-from utils.tutorial.views import TutoMixin
+from utils.views.tutorial import TutorialMixin
 
 
-class ProfileDetailView(TutoMixin, ProfileDetailView, MultipleObjectMixin, FollowMixin):
+class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
+                        FollowMixin):
 
     paginate_by = 10
 
@@ -66,7 +67,7 @@ class ProfileDetailView(TutoMixin, ProfileDetailView, MultipleObjectMixin, Follo
         return context
 
 
-class ProfileListView(TutoMixin, ProfileListView):
+class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
 
