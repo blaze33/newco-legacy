@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from follow.utils import register
-from taggit_autosuggest.managers import TaggableManager
+from taggit.managers import TaggableManager
 from voting.models import Vote
 
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
