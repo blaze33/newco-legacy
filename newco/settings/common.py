@@ -124,6 +124,8 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "django.middleware.gzip.GZipMiddleware",
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -134,6 +136,8 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+HTML_MINIFY = False
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
@@ -249,10 +253,10 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-LOGIN_URL = "/account/login"
+LOGIN_URL = "/account/login/"
 
 # django-user-accounts
-ACCOUNT_LOGIN_URL = "/account/login"
+ACCOUNT_LOGIN_URL = "/account/login/"
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
@@ -295,7 +299,7 @@ TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
 TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 # Select2
-AUTO_RENDER_SELECT2_STATICS = True
+AUTO_RENDER_SELECT2_STATICS = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

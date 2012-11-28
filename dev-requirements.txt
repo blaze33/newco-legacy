@@ -26,3 +26,4 @@ pip-tools==0.2.1
 
 ## Tests
 nose==1.2.1
+pycallgraph==0.5.1

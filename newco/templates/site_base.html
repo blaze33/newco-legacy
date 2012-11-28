@@ -5,25 +5,38 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load account_tags %}
+{% load compress %}
 
-{% block extra_style %}
-  <link href="{% static 'css/global.css' %}" rel="stylesheet">
-  <!--
-  We may need to use font-awesome. Won't replace glyphicons for the moment
-  due to bad pixel fitting of small icons.
-  <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
-  -->
-  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-
-  {% include "feedback/header.html" %}
+{% block style_base %}
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!--
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap-responsive.css" %}" rel="stylesheet">
+    -->
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    {% compress css %}
+        <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
+        <link href="{% static 'css/global.css' %}" rel="stylesheet">
+        {% include "feedback/header.html" %}
+        <!--
+            We may need to use font-awesome. Won't replace glyphicons for the moment
+            due to bad pixel fitting of small icons.
+            <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
+        -->
+    {% endcompress %}
+    {% compress css %}
+        {% block extra_style %}{% endblock %}
+    {% endcompress %}
 {% endblock %}
 
 {% block extra_head_base %}
-  {{ block.super }}
-  <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
-  <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-  <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+    {% compress js %}
+    <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
+    <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+    <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+    {% block extra_head_script %}{% endblock%}
+    {% endcompress %}
 {% endblock %}
 
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
@@ -42,45 +55,32 @@
 
 {% block footer %}{% include "_footer.html" %}{% endblock %}
 
-{% block extra_script %}
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="{% static 'js/jquery.masonry.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/expand.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/mixpanel_functions.js' %}"></script>
 
-  <script type="text/javascript">
-    $(function() {
-      var labels, mapped
-      $("#global_search").typeahead({
-        source: function (query, process) {
-          $.get('{% url "redis" %}', {q: query}, function (data) {
-            labels = []
-            mapped = {}
-
-            $.each(data, function (i, item) {
-                mapped[item.title] = item
-                labels.push(item.title)
-            })
-            process(labels)
-          })
-        }
-        , updater: function (item) {
-          var obj = mapped[item];
-          $('#obj_class').val(obj.class);
-          $('#obj_id').val(obj.id);
-          return obj.title
-        }
-      });
-    });
-  </script>
+{% block script_base %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+    {% compress js %}
+        <script src="{% static 'pinax/js/theme.js' %}"></script>
+        <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
+        <script src="{% static 'external/select2/select2.js' %}"></script>
+        <script>
+          var URL_TYPEAHEAD='{% url "redis" %}';
+          var URL_REDIS_TAG='{% url "redis" "tag" %}';
+        </script>
+        <script src="{% static 'js/global.js' %}"></script>
+        <script src="{% static 'js/expand.js' %}"></script>
+        <script src="{% static 'js/mixpanel_functions.js' %}"></script>
+    {% endcompress %}
+    {% compress js %}
+        {% block extra_script %}{% endblock %}
+    {% endcompress %}
 {% endblock %}
 
 {% block extra_body_base %}
-  {{ block.super }}
-  <div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
-  </div>
-  {% analytics %}
+<div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
+</div>
+    {% analytics %}
 
   {% block extra_body %}{% endblock %}
 

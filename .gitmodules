@@ -1,0 +1,3 @@
+[submodule "newco/static/external/select2"]
+	path = newco/static/external/select2
+	url = git://github.com/ivaynberg/select2.git

@@ -12,8 +12,7 @@
     <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
 {% endblock %}
 
-{% block extra_body_base %}
-    {{ block.super }}
+{% block extra_script %}
     <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
         {% for key, box in boxes.items %}
             $(function(){

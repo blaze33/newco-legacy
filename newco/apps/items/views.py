@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.db.models import Sum, Count
 from django.db.models.loading import get_model
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
@@ -132,6 +132,17 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     next = self.object.get_absolute_url()
                     return HttpResponseRedirect(self.get_success_url(next))
                 ctx.update({"formset": formset})
+        elif request.is_ajax() and "add_item" in POST:
+            i_form = ItemForm(data=POST, request=request, prefix="item")
+            if i_form.is_valid():
+                item = i_form.save()
+                args = [item._meta.module_name, item.id]
+                response_data = {"id": item.pk,
+                                 "name": item.name,
+                                 "next": reverse("item_edit", args=args)}
+            else:
+                response_data = 'invalid form'
+            return HttpResponse(json.dumps(response_data), mimetype="application/json")
         elif "add_item" in POST:
             i_form = ItemForm(data=POST, request=request, prefix="item")
             if i_form.is_valid():
