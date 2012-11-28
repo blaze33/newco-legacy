@@ -11,7 +11,7 @@ from idios.views import ProfileDetailView, ProfileListView
 from items.models import Item, Content
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
-from utils.tutorial.views import TutorialMixin
+from utils.views.tutorial import TutorialMixin
 
 
 class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,

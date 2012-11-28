@@ -33,7 +33,7 @@ from utils.follow.views import FollowMixin
 from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.tutorial.views import TutorialMixin
+from utils.views.tutorial import TutorialMixin
 
 app_name = "items"
 
