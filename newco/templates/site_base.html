@@ -87,18 +87,21 @@
 
 {% block extra_body_base %}
   <ol id="joyRideContent" style="display:none">
-    <li data-class="brand" data-button="{% trans "Tell me more!" %}">
+    <li data-class="brand" data-button="{% trans 'Tell me more!' %}">
       <p>{% trans "NewCo is a product information webapp organized around Q&amp;A." %}</p>
     </li>
-    <li data-id="global_search" data-button="{% trans "... what if I don&#39;t find?" %}">
-      <p>{% trans "Find what you are looking for by product, tag, question or user." %}</p>
+    <li data-id="global_search" data-button="{% trans 'But what if I don&#39;t find it?' %}">
+      <p>{% trans "Looking for some information or advice? See if you can find here the related product, tag or user." %}</p>
     </li>
-    <li data-id="add-dropdown" data-button="{% trans "Thank you!" %}">
-      <p>{% trans "NewCo is a collaborative webapp:" %}<br>{% trans "If you don't find, ask!" %}{#<br>{% trans "...and help others when you know the answer ;)" %}</p>#}
-    </li>{% comment %} Seb: excluded until a solution to avoid the "tip" to go out of the window is found
-    <li data-class="non_auth" data-button="{% trans "Next" %}">
-      <p>{% trans "Sign up to build your reputation with your contributions." %}</p>
-    </li>{% endcomment %}
+    <li data-id="add-dropdown" data-button="{% trans 'Thank you!' %}">
+      <p>{% trans "NewCo is a collaborative webapp: if you can't find what you're looking for, create it and ask something!" %}</p>
+    </li>
+    {% comment %}
+      Seb: excluded until a solution to avoid the "tip" to go out of the window is found
+      <li data-class="non_auth" data-button="{% trans "Next" %}">
+        <p>{% trans "Sign up to build your reputation with your contributions." %}</p>
+      </li>
+    {% endcomment %}
   </ol>
 
   <div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>

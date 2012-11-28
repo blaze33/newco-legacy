@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-28 16:53+0100\n"
-"PO-Revision-Date: 2012-11-27 23:23\n"
+"POT-Creation-Date: 2012-11-28 17:41+0100\n"
+"PO-Revision-Date: 2012-11-28 17:40\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -99,8 +99,8 @@ msgid "Reload the tutorial here"
 msgstr "Rechargez le tutoriel ici"
 
 #: templates/_account_bar.html:25
-msgid "Intro tutorial"
-msgstr "Tutoriel d'intro"
+msgid "Tutorial"
+msgstr "Tutoriel"
 
 #: templates/_account_bar.html:26 templates/_footer.html:4
 msgid "FAQ"
@@ -394,29 +394,32 @@ msgstr "Dites m'en plus&#x202F;!"
 #: templates/site_base.html:91
 msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
-"NewCo est un site d'information produit organisé autour de questions/"
+"NewCo est un site d'information produit organisé autour des questions/"
 "réponses."
 
 #: templates/site_base.html:93
-msgid "... what if I don&#39;t find?"
-msgstr "... et si je ne trouve pas&#x202F;?"
+msgid "But what if I don&#39;t find it?"
+msgstr "Et si je ne trouve pas&#x202F;?"
 
 #: templates/site_base.html:94
-msgid "Find what you are looking for by product, tag, question or user."
+msgid ""
+"Looking for some information or advice? See if you can find here the related "
+"product, tag or user."
 msgstr ""
-"Trouvez ce que vous cherchez par produit, tag, question ou utilisateur."
+"Vous cherchez des informations ou des avis ? Essayez de trouver ici le "
+"produit, le tag ou l'utilisateur correspondant."
 
 #: templates/site_base.html:96
 msgid "Thank you!"
 msgstr "Merci&#x202F;!"
 
 #: templates/site_base.html:97
-msgid "NewCo is a collaborative webapp:"
-msgstr "NewCo est une webapp collaborative&nbsp;:"
-
-#: templates/site_base.html:97
-msgid "If you don't find, ask!"
-msgstr "Si vous ne trouvez pas&nbsp;: demandez&#x202F;!"
+msgid ""
+"NewCo is a collaborative webapp: if you can't find what you're looking for, "
+"create it and ask something!"
+msgstr ""
+"NewCo est une application web collaborative&nbsp;: si vous ne trouvez pas ce "
+"que vous cherchez, créez-le et posez des questions&#x202F;!"
 
 #: templates/account/email/email_confirmation_message.txt:6
 #, python-format
@@ -487,6 +490,16 @@ msgstr "Tous les utilisateurs"
 #: templates/idios/profiles.html:14
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
+
+#~ msgid "Find what you are looking for by product, tag, question or user."
+#~ msgstr ""
+#~ "Trouvez ce que vous cherchez par produit, tag, question ou utilisateur."
+
+#~ msgid "NewCo is a collaborative webapp:"
+#~ msgstr "NewCo est une webapp collaborative&nbsp;:"
+
+#~ msgid "If you don't find, ask!"
+#~ msgstr "Si vous ne trouvez pas&nbsp;: demandez&#x202F;!"
 
 #~ msgid "Get started"
 #~ msgstr "Lancez-vous"
