@@ -64,16 +64,16 @@
     {% compress js %}
         <script src="{% static 'pinax/js/theme.js' %}"></script>
         <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
-        {% if launch_tutorial %}<script type="text/javascript">
-          $(window).load(function() {
-              launchJoyride();
-          });
-        </script>{% endif %}
+        <script src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
         <script src="{% static 'external/select2/select2.js' %}"></script>
         <script>
           var URL_TYPEAHEAD='{% url "redis" %}';
           var URL_REDIS_TAG='{% url "redis" "tag" %}';
+          {% if launch_tutorial %}
+          $(window).load(function() {
+              launchJoyride();
+          });
+          {% endif %}
         </script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/expand.js' %}"></script>
