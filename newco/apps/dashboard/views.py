@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from follow.models import Follow
-from voting.models import Vote
 
 from items.models import Content, Item
 from profiles.models import Profile
@@ -111,7 +110,7 @@ class DashboardView(ListView, FollowMixin):
                     self.queryset = self.queryset.draft()
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
-            self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
+            self.scores = self.queryset.get_scores()
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -141,7 +140,7 @@ class DashboardView(ListView, FollowMixin):
             if self.page == "feed":
                 # "Who to follow": For now, random on not followed people/items
                 objects_followed = Follow.objects.filter(user=self.user)
-                wtf = dict()
+                wtf = {}
                 for key, value in WHAT_TO_FOLLOW_PARAMS.items():
                     ids = filter(None, objects_followed.values_list(
                         value.get("fieldname"), flat=True))

@@ -8,7 +8,7 @@ from model_utils.managers import InheritanceQuerySet, InheritanceManager
 from voting.models import Vote
 
 from content.models import Item
-from items import STATUSES
+from items import STATUSES, EMPTY_SCORE
 
 
 class ItemQuerySet(QuerySet):
@@ -65,26 +65,33 @@ class ContentQuerySet(InheritanceQuerySet):
         item_qs = item_qs.filter(tags__in=profile.skills.all())
         return self.filter(items__in=item_qs)
 
-    def order_queryset(self, option):
+    def order_queryset(self, option, scores=None):
         if option == "popular":
-            return generic_annotate(
-                self, Vote, Sum('votes__vote')).order_by("-score")
+            if not scores:
+                scores = self.get_scores()
+            qs = self.select_subclasses()
+            return sorted(qs, key=lambda c: scores.get(c.id).get("score"),
+                          reverse=True)
         elif "pub_date" in option:
-            return self.order_by(option)
+            return self.order_by(option).select_subclasses()
         elif option == "no_answers":
-            return self.annotate(score=Count("answer")).filter(score__lte=0)
+            return self.annotate(score=Count("question__answer")).filter(
+                score__lte=0).select_subclasses()
         return self
 
-    def get_scores_and_votes(self, user):
+    def get_scores(self):
         scores = Vote.objects.get_scores_in_bulk(self)
-        votes = Vote.objects.get_for_user_in_bulk(self, user)
-        return [scores, votes]
+        for item in self:
+            pk = item._get_pk_val()
+            if not pk in scores:
+                scores.update({pk: EMPTY_SCORE})
+        return scores
 
-    def get_qs_tools(self, option, user):
-        qs = self.order_queryset(option)
-        scores, votes = qs.get_scores_and_votes(user)
-        return {"queryset": qs.select_subclasses(),
-                "scores": scores, "votes": votes}
+    def get_votes(self, user):
+        return Vote.objects.get_for_user_in_bulk(self, user)
+
+    def get_scores_and_votes(self, user):
+        return [self.get_scores(), self.get_votes(user)]
 
     def public(self):
         return self.filter(status=STATUSES.public)
@@ -114,6 +121,12 @@ class ContentManager(InheritanceManager):
 
     def order_queryset(self, option):
         return self.get_query_set().order_queryset(option)
+
+    def get_scores(self):
+        return self.get_query_set().get_scores()
+
+    def get_votes(self, user):
+        return self.get_query_set().get_votes(user)
 
     def get_scores_and_votes(self, user):
         return self.get_query_set().get_scores_and_votes(user)

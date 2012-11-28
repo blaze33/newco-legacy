@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-20 19:35+0100\n"
+"POT-Creation-Date: 2012-11-28 00:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,107 +17,103 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: __init__.py:7
+#: __init__.py:17
 msgid "Draft"
 msgstr ""
 
-#: __init__.py:9
+#: __init__.py:19
 msgid "Public"
 msgstr ""
 
-#: forms.py:70
+#: forms.py:69
 msgctxt "parent"
 msgid "products"
 msgstr ""
 
-#: forms.py:71
+#: forms.py:70
 msgctxt "parent"
 msgid "tags"
 msgstr ""
 
-#: forms.py:75
+#: forms.py:74
 msgid "No results matched"
 msgstr ""
 
-#: forms.py:82
+#: forms.py:81
 msgid "My question refers to"
 msgstr ""
 
-#: forms.py:90 forms.py:159
+#: forms.py:89 forms.py:158
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:94
-msgid "Pick a product."
-msgstr ""
-
-#: forms.py:108
+#: forms.py:107
 msgid "Select up to 5 products using Enter and the Arrow keys."
 msgstr ""
 
-#: forms.py:135
+#: forms.py:134
 msgid "Choose between either products or tags to link your question to."
 msgstr ""
 
-#: forms.py:138
+#: forms.py:137
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 
-#: forms.py:142
+#: forms.py:141
 msgid "Pick less than 5 tags"
 msgstr ""
 
-#: forms.py:146
+#: forms.py:145
 msgid "Pick less than 10 items"
 msgstr ""
 
-#: forms.py:188
+#: forms.py:187
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:208
+#: forms.py:207
 msgid "Please login before answering."
 msgstr ""
 
-#: forms.py:271
+#: forms.py:267
 msgid "Link description"
 msgstr ""
 
-#: models.py:20
+#: models.py:19
 msgid "Tags"
 msgstr ""
 
-#: models.py:21
+#: models.py:20
 msgid ""
 "Add one or several related categories/activities separated by a tab or comma."
 "<br>e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 
-#: models.py:27
+#: models.py:26
 msgid "name"
 msgstr ""
 
-#: models.py:28
+#: models.py:27
 msgid "slug"
 msgstr ""
 
-#: models.py:31 models.py:88
+#: models.py:30 models.py:89
 msgid "date published"
 msgstr ""
 
-#: models.py:33
+#: models.py:32
 msgid "last modified"
 msgstr ""
 
-#: models.py:40
+#: models.py:39
 msgid "product"
 msgstr ""
 
-#: models.py:90
+#: models.py:91
 msgid "status"
 msgstr ""
 
-#: models.py:91
+#: models.py:92
 msgid "products"
 msgstr ""
 
@@ -125,35 +121,35 @@ msgstr ""
 msgid "question"
 msgstr ""
 
-#: models.py:164 models.py:183 models.py:198 models.py:214
+#: models.py:177 models.py:205 models.py:220 models.py:236
 msgid "content"
 msgstr ""
 
-#: models.py:167
+#: models.py:180
 msgid "answer"
 msgstr ""
 
-#: models.py:184
+#: models.py:206
 msgid "URL"
 msgstr ""
 
-#: models.py:187
+#: models.py:209
 msgid "link"
 msgstr ""
 
-#: models.py:202
+#: models.py:224
 msgid "feature"
 msgstr ""
 
-#: models.py:213
+#: models.py:235
 msgid "title"
 msgstr ""
 
-#: models.py:219
+#: models.py:241
 msgid "story"
 msgstr ""
 
-#: models.py:220
+#: models.py:242
 msgid "stories"
 msgstr ""
 
@@ -212,11 +208,11 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:292 views.py:385
+#: views.py:293 views.py:384
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:293 views.py:386
+#: views.py:294 views.py:385
 msgid "Latest related questions"
 msgstr ""
 
@@ -235,22 +231,22 @@ msgstr ""
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:432
+#: views.py:430
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:436
+#: views.py:434
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:440
+#: views.py:438
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:444
+#: views.py:442
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -267,7 +263,7 @@ msgstr ""
 msgid "Ask"
 msgstr ""
 
-#: templates/items/_data_sheet.html:13
+#: templates/items/_data_sheet.html:12
 msgid "Maybe they can help you?"
 msgstr ""
 
@@ -283,19 +279,19 @@ msgstr ""
 msgid "Publish an external link"
 msgstr ""
 
-#: templates/items/_question_list.html:12 templates/items/item_detail.html:95
+#: templates/items/_question_list.html:9 templates/items/item_detail.html:94
 msgid "Ask a new question!"
 msgstr ""
 
-#: templates/items/_question_list.html:13 templates/items/item_detail.html:96
+#: templates/items/_question_list.html:12
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: templates/items/answer_form.html:11 templates/items/item_detail.html:115
+#: templates/items/answer_form.html:11 templates/items/item_detail.html:113
 msgid "Answer"
 msgstr ""
 
-#: templates/items/answer_form.html:20 templates/items/item_form.html:94
+#: templates/items/answer_form.html:20 templates/items/item_form.html:93
 msgid "Update"
 msgstr ""
 
@@ -303,13 +299,13 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: templates/items/answer_form.html:21 templates/items/question_form.html:50
+#: templates/items/answer_form.html:21 templates/items/question_form.html:34
 msgid "Unpublish and save as draft"
 msgstr ""
 
-#: templates/items/answer_form.html:21 templates/items/question_form.html:50
-#: templates/items/question_form.html:73
-#: templates/items/root_display/_question.html:62
+#: templates/items/answer_form.html:21 templates/items/question_form.html:34
+#: templates/items/question_form.html:57
+#: templates/items/root_display/_question.html:66
 msgid "Save as draft"
 msgstr ""
 
@@ -366,17 +362,14 @@ msgstr ""
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:90
-msgid "Ask a new question:"
-msgstr ""
-
-#: templates/items/item_detail.html:111
+#: templates/items/item_detail.html:109
 msgid "Close"
 msgstr ""
 
 #: templates/items/item_form.html:18 templates/items/item_form.html.py:22
 #: templates/items/item_list_base.html:43
-#: templates/items/question_form.html:83
+#: templates/items/question_form.html:68
+#: templates/items/question_form.html:146
 msgid "Add a product"
 msgstr ""
 
@@ -384,7 +377,7 @@ msgstr ""
 msgid "Fill in some information about"
 msgstr ""
 
-#: templates/items/item_form.html:22 templates/items/question_form.html:83
+#: templates/items/item_form.html:22 templates/items/question_form.html:68
 #: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
 msgid ":"
@@ -394,7 +387,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:27 templates/items/question_form.html:37
+#: templates/items/item_form.html:27 templates/items/question_form.html:21
 msgid "Tips"
 msgstr ""
 
@@ -433,19 +426,19 @@ msgstr ""
 msgid "Add selected"
 msgstr ""
 
-#: templates/items/item_form.html:90
+#: templates/items/item_form.html:89
 msgid "Save product"
 msgstr ""
 
-#: templates/items/item_form.html:92
+#: templates/items/item_form.html:91
 msgid "Create"
 msgstr ""
 
-#: templates/items/item_form.html:92
+#: templates/items/item_form.html:91
 msgid "or"
 msgstr ""
 
-#: templates/items/item_form.html:92
+#: templates/items/item_form.html:91
 msgid "Create and add features"
 msgstr ""
 
@@ -541,55 +534,55 @@ msgstr ""
 msgid "Related tags"
 msgstr ""
 
-#: templates/items/question_form.html:32
+#: templates/items/question_form.html:16
 msgid "Question"
 msgstr ""
 
-#: templates/items/question_form.html:38
+#: templates/items/question_form.html:22
 msgid "Ask a question"
 msgstr ""
 
-#: templates/items/question_form.html:38
+#: templates/items/question_form.html:22
 msgid "Edit your question"
 msgstr ""
 
-#: templates/items/question_form.html:49
+#: templates/items/question_form.html:33
 msgid "Update and keep public"
 msgstr ""
 
-#: templates/items/question_form.html:49
+#: templates/items/question_form.html:33
 msgid "Update and publish"
 msgstr ""
 
-#: templates/items/question_form.html:49
+#: templates/items/question_form.html:33
 msgid "Publish your question"
 msgstr ""
 
-#: templates/items/question_form.html:50
+#: templates/items/question_form.html:34
 msgid "Update and keep as draft"
 msgstr ""
 
-#: templates/items/question_form.html:57
+#: templates/items/question_form.html:41
 msgid "Why is it encouraged?"
 msgstr ""
 
-#: templates/items/question_form.html:61
+#: templates/items/question_form.html:45
 msgid "Answer your own question"
 msgstr ""
 
-#: templates/items/question_form.html:72
+#: templates/items/question_form.html:56
 msgid "Publish your question and answer"
 msgstr ""
 
-#: templates/items/question_form.html:87
+#: templates/items/question_form.html:73
 msgid "Cancel"
 msgstr ""
 
-#: templates/items/question_form.html:88
+#: templates/items/question_form.html:74
 msgid "Add product"
 msgstr ""
 
-#: templates/items/question_form.html:96
+#: templates/items/question_form.html:82
 msgid ""
 "\n"
 "      Here, you can ask a question about one or several products:\n"
@@ -603,11 +596,24 @@ msgid ""
 "    "
 msgstr ""
 
-#: templates/items/question_form.html:105
+#: templates/items/question_form.html:91
 msgid ""
 "You can also answer your own question if there is something you would like "
 "to share and you haven't found the related question. That way, you document "
 "your knowledge so it can help others."
+msgstr ""
+
+#: templates/items/question_form.html:140
+msgid "Search for a product"
+msgstr ""
+
+#: templates/items/question_form.html:143
+msgid "not found"
+msgstr ""
+
+#: templates/items/question_form.html:145
+msgid ""
+"Click here if you cannot find the product you want to link your question to"
 msgstr ""
 
 #: templates/items/feed_display/_answer.html:9
@@ -659,7 +665,7 @@ msgid "asked a question"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:45
+#: templates/items/root_display/_question.html:49
 msgid "Answer this question"
 msgstr ""
 
@@ -679,19 +685,19 @@ msgstr ""
 msgid "Add Answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:16
+#: templates/items/root_display/_question.html:17
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
 
-#: templates/items/root_display/_question.html:45
+#: templates/items/root_display/_question.html:49
 msgid "Add a better answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:46
 #: templates/items/root_display/_question.html:50
+#: templates/items/root_display/_question.html:54
 msgid "Ask someone to answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:61
+#: templates/items/root_display/_question.html:65
 msgid "Answer and publish"
 msgstr ""

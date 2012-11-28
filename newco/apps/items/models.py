@@ -100,13 +100,6 @@ class Content(models.Model):
     class Meta:
         ordering = ["-pub_date"]
 
-    def save(self):
-        super(Content, self).save()
-        obj = self.select_parent()
-        if obj.votes.count() == 0:
-            user1 = User.objects.get(id=2)
-            Vote.objects.record_vote(obj, user1, 0)
-
     def delete(self):
         try:
             self.votes.all().delete()
@@ -173,6 +166,11 @@ class Question(Content):
             "query_string": self.query_string, "anchor": self.anchor
         }
 
+    def sort_related_answers(self, option="popular"):
+        answer_qs = Content.objects.filter(answer__question=self)
+        ids = [a._get_pk_val() for a in answer_qs.order_queryset(option)]
+        self.set_answer_order(ids)
+
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
@@ -180,6 +178,7 @@ class Answer(Content):
 
     class Meta:
         verbose_name = _("answer")
+        order_with_respect_to = "question"
 
     def __unicode__(self):
         return truncatechars(self.content, 50)

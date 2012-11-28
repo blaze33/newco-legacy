@@ -8,6 +8,8 @@ from account.utils import user_display
 
 from voting.models import Vote
 
+from items.models import Content, Question, Answer
+
 VOTE_DIRECTIONS = (('up', 1), ('down', -1), ('clear', 0))
 
 
@@ -42,9 +44,13 @@ def process_voting(request, obj, success_url):
                 "'%s' is not a valid vote type." % direction
             )
 
-        if hasattr(obj, "content_ptr"):
-            obj = obj.content_ptr
-        Vote.objects.record_vote(obj, request.user, vote)
+        Vote.objects.record_vote(obj.select_parent(), request.user, vote)
+        if obj.__class__ is Content:
+            obj = obj.select_subclass()
+        if obj.__class__ is Question:
+            obj.sort_related_answers()
+        elif obj.__class__ is Answer:
+            obj.question.sort_related_answers()
 
         messages.add_message(request, msgs[direction]["level"], mark_safe(
             msgs[direction]["text"] % {"user": username, "object": obj}))

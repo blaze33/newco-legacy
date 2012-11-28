@@ -21,7 +21,7 @@
       <a class="black" href="{{ content.get_absolute_url }}">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
       {% edit_buttons user content edit_next=path delete_next=path %}
     </p></div>
-    <div class="span1 right"><h3>{% if score %}{{ score.score }}{% else %}0{% endif %}</h3></div>
+    <div class="span1 right"><h3>{{ score.score }}</h3></div>
     <div class="span2 right">{% content_info content "signature-author" %}</div>
   </div>
 

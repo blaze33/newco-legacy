@@ -2,7 +2,7 @@ from django.template.base import Variable, Library, TemplateSyntaxError
 
 from babel.numbers import format_currency
 
-from affiliation.models import AffiliationItemBase
+from affiliation import CURRENCIES
 from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
@@ -26,22 +26,22 @@ class PriceNode(GenericNode):
             val = args[index] if not val and len(args) > index else val
             setattr(self, field, val)
 
-        kwargs, currencies = [dict(), AffiliationItemBase.CURRENCIES]
-        if self.currency == currencies.euro:
-            kwargs.update({"currency": "EUR"})
-        elif self.currency == currencies.dollar:
-            kwargs.update({"currency": "USD"})
-        elif self.currency == currencies.pound:
-            kwargs.update({"currency": "GBP"})
+        price_kwargs = {}
+        if self.currency == CURRENCIES.euro:
+            price_kwargs.update({"currency": "EUR"})
+        elif self.currency == CURRENCIES.dollar:
+            price_kwargs.update({"currency": "USD"})
+        elif self.currency == CURRENCIES.pound:
+            price_kwargs.update({"currency": "GBP"})
         else:
-            kwargs.update({"currency": "EUR"})
+            price_kwargs.update({"currency": "EUR"})
 
         if self.language_code == "fr":
-            kwargs.update({"locale": "fr_FR"})
+            price_kwargs.update({"locale": "fr_FR"})
         elif self.language_code == "en":
-            kwargs.update({"locale": "en_US"})
+            price_kwargs.update({"locale": "en_US"})
 
-        formatted_price = format_currency(value, **kwargs)
+        formatted_price = format_currency(value, **price_kwargs)
 
         return self.render_output(context, formatted_price)
 
@@ -59,7 +59,7 @@ def price(parser, token):
     The first argument is a decimal number.
 
     Other arguments are space-separated values. 'currency' is a
-    AffiliationItemBase.CURRENCIES choice associated with the price value.
+    affiliation.CURRENCIES choice associated with the price value.
     'language_code' is the language convention used for the display.
     Don't mix positional and keyword arguments.
 
