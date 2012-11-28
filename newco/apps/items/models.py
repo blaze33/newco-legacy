@@ -17,9 +17,8 @@ from items.managers import ContentManager, ItemManager
 
 CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")
-TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
-                  " by a tab or comma.<br>e.g. tennis, trekking, shoes,"
-                  " housework, cooking, GPS, smartphone, etc.")
+TAG_HELP_TEXT = _("Add one or several related categories/activities using"
+                  " Tab or Enter, and the Arrow keys.")
 
 
 class Item(models.Model):

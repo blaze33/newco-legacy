@@ -104,7 +104,7 @@ class QuestionForm(ModelForm):
             self.fields.get("parents").initial = self.PARENTS.products \
                 if self.object.items.count() else self.PARENTS.tags
         self.fields.get("items").help_text = _(
-            "Select up to 5 products using Enter and the Arrow keys.")
+            "Select up to 5 products using Tab or Enter, and the Arrow keys.")
 
     def save(self, commit=True, **kwargs):
         question = super(QuestionForm, self).save(commit=False)
