@@ -85,10 +85,6 @@
 {% endblock %}
 
 {% block extra_body_base %}
-<div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
-</div>
-    {% analytics %}
-
   <ol id="joyRideContent" style="display:none">
     <li data-class="brand" data-button="{% trans "Tell me more!" %}">
       <p>{% trans "NewCo is a product information webapp organized around Q&amp;A." %}</p>
