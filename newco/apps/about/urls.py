@@ -5,8 +5,6 @@ from django.views.generic.simple import direct_to_template
 urlpatterns = patterns("",
     url(r"^$", direct_to_template, {"template": "about/about.html"},
                                                 name="about"),
-    url(r"^get_started/$", direct_to_template,
-                    {"template": "about/get_started.html"}, name="get_started"),
     url(r"^faq/$", direct_to_template, {"template": "about/faq.html"},
                                                 name="faq"),
     url(r"^team/$", direct_to_template, {"template": "about/team.html"},
