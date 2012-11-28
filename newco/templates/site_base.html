@@ -66,7 +66,7 @@
         <script src="{% static 'pinax/js/theme.js' %}"></script>
         <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
-        {% if not visited and not '/dashboard' in request.path and not '/about/' in request.path %} {# Seb: exclude "/about" temporarily because pages are generated with "direct_to_template()" => no way to use TutoMixin... #}<script type="text/javascript">
+        {% if not visited and not '/dashboard' in request.path and not '/about/' in request.path and not 'account/' in request.path %} {# Seb: exclude "/about" temporarily because pages are generated with "direct_to_template()" => no way to use TutoMixin... #}<script type="text/javascript">
           $(window).load(function() {
               launchJoyride();
           });
