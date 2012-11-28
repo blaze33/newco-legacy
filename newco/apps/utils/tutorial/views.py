@@ -1,13 +1,15 @@
 
-class TutoMixin(object):
+
+class TutorialMixin(object):
 
     def get(self, request, *args, **kwargs):
         self.visited = request.session.get("visited", False)
         if not self.visited:
             request.session["visited"] = True
-        return super(TutoMixin, self).get(request, *args, **kwargs)
+        return super(TutorialMixin, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        if self.visited == False and not "welcome" in self.request.GET:
+        self.visited = getattr(self, "visited", True)
+        if self.visited is False and not "welcome" in self.request.GET:
             kwargs.update({"launch_tutorial": True})
-        return super(TutoMixin, self).get_context_data(**kwargs)
+        return super(TutorialMixin, self).get_context_data(**kwargs)

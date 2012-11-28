@@ -20,7 +20,6 @@ from django.contrib import messages
 
 from account.utils import user_display
 from taggit.models import Tag
-from voting.models import Vote
 
 from content.transition import add_images, get_album
 from items import STATUSES
@@ -34,12 +33,12 @@ from utils.follow.views import FollowMixin
 from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.tutorial.views import TutoMixin
+from utils.tutorial.views import TutorialMixin
 
 app_name = "items"
 
 
-class ContentView(TutoMixin, View):
+class ContentView(TutorialMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
