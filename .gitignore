@@ -36,3 +36,6 @@ opendiff-w
 
 # static files
 */site_media/*
+
+# ignore images in project root folder (pycallgraph)
+*.png

@@ -8,7 +8,6 @@
 {% load compress %}
 
 {% block style_base %}
-    <link href="{% static "pinax/css/theme.css" %}" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <!--
     <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
@@ -26,14 +25,14 @@
             due to bad pixel fitting of small icons.
             <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
         -->
-        {% block extra_style %}
-        {% endblock %}
+    {% endcompress %}
+    {% compress css %}
+        {% block extra_style %}{% endblock %}
     {% endcompress %}
 {% endblock %}
 
 {% block extra_head_base %}
     {% compress js %}
-    {{ block.super }}
     <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
     <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
     <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
@@ -74,18 +73,21 @@
         <script src="{% static 'external/select2/select2.js' %}"></script>
         <script>
           var URL_TYPEAHEAD='{% url "redis" %}';
-          var URL_REDIS_TAG='{% url "redis" "tag" %}'
+          var URL_REDIS_TAG='{% url "redis" "tag" %}';
         </script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/expand.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
-        {% block extra_script %}
-        {% endblock %}
+    {% endcompress %}
+    {% compress js %}
+        {% block extra_script %}{% endblock %}
     {% endcompress %}
 {% endblock %}
 
 {% block extra_body_base %}
-  {{ block.super }}
+<div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
+</div>
+    {% analytics %}
 
   <ol id="joyRideContent" style="display:none">
     <li data-class="brand" data-button="{% trans "Tell me more!" %}">

@@ -1,3 +1,16 @@
+/* rules from pinax_theme_bootstrap theme.css */
+
+@media (min-width: 980px) {
+  body {
+    padding-top: 80px;
+    position: relative;
+  }
+}
+.modal form {
+  margin-bottom: 0px;
+}
+
+
 /* ↓ css defs for profile page */
 
 .run-in {
