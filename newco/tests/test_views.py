@@ -36,7 +36,8 @@ class UrlTest(unittest.TestCase):
 
     def test_homepage(self):
         ''' Homepage: unit '''
-        response = self.client.get(reverse('home'))
+        url = os.environ.get('URL', reverse('home'))
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response._is_rendered, True)
         if hasattr(self, 'n'):
