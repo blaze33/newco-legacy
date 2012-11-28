@@ -171,7 +171,7 @@ var select2TagsParameters = {
   initSelection: function (element, callback) {
       // reload tags
       var data = [];
-      $(element.val().split(",")).each(function () {
+      $(element.val().split(/, ?/)).each(function () {
           data.push({id: this, text: this});
       });
       callback(data);
