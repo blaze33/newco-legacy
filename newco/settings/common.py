@@ -219,7 +219,6 @@ INSTALLED_APPS = [
     "content",
 
     # Foreign apps
-    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
@@ -294,10 +293,6 @@ REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Voting
 VOTING_ZERO_VOTES_ALLOWED = True
-
-# Taggit autosuggest
-TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
-TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
 
 # Select2
 AUTO_RENDER_SELECT2_STATICS = False
