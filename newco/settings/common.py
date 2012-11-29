@@ -194,7 +194,6 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
-    "django_select2",
     "chosen",
 
     # Deployment
@@ -293,9 +292,6 @@ REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Voting
 VOTING_ZERO_VOTES_ALLOWED = True
-
-# Select2
-AUTO_RENDER_SELECT2_STATICS = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
