@@ -2,15 +2,13 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
-from django.forms.widgets import Textarea, RadioSelect, SelectMultiple, TextInput
-from django.utils.text import capfirst
+from django.forms.widgets import Textarea, RadioSelect, SelectMultiple
 from django.utils.translation import ugettext_lazy as _, pgettext
 
 from account.utils import user_display
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
-from taggit.forms import TagField, TagWidget
-from taggit_autosuggest.widgets import TagAutoSuggest
+from taggit.forms import TagWidget
 
 from affiliation.models import AffiliationItem, AffiliationItemCatalog
 from affiliation.tools import stores_product_search
@@ -21,15 +19,11 @@ from utils.mailtools import mail_question_author
 class ItemForm(ModelForm):
 
     create = False
-    tag_field = Item._meta.get_field_by_name('tags')[0]
-    tags = TagField(required=not(tag_field.blank),
-                    help_text=tag_field.help_text,
-                    label=capfirst(tag_field.verbose_name),
-                    widget=TagWidget(attrs={"class": "input-block-level"}))
 
     class Meta:
         model = Item
         exclude = ("author")
+        widgets = {"tags": TagWidget(attrs={"class": "input-block-level"})}
 
     def __init__(self, request, *args, **kwargs):
         super(ItemForm, self).__init__(*args, **kwargs)
@@ -72,11 +66,6 @@ class QuestionForm(ModelForm):
 
     create = False
     no_results = _("No results matched")
-    tag_field = Content._meta.get_field('tags')
-    tags = TagField(required=not(tag_field.blank),
-                    help_text=tag_field.help_text,
-                    label=capfirst(tag_field.verbose_name),
-                    widget=TagWidget(attrs={"class": "input-block-level"}))
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
                           label=_("My question refers to"))
 
@@ -91,7 +80,8 @@ class QuestionForm(ModelForm):
             "items": SelectMultiple(
                 attrs={"class": "input-block-level", "rows": 1},
                 # overlay=_("Pick a product."),
-            )
+            ),
+            "tags": TagWidget(attrs={"class": "input-block-level"})
         }
 
     def __init__(self, request, *args, **kwargs):
