@@ -72,16 +72,6 @@
         line-height: 180%;
     }
 
-    .score-display {
-        display: inline-block;
-        line-height: 10px;
-        vertical-align: middle;
-    }
-
-    .score-small {
-        font-size: 10px;
-    }
-
     .right {
         text-align: right;
         float: right;

@@ -6,7 +6,8 @@
 
 <div class="row one_row{% if question.is_draft %} well well-small{% endif %}" id="{{ question.anchor }}">
   <div class="span1 vote-controls">
-    {% include "items/_vote_box.html" with content=question item=item score=score %}
+    {% get_content_url question display item as next %}
+    {% vote_form question vote next %}{% if score %}{{ score.score }}{% else %}0{% endif %}
     {% if item %}{% edit_buttons user question delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user question %}{% endif %}
   </div>
   <div class="span8 question-content">
@@ -25,7 +26,8 @@
   <br>
   <div class="row one_row" id="{{ answer.anchor }}">
     <div class="span1 vote-controls">
-      {% include "items/_vote_box.html" with content=answer item=item score=score %}
+      {% get_content_url answer display item as next %}
+      {% vote_form answer vote next %}{% if score %}{{ score.score }}{% else %}0{% endif %}
       {% edit_buttons user answer delete_next=request.path %}
     </div>
     <div class="span8 answer-content">

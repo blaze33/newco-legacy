@@ -1,7 +1,0 @@
-{% load i18n %}
-{% load voting_utils %}
-{% load content_utils %}
-
-{% get_content_url content display item as next %}
-{% vote_form content vote next %}<div class="score-display"><center>{% if score %}{{ score.score }}{% else %}0{% endif %}</center>
-<span class="score-small">{% trans "Score" %}</span></div>
