@@ -150,7 +150,7 @@ button[type="submit"][class*="icon-"][data-vote="True"] {
 
 .nc_transition_add {
   padding-bottom:10px;
-  cursor: pointer; 
+  cursor: pointer;
   cursor: hand;
 }
 

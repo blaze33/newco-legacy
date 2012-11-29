@@ -3,5 +3,4 @@
 {% load content_utils %}
 
 {% get_content_url content display item as next %}
-{% vote_form content vote next %}<div class="score-display"><center>{{ score.score }}</center>
-<span class="score-small">{% trans "Score" %}</span></div>
+{% vote_form content vote next %}<div class="score-display"><center>{{ score.score }}</center>&#08;<span class="score-small">{% trans "Score" %}</span></div>
