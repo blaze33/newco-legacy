@@ -1,3 +1,6 @@
 [submodule "newco/static/external/select2"]
 	path = newco/static/external/select2
 	url = git://github.com/ivaynberg/select2.git
+[submodule "newco/static/external/bootstrap-image-gallery"]
+	path = newco/static/external/bootstrap-image-gallery
+	url = git://github.com/blueimp/Bootstrap-Image-Gallery.git
