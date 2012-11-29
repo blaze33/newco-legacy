@@ -194,8 +194,6 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
-    "django_select2",
-    "chosen",
 
     # Deployment
     "south",
@@ -219,7 +217,6 @@ INSTALLED_APPS = [
     "content",
 
     # Foreign apps
-    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
@@ -265,6 +262,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
 ACCOUNT_LOGIN_REDIRECT_URL = "/?welcome=back"
 ACCOUNT_SIGNUP_REDIRECT_URL = "/?welcome=home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/?welcome=logout"
 ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
@@ -293,13 +291,6 @@ REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Voting
 VOTING_ZERO_VOTES_ALLOWED = True
-
-# Taggit autosuggest
-TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
-TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
-
-# Select2
-AUTO_RENDER_SELECT2_STATICS = False
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

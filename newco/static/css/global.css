@@ -488,6 +488,12 @@ textarea#id_content {
   resize: vertical;
 }
 
+/* fix for tutorial : NewCo's subnav is z-index: 999; */
+.joyride-tip-guide {
+  z-index: 1001;
+}
+/* End of fix for tutorial : NewCo's subnav is z-index: 999; */
+
 /*
 div, span {
   box-shadow:

@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import MultipleObjectMixin
@@ -8,14 +7,15 @@ from django.contrib.auth.models import User
 from account.utils import user_display
 from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
-from voting.models import Vote
 
 from items.models import Item, Content
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
+from utils.views.tutorial import TutorialMixin
 
 
-class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
+class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
+                        FollowMixin):
 
     paginate_by = 10
 
@@ -49,7 +49,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
             "fwers": followers.order_by("-reputation__reputation_incremented"),
             "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "scores": Vote.objects.get_scores_in_bulk(history),
+            "scores": history.get_scores(),
             "nb_fwers": followers.count(),
             "nb_fwees": followers.count(),
         })
@@ -67,7 +67,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
         return context
 
 
-class ProfileListView(ProfileListView):
+class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
 

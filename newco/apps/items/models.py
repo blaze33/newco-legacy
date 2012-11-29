@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from follow.utils import register
-from taggit_autosuggest.managers import TaggableManager
+from taggit.managers import TaggableManager
 from voting.models import Vote
 
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
@@ -17,9 +17,8 @@ from items.managers import ContentManager, ItemManager
 
 CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")
-TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
-                  " by a tab or comma.<br>e.g. tennis, trekking, shoes,"
-                  " housework, cooking, GPS, smartphone, etc.")
+TAG_HELP_TEXT = _("Add one or several related categories/activities using"
+                  " Tab or Enter, and the Arrow keys.")
 
 
 class Item(models.Model):
@@ -100,13 +99,6 @@ class Content(models.Model):
     class Meta:
         ordering = ["-pub_date"]
 
-    def save(self):
-        super(Content, self).save()
-        obj = self.select_parent()
-        if obj.votes.count() == 0:
-            user1 = User.objects.get(id=2)
-            Vote.objects.record_vote(obj, user1, 0)
-
     def delete(self):
         try:
             self.votes.all().delete()
@@ -173,6 +165,11 @@ class Question(Content):
             "query_string": self.query_string, "anchor": self.anchor
         }
 
+    def sort_related_answers(self, option="popular"):
+        answer_qs = Content.objects.filter(answer__question=self)
+        ids = [a._get_pk_val() for a in answer_qs.order_queryset(option)]
+        self.set_answer_order(ids)
+
 
 class Answer(Content):
     question = models.ForeignKey(Question, null=True)
@@ -180,6 +177,7 @@ class Answer(Content):
 
     class Meta:
         verbose_name = _("answer")
+        order_with_respect_to = "question"
 
     def __unicode__(self):
         return truncatechars(self.content, 50)

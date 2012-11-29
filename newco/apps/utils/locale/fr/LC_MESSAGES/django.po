@@ -2,34 +2,34 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 16:21+0100\n"
+"POT-Creation-Date: 2012-11-23 21:12+0100\n"
 "PO-Revision-Date: 2012-11-19 17:54\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: mailtools.py:45
+#: mailtools.py:47
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr "%(receiver)s, %(answerer)s répondu a votre question&#x202F;!"
 
-#: mailtools.py:69
+#: mailtools.py:71
 #, python-format
 msgid "%(user)s, your request has been sent to %(receiver)s!"
 msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#x202F;!"
 
-#: mailtools.py:74
+#: mailtools.py:76
 #, python-format
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
@@ -143,25 +143,34 @@ msgstr "Merci,<br> L'équipe NewCo Project"
 #, python-format
 msgid ""
 "\n"
-"        This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon, please forgive us for the emails you didn't want in the mean time).\n"
+"        This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
+"\" >here</a> (available soon, please forgive us for the emails you didn't "
+"want in the mean time).\n"
 "      "
 msgstr ""
 "\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
+"vos notifications. Si vous voulez les changer, rendez-vous <a href="
+"\"%(settings_url)s\" >ici</a> (disponible prochainement)."
 
 #: templates/mail/_notification_email.txt:27
 #, python-format
 msgid ""
 "\n"
 "---\n"
-"This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: %(settings_url)s (available soon).\n"
+"This email has been sent because you allowed it in your account "
+"configuration. If you want to change it, please go there: %(settings_url)s "
+"(available soon).\n"
 "---\n"
 "Thanks !\n"
 "The NewCo Project team\n"
 msgstr ""
 "\n"
 "---\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
+"vos notifications. Si vous voulez les changer, rendez-vous <a href="
+"\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
 "---\n"
 "Merci,\n"
 "L'équipe de NewCo\n"
@@ -176,8 +185,8 @@ msgstr ""
 
 #: templates/voting/form.html:8
 msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful"
-" or unclear (click again to undo)"
+"Vote down: this contribution does't show effort on quality; it is not useful "
+"or unclear (click again to undo)"
 msgstr ""
 "Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
 "qualité&#x202F;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
@@ -274,11 +283,11 @@ msgstr ""
 #~ msgstr "par"
 
 #~ msgid ""
-#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
-#~ "href='%(answerer_url)s'>%(answerer)s</a> has answered your question "
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
+#~ "s'>%(answerer)s</a> has answered your question "
 #~ msgstr ""
-#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
-#~ "href='%(answerer_url)s'>%(answerer)s</a> a répondu a votre question"
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
+#~ "s'>%(answerer)s</a> a répondu a votre question"
 
 #~ msgid "Product"
 #~ msgstr "Produit"

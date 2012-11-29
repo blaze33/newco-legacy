@@ -7,9 +7,10 @@ from django.views.generic import ListView
 from items import STATUSES
 from items.models import Item, Question
 from utils.multitemplate.views import MultiTemplateMixin
+from utils.views.tutorial import TutorialMixin
 
 
-class HomepageView(MultiTemplateMixin, ListView):
+class HomepageView(MultiTemplateMixin, TutorialMixin, ListView):
 
     paginate_by = 14
 
@@ -20,14 +21,13 @@ class HomepageView(MultiTemplateMixin, ListView):
             self.queryset = Item.objects.all()
             self.template_name = "homepage_products.html"
             if self.cat == "home":
-                delta = timezone.now() - datetime.timedelta(days=30)
+                delta = timezone.now() - datetime.timedelta(days=61)
                 self.queryset = self.queryset.filter(
                     content__pub_date__gt=delta)
                 self.queryset = self.queryset.annotate(
                     count=Count("content__votes__vote"),
                     score=Sum("content__votes__vote")
                 ).filter(count__gt=0).order_by("-score")
-
             else:
                 self.queryset = self.queryset.order_by("-pub_date")
         elif self.cat == "questions":

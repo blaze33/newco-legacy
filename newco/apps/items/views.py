@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Sum, Count
+from django.db.models import Q, Count
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -19,9 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from account.utils import user_display
-from generic_aggregation import generic_annotate
 from taggit.models import Tag
-from voting.models import Vote
 
 from content.transition import add_images, get_album
 from items import STATUSES
@@ -35,11 +33,12 @@ from utils.follow.views import FollowMixin
 from utils.tools import load_object
 from utils.vote.views import ProcessVoteView
 from utils.multitemplate.views import MultiTemplateMixin
+from utils.views.tutorial import TutorialMixin
 
 app_name = "items"
 
 
-class ContentView(View):
+class ContentView(TutorialMixin, View):
 
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
@@ -153,7 +152,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                 ctx.update({"next": reverse("item_edit", args=args)})
             else:
                 ctx.update({"i_form": i_form, "show": 1})
-            initial = dict()
+            initial = {}
             for name, field in form.fields.items():
                 val = POST.get(name) if name != "items" else POST.getlist(name)
                 initial.update({name: val})
@@ -220,13 +219,10 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         if self.model == Item:
             item = context.get("item")
             item_related_qs = content_qs.filter(items=item)
-            querysets = {
-                "questions": item_related_qs.filter(question__isnull=False),
-            }
-
-            contents = dict()
-            for key, queryset in querysets.items():
-                contents.update({key: queryset.get_qs_tools("popular", user)})
+            scores, votes = item_related_qs.get_scores_and_votes(user)
+            question_qs = item_related_qs.filter(
+                question__isnull=False)
+            questions = question_qs.order_queryset("popular", scores)
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -237,18 +233,18 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 context.update({"q_id": q_id})
 
             media = None
-            for q in contents.get("questions").get("queryset"):
+            for q in questions:
                 q.answer_form = AnswerForm(request=request) \
                     if q.id != q_id else AnswerForm(data=POST, request=request)
-                q.answers = content_qs.filter(
-                    answer__question__id=q.id).get_qs_tools("popular", user)
                 if not media:
                     media = q.answer_form.media
-            context.update(contents)
-            context.update({"media": media})
 
-            p_list = Profile.objects.filter(skills__in=self.object.tags.all())
-            context.update({"q_form": q_form, "prof_list": p_list.distinct()})
+            p_qs = Profile.objects.filter(skills__in=item.tags.all())
+
+            context.update({
+                "questions": questions, "scores": scores, "votes": votes,
+                "media": media, "q_form": q_form, "profile_qs": p_qs.distinct()
+            })
 
             # Linked affiliated products
             store_prods = item.affiliationitem_set.select_related()
@@ -256,7 +252,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 store_prods = store_prods.order_by("price")
                 cheapest_prod = store_prods[0]
                 ean_set = set(store_prods.values_list("ean", flat=True))
-                store_prods_by_ean = dict()
+                store_prods_by_ean = {}
                 for ean in ean_set:
                     store_prods_by_ean.update({
                         ean: store_prods.filter(ean=ean)
@@ -280,27 +276,23 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             q.answer_form = AnswerForm(request, data=POST) \
                 if "answer" in POST or "edit_about" in POST \
                 else AnswerForm(request)
-            q.score = Vote.objects.get_score(q.content_ptr)
-            q.vote = Vote.objects.get_for_user(q.content_ptr, user)
 
-            q.answers = content_qs.filter(
-                answer__question__id=q.id).get_qs_tools("popular", user)
+            qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
+            scores, votes = qna_qs.get_scores_and_votes(user)
+            context.update({"question": q, "scores": scores, "votes": votes})
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
-            p_list = Profile.objects.filter(skills__id__in=tag_ids).distinct()
-            context.update({"question": q, "prof_list": p_list})
+            p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
-            qs = Content.objects.filter(question__items__in=q.items.all())
-            qs = qs.exclude(id=q.id)
-            qs_ordered = generic_annotate(qs, Vote, Sum('votes__vote'))
-            qs_ordered = qs_ordered.order_by("-score").select_subclasses()
-            context.update({
-                "question": q, "prof_list": p_list, "item_list": q.items.all(),
-                "related_questions": {
-                    _("Top related questions"): qs_ordered[:3],
-                    _("Latest related questions"): qs.select_subclasses()[:3]
-                }
-            })
+            related_questions = Content.objects.filter(
+                question__items__in=q.items.all()).exclude(id=q.id)
+            top_questions = related_questions.order_queryset("popular")
+            related_questions = related_questions.select_subclasses()
+
+            context.update({"profile_qs": p_qs, "related_questions": {
+                _("Top related questions"): top_questions[:3],
+                _("Latest related questions"): related_questions[:3]
+            }})
         return context
 
     @method_decorator(login_required)
@@ -373,9 +365,8 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            res = qs.get_qs_tools(self.qs_option, self.request.user)
-            qs = res.get("queryset")
-            self.scores, self.votes = [res.get("scores"), res.get("votes")]
+            self.scores = qs.get_scores()
+            qs = qs.order_queryset(self.qs_option, self.scores)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -384,16 +375,15 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
-            qs = Content.objects.filter(
+            related_questions = Content.objects.filter(
                 question__items__in=context.get("object_list")).distinct()
-            field = "votes__vote"
-            qss = generic_annotate(qs, Vote, Sum(field)).order_by("-score")
-            rq = SortedDict()
-            rq.update({
-                _("Top related questions"): qss.select_subclasses()[:3],
-                _("Latest related questions"): qs.select_subclasses()[:3]
-            })
-            context.update({"related_questions": rq})
+            top_questions = related_questions.order_queryset("popular")
+            related_questions = related_questions.select_subclasses()
+
+            context.update({"related_questions": SortedDict({
+                _("Top related questions"): top_questions[:3],
+                _("Latest related questions"): related_questions[:3]
+            })})
         if self.model is Item:
             context.get("object_list").fetch_images()
         else:
