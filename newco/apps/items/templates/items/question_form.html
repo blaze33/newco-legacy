@@ -100,21 +100,21 @@
   <script type="text/javascript">
     {% if show %}$("#itemModal").modal("show"){% endif %}
     $('#answer_form').on('hide', function () {
-      $('#div_submit_q').css('visibility','visible');
-      $('#div_submit_qa').css('display','none');
+        $('#div_submit_q').css('visibility','visible');
+        $('#div_submit_qa').css('display','none');
     })
     $('#answer_form').on('show', function () {
-      $('#div_submit_q').css('visibility','hidden');
-      $('#div_submit_qa').css('display','inline');
+        $('#div_submit_q').css('visibility','hidden');
+        $('#div_submit_qa').css('display','inline');
     })
 
     function hide_tags_show_items() {
-      $('#div_id_items').css('opacity','1');
-      $('#div_id_tags').css('opacity','0.5');
+        $('#div_id_items').css('opacity','1');
+        $('#div_id_tags').css('opacity','0.5');
     }
     function hide_items_show_tags() {
-      $('#div_id_items').css('opacity','0.5');
-      $('#div_id_tags').css('opacity','1');
+        $('#div_id_items').css('opacity','0.5');
+        $('#div_id_tags').css('opacity','1');
     }
 
     if($("#id_parents_1").is(":checked")){hide_tags_show_items();}
@@ -126,49 +126,49 @@
         mixpanel.track("Load_add_question");
     });
 
-  $("#id_tags").select2(select2TagsParameters);
-  $("#id_item-tags").select2(select2TagsParameters);
+    $("#id_tags").select2(select2TagsParameters);
+    $("#id_item-tags").select2(select2TagsParameters);
 
-function addProduct(term) {
-    $("#id_items").select2("close");
-    $("#id_tags").select2("close");
-    $("#id_item-name").val(term);
-    $('#itemModal').modal('show');
-};
+    function addProduct(term) {
+        $("#id_items").select2("close");
+        $("#id_tags").select2("close");
+        $("#id_item-name").val(term);
+        $('#itemModal').modal('show');
+    };
 
-$("#id_items").select2({
-    placeholder: "{% trans 'Search for a product' %}",
-    formatNoMatches: function (term) {
-        // return term + ' is not found. <button class="btn">Add it</button>'
-        result = '<span><span id="tag_query">' + term + '</span> {% trans 'not found' %}</span>' +
-            '<button class="btn tooltip-top" onclick="addProduct(\''+term+'\')"' +
-            'title="{% trans 'Click here if you cannot find the product you want to link your question to' %}">' +
-            '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
-        return result;
-    },
-    containerCssClass: 'select2-bootstrap',
-});
-
-$(function() {
-    $("#add-item").click(function(event) {
-      event.preventDefault();
-      $('#itemModal').modal('hide');
-      $.ajax({
-          type: "post",
-          data: $("#itemModal form").serialize()+'&add_item=add_item',
-          success: function(data, status, xhr) {
-            console.log(data);
-            $("#id_items").append('<option value='+data.id+'>'+data.name+'</name>')
-                .select2("val", [].concat($("#id_items").val(), [String(data.id)]));
-            $('input[name="next"]').val(data.next);
-          },
-          error: function(xhr, status, error) {
-            console.log(xhr, status, error);
-          }
-      });
-      return false;
+    $("#id_items").select2({
+        placeholder: "{% trans 'Search for a product' %}",
+        formatNoMatches: function (term) {
+            // return term + ' is not found. <button class="btn">Add it</button>'
+            result = '<span><span id="tag_query">' + term + '</span> {% trans 'not found' %}</span>' +
+                '<button class="btn tooltip-top" onclick="addProduct(\'' + term + '\')"' +
+                'title="{% trans 'Click here if you cannot find the product you want to link your question to' %}">' +
+                '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
+            return result;
+        },
+        containerCssClass: 'select2-bootstrap',
     });
-});
+
+    $(function() {
+        $("#add-item").click(function(event) {
+            event.preventDefault();
+            $('#itemModal').modal('hide');
+            $.ajax({
+                type: "post",
+                data: $("#itemModal form").serialize() + '&add_item=add_item',
+                success: function(data, status, xhr) {
+                    console.log(data);
+                    $("#id_items").append('<option value=' + data.id+'>' + data.name+'</name>')
+                        .select2("val", [].concat($("#id_items").val(), [String(data.id)]));
+                    $('input[name="next"]').val(data.next);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr, status, error);
+                }
+            });
+            return false;
+        });
+    });
 
   </script>
 {% endblock %}
