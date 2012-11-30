@@ -75,19 +75,19 @@ class ContentFormMixin(object):
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+        POST = request.POST
 
-        if self.model == Item and ("store_search" in request.POST or
-                                   "add_links" in request.POST or
-                                   "remove_links" in request.POST):
-            if "add_links" in request.POST and self.object:
+        if self.model == Item and ("add_links" in POST or "del_links" in POST
+                                   or "store_search" in POST):
+            if "add_links" in POST and self.object:
                 form.link_aff(self.object)
-            if "remove_links" in request.POST and self.object:
-                aff_item_ids = request.POST.getlist("linked_aff")
+            if "del_links" in POST and self.object:
+                aff_item_ids = POST.getlist("linked_aff")
                 linked_items = self.object.affiliationitem_set.select_related()
                 aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
                 for aff_item in aff_items_to_delete:
                     aff_item.delete()
-            if "store_search" in request.POST:
+            if "store_search" in POST:
                 form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
         elif form.is_valid():
