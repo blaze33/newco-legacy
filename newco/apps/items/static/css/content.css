@@ -68,6 +68,7 @@
   display: inline-block;
   line-height: 10px;
   vertical-align: middle;
+  text-align: center;
 }
 
 .score-small {
