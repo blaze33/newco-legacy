@@ -19,11 +19,11 @@
 
 {% url 'faq' as faq %}
 
-<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#item_form" style="z-index: 0 ;"><i class="icon-plus"></i>{% trans "Tips" %}</button>
+<button class="btn btn-mini btn-success " data-toggle="collapse" data-target="#item_form" style="z-index: 0 ;"><i class="icon-plus icon-white"></i> {% trans "Tips" %}</button>
 <div id="item_form" class="collapse out">{% blocktrans with url=faq|add:"#tags" %}
   Here, you can create a new product page in 10 seconds. To do so, you need to:
   <ol>
-    <li>Fill in the product name and its associated <b><a class="black tooltip-top" href="{{ url }}" target="_blank" title="Click here for help on tags">tags</a></b>.</li>
+    <li>Fill in the product name and its associated <b><a class="black tooltip-bottom" href="{{ url }}" target="_blank" title="Click here for help on tags">tags</a></b>.</li>
     <i class="icon-play"></i> You want to do more? <b>Add features!</b> You can:
     <li>Create the associated Store links using <em>Stores search</em>.</li>
     <li>Drag and drop the right corresponding images on the top positions, and trash the irrelevant ones.</li>
