@@ -5,49 +5,46 @@
 {% block subtitle %}{% trans "We provide you with all the things that concern you on this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}{% endblock %}
 
 {% block dashboard %}
-    <div class="row" id="boxes_container">
-        {% for key, box in boxes.items %}{% include "dashboard/_box.html" with box=box %}{% endfor %}
-    </div>
-    <br>
-    <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
+  <div class="row" id="boxes_container">
+    {% for key, box in boxes.items %}{% include "dashboard/_box.html" with box=box %}{% endfor %}
+  </div>
+  <br>
+  <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
 {% endblock %}
 
-{% block extra_script %}
-    <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
-        {% for key, box in boxes.items %}
-            $(function(){
-                var collapse_div = $('#{{ box.name }}_well');
-                var icon_change = $('[rel=expand_btn_{{ box.name }}]');
-                collapse_div.on('shown', function () {
-                    icon_change.removeClass('icon-plus').addClass('icon-minus');
-                })
-                collapse_div.on('hidden', function () {
-                    icon_change.removeClass('icon-minus').addClass('icon-plus');
-                })
-            });
-        {% endfor %}
+{% block extra_script %}<script>
 
+$(function() {
+    var boxCol = $('div[id^="box_"]');
+    $.each(boxCol, function (i, item) {
+        var btn_icon = $('[rel=collapse_btn]', item);
+        var div = $('[rel=collapse_div]', item);
+        div.on('shown', function () {
+            btn_icon.removeClass('icon-plus').addClass('icon-minus');
+        })
+        div.on('hidden', function () {
+            btn_icon.removeClass('icon-minus').addClass('icon-plus');
+        })
+    })
+});
 
-        // Seb: To Do : put in dashboard.js ? ... see where we get to use these functions
+function TriggerMasonry_boxes(){
+    var $container = $('#boxes_container');
+    $container.masonry({
+        itemSelector : '.box',
+        isAnimated: true,
+        //isFitWidth: true,
+        //columnWidth : 240,
+        columnWidth: function( containerWidth ) {
+            return containerWidth / 10; //container should be a span10, hence to fit Bootstrap columns => divide per 10
+        },
+    });
+}
 
-        function TriggerMasonry_boxes(){
-            var $container = $('#boxes_container');
-            $container.masonry({
-                itemSelector : '.box',
-                isAnimated: true,
-                //isFitWidth: true,
-                //columnWidth : 240,
-                columnWidth: function( containerWidth ) {
-                    return containerWidth / 10; //container should be a span10, hence to fit Bootstrap columns => divide per 10
-                },
-            });
-        }
+$(function(){
+    TriggerMasonry_boxes()
+    $('[rel=collapse_div]').on('hidden',function() { TriggerMasonry_boxes() });
+    $('[rel=collapse_div]').on('shown',function() { TriggerMasonry_boxes() });
+});
 
-        $(function(){
-            TriggerMasonry_boxes()
-            $('[rel=collapse_div]').on('hidden',function() { TriggerMasonry_boxes() });
-            $('[rel=collapse_div]').on('shown',function() { TriggerMasonry_boxes() });
-        });
-
-    </script>
-{% endblock %}
+</script>{% endblock %}
