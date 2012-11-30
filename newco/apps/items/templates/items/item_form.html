@@ -40,7 +40,7 @@
       {% if item %}{% if item.affiliationitem_set.all %}<br><br>
         <h3>{% trans "Linked Products" %}</h3>
         <div class="row"><div class="span3">
-          <button type="submit" class="btn pull-right" name="remove_links"><i class="icon-remove-sign"></i> {% trans "Remove unselected" %}</button>
+          <button type="submit" class="btn pull-right" name="del_links"><i class="icon-remove-sign"></i> {% trans "Remove unselected" %}</button>
         </div></div>
         {% for i in item.affiliationitem_set.all %}
           <div class="row"><div >
