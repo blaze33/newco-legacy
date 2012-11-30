@@ -64,6 +64,13 @@
   line-height: 180%;
 }
 
+@media (max-width: 979px) and (min-width: 768px) {
+  .vote-controls {
+    margin-left: 5px;
+    width: 57px;
+  }
+}
+
 .score-display {
   display: inline-block;
   line-height: 10px;
