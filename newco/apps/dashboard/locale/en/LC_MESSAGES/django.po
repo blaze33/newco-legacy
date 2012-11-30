@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-29 20:16+0100\n"
+"POT-Creation-Date: 2012-11-30 19:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,13 +191,13 @@ msgstr ""
 msgid "Products you may like"
 msgstr ""
 
-#: templates/dashboard/home.html:5
+#: templates/dashboard/home.html:6
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
 msgstr ""
 
-#: templates/dashboard/home.html:12
+#: templates/dashboard/home.html:20
 #, python-format
 msgid ""
 " More tools to come very soon on the dashboard! If you have some ideas about "

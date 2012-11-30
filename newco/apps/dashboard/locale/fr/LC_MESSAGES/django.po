@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-29 20:16+0100\n"
-"PO-Revision-Date: 2012-11-29 20:12\n"
+"POT-Creation-Date: 2012-11-30 19:28+0100\n"
+"PO-Revision-Date: 2012-11-30 19:21\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -216,7 +216,7 @@ msgstr "Voir tous"
 msgid "Products you may like"
 msgstr "Les produits que vous pourriez aimer"
 
-#: templates/dashboard/home.html:5
+#: templates/dashboard/home.html:6
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
@@ -224,16 +224,16 @@ msgstr ""
 "Nous mettons à votre disposition sur cette page tout ce qui vous concerne. "
 "Si vous n'avez qu'un passage rapide à faire sur NewCo, tout est ici."
 
-#: templates/dashboard/home.html:12
+#: templates/dashboard/home.html:20
 #, python-format
 msgid ""
 " More tools to come very soon on the dashboard! If you have some ideas about "
 "how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait "
 "to read them!"
 msgstr ""
-"Très bientôt plus d'outils sur le tableau de bord ! Si vous avez des idées "
-"pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, nous "
-"avons hâte de les découvrir&#x202F;!"
+"Très bientôt plus d'outils sur le tableau de bord&#x202F;! Si vous avez des "
+"idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
+"nous avons hâte de les découvrir&#x202F;!"
 
 #: templates/dashboard/purchase.html:11
 msgid "Search in all my purchases"
