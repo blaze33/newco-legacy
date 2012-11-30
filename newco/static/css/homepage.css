@@ -83,3 +83,10 @@ opacity:1.0;
 .homepage_sort {
   margin-top: 20px;
 }
+
+/* Fix specific case of icons in "collapse tutorial" buttons */
+#explore [class^="icon-"], #explore [class*=" icon-"], #contribute-btn [class^="icon-"], #contribute-btn [class*=" icon-"] {
+  margin-right: 3px;
+  vertical-align:middle;
+  margin-top: -2px;
+}
