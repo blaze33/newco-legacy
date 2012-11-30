@@ -4,3 +4,6 @@
 [submodule "newco/static/external/bootstrap-image-gallery"]
 	path = newco/static/external/bootstrap-image-gallery
 	url = git://github.com/blueimp/Bootstrap-Image-Gallery.git
+[submodule "newco/static/external/javascript-load-image"]
+	path = newco/static/external/javascript-load-image
+	url = git://github.com/blueimp/JavaScript-Load-Image.git
