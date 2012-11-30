@@ -90,6 +90,16 @@ class ContentFormMixin(object):
             if "store_search" in POST:
                 form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))
+        elif request.is_ajax() and "add_item" in POST:
+            form = ItemForm(data=POST, request=request, prefix="item")
+            if form.is_valid():
+                item = form.save()
+                args = [item._meta.module_name, item.id]
+                data = {"id": item.pk, "name": item.name,
+                        "next": reverse("item_edit", args=args)}
+            else:
+                data = "invalid form"
+            return HttpResponse(json.dumps(data), mimetype="application/json")
         elif form.is_valid():
             msg = "updated" if self.object else "created"
             display_message(msg, self.request, self.model._meta.verbose_name)
@@ -99,23 +109,28 @@ class ContentFormMixin(object):
 
     def get_context_data(self, **kwargs):
         kwargs.update({"statuses": STATUSES})
+        if self.model is Question:
+            form = ItemForm(request=self.request, prefix="item")
+            kwargs.update({"i_form": form})
         return super(ContentFormMixin, self).get_context_data(**kwargs)
+
+    def get_success_url(self):
+        if self.model is Question:
+            args = (self.success_url, self.object.get_absolute_url())
+            self.success_url = "%s?next=%s" % args if all(args) else args[0]
+        return super(ContentFormMixin, self).get_success_url()
 
 
 class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                         CreateView):
 
     def post(self, request, *args, **kwargs):
-        if self.model is not Question:
-            return super(ContentCreateView, self).post(request, *args,
-                                                       **kwargs)
-
         POST = request.POST
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        cb_answer = POST.get("cb_answer", None)
-        ctx = {"cb_answer": cb_answer}
-        if "add_question" in POST:
+        if self.model is Question and "add_question" in POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            cb_answer = POST.get("cb_answer", None)
+            ctx = {"cb_answer": cb_answer}
             if form.is_valid():
                 self.object = form.save(commit=False)
                 kwargs = {"request": request, "status": self.object.status}
@@ -128,38 +143,12 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     self.object.save()
                     form.save_m2m()
                     formset.save()
-                    next = self.object.get_absolute_url()
-                    return HttpResponseRedirect(self.get_success_url(next))
+                    return HttpResponseRedirect(self.get_success_url())
                 ctx.update({"formset": formset})
-        elif request.is_ajax() and "add_item" in POST:
-            i_form = ItemForm(data=POST, request=request, prefix="item")
-            if i_form.is_valid():
-                item = i_form.save()
-                args = [item._meta.module_name, item.id]
-                response_data = {"id": item.pk,
-                                 "name": item.name,
-                                 "next": reverse("item_edit", args=args)}
-            else:
-                response_data = 'invalid form'
-            return HttpResponse(json.dumps(response_data), mimetype="application/json")
-        elif "add_item" in POST:
-            i_form = ItemForm(data=POST, request=request, prefix="item")
-            if i_form.is_valid():
-                item = i_form.save()
-                display_message("created", self.request,
-                                item._meta.verbose_name)
-                args = [item._meta.module_name, item.id]
-                ctx.update({"next": reverse("item_edit", args=args)})
-            else:
-                ctx.update({"i_form": i_form, "show": 1})
-            initial = {}
-            for name, field in form.fields.items():
-                val = POST.get(name) if name != "items" else POST.getlist(name)
-                initial.update({name: val})
-            form = form_class(initial=initial, request=request)
+            ctx.update({"form": form})
+            return self.render_to_response(self.get_context_data(**ctx))
 
-        ctx.update({"form": form})
-        return self.render_to_response(self.get_context_data(**ctx))
+        return super(ContentCreateView, self).post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ContentCreateView, self).get_context_data(**kwargs)
@@ -170,20 +159,14 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
             formset = QAFormSet(data=POST, request=self.request) if POST \
                 else QAFormSet(request=self.request)
             context.update({"formset": formset})
-        if "i_form" not in context:
-            i_form = ItemForm(request=self.request, prefix="item")
-            context.update({"i_form": i_form})
         err = any(item for item in context.get("formset").errors)
         context.update({"formset_errors": err})
         return context
 
-    def get_success_url(self, next=None):
+    def get_success_url(self):
         if self.model == Item and "edit" in self.request.POST:
             args = [self.object._meta.module_name, self.object.id]
             self.success_url = reverse("item_edit", args=args)
-        url = self.success_url
-        self.success_url = "%s?next=%s" % (url, next) if url and next else url
-
         return super(ContentCreateView, self).get_success_url()
 
 
