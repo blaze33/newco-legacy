@@ -158,11 +158,26 @@
 
 /* only display album's first image on small screens */
 @media (max-width: 767px) {
-    .album :not(:first-child) {
-        display: none;
-    }
+  .album :not(:first-child) {
+    display: none;
+  }
+}
+
+.modal-image img {
+  max-height: 100%;
+}
+.modal-gallery {
+  min-width: 66%;
+  max-width: 100%
+}
+.modal-footer {
+  text-align: left;
+}
+.modal-download {
+  padding: 4px 0;
+  line-height: 20px;
 }
 
 .product-name h1 {
-    margin: 0;
+  margin: 0;
 }
