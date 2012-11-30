@@ -172,10 +172,13 @@
 }
 .modal-footer {
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
 }
 .modal-download {
-  padding: 4px 0;
-  line-height: 20px;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 .product-name h1 {
