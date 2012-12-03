@@ -26,6 +26,7 @@ django-model-utils==1.1.0
 django-tastypie==0.9.11
 
 django-admin-tools==0.4.1
+django-admin-bootstrapped==0.1.1
 git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66746c408b4#egg=django-gravatar
 
 # Amazon
