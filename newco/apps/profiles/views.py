@@ -9,7 +9,6 @@ from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item, Content
-from profiles.models import Profile
 from utils.follow.views import FollowMixin
 from utils.views.tutorial import TutorialMixin
 
@@ -19,14 +18,17 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
 
     paginate_by = 10
 
-    def dispatch(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=kwargs.pop("pk"))
-        if profile.slug and kwargs["slug"] != profile.slug:
-            url = profile.get_absolute_url()
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.slug and kwargs["slug"] != self.object.slug:
+            url = self.object.get_absolute_url()
             return HttpResponsePermanentRedirect(url)
-        kwargs["username"] = profile.user.username
-        return super(ProfileDetailView, self).dispatch(request,
-                                                       *args, **kwargs)
+        return super(ProfileDetailView, self).get(request, *args, **kwargs)
+
+    def get_object(self):
+        if hasattr(self, "object"):
+            return self.object
+        return super(ProfileDetailView, self).get_object()
 
     def get_context_data(self, **kwargs):
         history = Content.objects.public().filter(author=self.page_user)

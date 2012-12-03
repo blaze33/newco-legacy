@@ -270,6 +270,9 @@ ACCOUNT_LANGUAGES = [
     for code in ['fr', 'en']
 ]
 
+# idios
+IDIOS_USE_USERNAME = False
+
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
 
