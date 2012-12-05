@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from babel.numbers import parse_decimal
 
 from affiliation import CURRENCIES
+from affiliation.managers import StoreManager
 from items.models import Item
 
 
@@ -18,6 +19,8 @@ class Store(models.Model):
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
+
+    objects = StoreManager()
 
     class Meta:
         verbose_name = _("store")
@@ -104,10 +107,7 @@ class AffiliationItem(AffiliationItemBase):
 
 
 def _amazon_init(aff_item, amazon_item):
-    amazon, created = Store.objects.get_or_create(
-        name="Amazon", url="http://www.amazon.fr"
-    )
-    aff_item.store = amazon
+    aff_item.store = Store.objects.get_store("Amazon")
 
     maxl = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
@@ -152,10 +152,7 @@ def _amazon_init(aff_item, amazon_item):
 
 
 def _decathlon_init(aff_item, decathlon_item):
-    decathlon, created = Store.objects.get_or_create(
-        name="Decathlon", url="http://www.decathlon.fr"
-    )
-    aff_item.store = decathlon
+    aff_item.store = Store.objects.get_store("Decathlon")
     max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
     for key, value in decathlon_item.items():
