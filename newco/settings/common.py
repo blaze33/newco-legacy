@@ -166,10 +166,11 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 INSTALLED_APPS = [
     # Django
-    "admin_tools",
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
+    # "admin_tools",
+    # 'admin_tools.theming',
+    # 'admin_tools.menu',
+    # 'admin_tools.dashboard',
+    "django_admin_bootstrapped",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -268,6 +269,9 @@ ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+# idios
+IDIOS_USE_USERNAME = False
 
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'

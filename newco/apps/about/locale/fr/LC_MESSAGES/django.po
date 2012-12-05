@@ -2,90 +2,90 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 17:58+0200\n"
-"PO-Revision-Date: 2012-11-12 12:02\n"
+"POT-Creation-Date: 2012-12-03 17:01+0100\n"
+"PO-Revision-Date: 2012-12-03 16:59\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
 #: templates/about/contribute.html:5 templates/about/contribute.html.py:8
-#: templates/about/faq.html:49
+#: templates/about/faq.html:48
 msgid "How to contribute?"
 msgstr "Comment contribuer&#x202F;?"
 
-#: templates/about/faq.html:6 templates/about/faq.html.py:23
+#: templates/about/faq.html:5 templates/about/faq.html.py:22
 msgid "FAQ"
 msgstr "FAQ"
 
-#: templates/about/faq.html:26 templates/about/get_started.html:177
+#: templates/about/faq.html:25
 msgid "Why NewCo?"
 msgstr "Pourquoi NewCo&#x202F;?"
 
-#: templates/about/faq.html:26
+#: templates/about/faq.html:25
 msgid ""
 "We believe in today's connected world you should be able to find easily a "
 "deep information on any product. It would empower you to make wise choices. "
 "We work hard to make it real, and sometimes work late at night. We believe "
-"if we realize this vision we will all be able to buy products better adapter"
-" to our needs, push industrials to produce better products, and help you "
-"save a lot of time and energy finding what you want to buy."
+"if we realize this vision we will all be able to buy products better adapter "
+"to our needs, push industrials to produce better products, and help you save "
+"a lot of time and energy finding what you want to buy."
 msgstr ""
-"Nous croyons que dans le monde connecté d'aujourd'hui, vous devriez avoir la"
-" possibilité de trouver facilement de l'information détaillée sur n'importe "
+"Nous croyons que dans le monde connecté d'aujourd'hui, vous devriez avoir la "
+"possibilité de trouver facilement de l'information détaillée sur n'importe "
 "quel produit. Vous auriez le pouvoir de faire des choix en connaissance de "
 "cause. Nous travaillons dur pour concrétiser ça, et parfois tard la nuit. "
 "Nous croyons que si nous réalisons cette vision, nous aurons tous la "
-"possibilité d'acheter des produits plus adaptés à nos besoins, d'inciter les"
-" industriels à faire de meilleurs produits, et de vous aider à gagner du "
+"possibilité d'acheter des produits plus adaptés à nos besoins, d'inciter les "
+"industriels à faire de meilleurs produits, et de vous aider à gagner du "
 "temps et de l'énergie à trouver ce que vous voulez acheter."
 
-#: templates/about/faq.html:28
+#: templates/about/faq.html:27
 msgid "We believe this shouldn't happen"
 msgstr "Nous croyons que ça ne devrait pas arriver"
 
-#: templates/about/faq.html:28
+#: templates/about/faq.html:27
 msgid ":"
 msgstr "&nbsp;:"
 
-#: templates/about/faq.html:49
+#: templates/about/faq.html:48
 msgid "How can I contribute to NewCo?"
 msgstr "Comment contribuer&#x202F;?"
 
-#: templates/about/faq.html:51
+#: templates/about/faq.html:50
 msgid "How do you ensure to have quality content on the platform?"
 msgstr ""
 "Comment vous assurez-vous d'avoir du contenu de qualité sur la "
 "plateforme&#x202F;?"
 
-#: templates/about/faq.html:51
+#: templates/about/faq.html:50
 msgid ""
-"Quality of content is, with user experience, our first worry. To reach great"
-" result, we set up everything to:<ul><li>guide contributors and entice them "
+"Quality of content is, with user experience, our first worry. To reach great "
+"result, we set up everything to:<ul><li>guide contributors and entice them "
 "to collaborate between them</li><li>promote best content emergence through "
 "our collective intelligence system"
 msgstr ""
 "La qualité du contenu est, avec l'expérience utilisateur, notre première "
-"préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en"
-" oeuvre pour&#x202F;:<ul><li>guider les contributeurs et les inciter à "
-"collaborer entre eux.</li><li>favoriser l'émergence du bon contenu via notre"
-" système d'intelligence collective."
+"préoccupation. Pour atteindre un résultat satisfaisant, nous mettons tout en "
+"oeuvre pour&#x202F;:<ul><li>guider les contributeurs et les inciter à "
+"collaborer entre eux.</li><li>favoriser l'émergence du bon contenu via notre "
+"système d'intelligence collective."
 
-#: templates/about/faq.html:54
+#: templates/about/faq.html:53
 msgid "How to earn reputation points?"
 msgstr "Comment gagner des points de réputation&#x202F;?"
 
-#: templates/about/faq.html:54
+#: templates/about/faq.html:53
 msgid ""
 "Build your reputation by creating quality content. You will get points from "
 "other users votes."
@@ -93,181 +93,155 @@ msgstr ""
 "Construisez votre réputation en créant du contenu de qualité et vous "
 "gagnerez des point par les votes des autres utilisateurs."
 
-#: templates/about/faq.html:56
+#: templates/about/faq.html:55
 msgid "What are the tags for?"
 msgstr "A quoi servent les tags&#x202F;?"
 
-#: templates/about/faq.html:56
+#: templates/about/faq.html:55
 msgid ""
-"Tags are used for two things: tag products, and tag skills. Tags can both be"
-" used for skills and products, but the use is different: tags on products is"
-" a way to categorize, tags on skills is a way to identify someone's area of "
+"Tags are used for two things: tag products, and tag skills. Tags can both be "
+"used for skills and products, but the use is different: tags on products is "
+"a way to categorize, tags on skills is a way to identify someone's area of "
 "competence."
 msgstr ""
 "Les tags s'appliquent à deux choses : les produits et les compétences des "
 "utilisateurs. Les tags peuvent servir à la fois aux compétences et aux "
-"produits, mais l'utilisation est différente&nbsp;: les tags sur les produits"
-" est une manière de catégoriser, les tags sur les compétences est une "
-"manière d'identifier les zones d'expertise d'un utilisateur."
+"produits, mais l'utilisation est différente&nbsp;: les tags sur les produits "
+"est une manière de catégoriser, les tags sur les compétences est une manière "
+"d'identifier les zones d'expertise d'un utilisateur."
 
-#: templates/about/get_started.html:7
-msgid "Get started"
-msgstr "Lancez-vous"
-
-#: templates/about/get_started.html:67
-msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
-msgstr "Lancez-<em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
-
-#: templates/about/get_started.html:76
-msgid "Explore"
-msgstr "Explorer"
-
-#: templates/about/get_started.html:79
-msgid "Ask a question"
-msgstr "Poser une question"
-
-#: templates/about/get_started.html:82
-msgid "Add a product"
-msgstr "Ajouter un produit"
-
-#: templates/about/get_started.html:91
-msgid "Or get to know more NewCo"
-msgstr "Ou découvrez-en plus sur NewCo"
-
-#: templates/about/get_started.html:117
-msgid "How it works?"
-msgstr "Comment est structuré NewCo&#x202F;?"
-
-#: templates/about/get_started.html:131
-msgid "Public space"
-msgstr "Espace public"
-
-#: templates/about/get_started.html:135
-#, python-format
-msgid ""
-"Product information? Go this way, Explore through the <a "
-"href=\"%(url_home)s\">homepage</a> or the search bar!"
-msgstr ""
-"Les informations produits&#x202F;? C'est par ici, passez par la page d'<a "
-"href=\"%(url_home)s\">accueil</a> ou la barre de recherche&#x202F;!"
-
-#: templates/about/get_started.html:136
-msgid ""
-"Here, you will see what each visitor can see. This is the part of the "
-"website shared by everyone."
-msgstr ""
-"Ici, vous verrez la meme chose que chaque visiteur, c'est la partie que "
-"partage tout le monde."
-
-#: templates/about/get_started.html:146
-msgid "Personal space"
-msgstr "Espace personnel"
-
-#: templates/about/get_started.html:150
-msgid ""
-"Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
-msgstr ""
-"Les pages rien que pour vous&#x202F;? Votre sélection de flux, vos "
-"brouillons, votre profil... c'est ici&#x202F;!"
-
-#: templates/about/get_started.html:152
-msgid ""
-"This is your exclusive space. We offer you the tools to display the "
-"information as <b>you</b> want to see it."
-msgstr ""
-"Ici, c'est votre espace dédié, vous seul y avez accès. On vous propose les "
-"outils pour organiser <b>vos</b> informations tel que <b>vous</b> le "
-"souhaitez."
-
-#: templates/about/get_started.html:162
-msgid "tell me more!"
-msgstr "dites m'en plus&#x202F;!"
-
-#: templates/about/get_started.html:179
-msgid ""
-"NewCo empowers you to buy better.<br>How? We enable you to get the "
-"information you look for, and share your knowledge back to the community."
-msgstr ""
-"NewCo vous donne le pouvoir de mieux acheter.<br>Comment&#x202F;? En vous "
-"permettant de vous informer et de partager vos connaissances à la "
-"communauté."
-
-#: templates/about/get_started.html:188
-msgid "Get information"
-msgstr "Informez-vous"
-
-#: templates/about/get_started.html:192
-msgid "To get some information about products:"
-msgstr "Pour vous informer sur les produits&nbsp;:"
-
-#: templates/about/get_started.html:194
-msgid "browse the public area"
-msgstr "naviguez dans l'espace public"
-
-#: templates/about/get_started.html:195
-msgid "use the tools available in your private space"
-msgstr "utilisez les outils de votre espace personnel"
-
-#: templates/about/get_started.html:202
-msgid "Share knowledge"
-msgstr "Partagez vos connaissances"
-
-#: templates/about/get_started.html:206
-#, python-format
-msgid ""
-"You can contribute while browsing the public area. Or visit the <b><a "
-"href=\"%(url_contrib)s\" class=\"black\">contribution center</a></b>."
-msgstr ""
-"Vous pouvez contribuer en naviguant dans l'espace public. Ou rendez-vous "
-"dans votre <b><a href=\"%(url_contrib)s\" class=\"black\">centre de "
-"contribution</a></b>."
-
-#: templates/about/get_started.html:207
-msgid ""
-"Build your reputation: create quality content and you will get points from "
-"other users votes."
-msgstr ""
-"Construisez votre réputation : créez du contenu de qualité et vous gagnerez "
-"des point par les votes des autres utilisateurs."
-
-#: templates/about/get_started.html:208
-msgid ""
-"<b>NEW:</b> We just set up a tool to create <b>easily</b> affiliation links "
-"towards our partners!"
-msgstr ""
-"<b>Nouveauté&nbsp;:</b> Nous venons de mettre en place un outil pour créer "
-"<b>simplement</b> les liens d'affiliation vers nos sites partenaires&#x202F;!"
-" "
-
-#: templates/about/get_started.html:208
-msgid "<i>Check this out</i></a>!"
-msgstr "Allez voir</a>&#x202F;!"
-
-#: templates/about/team.html:6
+#: templates/about/team.html:5
 msgid "Team"
 msgstr "Equipe"
 
-#: templates/about/team.html:10
+#: templates/about/team.html:9
 msgid "Who are we?"
-msgstr "Qui sommes nous&#x202F;?"
+msgstr "Qui sommes-nous&#x202F;?"
 
-#: templates/about/what_next.html:6 templates/about/what_next.html.py:9
+#: templates/about/what_next.html:5 templates/about/what_next.html.py:8
 msgid "What Next?"
 msgstr "Que faire maintenant&#x202F;?"
 
-#: templates/about/what_next.html:35
+#: templates/about/what_next.html:34
 #, python-format
 msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a "
-"href=\"%(login_url)s\">logging in</a>."
+"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
+"\"%(login_url)s\">logging in</a>."
 msgstr ""
-"Commencez par <a href=\"%(signup_url)s\">vous inscrire</a> et <a "
-"href=\"%(login_url)s\">vous authentifier</a>."
+"Commencez par <a href=\"%(signup_url)s\">vous inscrire</a> et <a href="
+"\"%(login_url)s\">vous authentifier</a>."
 
-#: templates/about/what_next.html:37
+#: templates/about/what_next.html:36
 #, python-format
 msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
 msgstr "Commencez par <a href=\"%(login_url)s\">vous authentifier</a>."
+
+#~ msgid "Get started"
+#~ msgstr "Lancez-vous"
+
+#~ msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
+#~ msgstr "Lancez-<em style='color: #46a546 /*Bootstrap green*/'>vous</em>"
+
+#~ msgid "Explore"
+#~ msgstr "Explorer"
+
+#~ msgid "Ask a question"
+#~ msgstr "Poser une question"
+
+#~ msgid "Add a product"
+#~ msgstr "Ajouter un produit"
+
+#~ msgid "Or get to know more NewCo"
+#~ msgstr "Ou découvrez-en plus sur NewCo"
+
+#~ msgid "How it works?"
+#~ msgstr "Comment est structuré NewCo&#x202F;?"
+
+#~ msgid "Public space"
+#~ msgstr "Espace public"
+
+#~ msgid ""
+#~ "Product information? Go this way, Explore through the <a href="
+#~ "\"%(url_home)s\">homepage</a> or the search bar!"
+#~ msgstr ""
+#~ "Les informations produits&#x202F;? C'est par ici, passez par la page d'<a "
+#~ "href=\"%(url_home)s\">accueil</a> ou la barre de recherche&#x202F;!"
+
+#~ msgid ""
+#~ "Here, you will see what each visitor can see. This is the part of the "
+#~ "website shared by everyone."
+#~ msgstr ""
+#~ "Ici, vous verrez la meme chose que chaque visiteur, c'est la partie que "
+#~ "partage tout le monde."
+
+#~ msgid "Personal space"
+#~ msgstr "Espace personnel"
+
+#~ msgid ""
+#~ "Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
+#~ msgstr ""
+#~ "Les pages rien que pour vous&#x202F;? Votre sélection de flux, vos "
+#~ "brouillons, votre profil... c'est ici&#x202F;!"
+
+#~ msgid ""
+#~ "This is your exclusive space. We offer you the tools to display the "
+#~ "information as <b>you</b> want to see it."
+#~ msgstr ""
+#~ "Ici, c'est votre espace dédié, vous seul y avez accès. On vous propose "
+#~ "les outils pour organiser <b>vos</b> informations tel que <b>vous</b> le "
+#~ "souhaitez."
+
+#~ msgid "tell me more!"
+#~ msgstr "dites m'en plus&#x202F;!"
+
+#~ msgid ""
+#~ "NewCo empowers you to buy better.<br>How? We enable you to get the "
+#~ "information you look for, and share your knowledge back to the community."
+#~ msgstr ""
+#~ "NewCo vous donne le pouvoir de mieux acheter.<br>Comment&#x202F;? En vous "
+#~ "permettant de vous informer et de partager vos connaissances à la "
+#~ "communauté."
+
+#~ msgid "Get information"
+#~ msgstr "Informez-vous"
+
+#~ msgid "To get some information about products:"
+#~ msgstr "Pour vous informer sur les produits&nbsp;:"
+
+#~ msgid "browse the public area"
+#~ msgstr "naviguez dans l'espace public"
+
+#~ msgid "use the tools available in your private space"
+#~ msgstr "utilisez les outils de votre espace personnel"
+
+#~ msgid "Share knowledge"
+#~ msgstr "Partagez vos connaissances"
+
+#~ msgid ""
+#~ "You can contribute while browsing the public area. Or visit the <b><a "
+#~ "href=\"%(url_contrib)s\" class=\"black\">contribution center</a></b>."
+#~ msgstr ""
+#~ "Vous pouvez contribuer en naviguant dans l'espace public. Ou rendez-vous "
+#~ "dans votre <b><a href=\"%(url_contrib)s\" class=\"black\">centre de "
+#~ "contribution</a></b>."
+
+#~ msgid ""
+#~ "Build your reputation: create quality content and you will get points "
+#~ "from other users votes."
+#~ msgstr ""
+#~ "Construisez votre réputation : créez du contenu de qualité et vous "
+#~ "gagnerez des point par les votes des autres utilisateurs."
+
+#~ msgid ""
+#~ "<b>NEW:</b> We just set up a tool to create <b>easily</b> affiliation "
+#~ "links towards our partners!"
+#~ msgstr ""
+#~ "<b>Nouveauté&nbsp;:</b> Nous venons de mettre en place un outil pour "
+#~ "créer <b>simplement</b> les liens d'affiliation vers nos sites "
+#~ "partenaires&#x202F;! "
+
+#~ msgid "<i>Check this out</i></a>!"
+#~ msgstr "Allez voir</a>&#x202F;!"
 
 #~ msgid "What are the partnerships in place"
 #~ msgstr "Quels sont les partenariats en place ?"

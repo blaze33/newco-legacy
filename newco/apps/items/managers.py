@@ -1,9 +1,8 @@
 from django.db import models
-from django.db.models import Q, Sum, Count
+from django.db.models import Q, Count
 from django.db.models.query import QuerySet
 
 from follow.models import Follow
-from generic_aggregation import generic_annotate
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
 from voting.models import Vote
 
