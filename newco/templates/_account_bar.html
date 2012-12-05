@@ -6,7 +6,7 @@
 <div class="pull-right">
   <ul class="nav" role="navigation">
     {% if debug and templates %}<li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""> {% trans "Templates" %}{% trans ":" %} {{ templates|length }}</a>
+    <a class="dropdown-toggle" data-toggle="dropdown" role="button" data-target="#" href=""><i class="icon-file icon-white"></i> {{ templates|length }}</a>
     <ul class="dropdown-menu pull-right" role="menu">{% for name, title in templates.items %}
       <li{% if name == template %} class="active"{% endif %}><a href="{{ request.path }}?{% for k, v in request.GET.items %}{% if not k == 'template' %}{{ k }}={{ v }}&amp;{% endif %}{% endfor %}template={{ name }}">{{ title }}</a></li>
       {% endfor %}</ul>
