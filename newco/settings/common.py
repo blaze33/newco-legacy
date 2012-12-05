@@ -186,12 +186,10 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # external
-#    "notification",  # must be first
     "staticfiles",
     "compressor",
     "django_openid",
     "timezones",
-    "announcements",
     "pagination",
     "idios",
     "metron",
