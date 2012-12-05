@@ -61,7 +61,7 @@ def decathlon_db_processing(output_file=None):
                 errors.append(err_msg + "\n")
                 output.write(err_msg)
             else:
-                if not item.identical(entry):
+                if not item.same_as(entry):
                     entry.id = item.id
                     entry.save()
                     transaction.commit()

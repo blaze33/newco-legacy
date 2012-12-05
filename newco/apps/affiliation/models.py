@@ -69,16 +69,14 @@ class AffiliationItemBase(models.Model):
             elif source == "decathlon":
                 self = _decathlon_init(self, item)
 
-    def identical(self, other):
-        identical = self.name == other.name
-        identical = identical and self.store == other.store
-        identical = identical and self.object_id == other.object_id
-        identical = identical and self.ean == other.ean
-        identical = identical and self.url == other.url
-        identical = identical and self.price == other.price
-        identical = identical and self.currency == other.currency
+    def same_as(self, other):
+        fields = ["name", "store", "object_id", "ean", "url", "price",
+                  "currency"]
+        same = True
+        for field in fields:
+            same = same and getattr(self, field) == getattr(other, field)
 
-        return identical
+        return same
 
 
 class AffiliationItemCatalog(AffiliationItemBase):
@@ -91,16 +89,11 @@ class AffiliationItem(AffiliationItemBase):
     item = models.ForeignKey(Item)
 
     def copy_from_affcatalog(self, other):
-        self.name = other.name
-        self.store = other.store
-        self.object_id = other.object_id
-        self.ean = other.ean
-        self.url = other.url
-        self.price = other.price
-        self.currency = other.currency
-        self.img_small = other.img_small
-        self.img_medium = other.img_medium
-        self.img_large = other.img_large
+        fields = ["name", "store", "object_id", "ean", "url", "price",
+                  "currency", "img_small", "img_medium", "img_large"]
+        for field in fields:
+            value = getattr(other, field)
+            setattr(self, field, value)
 
     class Meta:
         unique_together = (("item", "store", "object_id"),)
