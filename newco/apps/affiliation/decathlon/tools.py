@@ -10,15 +10,13 @@ from utils.tools import get_search_results
 
 
 def decathlon_product_search(keyword, nb_items=10):
-    decathlon, created = Store.objects.get_or_create(
-        name="Decathlon", url="http://www.decathlon.fr"
-    )
+    store = Store.objects.get_store("Decathlon")
 
     # Exclude from search already linked items
     d4_object_ids = AffiliationItem.objects.filter(
-        store=decathlon).values_list("object_id", flat=True)
-    d4_prods = AffiliationItemCatalog.objects.filter(store=decathlon).exclude(
-        object_id__in=d4_object_ids, store=decathlon)
+        store=store).values_list("object_id", flat=True)
+    d4_prods = AffiliationItemCatalog.objects.filter(store=store).exclude(
+        object_id__in=d4_object_ids, store=store)
 
     # Mininum length for words that are used for the search
     min_len = 3
@@ -37,13 +35,11 @@ def decathlon_db_processing(output_file=None):
 
     storing_class = AffiliationItemCatalog
     errors = list()
-    decathlon, created = Store.objects.get_or_create(
-        name="Decathlon", url="http://www.decathlon.fr"
-    )
+    store = Store.objects.get_store("Decathlon")
     transaction.commit()
 
     # Decathlon stored references. #TODO: store D4 ref in other DB
-    d4_items = storing_class.objects.filter(store=decathlon)
+    d4_items = storing_class.objects.filter(store=store)
     d4_object_ids = list(d4_items.values_list("object_id", flat=True))
 
     d4_csv_url = "http://flux.netaffiliation.com/catalogue.php" + \
@@ -65,7 +61,7 @@ def decathlon_db_processing(output_file=None):
                 errors.append(err_msg + "\n")
                 output.write(err_msg)
             else:
-                if not item.identical(entry):
+                if not item.same_as(entry):
                     entry.id = item.id
                     entry.save()
                     transaction.commit()
