@@ -1,44 +1,45 @@
 .one_row {
-	border-radius: 5px 5px 5px 5px;
-	-webkit-transition: background-color 0.9s;
-	-moz-transition: background-color 0.9s;
+  border-radius: 5px 5px 5px 5px;
+  -webkit-transition: background-color 0.9s;
+  -moz-transition: background-color 0.9s;
 }
 
 .one_row:hover {
-	background-color: #F8F8F8;
-	-webkit-transition: background-color 5s;
-	-moz-transition: background-color 5s;
+  background-color: #F8F8F8;
+  -webkit-transition: background-color 5s;
+  -moz-transition: background-color 5s;
 }
 
 .one_row:hover .controls_2 {
-	opacity: 1;
-	-webkit-transition: opacity 1s;
-	-moz-transition: opacity 1s;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
 }
 
 .row .block_controls {
-	padding-top: 3px;
-	opacity: 0;
-	-webkit-transition: opacity 0.9s;
-	-moz-transition: opacity 0.9s;
+  padding-top: 3px;
+  opacity: 0;
+  -webkit-transition: opacity 0.9s;
+  -moz-transition: opacity 0.9s;
 }
 
 .row:hover .block_controls {
-	opacity: 1;
-	-webkit-transition: opacity 5s;
-	-moz-transition: opacity 5s;
+  opacity: 1;
+  -webkit-transition: opacity 5s;
+  -moz-transition: opacity 5s;
 }
 
 .question hr {
-	margin: 8px 0 15px;
+  margin: 8px 0 15px;
 }
 
 .draft {
-	background-color: #e5e5e5;
-	border-radius: 5px 5px 5px 5px;
+  background-color: #e5e5e5;
+  border-radius: 5px 5px 5px 5px;
 }
+
 .draft:hover .controls_2 {
-	opacity: 1;
-	-webkit-transition: opacity 1s;
-	-moz-transition: opacity 1s;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
 }
