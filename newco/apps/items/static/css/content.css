@@ -10,14 +10,6 @@
   -moz-transition: background-color 5s;
 }
 
-.controls_2 {
-  display: inline-block;
-  line-height: 14px;
-  margin: 0 0;
-  opacity: 0;
-  -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
-}
 .one_row:hover .controls_2 {
   opacity: 1;
   -webkit-transition: opacity 1s;
@@ -56,84 +48,6 @@
 
 .answer-content {
   line-height: 150%;
-}
-
-.vote-controls {
-  font-size: 180%;
-  font-weight: bold;
-  line-height: 180%;
-}
-
-@media (max-width: 979px) and (min-width: 768px) {
-  .vote-controls {
-    margin-left: 5px;
-    width: 57px;
-  }
-}
-
-.score-display {
-  display: inline-block;
-  line-height: 10px;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.score-small {
-  font-size: 10px;
-}
-
-.right {
-  text-align: right;
-  float: right;
-}
-
-.signature {
-  float: right;
-  padding: 2px 2px 5px 5px;
-  margin: 0;
-  font-size: 14px;
-  font-weight: normal;
-}
-
-.signature-header {
-  display: inline;
-  margin-bottom: 1em;
-}
-
-.signature .author img {
-  float: left;
-  margin-right: 3px;
-}
-
-.signature .author div {
-  margin-left: 40px;
-  line-height: 110%
-}
-
-.controls_2.vote {
-  vertical-align: middle;
-}
-
-button[type="submit"][class*="icon-"] {
-  height: 14px;
-  width: 21px;
-  line-height: 14px;
-  border: none;
-  margin: 0 0;
-  background-color: transparent;
-  border-radius: 5px;
-}
-
-button[type="submit"][class*="icon-"][data-vote="True"] {
-  background-color: #f89406;
-}
-
-.controls_2 .icon-chevron-up {
-  background-position: -284px -120px;
-}
-
-.controls_2 .icon-chevron-down {
-  background-position: -309px -119px;
 }
 
 .nc_qna_list_div .nc_transition_add {
