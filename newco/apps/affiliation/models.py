@@ -96,6 +96,7 @@ class AffiliationItem(AffiliationItemBase):
             setattr(self, field, value)
 
     class Meta:
+        ordering = ["price"]
         unique_together = (("item", "store", "object_id"),)
 
 

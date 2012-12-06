@@ -230,20 +230,10 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             })
 
             # Linked affiliated products
-            store_prods = item.affiliationitem_set.select_related()
-            if store_prods:
-                store_prods = store_prods.order_by("price")
-                cheapest_prod = store_prods[0]
-                ean_set = set(store_prods.values_list("ean", flat=True))
-                store_prods_by_ean = {}
-                for ean in ean_set:
-                    store_prods_by_ean.update({
-                        ean: store_prods.filter(ean=ean)
-                    })
-                context.update({
-                    "store_prods_by_ean": store_prods_by_ean,
-                    "cheapest_prod": cheapest_prod
-                })
+            store_products = list(item.affiliationitem_set.all())
+            if store_products:
+                context.update({"store_products": store_products,
+                                "cheapest_product": store_products[0]})
 
             albums = self.object.node.graph.image_set
             if albums:

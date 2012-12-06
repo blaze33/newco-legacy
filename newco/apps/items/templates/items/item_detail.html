@@ -30,19 +30,18 @@
     <br>
     {% include "items/_question_list.html" %}
 
-    {% if store_prods_by_ean %}{% with nb_ean=store_prods_by_ean|length %}
+    {% if store_products %}
       <h3>{% trans "Where to buy" %}</h3>
       <div class="row" id="prices">
-        {% if nb_ean != 1 %}<div class="span1"><h4>{% trans "EAN" %}</h4></div>{% endif %}
         <div class="span2"><h4>{% trans "Store" %}</h4></div>
-        <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}"><h4>{% trans "Name" %}</h4></div>
+        <div class="offset1 span5"><h4>{% trans "Name" %}</h4></div>
         <div class="span1"><h4>{% trans "Price" %}</h4></div>
       </div>
-      {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
+      {% for prod in store_products %}
         <hr>
         {% include "affiliation/_affiliation_item.html" with prod=prod display="list" %}
-      {% endfor %}{% endfor %}
-    {% endwith %}{% endif %}
+      {% endfor %}
+    {% endif %}
 
     <hr>
 
@@ -50,12 +49,12 @@
     {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
   </div>
 
-  {% if store_prods_by_ean %}<div class="span3">
+  {% if store_products %}<div class="span3">
     <div class="dropdown controls">
-      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_product.price currency=cheapest_product.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
-        {% for ean, prod_list in store_prods_by_ean.items %}
-          {% for prod in prod_list %}{% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}{% endfor %}
+        {% for prod in store_products %}
+          {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
           <li class="divider"></li>
         {% endfor %}
         <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
@@ -65,9 +64,9 @@
     <hr>
 
     <h4>{% trans "Where to buy" %}</h4>
-    <div>{% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
+    {% for prod in store_products %}
       {% include "affiliation/_affiliation_item.html" with prod=prod display="thumbnail" %}
-    {% endfor %}{% endfor %}</div>
+    {% endfor %}
 
   </div>{% endif %}
 </div>

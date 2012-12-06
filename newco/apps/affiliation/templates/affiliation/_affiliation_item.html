@@ -17,9 +17,9 @@
   </div>
 {% elif display == "list" %}
   <div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
-    {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
     <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
-    <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
+    <div class="span1"><img src="{{ prod.img_small }}"></div>
+    <div class="span5">{{ prod.name }}</div>
     <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
   </div>
 {% elif display == "dropdown" %}
