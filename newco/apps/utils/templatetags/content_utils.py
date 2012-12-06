@@ -144,6 +144,29 @@ def profile_pic(user, size=None, quote_type="double"):
     return mark_safe(img)
 
 
+@register.simple_tag
+def favicon(url, size=16, quote_type="double"):
+    """
+    Returns the website's favicon of the given url.
+
+    Syntax::
+
+        {% favicon <url> [size] %}
+
+    Example::
+
+        {% favicon "http://www.google.fr" %}
+        {% favicon myurl 62 %}
+    """
+    template = "favicon.html"
+    icon_url = "https://getfavicon.appspot.com/%s" % url
+    context = {"icon_url": icon_url, "size": size}
+    favicon = render_to_string(template, context)
+    if quote_type == "single":
+        favicon = favicon.replace("\"", "\'")
+    return mark_safe(favicon)
+
+
 class URINode(GenericNode):
     def __init__(self, obj, request, *args, **kwargs):
         self.obj = Variable(obj)
