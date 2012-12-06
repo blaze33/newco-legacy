@@ -6,7 +6,7 @@ Django==1.4.2
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 django-user-accounts==1.0b7
 
-django-extensions==1.0.0
+django-extensions==1.0.1
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django-compressor==1.2
