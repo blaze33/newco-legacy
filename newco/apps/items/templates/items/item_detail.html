@@ -29,19 +29,19 @@
     {% include "items/_data_sheet.html" %}
     <br>
     {% include "items/_question_list.html" %}
-
-    {% if store_products %}
-      <h3>{% trans "Where to buy" %}</h3>
-      <div class="row" id="prices">
-        <div class="span2"><h4>{% trans "Store" %}</h4></div>
-        <div class="offset1 span5"><h4>{% trans "Name" %}</h4></div>
-        <div class="span1"><h4>{% trans "Price" %}</h4></div>
-      </div>
-      {% for prod in store_products %}
-        <hr>
-        {% include "affiliation/_affiliation_item.html" with prod=prod display="list" %}
-      {% endfor %}
-    {% endif %}
+    <br>
+    {% for prod in store_products %}
+      {% if forloop.first %}
+        <h3>{% trans "Where to buy" %}</h3>
+        <div class="row" id="prices">
+          <div class="span2"><h4>{% trans "Store" %}</h4></div>
+          <div class="offset1 span5"><h4>{% trans "Name" %}</h4></div>
+          <div class="span1"><h4>{% trans "Price" %}</h4></div>
+        </div>
+      {% endif %}
+      <hr>
+      {% include "affiliation/_affiliation_item.html" with prod=prod display="list" %}
+    {% endfor %}
 
     <hr>
 
