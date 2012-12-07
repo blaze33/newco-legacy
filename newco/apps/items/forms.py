@@ -32,13 +32,13 @@ class ItemForm(ModelForm):
         self.reload_current_search()
 
     def save(self, commit=True, **kwargs):
-        if commit and self.create:
-            item = super(ItemForm, self).save(commit=False)
+        item = super(ItemForm, self).save(commit=False)
+        if self.create:
             item.author = self.request.user
+
+        if commit:
             item.save()
             self.save_m2m()
-        else:
-            item = super(ItemForm, self).save(commit)
 
         self.link_aff(item)
 
