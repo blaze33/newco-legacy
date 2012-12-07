@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 20:48+0100\n"
+"POT-Creation-Date: 2012-12-07 15:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,11 +347,11 @@ msgid "Price"
 msgstr ""
 
 #: templates/items/item_detail.html:48
-msgid "Edit Item"
+msgid "Edit Product"
 msgstr ""
 
 #: templates/items/item_detail.html:49
-msgid "Delete Item"
+msgid "Delete Product"
 msgstr ""
 
 #: templates/items/item_detail.html:54

@@ -45,8 +45,8 @@
 
     <hr>
 
-    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Item" %}</a>
-    {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Item" %}</a>{% endif %}
+    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
+    {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Product" %}</a>{% endif %}
   </div>
 
   {% if store_products %}<div class="span3">
