@@ -45,8 +45,7 @@ class ItemForm(ModelForm):
         return item
 
     def link_aff(self, item):
-        if hasattr(self, "request"):
-            _link_aff(self.request, item)
+        _link_aff(self.request, item)
 
     def stores_search(self):
         self.errors.clear()
@@ -144,9 +143,8 @@ class PartialQuestionForm(ModelForm):
         model = Question
         fields = ("content", )
         widgets = {"content": Textarea(attrs={
-            "class": "span4",
-            "placeholder": _("Ask something specific."),
-            "rows": 1})}
+            "class": "span4", "rows": 1,
+            "placeholder": _("Ask something specific.")})}
 
     def __init__(self, request, item, *args, **kwargs):
         super(PartialQuestionForm, self).__init__(*args, **kwargs)
