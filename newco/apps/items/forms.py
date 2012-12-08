@@ -3,7 +3,8 @@ from django.forms.fields import ChoiceField
 from django.forms.models import (ModelForm, BaseInlineFormSet,
                                  inlineformset_factory)
 from django.forms.widgets import Textarea, RadioSelect, SelectMultiple
-from django.utils.translation import ugettext_lazy as _, pgettext
+from django.utils.translation import (ugettext_lazy as _, ungettext_lazy,
+                                      pgettext)
 
 from account.utils import user_display
 from model_utils import Choices
@@ -63,6 +64,12 @@ class QuestionForm(ModelForm):
         ("1", "tags", pgettext("parent", "tags"))
     )
 
+    max_products = 5
+    PRODUCTS_HELP_TEXT = ungettext_lazy(
+        "Select %d product using Tab or Enter, and the Arrow keys.",
+        "Select up to %d products using Tab or Enter, and the Arrow keys.",
+        max_products) % max_products
+
     create = False
     no_results = _("No results matched")
     parents = ChoiceField(widget=RadioSelect, choices=PARENTS,
@@ -92,8 +99,7 @@ class QuestionForm(ModelForm):
         if self.object:
             self.fields.get("parents").initial = self.PARENTS.products \
                 if self.object.items.count() else self.PARENTS.tags
-        self.fields.get("items").help_text = _(
-            "Select up to 5 products using Tab or Enter, and the Arrow keys.")
+        self.fields.get("items").help_text = self.PRODUCTS_HELP_TEXT
 
     def save(self, commit=True, **kwargs):
         question = super(QuestionForm, self).save(commit=False)
@@ -126,12 +132,12 @@ class QuestionForm(ModelForm):
                 raise ValidationError(_("Link your question to at least either"
                                         " one product or one tag."))
         else:
-            if len(tags) > 5:
-                tags_msg = _("Pick less than 5 tags")
+            if len(tags) > 10:
+                tags_msg = _("Pick less than 10 tags")
                 self._errors["tags"] = self.error_class([tags_msg])
                 del cleaned_data["tags"]
-            elif len(items) > 10:
-                items_msg = _("Pick less than 10 items")
+            elif len(items) > self.max_products:
+                items_msg = _("Pick less than %d products" % self.max_products)
                 self._errors["items"] = self.error_class([items_msg])
                 del cleaned_data["items"]
         return cleaned_data

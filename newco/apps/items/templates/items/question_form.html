@@ -136,8 +136,9 @@
         $('#itemModal').modal('show');
     };
 
-    $("#id_items").select2({
+    var select2ItemParameters = {
         placeholder: "{% trans 'Search for a product' %}",
+        maximumSelectionSize: "{{ form.max_products }}",
         formatNoMatches: function (term) {
             // return term + ' is not found. <button class="btn">Add it</button>'
             result = '<span><span id="tag_query">' + term + '</span> {% trans 'not found' %}</span>' +
@@ -147,7 +148,9 @@
             return result;
         },
         containerCssClass: 'select2-bootstrap',
-    });
+    };
+    $.extend(select2ItemParameters, select2BaseParameters)
+    $("#id_items").select2( select2ItemParameters );
 
     $(function() {
         $("#add-item").click(function(event) {
