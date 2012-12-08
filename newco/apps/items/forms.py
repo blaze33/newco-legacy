@@ -64,6 +64,7 @@ class QuestionForm(ModelForm):
         ("1", "tags", pgettext("parent", "tags"))
     )
 
+    max_tags = 10
     max_products = 5
     PRODUCTS_HELP_TEXT = ungettext_lazy(
         "Select %d product using Tab or Enter, and the Arrow keys.",
@@ -83,10 +84,8 @@ class QuestionForm(ModelForm):
                 "class": "input-block-level",
                 "placeholder": _("Ask something specific."),
                 "rows": 2}),
-            "items": SelectMultiple(
-                attrs={"class": "input-block-level", "rows": 1},
-                # overlay=_("Pick a product."),
-            ),
+            "items": SelectMultiple(attrs={
+                "class": "input-block-level", "rows": 1}),
             "tags": TagWidget(attrs={"class": "input-block-level"})
         }
 
@@ -132,8 +131,8 @@ class QuestionForm(ModelForm):
                 raise ValidationError(_("Link your question to at least either"
                                         " one product or one tag."))
         else:
-            if len(tags) > 10:
-                tags_msg = _("Pick less than 10 tags")
+            if len(tags) > self.max_tags:
+                tags_msg = _("Pick less than %d tags" % self.max_tags)
                 self._errors["tags"] = self.error_class([tags_msg])
                 del cleaned_data["tags"]
             elif len(items) > self.max_products:

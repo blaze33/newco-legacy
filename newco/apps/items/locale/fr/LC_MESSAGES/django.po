@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 18:12+0100\n"
-"PO-Revision-Date: 2012-12-08 18:13\n"
+"POT-Creation-Date: 2012-12-08 18:18+0100\n"
+"PO-Revision-Date: 2012-12-08 18:19\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgctxt "parent"
 msgid "tags"
 msgstr "des tags"
 
-#: forms.py:69
+#: forms.py:70
 #, python-format
 msgid "Select %d product using Tab or Enter, and the Arrow keys."
 msgid_plural ""
@@ -49,45 +49,46 @@ msgstr[1] ""
 "Sélectionnez jusqu'à %d produits en utilisant la touche Entrée ou "
 "Tabulation, et les flèches de direction."
 
-#: forms.py:74
+#: forms.py:75
 msgid "No results matched"
 msgstr "Pas de résultats correspondant à la requête"
 
-#: forms.py:76
+#: forms.py:77
 msgid "My question refers to"
 msgstr "Ma question concerne"
 
-#: forms.py:84 forms.py:153
+#: forms.py:85 forms.py:152
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:129
+#: forms.py:128
 msgid "Choose between either products or tags to link your question to."
 msgstr "Choisissez soit des produits, soit des tags à lier à votre question."
 
-#: forms.py:132
+#: forms.py:131
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 "Liez votre question à au moins soit un produit, soit une catégorie/activité."
 
-#: forms.py:136
-msgid "Pick less than 10 tags"
-msgstr "Choisissez moins de 10 tags"
+#: forms.py:135
+#, python-format
+msgid "Pick less than %d tags"
+msgstr "Choisissez moins de %d tags"
 
-#: forms.py:140
+#: forms.py:139
 #, python-format
 msgid "Pick less than %d products"
 msgstr "Choisissez moins de %d produits"
 
-#: forms.py:181
+#: forms.py:180
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: forms.py:201
+#: forms.py:200
 msgid "Please login before answering."
 msgstr "Connectez-vous avant de répondre."
 
-#: forms.py:261
+#: forms.py:260
 msgid "Link description"
 msgstr "Description du lien"
 
