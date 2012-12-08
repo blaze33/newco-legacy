@@ -66,6 +66,7 @@ LANGUAGES = (
 
 # Where to look to compile translations
 LOCALE_PATHS = (
+    PROJECT_ROOT + '/locale',
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/affiliation/locale',
     PROJECT_ROOT + '/apps/dashboard/locale',

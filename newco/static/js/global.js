@@ -162,6 +162,26 @@ $(function() {
     });
 });
 
+// select2 default translated parameters
+var select2BaseParameters = {
+  formatNoMatches: function () { return gettext("No matches found"); },
+  formatInputTooShort: function (input, min) {
+      var n = min - input.length;
+      text = ngettext("Please enter one more character",
+                      "Please enter %s more characters", n);
+      return interpolate(text, [n])
+  },
+  formatSelectionTooBig: function (limit) {
+      text = ngettext("You can only select one item",
+                      "You can only select %s items", [limit])
+      return interpolate(text, limit)
+  },
+  formatLoadMore: function (pageNumber) { 
+      return gettext("Loading more results..."); 
+  },
+  formatSearching: function () { return gettext("Searching..."); },
+}
+
 // select2 tags default parameters
 var select2TagsParameters = {
   placeholder: TAG_PLACEHOLDER,
