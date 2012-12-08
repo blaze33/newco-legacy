@@ -173,8 +173,8 @@ var select2BaseParameters = {
   },
   formatSelectionTooBig: function (limit) {
       text = ngettext("You can only select one item",
-                      "You can only select %s items", [limit])
-      return interpolate(text, limit)
+                      "You can only select %s items", limit)
+      return interpolate(text, [limit])
   },
   formatLoadMore: function (pageNumber) { 
       return gettext("Loading more results..."); 
