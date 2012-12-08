@@ -70,6 +70,13 @@
           var URL_TYPEAHEAD='{% url "redis" %}';
           var URL_REDIS_TAG='{% url "redis" "tag" %}';
           var TAG_PLACEHOLDER='{% trans "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc." %}'
+          var select2BaseParameters = {
+            formatNoMatches: function () { return "{% trans 'No matches found' %}"; },
+            formatInputTooShort: function (input, min) { var n = min - input.length; console.log(n); return "Please enter " + n + " more character" + (n == 1? "" : "s"); },
+            formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
+            formatLoadMore: function (pageNumber) { return "{% trans 'Loading more results...' %}"; },
+            formatSearching: function () { return "{% trans 'Searching...' %}"; },
+          }
           {% if launch_tutorial %}
           $(window).load(function() {
               launchJoyride();

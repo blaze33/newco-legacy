@@ -204,6 +204,7 @@ var select2TagsParameters = {
   },
   containerCssClass: 'select2-bootstrap',
 };
+$.extend(select2TagsParameters, select2BaseParameters)
 
 // *** Joyride tutorial ***
 
