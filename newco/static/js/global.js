@@ -183,7 +183,7 @@ var select2BaseParameters = {
 }
 
 // select2 tags default parameters
-var select2TagsParameters = {
+var select2TagsParameters = $.extend({}, select2BaseParameters, {
   placeholder: TAG_PLACEHOLDER,
   multiple:true,
   minimumInputLength: 2,
@@ -223,8 +223,7 @@ var select2TagsParameters = {
     }
   },
   containerCssClass: 'select2-bootstrap',
-};
-$.extend(select2TagsParameters, select2BaseParameters)
+});
 
 // *** Joyride tutorial ***
 

@@ -136,7 +136,7 @@
         $('#itemModal').modal('show');
     };
 
-    var select2ItemParameters = {
+    $("#id_items").select2($.extend({}, select2BaseParameters, {
         placeholder: "{% trans 'Search for a product' %}",
         maximumSelectionSize: "{{ form.max_products }}",
         formatNoMatches: function (term) {
@@ -148,9 +148,7 @@
             return result;
         },
         containerCssClass: 'select2-bootstrap',
-    };
-    $.extend(select2ItemParameters, select2BaseParameters)
-    $("#id_items").select2( select2ItemParameters );
+    }));
 
     $(function() {
         $("#add-item").click(function(event) {
