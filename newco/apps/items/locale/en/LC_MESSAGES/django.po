@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 20:48+0100\n"
+"POT-Creation-Date: 2012-12-08 18:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,47 +35,52 @@ msgctxt "parent"
 msgid "tags"
 msgstr ""
 
-#: forms.py:68
+#: forms.py:70
+#, python-format
+msgid "Select %d product using Tab or Enter, and the Arrow keys."
+msgid_plural "Select up to %d products using Tab or Enter, and the Arrow keys."
+msgstr[0] ""
+msgstr[1] ""
+
+#: forms.py:75
 msgid "No results matched"
 msgstr ""
 
-#: forms.py:70
+#: forms.py:77
 msgid "My question refers to"
 msgstr ""
 
-#: forms.py:78 forms.py:148
+#: forms.py:85 forms.py:152
 msgid "Ask something specific."
 msgstr ""
 
-#: forms.py:97
-msgid "Select up to 5 products using Tab or Enter, and the Arrow keys."
-msgstr ""
-
-#: forms.py:124
+#: forms.py:128
 msgid "Choose between either products or tags to link your question to."
 msgstr ""
 
-#: forms.py:127
+#: forms.py:131
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 
-#: forms.py:131
-msgid "Pick less than 5 tags"
-msgstr ""
-
 #: forms.py:135
-msgid "Pick less than 10 items"
+#, python-format
+msgid "Pick less than %d tags"
 msgstr ""
 
-#: forms.py:177
+#: forms.py:139
+#, python-format
+msgid "Pick less than %d products"
+msgstr ""
+
+#: forms.py:180
 msgid "Be concise and to the point."
 msgstr ""
 
-#: forms.py:197
+#: forms.py:200
 msgid "Please login before answering."
 msgstr ""
 
-#: forms.py:257
+#: forms.py:260
 msgid "Link description"
 msgstr ""
 
@@ -347,11 +352,11 @@ msgid "Price"
 msgstr ""
 
 #: templates/items/item_detail.html:48
-msgid "Edit Item"
+msgid "Edit Product"
 msgstr ""
 
 #: templates/items/item_detail.html:49
-msgid "Delete Item"
+msgid "Delete Product"
 msgstr ""
 
 #: templates/items/item_detail.html:54
@@ -377,7 +382,7 @@ msgstr ""
 #: templates/items/item_form.html:14 templates/items/item_form.html.py:18
 #: templates/items/item_list_base.html:42
 #: templates/items/question_form.html:68
-#: templates/items/question_form.html:146
+#: templates/items/question_form.html:147
 msgid "Add a product"
 msgstr ""
 
@@ -615,11 +620,11 @@ msgstr ""
 msgid "Search for a product"
 msgstr ""
 
-#: templates/items/question_form.html:143
+#: templates/items/question_form.html:144
 msgid "not found"
 msgstr ""
 
-#: templates/items/question_form.html:145
+#: templates/items/question_form.html:146
 msgid ""
 "Click here if you cannot find the product you want to link your question to"
 msgstr ""
