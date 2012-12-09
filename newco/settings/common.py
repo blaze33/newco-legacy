@@ -163,6 +163,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax_theme_bootstrap_account.context_processors.theme",
     "utils.context_processors.settings_mp",
     "utils.context_processors.site_settings",
+    "django.core.context_processors.i18n",
 ]
 
 INSTALLED_APPS = [
@@ -188,6 +189,7 @@ INSTALLED_APPS = [
 
     # external
     "staticfiles",
+    "statici18n",
     "compressor",
     "django_openid",
     "timezones",

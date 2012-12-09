@@ -9,6 +9,7 @@ django-user-accounts==1.0b7
 django-extensions==1.0.1
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
+django-statici18n==0.4.1
 django-compressor==1.2
 
 django-timezones==0.2
