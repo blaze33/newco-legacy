@@ -17,7 +17,9 @@ v1_api.register(RelationResource())
 
 urlpatterns = patterns("",
     url(r"^$", HomepageView.as_view(), name="home"),
-    url(r"^(?P<cat>last|questions)$", HomepageView.as_view(), name="home"),
+    url(r"^(?P<cat>products|questions)$", HomepageView.as_view(), name="home"),
+    url(r"^(?P<cat>products|questions)/(?P<filter>last|popular|unanswered)$",
+        HomepageView.as_view(), name="home"),
     url(r"^content$", HomepageView.as_view(), name="item_index"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^admin_tools/", include("admin_tools.urls")),
