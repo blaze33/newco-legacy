@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
-from django.db.models import Q
 from django.utils.decorators import method_decorator
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from follow.models import Follow
-from voting.models import Vote
 
 from items.models import Content, Item
 from profiles.models import Profile
@@ -31,21 +30,22 @@ BOXES = {
         "subtitle": _("Mini feed from what you follow"),
         "name": "feed",
         "mini_feed": "True",
-        "empty_msg": _("You don't follow anything nor anyone yet. Find people "
-                "or products to follow on your right, or navigating NewCo!"),
+        "empty_msg": mark_safe(_("You don't follow anything nor anyone yet. "
+                                 "Find people or products to follow on your "
+                                 "right, or navigating NewCo!")),
         "page_url": reverse_lazy("dash", args=["feed"]),
     },
     "contribution": {
         "title": _("Contribution center"),
-        "subtitle": _("Latest activity on your skills tags..."
-                      " Maybe you would like to contribute?"),
+        "subtitle": mark_safe(_("Latest activity on your skills tags."
+                                " Maybe you would like to contribute?")),
         "name": "contrib",
         "mini_feed": "True",
         "page_url": reverse_lazy("dash", args=["contribution"]),
     },
     "draft": {
         "title": _("Drafts"),
-        "subtitle": _("Maybe you want to complete and publish some?"),
+        "subtitle": mark_safe(_("Complete and publish some?")),
         "name": "drafts",
         "mini_feed": "True",
         "empty_msg": _("You don't have any drafts."),
@@ -72,18 +72,17 @@ class DashboardView(ListView, FollowMixin):
 
     def __init__(self, **kwargs):
         super(DashboardView, self).__init__(**kwargs)
-        BOXES.get("contribution").update({"empty_msg": _(
+        BOXES.get("contribution").update({"empty_msg": mark_safe(_(
             "We don't know what to advice you to contribute on, we would need "
             "to know more about you. Maybe you could <a href='%(url_ed)s'>"
             "add skill tags</a> to your profile?") % {
-                "url_ed": reverse_lazy("profile_edit")}
+                "url_ed": reverse_lazy("profile_edit")})
         })
-        BOXES.get("all").update({"empty_msg": _(
+        BOXES.get("all").update({"empty_msg": mark_safe(_(
             "You haven't contributed yet. Have you checked the "
-            "<a href='%(url_get)s'>Get Started</a> or <a href='%(url_cont)s'>"
-            "How to contribute</a> pages?") % {
-                "url_get": reverse_lazy("get_started"),
-                "url_cont": reverse_lazy("contribute")}
+            "<a href='%(url_cont)s'>"
+            "How to contribute</a> page?") % {
+                "url_cont": reverse_lazy("contribute")})
         })
 
     @method_decorator(login_required)
@@ -103,16 +102,15 @@ class DashboardView(ListView, FollowMixin):
                 self.queryset = self.queryset.get_feed(self.user)
             elif self.page == "contribution":
                 self.queryset = self.queryset.get_related_contributions(
-                    self.user, Item.objects.all())
+                    self.user, Item.objects.all()).exclude(author=self.user)
 #            elif self.page == "collaboration":
             elif self.page == "draft" or self.page == "all":
                 self.queryset = self.queryset.filter(author=self.user)
                 if self.page == "draft":
-                    self.queryset = self.queryset.filter(
-                        status=Content.STATUS.draft)
+                    self.queryset = self.queryset.draft()
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
-            self.scores = Vote.objects.get_scores_in_bulk(self.queryset)
+            self.scores = self.queryset.get_scores()
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -121,13 +119,11 @@ class DashboardView(ListView, FollowMixin):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         if self.page == "dashboard":
-            drafts = self.queryset.filter(
-                Q(author=self.user) & Q(status=Content.STATUS.draft)
-            )
             feed = self.queryset.get_feed(self.user)
             all_my_contrib = self.queryset.filter(author=self.user)
+            drafts = all_my_contrib.draft()
             contrib_feed = self.queryset.get_related_contributions(
-                self.user, Item.objects.all())
+                self.user, Item.objects.all()).exclude(author=self.user)
 
             boxes = BOXES
             boxes.get("feed").update({"feed": feed.select_subclasses()[:4]})
@@ -144,7 +140,7 @@ class DashboardView(ListView, FollowMixin):
             if self.page == "feed":
                 # "Who to follow": For now, random on not followed people/items
                 objects_followed = Follow.objects.filter(user=self.user)
-                wtf = dict()
+                wtf = {}
                 for key, value in WHAT_TO_FOLLOW_PARAMS.items():
                     ids = filter(None, objects_followed.values_list(
                         value.get("fieldname"), flat=True))

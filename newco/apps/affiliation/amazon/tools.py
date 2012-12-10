@@ -10,10 +10,6 @@ from affiliation.models import AffiliationItem, AffiliationItemCatalog, Store
 
 
 def amazon_product_search(keyword, search_index="All", nb_items=10):
-    amazon, created = Store.objects.get_or_create(
-        name="Amazon", url="http://www.amazon.fr"
-    )
-
     api = API(settings.AWS_PRODUCT_ACCESS_KEY_ID,
               settings.AWS_PRODUCT_SECRET_ACCESS_KEY, settings.AWS_LOCALE)
 
@@ -49,16 +45,17 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
         if current_page >= nb_pages:
             break
 
+    store = Store.objects.get_store("Amazon")
     counter = 0
     aff_item_list = list()
     for item in item_list:
         entry, created = AffiliationItemCatalog.objects.get_or_create(
-            store=amazon, object_id=item.ASIN
+            store=store, object_id=item.ASIN
         )
         entry.store_init("amazon", item)
         entry.save()
         if AffiliationItem.objects.filter(object_id=entry.object_id,
-                                          store=amazon).count() == 0:
+                                          store=store).count() == 0:
             aff_item_list.append(entry)
             counter += 1
             if counter == nb_items:

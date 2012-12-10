@@ -12,7 +12,7 @@ from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 from taggit.models import Tag
 
-from items.models import Item, Question
+from items.models import Item
 from profiles.models import Profile
 from utils.tools import get_class_name
 
@@ -28,10 +28,6 @@ PARAMS = {
     get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name",
         "recorded_fields": ["id", "name", "slug"]
-    },
-    get_class_name(Question): {
-        "class": Question, "pk": "id", "title_field": "content",
-        "recorded_fields": ["id", "content"]
     },
 }
 
@@ -60,32 +56,7 @@ def load_redis_engine():
                              % settings.REDISTOGO_URL)
         else:
             return None
-
-
-@receiver(user_logged_in)
-def update_redis_db(sender, request, user, **kwargs):
-    engine = load_redis_engine()
-    if not engine:
-        return
-    engine.flush(everything=True)
-    for key, value in PARAMS.iteritems():
-        cls = value["class"]
-        ctype = ContentType.objects.get_for_model(cls)
-        for obj in cls.objects.all():
-            record_object(engine, obj, key, value, ctype)
-
-
-@receiver(post_save)
-def redis_post_save(sender, instance=None, raw=False, **kwargs):
-    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
-    if not key in PARAMS:
-        return
-    engine = load_redis_engine()
-    if not engine:
-        return
-    value = PARAMS.get(key)
-
-    record_object(engine, instance, key, value)
+engine = load_redis_engine()
 
 
 def record_object(engine, obj, key, value, ctype=None):
@@ -103,16 +74,32 @@ def record_object(engine, obj, key, value, ctype=None):
     engine.store_json(obj_id, title, data, ctype.id)
 
 
+@receiver(user_logged_in)
+def update_redis_db(sender, request, user, **kwargs):
+    if engine is None:
+        return
+    engine.flush(everything=True)
+    for key, value in PARAMS.iteritems():
+        # TODO: grouped query
+        ctype = ContentType.objects.get_for_model(value["class"])
+        for obj in value["class"].objects.all():
+            record_object(engine, obj, key, value, ctype)
+
+
+@receiver(post_save)
+def redis_post_save(sender, instance=None, raw=False, **kwargs):
+    key = "%s.%s" % (instance.__module__, instance._meta.object_name)
+    if not key in PARAMS or engine is None:
+        return
+    record_object(engine, instance, key, PARAMS[key])
+
+
 @receiver(post_delete)
 def redis_post_delete(sender, instance=None, **kwargs):
     key = "%s.%s" % (instance.__module__, instance._meta.object_name)
-    if not key in PARAMS:
-        return
-    engine = load_redis_engine()
-    if not engine:
+    if not key in PARAMS or engine is None:
         return
     value = PARAMS[key]
-
     obj_id = instance.__getattribute__(value["pk"])
     ctype = ContentType.objects.get_for_model(instance)
     engine.remove(obj_id, ctype.id)

@@ -137,3 +137,112 @@ $(function(){
   });
 
 });
+
+// typeahead javascript
+$(function() {
+    var labels, mapped
+    $("#global_search").typeahead({
+        source: function (query, process) {
+            $.get(URL_TYPEAHEAD, {q: query}, function (data) {
+                labels = []
+                mapped = {}
+                $.each(data, function (i, item) {
+                    mapped[item.title] = item
+                    labels.push(item.title)
+                })
+                process(labels)
+            })
+        },
+        updater: function (item) {
+            var obj = mapped[item];
+            $('#obj_class').val(obj.class);
+            $('#obj_id').val(obj.id);
+            return obj.title
+        }
+    });
+});
+
+// select2 default translated parameters
+var select2BaseParameters = {
+  formatNoMatches: function () { return gettext("No matches found"); },
+  formatInputTooShort: function (input, min) {
+      var n = min - input.length;
+      text = ngettext("Please enter one more character",
+                      "Please enter %s more characters", n);
+      return interpolate(text, [n])
+  },
+  formatSelectionTooBig: function (limit) {
+      text = ngettext("You can only select one item",
+                      "You can only select %s items", limit)
+      return interpolate(text, [limit])
+  },
+  formatLoadMore: function (pageNumber) { 
+      return gettext("Loading more results..."); 
+  },
+  formatSearching: function () { return gettext("Searching..."); },
+}
+
+// select2 tags default parameters
+var select2TagsParameters = $.extend({}, select2BaseParameters, {
+  placeholder: TAG_PLACEHOLDER,
+  multiple:true,
+  minimumInputLength: 2,
+  tokenSeparators: [","],
+  initSelection: function (element, callback) {
+      // reload tags
+      var data = [];
+      $(element.val().split(/, ?/)).each(function () {
+          data.push({id: this, text: this});
+      });
+      callback(data);
+  },
+  createSearchChoice: function(term, data) {
+      if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+          return {id:term, text:term};
+      }
+  },
+  ajax: {
+    url: URL_REDIS_TAG,
+    dataType: 'json',
+    quietMillis: 100,
+    data: function (term, page) { // page is the one-based page number tracked by Select2
+        return {
+            q: term, //search term
+            limit: 20, // page size
+        };
+    },
+    results: function (data, page) {
+      $.each(data, function(i){
+          data[i].id = data[i].name;
+          data[i].text = data[i].name;
+      });
+      // console.log(data);
+      var more = (page * 10) < data.total; // whether or not there are more results available
+      // notice we return the value of more so Select2 knows if more results can be loaded
+      return {results: data, more: more};
+    }
+  },
+  containerCssClass: 'select2-bootstrap',
+});
+
+// *** Joyride tutorial ***
+
+function launchJoyride(){
+    $("#joyRideContent").joyride({
+        'tipContainer': '.navbar',
+        postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+            $('#help-dropdown').tooltip('show');
+            setTimeout("$('#help-dropdown').tooltip('hide')", 3000);
+        },
+    });
+};
+
+$('#link-tuto').click(function () {
+    launchJoyride();
+});
+
+$('.tooltip-help').tooltip({
+    trigger: 'manual',
+    placement: 'bottom',
+});
+// *** End of Joyride tutorial ***

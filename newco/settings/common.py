@@ -66,6 +66,7 @@ LANGUAGES = (
 
 # Where to look to compile translations
 LOCALE_PATHS = (
+    PROJECT_ROOT + '/locale',
     PROJECT_ROOT + '/apps/items/locale',
     PROJECT_ROOT + '/apps/affiliation/locale',
     PROJECT_ROOT + '/apps/dashboard/locale',
@@ -124,6 +125,8 @@ TEMPLATE_LOADERS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    "django.middleware.gzip.GZipMiddleware",
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -134,6 +137,8 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+HTML_MINIFY = False
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
@@ -158,14 +163,16 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax_theme_bootstrap_account.context_processors.theme",
     "utils.context_processors.settings_mp",
     "utils.context_processors.site_settings",
+    "django.core.context_processors.i18n",
 ]
 
 INSTALLED_APPS = [
     # Django
-    "admin_tools",
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
+    # "admin_tools",
+    # 'admin_tools.theming',
+    # 'admin_tools.menu',
+    # 'admin_tools.dashboard',
+    "django_admin_bootstrapped",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -181,17 +188,14 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # external
-#    "notification",  # must be first
     "staticfiles",
+    "statici18n",
     "compressor",
     "django_openid",
     "timezones",
-    "announcements",
     "pagination",
     "idios",
     "metron",
-    "django_select2",
-    "chosen",
 
     # Deployment
     "south",
@@ -215,7 +219,6 @@ INSTALLED_APPS = [
     "content",
 
     # Foreign apps
-    "taggit_autosuggest",
     "taggit",
     "voting",
     "follow",
@@ -249,10 +252,10 @@ NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 DEFAULT_FROM_EMAIL = 'feedback@newco-project.fr'
 
-LOGIN_URL = "/account/login"
+LOGIN_URL = "/account/login/"
 
 # django-user-accounts
-ACCOUNT_LOGIN_URL = "/account/login"
+ACCOUNT_LOGIN_URL = "/account/login/"
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_CONTACT_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
@@ -261,11 +264,15 @@ ACCOUNT_EMAIL_CONFIRMATION_EMAIL = True
 ACCOUNT_CREATE_ON_SAVE = False
 ACCOUNT_LOGIN_REDIRECT_URL = "/?welcome=back"
 ACCOUNT_SIGNUP_REDIRECT_URL = "/?welcome=home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/?welcome=logout"
 ACCOUNT_USER_DISPLAY = lambda user: user.get_profile().name
 ACCOUNT_LANGUAGES = [
     (code, get_language_info(code).get("name_local"))
     for code in ['fr', 'en']
 ]
+
+# idios
+IDIOS_USE_USERNAME = False
 
 #Profile pictures
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
@@ -289,13 +296,6 @@ REDISTOGO_URL = os.environ.get("REDISTOGO_URL")
 
 # Voting
 VOTING_ZERO_VOTES_ALLOWED = True
-
-# Taggit autosuggest
-TAGGIT_AUTOSUGGEST_MAX_SUGGESTIONS = 20
-TAGGIT_AUTOSUGGEST_CSS_FILENAME = "autoSuggest-grappelli.css"
-
-# Select2
-AUTO_RENDER_SELECT2_STATICS = True
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,

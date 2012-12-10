@@ -1,54 +1,23 @@
 {% extends "dashboard/base.html" %}
 
 {% load i18n %}
+{% load staticfiles %}
 
 {% block subtitle %}{% trans "We provide you with all the things that concern you on this page. If you have only a 'quick check' to do on NewCo, this page is the one!" %}{% endblock %}
 
 {% block dashboard %}
-    <div class="row" id="boxes_container">
-        {% for key, box in boxes.items %}{% include "dashboard/_box.html" with box=box %}{% endfor %}
+  <div class="row" id="boxes_container">{% for key, box in boxes.items %}
+    <div id="box_{{ box.name }}" class="span4 well well-small box">
+      <button class="btn btn-small pull-right" data-toggle="collapse" data-target="#collapse_{{ box.name }}"><i rel="collapse_btn" class="icon-minus"></i></button>
+      <h3><a href="{{ box.page_url }}" class="black">{{ box.title }}</a></h3>
+      <p class="muted">{{ box.subtitle }}</p>
+      <div id="collapse_{{ box.name }}" rel="collapse_div" class="collapse in">
+        {% include "items/feed_display/_content_list.html" with contents=box.feed display="mini_feed" empty_msg=box.empty_msg %}
+      </div>
     </div>
-    <br>
-    <p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p>
+  {% endfor %}</div>
+
+  <div><p class="lead">{% blocktrans with link_1="<a data-toggle='modal' href='#feedbackModal'>" link_2="</a>" %} More tools to come very soon on the dashboard! If you have some ideas about how to improve this page, please {{ link_1 }}tell us{{ link_2 }}, we can't wait to read them!{% endblocktrans %}</p></div>
 {% endblock %}
 
-{% block extra_body_base %}
-    {{ block.super }}
-    <script type="text/javascript"> // script can't go to '/static' : needs to fo the 'for' loop
-        {% for key, box in boxes.items %}
-            $(function(){
-                var collapse_div = $('#{{ box.name }}_well');
-                var icon_change = $('[rel=expand_btn_{{ box.name }}]');
-                collapse_div.on('shown', function () {
-                    icon_change.removeClass('icon-plus').addClass('icon-minus');
-                })
-                collapse_div.on('hidden', function () {
-                    icon_change.removeClass('icon-minus').addClass('icon-plus');
-                })
-            });
-        {% endfor %}
-
-
-        // Seb: To Do : put in dashboard.js ? ... see where we get to use these functions
-
-        function TriggerMasonry_boxes(){
-            var $container = $('#boxes_container');
-            $container.masonry({
-                itemSelector : '.box',
-                isAnimated: true,
-                //isFitWidth: true,
-                //columnWidth : 240,
-                columnWidth: function( containerWidth ) {
-                    return containerWidth / 10; //container should be a span10, hence to fit Bootstrap columns => divide per 10
-                },
-            });
-        }
-
-        $(function(){
-            TriggerMasonry_boxes()
-            $('[rel=collapse_div]').on('hidden',function() { TriggerMasonry_boxes() });
-            $('[rel=collapse_div]').on('shown',function() { TriggerMasonry_boxes() });
-        });
-
-    </script>
-{% endblock %}
+{% block extra_script %}<script src="{% static 'js/dashboard.js' %}"></script>{% endblock %}

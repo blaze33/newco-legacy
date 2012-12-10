@@ -7,8 +7,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from babel.numbers import parse_decimal
-from model_utils import Choices
 
+from affiliation import CURRENCIES
+from affiliation.managers import StoreManager
 from items.models import Item
 
 
@@ -18,6 +19,8 @@ class Store(models.Model):
     slug = models.SlugField(verbose_name=_("slug"), editable=False)
     last_modified = models.DateTimeField(auto_now=True,
                                          verbose_name=_("last modified"))
+
+    objects = StoreManager()
 
     class Meta:
         verbose_name = _("store")
@@ -31,12 +34,6 @@ class Store(models.Model):
 
 
 class AffiliationItemBase(models.Model):
-    CURRENCIES = Choices(
-        (0, "euro", _("Euro")),
-        (1, "dollar", _("Dollar")),
-        (2, "pound", _("Pound"))
-    )
-
     name = models.CharField(max_length=200, verbose_name=_("name at store"))
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(max_length=30,
@@ -72,16 +69,14 @@ class AffiliationItemBase(models.Model):
             elif source == "decathlon":
                 self = _decathlon_init(self, item)
 
-    def identical(self, other):
-        identical = self.name == other.name
-        identical = identical and self.store == other.store
-        identical = identical and self.object_id == other.object_id
-        identical = identical and self.ean == other.ean
-        identical = identical and self.url == other.url
-        identical = identical and self.price == other.price
-        identical = identical and self.currency == other.currency
+    def same_as(self, other):
+        fields = ["name", "store", "object_id", "ean", "url", "price",
+                  "currency"]
+        same = True
+        for field in fields:
+            same = same and getattr(self, field) == getattr(other, field)
 
-        return identical
+        return same
 
 
 class AffiliationItemCatalog(AffiliationItemBase):
@@ -94,26 +89,19 @@ class AffiliationItem(AffiliationItemBase):
     item = models.ForeignKey(Item)
 
     def copy_from_affcatalog(self, other):
-        self.name = other.name
-        self.store = other.store
-        self.object_id = other.object_id
-        self.ean = other.ean
-        self.url = other.url
-        self.price = other.price
-        self.currency = other.currency
-        self.img_small = other.img_small
-        self.img_medium = other.img_medium
-        self.img_large = other.img_large
+        fields = ["name", "store", "object_id", "ean", "url", "price",
+                  "currency", "img_small", "img_medium", "img_large"]
+        for field in fields:
+            value = getattr(other, field)
+            setattr(self, field, value)
 
     class Meta:
+        ordering = ["price"]
         unique_together = (("item", "store", "object_id"),)
 
 
 def _amazon_init(aff_item, amazon_item):
-    amazon, created = Store.objects.get_or_create(
-        name="Amazon", url="http://www.amazon.fr"
-    )
-    aff_item.store = amazon
+    aff_item.store = Store.objects.get_store("Amazon")
 
     maxl = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
@@ -137,9 +125,9 @@ def _amazon_init(aff_item, amazon_item):
 
     if Price is not None:
         if Price.CurrencyCode == "EUR":
-            aff_item.currency = AffiliationItem.CURRENCIES.euro
+            aff_item.currency = CURRENCIES.euro
         elif Price.CurrencyCode == "USD":
-            aff_item.currency = AffiliationItem.CURRENCIES.dollar
+            aff_item.currency = CURRENCIES.dollar
 
         price_str = Price.FormattedPrice.pyval.split(" ")
         # fr_FR locale won't recognize the thousand dot separator !?!
@@ -158,10 +146,7 @@ def _amazon_init(aff_item, amazon_item):
 
 
 def _decathlon_init(aff_item, decathlon_item):
-    decathlon, created = Store.objects.get_or_create(
-        name="Decathlon", url="http://www.decathlon.fr"
-    )
-    aff_item.store = decathlon
+    aff_item.store = Store.objects.get_store("Decathlon")
     max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
 
     for key, value in decathlon_item.items():
@@ -189,8 +174,8 @@ def _decathlon_init(aff_item, decathlon_item):
     aff_item.price = price if price and price < price_2 else price_2
 
     if currency == u"€":
-        aff_item.currency = AffiliationItem.CURRENCIES.euro
+        aff_item.currency = CURRENCIES.euro
     else:
-        aff_item.currency = AffiliationItem.CURRENCIES.dollar
+        aff_item.currency = CURRENCIES.dollar
 
     return aff_item

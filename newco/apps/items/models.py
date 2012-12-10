@@ -1,5 +1,4 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify, truncatechars
@@ -10,17 +9,16 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from follow.utils import register
-from model_utils import Choices
-from model_utils.managers import QueryManager
-from taggit_autosuggest.managers import TaggableManager
+from taggit.managers import TaggableManager
 from voting.models import Vote
 
+from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
 from items.managers import ContentManager, ItemManager
 
+CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")
-TAG_HELP_TEXT = _("Add one or several related categories/activities separated"
-                  " by a tab or comma.<br>e.g. tennis, trekking, shoes,"
-                  " housework, cooking, GPS, smartphone, etc.")
+TAG_HELP_TEXT = _("Add one or several related categories/activities using"
+                  " Tab or Enter, and the Arrow keys.")
 
 
 class Item(models.Model):
@@ -59,8 +57,9 @@ class Item(models.Model):
                                       "slug": self.slug})
 
     def get_image(self):
-        return self._image if self._image \
-            else self.node.graph.get_image()
+        if self._image is None:
+            self._image = self.node.graph.get_image()
+        return self._image
 
     def set_image(self, value):
         self._image = value
@@ -70,7 +69,9 @@ class Item(models.Model):
     image = property(get_image, set_image, del_image, "Image property")
 
     def get_node(self):
-        return self._node if self._node else sync_products(Item, self)
+        if self._node is None:
+            self._node = sync_products(Item, self)
+        return self._node
 
     def set_node(self, value):
         self._node = value
@@ -82,36 +83,21 @@ register(Item)
 
 
 class Content(models.Model):
-    STATUS = Choices(
-        (0, "draft", _("Draft")),
-#        (1, "sandbox", _("Sandbox")),
-        (2, "public", _("Public"))
-    )
-
     author = models.ForeignKey(User, null=True)
     pub_date = models.DateTimeField(default=timezone.now, editable=False,
                                     verbose_name=_("date published"))
-    status = models.SmallIntegerField(choices=STATUS, default=STATUS.public,
-                                      verbose_name=_("status"))
+    status = models.SmallIntegerField(
+        choices=STATUSES, default=STATUSES.public, verbose_name=_("status"))
     items = models.ManyToManyField(Item, verbose_name=_("products"),
                                    blank=True)
     votes = generic.GenericRelation(Vote)
     tags = TaggableManager(blank=True, verbose_name=TAG_VERBOSE_NAME,
                            help_text=TAG_HELP_TEXT)
 
-    public = QueryManager(status=STATUS.public)
-
     objects = ContentManager()
 
     class Meta:
         ordering = ["-pub_date"]
-
-    def save(self):
-        super(Content, self).save()
-        obj = self.select_parent()
-        if obj.votes.count() == 0:
-            user1 = User.objects.get(id=2)
-            Vote.objects.record_vote(obj, user1, 0)
 
     def delete(self):
         try:
@@ -120,11 +106,21 @@ class Content(models.Model):
             pass
         super(Content, self).delete()
 
+    @property
     def is_public(self):
-        return self.status == self.STATUS.public
+        return self.status == STATUSES.public
 
+    @property
     def is_draft(self):
-        return self.status == self.STATUS.draft
+        return self.status == STATUSES.draft
+
+    @property
+    def anchor(self):
+        return ANCHOR_PATTERNS.get(self.__class__.__name__) % self.__dict__
+
+    @property
+    def query_string(self):
+        return QUERY_STR_PATTERNS.get(self.__class__.__name__) % self.__dict__
 
     def select_subclass(self):
         subclasses = ["answer", "question", "feature", "link"]
@@ -151,15 +147,28 @@ class Question(Content):
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
+    def save(self):
+        super(Question, self).save()
+        for answer in self.answer_set.all():
+            answer.items = self.items.values_list("id", flat=True)
+            answer.tags.set(*self.tags.all())
+
     @permalink
     def get_absolute_url(self):
         return ("item_detail", [], {"model_name": self._meta.module_name,
                                     "pk": self.id,
                                     "slug": slugify(unicode(self))})
 
-    def get_product_related_url(self, item,
-                                anchor_pattern="?question=%(id)s#q-%(id)s"):
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+    def get_product_related_url(self, item):
+        return CONTENT_URL_PATTERN % {
+            "path": item.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
+
+    def sort_related_answers(self, option="popular"):
+        answer_qs = Content.objects.filter(answer__question=self)
+        ids = [a._get_pk_val() for a in answer_qs.order_queryset(option)]
+        self.set_answer_order(ids)
 
 
 class Answer(Content):
@@ -168,18 +177,27 @@ class Answer(Content):
 
     class Meta:
         verbose_name = _("answer")
+        order_with_respect_to = "question"
 
     def __unicode__(self):
         return truncatechars(self.content, 50)
 
-    def get_absolute_url(self, anchor_pattern="?answer=%(id)s#a-%(id)s"):
-        return self.question.get_absolute_url() + \
-            (anchor_pattern % self.__dict__) if self.is_public() else \
-            reverse("dash", args=["draft"])
+    def save(self):
+        super(Answer, self).save()
+        self.items = self.question.items.values_list("id", flat=True)
+        self.tags.set(*self.question.tags.all())
 
-    def get_product_related_url(self, item,
-                                anchor_pattern="?answer=%(id)s#a-%(id)s"):
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
+    def get_absolute_url(self):
+        return CONTENT_URL_PATTERN % {
+            "path": self.question.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
+
+    def get_product_related_url(self, item):
+        return CONTENT_URL_PATTERN % {
+            "path": item.get_absolute_url(),
+            "query_string": self.query_string, "anchor": self.anchor
+        }
 
 
 class Link(Content):

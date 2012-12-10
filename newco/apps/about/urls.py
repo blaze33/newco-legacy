@@ -1,24 +1,15 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic.simple import direct_to_template
 
+KWARGS = {
+    "faq": {"template": "about/faq.html"},
+    "team": {"template": "about/team.html"},
+    "contribute": {"template": "about/contribute.html"},
+}
 
 urlpatterns = patterns("",
-    url(r"^$", direct_to_template, {"template": "about/about.html"},
-                                                name="about"),
-    url(r"^get_started/$", direct_to_template,
-                    {"template": "about/get_started.html"}, name="get_started"),
-    url(r"^faq/$", direct_to_template, {"template": "about/faq.html"},
-                                                name="faq"),
-    url(r"^team/$", direct_to_template, {"template": "about/team.html"},
-                                                name="team"),
-    url(r"^contribute/$", direct_to_template,
-                    {"template": "about/contribute.html"}, name="contribute"),
-#    url(r"^terms/$", direct_to_template, {"template": "about/terms.html"},
-#                                                name="terms"),
-#    url(r"^privacy/$", direct_to_template, {"template": "about/privacy.html"},
-#                                                name="privacy"),
-#    url(r"^dmca/$", direct_to_template, {"template": "about/dmca.html"},
-#                                                name="dmca"),
-#    url(r"^what_next/$", direct_to_template,
-#                    {"template": "about/what_next.html"}, name="what_next"),
+    url(r"^faq/$", direct_to_template, KWARGS["faq"], name="faq"),
+    url(r"^team/$", direct_to_template, KWARGS["team"], name="team"),
+    url(r"^contribute/$", direct_to_template, KWARGS["contribute"],
+        name="contribute"),
 )

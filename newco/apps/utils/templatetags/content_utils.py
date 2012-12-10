@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.template.base import Node, Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from django.contrib.auth.models import User
 
@@ -49,13 +50,13 @@ def feed_template(value):
     return "items/feed_display/_%s.html" % value._meta.module_name
 
 
-@register.inclusion_tag('items/_tag_edit.html')
-def edit(item_name, item_id, edit_next=None, delete_next=None):
-    return {
-        'item_name': item_name,
-        'item_id': item_id,
-        'edit_next': edit_next,
-    }
+@register.assignment_tag
+def get_content_url(content, display, item=None):
+    if display == "detail":
+        return content.get_absolute_url()
+    elif display == "list" and item is not None:
+        return content.get_product_related_url(item)
+    return ""
 
 
 class EditButtonsNode(GenericNode):
@@ -140,7 +141,30 @@ def profile_pic(user, size=None, quote_type="double"):
     img = gravatar_img_for_user(user, size, rating=None)
     if quote_type == "single":
         img = img.replace("\"", "\'")
-    return img
+    return mark_safe(img)
+
+
+@register.simple_tag
+def favicon(url, size=16, quote_type="double"):
+    """
+    Returns the website's favicon of the given url.
+
+    Syntax::
+
+        {% favicon <url> [size] %}
+
+    Example::
+
+        {% favicon "http://www.google.fr" %}
+        {% favicon myurl 62 %}
+    """
+    template = "favicon.html"
+    icon_url = "https://getfavicon.appspot.com/%s" % url
+    context = {"icon_url": icon_url, "size": size}
+    favicon = render_to_string(template, context)
+    if quote_type == "single":
+        favicon = favicon.replace("\"", "\'")
+    return mark_safe(favicon)
 
 
 class URINode(GenericNode):

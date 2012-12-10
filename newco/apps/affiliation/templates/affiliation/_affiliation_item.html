@@ -1,35 +1,33 @@
+{% load content_utils %}
 {% load format_utils %}
 
 {% if display == "thumbnail" %}
-<div class="profile-item thumbnail click-to-product-thumb" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
+  <div class="profile-item thumbnail click-to-product-thumb" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
     <a href="{{ prod.url }}" target="_blank" title="{{ prod.name }}" class="black">
-        <div class="name">
-            <img src="{{ prod.img_small }}">
-            {{ prod.name|truncatechars:40 }}
-        </div>
+      <div class="name">
+        <img src="{{ prod.img_small }}">
+        {{ prod.name|truncatechars:40 }}
+      </div>
     </a>
     <div class="details {{ prod.ean }}">
-        <h4>
-            <a href="{{ prod.store.url }}" target="_blank" class="black">{{ prod.store }}</a>
-            <a href="{{ prod.url }}" target="_blank" id="{{ ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
-        </h4>
+      <h4>
+        <a href="{{ prod.store.url }}" target="_blank" class="black">{{ prod.store }}</a>
+        <a href="{{ prod.url }}" target="_blank" id="{{ ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
+      </h4>
     </div>
-</div>
-
+  </div>
 {% elif display == "list" %}
-<hr>
-<div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
-  {% if nb_ean != 1 %}<div class="span1">{{ ean }}</div>{% endif %}
-  <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}<img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}{% endwith %}</a></div>
-  <div class="span{% if nb_ean == 1 %}4{% else %}3{% endif %}">{{ prod.name }}</div>
-  <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
-</div>
-
+  <div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
+    <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
+    <div class="span1"><img src="{{ prod.img_small }}"></div>
+    <div class="span5">{{ prod.name }}</div>
+    <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+  </div>
 {% elif display == "dropdown" %}
-{% with "https://getfavicon.appspot.com/"|add:prod.store.url as icon_url %}
-<li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">>
-  <a href="{{ prod.url }}" target="_blank" id="{{ ean }}-drop"><img src="{{ icon_url }}" height="16px" width="16px">&nbsp;{{ prod.store }}&nbsp;&nbsp; {% price prod.price prod.currency LANGUAGE_CODE %}</a>
-</li>
-{% endwith %}
-
+  <li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
+    <a href="{{ prod.url }}" target="_blank" id="{{ prod.ean }}-drop">
+      {% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}
+      <span class="pull-right">{% price prod.price prod.currency LANGUAGE_CODE %}</span>
+    </a>
+  </li>
 {% endif %}

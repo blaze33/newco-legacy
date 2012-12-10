@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-15 20:19+0100\n"
+"POT-Creation-Date: 2012-12-10 16:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,14 +65,6 @@ msgstr ""
 msgid "or"
 msgstr ""
 
-#: templates/_account_bar.html:9
-msgid "Templates"
-msgstr ""
-
-#: templates/_account_bar.html:9
-msgid ":"
-msgstr ""
-
 #: templates/_account_bar.html:15
 msgid "Add +"
 msgstr ""
@@ -93,55 +85,59 @@ msgstr ""
 msgid "Add a story"
 msgstr ""
 
-#: templates/_account_bar.html:30
-msgid "Your reputation"
+#: templates/_account_bar.html:23
+msgid "Reload the tutorial here"
 msgstr ""
 
-#: templates/_account_bar.html:35
-msgid "Dashboard"
+#: templates/_account_bar.html:25
+msgid "Tutorial"
 msgstr ""
 
-#: templates/_account_bar.html:36
-msgid "My profile"
-msgstr ""
-
-#: templates/_account_bar.html:37
-msgid "Settings"
-msgstr ""
-
-#: templates/_account_bar.html:39
-msgid "Admin"
-msgstr ""
-
-#: templates/_account_bar.html:42
-msgid "Log out"
-msgstr ""
-
-#: templates/_account_bar.html:48
-msgid "Log in"
-msgstr ""
-
-#: templates/_account_bar.html:50
-msgid "Sign up"
-msgstr ""
-
-#: templates/_footer.html:4
-msgid "Get started"
-msgstr ""
-
-#: templates/_footer.html:5
+#: templates/_account_bar.html:26 templates/_footer.html:4
 msgid "FAQ"
 msgstr ""
 
-#: templates/_footer.html:6
+#: templates/_account_bar.html:37
+msgid "Your reputation"
+msgstr ""
+
+#: templates/_account_bar.html:42
+msgid "Dashboard"
+msgstr ""
+
+#: templates/_account_bar.html:43
+msgid "My profile"
+msgstr ""
+
+#: templates/_account_bar.html:44
+msgid "Settings"
+msgstr ""
+
+#: templates/_account_bar.html:46
+msgid "Admin"
+msgstr ""
+
+#: templates/_account_bar.html:49
+msgid "Log out"
+msgstr ""
+
+#: templates/_account_bar.html:55
+msgid "Log in"
+msgstr ""
+
+#: templates/_account_bar.html:57
+msgid "Sign up"
+msgstr ""
+
+#: templates/_footer.html:5
 msgid "How to contribute?"
 msgstr ""
 
-#: templates/_footer.html:7
+#: templates/_footer.html:6
 msgid "Team"
 msgstr ""
 
-#: templates/_footer.html:8
+#: templates/_footer.html:7
 msgid "&copy; 2012 NewCo"
 msgstr ""
 
@@ -154,48 +150,127 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: templates/homepage_base.html:27 templates/homepage_base_1.html:27
+#: templates/homepage_base.html:25 templates/homepage_base_1.html:25
 msgid "NewCo"
 msgstr ""
 
-#: templates/homepage_base.html:27 templates/homepage_base_1.html:27
+#: templates/homepage_base.html:25 templates/homepage_base_1.html:25
 msgid "Empowering you to buy better"
 msgstr ""
 
-#: templates/homepage_base.html:28 templates/homepage_base_1.html:28
+#: templates/homepage_base.html:26 templates/homepage_base_1.html:26
 msgid ""
 "NewCo helps you choose with confidence and share your advice between users."
 msgstr ""
 
-#: templates/homepage_base.html:36 templates/homepage_base_1.html:36
+#: templates/homepage_base.html:34 templates/homepage_base_1.html:34
 msgid "Get information"
 msgstr ""
 
-#: templates/homepage_base.html:39 templates/homepage_base.html.py:46
+#: templates/homepage_base.html:37 templates/homepage_base.html.py:44
 msgid "Find products, users or tags in the search bar"
 msgstr ""
 
-#: templates/homepage_base.html:42
+#: templates/homepage_base.html:40
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
 "style=\"margin-right: 3px; vertical-align:middle;\"></i> explore NewCo</em></"
 "a>"
 msgstr ""
 
-#: templates/homepage_base.html:48
+#: templates/homepage_base.html:46
 msgid ""
 "...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
 "size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play icon-white\" style=\"margin-right: 3px; vertical-align:middle; "
-"position: relative; top: -1px;\"></i> explore NewCo</em></a>"
+"\"icon-play icon-white\"></i> explore NewCo</em></a>"
 msgstr ""
 
-#: templates/homepage_base.html:54 templates/homepage_base_1.html:54
+#: templates/homepage_base.html:52 templates/homepage_base_1.html:52
 msgid "Share knowledge"
 msgstr ""
 
-#: templates/homepage_base.html:57 templates/homepage_base_1.html:57
-#: templates/homepage_base_1.html.py:62
+#: templates/homepage_base.html:55
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
+"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
+"\"><i class=\"icon-pencil\"></i> contribute</a></em>..."
+msgstr ""
+
+#: templates/homepage_base.html:58 templates/homepage_base_1.html:57
+msgid "...and build your reputation from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:61
+#, python-format
+msgid ""
+"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" id="
+"\"contribute-btn\" style=\"font-size: 18px; font-weight: 200; position:"
+"relative; top: -3px;\"><i class=\"icon-pencil icon-white\"></i> contribute</"
+"a></em>..."
+msgstr ""
+
+#: templates/homepage_base.html:65 templates/homepage_base_1.html:63
+#, python-format
+msgid ""
+"...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
+"\">reputation</a> from others' votes"
+msgstr ""
+
+#: templates/homepage_base.html:74 templates/homepage_base_1.html:105
+msgid "Click here to close the tutorial"
+msgstr ""
+
+#: templates/homepage_base.html:74 templates/homepage_base_1.html:105
+msgid "NewCo empowers you to buy better"
+msgstr ""
+
+#: templates/homepage_base.html:76
+msgid "Products"
+msgstr ""
+
+#: templates/homepage_base.html:78 templates/homepage_base.html.py:88
+#: templates/homepage_products_3.html:17
+msgid "Popular"
+msgstr ""
+
+#: templates/homepage_base.html:79 templates/homepage_base.html.py:87
+#: templates/homepage_products_3.html:18
+msgid "Last added"
+msgstr ""
+
+#: templates/homepage_base.html:84
+msgid "Questions"
+msgstr ""
+
+#: templates/homepage_base.html:86 templates/questions_subnav.html:25
+msgid "Unanswered"
+msgstr ""
+
+#: templates/homepage_base.html:94 templates/homepage_base_1.html:109
+msgid "My newsfeed"
+msgstr ""
+
+#: templates/homepage_base_1.html:37 templates/homepage_base_1.html.py:44
+msgid "Find products or tags in the search bar"
+msgstr ""
+
+#: templates/homepage_base_1.html:40
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
+"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
+"a>"
+msgstr ""
+
+#: templates/homepage_base_1.html:46
+msgid ""
+"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
+"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
+"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
+"i>explore NewCo</em></a>"
+msgstr ""
+
+#: templates/homepage_base_1.html:55 templates/homepage_base_1.html.py:60
 #, python-format
 msgid ""
 "Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
@@ -204,88 +279,25 @@ msgid ""
 "middle;\"></i> contribute</a></em>..."
 msgstr ""
 
-#: templates/homepage_base.html:60 templates/homepage_base_1.html:59
-msgid "...and build your reputation from others' votes"
-msgstr ""
-
-#: templates/homepage_base.html:63
-#, python-format
-msgid ""
-"Find where to <em><a class=\"btn btn-primary\" href=\"%(url_contrib)s\" "
-"style=\"font-size: 18px; font-weight: 200; position:relative; top: -3px;"
-"\"><i class=\"icon-pencil icon-white\" style=\"margin-right: 3px; vertical-"
-"align: middle;\"></i> contribute</a></em>..."
-msgstr ""
-
-#: templates/homepage_base.html:67 templates/homepage_base_1.html:65
-#, python-format
-msgid ""
-"...and build your <a id=\"reputation-trigger\" href=\"%(url_faq)s#reputation"
-"\">reputation</a> from others' votes"
-msgstr ""
-
-#: templates/homepage_base.html:76 templates/homepage_base_1.html:107
-msgid "Click here to close the tutorial"
-msgstr ""
-
-#: templates/homepage_base.html:76 templates/homepage_base_1.html:107
-msgid "NewCo empowers you to buy better"
-msgstr ""
-
-#: templates/homepage_base.html:77
-msgid "Products"
-msgstr ""
-
-#: templates/homepage_base.html:86 templates/homepage_base_1.html:108
-msgid "Popular products"
-msgstr ""
-
-#: templates/homepage_base.html:87
-msgid "Last products added"
-msgstr ""
-
-#: templates/homepage_base.html:91
-msgid "Answer Questions"
-msgstr ""
-
-#: templates/homepage_base.html:94 templates/homepage_base_1.html:111
-msgid "My newsfeed"
-msgstr ""
-
-#: templates/homepage_base_1.html:39 templates/homepage_base_1.html.py:46
-msgid "Find products or tags in the search bar"
-msgstr ""
-
-#: templates/homepage_base_1.html:42
-msgid ""
-"...or <a href=\"#\" class=\"btn btn-primary\"><em><i class=\"icon-play\" "
-"style=\"margin-right: 3px; vertical-align:middle;\"></i>explore NewCo</em></"
-"a>"
-msgstr ""
-
-#: templates/homepage_base_1.html:48
-msgid ""
-"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
-"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play\" style=\"margin-right: 3px; vertical-align:middle;\"></"
-"i>explore NewCo</em></a>"
-msgstr ""
-
-#: templates/homepage_base_1.html:76
+#: templates/homepage_base_1.html:74
 msgid "Create..."
 msgstr ""
 
-#: templates/homepage_base_1.html:95
+#: templates/homepage_base_1.html:93
 msgid "Join NewCo"
 msgstr ""
 
-#: templates/homepage_base_1.html:96
+#: templates/homepage_base_1.html:94
 msgid "Login"
 msgstr ""
 
-#: templates/homepage_base_1.html:109 templates/homepage_questions.html:20
-#: templates/homepage_questions_1.html:19
-#: templates/homepage_questions_2.html:25
+#: templates/homepage_base_1.html:106
+msgid "Popular products"
+msgstr ""
+
+#: templates/homepage_base_1.html:107 templates/homepage_questions.html:19
+#: templates/homepage_questions_1.html:18
+#: templates/homepage_questions_2.html:24
 msgid "Answer questions"
 msgstr ""
 
@@ -293,42 +305,34 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/homepage_products_3.html:17
-msgid "Popular"
-msgstr ""
-
-#: templates/homepage_products_3.html:18
-msgid "Last added"
-msgstr ""
-
-#: templates/homepage_questions.html:21 templates/homepage_questions_1.html:20
-#: templates/homepage_questions_2.html:26
+#: templates/homepage_questions.html:20 templates/homepage_questions_1.html:19
+#: templates/homepage_questions_2.html:25
 msgid "Category"
+msgstr ""
+
+#: templates/homepage_questions.html:45 templates/homepage_questions_1.html:69
+#: templates/homepage_questions_2.html:50
+msgid "No unanswered questions on this category."
 msgstr ""
 
 #: templates/homepage_questions.html:46 templates/homepage_questions_1.html:70
 #: templates/homepage_questions_2.html:51
-msgid "No unanswered questions on this category."
-msgstr ""
-
-#: templates/homepage_questions.html:47 templates/homepage_questions_1.html:71
-#: templates/homepage_questions_2.html:52
 msgid "Ask your own awesome question then!"
 msgstr ""
 
-#: templates/homepage_questions_1.html:26
+#: templates/homepage_questions_1.html:25
 msgid "Filter by category"
 msgstr ""
 
-#: templates/homepage_questions_1.html:27 templates/questions_subnav.html:16
+#: templates/homepage_questions_1.html:26 templates/questions_subnav.html:16
 msgid "Select"
 msgstr ""
 
-#: templates/homepage_questions_1.html:38
+#: templates/homepage_questions_1.html:37
 msgid "Questions on Products"
 msgstr ""
 
-#: templates/homepage_questions_1.html:39
+#: templates/homepage_questions_1.html:38
 msgid "Questions on Categories"
 msgstr ""
 
@@ -344,16 +348,44 @@ msgstr ""
 msgid "Filter by"
 msgstr ""
 
-#: templates/questions_subnav.html:25
-msgid "Unanswered"
-msgstr ""
-
 #: templates/questions_subnav.html:26
 msgid "Recently answered"
 msgstr ""
 
-#: templates/site_base.html:35
+#: templates/site_base.html:49
 msgid "Search for a product, a user or a tag"
+msgstr ""
+
+#: templates/site_base.html:73
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
+msgstr ""
+
+#: templates/site_base.html:91
+msgid "Tell me more!"
+msgstr ""
+
+#: templates/site_base.html:92
+msgid "NewCo is a product information webapp organized around Q&amp;A."
+msgstr ""
+
+#: templates/site_base.html:94
+msgid "But what if I don&#39;t find it?"
+msgstr ""
+
+#: templates/site_base.html:95
+msgid ""
+"Looking for some information or advice? See if you can find here the related "
+"product, tag or user."
+msgstr ""
+
+#: templates/site_base.html:97
+msgid "Thank you!"
+msgstr ""
+
+#: templates/site_base.html:98
+msgid ""
+"NewCo is a collaborative webapp: if you can't find what you're looking for, "
+"create it and ask something!"
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:6
@@ -407,7 +439,7 @@ msgstr ""
 msgid "Followers"
 msgstr ""
 
-#: templates/idios/profile_edit.html:15 templates/idios/profile_edit.html:19
+#: templates/idios/profile_edit.html:8 templates/idios/profile_edit.html:12
 msgid "Edit profile"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-27 17:58+0200\n"
+"POT-Creation-Date: 2012-12-03 17:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/about/contribute.html:5 templates/about/contribute.html.py:8
-#: templates/about/faq.html:49
+#: templates/about/faq.html:48
 msgid "How to contribute?"
 msgstr ""
 
-#: templates/about/faq.html:6 templates/about/faq.html.py:23
+#: templates/about/faq.html:5 templates/about/faq.html.py:22
 msgid "FAQ"
 msgstr ""
 
-#: templates/about/faq.html:26 templates/about/get_started.html:177
+#: templates/about/faq.html:25
 msgid "Why NewCo?"
 msgstr ""
 
-#: templates/about/faq.html:26
+#: templates/about/faq.html:25
 msgid ""
 "We believe in today's connected world you should be able to find easily a "
 "deep information on any product. It would empower you to make wise choices. "
@@ -40,23 +40,23 @@ msgid ""
 "a lot of time and energy finding what you want to buy."
 msgstr ""
 
-#: templates/about/faq.html:28
+#: templates/about/faq.html:27
 msgid "We believe this shouldn't happen"
 msgstr ""
 
-#: templates/about/faq.html:28
+#: templates/about/faq.html:27
 msgid ":"
 msgstr ""
 
-#: templates/about/faq.html:49
+#: templates/about/faq.html:48
 msgid "How can I contribute to NewCo?"
 msgstr ""
 
-#: templates/about/faq.html:51
+#: templates/about/faq.html:50
 msgid "How do you ensure to have quality content on the platform?"
 msgstr ""
 
-#: templates/about/faq.html:51
+#: templates/about/faq.html:50
 msgid ""
 "Quality of content is, with user experience, our first worry. To reach great "
 "result, we set up everything to:<ul><li>guide contributors and entice them "
@@ -64,21 +64,21 @@ msgid ""
 "our collective intelligence system"
 msgstr ""
 
-#: templates/about/faq.html:54
+#: templates/about/faq.html:53
 msgid "How to earn reputation points?"
 msgstr ""
 
-#: templates/about/faq.html:54
+#: templates/about/faq.html:53
 msgid ""
 "Build your reputation by creating quality content. You will get points from "
 "other users votes."
 msgstr ""
 
-#: templates/about/faq.html:56
+#: templates/about/faq.html:55
 msgid "What are the tags for?"
 msgstr ""
 
-#: templates/about/faq.html:56
+#: templates/about/faq.html:55
 msgid ""
 "Tags are used for two things: tag products, and tag skills. Tags can both be "
 "used for skills and products, but the use is different: tags on products is "
@@ -86,138 +86,26 @@ msgid ""
 "competence."
 msgstr ""
 
-#: templates/about/get_started.html:7
-msgid "Get started"
-msgstr ""
-
-#: templates/about/get_started.html:67
-msgid "Get <em style='color: #46a546 /*Bootstrap green*/'>started</em>"
-msgstr ""
-
-#: templates/about/get_started.html:76
-msgid "Explore"
-msgstr ""
-
-#: templates/about/get_started.html:79
-msgid "Ask a question"
-msgstr ""
-
-#: templates/about/get_started.html:82
-msgid "Add a product"
-msgstr ""
-
-#: templates/about/get_started.html:91
-msgid "Or get to know more NewCo"
-msgstr ""
-
-#: templates/about/get_started.html:117
-msgid "How it works?"
-msgstr ""
-
-#: templates/about/get_started.html:131
-msgid "Public space"
-msgstr ""
-
-#: templates/about/get_started.html:135
-#, python-format
-msgid ""
-"Product information? Go this way, Explore through the <a href=\"%(url_home)s"
-"\">homepage</a> or the search bar!"
-msgstr ""
-
-#: templates/about/get_started.html:136
-msgid ""
-"Here, you will see what each visitor can see. This is the part of the "
-"website shared by everyone."
-msgstr ""
-
-#: templates/about/get_started.html:146
-msgid "Personal space"
-msgstr ""
-
-#: templates/about/get_started.html:150
-msgid "Exclusive Pages? Your newsfeed, your drafts, your profile... over here!"
-msgstr ""
-
-#: templates/about/get_started.html:152
-msgid ""
-"This is your exclusive space. We offer you the tools to display the "
-"information as <b>you</b> want to see it."
-msgstr ""
-
-#: templates/about/get_started.html:162
-msgid "tell me more!"
-msgstr ""
-
-#: templates/about/get_started.html:179
-msgid ""
-"NewCo empowers you to buy better.<br>How? We enable you to get the "
-"information you look for, and share your knowledge back to the community."
-msgstr ""
-
-#: templates/about/get_started.html:188
-msgid "Get information"
-msgstr ""
-
-#: templates/about/get_started.html:192
-msgid "To get some information about products:"
-msgstr ""
-
-#: templates/about/get_started.html:194
-msgid "browse the public area"
-msgstr ""
-
-#: templates/about/get_started.html:195
-msgid "use the tools available in your private space"
-msgstr ""
-
-#: templates/about/get_started.html:202
-msgid "Share knowledge"
-msgstr ""
-
-#: templates/about/get_started.html:206
-#, python-format
-msgid ""
-"You can contribute while browsing the public area. Or visit the <b><a href="
-"\"%(url_contrib)s\" class=\"black\">contribution center</a></b>."
-msgstr ""
-
-#: templates/about/get_started.html:207
-msgid ""
-"Build your reputation: create quality content and you will get points from "
-"other users votes."
-msgstr ""
-
-#: templates/about/get_started.html:208
-msgid ""
-"<b>NEW:</b> We just set up a tool to create <b>easily</b> affiliation links "
-"towards our partners!"
-msgstr ""
-
-#: templates/about/get_started.html:208
-msgid "<i>Check this out</i></a>!"
-msgstr ""
-
-#: templates/about/team.html:6
+#: templates/about/team.html:5
 msgid "Team"
 msgstr ""
 
-#: templates/about/team.html:10
+#: templates/about/team.html:9
 msgid "Who are we?"
 msgstr ""
 
-#: templates/about/what_next.html:6 templates/about/what_next.html.py:9
+#: templates/about/what_next.html:5 templates/about/what_next.html.py:8
 msgid "What Next?"
 msgstr ""
 
-#: templates/about/what_next.html:35
+#: templates/about/what_next.html:34
 #, python-format
 msgid ""
 "Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
 "\"%(login_url)s\">logging in</a>."
 msgstr ""
 
-#: templates/about/what_next.html:37
+#: templates/about/what_next.html:36
 #, python-format
 msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
 msgstr ""

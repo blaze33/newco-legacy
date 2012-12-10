@@ -12,7 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from idios.models import ProfileBase
 from follow.utils import register
-from taggit_autosuggest.managers import TaggableManager
+from taggit.managers import TaggableManager
 from voting.models import Vote
 
 from items.models import Content

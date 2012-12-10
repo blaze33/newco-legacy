@@ -8,7 +8,6 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-    {{ block.super }}
     <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -52,29 +51,6 @@
 </div></div>
 {% if is_paginated %}{% paginate %}{% endif %}
 
-{% endblock %}
-
-{% block extra_script %}
-    {{ block.super }}
-    <script type="text/javascript">
-        $(function() {
-            var labels, mapped
-            $("#global_search_cat").typeahead({
-                source: function (query, process) {
-                    $.get('{% url "redis" "tags" %}', {q: query}, function (data) {
-                        labels = []
-                        mapped = {}
-
-                        $.each(data, function (i, item) {
-                            mapped[item.title] = item
-                            labels.push(item.title)
-                        })
-                        process(labels)
-                    })
-                }
-            });
-        });
-    </script>
 {% endblock %}
 
 {# TITLE: Original #}

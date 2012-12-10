@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import MultipleObjectMixin
@@ -8,29 +7,31 @@ from django.contrib.auth.models import User
 from account.utils import user_display
 from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
-from voting.models import Vote
 
 from items.models import Item, Content
-from profiles.models import Profile
 from utils.follow.views import FollowMixin
+from utils.views.tutorial import TutorialMixin
 
 
-class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
+class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
+                        FollowMixin):
 
     paginate_by = 10
 
-    def dispatch(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=kwargs.pop("pk"))
-        if profile.slug and kwargs["slug"] != profile.slug:
-            url = profile.get_absolute_url()
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.slug and kwargs["slug"] != self.object.slug:
+            url = self.object.get_absolute_url()
             return HttpResponsePermanentRedirect(url)
-        kwargs["username"] = profile.user.username
-        return super(ProfileDetailView, self).dispatch(request,
-                                                       *args, **kwargs)
+        return super(ProfileDetailView, self).get(request, *args, **kwargs)
+
+    def get_object(self):
+        if hasattr(self, "object"):
+            return self.object
+        return super(ProfileDetailView, self).get_object()
 
     def get_context_data(self, **kwargs):
-        history = Content.objects.filter(
-            Q(author=self.page_user) & Q(status=Content.STATUS.public))
+        history = Content.objects.public().filter(author=self.page_user)
         fwers_ids = Follow.objects.get_follows(
             self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)
@@ -50,7 +51,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
             "fwers": followers.order_by("-reputation__reputation_incremented"),
             "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "scores": Vote.objects.get_scores_in_bulk(history),
+            "scores": history.get_scores(),
             "nb_fwers": followers.count(),
             "nb_fwees": followers.count(),
         })
@@ -68,7 +69,7 @@ class ProfileDetailView(ProfileDetailView, MultipleObjectMixin, FollowMixin):
         return context
 
 
-class ProfileListView(ProfileListView):
+class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
 

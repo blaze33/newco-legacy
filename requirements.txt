@@ -6,9 +6,10 @@ Django==1.4.2
 --extra-index-url=http://dist.pinaxproject.com/alpha/
 django-user-accounts==1.0b7
 
-django-extensions==1.0.0
+django-extensions==1.0.1
 django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
+django-statici18n==0.4.1
 django-compressor==1.2
 
 django-timezones==0.2
@@ -17,15 +18,14 @@ django-openid==0.3a1
 python-openid==2.2.5
 Babel==0.9.6
 
-django-announcements==0.2.1
 django-pagination==1.0.7
-django-notification==0.3a1.dev9
 idios==0.2a2.dev2
 metron==0.2.dev3
 django-model-utils==1.1.0
 django-tastypie==0.9.11
 
 django-admin-tools==0.4.1
+django-admin-bootstrapped==0.1.1
 git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66746c408b4#egg=django-gravatar
 
 # Amazon
@@ -43,7 +43,8 @@ South==0.7.6
 
 ## AWS interface & storage backend
 boto==2.6.0
-django-storages==1.1.5
+# django-storages==1.1.5
+hg+https://bitbucket.org/david/django-storages@1574890#egg=django-storages
 ## dateutil needed to only upload updated files
 python-dateutil==1.5
 
@@ -54,7 +55,7 @@ django-pylibmc-sasl==0.2.4
 django-heroku-memcacheify==0.3
 
 ## production webserver
-gunicorn==0.15.0
+gunicorn==0.16.1
 gevent==0.13.8
 greenlet==0.4.0
 
@@ -71,10 +72,10 @@ raven==2.0.7.1
 
 ## utils
 requests==0.14.2
+django-htmlmin==0.5.2
 
-## tagging + autosuggest
+## tagging
 django-taggit==0.9.3
-django-taggit-autosuggest==0.2
 
 ## voting application
 django-voting==0.2
@@ -84,13 +85,6 @@ django-generic-aggregation==0.3.1
 
 ## Following application
 django-follow==0.6
-
-## Chosen
-git+git://github.com/theatlantic/django-chosen.git@b230dd5fe2d42c0bae9b4c3c61ae0eb964a118ea#egg=django_chosen
-# django-chosen==0.1
-
-## Select2
-django_select2==3.1.2
 
 ## Redis + complete
 redis==2.7.1
@@ -102,7 +96,6 @@ django-apptemplates==0.0.1
 ## The following requirements were added by pip --freeze:
 BeautifulSoup==3.2.1
 argparse==1.2.1
-distribute==0.6.27
 dj-database-url==0.2.1
 django-appconf==0.5
 django-email-confirmation==0.2

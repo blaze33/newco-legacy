@@ -2,10 +2,10 @@
 {% load follow_tags %}
 {% load content_utils %}
 
-<form action='' method='POST'>{% csrf_token %}
-  <input type='submit' class='{{ btn.class }}{% if btn.extra_class %} {{ btn.extra_class }}{% endif %}{% if tooltip %} {{ tooltip.class }}{% endif %}' name='{{ btn.name }}' value='{{ btn.value }}'{% if tooltip %} title='{{ tooltip.title }}'{% endif %}{% if disabled %} disabled{% endif %}/>
-  <input type='hidden' name='app_label' value='{{ object|to_app_label }}'/>
-  <input type='hidden' name='object_name' value='{{ object|to_class_name }}'/>
-  <input type='hidden' name='id' value='{{ object.id }}'/>
-  {% if next %}<input type="hidden" name="next" value="{{ next }}"/>{% endif %}
+<form method='POST'>{% csrf_token %}
+  <input type='submit' class='{{ btn.class }}{% if btn.extra_class %} {{ btn.extra_class }}{% endif %}{% if tooltip %} {{ tooltip.class }}{% endif %}' name='{{ btn.name }}' value='{{ btn.value }}'{% if tooltip %} title='{{ tooltip.title }}'{% endif %}{% if disabled %} disabled{% endif %}>
+  <input type='hidden' name='app_label' value='{{ object|to_app_label }}'>
+  <input type='hidden' name='object_name' value='{{ object|to_class_name }}'>
+  <input type='hidden' name='id' value='{{ object.id }}'>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 </form>
