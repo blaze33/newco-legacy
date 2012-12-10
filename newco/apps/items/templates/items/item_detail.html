@@ -52,7 +52,7 @@
 
   {% if store_prods_by_ean %}<div class="span3">
     <div class="dropdown controls">
-      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest_prod.price currency=cheapest_prod.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
         {% for ean, prod_list in store_prods_by_ean.items %}{% for prod in prod_list %}
           {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
@@ -122,7 +122,11 @@
     {{ block.super }}
 
     <script type ="text/javascript">
-        $(document).ready(function(){mixpanel.track("Load_item_detail");});
+        $(document).ready(function(){
+            var product=document.getElementById("drop");
+	        var name=product.getAttribute("data-name");
+        	mixpanel.track("Load_item_detail", {"product":name});});
         if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
     </script>
+    <script type="text/javascript" src="{% static 'js/ga_functions.js' %}"></script>
 {% endblock %}
