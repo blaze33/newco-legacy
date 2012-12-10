@@ -203,9 +203,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             item = context.get("item")
             item_related_qs = content_qs.filter(items=item)
             scores, votes = item_related_qs.get_scores_and_votes(user)
-            question_qs = item_related_qs.filter(
-                question__isnull=False)
-            questions = question_qs.order_queryset("popular", scores)
+            questions = item_related_qs.questions().order_queryset(
+                "popular", scores)
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -316,7 +315,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             msg = _("No products with tag %s")
         elif self.cat == "questions":
             self.model, self.pill = [Question, kwargs.get("pill", "tag")]
-            self.queryset = Content.objects.filter(question__isnull=False)
+            self.queryset = Content.objects.questions()
             if self.pill == "tag":
                 self.queryset = self.queryset.filter(tags=self.tag)
                 msg = _("No questions with tag %s")
