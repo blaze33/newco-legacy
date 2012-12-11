@@ -48,6 +48,12 @@ class ItemManager(models.Manager):
 
 
 class ContentQuerySet(InheritanceQuerySet):
+    def questions(self):
+        return self.filter(question__isnull=False)
+
+    def answers(self):
+        return self.filter(answer__isnull=False)
+
     def get_feed(self, user):
         """
         Get the newsfeed of a specific user
@@ -73,9 +79,11 @@ class ContentQuerySet(InheritanceQuerySet):
                           reverse=True)
         elif "pub_date" in option:
             return self.order_by(option).select_subclasses()
-        elif option == "no_answers":
+        elif option == "last":
+            return self.order_by("-pub_date").select_subclasses()
+        elif option in ["no_answers", "unanswered"]:
             return self.annotate(score=Count("question__answer")).filter(
-                score__lte=0).select_subclasses()
+                score__lte=0, status=STATUSES.public).select_subclasses()
         return self
 
     def get_scores(self):
@@ -111,6 +119,12 @@ class ContentManager(InheritanceManager):
     def get_query_set(self):
         qs = ContentQuerySet(self.model)
         return qs.filter(Q(link__isnull=True) & Q(feature__isnull=True))
+
+    def questions(self):
+        return self.get_query_set().questions()
+
+    def answers(self):
+        return self.get_query_set().answers()
 
     def get_feed(self, user):
         return self.get_query_set().get_feed(user)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 16:44+0100\n"
+"POT-Creation-Date: 2012-12-10 16:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,19 +229,25 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: templates/homepage_base.html:78 templates/homepage_products_3.html:17
+#: templates/homepage_base.html:78 templates/homepage_base.html.py:88
+#: templates/homepage_products_3.html:17
 msgid "Popular"
 msgstr ""
 
-#: templates/homepage_base.html:79 templates/homepage_products_3.html:18
+#: templates/homepage_base.html:79 templates/homepage_base.html.py:87
+#: templates/homepage_products_3.html:18
 msgid "Last added"
 msgstr ""
 
-#: templates/homepage_base.html:83
+#: templates/homepage_base.html:84
 msgid "Questions"
 msgstr ""
 
-#: templates/homepage_base.html:86 templates/homepage_base_1.html:109
+#: templates/homepage_base.html:86 templates/questions_subnav.html:25
+msgid "Unanswered"
+msgstr ""
+
+#: templates/homepage_base.html:94 templates/homepage_base_1.html:109
 msgid "My newsfeed"
 msgstr ""
 
@@ -342,10 +348,6 @@ msgstr ""
 msgid "Filter by"
 msgstr ""
 
-#: templates/questions_subnav.html:25
-msgid "Unanswered"
-msgstr ""
-
 #: templates/questions_subnav.html:26
 msgid "Recently answered"
 msgstr ""
@@ -354,45 +356,33 @@ msgstr ""
 msgid "Search for a product, a user or a tag"
 msgstr ""
 
-#: templates/site_base.html:77
+#: templates/site_base.html:73
 msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 
-#: templates/site_base.html:79
-msgid "No matches found"
-msgstr ""
-
-#: templates/site_base.html:82
-msgid "Loading more results..."
-msgstr ""
-
-#: templates/site_base.html:83
-msgid "Searching..."
-msgstr ""
-
-#: templates/site_base.html:102
+#: templates/site_base.html:91
 msgid "Tell me more!"
 msgstr ""
 
-#: templates/site_base.html:103
+#: templates/site_base.html:92
 msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
 
-#: templates/site_base.html:105
+#: templates/site_base.html:94
 msgid "But what if I don&#39;t find it?"
 msgstr ""
 
-#: templates/site_base.html:106
+#: templates/site_base.html:95
 msgid ""
 "Looking for some information or advice? See if you can find here the related "
 "product, tag or user."
 msgstr ""
 
-#: templates/site_base.html:108
+#: templates/site_base.html:97
 msgid "Thank you!"
 msgstr ""
 
-#: templates/site_base.html:109
+#: templates/site_base.html:98
 msgid ""
 "NewCo is a collaborative webapp: if you can't find what you're looking for, "
 "create it and ask something!"
