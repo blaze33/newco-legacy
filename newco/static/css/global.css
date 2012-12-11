@@ -10,6 +10,13 @@
   margin-bottom: 0px;
 }
 
+/* utilities */
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
 
 /* ↓ css defs for profile page */
 
