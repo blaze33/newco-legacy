@@ -180,6 +180,10 @@ button[type="submit"][class*="icon-"][data-vote="True"] {
   min-width: 66%;
   max-width: 100%
 }
+.modal-gallery.fade.in {
+  /*fix modal position starting with bootstrap 2.2.2*/
+  top: 50%;
+}
 .modal-footer {
   text-align: left;
   white-space: nowrap;
