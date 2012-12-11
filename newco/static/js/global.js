@@ -158,6 +158,9 @@ $(function() {
             $('#obj_class').val(obj.class);
             $('#obj_id').val(obj.id);
             return obj.title
+        },
+        matcher: function (item) {
+            return true
         }
     });
 });
