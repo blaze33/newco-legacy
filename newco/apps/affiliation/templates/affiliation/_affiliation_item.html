@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load content_utils %}
 {% load format_utils %}
 
@@ -19,9 +20,14 @@
 {% elif display == "list" %}
   <div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
     <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
-    <div class="span1"><img src="{{ prod.img_small }}"></div>
-    <div class="span5">{{ prod.name }}</div>
-    <div class="span1 {{ prod.ean }}"><a href="{{ prod.url }}" target="_blank" id="{{ ean }}">{% price prod.price prod.currency LANGUAGE_CODE %}</a></div>
+    <div class="span4">
+      <img class="pull-right" src="{{ prod.img_small }}">
+      {{ prod.name }}
+    </div>
+    <div class="span3">
+      <b>{% price prod.price prod.currency LANGUAGE_CODE %}</b>
+      <a class="btn pull-right" id="{{ ean }}" href="{{ prod.url }}" target="_blank"><b>{% trans "See offer" %}</b> <i class="icon-play"></i></a>
+    </div>
   </div>
 {% elif display == "dropdown" %}
   <li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
