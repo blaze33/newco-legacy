@@ -89,16 +89,7 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{ block.super }}
-
-  <script type ="text/javascript">
-      $(document).ready(function(){
-          var product=document.getElementById("drop");
-	      var name=product.getAttribute("data-name");
-          mixpanel.track("Load_item_detail", {"product":name});});
-      if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
-  </script>
-  <script type="text/javascript" src="{% static 'js/ga_functions.js' %}"></script>
+  <script src="{% static 'js/ga_functions.js' %}"></script>
   <script src="{{ STATIC_URL }}external/javascript-load-image/load-image.min.js"></script>
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
@@ -139,5 +130,12 @@
         })
       })
     });
+    
+    //Tracking Product name for analytics
+    $(document).ready(function(){
+          var product=document.getElementById("drop");
+	      var name=product.getAttribute("data-name");
+          mixpanel.track("Load_item_detail", {"product":name});});
+      if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
   </script>
 {% endblock %}
