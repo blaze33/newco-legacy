@@ -5,7 +5,7 @@
 # Python API client library to consume mixpanel.com analytics data.
 
 import csv
-import tablib
+#import tablib
 import hashlib
 import urllib
 import time
@@ -14,39 +14,24 @@ try:
     import json
 except ImportError:
     import simplejson as json
+    
+from django.conf import settings
 
 #Newco Dev
-#API_KEY = 'c5feefa79919576098a2f711dc1bbcc0'
-#API_SECRET = 'd39bf6955dc0f876e4687df87d6579c3'
+#API_KEY = settings.MIXPANEL_API_KEY_DEV
+#API_SECRET = MIXPANEL_API_SECRET_DEV
 
 #Newco Production
-API_KEY = '36bb00d6e2f24b7f7c1f4871004d23a8'
-API_SECRET = '16be758f6a25a88315628c01eb498d52'
+API_KEY = settings.MIXPANEL_API_KEY
+API_SECRET = settings.MIXPANEL_API_SECRET
 
 
 TYPE = 'segmentation'
-EVENT = 'Load item detail'
+EVENT = 'Load_item_detail'
 PROPERTY = 'properties["product"]'
 FROM_DATE = '2012-11-9'
 TO_DATE = '2012-11-23'
 NUM_DAYS = 15
-
-#data = csv.reader(open('products.csv','rU'))
-## Read the column names from the first line of the file 
-#fields = data.next() 
-#LIST_PRODUCTS=fields
-#
-#data = csv.reader(open('merchants.csv','rU'))
-## Read the column names from the first line of the file 
-#fields = data.next() 
-#LIST_MERCHANTS=fields
-#
-#data = csv.reader(open('referrer_page.csv','rU'))
-## Read the column names from the first line of the file 
-#fields = data.next() 
-#LIST_REFERRER=fields
-#
-#LIST=LIST_REFERRER
 
 class Mixpanel(object):
 
@@ -136,7 +121,7 @@ if __name__ == '__main__':
         'event' : EVENT,
         'from_date':FROM_DATE,
         'to_date':TO_DATE,
-        'on':PROPERTY,
+        #'on':PROPERTY,
         #'name':'Country',
         #'values':['Firefox'],
         #'unit' : 'day',
@@ -145,6 +130,8 @@ if __name__ == '__main__':
     })
     #print LIST
     pprint.pprint(data)
+    pprint.pprint(API_KEY)
+    pprint.pprint(API_SECRET)
     filename = 'results.%s.%06d.csv' %(FROM_DATE+'_'+TO_DATE+EVENT+'_'+PROPERTY,2012)
     csv_file = open(filename, 'wb')
     wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
