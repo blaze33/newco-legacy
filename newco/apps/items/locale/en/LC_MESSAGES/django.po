@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-13 10:48+0100\n"
+"POT-Creation-Date: 2012-12-13 10:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,11 +102,11 @@ msgstr ""
 msgid "slug"
 msgstr ""
 
-#: models.py:27
+#: models.py:27 models.py:84
 msgid "author"
 msgstr ""
 
-#: models.py:28 models.py:86
+#: models.py:28 models.py:85
 msgid "date published"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "product"
 msgstr ""
 
-#: models.py:88
+#: models.py:87
 msgid "status"
 msgstr ""
 
@@ -126,39 +126,39 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-#: models.py:140 models.py:143
+#: models.py:140 models.py:143 models.py:173
 msgid "question"
 msgstr ""
 
-#: models.py:174 models.py:202 models.py:217 models.py:233
+#: models.py:175 models.py:203 models.py:218 models.py:234
 msgid "content"
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 msgid "answer"
 msgstr ""
 
-#: models.py:203
+#: models.py:204
 msgid "URL"
 msgstr ""
 
-#: models.py:206
+#: models.py:207
 msgid "link"
 msgstr ""
 
-#: models.py:221
+#: models.py:222
 msgid "feature"
 msgstr ""
 
-#: models.py:232
+#: models.py:233
 msgid "title"
 msgstr ""
 
-#: models.py:238
+#: models.py:239
 msgid "story"
 msgstr ""
 
-#: models.py:239
+#: models.py:240
 msgid "stories"
 msgstr ""
 

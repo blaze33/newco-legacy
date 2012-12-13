@@ -81,16 +81,16 @@ register(Item)
 
 
 class Content(models.Model):
-    author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                    verbose_name=_("date published"))
-    status = models.SmallIntegerField(
-        choices=STATUSES, default=STATUSES.public, verbose_name=_("status"))
+    author = models.ForeignKey(User, verbose_name=_("author"), null=True)
+    pub_date = models.DateTimeField(_("date published"), default=timezone.now,
+                                    editable=False)
+    status = models.SmallIntegerField(_("status"), choices=STATUSES,
+                                      default=STATUSES.public)
     items = models.ManyToManyField(Item, verbose_name=_("products"),
                                    blank=True)
     votes = generic.GenericRelation(Vote)
-    tags = TaggableManager(blank=True, verbose_name=TAG_VERBOSE_NAME,
-                           help_text=TAG_HELP_TEXT)
+    tags = TaggableManager(TAG_VERBOSE_NAME, help_text=TAG_HELP_TEXT,
+                           blank=True)
 
     objects = ContentManager()
 
@@ -137,7 +137,7 @@ class Content(models.Model):
 
 
 class Question(Content):
-    content = models.CharField(max_length=200, verbose_name=_("question"))
+    content = models.CharField(_("question"), max_length=200)
 
     class Meta:
         verbose_name = _("question")
@@ -170,8 +170,9 @@ class Question(Content):
 
 
 class Answer(Content):
-    question = models.ForeignKey(Question, null=True)
-    content = models.CharField(max_length=10000, verbose_name=_("content"))
+    question = models.ForeignKey(Question, verbose_name=_("question"),
+                                 null=True)
+    content = models.CharField(_("content"), max_length=10000)
 
     class Meta:
         verbose_name = _("answer")
