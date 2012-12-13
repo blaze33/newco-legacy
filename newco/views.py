@@ -7,12 +7,13 @@ from django.views.generic import ListView
 from items.models import Item, Content
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
+from utils.views.category_filtering import CategoryMixin
 
 DEFAULT_CATGORY = "products"
 DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
 
 
-class HomepageView(MultiTemplateMixin, TutorialMixin, ListView):
+class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView):
 
     paginate_by = 14
 
@@ -47,3 +48,4 @@ class HomepageView(MultiTemplateMixin, TutorialMixin, ListView):
         if self.model == Item:
             ctx.get("object_list").fetch_images()
         return ctx
+            
