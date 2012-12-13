@@ -82,11 +82,7 @@ class ContentFormMixin(object):
             if "add_links" in POST and self.object:
                 form.link_aff(self.object)
             if "del_links" in POST and self.object:
-                aff_item_ids = POST.getlist("linked_aff")
-                linked_items = self.object.affiliationitem_set.select_related()
-                aff_items_to_delete = linked_items.exclude(id__in=aff_item_ids)
-                for aff_item in aff_items_to_delete:
-                    aff_item.delete()
+                form.unlink_aff(self.object)
             if "store_search" in POST:
                 form.stores_search()
             return self.render_to_response(self.get_context_data(form=form))

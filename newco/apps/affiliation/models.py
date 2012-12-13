@@ -32,7 +32,7 @@ class Store(models.Model):
         super(Store, self).save(**kwargs)
 
 
-class AffiliationItemBase(models.Model):
+class AffiliationItem(models.Model):
     name = models.CharField(_("name at store"), max_length=200)
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(_("store object id"), max_length=30)
@@ -49,13 +49,14 @@ class AffiliationItemBase(models.Model):
     img_medium = models.URLField(_("medium image"), max_length=1000)
     img_large = models.URLField(_("large image"), max_length=1000)
 
+    item = models.ForeignKey(Item, null=True, blank=True)
+
     class Meta:
-        abstract = True
         verbose_name = _("affiliation item")
         unique_together = (('store', 'object_id'),)
 
     def __unicode__(self):
-        return u"%s @ %s" % (self.item, self.store)
+        return u"%s @ %s" % (self.name[:10], self.store)
 
     def store_init(self, source, item):
         if source is not None and item is not None:
@@ -72,28 +73,6 @@ class AffiliationItemBase(models.Model):
             same = same and getattr(self, field) == getattr(other, field)
 
         return same
-
-
-class AffiliationItemCatalog(AffiliationItemBase):
-
-    def __unicode__(self):
-        return u"%s @ %s" % (self.name[:10], self.store)
-
-
-class AffiliationItem(AffiliationItemBase):
-    item = models.ForeignKey(Item)
-
-    def copy_from_affcatalog(self, other):
-        if other.__class__ is not AffiliationItemCatalog:
-            return
-        for field in self._meta.fields:
-            if field.editable and not field.name in ["id", "item"]:
-                value = getattr(other, field.name)
-                setattr(self, field.name, value)
-
-    class Meta:
-        ordering = ["price"]
-        unique_together = (("item", "store", "object_id"),)
 
 
 def _amazon_init(aff_item, amazon_item):

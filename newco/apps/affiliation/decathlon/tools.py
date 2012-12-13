@@ -4,7 +4,7 @@ import sys
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction, IntegrityError
 
-from affiliation.models import AffiliationItem, AffiliationItemCatalog, Store
+from affiliation.models import AffiliationItem, Store
 from affiliation.catalogs_tools import csv_url2dict
 from utils.tools import get_search_results
 
@@ -13,10 +13,7 @@ def decathlon_product_search(keyword, nb_items=10):
     store = Store.objects.get_store("Decathlon")
 
     # Exclude from search already linked items
-    d4_object_ids = AffiliationItem.objects.filter(
-        store=store).values_list("object_id", flat=True)
-    d4_prods = AffiliationItemCatalog.objects.filter(store=store).exclude(
-        object_id__in=d4_object_ids, store=store)
+    d4_prods = AffiliationItem.objects.filter(store=store, item=None)
 
     # Mininum length for words that are used for the search
     min_len = 3
@@ -33,7 +30,7 @@ def decathlon_db_processing(output_file=None):
         output = sys.stdout
     output.write("\n-----------\nDECATHLON DB PROCESSING\n-----------\n")
 
-    storing_class = AffiliationItemCatalog
+    storing_class = AffiliationItem
     errors = list()
     store = Store.objects.get_store("Decathlon")
     transaction.commit()
@@ -49,30 +46,13 @@ def decathlon_db_processing(output_file=None):
     transaction.commit()
     for i, row in enumerate(rows):
         output.write("ENTRY %d --- " % (i + 1))
-        entry = storing_class()
-        entry.store_init("decathlon", row)
+        entry, created = storing_class.objects.get_or_create(
+            store=store, object_id=row.get("Id produit", ""))
 
-        if entry.object_id in d4_object_ids:
-            try:
-                item = d4_items.get(object_id=entry.object_id)
-            except ObjectDoesNotExist:
-                err_msg = "Couldn't load object %s while updating" \
-                    % entry.object_id
-                errors.append(err_msg + "\n")
-                output.write(err_msg)
-            else:
-                if not item.same_as(entry):
-                    entry.id = item.id
-                    entry.save()
-                    transaction.commit()
-                    output.write("UPDATED: %s" % entry.name[:50])
-                else:
-                    transaction.commit()
-                    output.write("NO CHANGES: %s" % entry.name[:50])
-                del d4_object_ids[d4_object_ids.index(entry.object_id)]
-        else:
+        if created:
             # Since postgres db not functionnal after an IntegrityError,
             # need to handle transactions manually
+            entry.store_init("decathlon", row)
             try:
                 entry.save()
                 transaction.commit()
@@ -83,6 +63,18 @@ def decathlon_db_processing(output_file=None):
                 output.write(err_msg)
             else:
                 output.write("CREATED: %s" % entry.name[:50])
+        else:
+            new_entry = storing_class()
+            new_entry.store_init("decathlon", row)
+            if entry.same_as(new_entry):
+                transaction.commit()
+                output.write("NO CHANGES: %s" % entry.name[:50])
+            else:
+                new_entry.id = entry.id
+                new_entry.save()
+                transaction.commit()
+                output.write("UPDATED: %s" % entry.name[:50])
+            del d4_object_ids[d4_object_ids.index(entry.object_id)]
 
         output.write("\n")
         output.flush()

@@ -11,7 +11,7 @@ from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagWidget
 
-from affiliation.models import AffiliationItem, AffiliationItemCatalog
+from affiliation.models import AffiliationItem
 from affiliation.tools import stores_product_search
 from items.models import Item, Content, Question, Answer, Story, Link
 from utils.mailtools import mail_question_author
@@ -41,12 +41,18 @@ class ItemForm(ModelForm):
             item.save()
             self.save_m2m()
 
+        self.unlink_aff(item)
         self.link_aff(item)
 
         return item
 
     def link_aff(self, item):
-        _link_aff(self.request, item)
+        aff_ids = self.request.POST.getlist("link_aff", [])
+        AffiliationItem.objects.filter(id__in=aff_ids).update(item=item)
+
+    def unlink_aff(self, item):
+        aff_ids = self.request.POST.getlist("linked_aff", [])
+        item.affiliationitem_set.exclude(id__in=aff_ids).delete()
 
     def stores_search(self):
         self.errors.clear()
@@ -284,41 +290,12 @@ class LinkForm(ModelForm):
             return super(LinkForm, self).save(commit)
 
 
-def _link_aff(request, item):
-    if "link_aff" in request.POST:
-        aff_cat_ids = request.POST.getlist("link_aff")
-        for aff_cat_id in aff_cat_ids:
-            try:
-                aff_cat = AffiliationItemCatalog.objects.get(
-                    id=aff_cat_id)
-            except ObjectDoesNotExist:
-                pass
-            else:
-                aff_item, c = AffiliationItem.objects.get_or_create(
-                    item=item, store=aff_cat.store,
-                    object_id=aff_cat.object_id
-                )
-                aff_item.copy_from_affcatalog(aff_cat)
-                aff_item.save()
-
-
 def _reload_current_search(item_form):
-    product_list_by_store = {}
+    store_dict = {}
     for key in item_form.request.POST.keys():
         if "current_search_" in key:
             store = unicode.replace(key, "current_search_", "")
-            aff_cat_ids = item_form.request.POST.getlist(key)
-            product_list = list()
-            for aff_cat_id in aff_cat_ids:
-                try:
-                    aff_cat = AffiliationItemCatalog.objects.get(
-                        id=aff_cat_id)
-                except ObjectDoesNotExist:
-                    pass
-                else:
-                    if AffiliationItem.objects.filter(
-                            object_id=aff_cat.object_id,
-                            store=aff_cat.store).count() == 0:
-                        product_list.append(aff_cat)
-            product_list_by_store.update({store: product_list})
-    return product_list_by_store
+            aff_ids = item_form.request.POST.getlist(key)
+            store_dict.update({store: AffiliationItem.objects.filter(
+                id__in=aff_ids, item=None)})
+    return store_dict
