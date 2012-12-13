@@ -1,0 +1,7 @@
+@charset 'UTF-8';
+
+.product-comparator img {
+  float: right;
+  margin-right: 0px;
+  width: 75px;
+}
