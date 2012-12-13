@@ -22,15 +22,13 @@ TAG_HELP_TEXT = _("Add one or several related categories/activities using"
 
 
 class Item(models.Model):
-    name = models.CharField(max_length=255, verbose_name=_("name"))
-    slug = models.SlugField(verbose_name=_("slug"), editable=False)
-    author = models.ForeignKey(User, null=True)
-    pub_date = models.DateTimeField(default=timezone.now, editable=False,
-                                    verbose_name=_('date published'))
-    last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_("last modified"))
-    tags = TaggableManager(verbose_name=TAG_VERBOSE_NAME,
-                           help_text=TAG_HELP_TEXT)
+    name = models.CharField(_("name"), max_length=255)
+    slug = models.SlugField(_("slug"), editable=False)
+    author = models.ForeignKey(User, verbose_name=_("author"), null=True)
+    pub_date = models.DateTimeField(_('date published'), default=timezone.now,
+                                    editable=False)
+    last_modified = models.DateTimeField(_("last modified"), auto_now=True)
+    tags = TaggableManager(TAG_VERBOSE_NAME, help_text=TAG_HELP_TEXT)
 
     objects = ItemManager()
 
@@ -46,7 +44,7 @@ class Item(models.Model):
         return u"%s" % (self.name)
 
     def save(self):
-        maxl = self._meta.get_field_by_name('slug')[0].max_length
+        maxl = self._meta.get_field_by_name("slug")[0].max_length
         self.slug = truncatechars(slugify(self.name), maxl)
         super(Item, self).save()
 

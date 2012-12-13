@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 18:18+0100\n"
+"POT-Creation-Date: 2012-12-13 10:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,59 +102,63 @@ msgstr ""
 msgid "slug"
 msgstr ""
 
-#: models.py:29 models.py:88
+#: models.py:27
+msgid "author"
+msgstr ""
+
+#: models.py:28 models.py:86
 msgid "date published"
 msgstr ""
 
-#: models.py:31
+#: models.py:30
 msgid "last modified"
 msgstr ""
 
-#: models.py:38
+#: models.py:36
 msgid "product"
 msgstr ""
 
-#: models.py:90
+#: models.py:88
 msgid "status"
 msgstr ""
 
-#: models.py:91
+#: models.py:89
 msgid "products"
 msgstr ""
 
-#: models.py:142 models.py:145
+#: models.py:140 models.py:143
 msgid "question"
 msgstr ""
 
-#: models.py:176 models.py:204 models.py:219 models.py:235
+#: models.py:174 models.py:202 models.py:217 models.py:233
 msgid "content"
 msgstr ""
 
-#: models.py:179
+#: models.py:177
 msgid "answer"
 msgstr ""
 
-#: models.py:205
+#: models.py:203
 msgid "URL"
 msgstr ""
 
-#: models.py:208
+#: models.py:206
 msgid "link"
 msgstr ""
 
-#: models.py:223
+#: models.py:221
 msgid "feature"
 msgstr ""
 
-#: models.py:234
+#: models.py:232
 msgid "title"
 msgstr ""
 
-#: models.py:240
+#: models.py:238
 msgid "story"
 msgstr ""
 
-#: models.py:241
+#: models.py:239
 msgid "stories"
 msgstr ""
 
@@ -213,45 +217,45 @@ msgctxt "feature"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:266 views.py:357
+#: views.py:265 views.py:356
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:267 views.py:358
+#: views.py:266 views.py:357
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:316
+#: views.py:315
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:322
+#: views.py:321
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:327
+#: views.py:326
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:403
+#: views.py:402
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:407
+#: views.py:406
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:411
+#: views.py:410
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:415
+#: views.py:414
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
