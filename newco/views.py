@@ -48,4 +48,4 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView):
         if self.model == Item:
             ctx.get("object_list").fetch_images()
         return ctx
-            
+ 
