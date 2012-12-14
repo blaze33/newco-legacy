@@ -8,9 +8,7 @@ from items.models import Item, Content
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
 from utils.views.category_filtering import CategoryMixin
-
-DEFAULT_CATGORY = "products"
-DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
+from newco import DEFAULT_FILTERS, DEFAULT_CATGORY
 
 
 class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView):

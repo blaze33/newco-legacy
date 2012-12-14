@@ -12,10 +12,9 @@ from django.shortcuts import get_object_or_404
 
 from items.models import Item, Content
 from taggit.models import Tag
+from newco import DEFAULT_FILTERS, DEFAULT_CATGORY
 
 
-DEFAULT_CATGORY = "products"
-DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
 class CategoryMixin(object):
 
     def get(self, request, *args, **kwargs):
