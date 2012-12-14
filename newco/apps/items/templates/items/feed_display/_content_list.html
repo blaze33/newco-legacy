@@ -8,6 +8,8 @@
     {% dict_entry_for_item content from scores as score %}
 
     {% include content|feed_template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
+    <hr>
+    {% include "items/feed_display/_question_2.html" with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
   </div></div>
 {% empty %}
   {% if empty_msg %}
