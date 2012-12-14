@@ -9,7 +9,7 @@
 
     {% include content|feed_template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
     <hr>
-    {% include "items/feed_display/_question_2.html" with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
+    {% include "items/feed_display/_question_2.html" with content=content display_ctx=display_ctx author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
   </div></div>
 {% empty %}
   {% if empty_msg %}

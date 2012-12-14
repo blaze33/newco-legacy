@@ -16,9 +16,10 @@
 
 {% elif display == "text" %}
 
-  <div class="row"><div class="span7">
+  {% if display_ctx == "True" %}<div class="row"><div class="span7">
     <p class="nf-small-grey">{% object_display author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}</p>
-  </div></div>
+  </div></div>{% endif %}
+
   <div class="row one_row">
     <div class="span1 vote-controls">
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display only %}
@@ -47,7 +48,7 @@
 
     </div>
 
-    {% if display_img == "True" %}{# quick-fix whil we have not standardized width of newsfeed: no image allow to stay in span7 #}
+    {% if display_img == "True" %}{# Seb: quick-fix while we don't have standardized width of newsfeed: "no image" allows to stay in span7 #}
       {% if content.items.all %}
         {% for item in content.items.all %}
           <div class="span1 content-item-mini">

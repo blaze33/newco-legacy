@@ -16,7 +16,7 @@
 <div class="row"><div class="span10 offset1">
   <div class="row">
     <div class="span6">
-      <h2>{% trans "New feed display" %}</h2>
+      <h2>{% trans "Questions without answer / New feed display" %}</h2>
       {% if category_name %}<h5>{% trans "Category" %} {{ category_name }}</h5>{% endif %}
       <br><hr>
     </div>
@@ -25,34 +25,8 @@
   <div class="row">
     <div class="span10">
       {% if object_list %}{% for content in object_list %}
-        {% include "items/feed_display/_question_2.html" with display="text" display_img="True" reason="Reasoooon !" content=content author=content.author score=score user=user path=request.path csrf_token=csrf_token only %}
+        {% include "items/feed_display/_question_2.html" with display="text" display_img="True" display_ctx="False" content=content author=content.author score=score user=user path=request.path csrf_token=csrf_token only %}
         <hr>
-      {% endfor %}
-      {% else %}
-        {% trans "No unanswered questions on this category." %}
-        <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span10"><br><br><h1>Previous question feed: </h1>
-      {% if object_list %}{% for content in object_list %}
-        {% include "items/feed_display/_question.html" with display="unanswered" %}
-        {% if content.items.all %}
-          {% for item in content.items.all %}
-            <div class="span1 content-item-mini">
-              {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
-            </div>
-          {% endfor %}
-        {% elif content.tags.all %}
-          {% for tag in content.tags.all %}
-            <div class="span1 content-item-mini">
-              <a href="{{ content.get_absolute_url }}"><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
-              <h6 class="black" align="center">{{ tag.name }}</h6></a>
-            </div>
-          {% endfor %}
-        {% endif %}
       {% endfor %}
       {% else %}
         {% trans "No unanswered questions on this category." %}
