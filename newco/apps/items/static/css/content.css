@@ -178,7 +178,7 @@ button[type="submit"][class*="icon-"][data-vote="True"] {
 }
 .modal-gallery {
   min-width: 66%;
-  max-width: 100%
+  max-width: 95%
 }
 .modal-gallery.fade.in {
   /*fix modal position starting with bootstrap 2.2.2*/
