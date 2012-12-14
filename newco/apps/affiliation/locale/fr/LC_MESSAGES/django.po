@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 16:27+0100\n"
-"PO-Revision-Date: 2012-09-05 01:27\n"
+"POT-Creation-Date: 2012-12-12 16:53+0100\n"
+"PO-Revision-Date: 2012-12-12 16:10\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,67 +31,67 @@ msgstr "Dollar"
 msgid "Pound"
 msgstr "Livre"
 
-#: models.py:16
+#: models.py:17
 msgid "name"
 msgstr "nom"
 
-#: models.py:17
+#: models.py:18
 msgid "url webapp"
 msgstr "url de l'application web"
 
-#: models.py:18
+#: models.py:19
 msgid "slug"
 msgstr "slug"
 
-#: models.py:20 models.py:48
+#: models.py:21 models.py:51
 msgid "last modified"
 msgstr "date de dernière modification"
 
-#: models.py:23 models.py:35
+#: models.py:26 models.py:38
 msgid "store"
 msgstr "magasin"
 
-#: models.py:34
+#: models.py:37
 msgid "name at store"
 msgstr "nom chez le magasin"
 
-#: models.py:37
+#: models.py:40
 msgid "store object id"
 msgstr "id de l'objet chez le magasin"
 
-#: models.py:38
+#: models.py:41
 msgid "EAN"
 msgstr "EAN"
 
-#: models.py:39
+#: models.py:42
 msgid "url"
 msgstr "url"
 
-#: models.py:41
+#: models.py:44
 msgid "price"
 msgstr "prix"
 
-#: models.py:44
+#: models.py:47
 msgid "currency"
 msgstr "monnaie"
 
-#: models.py:46
+#: models.py:49
 msgid "date created"
 msgstr "date de création"
 
-#: models.py:49
+#: models.py:52
 msgid "small image"
 msgstr "petite image"
 
-#: models.py:51
+#: models.py:54
 msgid "medium image"
 msgstr "moyenne image"
 
-#: models.py:52
+#: models.py:55
 msgid "large image"
 msgstr "grande image"
 
-#: models.py:56
+#: models.py:59
 msgid "affiliation item"
 msgstr "produit affilié"
 
@@ -274,3 +274,7 @@ msgstr ""
 #: amazon/search_index.py:48
 msgid "Wireless"
 msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:29
+msgid "See offer"
+msgstr "Voir l'offre"
