@@ -12,6 +12,8 @@ from affiliation import CURRENCIES
 from affiliation.managers import StoreManager
 from items.models import Item
 
+NAME_MAX_LENGTH = 200
+
 
 class Store(models.Model):
     name = models.CharField(_("name"), max_length=100)
@@ -33,7 +35,7 @@ class Store(models.Model):
 
 
 class AffiliationItem(models.Model):
-    name = models.CharField(_("name at store"), max_length=200)
+    name = models.CharField(_("name at store"), max_length=NAME_MAX_LENGTH)
     store = models.ForeignKey(Store, verbose_name=_("store"))
     object_id = models.CharField(_("store object id"), max_length=30)
     ean = models.CharField(_("EAN"), max_length=30)
@@ -58,12 +60,13 @@ class AffiliationItem(models.Model):
     def __unicode__(self):
         return u"%s @ %s" % (self.name[:10], self.store)
 
-    def store_init(self, source, item):
-        if source is not None and item is not None:
-            if source == "amazon":
+    def store_init(self, store, item):
+        if store.__class__ is Store and item is not None:
+            if store.name == "Amazon":
                 self = _amazon_init(self, item)
-            elif source == "decathlon":
+            elif store.name == "Decathlon":
                 self = _decathlon_init(self, item)
+            self.store = store
 
     def same_as(self, other):
         fields = ["name", "store", "object_id", "ean", "url", "price",
@@ -76,11 +79,8 @@ class AffiliationItem(models.Model):
 
 
 def _amazon_init(aff_item, amazon_item):
-    aff_item.store = Store.objects.get_store("Amazon")
-
-    maxl = AffiliationItem._meta.get_field_by_name('name')[0].max_length
-
-    aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval, maxl)
+    aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval,
+                                  NAME_MAX_LENGTH)
     aff_item.object_id = unicode(amazon_item.ASIN)
     aff_item.ean = unicode(getattr(amazon_item.ItemAttributes, "EAN", ""))
     aff_item.url = unicode(amazon_item.DetailPageURL)
@@ -121,9 +121,6 @@ def _amazon_init(aff_item, amazon_item):
 
 
 def _decathlon_init(aff_item, decathlon_item):
-    aff_item.store = Store.objects.get_store("Decathlon")
-    max_chars = AffiliationItem._meta.get_field_by_name('name')[0].max_length
-
     for key, value in decathlon_item.items():
         if key == "Prix":
             price = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
@@ -136,7 +133,8 @@ def _decathlon_init(aff_item, decathlon_item):
         elif key == "EAN":
             aff_item.ean = unicode(value)
         elif key == "Nom":
-            aff_item.name = truncatechars(unicode(value, "utf-8"), max_chars)
+            aff_item.name = truncatechars(unicode(value, "utf-8"),
+                                          NAME_MAX_LENGTH)
         elif key == "Id produit":
             aff_item.object_id = unicode(value)
         elif key == "Url image petite":

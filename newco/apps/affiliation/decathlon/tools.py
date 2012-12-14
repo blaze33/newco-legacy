@@ -52,7 +52,7 @@ def decathlon_db_processing(output_file=None):
         if created:
             # Since postgres db not functionnal after an IntegrityError,
             # need to handle transactions manually
-            entry.store_init("decathlon", row)
+            entry.store_init(store, row)
             try:
                 entry.save()
                 transaction.commit()
@@ -65,7 +65,7 @@ def decathlon_db_processing(output_file=None):
                 output.write("CREATED: %s" % entry.name[:50])
         else:
             new_entry = storing_class()
-            new_entry.store_init("decathlon", row)
+            new_entry.store_init(store, row)
             if entry.same_as(new_entry):
                 transaction.commit()
                 output.write("NO CHANGES: %s" % entry.name[:50])

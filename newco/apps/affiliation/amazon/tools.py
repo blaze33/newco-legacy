@@ -51,7 +51,7 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
     for item in item_list:
         entry, created = AffiliationItem.objects.get_or_create(
             store=store, object_id=item.ASIN)
-        entry.store_init("amazon", item)
+        entry.store_init(store, item)
         entry.save()
         if entry.item is None:
             aff_item_list.append(entry)
