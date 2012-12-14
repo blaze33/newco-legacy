@@ -26,6 +26,17 @@
 
 {% for question in questions %}
 
+  <div class="question" itemscope itemtype="http://schema.org/Article">{% include "items/feed_display/_question_2.html" with display="text" display_img=display_img display_ctx="False" display_answer="True" content=question author=question.author score=score user=user path=request.path csrf_token=csrf_token only %}</div>
+
+  {% if not forloop.last %}<hr>{% endif %}
+{% endfor %}
+
+
+
+
+<h1>For checking purposes, former list below:</h1>
+{% for question in questions %}
+
   <div class="question" itemscope itemtype="http://schema.org/Article">{% include "items/root_display/_question.html" with item=item question=question vote=vote score=score display="list" %}</div>
 
   {% if not forloop.last %}<hr>{% endif %}

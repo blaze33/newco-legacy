@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load voting_tags %}
+{% load voting_utils %}
+{% load content_utils %}
+
+{% dict_entry_for_item answer from votes as vote %}
+{% dict_entry_for_item answer from scores as score %}
+<br>
+<div class="row one_row" id="{{ answer.anchor }}">
+  <div class="span1 vote-controls">
+    {% include "items/_vote_box.html" with content=answer item=item score=score vote=vote display=display %}
+    {% edit_buttons user answer delete_next=request.path %}
+  </div>
+  <div class="span8 answer-content">
+    {% content_info answer "signature" 32 %}
+    {% content_info answer "header" %}
+    <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
+  </div>
+</div>

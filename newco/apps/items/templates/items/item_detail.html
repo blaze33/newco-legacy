@@ -29,7 +29,7 @@
   <div class="span9">
     {% include "items/_data_sheet.html" %}
     <br>
-    {% include "items/_question_list.html" %}
+    {% include "items/_question_list.html" with display_img="False" %}
     <br>
     {% for prod in store_products %}
       {% if forloop.first %}

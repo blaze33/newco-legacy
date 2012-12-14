@@ -23,20 +23,7 @@
 </div>
 
 {% for answer in question.answer_set.all %}
-  {% dict_entry_for_item answer from votes as vote %}
-  {% dict_entry_for_item answer from scores as score %}
-  <br>
-  <div class="row one_row" id="{{ answer.anchor }}">
-    <div class="span1 vote-controls">
-      {% include "items/_vote_box.html" with content=answer item=item score=score vote=vote display=display %}
-      {% edit_buttons user answer delete_next=request.path %}
-    </div>
-    <div class="span8 answer-content">
-      {% content_info answer "signature" 32 %}
-      {% if display == "detail" %}{% content_info answer "header" %}{% endif %}
-      <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
-    </div>
-  </div>
+  {% include "items/root_display/_answer.html" with answer=answer item=item scores=scores vote=vote display=display only %}
 {% empty %}
   {% cycle "empty" as empty silent %}
 {% endfor %}

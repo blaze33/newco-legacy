@@ -67,6 +67,13 @@
 
   </div>
 
+  {% if display_answer == "True" %}
+    {% for answer in content.answer_set.all %}
+      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display only %}{# scores=answer.scores #}
+    {% empty %}
+      {% cycle "empty" as empty silent %}
+    {% endfor %}
+  {% endif %}
 
 {% elif display == "email_html" %}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
