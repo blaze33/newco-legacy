@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import decimal
+import re
 
 from django.db import models
 from django.template.defaultfilters import slugify, truncatechars
@@ -8,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from babel.numbers import parse_decimal
 
-from affiliation import CURRENCIES
+from affiliation import CURRENCIES, AVAILABILITY_PATTERNS
 from affiliation.managers import StoreManager
 from items.models import Item
 
@@ -75,7 +76,7 @@ class AffiliationItem(models.Model):
 
     def same_as(self, other):
         fields = ["name", "store", "object_id", "ean", "url", "price",
-                  "currency"]
+                  "currency", "availability", "shipping_price"]
         same = True
         for field in fields:
             same = same and getattr(self, field) == getattr(other, field)
@@ -126,8 +127,20 @@ def _amazon_init(aff_item, amazon_item):
 
 
 def _decathlon_init(aff_item, decathlon_item):
+    MATCHING_TABLE = {
+        "Url": "url",
+        "EAN": "ean",
+        "Id produit": "object_id",
+        "Url image petite": "img_small",
+        "Url image moyenne": "img_medium",
+        "Url image grande": "img_large"
+    }
+
     CURRENCY_TABLE = {u"€": CURRENCIES.euro, u"$": CURRENCIES.dollar,
                       u"£": CURRENCIES.pound}
+
+    DECATHLON_AVAILABILITY_PATTERN = "(?P<days>\d*)\s?jours"
+    EXACT_PATTERN = AVAILABILITY_PATTERNS["exact"]
 
     ROUND = decimal.Decimal(".01")
 
@@ -138,24 +151,23 @@ def _decathlon_init(aff_item, decathlon_item):
             price_2 = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
         elif key == "Monnaie":
             currency = unicode(value, "utf-8")
-        elif key == "Url":
-            aff_item.url = unicode(value)
-        elif key == "EAN":
-            aff_item.ean = unicode(value)
         elif key == "Frais de port":
             aff_item.shipping_price = decimal.Decimal(
                 value.replace(",", ".")).quantize(ROUND)
         elif key == "Nom":
             aff_item.name = truncatechars(unicode(value, "utf-8"),
                                           NAME_MAX_LENGTH)
-        elif key == "Id produit":
-            aff_item.object_id = unicode(value)
-        elif key == "Url image petite":
-            aff_item.img_small = unicode(value)
-        elif key == "Url image moyenne":
-            aff_item.img_medium = unicode(value)
-        elif key == "Url image grande":
-            aff_item.img_large = unicode(value)
+        elif key == "Disponibilité":
+            match = re.match(DECATHLON_AVAILABILITY_PATTERN, value)
+            if match is not None:
+                days = match.groups("days")[0]
+                if days:
+                    aff_item.availability = EXACT_PATTERN.format(
+                        value=days, unit="D")
+                else:
+                    aff_item.availability = "in stock"
+        elif key in MATCHING_TABLE:
+            setattr(aff_item, MATCHING_TABLE[key], unicode(value))
 
     aff_item.price = price if price and price < price_2 else price_2
 

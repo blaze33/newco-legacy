@@ -7,3 +7,8 @@ CURRENCIES = Choices(
     (1, "dollar", _("Dollar")),
     (2, "pound", _("Pound"))
 )
+
+AVAILABILITY_PATTERNS = {
+    "exact": "{value} {unit}",
+    "range": "{min_value}/{max_value} {unit}"
+}
