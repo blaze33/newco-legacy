@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-12 16:53+0100\n"
+"POT-Creation-Date: 2012-12-17 23:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,68 +29,104 @@ msgstr ""
 msgid "Pound"
 msgstr ""
 
-#: models.py:17
+#: models.py:27
 msgid "name"
 msgstr ""
 
-#: models.py:18
+#: models.py:28
 msgid "url webapp"
 msgstr ""
 
-#: models.py:19
+#: models.py:29
 msgid "slug"
 msgstr ""
 
-#: models.py:21 models.py:51
+#: models.py:30 models.py:61
 msgid "last modified"
 msgstr ""
 
-#: models.py:26 models.py:38
+#: models.py:35 models.py:47
 msgid "store"
 msgstr ""
 
-#: models.py:37
+#: models.py:46
 msgid "name at store"
 msgstr ""
 
-#: models.py:40
+#: models.py:48
 msgid "store object id"
 msgstr ""
 
-#: models.py:41
+#: models.py:49
 msgid "EAN"
 msgstr ""
 
-#: models.py:42
-msgid "url"
+#: models.py:50
+msgid "URL"
 msgstr ""
 
-#: models.py:44
+#: models.py:51
 msgid "price"
 msgstr ""
 
-#: models.py:47
+#: models.py:53
 msgid "currency"
 msgstr ""
 
-#: models.py:49
-msgid "date created"
-msgstr ""
-
-#: models.py:52
-msgid "small image"
-msgstr ""
-
-#: models.py:54
-msgid "medium image"
-msgstr ""
-
 #: models.py:55
-msgid "large image"
+msgid "shipping price"
+msgstr ""
+
+#: models.py:57
+msgid "availability"
 msgstr ""
 
 #: models.py:59
+msgid "date created"
+msgstr ""
+
+#: models.py:62
+msgid "small image"
+msgstr ""
+
+#: models.py:63
+msgid "medium image"
+msgstr ""
+
+#: models.py:64
+msgid "large image"
+msgstr ""
+
+#: models.py:69
 msgid "affiliation item"
+msgstr ""
+
+#: models.py:103 models.py:131
+msgid "See site"
+msgstr ""
+
+#: models.py:112
+msgid "In stock"
+msgstr ""
+
+#: models.py:117
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: models.py:118
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: models.py:125
+msgid "days"
+msgstr ""
+
+#: models.py:126
+msgid "months"
 msgstr ""
 
 #: amazon/search_index.py:4
@@ -273,6 +309,22 @@ msgstr ""
 msgid "Wireless"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:29
+#: templates/affiliation/_affiliation_item.html:30
+msgid "Total Price"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:31
 msgid "See offer"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:35
+msgid "Price"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:38
+msgid "Shipping Price"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:41
+msgid "Availability"
 msgstr ""

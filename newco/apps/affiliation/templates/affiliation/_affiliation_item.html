@@ -25,8 +25,22 @@
       {{ prod.name }}
     </div>
     <div class="span3">
-      <b>{% price prod.price prod.currency LANGUAGE_CODE %}</b>
+      {% price prod.price prod.currency LANGUAGE_CODE as price %}
+      {% price prod.total_price prod.currency LANGUAGE_CODE as total_price %}
+
+      <b title="{% trans 'Total Price' %}">{{ total_price }}</b>
       <a class="btn pull-right" id="{{ prod.ean }}" href="{{ prod.url }}" target="_blank"><b>{% trans "See offer" %}</b> <i class="icon-play"></i></a>
+      <br>
+      <small class="muted">
+        <!-- icon-barcode, icon-gift -->
+        <span title="{% trans 'Price' %}"><i class="icon-shopping-cart"></i> {{ price }}</span>
+        <br>
+        <!-- icon-plane, icon-road -->
+        <span title="{% trans 'Shipping Price' %}"><i class="icon-envelope"></i> {{ prod.shipping_price }}</span>
+        <br>
+        <!-- icon-calendar -->
+        <span title="{% trans 'Availability' %}"><i class="icon-time"></i> {{ prod.availability }}</span>
+      </small>
     </div>
   </div>
 {% elif display == "dropdown" %}

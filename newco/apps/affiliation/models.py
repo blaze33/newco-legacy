@@ -6,15 +6,18 @@ import math
 import re
 
 from django.db import models
+from django.conf import settings
 from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext, ungettext
 
 from babel.numbers import parse_decimal
 
-from affiliation import CURRENCIES, AVAILABILITY_PATTERNS
+from affiliation import (CURRENCIES, AVAILABILITY_PATTERNS,
+                         RE_AVAILABILITY_PATTERNS)
 from affiliation.managers import StoreManager
 from items.models import Item
+from utils.templatetags.format_utils import format_price
 
 NAME_MAX_LENGTH = 200
 ROUND = decimal.Decimal(".01")
@@ -49,7 +52,7 @@ class AffiliationItem(models.Model):
                                 decimal_places=2)
     currency = models.SmallIntegerField(_("currency"), choices=CURRENCIES,
                                         default=CURRENCIES.euro)
-    _shipping_price = models.DecimalField(_("shipping_price"), default=-1,
+    _shipping_price = models.DecimalField(_("shipping price"), default=-1,
                                           max_digits=14, decimal_places=2)
     _availability = models.CharField(_("availability"), max_length=50,
                                      default="see site")
@@ -85,6 +88,48 @@ class AffiliationItem(models.Model):
             same = same and getattr(self, field) == getattr(other, field)
 
         return same
+
+    def total_price(self):
+        if self._shipping_price != -1:
+            return self.price + self._shipping_price
+        else:
+            return self.price
+
+    def shipping_price(self):
+        if self._shipping_price != -1:
+            return format_price(self._shipping_price, self.currency,
+                                settings.LANGUAGE_CODE)
+        else:
+            return _("See site")
+
+    def availability(self):
+        match_exact = re.match(RE_AVAILABILITY_PATTERNS["exact"],
+                               self._availability)
+        match_range = re.match(RE_AVAILABILITY_PATTERNS["range"],
+                               self._availability)
+
+        if self._availability == "in stock":
+            availability = _("In stock")
+        elif match_exact is not None:
+            value, unit = match_exact.groups()
+
+            UNIT_TRANSLATIONS = {
+                "D": ungettext("day", "days", value),
+                "M": ungettext("month", "months", value)
+            }
+
+            availability = AVAILABILITY_PATTERNS["exact"].format(
+                value=value, unit=UNIT_TRANSLATIONS[unit])
+        elif match_range is not None:
+            min_value, max_value, unit = match_range.groups()
+            UNIT_TRANSLATIONS = {"D": ugettext("days"),
+                                 "M": ugettext("months")}
+            availability = AVAILABILITY_PATTERNS["range"].format(
+                min_value=min_value, max_value=max_value,
+                unit=UNIT_TRANSLATIONS[unit])
+        else:
+            availability = _("See site")
+        return availability
 
 
 def _amazon_init(aff_item, amazon_item):

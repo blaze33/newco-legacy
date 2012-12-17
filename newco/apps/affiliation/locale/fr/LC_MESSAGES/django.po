@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-12 16:53+0100\n"
-"PO-Revision-Date: 2012-12-12 16:10\n"
+"POT-Creation-Date: 2012-12-17 23:47+0100\n"
+"PO-Revision-Date: 2012-12-17 23:47\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -31,69 +31,105 @@ msgstr "Dollar"
 msgid "Pound"
 msgstr "Livre"
 
-#: models.py:17
+#: models.py:27
 msgid "name"
 msgstr "nom"
 
-#: models.py:18
+#: models.py:28
 msgid "url webapp"
 msgstr "url de l'application web"
 
-#: models.py:19
+#: models.py:29
 msgid "slug"
 msgstr "slug"
 
-#: models.py:21 models.py:51
+#: models.py:30 models.py:61
 msgid "last modified"
 msgstr "date de dernière modification"
 
-#: models.py:26 models.py:38
+#: models.py:35 models.py:47
 msgid "store"
 msgstr "magasin"
 
-#: models.py:37
+#: models.py:46
 msgid "name at store"
 msgstr "nom chez le magasin"
 
-#: models.py:40
+#: models.py:48
 msgid "store object id"
 msgstr "id de l'objet chez le magasin"
 
-#: models.py:41
+#: models.py:49
 msgid "EAN"
 msgstr "EAN"
 
-#: models.py:42
-msgid "url"
-msgstr "url"
+#: models.py:50
+msgid "URL"
+msgstr "URL"
 
-#: models.py:44
+#: models.py:51
 msgid "price"
 msgstr "prix"
 
-#: models.py:47
+#: models.py:53
 msgid "currency"
 msgstr "monnaie"
 
-#: models.py:49
+#: models.py:55
+msgid "shipping price"
+msgstr "frais d'envoi"
+
+#: models.py:57
+msgid "availability"
+msgstr "disponibilité"
+
+#: models.py:59
 msgid "date created"
 msgstr "date de création"
 
-#: models.py:52
+#: models.py:62
 msgid "small image"
 msgstr "petite image"
 
-#: models.py:54
+#: models.py:63
 msgid "medium image"
 msgstr "moyenne image"
 
-#: models.py:55
+#: models.py:64
 msgid "large image"
 msgstr "grande image"
 
-#: models.py:59
+#: models.py:69
 msgid "affiliation item"
 msgstr "produit affilié"
+
+#: models.py:103 models.py:131
+msgid "See site"
+msgstr "Voir site"
+
+#: models.py:112
+msgid "In stock"
+msgstr "En stock"
+
+#: models.py:117
+msgid "day"
+msgid_plural "days"
+msgstr[0] "jour"
+msgstr[1] "jours"
+
+#: models.py:118
+msgid "month"
+msgid_plural "months"
+msgstr[0] "mois"
+msgstr[1] "mois"
+
+#: models.py:125
+msgid "days"
+msgstr "jours"
+
+#: models.py:126
+msgid "months"
+msgstr "mois"
 
 #: amazon/search_index.py:4
 msgid "All"
@@ -275,6 +311,25 @@ msgstr ""
 msgid "Wireless"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:29
+#: templates/affiliation/_affiliation_item.html:30
+msgid "Total Price"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:31
 msgid "See offer"
 msgstr "Voir l'offre"
+
+#: templates/affiliation/_affiliation_item.html:35
+msgid "Price"
+msgstr "Prix"
+
+#: templates/affiliation/_affiliation_item.html:38
+msgid "Shipping Price"
+msgstr ""
+
+#: templates/affiliation/_affiliation_item.html:41
+msgid "Availability"
+msgstr ""
+
+#~ msgid "url"
+#~ msgstr "url"
