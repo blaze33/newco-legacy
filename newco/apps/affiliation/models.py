@@ -146,15 +146,18 @@ def _decathlon_init(aff_item, decathlon_item):
 
     for key, value in decathlon_item.items():
         if key == "Prix":
-            price = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
+            parsed_price = parse_decimal(value, locale="fr")
+            price = decimal.Decimal(parsed_price).quantize(ROUND)
         elif key == "Prix barré":
-            price_2 = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
+            parsed_price = parse_decimal(value, locale="fr")
+            price_2 = decimal.Decimal(parsed_price).quantize(ROUND)
         elif key == "Monnaie":
             currency = unicode(value, "utf-8")
             aff_item.currency = CURRENCY_TABLE.get(currency, None)
         elif key == "Frais de port":
+            parsed_price = parse_decimal(value, locale="fr")
             aff_item.shipping_price = decimal.Decimal(
-                value.replace(",", ".")).quantize(ROUND)
+                parsed_price).quantize(ROUND)
         elif key == "Nom":
             aff_item.name = truncatechars(unicode(value, "utf-8"),
                                           NAME_MAX_LENGTH)
