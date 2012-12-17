@@ -85,6 +85,9 @@ class AffiliationItem(models.Model):
 
 
 def _amazon_init(aff_item, amazon_item):
+    CURRENCY_TABLE = {"EUR": CURRENCIES.euro, "USD": CURRENCIES.dollar,
+                      "GBP": CURRENCIES.pound}
+
     aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval,
                                   NAME_MAX_LENGTH)
     aff_item.object_id = unicode(amazon_item.ASIN)
@@ -105,10 +108,8 @@ def _amazon_init(aff_item, amazon_item):
             Price = amazon_item.OfferSummary.LowestUsedPrice
 
     if Price is not None:
-        if Price.CurrencyCode == "EUR":
-            aff_item.currency = CURRENCIES.euro
-        elif Price.CurrencyCode == "USD":
-            aff_item.currency = CURRENCIES.dollar
+        aff_item.currency = CURRENCY_TABLE.get(Price.CurrencyCode,
+                                               CURRENCIES.euro)
 
         price_str = Price.FormattedPrice.pyval.split(" ")
         # fr_FR locale won't recognize the thousand dot separator !?!
