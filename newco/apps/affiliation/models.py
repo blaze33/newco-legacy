@@ -95,27 +95,24 @@ def _amazon_init(aff_item, amazon_item):
     aff_item.url = unicode(amazon_item.DetailPageURL)
 
     # Look for amazon then foreign new, then foreign used prices
-    Price = None
-    if hasattr(amazon_item, "Offers") & hasattr(amazon_item, "OfferSummary"):
+    price = None
+    if hasattr(amazon_item, "Offers") and hasattr(amazon_item, "OfferSummary"):
         if amazon_item.Offers.TotalOffers > 0:
-            if hasattr(amazon_item.Offers.Offer.OfferListing, "SalePrice"):
-                Price = amazon_item.Offers.Offer.OfferListing.SalePrice
-            else:
-                Price = amazon_item.Offers.Offer.OfferListing.Price
+            listing = amazon_item.Offers.Offer.OfferListing
+            price = getattr(listing, "SalePrice", listing.Price)
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
-            Price = amazon_item.OfferSummary.LowestNewPrice
+            price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):
-            Price = amazon_item.OfferSummary.LowestUsedPrice
+            price = amazon_item.OfferSummary.LowestUsedPrice
 
-    if Price is not None:
-        aff_item.currency = CURRENCY_TABLE.get(Price.CurrencyCode,
+    if price is not None:
+        aff_item.currency = CURRENCY_TABLE.get(price.CurrencyCode,
                                                CURRENCIES.euro)
 
-        price_str = Price.FormattedPrice.pyval.split(" ")
+        price_str = price.FormattedPrice.pyval.split(" ")
         # fr_FR locale won't recognize the thousand dot separator !?!
-        price = parse_decimal(price_str[1], locale="de")
-
-        aff_item.price = decimal.Decimal(price).quantize(ROUND)
+        aff_item.price = decimal.Decimal(
+            parse_decimal(price_str[1], locale="de")).quantize(ROUND)
 
     if hasattr(amazon_item, "SmallImage"):
         aff_item.img_small = unicode(amazon_item.SmallImage.URL)
