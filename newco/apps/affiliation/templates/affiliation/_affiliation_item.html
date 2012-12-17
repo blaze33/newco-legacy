@@ -13,7 +13,7 @@
     <div class="details {{ prod.ean }}">
       <h4>
         <a href="{{ prod.store.url }}" target="_blank" class="black">{{ prod.store }}</a>
-        <a href="{{ prod.url }}" target="_blank" id="{{ ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
+        <a href="{{ prod.url }}" target="_blank" id="{{ prod.ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
       </h4>
     </div>
   </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="span3">
       <b>{% price prod.price prod.currency LANGUAGE_CODE %}</b>
-      <a class="btn pull-right" id="{{ ean }}" href="{{ prod.url }}" target="_blank"><b>{% trans "See offer" %}</b> <i class="icon-play"></i></a>
+      <a class="btn pull-right" id="{{ prod.ean }}" href="{{ prod.url }}" target="_blank"><b>{% trans "See offer" %}</b> <i class="icon-play"></i></a>
     </div>
   </div>
 {% elif display == "dropdown" %}

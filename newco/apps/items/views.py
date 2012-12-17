@@ -257,7 +257,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
             related_questions = Content.objects.filter(
-                question__items__in=q.items.all()).exclude(id=q.id)
+                Q(question__items__in=q.items.all())|(Q(tags__in=q.tags.all()) & Q(question__isnull=False))).exclude(id=q.id).distinct()
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
@@ -343,12 +343,13 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
+        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
         for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
             related_questions = Content.objects.filter(
-                question__items__in=context.get("object_list")).distinct()
+                Q(question__items__in=context.get("object_list")) | (Q(tags=self.tag) & Q(question__isnull=False))).distinct()             
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 

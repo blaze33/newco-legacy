@@ -35,7 +35,7 @@
 .profile-item img {
     float: right;
     margin-left: 5px;
-    height: 64px;
+    max-height: 64px;
     border-radius: 4px;
 }
 

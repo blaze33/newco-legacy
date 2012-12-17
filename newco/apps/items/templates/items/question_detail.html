@@ -40,7 +40,7 @@
 {% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>
   {% if question %}{{ question.answer_form.media.js }}{% endif %}
-  <script type ="text/javascript">
+  <script>
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
   </script>
