@@ -112,7 +112,6 @@ def _amazon_init(aff_item, amazon_item):
             d = [int(math.floor(h[0] / 24)), int(math.ceil(h[1] / 24))]
             d15 = [int(round(d[0] / 15) * 15), int(round(d[1] / 15) * 15)]
             m = [int(round(h[0] / (24 * 30))), int(round(h[1] / (24 * 30)))]
-            availability = None
             if attr.AvailabilityType == ["now", "futureDate"]:
                 if h[0] < 48:
                     availability = "in stock"
@@ -133,9 +132,9 @@ def _amazon_init(aff_item, amazon_item):
                     else:
                         availability = EXACT_PATTERN.format(
                             value=m[0], unit="M")
+                aff_item._availability = availability
             elif attr.AvailabilityType == "unknown":
-                availability = None
-            aff_item._availability = availability
+                pass
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
             price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):
