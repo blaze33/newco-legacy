@@ -125,6 +125,9 @@ def _amazon_init(aff_item, amazon_item):
 
 
 def _decathlon_init(aff_item, decathlon_item):
+    CURRENCY_TABLE = {u"€": CURRENCIES.euro, u"$": CURRENCIES.dollar,
+                      u"£": CURRENCIES.pound}
+
     for key, value in decathlon_item.items():
         if key == "Prix":
             price = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
@@ -150,9 +153,7 @@ def _decathlon_init(aff_item, decathlon_item):
 
     aff_item.price = price if price and price < price_2 else price_2
 
-    if currency == u"€":
-        aff_item.currency = CURRENCIES.euro
-    else:
-        aff_item.currency = CURRENCIES.dollar
+    if currency in CURRENCY_TABLE:
+        aff_item.currency = CURRENCY_TABLE[currency]
 
     return aff_item
