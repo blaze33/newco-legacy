@@ -60,7 +60,7 @@ class AffiliationItem(models.Model):
     img_medium = models.URLField(_("medium image"), max_length=1000)
     img_large = models.URLField(_("large image"), max_length=1000)
 
-    item = models.ForeignKey(Item, default=None)
+    item = models.ForeignKey(Item, null=True, blank=True)
 
     class Meta:
         verbose_name = _("affiliation item")

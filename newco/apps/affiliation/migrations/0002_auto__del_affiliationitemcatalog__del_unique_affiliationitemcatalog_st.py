@@ -27,6 +27,9 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.CharField')(default='see site', max_length=50),
                       keep_default=False)
 
+
+        # Changing field 'AffiliationItem.item'
+        db.alter_column('affiliation_affiliationitem', 'item_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Item'], null=True))
         # Adding unique constraint on 'AffiliationItem', fields ['object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['object_id', 'store_id'])
 
@@ -62,6 +65,9 @@ class Migration(SchemaMigration):
         # Deleting field 'AffiliationItem._availability'
         db.delete_column('affiliation_affiliationitem', '_availability')
 
+
+        # Changing field 'AffiliationItem.item'
+        db.alter_column('affiliation_affiliationitem', 'item_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['items.Item']))
         # Adding unique constraint on 'AffiliationItem', fields ['item', 'object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['item_id', 'object_id', 'store_id'])
 
@@ -78,7 +84,7 @@ class Migration(SchemaMigration):
             'img_large': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
             'img_medium': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
             'img_small': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
-            'item': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'to': "orm['items.Item']"}),
+            'item': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Item']", 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'object_id': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'price': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '14', 'decimal_places': '2'}),
