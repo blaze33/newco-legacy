@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from decimal import Decimal
+import decimal
 
 from django.db import models
 from django.template.defaultfilters import slugify, truncatechars
@@ -13,6 +13,7 @@ from affiliation.managers import StoreManager
 from items.models import Item
 
 NAME_MAX_LENGTH = 200
+ROUND = decimal.Decimal(".01")
 
 
 class Store(models.Model):
@@ -112,7 +113,7 @@ def _amazon_init(aff_item, amazon_item):
         # fr_FR locale won't recognize the thousand dot separator !?!
         price = parse_decimal(price_str[1], locale="de")
 
-        aff_item.price = Decimal(price).quantize(Decimal('.01'))
+        aff_item.price = decimal.Decimal(price).quantize(ROUND)
 
     if hasattr(amazon_item, "SmallImage"):
         aff_item.img_small = unicode(amazon_item.SmallImage.URL)
@@ -128,11 +129,13 @@ def _decathlon_init(aff_item, decathlon_item):
     CURRENCY_TABLE = {u"€": CURRENCIES.euro, u"$": CURRENCIES.dollar,
                       u"£": CURRENCIES.pound}
 
+    ROUND = decimal.Decimal(".01")
+
     for key, value in decathlon_item.items():
         if key == "Prix":
-            price = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
+            price = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
         elif key == "Prix barré":
-            price_2 = Decimal(value.replace(",", ".")).quantize(Decimal('.01'))
+            price_2 = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
         elif key == "Monnaie":
             currency = unicode(value, "utf-8")
         elif key == "Url":
