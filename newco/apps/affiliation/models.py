@@ -112,28 +112,30 @@ def _amazon_init(aff_item, amazon_item):
             d = [int(math.floor(h[0] / 24)), int(math.ceil(h[1] / 24))]
             d15 = [int(round(d[0] / 15) * 15), int(round(d[1] / 15) * 15)]
             m = [int(round(h[0] / (24 * 30))), int(round(h[1] / (24 * 30)))]
+            availability = None
             if attr.AvailabilityType == ["now", "futureDate"]:
                 if h[0] < 48:
-                    aff_item.availability = "in stock"
+                    availability = "in stock"
                 elif d[1] < 15:
-                    aff_item.availability = RANGE_PATTERN.format(
+                    availability = RANGE_PATTERN.format(
                         min_value=d[0], max_value=d[1], unit="D")
                 elif d[1] < 60:
                     if d15[0] != d15[1]:
-                        aff_item.availability = RANGE_PATTERN.format(
+                        availability = RANGE_PATTERN.format(
                             min_value=d15[0], max_value=d15[1], unit="D")
                     else:
-                        aff_item.availability = EXACT_PATTERN.format(
+                        availability = EXACT_PATTERN.format(
                             value=d15[0], unit="D")
                 else:
                     if m[0] != m[1]:
-                        aff_item.availability = RANGE_PATTERN.format(
+                        availability = RANGE_PATTERN.format(
                             min_value=m[0], max_value=m[1], unit="M")
                     else:
-                        aff_item.availability = EXACT_PATTERN.format(
+                        availability = EXACT_PATTERN.format(
                             value=m[0], unit="M")
             elif attr.AvailabilityType == "unknown":
-                aff_item.availability = "unknown"
+                availability = None
+            aff_item._availability = availability
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
             price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):
@@ -185,7 +187,7 @@ def _decathlon_init(aff_item, decathlon_item):
             aff_item.currency = CURRENCY_TABLE.get(currency, None)
         elif key == "Frais de port":
             parsed_price = parse_decimal(value, locale="fr")
-            aff_item.shipping_price = decimal.Decimal(
+            aff_item._shipping_price = decimal.Decimal(
                 parsed_price).quantize(ROUND)
         elif key == "Nom":
             aff_item.name = truncatechars(unicode(value, "utf-8"),
@@ -195,10 +197,11 @@ def _decathlon_init(aff_item, decathlon_item):
             if match is not None:
                 days = match.groups("days")[0]
                 if days:
-                    aff_item.availability = EXACT_PATTERN.format(
+                    availability = EXACT_PATTERN.format(
                         value=days, unit="D")
                 else:
-                    aff_item.availability = "in stock"
+                    availability = "in stock"
+                aff_item._availability = availability
         elif key in MATCHING_TABLE:
             setattr(aff_item, MATCHING_TABLE[key], unicode(value))
 
