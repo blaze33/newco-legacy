@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
+
 import decimal
+import math
 import re
 
 from django.db import models
@@ -88,6 +91,9 @@ def _amazon_init(aff_item, amazon_item):
     CURRENCY_TABLE = {"EUR": CURRENCIES.euro, "USD": CURRENCIES.dollar,
                       "GBP": CURRENCIES.pound}
 
+    EXACT_PATTERN = AVAILABILITY_PATTERNS["exact"]
+    RANGE_PATTERN = AVAILABILITY_PATTERNS["range"]
+
     aff_item.name = truncatechars(amazon_item.ItemAttributes.Title.pyval,
                                   NAME_MAX_LENGTH)
     aff_item.object_id = unicode(amazon_item.ASIN)
@@ -100,6 +106,34 @@ def _amazon_init(aff_item, amazon_item):
         if amazon_item.Offers.TotalOffers > 0:
             listing = amazon_item.Offers.Offer.OfferListing
             price = getattr(listing, "SalePrice", listing.Price)
+
+            attr = listing.AvailabilityAttributes
+            h = [attr.MinimumHours.pyval, attr.MaximumHours.pyval]
+            d = [int(math.floor(h[0] / 24)), int(math.ceil(h[1] / 24))]
+            d15 = [int(round(d[0] / 15) * 15), int(round(d[1] / 15) * 15)]
+            m = [int(round(h[0] / (24 * 30))), int(round(h[1] / (24 * 30)))]
+            if attr.AvailabilityType == ["now", "futureDate"]:
+                if h[0] < 48:
+                    aff_item.availability = "in stock"
+                elif d[1] < 15:
+                    aff_item.availability = RANGE_PATTERN.format(
+                        min_value=d[0], max_value=d[1], unit="D")
+                elif d[1] < 60:
+                    if d15[0] != d15[1]:
+                        aff_item.availability = RANGE_PATTERN.format(
+                            min_value=d15[0], max_value=d15[1], unit="D")
+                    else:
+                        aff_item.availability = EXACT_PATTERN.format(
+                            value=d15[0], unit="D")
+                else:
+                    if m[0] != m[1]:
+                        aff_item.availability = RANGE_PATTERN.format(
+                            min_value=m[0], max_value=m[1], unit="M")
+                    else:
+                        aff_item.availability = EXACT_PATTERN.format(
+                            value=m[0], unit="M")
+            elif attr.AvailabilityType == "unknown":
+                aff_item.availability = "unknown"
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
             price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):
