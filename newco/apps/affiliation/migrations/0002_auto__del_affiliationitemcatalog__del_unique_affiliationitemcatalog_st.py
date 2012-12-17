@@ -17,9 +17,16 @@ class Migration(SchemaMigration):
         # Deleting model 'AffiliationItemCatalog'
         db.delete_table('affiliation_affiliationitemcatalog')
 
+        # Adding field 'AffiliationItem._shipping_price'
+        db.add_column('affiliation_affiliationitem', '_shipping_price',
+                      self.gf('django.db.models.fields.DecimalField')(default=-1, max_digits=14, decimal_places=2),
+                      keep_default=False)
 
-        # Changing field 'AffiliationItem.item'
-        db.alter_column('affiliation_affiliationitem', 'item_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Item'], null=True))
+        # Adding field 'AffiliationItem._availability'
+        db.add_column('affiliation_affiliationitem', '_availability',
+                      self.gf('django.db.models.fields.CharField')(default='see site', max_length=50),
+                      keep_default=False)
+
         # Adding unique constraint on 'AffiliationItem', fields ['object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['object_id', 'store_id'])
 
@@ -49,9 +56,12 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'AffiliationItemCatalog', fields ['store', 'object_id']
         db.create_unique('affiliation_affiliationitemcatalog', ['store_id', 'object_id'])
 
+        # Deleting field 'AffiliationItem._shipping_price'
+        db.delete_column('affiliation_affiliationitem', '_shipping_price')
 
-        # Changing field 'AffiliationItem.item'
-        db.alter_column('affiliation_affiliationitem', 'item_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['items.Item']))
+        # Deleting field 'AffiliationItem._availability'
+        db.delete_column('affiliation_affiliationitem', '_availability')
+
         # Adding unique constraint on 'AffiliationItem', fields ['item', 'object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['item_id', 'object_id', 'store_id'])
 
@@ -59,6 +69,8 @@ class Migration(SchemaMigration):
     models = {
         'affiliation.affiliationitem': {
             'Meta': {'unique_together': "(('store', 'object_id'),)", 'object_name': 'AffiliationItem'},
+            '_availability': ('django.db.models.fields.CharField', [], {'default': "'see site'", 'max_length': '50'}),
+            '_shipping_price': ('django.db.models.fields.DecimalField', [], {'default': '-1', 'max_digits': '14', 'decimal_places': '2'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'currency': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'ean': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -66,7 +78,7 @@ class Migration(SchemaMigration):
             'img_large': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
             'img_medium': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
             'img_small': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
-            'item': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['items.Item']", 'null': 'True', 'blank': 'True'}),
+            'item': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'to': "orm['items.Item']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'object_id': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'price': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '14', 'decimal_places': '2'}),

@@ -49,10 +49,10 @@ class AffiliationItem(models.Model):
                                 decimal_places=2)
     currency = models.SmallIntegerField(_("currency"), choices=CURRENCIES,
                                         default=CURRENCIES.euro)
-    shipping_price = models.DecimalField(_("shipping_price"), default=-1,
-                                         max_digits=14, decimal_places=2)
-    availability = models.CharField(_("availability"), max_length=50,
-                                    default="see site")
+    _shipping_price = models.DecimalField(_("shipping_price"), default=-1,
+                                          max_digits=14, decimal_places=2)
+    _availability = models.CharField(_("availability"), max_length=50,
+                                     default="see site")
     creation_date = models.DateTimeField(_("date created"),
                                          default=timezone.now, editable=False)
     update_date = models.DateTimeField(_("last modified"), auto_now=True)
@@ -60,7 +60,7 @@ class AffiliationItem(models.Model):
     img_medium = models.URLField(_("medium image"), max_length=1000)
     img_large = models.URLField(_("large image"), max_length=1000)
 
-    item = models.ForeignKey(Item, null=True, blank=True)
+    item = models.ForeignKey(Item, default=None)
 
     class Meta:
         verbose_name = _("affiliation item")
