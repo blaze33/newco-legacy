@@ -142,6 +142,9 @@ def _decathlon_init(aff_item, decathlon_item):
             aff_item.url = unicode(value)
         elif key == "EAN":
             aff_item.ean = unicode(value)
+        elif key == "Frais de port":
+            aff_item.shipping_price = decimal.Decimal(
+                value.replace(",", ".")).quantize(ROUND)
         elif key == "Nom":
             aff_item.name = truncatechars(unicode(value, "utf-8"),
                                           NAME_MAX_LENGTH)
