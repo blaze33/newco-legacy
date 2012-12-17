@@ -11,6 +11,12 @@
 {% block extra_style %}
   {{ form.media.css }}
   {{ formset.media.css }}
+  <style type="text/css">
+    #div_id_items, #div_id_tags {
+      display: none;
+      opacity: 0;
+    }
+  </style>
 {% endblock %}
 
 {% block head_title %}{% trans "Question" %}{% endblock %}
@@ -109,12 +115,12 @@
     })
 
     function hide_tags_show_items() {
-        $('#div_id_items').css('opacity','1');
-        $('#div_id_tags').css('opacity','0.5');
+        $('#div_id_items').show().animate({opacity: 1});
+        $('#div_id_tags').hide().animate({opacity: 0});
     }
     function hide_items_show_tags() {
-        $('#div_id_items').css('opacity','0.5');
-        $('#div_id_tags').css('opacity','1');
+        $('#div_id_items').hide().animate({opacity: 0});
+        $('#div_id_tags').show().animate({opacity: 1});
     }
 
     if($("#id_parents_1").is(":checked")){hide_tags_show_items();}

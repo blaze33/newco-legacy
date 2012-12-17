@@ -6,33 +6,27 @@
     <form action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
     <div class="modal-body form-horizontal">
         <div class="control-group">
-            <label class="control-label" for="Name">Nom (optionnel) :</label>
-            <div class="controls_2">
-                <input type="text" name="Name" class="input-large"/>
+            <label class="control-label" for="feedback-name">Nom (optionnel)</label>
+            <div class="controls">
+                <input type="text" id="feedback-name" name="Name" class="input-large"/>
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="email">Email (optionnel) :</label>
-            <div class="controls_2">
-                <input type="text" name="email" class="input-large"/>
+            <label class="control-label" for="feedback-email">Email (optionnel)</label>
+            <div class="controls">
+                <input type="text" id="feedback-email" name="email" class="input-large"/>
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="subject" >Sujet (optionnel) :</label>
-            <div class="controls_2">
-                <input type="text" name="subject" class="input-large"/>
+            <label class="control-label" for="feedback-subject">Sujet (optionnel)</label>
+            <div class="controls">
+                <input type="text" id="feedback-subject" name="subject" class="input-large"/>
             </div>
         </div>
 
-        <div class="hidden-phone">
-            <textarea id="input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
-        </div>
-
-        <div class="visible-phone">
-            <textarea name="Feedback_simple" rows="8" cols="4" placeholder="Ecrivez votre message ici !"></textarea>
-        </div>
+        <textarea class="boxsizingBorder" id="feedback-input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
     </div>
     <div class="modal-footer">
         Merci pour votre feedback :

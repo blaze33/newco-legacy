@@ -14,11 +14,10 @@ from items.models import Item
 
 
 class Store(models.Model):
-    name = models.CharField(max_length=100, verbose_name=_("name"))
-    url = models.URLField(max_length=200, verbose_name=_("url webapp"))
-    slug = models.SlugField(verbose_name=_("slug"), editable=False)
-    last_modified = models.DateTimeField(auto_now=True,
-                                         verbose_name=_("last modified"))
+    name = models.CharField(_("name"), max_length=100)
+    url = models.URLField(_("url webapp"), max_length=200)
+    slug = models.SlugField(_("slug"), editable=False)
+    last_modified = models.DateTimeField(_("last modified"), auto_now=True)
 
     objects = StoreManager()
 
@@ -34,25 +33,21 @@ class Store(models.Model):
 
 
 class AffiliationItemBase(models.Model):
-    name = models.CharField(max_length=200, verbose_name=_("name at store"))
+    name = models.CharField(_("name at store"), max_length=200)
     store = models.ForeignKey(Store, verbose_name=_("store"))
-    object_id = models.CharField(max_length=30,
-                                 verbose_name=_("store object id"))
-    ean = models.CharField(max_length=30, verbose_name=_("EAN"))
-    url = models.URLField(max_length=1000, verbose_name=_("url"))
-    price = models.DecimalField(default=0, max_digits=14, decimal_places=2,
-                                verbose_name=_("price"))
-    currency = models.SmallIntegerField(choices=CURRENCIES,
-                                        default=CURRENCIES.euro,
-                                        verbose_name=_("currency"))
-    creation_date = models.DateTimeField(default=timezone.now, editable=False,
-                                         verbose_name=_("date created"))
-    update_date = models.DateTimeField(auto_now=True,
-                                       verbose_name=_("last modified"))
-    img_small = models.URLField(max_length=1000, verbose_name=_("small image"))
-    img_medium = models.URLField(max_length=1000,
-                                 verbose_name=_("medium image"))
-    img_large = models.URLField(max_length=1000, verbose_name=_("large image"))
+    object_id = models.CharField(_("store object id"), max_length=30)
+    ean = models.CharField(_("EAN"), max_length=30)
+    url = models.URLField(_("URL"), max_length=1000)
+    price = models.DecimalField(_("price"), default=0, max_digits=14,
+                                decimal_places=2)
+    currency = models.SmallIntegerField(_("currency"), choices=CURRENCIES,
+                                        default=CURRENCIES.euro)
+    creation_date = models.DateTimeField(_("date created"),
+                                         default=timezone.now, editable=False)
+    update_date = models.DateTimeField(_("last modified"), auto_now=True)
+    img_small = models.URLField(_("small image"), max_length=1000)
+    img_medium = models.URLField(_("medium image"), max_length=1000)
+    img_large = models.URLField(_("large image"), max_length=1000)
 
     class Meta:
         abstract = True
@@ -89,11 +84,12 @@ class AffiliationItem(AffiliationItemBase):
     item = models.ForeignKey(Item)
 
     def copy_from_affcatalog(self, other):
-        fields = ["name", "store", "object_id", "ean", "url", "price",
-                  "currency", "img_small", "img_medium", "img_large"]
-        for field in fields:
-            value = getattr(other, field)
-            setattr(self, field, value)
+        if other.__class__ is not AffiliationItemCatalog:
+            return
+        for field in self._meta.fields:
+            if field.editable and not field.name in ["id", "item"]:
+                value = getattr(other, field.name)
+                setattr(self, field.name, value)
 
     class Meta:
         ordering = ["price"]
