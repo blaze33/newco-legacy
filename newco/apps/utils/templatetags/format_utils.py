@@ -26,24 +26,8 @@ class PriceNode(GenericNode):
             val = args[index] if not val and len(args) > index else val
             setattr(self, field, val)
 
-        price_kwargs = {}
-        if self.currency == CURRENCIES.euro:
-            price_kwargs.update({"currency": "EUR"})
-        elif self.currency == CURRENCIES.dollar:
-            price_kwargs.update({"currency": "USD"})
-        elif self.currency == CURRENCIES.pound:
-            price_kwargs.update({"currency": "GBP"})
-        else:
-            price_kwargs.update({"currency": "EUR"})
-
-        if self.language_code == "fr":
-            price_kwargs.update({"locale": "fr_FR"})
-        elif self.language_code == "en":
-            price_kwargs.update({"locale": "en_US"})
-
-        formatted_price = format_currency(value, **price_kwargs)
-
-        return self.render_output(context, formatted_price)
+        return self.render_output(
+            context, format_price(value, self.currency, self.language_code))
 
 
 @register.tag
@@ -87,3 +71,22 @@ def price(parser, token):
     args, kwargs, asvar = get_node_extra_arguments(parser, bits, tag_name, 2)
 
     return PriceNode(value, args, kwargs, asvar)
+
+
+def format_price(value, currency, language_code):
+    price_kwargs = {}
+    if currency == CURRENCIES.euro:
+        price_kwargs.update({"currency": "EUR"})
+    elif currency == CURRENCIES.dollar:
+        price_kwargs.update({"currency": "USD"})
+    elif currency == CURRENCIES.pound:
+        price_kwargs.update({"currency": "GBP"})
+    else:
+        price_kwargs.update({"currency": "EUR"})
+
+    if language_code == "fr":
+        price_kwargs.update({"locale": "fr_FR"})
+    elif language_code == "en":
+        price_kwargs.update({"locale": "en_US"})
+
+    return format_currency(value, **price_kwargs)
