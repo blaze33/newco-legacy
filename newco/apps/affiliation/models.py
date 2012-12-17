@@ -151,6 +151,7 @@ def _decathlon_init(aff_item, decathlon_item):
             price_2 = decimal.Decimal(value.replace(",", ".")).quantize(ROUND)
         elif key == "Monnaie":
             currency = unicode(value, "utf-8")
+            aff_item.currency = CURRENCY_TABLE.get(currency, None)
         elif key == "Frais de port":
             aff_item.shipping_price = decimal.Decimal(
                 value.replace(",", ".")).quantize(ROUND)
@@ -170,8 +171,5 @@ def _decathlon_init(aff_item, decathlon_item):
             setattr(aff_item, MATCHING_TABLE[key], unicode(value))
 
     aff_item.price = price if price and price < price_2 else price_2
-
-    if currency in CURRENCY_TABLE:
-        aff_item.currency = CURRENCY_TABLE[currency]
 
     return aff_item
