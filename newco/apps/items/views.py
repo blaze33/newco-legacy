@@ -257,7 +257,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
             related_questions = Content.objects.filter(
-                Q(question__items__in=q.items.all())|(Q(tags__in=q.tags.all()) & Q(question__isnull=False))).exclude(id=q.id)
+                Q(question__items__in=q.items.all())|(Q(tags__in=q.tags.all()) & Q(question__isnull=False))).exclude(id=q.id).distinct()
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
