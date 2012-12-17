@@ -55,7 +55,6 @@ $(function() {
     mixpanel.track_links("#mixpanel_popular","Click Popular");
     mixpanel.track_links("#mixpanel_questions","Click Unanswered Questions");
     mixpanel.track_links("#mixpanel_mynewsfeed","Click My Newsfeed");
-
     // Authentification (on Homepage only)
     if ($('li').hasClass('well_auth')) {
         // Pretty sure a loop could narrow down this part to 3 lines of code
@@ -73,4 +72,8 @@ $(function() {
         });
         mixpanel.name_tag(user_name);
     }
+    
+    //Landing Page
+    if ($('li').hasClass('non_auth')){mixpanel.register_once({ 'landing page': window.location.href });};
+
 });

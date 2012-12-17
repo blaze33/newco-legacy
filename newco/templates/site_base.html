@@ -33,9 +33,9 @@
 
 {% block extra_head_base %}
     {% compress js %}
-    <script type="text/javascript" src="{% static 'js/ga.js' %}"></script>
-    <script type="text/javascript">var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-    <script type="text/javascript" src="{% static 'js/mixpanel.js' %}"></script>
+    <script src="{% static 'js/ga.js' %}"></script>
+    <script>var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+    <script src="{% static 'js/mixpanel.js' %}"></script>
     {% block extra_head_script %}{% endblock%}
     {% endcompress %}
 {% endblock %}

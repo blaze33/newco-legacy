@@ -52,7 +52,7 @@
 
   {% if store_products %}<div class="span3">
     <div class="dropdown controls">
-      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest_product.price currency=cheapest_product.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest_product.price currency=cheapest_product.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
         {% for prod in store_products %}
           {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
@@ -90,6 +90,7 @@
 {% endblock %}
 
 {% block extra_script %}
+  <script src="{% static 'js/ga_functions.js' %}"></script>
   <script src="{{ STATIC_URL }}external/javascript-load-image/load-image.min.js"></script>
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
@@ -130,8 +131,13 @@
         })
       })
     });
-
-    $(document).ready(function(){mixpanel.track("Load_item_detail");});
-    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
+    
+    //Tracking Product name for analytics
+    $(document).ready(function(){
+      var product=document.getElementById("drop");
+      var name=product.getAttribute("data-name");
+      mixpanel.track("Load_item_detail", {"product":name});
+      if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
+    });
   </script>
 {% endblock %}
