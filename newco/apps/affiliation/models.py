@@ -79,7 +79,7 @@ class AffiliationItem(models.Model):
 
     def same_as(self, other):
         fields = ["name", "store", "object_id", "ean", "url", "price",
-                  "currency", "availability", "shipping_price"]
+                  "currency", "_availability", "_shipping_price"]
         same = True
         for field in fields:
             same = same and getattr(self, field) == getattr(other, field)
@@ -112,7 +112,7 @@ def _amazon_init(aff_item, amazon_item):
             d = [int(math.floor(h[0] / 24)), int(math.ceil(h[1] / 24))]
             d15 = [int(round(d[0] / 15) * 15), int(round(d[1] / 15) * 15)]
             m = [int(round(h[0] / (24 * 30))), int(round(h[1] / (24 * 30)))]
-            if attr.AvailabilityType == ["now", "futureDate"]:
+            if attr.AvailabilityType in ["now", "futureDate"]:
                 if h[0] < 48:
                     availability = "in stock"
                 elif d[1] < 15:
