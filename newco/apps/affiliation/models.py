@@ -44,10 +44,10 @@ class AffiliationItem(models.Model):
                                 decimal_places=2)
     currency = models.SmallIntegerField(_("currency"), choices=CURRENCIES,
                                         default=CURRENCIES.euro)
-    shipping_price = models.DecimalField(_("shipping_price"), default=0,
+    shipping_price = models.DecimalField(_("shipping_price"), default=-1,
                                          max_digits=14, decimal_places=2)
     availability = models.CharField(_("availability"), max_length=50,
-                                    default="in stock")
+                                    default="see site")
     creation_date = models.DateTimeField(_("date created"),
                                          default=timezone.now, editable=False)
     update_date = models.DateTimeField(_("last modified"), auto_now=True)

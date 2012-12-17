@@ -10,12 +10,12 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'AffiliationItem.shipping_price'
         db.add_column('affiliation_affiliationitem', 'shipping_price',
-                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=14, decimal_places=2),
+                      self.gf('django.db.models.fields.DecimalField')(default=-1, max_digits=14, decimal_places=2),
                       keep_default=False)
 
         # Adding field 'AffiliationItem.availability'
         db.add_column('affiliation_affiliationitem', 'availability',
-                      self.gf('django.db.models.fields.CharField')(default='in stock', max_length=50),
+                      self.gf('django.db.models.fields.CharField')(default='see site', max_length=50),
                       keep_default=False)
 
 
@@ -30,7 +30,7 @@ class Migration(SchemaMigration):
     models = {
         'affiliation.affiliationitem': {
             'Meta': {'unique_together': "(('store', 'object_id'),)", 'object_name': 'AffiliationItem'},
-            'availability': ('django.db.models.fields.CharField', [], {'default': "'in stock'", 'max_length': '50'}),
+            'availability': ('django.db.models.fields.CharField', [], {'default': "'see site'", 'max_length': '50'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'currency': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'ean': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -42,7 +42,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'object_id': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'price': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '14', 'decimal_places': '2'}),
-            'shipping_price': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '14', 'decimal_places': '2'}),
+            'shipping_price': ('django.db.models.fields.DecimalField', [], {'default': '-1', 'max_digits': '14', 'decimal_places': '2'}),
             'store': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['affiliation.Store']"}),
             'update_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '1000'})
