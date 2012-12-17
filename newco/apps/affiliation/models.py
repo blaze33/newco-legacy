@@ -108,11 +108,8 @@ def _amazon_init(aff_item, amazon_item):
     if price is not None:
         aff_item.currency = CURRENCY_TABLE.get(price.CurrencyCode,
                                                CURRENCIES.euro)
-
-        price_str = price.FormattedPrice.pyval.split(" ")
-        # fr_FR locale won't recognize the thousand dot separator !?!
-        aff_item.price = decimal.Decimal(
-            parse_decimal(price_str[1], locale="de")).quantize(ROUND)
+        aff_item.price = (decimal.Decimal(price.Amount.pyval) /
+                          decimal.Decimal(100)).quantize(ROUND)
 
     if hasattr(amazon_item, "SmallImage"):
         aff_item.img_small = unicode(amazon_item.SmallImage.URL)
