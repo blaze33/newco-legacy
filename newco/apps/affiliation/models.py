@@ -180,6 +180,9 @@ def _amazon_init(aff_item, amazon_item):
                 aff_item._availability = availability
             elif attr.AvailabilityType == "unknown":
                 pass
+            else:
+                # TODO: find a better way to grab new cases
+                print attr.AvailabilityType
         elif hasattr(amazon_item.OfferSummary, "LowestNewPrice"):
             price = amazon_item.OfferSummary.LowestNewPrice
         elif hasattr(amazon_item.OfferSummary, "LowestUsedPrice"):
