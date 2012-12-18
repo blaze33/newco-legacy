@@ -223,24 +223,22 @@ def _decathlon_init(aff_item, decathlon_item):
     ROUND = decimal.Decimal(".01")
 
     for key, value in decathlon_item.items():
-        if key == "Prix":
-            parsed_price = parse_decimal(value, locale="fr")
-            price = decimal.Decimal(parsed_price).quantize(ROUND)
-        elif key == "Prix barré":
-            parsed_price = parse_decimal(value, locale="fr")
-            price_2 = decimal.Decimal(parsed_price).quantize(ROUND)
+        val = unicode(value, "utf-8")
+        if key in ["Prix", "Prix barré", "Frais de port"]:
+            parsed_price = parse_decimal(val, locale="fr")
+            decimal_price = decimal.Decimal(parsed_price).quantize(ROUND)
+            if key == "Prix":
+                price = decimal_price
+            elif key == "Prix barré":
+                price_2 = decimal_price
+            elif key == "Frais de port":
+                aff_item._shipping_price = decimal_price
         elif key == "Monnaie":
-            currency = unicode(value, "utf-8")
-            aff_item.currency = CURRENCY_TABLE.get(currency, None)
-        elif key == "Frais de port":
-            parsed_price = parse_decimal(value, locale="fr")
-            aff_item._shipping_price = decimal.Decimal(
-                parsed_price).quantize(ROUND)
+            aff_item.currency = CURRENCY_TABLE.get(val, CURRENCIES.euro)
         elif key == "Nom":
-            aff_item.name = truncatechars(unicode(value, "utf-8"),
-                                          NAME_MAX_LENGTH)
+            aff_item.name = truncatechars(val, NAME_MAX_LENGTH)
         elif key == "Disponibilité":
-            match = re.match(DECATHLON_AVAILABILITY_PATTERN, value)
+            match = re.match(DECATHLON_AVAILABILITY_PATTERN, val)
             if match is not None:
                 days = match.groups("days")[0]
                 if days:
@@ -250,7 +248,7 @@ def _decathlon_init(aff_item, decathlon_item):
                     availability = "in stock"
                 aff_item._availability = availability
         elif key in MATCHING_TABLE:
-            setattr(aff_item, MATCHING_TABLE[key], unicode(value))
+            setattr(aff_item, MATCHING_TABLE[key], val)
 
     aff_item.price = price if price and price < price_2 else price_2
 
