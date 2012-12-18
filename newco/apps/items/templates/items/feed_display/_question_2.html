@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load content_utils %}
 {% load date_utils %}
+{% load bootstrap_tags %}
 
 {% if display == "mini_feed" %}
   {#<div class="row"><div class="span4">#}
@@ -16,13 +17,9 @@
 
 {% elif display == "text" %}
 
-  {% if display_ctx == "True" %}<div class="row"><div class="span7">
-    <p class="nf-small-grey">{% object_display author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}</p>
-  </div></div>{% endif %}
-
   <div class="row one_row">
     <div class="span1 vote-controls">
-      {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display only %}
+      {% include "items/_vote_box.html" with content=content item=item score=score scores=scores vote=vote display=display only %}
       {% edit_buttons user content edit_next=path delete_next=path %}
     </div>
     <div class="span6">
@@ -32,20 +29,21 @@
         </p></div>
       </div>
 
-      <p class="nf-small-grey">
-        <a href="{{ content.get_absolute_url }}">{% trans "Add Answer" %}</a> • <a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
-        <div class="dropdown">
-          <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-            <li><a tabindex="-1" href="#">Detailed info</a></li>
-            <li><a tabindex="-1" href="#">An</a></li>
-            <li><a tabindex="-1" href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Separated link</a></li>
-          </ul>
-        </div>{% endcomment %}
-      </p>
-
+      {% if not display_answer == "True" %}
+        <p class="nf-small-grey">
+          <a href="{{ content.get_absolute_url }}">{% trans "Add Answer" %}</a> • <a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
+          <div class="dropdown">
+            <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Detailed info</a></li>
+              <li><a tabindex="-1" href="#">An</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+          </div>{% endcomment %}
+        </p>
+      {% endif %}
     </div>
 
     {% if display_img == "True" %}{# Seb: quick-fix while we don't have standardized width of newsfeed: "no image" allows to stay in span7 #}
@@ -75,7 +73,30 @@
     {% endfor %}
   {% endif %}
 
-{% elif display == "email_html" %}
+
+  {% if display_answer == "True" %}
+    <div class="row" id="controls_answer_form_{{ content.id }}">
+      <br>
+      <div class="span4"><button class="btn btn-small" data-toggle="collapse" data-target="#answer_form_{{ content.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add a better answer" %}{% endif %}</span></button></div>
+      <div class="span4 right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+    </div>
+    <div class="row"><div class="span9">
+      <div id="answer_form_{{ content.id }}" class="row collapse {% if content.answer_form.errors or content.id == q_id %}in{% else %}out{% endif %}"><form method="POST" action="#answer_form_{{ content.id }}">
+        <br>
+        {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
+        <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
+          {% csrf_token %}
+          {{ content.answer_form|as_bootstrap }}
+          <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
+          <button type="submit" class="btn btn-small" name="answer" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+          <input type="hidden" name="question_id" value="{{ content.id }}"/>
+        </div>
+      </form></div>
+    </div></div>
+    {% include "items/_ask_modal.html" %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
+  {% endif %}
+
+{% elif display == "email_html" %} {# to do: change object name (same convention in this template): question => content #}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
   <br>
 {% elif display == "email_txt" %}
