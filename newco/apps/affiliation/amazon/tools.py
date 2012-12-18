@@ -18,9 +18,9 @@ def amazon_product_search(keyword, storing_class, store,
                                AssociateTag=settings.AWS_ASSOCIATE_TAG)
     except NoExactMatchesFound:
         return None
-    except URLError, e:
+    except URLError:
         if settings.DEBUG:
-            raise e
+            raise
         else:
             return None
 
