@@ -9,7 +9,7 @@
 {% block list %}
 <div class="tabbable row">
   <div class="span9">
-    {% include "items/_question_list.html" with questions=object_list %}
+    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_answer="True" display_q_form="True" q_form=q_form item=item user=user path=request.path csrf_token=csrf_token empty_msg=empty_msg only %}
   </div>
   <div class="span3">
     <b>{% trans "Question type:" %}</b>
