@@ -19,7 +19,7 @@
     {% edit_buttons user answer delete_next=request.path %}
   </div>
   <div class="span8 answer-content">
-    {% content_info answer "signature" 32 %}
+    {% if display_signature == "True" %}{% content_info answer "signature" 32 %}{% endif %}
     {% content_info answer "header" %}
     <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
     {% if display_options == "True" %}

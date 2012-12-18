@@ -17,16 +17,26 @@
 
 {% elif display == "text" %}
 
+  {% comment %}{% if display_linked_content == "True" %}
+    <div class="row one_row">
+      <div class="span9">
+          <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
+          {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
+          {% endif %}</p>
+      </div>
+    </div>
+  {% endif %}{% endcomment %}
+
   <div class="row one_row">
     <div class="span1 vote-controls">
-      {% include "items/_vote_box.html" with content=content item=item score=score scores=scores vote=vote display=display only %}
+      {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display only %}
       {% edit_buttons user content edit_next=path delete_next=path %}
     </div>
     <div class="span6">
       <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
-        <div class="span6"><p>
-          <a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a>
-        </p></div>
+        <div class="span6">
+          <p><a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
+        </div>
       </div>
 
       {% if not display_answer == "True" %}
@@ -47,27 +57,39 @@
     </div>
 
     {% if display_img == "True" %}{# Seb: quick-fix while we don't have standardized width of newsfeed: "no image" allows to stay in span7 #}
-      {% if content.items.all %}
-        {% for item in content.items.all %}
-          <div class="span1 content-item-mini">
-            {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
-          </div>
-        {% endfor %}
-      {% elif content.tags.all %}
-        {% for tag in content.tags.all %}
-          <div class="span1 content-item-mini">
-            <a href="{{ content.get_absolute_url }}"><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
-            <h6 class="black" align="center">{{ tag.name }}</h6></a>
-          </div>
-        {% endfor %}
-      {% endif %}
+      <div class="span2">
+        <div class="row">
+          {% if content.items.all.count > 2 or content.tags.all.count > 2 %}
+            <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="nf-small-grey">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
+            {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
+            {% endif %}</p>
+          {% else %}
+            {% if content.items.all %}
+              {% for item in content.items.all|slice:":2" %}
+                <div class="span1 content-item-mini">
+                  {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
+                </div>
+              {% endfor %}
+            {% elif content.tags.all %}
+              {% for tag in content.tags.all|slice:":2" %}
+                <div class="span1 content-item-mini">
+                  <a href="{{ content.get_absolute_url }}">
+                    <img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
+                    <h6 class="black" align="center">{{ tag.name|truncatechars:25 }}</h6>
+                  </a>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
     {% endif %}
 
   </div>
 
   {% if display_answer == "True" %}
     {% for answer in content.answer_set.all %}
-      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display only %}{# scores=answer.scores #}
+      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display display_signature=display_signature scores=scores only %}{# scores=answer.scores #}
     {% empty %}
       {% cycle "empty" as empty silent %}
     {% endfor %}
