@@ -4,16 +4,13 @@ import sys
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction, IntegrityError
 
-from affiliation.models import AffiliationItem, Store
 from affiliation.catalogs_tools import csv_url2dict
 from utils.tools import get_search_results
 
 
-def decathlon_product_search(keyword, nb_items=10):
-    store = Store.objects.get_store("Decathlon")
-
+def decathlon_product_search(keyword, storing_class, store, nb_items=10):
     # Exclude from search already linked items
-    d4_prods = AffiliationItem.objects.filter(store=store, item=None)
+    d4_prods = storing_class.objects.filter(store=store, item=None)
 
     # Mininum length for words that are used for the search
     min_len = 3
@@ -21,7 +18,7 @@ def decathlon_product_search(keyword, nb_items=10):
 
 
 @transaction.commit_manually
-def decathlon_db_processing(output_file=None):
+def decathlon_db_processing(storing_class, store, output_file=None):
 
     # If file path given in kwargs, writes log in it. Else, stdout.
     if output_file:
@@ -30,9 +27,7 @@ def decathlon_db_processing(output_file=None):
         output = sys.stdout
     output.write("\n-----------\nDECATHLON DB PROCESSING\n-----------\n")
 
-    storing_class = AffiliationItem
     errors = list()
-    store = Store.objects.get_store("Decathlon")
     transaction.commit()
 
     # Decathlon stored references. #TODO: store D4 ref in other DB

@@ -6,10 +6,9 @@ from django.conf import settings
 from amazonproduct import API
 from amazonproduct.errors import NoExactMatchesFound
 
-from affiliation.models import AffiliationItem, Store
 
-
-def amazon_product_search(keyword, search_index="All", nb_items=10):
+def amazon_product_search(keyword, storing_class, store,
+                          search_index="All", nb_items=10):
     api = API(settings.AWS_PRODUCT_ACCESS_KEY_ID,
               settings.AWS_PRODUCT_SECRET_ACCESS_KEY, settings.AWS_LOCALE)
 
@@ -45,11 +44,10 @@ def amazon_product_search(keyword, search_index="All", nb_items=10):
         if current_page >= nb_pages:
             break
 
-    store = Store.objects.get_store("Amazon")
     counter = 0
     aff_item_list = list()
     for item in item_list:
-        entry, created = AffiliationItem.objects.get_or_create(
+        entry, created = storing_class.objects.get_or_create(
             store=store, object_id=item.ASIN)
         entry.store_init(store, item)
         entry.save()
