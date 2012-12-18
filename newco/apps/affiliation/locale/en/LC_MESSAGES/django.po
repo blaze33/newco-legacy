@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-17 23:47+0100\n"
+"POT-Creation-Date: 2012-12-18 18:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,202 +129,22 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: amazon/search_index.py:4
-msgid "All"
-msgstr ""
-
-#: amazon/search_index.py:5
-msgid "Apparel"
-msgstr ""
-
-#: amazon/search_index.py:6
-msgid "Appliances"
-msgstr ""
-
-#: amazon/search_index.py:7
-msgid "Automotive"
-msgstr ""
-
-#: amazon/search_index.py:8
-msgid "Baby"
-msgstr ""
-
-#: amazon/search_index.py:9
-msgid "Beauty"
-msgstr ""
-
-#: amazon/search_index.py:10
-msgid "Blended"
-msgstr ""
-
-#: amazon/search_index.py:11
-msgid "Books"
-msgstr ""
-
-#: amazon/search_index.py:12
-msgid "Classical"
-msgstr ""
-
-#: amazon/search_index.py:13
-msgid "Digital Music"
-msgstr ""
-
-#: amazon/search_index.py:14
-msgid "DVD"
-msgstr ""
-
-#: amazon/search_index.py:15
-msgid "Electronics"
-msgstr ""
-
-#: amazon/search_index.py:16
-msgid "Foreign Books"
-msgstr ""
-
-#: amazon/search_index.py:17
-msgid "Gourmet Food"
-msgstr ""
-
-#: amazon/search_index.py:18
-msgid "Grocery"
-msgstr ""
-
-#: amazon/search_index.py:19
-msgid "Health & Personal Care"
-msgstr ""
-
-#: amazon/search_index.py:20
-msgid "Hobbies"
-msgstr ""
-
-#: amazon/search_index.py:21
-msgid "Home & Garden"
-msgstr ""
-
-#: amazon/search_index.py:22
-msgid "Industrial"
-msgstr ""
-
-#: amazon/search_index.py:23
-msgid "Jewelry"
-msgstr ""
-
-#: amazon/search_index.py:24
-msgid "Kindle Store"
-msgstr ""
-
-#: amazon/search_index.py:25
-msgid "Kitchen"
-msgstr ""
-
-#: amazon/search_index.py:26
-msgid "Lawn & Garden"
-msgstr ""
-
-#: amazon/search_index.py:27
-msgid "Magazines"
-msgstr ""
-
-#: amazon/search_index.py:28
-msgid "Miscellaneous"
-msgstr ""
-
-#: amazon/search_index.py:29
-msgid "MP3 Downloads"
-msgstr ""
-
-#: amazon/search_index.py:30
-msgid "Musical Instruments"
-msgstr ""
-
-#: amazon/search_index.py:31
-msgid "Music"
-msgstr ""
-
-#: amazon/search_index.py:32
-msgid "Music Tracks"
-msgstr ""
-
-#: amazon/search_index.py:33
-msgid "Office Products"
-msgstr ""
-
-#: amazon/search_index.py:34
-msgid "Outdoor Living"
-msgstr ""
-
-#: amazon/search_index.py:35
-msgid "PC Hardware"
-msgstr ""
-
-#: amazon/search_index.py:36
-msgid "Pet Supplies"
-msgstr ""
-
-#: amazon/search_index.py:37
-msgid "Photo"
-msgstr ""
-
-#: amazon/search_index.py:38
-msgid "Software"
-msgstr ""
-
-#: amazon/search_index.py:39
-msgid "Software & Video Games"
-msgstr ""
-
-#: amazon/search_index.py:40
-msgid "Sporting Goods"
-msgstr ""
-
-#: amazon/search_index.py:41
-msgid "Tools"
-msgstr ""
-
-#: amazon/search_index.py:42
-msgid "Toys"
-msgstr ""
-
-#: amazon/search_index.py:43
-msgid "VHS"
-msgstr ""
-
-#: amazon/search_index.py:44
-msgid "Video Games"
-msgstr ""
-
-#: amazon/search_index.py:45
-msgid "Video"
-msgstr ""
-
-#: amazon/search_index.py:46
-msgid "Watches"
-msgstr ""
-
-#: amazon/search_index.py:47
-msgid "Wireless Accessories"
-msgstr ""
-
-#: amazon/search_index.py:48
-msgid "Wireless"
-msgstr ""
-
-#: templates/affiliation/_affiliation_item.html:30
+#: templates/affiliation/_affiliation_item.html:31
 msgid "Total Price"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:31
+#: templates/affiliation/_affiliation_item.html:32
 msgid "See offer"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:35
+#: templates/affiliation/_affiliation_item.html:36
 msgid "Price"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:38
+#: templates/affiliation/_affiliation_item.html:39
 msgid "Shipping Price"
 msgstr ""
 
-#: templates/affiliation/_affiliation_item.html:41
+#: templates/affiliation/_affiliation_item.html:42
 msgid "Availability"
 msgstr ""
