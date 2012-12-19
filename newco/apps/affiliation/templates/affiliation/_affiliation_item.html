@@ -28,7 +28,7 @@
       {% price prod.price prod.currency LANGUAGE_CODE as price %}
       {% price prod.total_price prod.currency LANGUAGE_CODE as total_price %}
 
-      <b title="{% trans 'Total Price' %}">{{ total_price }}</b>
+      <b title="{% trans 'Total Price (shipping included)' %}">{{ total_price }}</b>
       <a class="btn pull-right" id="{{ prod.ean }}" href="{{ prod.url }}" target="_blank"><b>{% trans "See offer" %}</b> <i class="icon-play"></i></a>
       <br>
       <small class="muted">

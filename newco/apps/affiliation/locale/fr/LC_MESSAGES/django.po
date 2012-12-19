@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 18:35+0100\n"
-"PO-Revision-Date: 2012-12-18 18:35\n"
+"POT-Creation-Date: 2012-12-19 10:09+0100\n"
+"PO-Revision-Date: 2012-12-19 10:09\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -132,8 +132,8 @@ msgid "months"
 msgstr "mois"
 
 #: templates/affiliation/_affiliation_item.html:31
-msgid "Total Price"
-msgstr "Prix Total"
+msgid "Total Price (shipping included)"
+msgstr "Prix Total (livraison incluse)"
 
 #: templates/affiliation/_affiliation_item.html:32
 msgid "See offer"
@@ -150,6 +150,9 @@ msgstr "Frais d'envoi"
 #: templates/affiliation/_affiliation_item.html:42
 msgid "Availability"
 msgstr "Disponibilité"
+
+#~ msgid "Total Price"
+#~ msgstr "Prix Total"
 
 #~ msgid "url"
 #~ msgstr "url"
