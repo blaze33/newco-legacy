@@ -35,7 +35,7 @@ python-amazon-product-api==0.2.5
 lxml==3.0.1
 
 ## pinax-theme-bootstrap
-pinax-theme-bootstrap==2.2.1
+pinax-theme-bootstrap==2.2.2
 pinax-theme-bootstrap-account==1.0b2
 
 ## schema and data migrations
