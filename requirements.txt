@@ -75,7 +75,8 @@ requests==0.14.2
 django-htmlmin==0.5.2
 
 ## tagging
-django-taggit==0.9.3
+# django-taggit==0.9.3
+git+git://github.com/yedpodtrzitko/django-taggit.git@791378aea6#egg=django-taggit
 
 ## voting application
 django-voting==0.2
