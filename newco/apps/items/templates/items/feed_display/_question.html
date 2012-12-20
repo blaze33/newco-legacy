@@ -32,33 +32,10 @@
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display only %}
       {% edit_buttons user content edit_next=path delete_next=path %}
     </div>
-    <div class="span6">
-      <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
-        <div class="span6">
-          <p><a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
-        </div>
-      </div>
+    <div class="span8">
 
-      {% if not display_answer == "True" %}
-        <p class="nf-small-grey">
-          <a href="{{ content.get_absolute_url }}">{% trans "Add Answer" %}</a> • <a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
-          <div class="dropdown">
-            <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><a tabindex="-1" href="#">Detailed info</a></li>
-              <li><a tabindex="-1" href="#">An</a></li>
-              <li><a tabindex="-1" href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a tabindex="-1" href="#">Separated link</a></li>
-            </ul>
-          </div>{% endcomment %}
-        </p>
-      {% endif %}
-    </div>
-
-    {% if display_img == "True" %}{# Seb: quick-fix while we don't have standardized width of newsfeed: "no image" allows to stay in span7 #}
-      <div class="span2">
-        <div class="row">
+      {% if display_img == "True" %}{# Seb: quick-fix while we don't have standardized width of newsfeed: "no image" allows to stay in span7 #}
+        <div class="pull-right" style="max-width: 190px; padding-left: 5px;">
           {% if content.items.all.count > 2 or content.tags.all.count > 2 %}
             <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="nf-small-grey">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
             {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
@@ -82,8 +59,29 @@
             {% endif %}
           {% endif %}
         </div>
-      </div>
-    {% endif %}
+      {% endif %}
+
+      {#<div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}"><div class="span6">#}
+      <p><a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
+      {#</div></div>#}
+
+      {% if not display_answer == "True" %}{#  If no answer => display controls  #}
+        <p class="nf-small-grey">
+          <a href="{{ content.get_absolute_url }}">{% trans "Add Answer" %}</a> • <a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
+          <div class="dropdown">
+            <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Detailed info</a></li>
+              <li><a tabindex="-1" href="#">An</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+          </div>{% endcomment %}
+        </p>
+      {% endif %}
+
+    </div>
 
   </div>
 
