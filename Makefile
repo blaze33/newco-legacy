@@ -69,6 +69,10 @@ pg_backup2dropbox:
 	curl -o ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
 	cp  ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/{$(DATE).dump,latest.dump}
 
+pg_prod2staging:
+	heroku pg:reset DATABASE --confirm newco-staging
+	heroku pgbackups:restore DATABASE '$(PGDUMPURL)' --confirm newco-staging
+
 # TODO: add additional commands to manage stuff.
 # Static stuff
 
