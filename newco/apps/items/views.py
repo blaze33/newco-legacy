@@ -217,11 +217,11 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 if not media:
                     media = q.answer_form.media
 
-            p_qs = Profile.objects.filter(skills__in=item.tags.all())
+            experts = Profile.objects.filter(skills__in=item.tags.all())
 
             context.update({
                 "questions": questions, "scores": scores, "votes": votes,
-                "media": media, "q_form": q_form, "profile_qs": p_qs.distinct()
+                "media": media, "q_form": q_form, "experts": experts.distinct()
             })
 
             # Linked affiliated products
@@ -250,14 +250,14 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             context.update({"question": q, "scores": scores, "votes": votes})
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
-            p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
             related_questions = Content.objects.filter(
                 Q(question__items__in=q.items.all())|(Q(tags__in=q.tags.all()) & Q(question__isnull=False))).exclude(id=q.id).distinct()
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
-            context.update({"profile_qs": p_qs, "related_questions": {
+            context.update({"experts": experts, "related_questions": {
                 _("Top related questions"): top_questions[:3],
                 _("Latest related questions"): related_questions[:3]
             }})

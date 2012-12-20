@@ -9,10 +9,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 
 from django.contrib import messages
-from django.contrib.auth.models import User
 
 from account.utils import user_display
 
+from profiles.models import Profile
 from utils.tools import unescape
 
 
@@ -80,8 +80,9 @@ def process_asking_for_help(request, question, success_url):
     username = user_display(request.user)
 
     if "ask" in request.POST:
-        receiver = User.objects.get(id=request.POST["ask"])
-        receiver_name = user_display(receiver)
+        receiver_profile = Profile.objects.get(id=request.POST["ask"])
+        receiver = receiver_profile.user
+        receiver_name = user_display(receiver_profile)
 
     #TODO: improve typeahead
 #    elif "ask_prof_pick" in request.POST:

@@ -8,12 +8,12 @@
     <h3>{% trans "Ask..." %}</h3>
   </div>
   <div class="modal-body">
-    {% if profile_qs.count > 0 %}
+    {% if experts.count > 0 %}
       <h4>{% trans "...an expert:" %}</h4>
-      {% for prof in profile_qs %}<br><div class="row">
-        <div class="span2 left"><a href="{{ prof.user.get_absolute_url }}" target="_blank" class="label label-success">{% user_display prof.user %}</a></div>
+      {% for expert in experts %}<br><div class="row">
+        <div class="span2 left"><a href="{{ expert.get_absolute_url }}" target="_blank" class="label label-success">{% user_display expert %}</a></div>
         <div class="span3 right"><form action="" method="POST">{% csrf_token %}
-          <button class="btn" type="submit" name="ask" value="{{ prof.user.id }}">{% trans "Ask" %}</button>
+          <button class="btn" type="submit" name="ask" value="{{ expert.id }}">{% trans "Ask" %}</button>
           <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
           <input type="hidden" name="object_name" value="{{ question|to_class_name }}"/>
           <input type="hidden" name="id" value="{{ question.id }}"/>
