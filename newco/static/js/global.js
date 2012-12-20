@@ -201,7 +201,7 @@ var select2TagsParameters = $.extend({}, select2BaseParameters, {
   },
   createSearchChoice: function(term, data) {
       if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-          return {id:term, text:term};
+          return {id:term.toLowerCase(), text:term.toLowerCase()};
       }
   },
   ajax: {
