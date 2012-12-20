@@ -252,8 +252,9 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
-            related_questions = Content.objects.filter(
-                Q(question__items__in=q.items.all())|(Q(tags__in=q.tags.all()) & Q(question__isnull=False))).exclude(id=q.id).distinct()
+            related_questions = Content.objects.questions().filter(
+                Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
+            ).exclude(id=q.id).distinct()
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
@@ -344,8 +345,9 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
-            related_questions = Content.objects.filter(
-                Q(question__items__in=context.get("object_list")) | (Q(tags=self.tag) & Q(question__isnull=False))).distinct()             
+            related_questions = Content.objects.questions().filter(
+                Q(items__in=context.get("object_list")) | Q(tags=self.tag)
+            ).distinct()
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
