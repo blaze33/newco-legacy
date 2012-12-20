@@ -45,7 +45,7 @@ class Profile(ProfileBase):
 
     class Meta:
         verbose_name = _("profile")
-        ordering = ["-user__reputation__reputation_incremented", "name"]
+        ordering = ["name", ]
 
     def __unicode__(self):
         return self.name

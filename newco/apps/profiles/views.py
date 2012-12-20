@@ -74,7 +74,7 @@ class ProfileListView(TutorialMixin, ProfileListView):
     paginate_by = 15
 
     def get_queryset(self):
-        profiles = self.get_model_class().objects.select_related()
+        profiles = self.get_model_class().objects.all()
 
         search_terms = self.request.GET.get("search", "")
         order = self.request.GET.get("order", "")
@@ -85,5 +85,8 @@ class ProfileListView(TutorialMixin, ProfileListView):
             profiles = profiles.order_by("-user__date_joined")
         elif order == "name":
             profiles = profiles.order_by("name")
+        else:
+            profiles = profiles.order_by(
+                "-user__reputation__reputation_incremented", "name")
 
         return profiles
