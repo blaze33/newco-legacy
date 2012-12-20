@@ -74,7 +74,8 @@ class ProfileListView(TutorialMixin, ProfileListView):
     paginate_by = 15
 
     def get_queryset(self):
-        profiles = self.get_model_class().objects.all()
+        profiles = self.get_model_class().objects.all().prefetch_related(
+            "user__reputation")
 
         search_terms = self.request.GET.get("search", "")
         order = self.request.GET.get("order", "")
