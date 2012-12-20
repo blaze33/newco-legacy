@@ -117,8 +117,7 @@ class ContentQuerySet(InheritanceQuerySet):
 
 class ContentManager(InheritanceManager):
     def get_query_set(self):
-        qs = ContentQuerySet(self.model)
-        return qs.filter(Q(link__isnull=True) & Q(feature__isnull=True))
+        return ContentQuerySet(self.model)
 
     def questions(self):
         return self.get_query_set().questions()

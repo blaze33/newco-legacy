@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Count
 from django.db.models.loading import get_model
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
@@ -25,7 +25,7 @@ from content.transition import add_images, get_album
 from items import STATUSES
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from items.forms import PartialQuestionForm
-from items.models import Item, Content, Question, Link, Feature
+from items.models import Item, Content, Question
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.mailtools import process_asking_for_help
@@ -43,8 +43,6 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
-            if self.model is Link or self.model is Feature:
-                raise Http404()
             form_class_name = self.model._meta.object_name + "Form"
             if form_class_name in globals():
                 self.form_class = globals()[form_class_name]

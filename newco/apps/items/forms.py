@@ -13,7 +13,7 @@ from taggit.forms import TagWidget
 
 from affiliation.models import AffiliationItem
 from affiliation.tools import stores_product_search
-from items.models import Item, Content, Question, Answer, Story, Link
+from items.models import Item, Content, Question, Answer, Story
 from utils.mailtools import mail_question_author
 
 
@@ -252,43 +252,6 @@ QAFormSet = inlineformset_factory(Question, Answer, form=AnswerForm,
 class StoryForm(ModelForm):
     class Meta:
         model = Story
-
-
-class LinkForm(ModelForm):
-
-    create = False
-
-    class Meta:
-        model = Link
-        exclude = ('author', 'items')
-        widgets = {
-            'text': Textarea(attrs={
-                'class': 'span4',
-                'placeholder': _('Link description'),
-                'rows': 1}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        if 'instance' not in kwargs or kwargs['instance'] is None:
-            self.create = True
-            self.request = kwargs.pop('request')
-            self.user = self.request.user
-            self.item_id = self.request.REQUEST['item_id']
-            self.item = Item.objects.get(pk=self.item_id)
-        else:
-            self.object = kwargs['instance']
-            self.item = self.object.items.select_related()[0]
-        return super(LinkForm, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True, **kwargs):
-        if commit and self.create:
-            link = super(LinkForm, self).save(commit=False)
-            link.author = self.user
-            link.save()
-            link.items.add(self.item_id)
-            return link
-        else:
-            return super(LinkForm, self).save(commit)
 
 
 def _reload_current_search(item_form):

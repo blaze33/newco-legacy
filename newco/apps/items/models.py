@@ -199,36 +199,6 @@ class Answer(Content):
         }
 
 
-class Link(Content):
-    content = models.CharField(max_length=200, verbose_name=_("content"))
-    url = models.URLField(max_length=200, verbose_name=_("URL"))
-
-    class Meta:
-        verbose_name = _("link")
-
-    def __unicode__(self):
-        return u"%s" % (self.content)
-
-    def get_absolute_url(self, anchor_pattern="?link=%(id)s#l-%(id)s"):
-        item = self.items.select_related()[0]
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
-
-
-class Feature(Content):
-    content = models.CharField(max_length=80, verbose_name=_('content'))
-    positive = models.BooleanField()
-
-    class Meta:
-        verbose_name = _('feature')
-
-    def __unicode__(self):
-        return u'%s' % (self.content)
-
-    def get_absolute_url(self, anchor_pattern="?feature=%(id)s#f-%(id)s"):
-        item = self.items.select_related()[0]
-        return item.get_absolute_url() + (anchor_pattern % self.__dict__)
-
-
 class Story(models.Model):
     title = models.CharField(max_length=200, verbose_name=_("title"))
     content = models.CharField(max_length=2000, verbose_name=_("content"))
