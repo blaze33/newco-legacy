@@ -58,6 +58,9 @@ class Profile(ProfileBase):
         kwargs = {'pk': self.pk, 'slug': self.slug}
         return reverse('profile_detail', kwargs=kwargs)
 
+    def get_profile(self):
+        return self
+
 
 class Reputation(models.Model):
     user = models.OneToOneField(User)
