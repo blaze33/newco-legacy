@@ -199,8 +199,9 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             item = context.get("item")
             item_related_qs = content_qs.filter(items=item)
             scores, votes = item_related_qs.get_scores_and_votes(user)
-            questions = item_related_qs.questions().order_queryset(
-                "popular", scores)
+            questions = item_related_qs.questions().prefetch_related(
+                "author__reputation", "answer_set__author__reputation"
+            ).order_queryset("popular", scores)
 
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
@@ -240,7 +241,11 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 context.update({'album': images})
 
         elif self.model == Question:
-            q = context.get("question")
+            # TODO: override get_object?
+            q = Content.objects.filter(
+                id=context["question"].id).prefetch_related(
+                    "answer_set__author__reputation").select_subclasses().get()
+
             q.answer_form = AnswerForm(request, data=POST) \
                 if "answer" in POST or "edit_about" in POST \
                 else AnswerForm(request)
