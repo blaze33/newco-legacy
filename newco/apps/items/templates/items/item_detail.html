@@ -30,6 +30,7 @@
     {% include "items/_data_sheet.html" %}
     <br>
     {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_answer="True" display_signature="True" display_q_form="True" q_form=q_form item=item user=user path=request.path csrf_token=csrf_token empty_msg=empty_msg scores=scores only %}
+
     <br>
     {% for prod in store_products %}
       {% if forloop.first %}

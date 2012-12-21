@@ -295,7 +295,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                                                        **kwargs)
 
 
-class ContentListView(ContentView, MultiTemplateMixin, ListView):
+class ContentListView(ContentView, MultiTemplateMixin, ListView,
+                        ProcessVoteView):
 
     paginate_by = 9
     qs_option = "-pub_date"
@@ -337,13 +338,13 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            self.scores = qs.get_scores()
+            self.scores, self.votes = self.queryset.get_scores_and_votes(self.request.user)
             qs = qs.order_queryset(self.qs_option, self.scores)
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes", "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
