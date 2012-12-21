@@ -6,7 +6,9 @@ from utils.vote.tools import process_voting as _process_voting
 from utils.tools import load_object
 
 
-class ProcessVoteView(object):
+class VoteMixin(object):
+
+    success_url = None
 
     def post(self, request, *args, **kwargs):
         if "vote_button" in request.POST:
@@ -15,8 +17,7 @@ class ProcessVoteView(object):
                 self.success_url = obj.get_absolute_url()
             return self.process_voting(request, obj, self.success_url)
         else:
-            return super(ProcessVoteView, self).post(request, *args,
-                                                                **kwargs)
+            return super(VoteMixin, self).post(request, *args, **kwargs)
 
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
