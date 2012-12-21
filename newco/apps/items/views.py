@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Min
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -224,10 +224,11 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             })
 
             # Linked affiliated products
-            store_products = list(item.affiliationitem_set.all())
-            if store_products:
-                context.update({"store_products": store_products,
-                                "cheapest_product": store_products[0]})
+            products = item.affiliationitem_set.select_related("store")
+            if products:
+                min_price = products.aggregate(Min("price"))["price__min"]
+                context.update({"store_products": products,
+                                "cheapest_price": min_price})
 
             albums = self.object.node.graph.image_set
             if albums:

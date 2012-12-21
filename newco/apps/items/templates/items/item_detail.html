@@ -52,7 +52,7 @@
 
   {% if store_products %}<div class="span3">
     <div class="dropdown controls">
-      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest_product.price currency=cheapest_product.currency language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+      <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest_price language_code=LANGUAGE_CODE %}</b> <span class="caret"></span></a>
       <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
         {% for prod in store_products %}
           {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
