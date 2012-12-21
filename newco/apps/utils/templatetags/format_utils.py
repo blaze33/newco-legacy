@@ -88,5 +88,7 @@ def format_price(value, currency, language_code):
         price_kwargs.update({"locale": "fr_FR"})
     elif language_code == "en":
         price_kwargs.update({"locale": "en_US"})
+    else:
+        price_kwargs.update({"locale": "fr_FR"})
 
     return format_currency(value, **price_kwargs)
