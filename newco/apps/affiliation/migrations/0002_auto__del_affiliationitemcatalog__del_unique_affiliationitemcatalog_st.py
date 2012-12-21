@@ -33,6 +33,11 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'AffiliationItem', fields ['object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['object_id', 'store_id'])
 
+        # Adding field 'Store.affiliated_url'
+        db.add_column('affiliation_store', 'affiliated_url',
+                      self.gf('django.db.models.fields.URLField')(default='', max_length=1000),
+                      keep_default=False)
+
 
     def backwards(self, orm):
         # Removing unique constraint on 'AffiliationItem', fields ['object_id', 'store']
@@ -71,6 +76,9 @@ class Migration(SchemaMigration):
         # Adding unique constraint on 'AffiliationItem', fields ['item', 'object_id', 'store']
         db.create_unique('affiliation_affiliationitem', ['item_id', 'object_id', 'store_id'])
 
+        # Deleting field 'Store.affiliated_url'
+        db.delete_column('affiliation_store', 'affiliated_url')
+
 
     models = {
         'affiliation.affiliationitem': {
@@ -94,6 +102,7 @@ class Migration(SchemaMigration):
         },
         'affiliation.store': {
             'Meta': {'object_name': 'Store'},
+            'affiliated_url': ('django.db.models.fields.URLField', [], {'max_length': '1000'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -146,9 +155,10 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'})
         },
         'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
+            'Meta': {'ordering': "['namespace', 'name']", 'object_name': 'Tag'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
+            'namespace': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
         },
         'taggit.taggeditem': {
