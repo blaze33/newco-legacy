@@ -26,6 +26,7 @@ ROUND = decimal.Decimal(".01")
 class Store(models.Model):
     name = models.CharField(_("name"), max_length=100)
     url = models.URLField(_("url webapp"), max_length=200)
+    affiliated_url = models.URLField(max_length=1000)
     slug = models.SlugField(_("slug"), editable=False)
     last_modified = models.DateTimeField(_("last modified"), auto_now=True)
 

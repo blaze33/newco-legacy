@@ -12,14 +12,14 @@
     </a>
     <div class="details {{ prod.ean }}">
       <h4>
-        <a href="{{ prod.store.url }}" target="_blank" class="black">{{ prod.store }}</a>
+        <a href="{{ prod.store.affiliated_url }}" target="_blank" class="black">{{ prod.store }}</a>
         <a href="{{ prod.url }}" target="_blank" id="{{ prod.ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
       </h4>
     </div>
   </div>
 {% elif display == "list" %}
   <div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
-    <div class="span2"><a href="{{ prod.store.url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
+    <div class="span2"><a href="{{ prod.store.affiliated_url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
     <div class="span4 product-comparator">
       <img src="{{ prod.img_small }}">
       {{ prod.name }}

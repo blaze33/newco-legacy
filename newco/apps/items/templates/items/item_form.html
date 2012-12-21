@@ -56,7 +56,7 @@
       {% if form.product_list_by_store %}
         <button type="submit" class="btn" name="add_links"><i class="icon-plus-sign"></i> {% trans "Add selected" %}</button><br><br>
         {% for store, product_list in form.product_list_by_store.items %}{% if product_list %}{% cycle 1 0 as row silent %}{% if row %}<div class="row">{% endif %}<div class="span4"><div class="thumbnail row">
-          <h3><a href="{{ product_list.0.store.url }}" target="_blank" class="black">{% favicon product_list.0.store.url 24 %}&nbsp;{{ store }}</a></h3>
+          <h3><a href="{{ product_list.0.store.affiliated_url }}" target="_blank" class="black">{% favicon product_list.0.store.url 24 %}&nbsp;{{ store }}</a></h3>
           {% for i in product_list %}<div class="row">
             <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
             <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
