@@ -1,5 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models.query import QuerySet
+
+from affiliation import CURRENCIES
 
 # Static data. Probably shouldn't be in the DB
 STORES = {
@@ -33,3 +36,24 @@ class StoreManager(models.Manager):
         except ObjectDoesNotExist:
             store, created = self.get_or_create(**store_entry)
         return store
+
+
+class AffiliationItemQuerySet(QuerySet):
+    def get_cheapest(self, currency):
+        if currency not in CURRENCIES._choice_dict.values():
+            return None
+        cheapest_product = None
+        products = self.values("currency").annotate(price=models.Min("price"))
+        for product in products:
+            if product["currency"] == currency:
+                cheapest_product = product
+                break
+        return cheapest_product
+
+
+class AffiliationItemManager(models.Manager):
+    def get_query_set(self):
+        return AffiliationItemQuerySet(self.model)
+
+    def get_cheapest(self, currency):
+        return self.get_query_set().get_cheapest(currency)

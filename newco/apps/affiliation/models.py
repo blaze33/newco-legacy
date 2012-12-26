@@ -15,7 +15,7 @@ from babel.numbers import parse_decimal
 
 from affiliation import (CURRENCIES, AVAILABILITY_PATTERNS,
                          RE_AVAILABILITY_PATTERNS)
-from affiliation.managers import StoreManager
+from affiliation.managers import StoreManager, AffiliationItemManager
 from items.models import Item
 from utils.templatetags.format_utils import format_price
 
@@ -65,6 +65,8 @@ class AffiliationItem(models.Model):
     img_large = models.URLField(_("large image"), max_length=1000)
 
     item = models.ForeignKey(Item, null=True, blank=True)
+
+    objects = AffiliationItemManager()
 
     class Meta:
         verbose_name = _("affiliation item")
