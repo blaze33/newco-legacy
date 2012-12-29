@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 
-import decimal
+# cdecimal is default in python >= 3.3
+import cdecimal as decimal
 import math
 import re
 
