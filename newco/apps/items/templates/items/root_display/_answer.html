@@ -5,7 +5,7 @@
 
 {% dict_entry_for_item answer from votes as vote %}
 {% dict_entry_for_item answer from scores as score %}
-<br>
+
 {% if display_q == "True" %}
   <div class="row one_row" id="{{ answer.anchor }}">
     <div class="span8 offset1">
@@ -19,7 +19,7 @@
     {% edit_buttons user answer delete_next=request.path %}
   </div>
   <div class="span8 answer-content">
-    {% if display_signature == "True" %}{% content_info answer "signature" 32 %}{% endif %}
+    {% if displ_sign == "True" %}{% content_info answer "signature" 32 %}{% endif %}
     {% content_info answer "header" %}
     <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
     {% if display_controls == "True" %}
@@ -28,3 +28,4 @@
     {% endif %}
   </div>
 </div>
+<br>

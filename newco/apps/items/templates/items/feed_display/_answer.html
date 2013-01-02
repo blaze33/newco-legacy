@@ -6,7 +6,7 @@
 
 {% if display == "mini_feed" %}
   <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-    <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% object_display author display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question{% endblocktrans %} {% source_display content display %}</h5>
+    <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question{% endblocktrans %} {% source_display content display %}</h5>
     <p{% if question.is_draft %} class="draft"{% endif %}><small><a class="black" href="{{ question.get_absolute_url }}">{{ question.content }}</a></small></p>
 
     <p>

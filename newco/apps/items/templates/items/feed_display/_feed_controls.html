@@ -2,7 +2,7 @@
 {% load bootstrap_tags %}
 
 <p class="nf-small-grey">
-  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}"{% else %}href="{{ content.get_absolute_url }}"{% endif %}>{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a> • {#<a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • #}<a class="nf-small-grey btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>{% comment %} •
+  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}"{% else %}href="{{ content.get_absolute_url }}"{% endif %}>{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a> • {#<a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • #}<a class="nf-small-grey btn-ask" {% if include_modal == "True" %}href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask"{% else %}href="{{ content.get_absolute_url }}?show_ask_to_answer=True"{% endif %}>{% trans "Ask to answer" %}</a>{% comment %} •
   <div class="dropdown">
     <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -32,8 +32,9 @@
 
 {% endif %}
 
-{% include "items/_ask_modal.html" %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
-
+{% if include_modal == "True" %}
+  {% include "items/_ask_modal.html" with question=content experts=experts csrf_token=csrf_token only %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
+{% endif %}
 
 {% comment %}
     <div class="row" id="controls_answer_form_{{ content.id }}">

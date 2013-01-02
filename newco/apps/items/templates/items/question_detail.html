@@ -13,7 +13,7 @@
 
 {% block body %}
 <div class="row">
-  <div class="span9">{% include "items/root_display/_question.html" with question=question display="detail" %}</div>
+  <div class="span9">{#{% include "items/root_display/_question.html" with question=question display="detail" experts=experts %}#}{% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_answer="True" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}</div>
 
   <div class="span3 pull-right">
     <div class="row"><div class="span3 well well-small nc-right-col-well-span4">
@@ -44,4 +44,5 @@
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
   </script>
+  {% if request.GET.show_ask_to_answer %}<script>$(document).ready(function(){$('#ask').modal('show')});</script>{% endif %}
 {% endblock %}

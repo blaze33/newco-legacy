@@ -15,8 +15,10 @@
 <br>
 <div class="row"><div class="span10 offset1">
   <div class="row">
-    <div class="span6">
-      <h2>{% trans "Answer questions" %}</h2>
+    <div class="span10">
+      {% if '/popular' in request.path %}<h2>{% trans "Popular questions" %}</h2>
+      {% elif '/las' in request.path %}<h2>{% trans "Last added questions" %}</h2>
+      {% else %}<h2>{% trans "Questions without answer" %}</h2>{% endif %}
       {% if category_name %}<h5>{% trans "Category" %} {{ category_name }}</h5>{% endif %}
       <br><hr>
     </div>
@@ -24,23 +26,8 @@
 
   <div class="row">
     <div class="span10">
-      {% if object_list %}{% for content in object_list %}
-        {% include "items/feed_display/_question.html" with display="unanswered" %}
-        {% if content.items.all %}
-          {% for item in content.items.all %}
-            <div class="span1 content-item-mini">
-              {% include "items/feed_display/_image.html" with image=item.image display="unanswered_questions" %}
-            </div>
-          {% endfor %}
-        {% elif content.tags.all %}
-          {% for tag in content.tags.all %}
-            <div class="span1 content-item-mini">
-              <a href="{{ content.get_absolute_url }}"><img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
-              <h6 class="black" align="center">{{ tag.name }}</h6></a>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
+      {% if object_list %}
+        {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="True" display_answer="False" display_linked_contt="False" user=user path=request.path scores=scores votes=votes csrf_token=csrf_token empty_msg=empty_msg only %}
       {% else %}
         {% trans "No unanswered questions on this category." %}
         <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>

@@ -42,7 +42,8 @@
       </p></div></div>
     {% endif %}
 
-    {% include content|feed_template with content=content display=display display_img=display_img display_answer=display_answer display_linked_content=display_linked_content display_signature=display_signature author=content.author scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+    {% include content|feed_template with content=content display=display display_img=display_img display_answer=display_answer displ_sign=displ_sign scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+
   </div></div>
 {% empty %}
   {% if empty_msg %}
