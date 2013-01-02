@@ -435,7 +435,8 @@ img:hover + .img-controls,
   margin-right: 4px;
 }
 
-/* Newsfeed and vote elements */
+
+/* ↓ Newsfeed and vote elements */
 .one_row {
   border-radius: 5px 5px 5px 5px;
   -webkit-transition: background-color 0.9s;
@@ -553,6 +554,7 @@ button[type="submit"][class*="icon-"][data-vote="True"] {
   background-position: -309px -119px;
 }
 /* End of Newsfeed and vote elements */
+
 
 /* Right column details (ex: question_detail.html and feed.html) */
 .well.nc-right-col-well-span4 { /*Maybe we don't want to limit this to nc-right-col-well-span4 ?*/

@@ -1,0 +1,45 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+
+<p class="nf-small-grey">
+  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}"{% else %}href="{{ content.get_absolute_url }}"{% endif %}>{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a> • {#<a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • #}<a class="nf-small-grey btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>{% comment %} •
+  <div class="dropdown">
+    <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+      <li><a tabindex="-1" href="#">Detailed info</a></li>
+      <li><a tabindex="-1" href="#">An</a></li>
+      <li><a tabindex="-1" href="#">Something else here</a></li>
+      <li class="divider"></li>
+      <li><a tabindex="-1" href="#">Separated link</a></li>
+    </ul>
+  </div>{% endcomment %}
+</p>
+
+{% if answer_location == "embedded" %}
+</div></div>
+<div class="row"><div class="span9">
+  <div id="answer_form_{{ content.id }}" class="row collapse {% if display_q_form_collapsed == "True" %}out{% else %}in{% endif %}"><form method="POST" action="#answer_form_{{ content.id }}">
+    <br>
+    {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
+    <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
+      {% csrf_token %}
+      {{ content.answer_form|as_bootstrap }}
+      <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
+      <button type="submit" class="btn btn-small" name="answer" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+      <input type="hidden" name="question_id" value="{{ content.id }}"/>
+    </div>
+  </form></div>
+
+{% endif %}
+
+{% include "items/_ask_modal.html" %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
+
+
+{% comment %}
+    <div class="row" id="controls_answer_form_{{ content.id }}">
+      <br>
+      <div class="span4"><button class="btn btn-small" data-toggle="collapse" data-target="#answer_form_{{ content.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</span></button></div>
+      <div class="span4 right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+    </div>
+{% endcomment %}
+

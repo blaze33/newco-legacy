@@ -16,7 +16,7 @@
   </blockquote>
 {% elif display == "text" %}
 
-  {% include "items/root_display/_answer.html" with answer=content scores=scores item=item vote=vote display=display display_q="True" display_options="True" user=user only %}
+  {% include "items/root_display/_answer.html" with answer=content scores=scores item=item vote=vote display=display display_q="True" display_controls="True" user=user only %}
 
 {% elif display == "email_html" %}
   <p><small><b><a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ question.content }}{% endautoescape %}</a></b></small></p>

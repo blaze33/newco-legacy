@@ -22,21 +22,9 @@
     {% if display_signature == "True" %}{% content_info answer "signature" 32 %}{% endif %}
     {% content_info answer "header" %}
     <div class="content{% if answer.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
-    {% if display_options == "True" %}
+    {% if display_controls == "True" %}
       <br>
-      <p class="nf-small-grey">
-        {% if user != author %}<a href="{{ answer.get_absolute_url }}">{% trans "Add Answer" %}</a> • {% endif %}<a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
-        <div class="dropdown">
-          <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-            <li><a tabindex="-1" href="#">Detailed info</a></li>
-            <li><a tabindex="-1" href="#">An</a></li>
-            <li><a tabindex="-1" href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Separated link</a></li>
-          </ul>
-        </div>{% endcomment %}
-      </p>
+      {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=answer user=user csrf_token=csrf_token only %}
     {% endif %}
   </div>
 </div>

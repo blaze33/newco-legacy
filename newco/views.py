@@ -7,7 +7,7 @@ from django.views.generic import ListView
 from items.models import Item, Content
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
-from utils.vote.views import ProcessVoteView
+from utils.vote.views import VoteMixin
 
 DEFAULT_CATGORY = "products"
 DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
@@ -71,7 +71,7 @@ class CategoryMixin(object):
 
 
 class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
-                    ProcessVoteView):
+                    VoteMixin):
 
     paginate_by = 14
 

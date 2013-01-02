@@ -12,6 +12,7 @@ from follow.models import Follow
 from items.models import Content, Item
 from profiles.models import Profile
 from utils.follow.views import FollowMixin
+from utils.vote.views import VoteMixin
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
@@ -66,7 +67,7 @@ WHAT_TO_FOLLOW_PARAMS = {
 }
 
 
-class DashboardView(ListView, FollowMixin):
+class DashboardView(ListView, FollowMixin, VoteMixin):
 
     queryset = Content.objects.all().prefetch_related(
         "author__reputation", "items")
@@ -111,7 +112,8 @@ class DashboardView(ListView, FollowMixin):
                     self.queryset = self.queryset.draft()
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
-            self.scores = self.queryset.get_scores()
+            # self.scores = self.queryset.get_scores()
+            self.scores, self.votes = self.queryset.get_scores_and_votes(request.user)
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -156,6 +158,7 @@ class DashboardView(ListView, FollowMixin):
             "data_source_profile": Profile.objects.get_all_names(),
             "page": self.page,
             "page_name": self.page_name,
-            "scores": getattr(self, "scores", {})
+            "scores": getattr(self, "scores", {}),
+            "votes": getattr(self, "votes", {})
         })
         return context

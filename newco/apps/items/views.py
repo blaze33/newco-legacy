@@ -296,7 +296,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
 
 class ContentListView(ContentView, MultiTemplateMixin, ListView,
-                        ProcessVoteView):
+                        VoteMixin):
 
     paginate_by = 9
     qs_option = "-pub_date"

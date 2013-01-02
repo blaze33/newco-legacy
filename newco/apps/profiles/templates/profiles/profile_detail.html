@@ -56,7 +56,7 @@
         </ul>
 
         <div class="tab-content" style="overflow: visible;">
-            <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list display_ctx="True" scores=scores display="text" %}{% if is_paginated %}{% paginate %}{% endif %}</div>
+            <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list display_ctx="True" scores=scores votes=votes display="text" %}{% if is_paginated %}{% paginate %}{% endif %}</div>
             <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
             <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
         </div>

@@ -87,8 +87,8 @@
         <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
           {% csrf_token %}
           {{ content.answer_form|as_bootstrap }}
-          <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
-          <button type="submit" class="btn btn-small" name="answer" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+          <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ STATUSES.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
+          <button type="submit" class="btn btn-small" name="answer" value="{{ STATUSES.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
           <input type="hidden" name="question_id" value="{{ content.id }}"/>
         </div>
       </form></div>

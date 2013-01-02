@@ -3,7 +3,6 @@
 {% load voting_tags %}
 {% load content_utils %}
 {% load date_utils %}
-{% load bootstrap_tags %}
 
 {% if display == "mini_feed" %}
   {#<div class="row"><div class="span4">#}
@@ -69,29 +68,16 @@
       <p><a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
       {#</div></div>#}
 
-      {% if not display_answer == "True" %}{#  If no answer => display controls  #}
-        <p class="nf-small-grey">
-          <a href="{{ content.get_absolute_url }}">{% trans "Add Answer" %}</a> • <a class="nf-small-grey" href="#">{% trans "Follow" %}</a> • <a class="nf-small-grey" href="#">{% trans "Ask someone to answer" %}</a>{% comment %} •
-          <div class="dropdown">
-            <a class="nf-small-grey dropdown-toggle" data-toggle="dropdown" href="#">{% trans "More" %} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <li><a tabindex="-1" href="#">Detailed info</a></li>
-              <li><a tabindex="-1" href="#">An</a></li>
-              <li><a tabindex="-1" href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a tabindex="-1" href="#">Separated link</a></li>
-            </ul>
-          </div>{% endcomment %}
-        </p>
+      {% if not display_answer == "True" %}{#  If no answer => display controls here, if not, display it below answer  #}
+        {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
       {% endif %}
 
     </div>
-
   </div>
 
   {% if display_answer == "True" %}
     {% for answer in content.answer_set.all %}
-      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display display_signature=display_signature scores=scores only %}{# scores=answer.scores #}
+      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display display_signature=display_signature scores=scores only %}
     {% empty %}
       {% cycle "empty" as empty silent %}
     {% endfor %}
@@ -99,25 +85,13 @@
 
 
   {% if display_answer == "True" %}
-    <div class="row" id="controls_answer_form_{{ content.id }}">
-      <br>
-      <div class="span4"><button class="btn btn-small" data-toggle="collapse" data-target="#answer_form_{{ content.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add a better answer" %}{% endif %}</span></button></div>
-      <div class="span4 right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="span8 offset1">
+        {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
+      </div>
     </div>
-    <div class="row"><div class="span9">
-      <div id="answer_form_{{ content.id }}" class="row collapse {% if content.answer_form.errors or content.id == q_id %}in{% else %}out{% endif %}"><form method="POST" action="#answer_form_{{ content.id }}">
-        <br>
-        {% if user.is_authenticated %}<div class="span1">{% include "profiles/_profile_edit_about.html" %}</div>{% endif %}
-        <div class="span8{% if not user.is_authenticated %} offset1{% endif %}">
-          {% csrf_token %}
-          {{ content.answer_form|as_bootstrap }}
-          <button type="submit" class="btn btn-primary btn-small" name="answer" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
-          <button type="submit" class="btn btn-small" name="answer" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
-          <input type="hidden" name="question_id" value="{{ content.id }}"/>
-        </div>
-      </form></div>
-    </div></div>
-    {% include "items/_ask_modal.html" %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
   {% endif %}
 
 {% elif display == "email_html" %} {# to do: change object name (same convention in this template): question => content #}

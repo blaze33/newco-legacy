@@ -10,11 +10,12 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item
 from utils.follow.views import FollowMixin
-from utils.views import TutorialMixin
+from utils.views.tutorial import TutorialMixin
+from utils.vote.views import VoteMixin
 
 
 class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
-                        FollowMixin):
+                        FollowMixin, VoteMixin):
 
     paginate_by = 10
 
@@ -46,13 +47,19 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         followers = User.objects.filter(pk__in=fwers_ids)
         followees = User.objects.filter(pk__in=fwees_ids)
+        if self.request.user:
+            scores, votes = history.get_scores_and_votes(self.request.user)
         context.update({
             "empty_msg": empty_msg,
             "reputation": self.page_user.reputation,
             "fwers": followers.order_by("-reputation__reputation_incremented"),
             "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "scores": history.get_scores(),
+            # "scores": history.get_scores(),
+            "scores": scores,
+            "votes": votes,
+            "nb_fwers": followers.count(),
+            "nb_fwees": followers.count(),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both
