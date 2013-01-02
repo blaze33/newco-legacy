@@ -55,7 +55,11 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
             "fwers": followers.order_by("-reputation__reputation_incremented"),
             "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
-            "scores": history.get_scores(),
+            # "scores": history.get_scores(),
+            "scores": scores,
+            "votes": votes,
+            "nb_fwers": followers.count(),
+            "nb_fwees": followers.count(),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both
