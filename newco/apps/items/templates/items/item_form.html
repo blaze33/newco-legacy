@@ -8,6 +8,7 @@
 {% load format_utils %}
 
 {% block extra_style %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/affiliation.css">
   {{ form.media.css }}
 {% endblock %}
 
@@ -40,14 +41,13 @@
 
       {% if item %}{% if item.affiliationitem_set.all %}<br><br>
         <h3>{% trans "Linked Products" %}</h3>
-        <div class="row"><div class="span3">
-          <button type="submit" class="btn pull-right" name="del_links"><i class="icon-remove-sign"></i> {% trans "Remove unselected" %}</button>
-        </div></div>
+        <button type="submit" class="btn right" name="del_links"><i class="icon-remove-sign"></i> {% trans "Remove unselected" %}</button>
+        <hr>
         {% for i in item.affiliationitem_set.all %}
-          <div class="row"><div >
-            <div class="span2">{% include "affiliation/_affiliation_item.html" with prod=i display="thumbnail" %}</div>
+          <div class="row">
+            <div class="span3">{% include "affiliation/_affiliation_item.html" with prod=i display="thumbnail" %}</div>
             <div class="span1"><span style="vertical-align:-30px"><input type="checkbox" name="linked_aff" value="{{ i.id }}" checked></span></div>
-          </div></div>
+          </div>
         {% endfor %}
       {% endif %}{% endif %}
     </div>

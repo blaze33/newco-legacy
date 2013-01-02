@@ -3,13 +3,11 @@
 {% load format_utils %}
 
 {% if display == "thumbnail" %}
-  <div class="profile-item thumbnail click-to-product-thumb" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
-    <a href="{{ prod.url }}" target="_blank" title="{{ prod.name }}" class="black">
-      <div class="name">
-        <img src="{{ prod.img_small }}">
-        {{ prod.name|truncatechars:40 }}
-      </div>
-    </a>
+  <div class="product-store thumbnail click-to-product-thumb" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
+    <div class="title">
+      <a href="{{ prod.url }}" target="_blank" title="{{ prod.name }}"><img src="{{ prod.img_small }}"></a>
+      <a class="black" href="{{ prod.url }}" target="_blank" title="{{ prod.name }}">{{ prod.name|truncatechars:80 }}</a>
+    </div>
     <div class="details {{ prod.ean }}">
       <h4>
         <a class="black" href="{{ prod.store.affiliated_url }}" target="_blank">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a>
@@ -18,9 +16,9 @@
     </div>
   </div>
 {% elif display == "list" %}
-  <div class="row click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
+  <div class="row product-store click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
     <div class="span2"><a href="{{ prod.store.affiliated_url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
-    <div class="span4 product-comparator">
+    <div class="span4 comparator">
       <img src="{{ prod.img_small }}">
       {{ prod.name }}
     </div>

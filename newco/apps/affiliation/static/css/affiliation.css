@@ -1,7 +1,15 @@
 @charset 'UTF-8';
 
-.product-comparator img {
+.product-store .comparator img {
   float: right;
   max-height: 75px;
   max-width: 75px;
 }
+
+.product-store.thumbnail .title img {
+  float: right;
+  max-height: 64px;
+  max-width: 64px;
+}
+
+.product-store.thumbnail { margin: 10px; }
