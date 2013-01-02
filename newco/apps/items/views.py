@@ -313,8 +313,16 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
 
+<<<<<<< HEAD
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+=======
+            if q.items.all().exists():
+                tag_ids = q.items.all().values_list("tags__id", flat=True)
+            else:
+                tag_ids = q.tags.all()
+            p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+>>>>>>> We can now ask the experts on Question Page for a question with tags
 
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
