@@ -65,15 +65,43 @@
         <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
       </ul>
     </div>
-
     <hr>
-
+    {% comment %}
     <h4>{% trans "Where to buy" %}</h4>
     {% for prod in store_products %}
       {% include "affiliation/_affiliation_item.html" with prod=prod display="thumbnail" %}
     {% endfor %}
-
-  </div>{% endif %}
+    {% endcomment %}
+    </div>
+  {% endif %}
+  
+  <div class="span2 offset1" align="right">
+    {% if top_products %}
+      <h3>{% trans "Top related products" %}</h3>
+      <div id="thumbnails_list">
+        {% for item in top_products %}
+          <div class="span2 content-item-mini">
+            {% include "items/feed_display/_image.html" with content=item image=item.image %}
+              <br><a href="{{ item.get_absolute_url }}"><h6 class="black" align="center">{{ item.name }}</h6></a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  
+  {% comment %}
+  <br><br>
+  <div class="span3" align="right">
+  	{% if top_products %}
+    <h3>{% trans "Related products" %}</h3>
+    <div id="thumbnails_list">{% for item in top_products %}
+      {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+      {% endfor %}</div>
+    {% endif %}
+  </div>
+  {% endcomment %}
+  
+  
 </div>
 
 {% endblock %}

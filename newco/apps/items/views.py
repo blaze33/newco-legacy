@@ -2,7 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -280,6 +280,14 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                     if q.id != q_id else AnswerForm(data=POST, request=request)
                 if not media:
                     media = q.answer_form.media
+            related_products = Item.objects.filter(
+                Q(tags__in=item.tags.all())).exclude(id=item.id).distinct()
+            
+            top_products = related_products.annotate(
+                        count=Count("content__votes__vote"),
+                        score=Sum("content__votes__vote")
+                    ).filter(count__gt=0).order_by("-score")
+            
 
             context.update({"questions": questions, "scores": scores,
                             "votes": votes, "media": media})
