@@ -8,7 +8,7 @@ from account.utils import user_display
 from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
 
-from items.models import Item, Content
+from items.models import Item
 from utils.follow.views import FollowMixin
 from utils.views.tutorial import TutorialMixin
 
@@ -31,7 +31,8 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
         return super(ProfileDetailView, self).get_object()
 
     def get_context_data(self, **kwargs):
-        history = Content.objects.public().filter(author=self.page_user)
+        history = self.page_user.content_set.public().prefetch_related(
+            "author__reputation", "items")
         fwers_ids = Follow.objects.get_follows(
             self.page_user).values_list("user_id", flat=True)
         obj_fwed = Follow.objects.filter(user=self.page_user)
@@ -52,8 +53,6 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
             "fwees": followees.order_by("-reputation__reputation_incremented"),
             "items_fwed": Item.objects.filter(pk__in=items_fwed_ids),
             "scores": history.get_scores(),
-            "nb_fwers": followers.count(),
-            "nb_fwees": followers.count(),
         })
 
         # Next step would be to be able to "merge" the get_context_data of both
