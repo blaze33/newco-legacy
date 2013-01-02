@@ -134,6 +134,7 @@ MIDDLEWARE_CLASSES = [
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
     "account.middleware.LocaleMiddleware",
+    "account.middleware.TimezoneMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
