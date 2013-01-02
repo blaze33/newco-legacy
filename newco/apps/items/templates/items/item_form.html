@@ -55,15 +55,14 @@
       <button type="submit" class="btn" name="store_search"><i class="icon-eye-open" id="item_test" data-item="1"></i> {% trans "Stores Search" %}</button>
       {% if form.product_list_by_store %}
         <button type="submit" class="btn" name="add_links"><i class="icon-plus-sign"></i> {% trans "Add selected" %}</button><br><br>
-        {% for store, product_list in form.product_list_by_store.items %}{% if product_list %}{% cycle 1 0 as row silent %}{% if row %}<div class="row">{% endif %}<div class="span4"><div class="thumbnail row">
-          <h3><a href="{{ product_list.0.store.affiliated_url }}" target="_blank" class="black">{% favicon product_list.0.store.url 24 %}&nbsp;{{ store }}</a></h3>
-          {% for i in product_list %}<div class="row">
-            <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}"/>
-            <div class="span1"><input type="checkbox" name="link_aff" value="{{ i.id }}">&nbsp;<img src="{{ i.img_small }}" width="50px" height="50px"></div>
-            <div class="span2"><a href="{{ i.url }}" class="black" target="_blank">{{ i.name }}</a></div>
-            <div class="span1"><a href="{{ i.url }}" target="_blank">{% price i.price i.currency LANGUAGE_CODE %}</a></div>
-          </div>{% endfor %}
-        </div></div>{% if not row %}</div>{% endif %}{% endif %}{% if row and forloop.last %}</div>{% endif %}{% endfor %}
+        {% for store, product_list in form.product_list_by_store.items %}{% if product_list %}
+          <div class="store thumbnail">
+            <h3><a class="black" href="{{ product_list.0.store.affiliated_url }}" target="_blank">{% favicon product_list.0.store.url 24 %}&nbsp;{{ store }}</a></h3>
+            {% for i in product_list %}
+              {% include "affiliation/_affiliation_item.html" with prod=i display="select" %}
+            {% endfor %}
+          </div>
+        {% endif %}{% endfor %}
       {% endif %}<br><br>
     {% endif %}</div>
   </div>

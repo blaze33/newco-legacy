@@ -18,7 +18,7 @@
 {% elif display == "list" %}
   <div class="row product-store click-to-product-row" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
     <div class="span2"><a href="{{ prod.store.affiliated_url }}" target="_blank" class="black">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a></div>
-    <div class="span4 comparator">
+    <div class="span4 list">
       <img src="{{ prod.img_small }}">
       {{ prod.name }}
     </div>
@@ -48,4 +48,14 @@
       <span class="pull-right">{% price prod.price prod.currency LANGUAGE_CODE %}</span>
     </a>
   </li>
+{% elif display == "select" %}
+  <div class="row product-store">
+    <input type="hidden" name="current_search_{{ store }}" value="{{ i.id }}">
+    <div class="span1"><input type="checkbox" class="pull-right" name="link_aff" value="{{ i.id }}"></div>
+    <div class="span5 select">
+      <img src="{{ i.img_small }}">
+      <a href="{{ i.url }}" class="black" target="_blank">{{ i.name }}</a>
+    </div>
+    <div class="span1"><b><a title="{% trans 'Price' %}" href="{{ i.url }}" target="_blank">{% price i.price i.currency LANGUAGE_CODE %}</a></b></div>
+  </div>
 {% endif %}
