@@ -12,8 +12,8 @@
     </a>
     <div class="details {{ prod.ean }}">
       <h4>
-        <a href="{{ prod.store.affiliated_url }}" target="_blank" class="black">{{ prod.store }}</a>
-        <a href="{{ prod.url }}" target="_blank" id="{{ prod.ean }}-thumb">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
+        <a class="black" href="{{ prod.store.affiliated_url }}" target="_blank">{% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}</a>
+        <a class="pull-right" id="{{ prod.ean }}-thumb" href="{{ prod.url }}" target="_blank">{% price prod.price prod.currency LANGUAGE_CODE %}</a>
       </h4>
     </div>
   </div>

@@ -32,7 +32,7 @@
     display:none
 }
 
-.profile-item img {
+.profile-item .name img {
     float: right;
     margin-left: 5px;
     max-height: 64px;

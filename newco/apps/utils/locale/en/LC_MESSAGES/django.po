@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-23 21:12+0100\n"
+"POT-Creation-Date: 2013-01-02 11:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,12 +32,12 @@ msgstr ""
 msgid "%(user)s, you can't ask yourself to answer a question!"
 msgstr ""
 
-#: mailtools.py:111
+#: mailtools.py:112
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help."
 msgstr ""
 
-#: mailtools.py:138
+#: mailtools.py:139
 #, python-format
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
@@ -68,14 +68,8 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-#: templates/form/question_form.html:18
-msgid ""
-"Click here if you can&#39;t find the product you want to link your question "
-"to"
-msgstr ""
-
-#: templates/form/question_form.html:18
-msgid "Add a product"
+#: templates/content/info.html:12
+msgid "Reputation"
 msgstr ""
 
 #: templates/mail/_answer_notification_email.html:7
@@ -230,22 +224,22 @@ msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: vote/tools.py:18
+#: vote/tools.py:20
 #, python-format
 msgid "%(user)s, your up vote on %(object)s has been recorded."
 msgstr ""
 
-#: vote/tools.py:22
+#: vote/tools.py:24
 #, python-format
 msgid "%(user)s, your down vote on %(object)s has been recorded."
 msgstr ""
 
-#: vote/tools.py:26
+#: vote/tools.py:28
 #, python-format
 msgid "%(user)s, your vote on %(object)s has been cancelled."
 msgstr ""
 
-#: vote/tools.py:30
+#: vote/tools.py:32
 #, python-format
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr ""
