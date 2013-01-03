@@ -113,8 +113,6 @@ class DashboardView(ListView, FollowMixin, VoteMixin):
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
             self.scores = self.queryset.get_scores()
-        self.queryset = self.queryset.prefetch_related(
-            "author__reputation", "items")
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
@@ -123,17 +121,11 @@ class DashboardView(ListView, FollowMixin, VoteMixin):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         if self.page == "dashboard":
-            feed = self.queryset.get_feed(self.user).prefetch_related(
-                "author__reputation", "items")
-            all_my_contrib = self.queryset.filter(
-                author=self.user).prefetch_related(
-                    "author__reputation", "items")
-            drafts = all_my_contrib.draft().prefetch_related(
-                "author__reputation", "items")
+            feed = self.queryset.get_feed(self.user)
+            all_my_contrib = self.queryset.filter(author=self.user)
+            drafts = all_my_contrib.draft()
             contrib_feed = self.queryset.get_related_contributions(
-                self.user, Item.objects.all()).exclude(
-                    author=self.user).prefetch_related(
-                        "author__reputation", "items")
+                self.user, Item.objects.all()).exclude(author=self.user)
 
             boxes = BOXES
             boxes.get("feed").update({"feed": feed.select_subclasses()[:4]})
