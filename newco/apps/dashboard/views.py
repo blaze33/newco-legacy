@@ -137,7 +137,8 @@ class DashboardView(ListView, FollowMixin):
             context.update({"boxes": boxes})
         else:
             empty_msg = BOXES.get(self.page).get("empty_msg")
-            context.update({"empty_msg": empty_msg})
+            context.update({"empty_msg": empty_msg, "object_list":
+                            context["object_list"].prefetch_items_image(Item)})
             if self.page == "feed":
                 # "Who to follow": For now, random on not followed people/items
                 objects_followed = Follow.objects.filter(user=self.user)
@@ -149,8 +150,6 @@ class DashboardView(ListView, FollowMixin):
                     nb_obj = value.get("nb_obj")
                     wtf.update({key: non_fwed.order_by("?")[:nb_obj]})
                 context.update({"wtf": wtf})
-            context.update({"object_list":
-                            context["object_list"].prefetch_items_image(Item)})
 
         context.update({
             "my_profile": Profile.objects.get(user=self.user),
