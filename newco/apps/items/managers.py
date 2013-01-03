@@ -59,8 +59,8 @@ class ContentQuerySet(InheritanceQuerySet):
         Get the newsfeed of a specific user
         """
         obj_fwed = Follow.objects.filter(user=user)
-        fwees_ids = obj_fwed.values_list('target_user_id', flat=True)
-        items_fwed_ids = obj_fwed.values_list('target_item_id', flat=True)
+        fwees_ids = obj_fwed.values_list("target_user_id", flat=True)
+        items_fwed_ids = obj_fwed.values_list("target_item_id", flat=True)
 
         return self.public().exclude(author=user).filter(
             Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids))
@@ -114,6 +114,19 @@ class ContentQuerySet(InheritanceQuerySet):
             query = query | Q(author=user)
         return self.filter(query)
 
+    def prefetch_items_image(self, item_model):
+        """
+        WARNING: it does force the QuerySet to be evaluated
+        """
+        content_ids = [i.id for i in self]
+        items = item_model.objects.filter(
+            content__id__in=content_ids).distinct().fetch_images()
+        image_dict = dict((item.id, item.image) for item in items)
+        for content in self:
+            for item in content.items.all():
+                item.image = image_dict[item.id]
+        return self
+
 
 class ContentManager(InheritanceManager):
     def get_query_set(self):
@@ -151,3 +164,6 @@ class ContentManager(InheritanceManager):
 
     def can_view(self, user):
         return self.get_query_set().can_view(user)
+
+    def prefetch_items_image(self, item_model):
+        return self.get_query_set().prefetch_items_image(item_model)

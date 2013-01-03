@@ -149,6 +149,8 @@ class DashboardView(ListView, FollowMixin):
                     nb_obj = value.get("nb_obj")
                     wtf.update({key: non_fwed.order_by("?")[:nb_obj]})
                 context.update({"wtf": wtf})
+            context.update({"object_list":
+                            context["object_list"].prefetch_items_image(Item)})
 
         context.update({
             "my_profile": Profile.objects.get(user=self.user),
