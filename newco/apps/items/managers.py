@@ -63,7 +63,7 @@ class ContentQuerySet(InheritanceQuerySet):
         items_fwed_ids = obj_fwed.values_list("target_item_id", flat=True)
 
         return self.public().exclude(author=user).filter(
-            Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids))
+            Q(author__in=fwees_ids) | Q(items__in=items_fwed_ids)).distinct()
 
     def get_related_contributions(self, user, item_qs):
         profile = user.get_profile()
