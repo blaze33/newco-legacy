@@ -316,7 +316,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
             msg = _("No products with tag %s")
         elif self.cat == "questions":
             self.model, self.pill = [Question, kwargs.get("pill", "tag")]
-            self.queryset = Content.objects.questions()
+            self.queryset = Content.objects.all()
             if self.pill == "tag":
                 self.queryset = self.queryset.filter(tags=self.tag)
                 msg = _("No questions with tag %s")
@@ -340,6 +340,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
         elif self.cat == "questions":
             self.scores, self.votes = self.queryset.get_scores_and_votes(self.request.user)
             qs = qs.order_queryset(self.qs_option, self.scores)
+        qs = qs.questions()
         return qs
 
     def get_context_data(self, **kwargs):

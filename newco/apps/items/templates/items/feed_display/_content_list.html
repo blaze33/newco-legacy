@@ -28,7 +28,7 @@
 
 {% for content in contents %}
   {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
-  <div class="row content"><div class="span{% if display == 'mini_feed' %}4{% else %}9{%endif%}">
+  <div class="row content" itemscope itemtype="http://schema.org/Article"><div class="span{% if display == 'mini_feed' %}4{% else %}9{%endif%}">
 
     {% if display_ctx == "True" %}
       <div class="row"><div class="span7"><p class="nf-small-grey">
@@ -42,7 +42,7 @@
       </p></div></div>
     {% endif %}
 
-    {% include content|feed_template with content=content display=display display_img=display_img display_answer=display_answer displ_sign=displ_sign scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+    {% include content|feed_template with content=content display=display display_img=display_img display_answer=display_answer displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
 
   </div></div>
 {% empty %}

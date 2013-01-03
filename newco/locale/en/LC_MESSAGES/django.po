@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 12:13+0100\n"
+"POT-Creation-Date: 2013-01-03 18:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -295,8 +295,7 @@ msgstr ""
 msgid "Popular products"
 msgstr ""
 
-#: templates/homepage_base_1.html:107 templates/homepage_questions.html:19
-#: templates/homepage_questions_1.html:18
+#: templates/homepage_base_1.html:107 templates/homepage_questions_1.html:18
 #: templates/homepage_questions_2.html:24
 msgid "Answer questions"
 msgstr ""
@@ -305,17 +304,29 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/homepage_questions.html:20 templates/homepage_questions_1.html:19
+#: templates/homepage_questions.html:19
+msgid "Popular questions"
+msgstr ""
+
+#: templates/homepage_questions.html:20
+msgid "Last added questions"
+msgstr ""
+
+#: templates/homepage_questions.html:21
+msgid "Questions without answer"
+msgstr ""
+
+#: templates/homepage_questions.html:22 templates/homepage_questions_1.html:19
 #: templates/homepage_questions_2.html:25
 msgid "Category"
 msgstr ""
 
-#: templates/homepage_questions.html:45 templates/homepage_questions_1.html:69
+#: templates/homepage_questions.html:32 templates/homepage_questions_1.html:69
 #: templates/homepage_questions_2.html:50
 msgid "No unanswered questions on this category."
 msgstr ""
 
-#: templates/homepage_questions.html:46 templates/homepage_questions_1.html:70
+#: templates/homepage_questions.html:33 templates/homepage_questions_1.html:70
 #: templates/homepage_questions_2.html:51
 msgid "Ask your own awesome question then!"
 msgstr ""

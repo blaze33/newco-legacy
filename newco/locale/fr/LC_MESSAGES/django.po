@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 12:13+0100\n"
-"PO-Revision-Date: 2013-01-10 18:41\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2013-01-03 18:04+0100\n"
+"PO-Revision-Date: 2013-01-03 18:05\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -323,8 +323,7 @@ msgstr "Connectez-vous"
 msgid "Popular products"
 msgstr "Produits populaires"
 
-#: templates/homepage_base_1.html:107 templates/homepage_questions.html:19
-#: templates/homepage_questions_1.html:18
+#: templates/homepage_base_1.html:107 templates/homepage_questions_1.html:18
 #: templates/homepage_questions_2.html:24
 msgid "Answer questions"
 msgstr "Répondez aux questions"
@@ -333,17 +332,29 @@ msgstr "Répondez aux questions"
 msgid "Filter"
 msgstr "Filtrer"
 
-#: templates/homepage_questions.html:20 templates/homepage_questions_1.html:19
+#: templates/homepage_questions.html:19
+msgid "Popular questions"
+msgstr "Questions populaires"
+
+#: templates/homepage_questions.html:20
+msgid "Last added questions"
+msgstr "Dernières questions ajoutées"
+
+#: templates/homepage_questions.html:21
+msgid "Questions without answer"
+msgstr "Questions sans réponses"
+
+#: templates/homepage_questions.html:22 templates/homepage_questions_1.html:19
 #: templates/homepage_questions_2.html:25
 msgid "Category"
 msgstr "Catégorie"
 
-#: templates/homepage_questions.html:45 templates/homepage_questions_1.html:69
+#: templates/homepage_questions.html:32 templates/homepage_questions_1.html:69
 #: templates/homepage_questions_2.html:50
 msgid "No unanswered questions on this category."
 msgstr "Pas de questions sans réponse dans cette catégorie."
 
-#: templates/homepage_questions.html:46 templates/homepage_questions_1.html:70
+#: templates/homepage_questions.html:33 templates/homepage_questions_1.html:70
 #: templates/homepage_questions_2.html:51
 msgid "Ask your own awesome question then!"
 msgstr "Poser alors votre propre question&#x202F;!"
@@ -704,12 +715,6 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 
 #~ msgid "stories"
 #~ msgstr "Historique"
-
-#~ msgid "Top related questions"
-#~ msgstr "Poser une question"
-
-#~ msgid "Latest related questions"
-#~ msgstr "Dernières contributions"
 
 #~ msgid "Store"
 #~ msgstr "Historique"

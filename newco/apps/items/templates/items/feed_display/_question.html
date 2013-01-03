@@ -5,15 +5,13 @@
 {% load date_utils %}
 
 {% if display == "mini_feed" %}
-  {#<div class="row"><div class="span4">#}
-    <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-      <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
-      <p>
-        <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
-        <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
-      </p>
-    </blockquote>
-  {#</div></div>#}
+  <blockquote{% if content.is_draft %} class="draft"{% endif %}>
+    <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
+    <p>
+      <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
+      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
+    </p>
+  </blockquote>
 
 {% elif display == "text" %}
 
@@ -35,23 +33,23 @@
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
       {% if item %}{% edit_buttons user content delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user content %}{% endif %}
     </div>
-    <div class="span8">
+    <div class="{% if content.is_draft %}span7{% else %}span8{% endif %}">
 
       {% if display_img == "True" %}
-        <div class="pull-right" style="max-width: 190px; padding-left: 5px;">
-          {% if content.items.all.count > 2 or content.tags.all.count > 2 %}
+        <div class="pull-right" style="max-width: 200px; padding-left: 5px;">
+          {% if content.items.all.count > 3 or content.tags.all.count > 3 %}
             <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="nf-small-grey">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
             {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
             {% endif %}</p>
           {% else %}
             {% if content.items.all %}
-              {% for item in content.items.all|slice:":2" %}
+              {% for item in content.items.all|slice:":3" %}
                 <div class="span1 content-item-mini">
                   {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
                 </div>
               {% endfor %}
             {% elif content.tags.all %}
-              {% for tag in content.tags.all|slice:":2" %}
+              {% for tag in content.tags.all|slice:":3" %}
                 <div class="span1 content-item-mini">
                   <a href="{{ content.get_absolute_url }}">
                     <img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
@@ -67,9 +65,9 @@
 
       {% if q_detail == "True" %}
         {% if content.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% content_info content "signature" 32 %}{% endif %}
-        <div class="content" itemprop="name"><h1 class="question-content">{{ content.content }}</h1></div>
+        <div class="content"><h1 class="question-content" itemprop="name">{{ content.content }}</h1></div>
       {% else %}
-        <p><a class="question-nf" href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
+        <p class="content" itemprop="name"><a class="question-nf" href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
 
         {% if not display_answer == "True" %}{#  If question only => display controls here, if answers are displayed, display controls below answer  #}
           {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
@@ -81,7 +79,7 @@
 
   {% if display_answer == "True" %}
     {% for answer in content.answer_set.all %}
-      {% include "items/root_display/_answer.html" with answer=answer item=item vote=vote display=display displ_sign=displ_sign scores=scores only %}
+      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
     {% empty %}
       {% cycle "empty" as empty silent %}
     {% endfor %}
@@ -90,9 +88,9 @@
     <div class="row">
       <div class="span8 offset1">
         {% if q_detail == "True" %}
-          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" content=content user=user csrf_token=csrf_token statuses=statuses experts=experts include_modal="True" only %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" content=content user=user statuses=statuses experts=experts include_modal="True" empty=empty csrf_token=csrf_token only %}
         {% else %}
-          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user empty=empty csrf_token=csrf_token only %}
         {% endif %}
       </div>
     </div>

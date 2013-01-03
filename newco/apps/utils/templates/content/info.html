@@ -14,8 +14,8 @@
   </div>{% endif %}
 </div>
 {% elif header %}
-<div class="signature-header">
-  <b itemprop="contributor" itemscope itemtype="http://schema.org/Person"><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, {{ about }}{% endif %}</b>
+<div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+  <b><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</b>
 </div>
 {% endif %}
 
