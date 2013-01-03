@@ -8,11 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2013-01-02 11:43+0100\n"
-=======
-"POT-Creation-Date: 2012-12-20 16:54+0100\n"
->>>>>>> Intermediary commit to be able to merge GAS's commit https://bitbucket.org/AGASS007/newco/commits/b1d42c21d1c13269cf80df013a257b77
+"POT-Creation-Date: 2013-01-03 18:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
