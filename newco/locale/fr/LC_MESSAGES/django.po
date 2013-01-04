@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 18:04+0100\n"
+"POT-Creation-Date: 2013-01-04 20:55+0100\n"
 "PO-Revision-Date: 2013-01-03 18:05\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -394,6 +394,12 @@ msgstr "Récemment répondu"
 #: templates/site_base.html:49
 msgid "Search for a product, a user or a tag"
 msgstr "Cherchez un produit, un utilisateur ou un tag"
+
+#: templates/site_base.html:73
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
+msgstr ""
+"ex.\\xA0: tennis, randonnée, chaussures, ménage, cuisine, GPS, smartphone, "
+"etc."
 
 #: templates/site_base.html:91
 msgid "Tell me more!"

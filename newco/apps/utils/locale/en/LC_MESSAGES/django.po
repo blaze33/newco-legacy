@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 18:34+0100\n"
+"POT-Creation-Date: 2013-01-04 20:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,13 +58,10 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-<<<<<<< HEAD
 #: templates/content/info.html:12
 msgid "Reputation"
 msgstr ""
 
-=======
->>>>>>> Intermediary commit to be able to merge GAS's commit https://bitbucket.org/AGASS007/newco/commits/b1d42c21d1c13269cf80df013a257b77
 #: templates/mail/_answer_notification_email.html:7
 msgid "has answered your question"
 msgstr ""

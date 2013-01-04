@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 18:37+0100\n"
+"POT-Creation-Date: 2013-01-04 21:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,45 +179,45 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:265 views.py:362
+#: views.py:267 views.py:364
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:266 views.py:363
+#: views.py:268 views.py:365
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:316
+#: views.py:318
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:322
+#: views.py:324
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:327
+#: views.py:329
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:408
+#: views.py:410
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:412
+#: views.py:414
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:416
+#: views.py:418
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:420
+#: views.py:422
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -272,7 +272,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/feed_display/_feed_controls.html:19
+#: templates/items/feed_display/_feed_controls.html:20
 msgid "Save as draft"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr ""
 msgid "Fill in some information about"
 msgstr ""
 
-#: templates/items/item_form.html:18 templates/items/question_form.html:74
+#: templates/items/item_form.html:19 templates/items/question_form.html:74
 #: templates/items/feed_display/_content_list.html:36
 #: templates/items/feed_display/_content_list.html:38
 #: templates/items/feed_display/_link.html:7
@@ -618,15 +618,11 @@ msgstr ""
 msgid "Add an answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:6
-msgid "Follow"
-msgstr ""
-
-#: templates/items/feed_display/_feed_controls.html:6
+#: templates/items/feed_display/_feed_controls.html:7
 msgid "Ask to answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:18
+#: templates/items/feed_display/_feed_controls.html:19
 msgid "Answer and publish"
 msgstr ""
 

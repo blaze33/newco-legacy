@@ -340,7 +340,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
         elif self.cat == "questions":
             self.scores, self.votes = self.queryset.get_scores_and_votes(self.request.user)
             qs = qs.order_queryset(self.qs_option, self.scores)
-        qs = qs.questions()
+            qs = qs.questions()
         return qs
 
     def get_context_data(self, **kwargs):

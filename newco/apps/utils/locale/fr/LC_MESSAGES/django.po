@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 18:34+0100\n"
+"POT-Creation-Date: 2013-01-04 20:59+0100\n"
 "PO-Revision-Date: 2013-01-02 11:43\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,6 +71,10 @@ msgstr "Posté"
 #: templates/mail/_ask_notification_email.txt:7
 msgid ":"
 msgstr "&nbsp;:"
+
+#: templates/content/info.html:12
+msgid "Reputation"
+msgstr "Réputation"
 
 #: templates/mail/_answer_notification_email.html:7
 msgid "has answered your question"
@@ -272,9 +276,6 @@ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
 msgid "%(user)s, you can't vote on your own contribution!"
 msgstr ""
 "%(user)s, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
-
-#~ msgid "Reputation"
-#~ msgstr "Réputation"
 
 #~ msgid ""
 #~ "Click here if you can&#39;t find the product you want to link your "
