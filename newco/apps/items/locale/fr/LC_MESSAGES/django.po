@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-20 18:06+0100\n"
+"POT-Creation-Date: 2013-01-04 16:47+0100\n"
 "PO-Revision-Date: 2012-12-19 15:39\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,45 +188,45 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:265 views.py:358
+#: views.py:267 views.py:360
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:266 views.py:359
+#: views.py:268 views.py:361
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:315
+#: views.py:317
 #, python-format
 msgid "No products with tag %s"
 msgstr "Pas de produits avec le tag %s"
 
-#: views.py:321
+#: views.py:323
 #, python-format
 msgid "No questions with tag %s"
 msgstr "Pas de questions avec le tag %s"
 
-#: views.py:326
+#: views.py:328
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr "Pas de questions sur les produits avec le tag %s"
 
-#: views.py:404
+#: views.py:406
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été créé avec succès."
 
-#: views.py:408
+#: views.py:410
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été mis à jour."
 
-#: views.py:412
+#: views.py:414
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr "Merci %(user)s, votre bio a été mise à jour."
 
-#: views.py:416
+#: views.py:418
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -274,7 +274,7 @@ msgstr "Score"
 msgid "Answer"
 msgstr "Répondre"
 
-#: templates/items/answer_form.html:19 templates/items/item_form.html:93
+#: templates/items/answer_form.html:19 templates/items/item_form.html:92
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -353,32 +353,32 @@ msgstr "Télécharger"
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/items/item_form.html:14 templates/items/item_form.html.py:18
+#: templates/items/item_form.html:15 templates/items/item_form.html.py:19
 #: templates/items/item_list_base.html:42
 #: templates/items/question_form.html:74
 #: templates/items/question_form.html:153
 msgid "Add a product"
 msgstr "Ajouter un produit"
 
-#: templates/items/item_form.html:18
+#: templates/items/item_form.html:19
 msgid "Fill in some information about"
 msgstr "Remplissez des informations sur"
 
-#: templates/items/item_form.html:18 templates/items/question_form.html:74
+#: templates/items/item_form.html:19 templates/items/question_form.html:74
 #: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
 msgid ":"
 msgstr "&nbsp;:"
 
-#: templates/items/item_form.html:18
+#: templates/items/item_form.html:19
 msgid "Edit"
 msgstr "Modifier"
 
-#: templates/items/item_form.html:23 templates/items/question_form.html:27
+#: templates/items/item_form.html:24 templates/items/question_form.html:27
 msgid "Tips"
 msgstr "Astuces"
 
-#: templates/items/item_form.html:24
+#: templates/items/item_form.html:25
 #, python-format
 msgid ""
 "\n"
@@ -411,7 +411,7 @@ msgstr ""
 "liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
 "</ol>\n"
 
-#: templates/items/item_form.html:42
+#: templates/items/item_form.html:43
 msgid "Linked Products"
 msgstr "Produits Associés"
 
@@ -427,19 +427,19 @@ msgstr "Recherche chez les e-commerçants"
 msgid "Add selected"
 msgstr "Ajouter les produits cochés"
 
-#: templates/items/item_form.html:89
+#: templates/items/item_form.html:88
 msgid "Save product"
 msgstr "Sauvergarder le produit"
 
-#: templates/items/item_form.html:91
+#: templates/items/item_form.html:90
 msgid "Create"
 msgstr "Créer"
 
-#: templates/items/item_form.html:91
+#: templates/items/item_form.html:90
 msgid "or"
 msgstr "ou"
 
-#: templates/items/item_form.html:91
+#: templates/items/item_form.html:90
 msgid "Create and add features"
 msgstr "Créer et ajouter des caractéristiques"
 

@@ -6,11 +6,9 @@
 {% load follow_utils %}
 
 {% if display == "text" %}
-  <span class="myClassPopover" data-original-title="<table width='100%' class='table-condensed'><tr valign='top'><td align='left'><img src='{{ object.image.data.thumbnailLink }}' height='{% widthratio object.image.data.thumbnailHeight object.image.data.thumbnailWidth 60 %}' alt='{{ object }}'></td><td align='right'>{% follow_form user object %}</td></tr></table>" data-content="{% tags_display object.tags quote_type='single' sep='&thinsp;' %}" itemscope itemtype="http://schema.org/Product">
-    <a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a>
-  </span>
+  <a class="popover-object-display {% if color %} {{ color }}{% endif %}" data-original-title="<img src='{{ object.image.data.thumbnailLink }}' alt='{{ object }}'> <span class='pull-right'>{% follow_form user object %}</span>" data-content="{% tags_display object.tags quote_type='single' sep='&thinsp;' %}" href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Product" itemprop="url"><span itemprop="name">{{ object }}</span></a>
 {% elif display == "thumbnail" or display == "mini_feed" %}
-  <span itemscope itemtype="http://schema.org/Product"><a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ object }}</span></a></span>
+  <a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Product" itemprop="url"><span itemprop="name">{{ object }}</span></a>
 {% elif display == "email" %}
   <a {% if color %}style="color: {{ color }};" {% endif %}href="{% get_absolute_uri object request %}">{{ object }}</a>
 {% endif %}

@@ -220,8 +220,22 @@ img:hover + .img-controls,
     width: 38px;
 }
 
-.myClassPopover{
-    position: relative;
+.popover.object-display {
+  font-size: 14px;
+}
+
+.popover.object-display img {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.popover.object-display .dl-horizontal dt {
+  width: 100px;
+}
+
+.popover.object-display .dl-horizontal dd {
+  font-weight: normal;
+  margin-left: 120px;
 }
 
 /* twitter aditional stuff */

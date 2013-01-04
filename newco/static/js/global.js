@@ -97,12 +97,12 @@ $(function(){
   // Manual method using timeout, shortcutting the weird behavior of hover,
   // which causes glitching if pointer doesn't go to the popover through the 
   // arrow
-  $('.myClassPopover').popover({
+  $('.popover-object-display').popover({
     offset: 10,
     trigger: 'manual',
     html: true,
     placement: 'bottom',
-    template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+    template: '<div class="popover object-display" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
   }).mouseenter(function(e) {
     $(this).popover('show');
   }).mouseleave(function(e) {
