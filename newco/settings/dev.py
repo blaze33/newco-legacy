@@ -47,10 +47,10 @@ EMAIL_USE_TLS = True
 ROSETTA_WSGI_AUTO_RELOAD = True
 ROSETTA_UWSGI_AUTO_RELOAD = True
 ROSETTA_MESSAGES_PER_PAGE = 50
-ROSETTA_STORAGE_CLASS = 'rosetta.storage.CacheRosettaStorage'
+ROSETTA_STORAGE_CLASS = "rosetta.storage.CacheRosettaStorage"
 
 HEROKU_DATABASES = postgresify()
 if HEROKU_DATABASES:
-    DATABASES = HEROKU_DATABASES
-    DATABASES['default']['ENGINE'] = 'django_hstore.postgresql_psycopg2'
-    SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.postgresql_psycopg2'}
+    DATABASES.update(HEROKU_DATABASES)
+    DATABASES["default"]["ENGINE"] = "django_hstore.postgresql_psycopg2"
+    SOUTH_DATABASE_ADAPTERS = {"default": "south.db.postgresql_psycopg2"}
