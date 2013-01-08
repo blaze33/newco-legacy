@@ -16,8 +16,8 @@
 <div class="row"><div class="span10 offset1">
   <div class="row">
     <div class="span10">
-      {% if '/popular' in request.path %}<h2>{% trans "Popular questions" %}</h2>
-      {% elif '/las' in request.path %}<h2>{% trans "Last added questions" %}</h2>
+      {% if filter == "popular" %}<h2>{% trans "Popular questions" %}</h2>
+      {% elif filter == "last" %}<h2>{% trans "Last added questions" %}</h2>
       {% else %}<h2>{% trans "Questions without answer" %}</h2>{% endif %}
       {% if category_name %}<h5>{% trans "Category" %} {{ category_name }}</h5>{% endif %}
       <br><hr>

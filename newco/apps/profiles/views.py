@@ -47,8 +47,7 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
         followers = User.objects.filter(pk__in=fwers_ids)
         followees = User.objects.filter(pk__in=fwees_ids)
-        if self.request.user:
-            scores, votes = history.get_scores_and_votes(self.request.user)
+        scores, votes = history.get_scores_and_votes(self.request.user)
         context.update({
             "empty_msg": empty_msg,
             "reputation": self.page_user.reputation,

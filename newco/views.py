@@ -20,7 +20,6 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
 
-
 class CategoryMixin(object):
 
     def get(self, request, *args, **kwargs):
@@ -96,13 +95,7 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
             self.queryset = Content.objects.questions()
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(pub_date__gt=delta)
-            if request.user:
-                self.scores, self.votes = self.queryset.get_scores_and_votes(request.user)
-            #     print "\n\nif user => True\n\n"
-            #     print "\n\nScores:", self.scores
-            # else:
-            #     self.scores = self.queryset.get_scores()
-            #scores, votes = self.queryset.get_scores_and_votes(user)
+            self.scores, self.votes = self.queryset.get_scores_and_votes(request.user)
             self.queryset = self.queryset.order_queryset(self.filter)
 
         return super(HomepageView, self).get(request, *args, **kwargs)
