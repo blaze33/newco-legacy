@@ -69,28 +69,37 @@
       {% else %}
         <p class="content" itemprop="name"><a class="question-nf" href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
 
-        {% if not display_answer == "True" %}{#  If question only => display controls here, if answers are displayed, display controls below answer  #}
+        {% if display_a == "no" %}{#  If question only => display controls here, if answers are displayed, display controls below answer  #}
           {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
         {% endif %}
       {% endif %}
 
     </div>
   </div>
+  {# display_a = <no|all|top|one> #}
+  {% if display_a == "all" or display_a == "top" or display_a == "one" %}
+    {% if display_a == "all" %}{# this "if" is only here for the "slice:1" is there any other way to do it ? #}
+      {% for answer in content.answer_set.all %}
+        {% if not forloop.first%}<br>{% endif %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+      {% empty %}
+        {% cycle "empty" as empty silent %}
+      {% endfor %}
+    {% elif display_a == "top" %}
+      {% for answer in content.answer_set.all|slice:":1" %}
+        {% if not forloop.first%}<br>{% endif %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+      {% empty %}
+        {% cycle "empty" as empty silent %}
+      {% endfor %}
+    {% endif %}
 
-  {% if display_answer == "True" %}
-    {% for answer in content.answer_set.all %}
-      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
-    {% empty %}
-      {% cycle "empty" as empty silent %}
-    {% endfor %}
-
-    <br>
     <div class="row">
       <div class="span8 offset1">
         {% if q_detail == "True" %}
-          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" content=content user=user statuses=statuses experts=experts include_modal="True" empty=empty csrf_token=csrf_token only %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" display_a=display_a content=content user=user statuses=statuses experts=experts include_modal="True" empty=empty csrf_token=csrf_token only %}
         {% else %}
-          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user empty=empty csrf_token=csrf_token only %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" display_a=display_a content=content user=user empty=empty csrf_token=csrf_token only %}
         {% endif %}
       </div>
     </div>

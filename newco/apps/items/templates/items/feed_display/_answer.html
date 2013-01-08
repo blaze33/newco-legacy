@@ -35,14 +35,13 @@
     <div class="span8 answer-content">
       {% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}
       {% content_info content "header" %}
-      <div class="content{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}</div>
-      {% if display_q == "True" %}{# if display_q = True => means answer is alone, not in a list below a question #}
+      <div class="content{% if disp_exp == "True" %} expander{% endif %}{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}</div>
+      {% if display_q == "True" %}{# if display_q = True => it means this answer is alone, not in a list below a question #}
         <br>
         {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
       {% endif %}
     </div>
   </div>
-  <br>
 
 {% elif display == "email_html" %}
   <p><small><b><a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ question.content }}{% endautoescape %}</a></b></small></p>

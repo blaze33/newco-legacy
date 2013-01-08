@@ -27,7 +27,7 @@
   <div class="row">
     <div class="span10">
       {% if object_list %}
-        {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="True" display_answer="False" display_linked_contt="False" user=user path=request.path scores=scores votes=votes csrf_token=csrf_token empty_msg=empty_msg only %}
+        {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="True" display_a="no" display_linked_contt="False" user=user path=request.path scores=scores votes=votes csrf_token=csrf_token empty_msg=empty_msg only %}
       {% else %}
         {% trans "No unanswered questions on this category." %}
         <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
