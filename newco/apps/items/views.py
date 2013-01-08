@@ -295,8 +295,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                                                        **kwargs)
 
 
-class ContentListView(ContentView, MultiTemplateMixin, ListView,
-                        VoteMixin):
+class ContentListView(ContentView, MultiTemplateMixin, ListView, VoteMixin):
 
     paginate_by = 9
     qs_option = "-pub_date"
@@ -323,8 +322,12 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
             elif self.pill == "products":
                 item_ids = Item.objects.filter(tags=self.tag).values_list(
                     "id", flat=True)
-                self.queryset = self.queryset.filter(items__in=item_ids)
+                self.queryset = self.queryset.filter(
+                    items__in=item_ids).distinct()
                 msg = _("No questions about products with tag %s")
+            self.scores, self.votes = self.queryset.get_scores_and_votes(
+                self.request.user)
+            self.queryset = self.queryset.questions()
 
         tpl = "tags/_tag_display.html"
         self.empty_msg = mark_safe(
@@ -338,14 +341,13 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView,
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            self.scores, self.votes = self.queryset.get_scores_and_votes(self.request.user)
             qs = qs.order_queryset(self.qs_option, self.scores)
-            qs = qs.questions()
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes", "empty_msg"]:
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes",
+                     "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
