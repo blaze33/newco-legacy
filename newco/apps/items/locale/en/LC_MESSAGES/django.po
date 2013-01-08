@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 21:04+0100\n"
+"POT-Creation-Date: 2013-01-08 18:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -457,45 +457,50 @@ msgid "Questions"
 msgstr ""
 
 #: templates/items/item_list_products.html:11
-msgid "Browse products with tag"
+msgid "What products?"
 msgstr ""
 
 #: templates/items/item_list_products.html:12
+msgid "Browse products with tag"
+msgstr ""
+
+#: templates/items/item_list_products.html:13
 msgid "Search products with tag"
 msgstr ""
 
-#: templates/items/item_list_products.html:29
-#: templates/items/item_list_questions.html:27
+#: templates/items/item_list_products.html:15
+#: templates/items/item_list_questions.html:17
+msgid "Filter"
+msgstr ""
+
+#: templates/items/item_list_products.html:16
+#: templates/items/item_list_questions.html:18
 msgid "Popular"
 msgstr ""
 
-#: templates/items/item_list_products.html:30
-#: templates/items/item_list_questions.html:28
+#: templates/items/item_list_products.html:17
+#: templates/items/item_list_questions.html:19
 msgid "Last added"
 msgstr ""
 
-#: templates/items/item_list_products.html:31
-#: templates/items/item_list_questions.html:29
+#: templates/items/item_list_products.html:18
+#: templates/items/item_list_questions.html:20
 msgid "Old"
 msgstr ""
 
-#: templates/items/item_list_questions.html:15
-msgid "Question type:"
+#: templates/items/item_list_questions.html:13
+msgid "What questions?"
 msgstr ""
 
-#: templates/items/item_list_questions.html:18
+#: templates/items/item_list_questions.html:14
 msgid "Questions with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:19
+#: templates/items/item_list_questions.html:15
 msgid "Questions about products with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:24
-msgid "Filtering:"
-msgstr ""
-
-#: templates/items/item_list_questions.html:30
+#: templates/items/item_list_questions.html:21
 msgid "No answers"
 msgstr ""
 
@@ -620,6 +625,15 @@ msgstr ""
 
 #: templates/items/feed_display/_feed_controls.html:7
 msgid "Ask to answer"
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:7
+#, python-format
+msgid "View all answers (%(nb_ans)s)"
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:7
+msgid "This is the only answer"
 msgstr ""
 
 #: templates/items/feed_display/_feed_controls.html:19
