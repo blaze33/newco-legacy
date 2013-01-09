@@ -43,6 +43,27 @@
   <script>
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
+
+    // script for "Edit your bio"
+    $(function() {
+        $("#submit-edit-about").click(function(event) {
+            event.preventDefault();
+            $('#modal-edit-about').modal('hide');
+            $.ajax({
+                type: "post",
+                data: $("#form-edit-bio").serialize() + '&edit_about=edit_about',
+                success: function(data, textstatus, jqxhr) {
+                    console.log(data);
+                    var text_to_change = $('[rel=current-user-name-and-bio]');
+                    text_to_change.html(data.bio_to_update);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr, status, error);
+                }
+            });
+            return false;
+        });
+    });
   </script>
   {% if request.GET.show_ask_to_answer %}<script>$(document).ready(function(){$('#ask').modal('show')});</script>{% endif %}
 {% endblock %}

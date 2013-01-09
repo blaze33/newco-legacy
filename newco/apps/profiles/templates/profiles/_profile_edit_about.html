@@ -1,16 +1,14 @@
 {% load i18n %}
 
-<div class="form-inline">
-  <button class="btn btn-mini" data-toggle="modal" data-target="#edit_about"><b>{% if user.get_profile.about %}{% trans "Edit your bio" %}{% else %}{% trans "Tell us about you" %}{% endif %}</b></button>
+<button type="button" class="btn btn-mini" data-toggle="modal" data-target="#modal-edit-about"><b>{% if user.get_profile.about %}{% trans "Edit your bio" %}{% else %}{% trans "Tell us about you" %}{% endif %}</b></button>
 
-  <div id="edit_about" class="modal fade hide">
-    <div class="modal-header">
-      <button class="close" data-dismiss="modal">&times;</button>
-      <h3>{% trans "I can give a good answer because..." %}</h3>
-    </div>
-    <div class="modal-body">
-      <input name="about" type="text" class="span4" autocomplete="off" {% if user.get_profile.about %} value="{{ user.get_profile.about }}"{% endif %} placeholder="{% trans 'e.g. professional gardener, model, local tennis champion' %}">
-      <input type="submit" class="btn btn-primary" name="edit_about" value="{% trans 'Submit' %}">
-    </div>
+<div id="modal-edit-about" class="modal fade hide">
+  <div class="modal-header">
+    <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+    <h3>{% trans "I can give a good answer because..." %}</h3>
+  </div>
+  <div class="modal-body">
+    <form method="POST" action="#answer_form_{{ content.id }}" id="form-edit-bio">{% csrf_token %}<input name="about" type="text" class="span4" autocomplete="off" {% if user.get_profile.about %} value="{{ user.get_profile.about }}"{% endif %} placeholder="{% trans 'e.g. professional gardener, model, local tennis champion' %}">
+    <input type="submit" class="btn btn-primary" name="edit_about" id="submit-edit-about" value="{% trans 'Submit' %}"></form>
   </div>
 </div>

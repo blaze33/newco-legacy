@@ -204,8 +204,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
             q_form = PartialQuestionForm(request, item, data=POST) \
                 if "question" in POST else PartialQuestionForm(request, item)
             q_id = -1
-            if ("answer" in POST or "edit_about" in POST) \
-                    and "question_id" in POST:
+            if "answer" in POST and "question_id" in POST:
                 q_id = int(POST.get("question_id"))
                 context.update({"q_id": q_id})
 
@@ -246,7 +245,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                     "answer_set__author__reputation").select_subclasses().get()
 
             q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST or "edit_about" in POST \
+                if "answer" in POST \
                 else AnswerForm(request)
 
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
@@ -284,13 +283,15 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
-        elif "edit_about" in POST:
+        elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
             profile = request.user.get_profile()
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            return self.render_to_response(self.get_context_data())
+            data = {"is_success": "bio update success",
+                "bio_to_update": user_display(request.user) + ", " + about }
+            return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
