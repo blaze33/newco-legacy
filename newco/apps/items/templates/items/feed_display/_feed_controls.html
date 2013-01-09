@@ -12,11 +12,11 @@
   <br>
   <div id="answer_form_{{ content.id }}" class="row">
     <div class="span8">
-      {% if user.is_authenticated %}
+      <p>{% if user.is_authenticated %}
         <b rel="current-user-name-and-bio">{% user_display user %}{% if user.get_profile.about %}, {{ user.get_profile.about }}{% endif %}</b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" %}
       {% else %}
         {% trans "Please login before answering." %}
-      {% endif %}
+      {% endif %}</p>
 
       <form method="POST" action="#answer_form_{{ content.id }}">{% csrf_token %}
         {{ content.answer_form|as_bootstrap }}
