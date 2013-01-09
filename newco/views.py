@@ -102,11 +102,9 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"cat": self.cat, "filter": self.filter})
-        if hasattr(self, "scores"):
-            kwargs.update({"scores": self.scores})
-        if hasattr(self, "votes"):
-            kwargs.update({"votes": self.votes})
+        for attr in ["cat", "filter", "scores", "votes", "empty_msg"]:
+            if hasattr(self, attr):
+                kwargs.update({attr: getattr(self, attr)})
         ctx = super(HomepageView, self).get_context_data(**kwargs)
         if self.model == Item:
             ctx.get("object_list").fetch_images()
