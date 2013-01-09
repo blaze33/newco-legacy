@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load date_utils %}
+{% load content_utils %}
 
 {% if signature %}
 <div class="signature">
@@ -14,8 +15,9 @@
   </div>{% endif %}
 </div>
 {% elif header %}
+<div class="right nf-small-grey" itemprop="dateModified" title="{{ pub_date }}"><small>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></div>
 <div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-  <b><a href="{{ author_url }}" itemprop="url" class="black"><span itemprop="name">{{ author_name }}</span></a>{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</b>
+  <b>{% object_display content.author "text" "black" %}{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</b>
 </div>
 {% endif %}
 

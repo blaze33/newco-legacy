@@ -8,6 +8,9 @@
 
 {% block list %}
 <div class="tabbable row">
+  <div class="span9">
+    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="top" disp_exp="True" displ_sign="True" display_q_form="True" q_form=q_form item=item user=user path=request.path csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+  </div>
   <div class="span3">
     <ul class="nav nav-list">
       <li class="nav-header">{% trans "What questions?" %}</li>
@@ -22,7 +25,7 @@
     </ul>
   </div>
   <div class="span9">
-    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="top" disp_exp="True" displ_sign="False" display_q_form="True" q_form=q_form item=item user=user path=request.path csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="top" disp_exp="True" displ_sign="True" display_q_form="True" q_form=q_form item=item user=user path=request.path csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
   </div>
 </div>
 {% endblock %}

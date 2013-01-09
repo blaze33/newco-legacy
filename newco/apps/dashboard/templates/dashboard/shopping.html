@@ -5,47 +5,47 @@
 {% block subtitle %}On veut aider a faire ses choix ! => assistant de shopping{% endblock %}
 
 {% block dashboard %}
-    "Boards" to organize your items per topic (ex : "possible gifts for Dad's birthday..." , or "The next vaccum !" ) ...
-    <br><br>
-    ... Or a possibility to take personnal annotations on products, and "store" those in a "purchase list" ... To let you more time to think about it, or wait for reviews/advice from others on NewCo !
-    <br><br>
-    ... Sharing your lists with others (whether *your* wish-lists or lists to prepare a gift, like "Dad's birthday", you could share your research with your Mom, and brothers & sisters "Hey what do you think of my 5-items selection? Which one do you prefer for Dad ? ")
-    <br><br>
-    ... Or *Cagnottes* like Leetchi !
-    <br>
-    <br>
+  "Boards" to organize your items per topic (ex : "possible gifts for Dad's birthday..." , or "The next vaccum !" ) ...
+  <br><br>
+  ... Or a possibility to take personnal annotations on products, and "store" those in a "purchase list" ... To let you more time to think about it, or wait for reviews/advice from others on NewCo !
+  <br><br>
+  ... Sharing your lists with others (whether *your* wish-lists or lists to prepare a gift, like "Dad's birthday", you could share your research with your Mom, and brothers & sisters "Hey what do you think of my 5-items selection? Which one do you prefer for Dad ? ")
+  <br><br>
+  ... Or *Cagnottes* like Leetchi !
+  <br>
+  <br>
 
-    <div class="row-fluid">
-        <ul class="thumbnails">
-            <li class="span4">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/300x200" alt="">
-                    <h3>Dad's birthday</h3>
-                    <p>Selection of gifts for Dad's birthday</p>
-                    <p><small>Shared with <a href="#">Louis Dupond</a>, <a href="#">Alexandra Dupond</a>, and <a href="#">Marie Dupond</a></small></p>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/300x200" alt="">
-                    <h3>Next mountain bike !</h3>
-                    <p>First research for my next mountain bike! <br>Bikes with: Aluminium, Disk-brakes, Rock-Shock suspensions, Anti-flattening tires... Less than 800$.</p>
-                    <p><small>Not shared. 4 products.</small></p>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/300x200" alt="">
-                    <h3>Thumbnail label</h3>
-                    <p>Thumbnail caption...</p>
-                    <p><small>Not shared. 4 products.</small></p>
+  <div class="row-fluid">
+    <ul class="thumbnails">
+      <li class="span4">
+        <div class="thumbnail">
+          <img src="http://placehold.it/300x200" alt="">
+          <h3>Dad's birthday</h3>
+          <p>Selection of gifts for Dad's birthday</p>
+          <p><small>Shared with <a href="#">Louis Dupond</a>, <a href="#">Alexandra Dupond</a>, and <a href="#">Marie Dupond</a></small></p>
+        </div>
+      </li>
+      <li class="span4">
+        <div class="thumbnail">
+          <img src="http://placehold.it/300x200" alt="">
+          <h3>Next mountain bike !</h3>
+          <p>First research for my next mountain bike! <br>Bikes with: Aluminium, Disk-brakes, Rock-Shock suspensions, Anti-flattening tires... Less than 800$.</p>
+          <p><small>Not shared. 4 products.</small></p>
+        </div>
+      </li>
+      <li class="span4">
+        <div class="thumbnail">
+          <img src="http://placehold.it/300x200" alt="">
+          <h3>Thumbnail label</h3>
+          <p>Thumbnail caption...</p>
+          <p><small>Not shared. 4 products.</small></p>
 
-                </div>
-            </li>
-        </ul>
-    </div>
-    <br>
-    <hr>
-    <h2>Your last notes on products:</h2>
-    {% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" %}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <br>
+  <hr>
+  <h2>Your last notes on products:</h2>
+  {% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" %}
 {% endblock %}

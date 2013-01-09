@@ -33,9 +33,8 @@
       {% edit_buttons user content delete_next=request.path %}
     </div>
     <div class="span8 answer-content">
-      {% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}
       {% content_info content "header" %}
-      <div class="content{% if disp_exp == "True" %} expander{% endif %}{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}</div>
+      <div class="content{% if disp_exp == "True" %} expander{% endif %}{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}{% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}</div>
       {% if display_q == "True" %}{# if display_q = True => it means this answer is alone, not in a list below a question #}
         <br>
         {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
