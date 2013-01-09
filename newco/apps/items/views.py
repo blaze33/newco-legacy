@@ -305,8 +305,11 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
     paginate_by = 9
     qs_option = "-pub_date"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
+        return super(ContentView, self).dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
-        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
         self.cat = kwargs.get("cat", "home")
         self.template_name = "items/item_list_%s.html" % self.cat
         self.qs_option = self.request.GET.get("qs_option", self.qs_option)
@@ -345,7 +348,6 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        self.tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
         for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
@@ -369,10 +371,9 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
 
     def post(self, request, *args, **kwargs):
         if "skills" in request.POST:
-            tag = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug", ""))
             profile = request.user.get_profile()
-            profile.skills.add(tag) if request.POST.get("skills") == "add" \
-                else profile.skills.remove(tag)
+            profile.skills.add(self.tag) if request.POST["skills"] == "add" \
+                else profile.skills.remove(self.tag.name)
             return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
