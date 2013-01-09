@@ -1,34 +1,20 @@
+var why_NewCo_div = $('#why_NewCo');
+var subnav2move = $('.subnav-fixed');
 
 $(function(){
     $('#profile-pic').tooltip({
         'trigger': 'hover',
         'placement': 'right'
     });
-});
 
-function TriggerMasonry(){
-    $('#thumbnails_list').masonry('reload');
-}
-$(function(){
-   // simple example, using all default options unless overridden globally
-  $('#thumbnails_list').imagesLoaded(function(){
-    $('#thumbnails_list').masonry({
-        itemSelector : '.content-item',
-        isAnimated: true,
-        isFitWidth: true,
+    // simple example, using all default options unless overridden globally
+    $('#thumbnails_list').imagesLoaded(function(){
+        $('#thumbnails_list').masonry({
+            itemSelector : '.content-item',
+            isAnimated: true,
+            isFitWidth: true,
+        });
     });
-  });
-  $('div.expandable').expander({
-			afterExpand:function() {TriggerMasonry();},
-			//Timer to relaunch Masonry after the onCollapse event
-			onCollapse:function(byUser) {timeout=setTimeout(TriggerMasonry,500);
-			}
- 	});
-});
-
-var why_NewCo_div = $('#why_NewCo');
-var subnav2move = $('.subnav-fixed');
-$(function(){
 
     why_NewCo_div.on('show', function () {
         subnav2move.addClass('subnav-moved');
