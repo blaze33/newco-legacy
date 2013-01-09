@@ -7,21 +7,17 @@ $(function(){
 });
 
 function TriggerMasonry(){
-	$('#thumbnails_list').masonry({
-		itemSelector : '.content-item',
+    $('#thumbnails_list').masonry('reload');
+}
+$(function(){
+   // simple example, using all default options unless overridden globally
+  $('#thumbnails_list').imagesLoaded(function(){
+    $('#thumbnails_list').masonry({
+        itemSelector : '.content-item',
         isAnimated: true,
         isFitWidth: true,
-        //columnWidth: auto,
-        //columnWidth: function( containerWidth ) {
-        //    return containerWidth / 40; // Seb: this thing is a mess... Maybe it's a matter of denominator ? (colunms/size of page)...
-        //},
-	});
-}
-$(document).ready(function() {
-   // simple example, using all default options unless overridden globally
-  TriggerMasonry();
-  setTimeout(TriggerMasonry,500); // trigger quickly after page load
-  setTimeout(TriggerMasonry,3000); // retrigger masonry in case the .js were very long to load - happens often when loading is long
+    });
+  });
   $('div.expandable').expander({
 			afterExpand:function() {TriggerMasonry();},
 			//Timer to relaunch Masonry after the onCollapse event
