@@ -17,5 +17,6 @@ for app in apps:
             unapplied_migrations.append('%s.%s' % (migration.app_label(), migration.name()))
 
 if num_new_migrations > 0:
-    sys.exit("%d new migrations to apply:\n%s" % (num_new_migrations, unapplied_migrations))
+    import pprint
+    sys.exit("%d new migrations to apply:\n%s" % (num_new_migrations, pprint.pformat(unapplied_migrations)))
 print "No migrations to run."
