@@ -57,8 +57,6 @@ $(function(){
         // delay: 500,
     });
 
-    $('.navbar-fixed-top').addClass('reduced-margin-navbar');
-
     //"Find products or tags in the search bar... "
     $('.arrow_search_bar_trigger').mouseover(function () {
         $('#arrow_search_bar').removeClass('arrow-search-bar-hidden');
