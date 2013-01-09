@@ -14,29 +14,22 @@
 {% block body %}
 <br>
 <div class="row"><div class="span10 offset1">
-  <div class="row">
-    <div class="span10">
-      {% if filter == "popular" %}<h2>{% trans "Popular questions" %}</h2>
-      {% elif filter == "last" %}<h2>{% trans "Last added questions" %}</h2>
-      {% else %}<h2>{% trans "Questions without answer" %}</h2>{% endif %}
-      {% if category_name %}<h5>{% trans "Category" %} {{ category_name }}</h5>{% endif %}
-      <br><hr>
-    </div>
-  </div>
+  <h2>
+    {% if filter == "popular" %}
+      {% trans "Popular questions" %}
+    {% elif filter == "last" %}
+      {% trans "Last added questions" %}
+    {% else %}
+      {% trans "Questions without answer" %}
+    {% endif %}
+  </h2>
 
-  <div class="row">
-    <div class="span10">
-      {% if object_list %}
-        {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="True" display_a="no" user=user path=request.path scores=scores votes=votes csrf_token=csrf_token empty_msg=empty_msg only %}
-      {% else %}
-        {% trans "No unanswered questions on this category." %}
-        <h3><a href="{% url 'item_create' 'question' %}" class="btn btn-large">{% trans "Ask your own awesome question then!" %}</a></h3>
-      {% endif %}
-    </div>
-  </div>
+  <br><hr>
 
+  {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="True" display_a="no" user=user path=request.path scores=scores votes=votes csrf_token=csrf_token empty_msg=empty_msg only %}
+
+  {% if is_paginated %}{% paginate %}{% endif %}
 </div></div>
-{% if is_paginated %}{% paginate %}{% endif %}
 
 {% endblock %}
 

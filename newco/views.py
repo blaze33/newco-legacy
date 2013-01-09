@@ -1,7 +1,10 @@
 import datetime
 
+from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count, Sum
 from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
 from items.models import Item, Content
@@ -98,6 +101,10 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
             self.scores, self.votes = self.queryset.get_scores_and_votes(
                 request.user)
             self.queryset = self.queryset.order_queryset(self.filter)
+            self.empty_msg = mark_safe(_(
+                "There is no question in this category. "
+                "<a class='btn' href='{create_url}'>Ask your own!</a>").format(
+                    create_url=reverse_lazy("item_create", args=["question"])))
 
         return super(HomepageView, self).get(request, *args, **kwargs)
 
