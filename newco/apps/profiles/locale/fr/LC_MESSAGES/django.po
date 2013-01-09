@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 15:54+0200\n"
+"POT-Creation-Date: 2013-01-04 16:47+0100\n"
 "PO-Revision-Date: 2012-11-12 11:59\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -51,29 +51,14 @@ msgstr "La liste de vos principales compétences produit"
 msgid "profile"
 msgstr "profil"
 
-#: models.py:68
+#: models.py:71
 msgid "reputation"
 msgstr "réputation"
 
-#: views.py:64
+#: views.py:42
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
 msgstr "%(page_user_display)s n'a pas contribué pour le moment."
-
-#: templates/profiles/_profile_display.html:12
-#: templates/profiles/_profile_info.html:24
-msgid "Reputation"
-msgstr "Réputation"
-
-#: templates/profiles/_profile_display.html:12
-#: templates/profiles/_profile_display.html:13
-msgid ":"
-msgstr "&nbsp;:"
-
-#: templates/profiles/_profile_display.html:13
-#: templates/profiles/_profile_info.html:28
-msgid "Skills"
-msgstr "Compétences"
 
 #: templates/profiles/_profile_edit_about.html:4
 msgid "Edit your bio"
@@ -95,29 +80,52 @@ msgstr "ex.&nbsp;: jardinier professionnel, mannequin, champion de tennis"
 msgid "Submit"
 msgstr "Soumettre"
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:10
+#: templates/profiles/_profile_info.html:45
 msgid "About"
 msgstr "A propos"
 
-#: templates/profiles/_profile_info.html:12
+#: templates/profiles/_profile_info.html:14
 msgid "Location"
 msgstr "Région"
 
-#: templates/profiles/_profile_info.html:16
+#: templates/profiles/_profile_info.html:18
+#: templates/profiles/_profile_info.html:48
 msgid "Website"
 msgstr "Site internet"
 
-#: templates/profiles/_profile_info.html:20
+#: templates/profiles/_profile_info.html:22
+#: templates/profiles/_profile_info.html:49
 msgid "Subscription date"
 msgstr "Date d'inscription"
 
-#: templates/profiles/_profile_info.html:33
+#: templates/profiles/_profile_info.html:26
+#: templates/profiles/_profile_info.html:50
+#: templates/profiles/_profile_info.html:56
+msgid "Reputation"
+msgstr "Réputation"
+
+#: templates/profiles/_profile_info.html:30
+#: templates/profiles/_profile_info.html:51
+#: templates/profiles/_profile_info.html:60
+msgid "Skills"
+msgstr "Compétences"
+
+#: templates/profiles/_profile_info.html:35
 msgid "Following"
 msgstr "Abonnements"
 
-#: templates/profiles/_profile_info.html:37
+#: templates/profiles/_profile_info.html:39
 msgid "Followers"
 msgstr "Abonnés"
+
+#: templates/profiles/_profile_info.html:45
+#: templates/profiles/_profile_info.html:48
+#: templates/profiles/_profile_info.html:49
+#: templates/profiles/_profile_info.html:50
+#: templates/profiles/_profile_info.html:51
+msgid ":"
+msgstr "&nbsp;:"
 
 #: templates/profiles/_profile_user_list.html:4
 msgid "Members:"
@@ -143,7 +151,9 @@ msgstr "Produits&nbsp;:"
 #~ msgstr "a <a href=\"%(url)s\">répondu</a> à une question à propos de"
 
 #~ msgid "<a href=\"%(url)s\" class=\"black\">answered</a> a question about"
-#~ msgstr "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos de"
+#~ msgstr ""
+#~ "a <a href=\"%(url)s\" class=\"black\">répondu</a> à une question à propos "
+#~ "de"
 
 #~ msgid "answered a question about"
 #~ msgstr "a répondu à une question à propos de"
@@ -158,10 +168,12 @@ msgstr "Produits&nbsp;:"
 #~ msgstr "Ajouter une réponse"
 
 #~ msgid "suggested a <a href=\"%(url)s\">feature</a> on"
-#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr ""
+#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "suggested a <a href=\"%(url)s\" class=\"black\">feature</a> on"
-#~ msgstr "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
+#~ msgstr ""
+#~ "a proposé une <a href=\"%(url)s\" class=\"black\">caractéristique</a> sur"
 
 #~ msgid "suggested a feature on"
 #~ msgstr "a suggéré une caractéristique sur"
@@ -179,7 +191,8 @@ msgstr "Produits&nbsp;:"
 #~ msgstr "a posé une <a href=\"%(url)s\">question</a> à propos de"
 
 #~ msgid "asked a <a href=\"%(url)s\" class=\"black\">question</a> about"
-#~ msgstr "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
+#~ msgstr ""
+#~ "a posé une <a href=\"%(url)s\" class=\"black\">question</a> à propos de"
 
 #~ msgid "asked a question about"
 #~ msgstr "a posé une question à propos de"

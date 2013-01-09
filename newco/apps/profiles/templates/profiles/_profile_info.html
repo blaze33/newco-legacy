@@ -1,3 +1,4 @@
+{% load url from future %}
 {% load i18n %}
 {% load account_tags %}
 {% load content_utils %}
@@ -22,7 +23,7 @@
         <dd>{{ profile.user.date_joined }}</dd>
       {% endif %}
       {% if reputation %}
-        <dt><a class="black" href="{% url faq %}#reputation">{% trans "Reputation" %}</a></dt>
+        <dt><a class="black" href="{% url 'faq' %}#reputation">{% trans "Reputation" %}</a></dt>
         <dd>{{ reputation.reputation_incremented }}</dd>
       {% endif %}
       {% if profile.skills.count > 0 %}
@@ -48,4 +49,15 @@
   {% if profile.user.reputation.reputation_incremented %}{% trans "Reputation" %}{% trans ":" %} {{ profile.user.reputation.reputation_incremented }}<br>{% endif %}
   {% if profile.skills.count > 0 %}{% trans "Skills" %}{% trans ":" %} {% tags_display profile.skills 3 %}<br>{% endif %}
   {# TODO: add followers and followees, or at least a count. Templatetag? #}
+{% elif display == "popover" %}
+  <dl class='dl-horizontal'>
+    {% if profile.reputation %}
+      <dt><a class='black' href='{% url "faq" %}#reputation'>{% trans 'Reputation' %}</a></dt>
+      <dd>{{ profile.reputation.reputation_incremented }}</dd>
+    {% endif %}
+    {% if skills %}
+      <dt>{% trans 'Skills' %}</dt>
+      <dd>{% tags_display skills quote_type='single' sep='&thinsp;' %}</dd>
+    {% endif %}
+  </dl>
 {% endif %}

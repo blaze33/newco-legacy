@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 15:54+0200\n"
+"POT-Creation-Date: 2013-01-04 16:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,28 +49,13 @@ msgstr ""
 msgid "profile"
 msgstr ""
 
-#: models.py:68
+#: models.py:71
 msgid "reputation"
 msgstr ""
 
-#: views.py:64
+#: views.py:42
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
-msgstr ""
-
-#: templates/profiles/_profile_display.html:12
-#: templates/profiles/_profile_info.html:24
-msgid "Reputation"
-msgstr ""
-
-#: templates/profiles/_profile_display.html:12
-#: templates/profiles/_profile_display.html:13
-msgid ":"
-msgstr ""
-
-#: templates/profiles/_profile_display.html:13
-#: templates/profiles/_profile_info.html:28
-msgid "Skills"
 msgstr ""
 
 #: templates/profiles/_profile_edit_about.html:4
@@ -93,28 +78,51 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:8
+#: templates/profiles/_profile_info.html:10
+#: templates/profiles/_profile_info.html:45
 msgid "About"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:12
+#: templates/profiles/_profile_info.html:14
 msgid "Location"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:16
+#: templates/profiles/_profile_info.html:18
+#: templates/profiles/_profile_info.html:48
 msgid "Website"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:20
+#: templates/profiles/_profile_info.html:22
+#: templates/profiles/_profile_info.html:49
 msgid "Subscription date"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:33
+#: templates/profiles/_profile_info.html:26
+#: templates/profiles/_profile_info.html:50
+#: templates/profiles/_profile_info.html:56
+msgid "Reputation"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:30
+#: templates/profiles/_profile_info.html:51
+#: templates/profiles/_profile_info.html:60
+msgid "Skills"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:35
 msgid "Following"
 msgstr ""
 
-#: templates/profiles/_profile_info.html:37
+#: templates/profiles/_profile_info.html:39
 msgid "Followers"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:45
+#: templates/profiles/_profile_info.html:48
+#: templates/profiles/_profile_info.html:49
+#: templates/profiles/_profile_info.html:50
+#: templates/profiles/_profile_info.html:51
+msgid ":"
 msgstr ""
 
 #: templates/profiles/_profile_user_list.html:4
