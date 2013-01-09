@@ -15,7 +15,7 @@
   <div class="row"><div id="question_form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %} style="position: relative; top: -75px;"{% endif %}>
     <form method="POST" action="" class="form-inline"><br>
       {% csrf_token %}
-      {% with field=q_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+      {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
         <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
         {% include "bootstrap/_field_errors.html" %}
         {% include "bootstrap/_field_help_text.html" %}

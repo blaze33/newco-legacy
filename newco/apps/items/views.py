@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -184,8 +184,49 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, ModelFormMixin,
-                        FollowMixin, VoteMixin, AskForHelpView):
+# Can't directly subclass FormMixin because of get_context_data.
+# Won't be an issue in 1.5
+class QuestionFormMixin(object):
+
+    form_class = PartialQuestionForm
+    items = []
+    tags = []
+
+    def form_valid(self, form):
+        question = form.save()
+        self.success_url = question.get_absolute_url()
+        return super(QuestionFormMixin, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(QuestionFormMixin, self).get_form_kwargs()
+        kwargs.update({"request": self.request, "prefix": "question"})
+        for attr in ["items", "tags"]:
+            if getattr(self, attr):
+                kwargs.update({attr: getattr(self, attr)})
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        kwargs.update({"question_form": form})
+        return super(QuestionFormMixin, self).get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        POST = request.POST
+        if "question" in POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            if form.is_valid():
+                display_message("created", self.request,
+                                form._meta.model._meta.verbose_name)
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+        return super(QuestionFormMixin, self).post(request, *args, **kwargs)
+
+
+class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
+                        FormMixin, FollowMixin, VoteMixin, AskForHelpView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -201,8 +242,6 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 "author__reputation", "answer_set__author__reputation"
             ).order_queryset("popular", scores)
 
-            q_form = PartialQuestionForm(request, item, data=POST) \
-                if "question" in POST else PartialQuestionForm(request, item)
             q_id = -1
             if "answer" in POST and "question_id" in POST:
                 q_id = int(POST.get("question_id"))
@@ -219,7 +258,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             context.update({
                 "questions": questions, "scores": scores, "votes": votes,
-                "media": media, "q_form": q_form, "experts": experts.distinct()
+                "media": media, "experts": experts.distinct()
             })
 
             # Linked affiliated products
@@ -270,13 +309,11 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+        self.items = [self.object]
         POST = request.POST
-        if "question" in POST or "answer" in POST:
-            if "question" in POST:
-                form = PartialQuestionForm(request, self.object, data=POST)
-            else:
-                status = int(POST.get("answer"))
-                form = AnswerForm(request, data=POST, status=status)
+        if "answer" in POST:
+            status = int(POST.get("answer"))
+            form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
                 display_message("created", self.request,
                                 form._meta.model._meta.verbose_name)
@@ -297,7 +334,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                                                        **kwargs)
 
 
-class ContentListView(ContentView, MultiTemplateMixin, ListView, VoteMixin):
+class ContentListView(ContentView, MultiTemplateMixin, QuestionFormMixin,
+                      ListView, FormMixin, VoteMixin):
 
     paginate_by = 9
     qs_option = "-pub_date"
@@ -371,6 +409,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView, VoteMixin):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.tags = [self.tag]
         if "skills" in request.POST:
             profile = request.user.get_profile()
             profile.skills.add(self.tag) if request.POST["skills"] == "add" \

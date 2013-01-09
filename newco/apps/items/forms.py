@@ -158,9 +158,9 @@ class PartialQuestionForm(ModelForm):
             "class": "span4", "rows": 1,
             "placeholder": _("Ask something specific.")})}
 
-    def __init__(self, request, item, *args, **kwargs):
+    def __init__(self, request, items=[], tags=[], *args, **kwargs):
         super(PartialQuestionForm, self).__init__(*args, **kwargs)
-        self.request, self.item = [request, item]
+        self.request, self.items, self.tags = [request, items, tags]
 
     def save(self, commit=True, **kwargs):
         question = super(PartialQuestionForm, self).save(commit=False)
@@ -169,7 +169,8 @@ class PartialQuestionForm(ModelForm):
         if commit:
             question.save()
             self.save_m2m()
-            question.items.add(self.item.id)
+            question.items.add(*self.items)
+            question.tags.add(*self.tags)
         return question
 
 
