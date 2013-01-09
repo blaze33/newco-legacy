@@ -81,7 +81,7 @@
     </li>
     
     <li class="{% if cat == 'questions' %}active {% endif %}dropdown">
-      <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href=""><b class="caret"></b> {% trans "Questions" %}</a>
+      <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Questions" %} <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li{% if cat == "questions" and filter == "unanswered" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'unanswered' %}"><i class="icon-time"></i> <b>{% trans "Unanswered" %}</b></a></li>
         <li{% if cat == "questions" and filter == "last" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'last' %}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
