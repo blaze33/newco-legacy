@@ -19,7 +19,6 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
-        print self.__dict__
         self.object = self.get_object()
         if self.object.slug and kwargs["slug"] != self.object.slug:
             url = self.object.get_absolute_url()
