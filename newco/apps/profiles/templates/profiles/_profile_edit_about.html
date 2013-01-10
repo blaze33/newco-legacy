@@ -1,17 +1,17 @@
 {% load i18n %}
 
-<button type="button" class="btn btn-mini btn-success" id="btn-add-about" data-toggle="modal" data-target="#modal-edit-about"{% if user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Tell us about you" %}</b></button>
-<button type="button" class="btn btn-mini" id="btn-edit-about" data-toggle="modal" data-target="#modal-edit-about"{% if not user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Edit your bio" %}</b></button>
+<button class="btn btn-mini btn-success" id="btn-add-about" data-toggle="modal" data-target="#modal-edit-about" type="button"{% if user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Tell us about you" %}</b></button>
+<button class="btn btn-mini" id="btn-edit-about" data-toggle="modal" data-target="#modal-edit-about" type="button"{% if not user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Edit your bio" %}</b></button>
 
-<div id="modal-edit-about" class="modal fade hide">
+<div class="modal fade hide" id="modal-edit-about">
   <div class="modal-header">
-    <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+    <a class="close" data-dismiss="modal" aria-hidden="true" type="button">&times;</a>
     <h3>{% trans "I can give a good answer because..." %}</h3>
   </div>
   <div class="modal-body form-inline">
-    <form method="POST" action="#answer_form_{{ content.id }}" id="form-edit-bio">{% csrf_token %}
-      <input name="about" type="text" class="span4" autocomplete="off" {% if user.get_profile.about %}value="{{ user.get_profile.about }}" {% endif %}placeholder="{% trans 'e.g. professional gardener, model, local tennis champion' %}">
-      <input type="submit" class="btn btn-primary" name="edit_about" id="submit-edit-about" value="{% trans 'Submit' %}">
+    <form id="form-edit-bio" method="POST" action="#answer_form_{{ content.id }}">{% csrf_token %}
+      <input class="span4" type="text" name="about" autocomplete="off" {% if user.get_profile.about %}value="{{ user.get_profile.about }}" {% endif %}placeholder="{% trans 'e.g. professional gardener, model, local tennis champion' %}">
+      <input class="btn btn-primary" id="submit-edit-about" name="edit_about" type="submit" value="{% trans 'Submit' %}">
     </form>
   </div>
 </div>

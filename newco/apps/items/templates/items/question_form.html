@@ -36,8 +36,8 @@
 
       <div class="control-group" id="div_submit_q"{% if cb_answer %} style="visibility: hidden;" {% endif %}>
         <div class="controls">
-          <button type="submit" class="btn btn-primary" name="add_question" value="{{ statuses.public }}">{% if question.is_public %}{% trans "Update and keep public" %}{% elif question.is_draft %}{% trans "Update and publish" %}{% else %}{% trans "Publish your question" %}{% endif %}</button>
-          <button type="submit" class="btn" name="add_question" value="{{ statuses.draft }}">{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Update and keep as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
+          <button class="btn btn-primary" name="add_question" type="submit" value="{{ statuses.public }}">{% if question.is_public %}{% trans "Update and keep public" %}{% elif question.is_draft %}{% trans "Update and publish" %}{% else %}{% trans "Publish your question" %}{% endif %}</button>
+          <button class="btn" name="add_question" type="submit" value="{{ statuses.draft }}">{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Update and keep as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
         </div>
       </div>
 
@@ -47,11 +47,11 @@
             <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
           </span>
           <label class="checkbox">
-            <input type="checkbox" name="cb_answer" data-toggle="collapse" data-target="#answer_form"{% if cb_answer %} checked{% endif %}>
+            <input name="cb_answer" data-toggle="collapse" data-target="#answer_form" type="checkbox"{% if cb_answer %} checked{% endif %}>
             {% trans "Answer your own question" %}
           </label>
         </div></div>
-        <div id="answer_form" class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}"><div class="span7">
+        <div class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}" id="answer_form"><div class="span7">
           {{ formset.management_form }}
           {% for form in formset %}
             {{ form|as_bootstrap }}
@@ -59,8 +59,8 @@
         </div></div>
         <div class="control-group" id="div_submit_qa"{% if not cb_answer %} style="display: none;"{% endif %}>
           <div class="controls">
-            <button type="submit" class="btn btn-primary" name="add_question" value="{{ statuses.public }}">{% trans "Publish your question and answer" %}</button>
-            <button type="submit" class="btn" name="add_question" value="{{ statuses.draft }}">{% trans "Save as draft" %}</button>
+            <button class="btn btn-primary" name="add_question" type="submit" value="{{ statuses.public }}">{% trans "Publish your question and answer" %}</button>
+            <button class="btn" name="add_question" type="submit" value="{{ statuses.draft }}">{% trans "Save as draft" %}</button>
           </div>
         </div>
       {% endif %}
@@ -70,14 +70,14 @@
 
       <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
         <div class="modal-header">
-          <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+          <a class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</a>
           <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
         </div>
         <form class="form-horizontal">
           <div class="modal-body">{{ i_form|as_bootstrap }}</div>
           <div class="modal-footer">
             <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
-            <input type="button" class="btn btn-primary" name="add_item" id="add-item" value="{% trans 'Add product' %}">
+            <input class="btn btn-primary" name="add_item" id="add-item" type="button" value="{% trans 'Add product' %}">
           </div>
         </form>
       </div>
@@ -150,7 +150,7 @@
             result = '<span><span id="tag_query">' + term + '</span> {% trans 'not found' %}</span>' +
                 '<button class="btn tooltip-top" onclick="addProduct(\'' + term + '\')"' +
                 'title="{% trans 'Click here if you cannot find the product you want to link your question to' %}">' +
-                '<i rel="add_icon" class="icon-plus"></i> {% trans "Add a product" %}</button>'
+                '<i class="icon-plus" rel="add_icon"></i> {% trans "Add a product" %}</button>'
             return result;
         },
         containerCssClass: 'select2-bootstrap',

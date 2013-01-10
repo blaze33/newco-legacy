@@ -28,7 +28,7 @@
       {% if display_img == "True" %}
         <div class="pull-right" style="max-width: 200px; padding-left: 5px;">
           {% if content.items.all.count > 3 or content.tags.all.count > 3 %}
-            <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="nf-small-grey">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
+            <p class="nf-small-grey">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a class="nf-small-grey" href="{{ item.get_absolute_url }}">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
             {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
             {% endif %}</p>
           {% else %}
