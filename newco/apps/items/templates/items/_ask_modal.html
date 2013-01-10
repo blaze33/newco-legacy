@@ -12,7 +12,7 @@
       <h4>{% trans "...an expert:" %}</h4>
       {% for expert in experts %}<br><div class="row">
         <div class="span2 left"><a href="{{ expert.get_absolute_url }}" target="_blank" class="label label-success">{% user_display expert %}</a></div>
-        <div class="span3 right"><form action="" method="POST">{% csrf_token %}
+        <div class="span3 right"><form method="POST">{% csrf_token %}
           <input class="btn" name="ask" value="{% trans 'Ask' %}" type="submit">
           <input name="expert-id" value="{{ expert.id }}" type="hidden">
           <input id="question-id_{{ expert.id }}" name="question-id" type="hidden">
