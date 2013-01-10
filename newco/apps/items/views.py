@@ -29,12 +29,10 @@ from items.forms import PartialQuestionForm
 from items.models import Item, Content, Question
 from profiles.models import Profile
 from utils.apiservices import search_images
-from utils.mailtools import process_asking_for_help
 from utils.follow.views import FollowMixin
-from utils.tools import load_object
 from utils.vote.views import VoteMixin
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.views.tutorial import TutorialMixin
+from utils.views import AskForHelpView, TutorialMixin
 
 app_name = "items"
 
@@ -186,7 +184,7 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 
 
 class ContentDetailView(ContentView, DetailView, ModelFormMixin,
-                        FollowMixin, VoteMixin):
+                        FollowMixin, VoteMixin, AskForHelpView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -273,10 +271,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         POST = request.POST
-        if "ask" in POST:
-            obj = load_object(request)
-            return process_asking_for_help(request, obj, request.path)
-        elif "question" in POST or "answer" in POST:
+        if "question" in POST or "answer" in POST:
             if "question" in POST:
                 form = PartialQuestionForm(request, self.object, data=POST)
             else:

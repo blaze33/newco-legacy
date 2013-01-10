@@ -2,7 +2,7 @@
 {% load account_tags %}
 {% load content_utils %}
 
-<div id="ask" class="modal fade hide">
+<div class="modal fade hide" id="modal-ask">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">&times;</button>
     <h3>{% trans "Ask..." %}</h3>
@@ -13,10 +13,9 @@
       {% for expert in experts %}<br><div class="row">
         <div class="span2 left"><a href="{{ expert.get_absolute_url }}" target="_blank" class="label label-success">{% user_display expert %}</a></div>
         <div class="span3 right"><form action="" method="POST">{% csrf_token %}
-          <button class="btn" type="submit" name="ask" value="{{ expert.id }}">{% trans "Ask" %}</button>
-          <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
-          <input type="hidden" name="object_name" value="{{ question|to_class_name }}"/>
-          <input type="hidden" name="id" value="{{ question.id }}"/>
+          <input class="btn" name="ask" value="{% trans 'Ask' %}" type="submit">
+          <input name="expert-id" value="{{ expert.id }}" type="hidden">
+          <input id="question-id" name="question-id" type="hidden">
         </form></div>
       </div>{% endfor %}
 {% comment %}
@@ -30,10 +29,8 @@
     #TODO: improve typeahead
     <form action="" method="POST" class="form-horizontal">{% csrf_token %}
       <input name="ask_prof_pick" type="text" autocomplete="off" placeholder="{% trans 'Pick someone' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profiles }}">
-      <input type="submit" class="btn" name="ask_design" value="{% trans 'Ask' %}"/>
-      <input type="hidden" name="app_label" value="{{ question|to_app_label }}"/>
-      <input type="hidden" name="object_name" value="{{ question|to_class_name }}"/>
-      <input type="hidden" name="id" value="{{ question.id }}"/>
+      <input class="btn" name="ask_design" value="{% trans 'Ask' %}" type="submit">
+      <input id="question-id" name="question-id" type="hidden">
     </form>
 {% endcomment %}
   </div>
