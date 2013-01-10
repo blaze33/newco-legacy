@@ -54,11 +54,12 @@
                 data: $("#form-edit-bio").serialize() + '&edit_about=edit_about',
                 success: function(data, textstatus, jqxhr) {
                     console.log(data);
-                    $('[rel=current-user-name-and-bio]').html(data.bio_to_update);
-                    if (data.bio_to_update === "") {
+                    if (data.about === "") {
+                        $('[rel=current-user-name-and-bio]').html("");
                         $('#btn-add-about').css('display','inline');
                         $('#btn-edit-about').css('display','none');
                     } else {
+                        $('[rel=current-user-name-and-bio]').html(", " + data.about);
                         $('#btn-add-about').css('display','none');
                         $('#btn-edit-about').css('display','inline');
                     }
