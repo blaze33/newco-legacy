@@ -11,10 +11,13 @@ $(function() {
 
 $(function() {
     $(document).on("click", ".btn-ask", function () {
-        var questionId, modalAsk;
+        var questionId, modalAsk, inputs;
         questionId = $(this).data("question-id");
         modalAsk = $("#modal-ask");
-        $("#question-id", modalAsk).val(questionId);
+        inputs = $("input[id^='question-id_']", modalAsk);
+        $.each(inputs, function (i, item) {
+            $(item).val(questionId);
+        });
         modalAsk.modal("show");
     });
 });

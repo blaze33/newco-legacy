@@ -15,7 +15,7 @@
         <div class="span3 right"><form action="" method="POST">{% csrf_token %}
           <input class="btn" name="ask" value="{% trans 'Ask' %}" type="submit">
           <input name="expert-id" value="{{ expert.id }}" type="hidden">
-          <input id="question-id" name="question-id" type="hidden">
+          <input id="question-id_{{ expert.id }}" name="question-id" type="hidden">
         </form></div>
       </div>{% endfor %}
 {% comment %}
