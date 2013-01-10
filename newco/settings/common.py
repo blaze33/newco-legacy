@@ -161,7 +161,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "staticfiles.context_processors.static",
 
     "account.context_processors.account",
-    "pinax_theme_bootstrap_account.context_processors.theme",
+    "pinax_theme_bootstrap.context_processors.theme",
     "utils.context_processors.settings_mp",
     "utils.context_processors.site_settings",
     "django.core.context_processors.i18n",
