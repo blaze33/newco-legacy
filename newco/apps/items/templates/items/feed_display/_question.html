@@ -21,7 +21,6 @@
   <div class="row one_row{% if content.is_draft %} well well-small{% endif %}" id="{{ content.anchor }}">
     <div class="span1 vote-controls">
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
-      {% if item %}{% edit_buttons user content delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user content %}{% endif %}
     </div>
     <div class="{% if content.is_draft %}span7{% else %}span8{% endif %}">
 
@@ -52,7 +51,7 @@
         </div>
       {% endif %}
 
-
+      {% if item %}{% edit_buttons user content delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user content %}{% endif %}
       {% if q_detail == "True" %}
         {% if content.is_draft %}<p><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% content_info content "signature" 32 %}{% endif %}
         <div class="content"><h1 class="question-content" itemprop="name">{{ content.content }}</h1></div>

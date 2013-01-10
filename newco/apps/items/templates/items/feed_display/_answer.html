@@ -30,10 +30,9 @@
   <div class="row one_row" id="{{ content.anchor }}">
     <div class="span1 vote-controls">
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
-      {% edit_buttons user content delete_next=request.path %}
     </div>
     <div class="span8 answer-content">
-      {% content_info content "header" %}
+      {% edit_buttons user content delete_next=request.path %}{% content_info content "header" %}
       <div class="content{% if disp_exp == "True" %} expander{% endif %}{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}{% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}</div>
       {% if display_q == "True" %}{# if display_q = True => it means this answer is alone, not in a list below a question #}
         <br>
