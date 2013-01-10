@@ -10,7 +10,7 @@ $(function() {
 });
 
 $(function() {
-    $(document).on("click", ".ask-btn", function () {
+    $(document).on("click", ".btn-ask", function () {
         var questionId, modalAsk;
         questionId = $(this).data("question-id");
         modalAsk = $("#modal-ask");
