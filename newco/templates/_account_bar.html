@@ -41,9 +41,9 @@
       <ul class="dropdown-menu pull-right">
         <li{% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}"><i class="icon-eye-open"></i> <b>{% trans "Dashboard" %}</b> </a></li>
         <li{% if is_me %} class="active"{% endif %}><a href="{{ user.get_absolute_url }}" ><i class="icon-user"></i> <b>{% trans "My profile" %}</b> </a></li>
-        <li><a href="{% url 'account_settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
-        {% if THEME_ACCOUNT_ADMIN_URL and request.user.is_staff %}
-        <li><a href="{% url THEME_ACCOUNT_ADMIN_URL %}"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+        <li><a href="{% url 'account_settings' %}"><i class="icon-wrench"></i> {% trans "Settings" %}</a></li>
+        {% if request.user.is_staff %}
+          <li><a href="{% url THEME_ADMIN_URL|default:'admin:index' %}"><i class="icon-cog"></i> {% trans "Admin" %}</a></li>
         {% endif %}
         <li class="divider"></li>
         <li><a href="{% url 'account_logout' %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
