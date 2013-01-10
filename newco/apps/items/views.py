@@ -327,9 +327,9 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
             profile.save()
             display_message("about", self.request)
             if about:
-                bio_to_update = user_display(request.user) + ", " + about
+                bio_to_update = ", " + about
             else:
-                bio_to_update = user_display(request.user)
+                bio_to_update = ""
             data = {"is_success": "bio update success",
                     "bio_to_update": bio_to_update}
             return HttpResponse(json.dumps(data), mimetype="application/json")

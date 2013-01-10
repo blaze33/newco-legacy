@@ -1,6 +1,7 @@
 {% load i18n %}
 
-<button type="button" class="btn btn-mini{% if not user.get_profile.about %} btn-success{% endif %}" data-toggle="modal" data-target="#modal-edit-about"><b>{% if user.get_profile.about %}{% trans "Edit your bio" %}{% else %}{% trans "Tell us about you" %}{% endif %}</b></button>
+<button type="button" class="btn btn-mini btn-success" id="btn-add-about" data-toggle="modal" data-target="#modal-edit-about"{% if user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Tell us about you" %}</b></button>
+<button type="button" class="btn btn-mini" id="btn-edit-about" data-toggle="modal" data-target="#modal-edit-about"{% if not user.get_profile.about %} style="display: none;"{% endif %}><b>{% trans "Edit your bio" %}</b></button>
 
 <div id="modal-edit-about" class="modal fade hide">
   <div class="modal-header">
