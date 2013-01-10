@@ -29,5 +29,5 @@
 {% block subtitle %}{% trans "Activity from what you follow." %}{% endblock %}
 
 {% block dashboard %}
-  {% include "items/feed_display/_content_list.html" with contents=object_list votes=votes scores=scores display="text" display_ctx="True" empty_msg=empty_msg user=user request=request csrf_token=csrf_token only %}
+  {% include "items/feed_display/_content_list.html" with contents=object_list votes=votes scores=scores display="text" display_ctx="True" display_a="no" empty_msg=empty_msg user=user request=request csrf_token=csrf_token only %}
 {% endblock %}
