@@ -19,6 +19,7 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
+        print self.__dict__
         self.object = self.get_object()
         if self.object.slug and kwargs["slug"] != self.object.slug:
             url = self.object.get_absolute_url()
@@ -71,6 +72,7 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
 class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
+    template_name = "profiles/profiles.html"
 
     def get_queryset(self):
         profiles = self.get_model_class().objects.all().prefetch_related(
