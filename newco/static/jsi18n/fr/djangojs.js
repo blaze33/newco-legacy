@@ -12,12 +12,15 @@ function pluralidx(n) {
   }
 }
 catalog['Please enter one more character'] = ['',''];
+catalog['Select one user'] = ['',''];
 catalog['You can only select one item'] = ['',''];
 catalog['Loading more results...'] = 'Chargement de plus de r\u00e9sultats...';
 catalog['No matches found'] = 'Pas de r\u00e9sultats correspondant';
 catalog['Please enter one more character'][0] = 'Tapez encore un caract\u00e8re';
 catalog['Please enter one more character'][1] = 'Tapez encore %s caract\u00e8res';
 catalog['Searching...'] = 'Recherche...';
+catalog['Select one user'][0] = 'S\u00e9lectionnez un utilisateur';
+catalog['Select one user'][1] = 'S\u00e9lectionnez jusqu\'\u00e0 %s utilisateurs';
 catalog['You can only select one item'][0] = 'Vous pouvez s\u00e9lectionner seulement un item';
 catalog['You can only select one item'][1] = 'Vous pouvez s\u00e9lectionner seulement %s items';
 catalog['e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc.'] = 'ex. : tennis, randonn\u00e9e, chaussures, m\u00e9nage, cuisine, GPS, smartphone, etc.';

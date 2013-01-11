@@ -1,3 +1,5 @@
+import re
+
 from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -18,26 +20,38 @@ class AskForHelpView(RedirectView):
         if "ask" not in request.POST:
             return super(AskForHelpView, self).post(request, *args, **kwargs)
 
-        expert_id = request.POST.get("expert-id", "")
         question_id = request.POST.get("question-id", "")
-        if not question_id or not expert_id:
+
+        profile_ids = []
+        if request.POST["ask"] == "expert":
+            profile_ids.append(int(request.POST["expert-id"]))
+        elif request.POST["ask"] == "users":
+            profile_ids.extend(
+                map(int, re.split("\D+", request.POST["profile-ids"])))
+
+        if not question_id or not profile_ids:
             # sent to logger + fails silenlty
             return HttpResponseRedirect(request.path)
 
         question = Question.objects.get(id=question_id)
 
-        receiver_profile = Profile.objects.get(id=expert_id)
-        receiver = receiver_profile.user
-        receiver_name = user_display(receiver_profile)
+        receiver_profiles = Profile.objects.filter(
+            id__in=profile_ids).select_related("user")
+        for receiver_profile in receiver_profiles:
+            receiver = receiver_profile.user
 
-        username = user_display(request.user)
+            # Not worth reloading profile instance
+            # receiver_name = user_display(receiver_profile)
+            receiver_name = receiver_profile.name
 
-        if receiver != request.user:
-            mail_helper(request, receiver, request.user, question)
-            kwargs = {"user": username, "receiver": receiver_name}
-            display_message("sent", request, **kwargs)
-        else:
-            display_message("warning", request, user=username)
+            username = user_display(request.user)
+            if receiver != request.user:
+                mail_helper(request, receiver, request.user, question)
+                kwargs = {"user": username, "receiver": receiver_name}
+                display_message("sent", request, **kwargs)
+            else:
+                display_message("warning", request, user=username)
+
         return HttpResponseRedirect(request.path)
 
 

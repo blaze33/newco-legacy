@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 16:47+0100\n"
+"POT-Creation-Date: 2013-01-11 13:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,45 +179,45 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:267 views.py:360
+#: views.py:265 views.py:357
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:268 views.py:361
+#: views.py:266 views.py:358
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:317
+#: views.py:315
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:323
+#: views.py:321
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:328
+#: views.py:326
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:406
+#: views.py:402
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:410
+#: views.py:406
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:414
+#: views.py:410
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:418
+#: views.py:414
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -230,8 +230,12 @@ msgstr ""
 msgid "...an expert:"
 msgstr ""
 
-#: templates/items/_ask_modal.html:16
+#: templates/items/_ask_modal.html:16 templates/items/_ask_modal.html.py:28
 msgid "Ask"
+msgstr ""
+
+#: templates/items/_ask_modal.html:22
+msgid "...some users you may know:"
 msgstr ""
 
 #: templates/items/_data_sheet.html:13
@@ -246,7 +250,7 @@ msgstr ""
 msgid "Delete this post"
 msgstr ""
 
-#: templates/items/_question_list.html:9 templates/items/item_detail.html:112
+#: templates/items/_question_list.html:9 templates/items/item_detail.html:115
 msgid "Ask a new question!"
 msgstr ""
 
@@ -258,7 +262,7 @@ msgstr ""
 msgid "Score"
 msgstr ""
 
-#: templates/items/answer_form.html:10 templates/items/item_detail.html:130
+#: templates/items/answer_form.html:10 templates/items/item_detail.html:133
 msgid "Answer"
 msgstr ""
 
@@ -337,7 +341,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: templates/items/item_detail.html:126
+#: templates/items/item_detail.html:129
 msgid "Close"
 msgstr ""
 
@@ -353,7 +357,6 @@ msgid "Fill in some information about"
 msgstr ""
 
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
-#: templates/items/feed_display/_link.html:7
 #: templates/items/feed_display/_question.html:8
 msgid ":"
 msgstr ""
@@ -602,19 +605,6 @@ msgstr ""
 
 #: templates/items/feed_display/_content_list.html:16
 msgid "Sorry, this feed is empty."
-msgstr ""
-
-#: templates/items/feed_display/_link.html:7
-#, python-format
-msgid "posted a <a href=\"%(url)s\">link</a>"
-msgstr ""
-
-#: templates/items/feed_display/_link.html:16
-msgid "posted a link"
-msgstr ""
-
-#: templates/items/feed_display/_link.html:21
-msgid "L:"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:8
