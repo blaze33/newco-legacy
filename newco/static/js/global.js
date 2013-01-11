@@ -143,7 +143,7 @@ $(function() {
     var labels, mapped
     $("#global_search").typeahead({
         source: function (query, process) {
-            $.get(URL_TYPEAHEAD, {q: query}, function (data) {
+            $.get(URL_REDIS, {q: query}, function (data) {
                 labels = []
                 mapped = {}
                 $.each(data, function (i, item) {
