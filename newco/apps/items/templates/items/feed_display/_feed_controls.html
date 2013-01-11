@@ -2,7 +2,6 @@
 
 {% load i18n %}
 {% load bootstrap_tags %}
-{% load content_utils %}
 {% load account_tags %}
 
 <p class="nf-small-grey">
@@ -10,7 +9,7 @@
     {% if not answer_location == "embedded" %}{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}{% endif %}
   </a>
 
-   • <a class="nf-small-grey btn-ask" {% if include_modal == "True" %}href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask"{% else %}href="{% if content|to_class_name == "question" %}{{ content.get_absolute_url }}{% else %}{{ content.question.get_absolute_url }}{% endif %}?show_ask_to_answer=True"{% endif %}>{% trans "Ask to answer" %}</a>
+   • <a class="nf-small-grey btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
 
   {% if display_a == "top" or display_a == "one" %}
     {% if content.answer_set.count > 1 %}
@@ -46,8 +45,6 @@
   </div>
 {% endif %}
 
-{% if include_modal == "True" %}
-  {% include "items/_ask_modal.html" with question=content experts=experts csrf_token=csrf_token only %} {# ToDo: ask_modal is not made to be displayed for each question => rework it to be coherent with this new structure #}
-{% endif %}
+{% include "items/_ask_modal.html" with question=content experts=experts csrf_token=csrf_token only %}
 
 {% endspaceless %}
