@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 17:16+0100\n"
-"PO-Revision-Date: 2013-01-11 17:17\n"
+"POT-Creation-Date: 2013-01-11 18:04+0100\n"
+"PO-Revision-Date: 2013-01-11 18:07\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -232,15 +232,15 @@ msgstr ""
 msgid "Ask..."
 msgstr "Demandez..."
 
-#: templates/items/_ask_modal.html:12
+#: templates/items/_ask_modal.html:13
 msgid "...an expert:"
 msgstr "...à un expert&nbsp;:"
 
-#: templates/items/_ask_modal.html:16 templates/items/_ask_modal.html.py:28
+#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:31
 msgid "Ask"
 msgstr "Demander"
 
-#: templates/items/_ask_modal.html:22
+#: templates/items/_ask_modal.html:25
 msgid "...some users you may know:"
 msgstr "...à des utilisateurs que vous connaissez&nbsp;:"
 
@@ -469,7 +469,7 @@ msgstr "Chercher des produits avec le tag"
 #: templates/items/item_list_products.html:15
 #: templates/items/item_list_questions.html:17
 msgid "Filter"
-msgstr "Filtre"
+msgstr ""
 
 #: templates/items/item_list_products.html:16
 #: templates/items/item_list_questions.html:18
@@ -640,7 +640,7 @@ msgstr "Ajouter une réponse"
 
 #: templates/items/feed_display/_feed_controls.html:12
 msgid "Ask to answer"
-msgstr "Demandez de répondre"
+msgstr "Demandez à répondre"
 
 #: templates/items/feed_display/_feed_controls.html:16
 #, python-format
@@ -692,21 +692,6 @@ msgstr "Catégorie"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"
-
-#~ msgid "posted a <a href=\"%(url)s\">link</a>"
-#~ msgstr "a posté un <a href=\"%(url)s\">lien</a>"
-
-#~ msgid "posted a link"
-#~ msgstr "a posté un lien"
-
-#~ msgid "L:"
-#~ msgstr "L&nbsp;:"
-
-#~ msgid "Question type:"
-#~ msgstr "Type de question :"
-
-#~ msgid "Follow"
-#~ msgstr "Suivre"
 
 #~ msgid "Q:"
 #~ msgstr "Q&nbsp;:"
