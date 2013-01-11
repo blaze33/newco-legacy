@@ -68,9 +68,9 @@
         <script src="{% static 'external/select2/select2.js' %}"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script>
-          var URL_TYPEAHEAD='{% url "redis" %}';
-          var URL_REDIS_TAG='{% url "redis" "tag" %}';
-          var TAG_PLACEHOLDER='{% trans "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc." %}'
+          var URL_REDIS = "{{ URL_REDIS }}";
+          var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
+          var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
           {% if launch_tutorial %}
           $(window).load(function() {
               launchJoyride();

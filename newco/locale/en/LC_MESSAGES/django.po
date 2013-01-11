@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-10 18:40+0100\n"
+"POT-Creation-Date: 2013-01-11 12:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,10 +354,6 @@ msgstr ""
 
 #: templates/site_base.html:49
 msgid "Search for a product, a user or a tag"
-msgstr ""
-
-#: templates/site_base.html:73
-msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 
 #: templates/site_base.html:91

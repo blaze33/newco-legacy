@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 17:08+0100\n"
+"POT-Creation-Date: 2013-01-11 13:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/global.js:167
+#: apps/items/static/js/content.js:26
+#, c-format
+msgid "Select one user"
+msgid_plural "Select up to %s users"
+msgstr[0] ""
+msgstr[1] ""
+
+#: static/js/global.js:170
 msgid "No matches found"
 msgstr ""
 
-#: static/js/global.js:170
+#: static/js/global.js:173
 #, c-format
 msgid "Please enter one more character"
 msgid_plural "Please enter %s more characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: static/js/global.js:175
+#: static/js/global.js:178
 #, c-format
 msgid "You can only select one item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: static/js/global.js:179
+#: static/js/global.js:183
 msgid "Loading more results..."
 msgstr ""
 
-#: static/js/global.js:181
+#: static/js/global.js:185
 msgid "Searching..."
+msgstr ""
+
+#: static/js/global.js:190
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""

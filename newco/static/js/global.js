@@ -143,7 +143,7 @@ $(function() {
     var labels, mapped
     $("#global_search").typeahead({
         source: function (query, process) {
-            $.get(URL_TYPEAHEAD, {q: query}, function (data) {
+            $.get(URL_REDIS, {q: query}, function (data) {
                 labels = []
                 mapped = {}
                 $.each(data, function (i, item) {
@@ -187,7 +187,7 @@ var select2BaseParameters = {
 
 // select2 tags default parameters
 var select2TagsParameters = $.extend({}, select2BaseParameters, {
-  placeholder: TAG_PLACEHOLDER,
+  placeholder: gettext("e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."),
   multiple:true,
   minimumInputLength: 2,
   tokenSeparators: [","],

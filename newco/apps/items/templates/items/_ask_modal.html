@@ -9,30 +9,29 @@
   </div>
   <div class="modal-body">
     {% if experts.count > 0 %}
-      <h4>{% trans "...an expert:" %}</h4>
-      {% for expert in experts %}<br><div class="row">
-        <div class="span2 left"><a href="{{ expert.get_absolute_url }}" target="_blank" class="label label-success">{% user_display expert %}</a></div>
-        <div class="span3 right"><form method="POST">{% csrf_token %}
-          <input class="btn" name="ask" value="{% trans 'Ask' %}" type="submit">
-          <input name="expert-id" value="{{ expert.id }}" type="hidden">
-          <input id="question-id_{{ expert.id }}" name="question-id" type="hidden">
-        </form></div>
-      </div>{% endfor %}
-{% comment %}
-      <h4>{% trans "...or someone you may know:" %}</h4>
-    {% else %}
-      <br>
-      <h4>{% trans "...someone you may know:" %}</h4>
-{% endcomment %}
+      {% for expert in experts %}
+        {% if forloop.first %}<h4>{% trans "...an expert:" %}</h4>{% endif %}
+        <div class="row">
+          <div class="span2 left"><a href="{{ expert.get_absolute_url }}" target="_blank" class="label label-success">{% user_display expert %}</a></div>
+          <div class="span3 right"><form method="POST">{% csrf_token %}
+            <button class="btn" name="ask" value="expert" type="submit">{% trans 'Ask' %}</button>
+            <input name="expert-id" value="{{ expert.id }}" type="hidden">
+            <input id="question-id_{{ expert.id }}" name="question-id" type="hidden">
+          </form></div>
+        </div>
+        <br>
+      {% endfor %}
     {% endif %}
-{% comment %}
-    #TODO: improve typeahead
-    <form action="" method="POST" class="form-horizontal">{% csrf_token %}
-      <input name="ask_prof_pick" type="text" autocomplete="off" placeholder="{% trans 'Pick someone' %}" class="span2" data-provide="typeahead" data-items="6" data-source="{{ data_source_profiles }}">
-      <input class="btn" name="ask_design" value="{% trans 'Ask' %}" type="submit">
-      <input id="question-id" name="question-id" type="hidden">
-    </form>
-{% endcomment %}
+    <h4>{% trans "...some users you may know:" %}</h4>
+    <div class="row"><form class="form-inline" method="POST">{% csrf_token %}
+      <div class="span3">
+        <input class="input-block-level" id="id_profiles" type="text" name="profile-ids">
+      </div>
+      <div class="span2 right">
+        <button class="btn" name="ask" value="users" type="submit">{% trans 'Ask' %}</button>
+      </div>
+      <input id="question-id_users" name="question-id" type="hidden">
+    </form></div>
   </div>
 {% comment %}
   <div class="modal-footer">

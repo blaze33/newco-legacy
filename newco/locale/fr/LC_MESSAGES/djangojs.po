@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 17:08+0100\n"
-"PO-Revision-Date: 2012-12-08 17:48\n"
+"POT-Creation-Date: 2013-01-11 13:00+0100\n"
+"PO-Revision-Date: 2013-01-11 13:02\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,28 +19,41 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: static/js/global.js:167
+#: apps/items/static/js/content.js:26
+#, c-format
+msgid "Select one user"
+msgid_plural "Select up to %s users"
+msgstr[0] "Sélectionnez un utilisateur"
+msgstr[1] "Sélectionnez jusqu'à %s utilisateurs"
+
+#: static/js/global.js:170
 msgid "No matches found"
 msgstr "Pas de résultats correspondant"
 
-#: static/js/global.js:170
+#: static/js/global.js:173
 #, c-format
 msgid "Please enter one more character"
 msgid_plural "Please enter %s more characters"
 msgstr[0] "Tapez encore un caractère"
 msgstr[1] "Tapez encore %s caractères"
 
-#: static/js/global.js:175
+#: static/js/global.js:178
 #, c-format
 msgid "You can only select one item"
 msgid_plural "You can only select %s items"
 msgstr[0] "Vous pouvez sélectionner seulement un item"
 msgstr[1] "Vous pouvez sélectionner seulement %s items"
 
-#: static/js/global.js:179
+#: static/js/global.js:183
 msgid "Loading more results..."
 msgstr "Chargement de plus de résultats..."
 
-#: static/js/global.js:181
+#: static/js/global.js:185
 msgid "Searching..."
 msgstr "Recherche..."
+
+#: static/js/global.js:190
+msgid ""
+"e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
+msgstr ""
+"ex. : tennis, randonnée, chaussures, ménage, cuisine, GPS, smartphone, etc."

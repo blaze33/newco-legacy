@@ -164,6 +164,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax_theme_bootstrap.context_processors.theme",
     "utils.context_processors.settings_mp",
     "utils.context_processors.site_settings",
+    "utils.redis.context_processors.redis_url",
     "django.core.context_processors.i18n",
 ]
 
@@ -216,6 +217,7 @@ INSTALLED_APPS = [
     "items",
     "profiles",
     "utils",
+    "utils.redis",
     "content",
 
     # Foreign apps
