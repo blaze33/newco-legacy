@@ -10,7 +10,7 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item
 from utils.follow.views import FollowMixin
-from utils.views.tutorial import TutorialMixin
+from utils.views import TutorialMixin
 
 
 class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
@@ -71,6 +71,7 @@ class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
 class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
+    template_name = "profiles/profiles.html"
 
     def get_queryset(self):
         profiles = self.get_model_class().objects.all().prefetch_related(

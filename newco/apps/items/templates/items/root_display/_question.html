@@ -45,11 +45,11 @@
   {% if display == "list" %}
     <div class="block_controls row" id="controls_answer_form_{{ question.id }}">
       <div class="span4"><button class="btn btn-small" data-toggle="collapse" data-target="#answer_form_{{ question.id }}"><i rel="icon" class="icon-share-alt"></i> <span rel="text">{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add a better answer" %}{% endif %}</span></button></div>
-      <div class="span4 right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+      <div class="span4 right"><button class="btn btn-small btn-ask" data-question-id="{{ question.id }}" data-toggle="modal" data-target="#modal-ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
     </div>
   {% elif display == "detail" %}
-      <br>
-      <div class="right"><button class="btn btn-small" data-toggle="modal" data-target="#ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
+    <br>
+    <div class="right"><button class="btn btn-small btn-ask" data-question-id="{{ question.id }}" data-toggle="modal" data-target="#modal-ask"><i class="icon-user"></i> {% trans "Ask someone to answer" %}</button></div>
   {% endif %}
 </div></div>
 
@@ -66,5 +66,3 @@
     </div>
   </form></div>
 </div></div>
-
-{% include "items/_ask_modal.html" %}

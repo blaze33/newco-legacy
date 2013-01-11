@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-02 11:43+0100\n"
+"POT-Creation-Date: 2013-01-10 17:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mailtools.py:47
+#: mailtools.py:42
 #, python-format
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:71
-#, python-format
-msgid "%(user)s, your request has been sent to %(receiver)s!"
-msgstr ""
-
-#: mailtools.py:76
-#, python-format
-msgid "%(user)s, you can't ask yourself to answer a question!"
-msgstr ""
-
-#: mailtools.py:112
+#: mailtools.py:65
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help."
 msgstr ""
 
-#: mailtools.py:139
+#: mailtools.py:92
 #, python-format
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
@@ -223,6 +213,14 @@ msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
+
+#: views/help.py:47
+msgid "{user}, your request has been sent to {receiver}!"
+msgstr ""
+
+#: views/help.py:51
+msgid "{user}, you can't ask yourself to answer a question!"
+msgstr ""
 
 #: vote/tools.py:20
 #, python-format

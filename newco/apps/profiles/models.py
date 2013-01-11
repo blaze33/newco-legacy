@@ -3,7 +3,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 from django.db import models
-from django.db.models.signals import pre_save, post_save, post_delete
+from django.db.models.signals import pre_save, post_save, pre_delete
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 
@@ -133,7 +133,7 @@ def increment_reputation(sender, instance=None, **kwargs):
         pass
 
 
-@receiver(post_delete, sender=Vote)
+@receiver(pre_delete, sender=Vote)
 def decrement_reputation(sender, instance=None, **kwargs):
     if instance is None:
         return

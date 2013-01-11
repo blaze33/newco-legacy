@@ -1,18 +1,13 @@
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 
-from django.contrib import messages
-
 from account.utils import user_display
 
-from profiles.models import Profile
 from utils.tools import unescape
 
 
@@ -61,48 +56,6 @@ def mail_question_author(request, answer):
     })
     send_mail(subject, subject_kwargs, receiver, txt_template, html_template,
               context, answerer)
-
-
-def process_asking_for_help(request, question, success_url):
-    msgs = {
-        "ask": {
-            "level": messages.INFO,
-            "text": _(
-                "%(user)s, your request has been sent to %(receiver)s!"
-            )
-        },
-        "warning": {
-            "level": messages.WARNING,
-            "text": _("%(user)s, you can't ask yourself to answer a question!")
-        },
-    }
-
-    username = user_display(request.user)
-
-    if "ask" in request.POST:
-        receiver_profile = Profile.objects.get(id=request.POST["ask"])
-        receiver = receiver_profile.user
-        receiver_name = user_display(receiver_profile)
-
-    #TODO: improve typeahead
-#    elif "ask_prof_pick" in request.POST:
-#        ask_profile_search = request.POST["ask_prof_pick"]
-#        profile_list = Profile.objects.filter(name=ask_profile_search)
-#        if profile_list.count() > 0:
-#            profile = profile_list[0]
-#        else:
-#            pass
-
-        if receiver != request.user:
-            mail_helper(request, receiver, request.user, question)
-            kwargs = {"user": username, "receiver": receiver_name}
-            messages.add_message(request, msgs["ask"]["level"], mark_safe(
-                msgs["ask"]["text"] % kwargs))
-        else:
-            messages.add_message(request, msgs["warning"]["level"], mark_safe(
-                msgs["warning"]["text"] % {"user": username}))
-
-    return HttpResponseRedirect(success_url)
 
 
 def mail_helper(request, receiver, requester, question):

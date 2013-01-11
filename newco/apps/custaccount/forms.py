@@ -6,12 +6,11 @@ from account.forms import SignupForm
 
 class SignupForm(SignupForm):
 
-    profile_name = CharField(label=_("Profile name"), max_length=30,
-        help_text=_(
-                "30 characters tops. Can be whatever you want. "
-                "And can be modified."
-        ),
-        error_messages={'max_length': _("No more than 30 characters.")}
+    profile_name = CharField(
+        label=_("Profile name"), max_length=30, help_text=_(
+            "30 characters tops. Can be whatever you want. "
+            "And can be modified."),
+        error_messages={"max_length": _("No more than 30 characters.")}
     )
 
     class Meta:
@@ -20,6 +19,5 @@ class SignupForm(SignupForm):
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         del self.fields["username"]
-        self.fields.keyOrder = [
-            'email', 'password', 'password_confirm', 'profile_name',
-        ]
+        self.fields.keyOrder = ["email", "password", "password_confirm",
+                                "profile_name"]

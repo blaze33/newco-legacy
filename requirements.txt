@@ -38,8 +38,7 @@ python-amazon-product-api==0.2.5
 lxml==3.0.1
 
 ## pinax-theme-bootstrap
-pinax-theme-bootstrap==2.2.2
-pinax-theme-bootstrap-account==1.0b2
+pinax-theme-bootstrap==3.0a2
 
 ## schema and data migrations
 South==0.7.6
@@ -74,7 +73,7 @@ newrelic==1.6.0.13
 raven==2.0.7.1
 
 ## utils
-requests==0.14.2
+requests==1.0.4
 django-htmlmin==0.5.2
 
 ## tagging

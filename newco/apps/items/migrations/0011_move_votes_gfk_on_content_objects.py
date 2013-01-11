@@ -16,11 +16,6 @@ class Migration(DataMigration):
                 except IntegrityError:
                     vote.delete()
 
-        user1 = orm["auth.User"].objects.get(id=6)
-        for obj in orm["items.Content"].objects.all():
-            if orm["voting.Vote"].objects.filter(content_type=content_ctype, object_id=obj.id).count() == 0:
-                 orm["voting.Vote"].objects.create(user=user1, content_type=content_ctype, object_id=obj.id, vote=0)
-
     def backwards(self, orm):
         content_ctype = orm["contenttypes.contenttype"].objects.get(app_label="items", model="content")
         for vote in orm['voting.Vote'].objects.all():

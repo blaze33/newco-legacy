@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-18 17:51+0200\n"
+"POT-Creation-Date: 2013-01-04 19:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: forms.py:9
+#: forms.py:10
 msgid "Profile name"
 msgstr "Nom de profil"
 
@@ -26,6 +26,6 @@ msgstr "Nom de profil"
 msgid "30 characters tops. Can be whatever you want. And can be modified."
 msgstr "30 caractères maximum. Soyez créatifs. Vous pourrez toujours changer."
 
-#: forms.py:14
+#: forms.py:13
 msgid "No more than 30 characters."
 msgstr "Pas plus de 30 caractères."

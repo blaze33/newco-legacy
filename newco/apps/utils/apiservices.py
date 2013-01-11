@@ -21,7 +21,7 @@ def search_images(query):
 
 def flatten(r):
     flat = []
-    for i in r.json.get("items", []):
+    for i in r.json().get("items", []):
         i.update(i.pop('image'))
         flat.append(i)
     return flat

@@ -23,7 +23,7 @@
         <dd>{{ profile.user.date_joined }}</dd>
       {% endif %}
       {% if reputation %}
-        <dt><a class="black" href="{% url 'faq' %}#reputation">{% trans "Reputation" %}</a></dt>
+        <dt><a class="black" href="{% url 'faq' %}#reputation" target="_blank">{% trans "Reputation" %}</a></dt>
         <dd>{{ reputation.reputation_incremented }}</dd>
       {% endif %}
       {% if profile.skills.count > 0 %}
@@ -52,7 +52,7 @@
 {% elif display == "popover" %}
   <dl class='dl-horizontal'>
     {% if profile.reputation %}
-      <dt><a class='black' href='{% url "faq" %}#reputation'>{% trans 'Reputation' %}</a></dt>
+      <dt><a class='black' href='{% url "faq" %}#reputation' target='_blank'>{% trans 'Reputation' %}</a></dt>
       <dd>{{ profile.reputation.reputation_incremented }}</dd>
     {% endif %}
     {% if skills %}

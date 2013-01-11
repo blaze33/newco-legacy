@@ -87,6 +87,9 @@
     <a class="modal-download" target="_blank">{% trans "Source:" %} <span>{% trans "Download" %}</span></a>
   </div>
 </div>
+
+{% include "items/_ask_modal.html" with experts=experts %}
+
 {% endblock %}
 
 {% block extra_script %}
