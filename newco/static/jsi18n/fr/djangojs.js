@@ -20,6 +20,7 @@ catalog['Please enter one more character'][1] = 'Tapez encore %s caract\u00e8res
 catalog['Searching...'] = 'Recherche...';
 catalog['You can only select one item'][0] = 'Vous pouvez s\u00e9lectionner seulement un item';
 catalog['You can only select one item'][1] = 'Vous pouvez s\u00e9lectionner seulement %s items';
+catalog['e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc.'] = 'ex.\\xA0: tennis, randonn\u00e9e, chaussures, m\u00e9nage, cuisine, GPS, smartphone, etc.';
 
 
 function gettext(msgid) {
