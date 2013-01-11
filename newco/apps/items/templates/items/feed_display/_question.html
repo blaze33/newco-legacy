@@ -91,7 +91,8 @@
       <div class="span8 offset1">
         {% if q_detail == "True" %}
           <br>
-          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" display_a=display_a content=content user=user statuses=statuses experts=experts include_modal="True" empty=empty csrf_token=csrf_token only %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" display_a=display_a content=content user=user statuses=statuses empty=empty csrf_token=csrf_token only %}
+          {% include "items/_ask_modal.html" with experts=experts csrf_token=csrf_token only %}
         {% else %}
           {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" display_a=display_a content=content user=user empty=empty csrf_token=csrf_token only %}
         {% endif %}

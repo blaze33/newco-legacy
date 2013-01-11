@@ -45,7 +45,7 @@
     {% if content|to_class_name == "question" %}
       {% include content|feed_template with content=content display=display display_img=display_img display_a=display_a disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
     {% elif content|to_class_name == "answer" %}
-      {% include "items/feed_display/_question.html" with content=content.question answer=content  display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+      {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
     {% endif %}
 
   </div></div>
@@ -56,3 +56,5 @@
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}
 {% endfor %}
+
+{% include "items/_ask_modal.html" with experts=experts csrf_token=csrf_token only %}

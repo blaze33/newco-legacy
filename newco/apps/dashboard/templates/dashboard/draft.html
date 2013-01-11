@@ -5,5 +5,5 @@
 {% block subtitle %}{% trans "Keep here your drafts: contributions you don't want to publish (yet)." %}{% endblock %}
 
 {% block dashboard %}
-  {% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" display_img="True" empty_msg=empty_msg %}
+  {% include "items/feed_display/_content_list.html" with contents=object_list scores=scores display="text" display_img="True" empty_msg=empty_msg experts=experts %}
 {% endblock %}
