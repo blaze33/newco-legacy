@@ -6,7 +6,7 @@
 
 {% block subnav %}
   {{ block.super }}
-
+  {% comment %} {# Seb: commented for now since these wells are in a span2 (subnav), but larger than that => display problems. Maybe re-display these once size of columns is standardized (=> span3) ?  #}
   <br>
   <br>
   <br>
@@ -23,7 +23,7 @@
       <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
       <div>{% for item in wtf.items %}{% include "items/feed_display/_thumbnail_frame.html" with object=item disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}</div>
     </div>
-  </div>
+  </div>{% endcomment %}
 {% endblock %}
 
 {% block subtitle %}{% trans "Activity from what you follow." %}{% endblock %}
