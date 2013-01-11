@@ -2,91 +2,91 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-30 19:28+0100\n"
-"PO-Revision-Date: 2012-11-30 19:21\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2013-01-11 17:11+0100\n"
+"PO-Revision-Date: 2013-01-11 17:13\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: views.py:17 templates/dashboard/_subnav.html:10
+#: views.py:18 templates/dashboard/_subnav.html:11
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: views.py:18
+#: views.py:19
 msgid "Feed"
 msgstr "Flux"
 
-#: views.py:19 views.py:39 templates/dashboard/_subnav.html:17
+#: views.py:20 views.py:43 templates/dashboard/_subnav.html:18
 msgid "Contribution center"
 msgstr "Centre de contributions"
 
-#: views.py:20
+#: views.py:21
 msgid "Teamwork"
 msgstr "Travail en équipe"
 
-#: views.py:21 views.py:47 templates/dashboard/_subnav.html:19
+#: views.py:22 views.py:51 templates/dashboard/_subnav.html:20
 msgid "Drafts"
 msgstr "Brouillons"
 
-#: views.py:22 views.py:55 templates/dashboard/_subnav.html:22
+#: views.py:23 views.py:59 templates/dashboard/_subnav.html:23
 msgid "All my contributions"
 msgstr "Toutes mes contributions"
 
-#: views.py:23
+#: views.py:24
 msgid "Shopping notes"
 msgstr "Notes de shopping"
 
-#: views.py:24
+#: views.py:25
 msgid "Purchase history"
 msgstr "Historique d'achat"
 
-#: views.py:29 templates/dashboard/_subnav.html:13
+#: views.py:30 templates/dashboard/_subnav.html:14
 msgid "My newsfeed"
 msgstr "Mon flux"
 
-#: views.py:30
+#: views.py:31
 msgid "Mini feed from what you follow"
 msgstr "Mini feed de ce que vous suivez"
 
-#: views.py:33
+#: views.py:34
 msgid ""
 "You don't follow anything nor anyone yet. Find people or products to follow "
-"on your right, or navigating NewCo!"
+"navigating NewCo!"
 msgstr ""
-"Vous ne suivez rien ni personne pour le moment. Consultez les profils et les "
-"produits à suivre sur votre droite, ou baladez-vous&#x202F;!"
+"Vous ne suivez rien ni personne pour le moment. Consultez les profils et les"
+" produits à suivre en navigant sur NewCo&#x202F;!"
 
-#: views.py:40
+#: views.py:44
 msgid ""
 "Latest activity on your skills tags. Maybe you would like to contribute?"
 msgstr ""
 "Dernière activité sur vos tags de compétences. Peut-être voulez-vous "
 "contribuer&#x202F;?"
 
-#: views.py:48
+#: views.py:52
 msgid "Complete and publish some?"
 msgstr "Pourquoi ne pas terminer et publier certaines contributions&#x202F;?"
 
-#: views.py:51
+#: views.py:55
 msgid "You don't have any drafts."
 msgstr "Vous n'avez pas de brouillons."
 
-#: views.py:56
+#: views.py:60
 msgid "Your latest contributions"
 msgstr "Vos dernières contributions"
 
-#: views.py:76
+#: views.py:81
 #, python-format
 msgid ""
 "We don't know what to advice you to contribute on, we would need to know "
@@ -97,63 +97,62 @@ msgstr ""
 "savoir plus sur vous. Peut être vous pourriez <a href='%(url_ed)s'>ajouter "
 "des compétences</a> à votre profil&#x202F;?"
 
-#: views.py:82
+#: views.py:87
 #, python-format
 msgid ""
-"You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How "
-"to contribute</a> page?"
+"You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How"
+" to contribute</a> page?"
 msgstr ""
 "Vous n'avez pas contribué pour le moment. Avez-vous visité la page <a "
 "href='%(url_cont)s'>Comment contribuer</a>&#x202F;?"
 
-#: templates/dashboard/_subnav.html:10
+#: templates/dashboard/_subnav.html:11
 msgid "Monitor all that&#39;s related to you"
 msgstr "Gardez un œil sur tout ce qui vous concerne"
 
-#: templates/dashboard/_subnav.html:13
+#: templates/dashboard/_subnav.html:14
 msgid "Activity feed based on what you follow"
 msgstr "Flux d'activité basé sur ce que vous suivez"
 
-#: templates/dashboard/_subnav.html:16
+#: templates/dashboard/_subnav.html:17
 msgid "Contributing"
 msgstr "Contribuer"
 
-#: templates/dashboard/_subnav.html:17
+#: templates/dashboard/_subnav.html:18
 msgid "If you want to use your time and knowledge wisely, this is the place!"
 msgstr ""
 "Si vous voulez utiliser votre temps et vos connaissances intelligemment, "
 "cliquez ici&#x202F;!"
 
-#: templates/dashboard/_subnav.html:19
+#: templates/dashboard/_subnav.html:20
 msgid "&lsquo;Drafts&rsquo; contains your unpublished contributions"
 msgstr "&lsquo;Brouillons&rsquo; contient vos contributions non-publiées"
 
-#: templates/dashboard/_subnav.html:22
+#: templates/dashboard/_subnav.html:23
 msgid "This is where to go to find all your inputs"
 msgstr "Vous trouverez ici toutes vos contributions"
 
-#: templates/dashboard/_subnav.html:37
+#: templates/dashboard/_subnav.html:39
 msgid "Profiles"
 msgstr "Profils"
 
-#: templates/dashboard/_subnav.html:39
+#: templates/dashboard/_subnav.html:42
 msgid ""
-"My profile, exactly as other users see it&mdash;besides the &lsquo;"
-"Update&rsquo; button"
+"My profile, exactly as other users see it&mdash;besides the "
+"&lsquo;Update&rsquo; button"
 msgstr ""
 "Mon profil, tel que les autres utilisateurs le voient &mdash;&nbsp;à "
 "l'exception du bouton &lsquo;Mettre à jour&rsquo;"
 
-#: templates/dashboard/_subnav.html:41
+#: templates/dashboard/_subnav.html:45
 msgid "User profile"
 msgstr "Profil utilisateur"
 
-#: templates/dashboard/_subnav.html:41
-#: templates/dashboard/contribution.html:11 templates/dashboard/feed.html:22
+#: templates/dashboard/_subnav.html:45 templates/dashboard/contribution.html:9
 msgid ":"
 msgstr "&nbsp;:"
 
-#: templates/dashboard/_subnav.html:46
+#: templates/dashboard/_subnav.html:50
 msgid "All Profiles"
 msgstr "Tous les profils"
 
@@ -161,8 +160,8 @@ msgstr "Tous les profils"
 msgid ""
 "Looking for one of your contributions? Here are the tools to help you find!"
 msgstr ""
-"Vous cherchez une de vos contributions&#x202F;? Ici on vous donne les outils "
-"pour vous aider à la trouver&#x202F;!"
+"Vous cherchez une de vos contributions&#x202F;? Ici on vous donne les outils"
+" pour vous aider à la trouver&#x202F;!"
 
 #: templates/dashboard/all.html:11
 msgid "Search in all my contributions - Not functional yet"
@@ -175,20 +174,20 @@ msgstr "Tableau de bord de %(username)s | %(page_name)s"
 
 #: templates/dashboard/contribution.html:5
 msgid ""
-"Here is where we provide you with all the <a data-toggle=\"modal\" href="
-"\"#feedbackModal\" class=\"tooltip-bottom\" title=\"We'd love to read your "
-"ideas, send us an email!\">tools</a> we have to help you contribute."
+"Here is where we provide you with all the <a data-toggle=\"modal\" "
+"href=\"#feedbackModal\" class=\"tooltip-bottom\" title=\"We'd love to read "
+"your ideas, send us an email!\">tools</a> we have to help you contribute."
 msgstr ""
-"Ici, nous vous donnons tous les <a data-toggle=\"modal\" href="
-"\"#feedbackModal\" rel=\"tooltip-bottom\" title=\"Vous avez des idées, "
+"Ici, nous vous donnons tous les <a data-toggle=\"modal\" "
+"href=\"#feedbackModal\" rel=\"tooltip-bottom\" title=\"Vous avez des idées, "
 "envoyez-nous un email !\">outils</a> que nous avons pour vous aider à "
 "contribuer."
 
-#: templates/dashboard/contribution.html:11
+#: templates/dashboard/contribution.html:9
 msgid "Activity on your domains of skills"
 msgstr "Activité sur vos domaines de compétences"
 
-#: templates/dashboard/contribution.html:12
+#: templates/dashboard/contribution.html:11
 msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 "Dernière activité sur vos tags de compétences... Vous voulez peut être "
@@ -200,21 +199,9 @@ msgstr ""
 "Gardez ici vos brouillons : contributions que vous ne voulez pas (encore) "
 "publier."
 
-#: templates/dashboard/feed.html:7
+#: templates/dashboard/feed.html:30
 msgid "Activity from what you follow."
 msgstr "Activité de ce que vous suivez."
-
-#: templates/dashboard/feed.html:16
-msgid "Who to follow?"
-msgstr "Qui suivre&#x202F;?"
-
-#: templates/dashboard/feed.html:16
-msgid "View all"
-msgstr "Voir tous"
-
-#: templates/dashboard/feed.html:22
-msgid "Products you may like"
-msgstr "Les produits que vous pourriez aimer"
 
 #: templates/dashboard/home.html:6
 msgid ""
@@ -227,9 +214,9 @@ msgstr ""
 #: templates/dashboard/home.html:20
 #, python-format
 msgid ""
-" More tools to come very soon on the dashboard! If you have some ideas about "
-"how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait "
-"to read them!"
+" More tools to come very soon on the dashboard! If you have some ideas about"
+" how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait"
+" to read them!"
 msgstr ""
 "Très bientôt plus d'outils sur le tableau de bord&#x202F;! Si vous avez des "
 "idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
@@ -239,6 +226,15 @@ msgstr ""
 msgid "Search in all my purchases"
 msgstr "Chercher dans tous mes achats"
 
+#~ msgid "Who to follow?"
+#~ msgstr "Qui suivre&#x202F;?"
+
+#~ msgid "View all"
+#~ msgstr "Voir tous"
+
+#~ msgid "Products you may like"
+#~ msgstr "Les produits que vous pourriez aimer"
+
 #~ msgid "Grrrr... Don't bother me, I'm working on it"
 #~ msgstr "Grrrr... Ne me dérangez pas, j'y travaille"
 
@@ -246,11 +242,11 @@ msgstr "Chercher dans tous mes achats"
 #~ msgstr "Shopping"
 
 #~ msgid ""
-#~ "It&lsquo;s still baking. We know you&lsquo;re hungry, and we do too, "
-#~ "please be patient ;)"
+#~ "It&lsquo;s still baking. We know you&lsquo;re hungry, and we do too, please "
+#~ "be patient ;)"
 #~ msgstr ""
-#~ "&Ccedil;a cuit encore. On sait que vous avez faim, mais nous aussi, un "
-#~ "peu de patience ;)"
+#~ "&Ccedil;a cuit encore. On sait que vous avez faim, mais nous aussi, un peu "
+#~ "de patience ;)"
 
 #~ msgid "We are working on it!"
 #~ msgstr "On y travaille&#x202F;!"

@@ -32,8 +32,11 @@ BOXES = {
         "name": "feed",
         "mini_feed": "True",
         "empty_msg": mark_safe(_("You don't follow anything nor anyone yet. "
-                                 "Find people or products to follow on your "
-                                 "right, or navigating NewCo!")),
+                                 ## Version to be restored when we display "who to follow" again
+                                 # "Find people or products to follow on your "
+                                 # "right, or navigating NewCo!")),
+                                "Find people or products to follow "
+                                "navigating NewCo!")),
         "page_url": reverse_lazy("dash", args=["feed"]),
     },
     "contribution": {
