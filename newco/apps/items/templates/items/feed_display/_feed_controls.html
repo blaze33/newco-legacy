@@ -6,7 +6,7 @@
 {% load account_tags %}
 
 <p class="nf-small-grey">
-  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}"{% else %}href="{{ content.get_absolute_url }}"{% endif %}>
+  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}"{% else %}href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}"{% endif %}>
     {% if not answer_location == "embedded" %}{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}{% endif %}
   </a>
 

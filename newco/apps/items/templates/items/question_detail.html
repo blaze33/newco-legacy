@@ -44,6 +44,20 @@
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
 
+
+    {% if request.GET.focus_editor %}
+      $(document).ready(function(){
+          // .focus is triggered two times:
+          // _ when $(document).ready: if $(document).ready after edito.on("load")
+          // _ when edito.on("load"): if $(document).ready before edito.on("load")
+          editor.focus();
+          editor.on("load", function() {
+              editor.focus();
+          });
+      });
+    {% endif %}
+
+
     // script for "Edit your bio"
     $(function() {
         $("#submit-edit-about").click(function(event) {
