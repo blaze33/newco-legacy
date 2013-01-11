@@ -216,6 +216,7 @@ INSTALLED_APPS = [
     "items",
     "profiles",
     "utils",
+    "utils.redis",
     "content",
 
     # Foreign apps
