@@ -34,6 +34,7 @@ class AskForHelpView(RedirectView):
             return HttpResponseRedirect(request.path)
 
         question = Question.objects.get(id=question_id)
+        username = user_display(request.user)
 
         receiver_profiles = Profile.objects.filter(
             id__in=profile_ids).select_related("user")
@@ -44,7 +45,6 @@ class AskForHelpView(RedirectView):
             # receiver_name = user_display(receiver_profile)
             receiver_name = receiver_profile.name
 
-            username = user_display(request.user)
             if receiver != request.user:
                 mail_helper(request, receiver, request.user, question)
                 kwargs = {"user": username, "receiver": receiver_name}
