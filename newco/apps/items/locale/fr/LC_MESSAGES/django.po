@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 13:11+0100\n"
-"PO-Revision-Date: 2013-01-11 13:18\n"
+"POT-Creation-Date: 2013-01-14 15:10+0100\n"
+"PO-Revision-Date: 2013-01-14 15:11\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -236,17 +236,26 @@ msgstr ""
 msgid "Ask..."
 msgstr "Demandez..."
 
-#: templates/items/_ask_modal.html:12
+#: templates/items/_ask_modal.html:13
 msgid "...an expert:"
 msgstr "...à un expert&nbsp;:"
 
-#: templates/items/_ask_modal.html:16 templates/items/_ask_modal.html.py:28
+#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:28
+#: templates/items/_ask_modal.html:35
 msgid "Ask"
 msgstr "Demander"
 
-#: templates/items/_ask_modal.html:22
+#: templates/items/_ask_modal.html:25
 msgid "...some users you may know:"
 msgstr "...à des utilisateurs que vous connaissez&nbsp;:"
+
+#: templates/items/_ask_modal.html:32
+msgid "...a non-member:"
+msgstr "...à une personne extérieure&nbsp;:"
+
+#: templates/items/_ask_modal.html:34
+msgid "Email address"
+msgstr "Adresse e-mail"
 
 #: templates/items/_data_sheet.html:13
 msgid "Maybe they can help you?"
@@ -678,6 +687,9 @@ msgstr "Demandez à quelqu'un de répondre"
 #: templates/items/root_display/_question.html:63
 msgid "Answer and publish"
 msgstr "Répondre et publier"
+
+#~ msgid "Email"
+#~ msgstr "Adresse e-mail"
 
 #~ msgid "posted a <a href=\"%(url)s\">link</a>"
 #~ msgstr "a posté un <a href=\"%(url)s\">lien</a>"

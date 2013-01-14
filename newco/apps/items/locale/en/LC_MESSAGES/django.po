@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 13:11+0100\n"
+"POT-Creation-Date: 2013-01-14 15:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,16 +226,25 @@ msgstr ""
 msgid "Ask..."
 msgstr ""
 
-#: templates/items/_ask_modal.html:12
+#: templates/items/_ask_modal.html:13
 msgid "...an expert:"
 msgstr ""
 
-#: templates/items/_ask_modal.html:16 templates/items/_ask_modal.html.py:28
+#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:28
+#: templates/items/_ask_modal.html:35
 msgid "Ask"
 msgstr ""
 
-#: templates/items/_ask_modal.html:22
+#: templates/items/_ask_modal.html:25
 msgid "...some users you may know:"
+msgstr ""
+
+#: templates/items/_ask_modal.html:32
+msgid "...a non-member:"
+msgstr ""
+
+#: templates/items/_ask_modal.html:34
+msgid "Email address"
 msgstr ""
 
 #: templates/items/_data_sheet.html:13

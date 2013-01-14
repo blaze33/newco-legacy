@@ -28,11 +28,13 @@
       <button class="btn right" name="ask" value="users" type="submit">{% trans 'Ask' %}</button>
       <input id="question-id_users" name="question-id" type="hidden">
     </form>
+    <br>
+    <h4>{% trans "...a non-member:" %}</h4>
+    <form class="form-inline" method="POST">{% csrf_token %}
+      <input class="input-xlarge" id="id_email" name="email" type="email" placeholder="{% trans 'Email address' %}" required>
+      <button class="btn right" name="ask" value="email" type="submit">{% trans 'Ask' %}</button>
+      <input id="question-id_email" name="question-id" type="hidden">
+    </form>
+    <br><br>
   </div>
-{% comment %}
-  <div class="modal-footer">
-    You could also push your question in Homepage for 50 points :
-    <button class="btn btn-primary" type="submit">Push!</button>
-  </div>
-{% endcomment %}
 </div>
