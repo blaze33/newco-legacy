@@ -29,13 +29,6 @@
 
 }
 
-/* To delete after new newsfeed has replaced "old" => replaced by nf-small */
-.q_add_answer {
-  font-size: 11px;
-  opacity: 0.5;
-}
-/* End of To delete after new newsfeed has replaced "old" => replaced by nf-small */
-
 @media (min-width: 768px) {
 .category-button {
   height:50px;
