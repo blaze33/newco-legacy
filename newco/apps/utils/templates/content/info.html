@@ -15,7 +15,7 @@
   </div>{% endif %}
 </div>
 {% elif header %}
-{% comment %}<div class="right nf-small-grey" itemprop="dateModified" title="{{ pub_date }}"><small>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></div>{% endcomment %}
+{% comment %}<div class="right nf-small muted" itemprop="dateModified" title="{{ pub_date }}"><small>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></div>{% endcomment %}
 <div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
   <b>{% object_display content.author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
 </div>

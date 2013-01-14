@@ -461,11 +461,15 @@ img:hover + .img-controls,
   line-height: 140%;
 }
 
-.nf-small-grey, .nf-small-grey > a:not(.label) {
+.nf-small {
   font-size: 13px;
-  color: #999;
-  /*opacity: 0.5;*/
 }
+
+/* quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
+.muted > a:not(.label) {
+  color: #999;
+}
+/* End of quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
 
 .vote-controls {
   font-size: 180%;

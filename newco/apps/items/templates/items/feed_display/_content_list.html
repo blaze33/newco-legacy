@@ -32,7 +32,7 @@
 
     {% if display_ctx == "True" %}
       <div class="row"><div class="span9">
-        <p class="nf-small-grey">
+        <p class="nf-small muted">
           {% if content|to_class_name == "question" %}
             {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}
           {% elif content|to_class_name == "answer" %}
