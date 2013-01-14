@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import RedirectView
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from account.models import Account
@@ -23,6 +24,7 @@ def void():
 
 class AskForHelpView(RedirectView):
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         if "ask" not in request.POST:
             return super(AskForHelpView, self).post(request, *args, **kwargs)
