@@ -23,15 +23,11 @@
       {% endfor %}
     {% endif %}
     <h4>{% trans "...some users you may know:" %}</h4>
-    <div class="row"><form class="form-inline" method="POST">{% csrf_token %}
-      <div class="span3">
-        <input class="input-block-level" id="id_profiles" type="text" name="profile-ids">
-      </div>
-      <div class="span2 right">
-        <button class="btn" name="ask" value="users" type="submit">{% trans 'Ask' %}</button>
-      </div>
+    <form class="form-inline" method="POST">{% csrf_token %}
+      <input class="input-xlarge" id="id_profiles" type="text" name="profile-ids">
+      <button class="btn right" name="ask" value="users" type="submit">{% trans 'Ask' %}</button>
       <input id="question-id_users" name="question-id" type="hidden">
-    </form></div>
+    </form>
   </div>
 {% comment %}
   <div class="modal-footer">
