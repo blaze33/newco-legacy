@@ -10,7 +10,7 @@
 
 
 @media (min-width: 768px) and (max-width: 979px) {
-  .reduced-margin-navbar{
+  .navbar-fixed-top{
     margin-bottom: 0px;
   }
 }
