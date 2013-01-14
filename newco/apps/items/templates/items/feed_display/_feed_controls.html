@@ -5,21 +5,19 @@
 {% load account_tags %}
 
 <p class="nf-small muted">
-  <a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#answer_form_{{ content.id }}"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}"{% else %}href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}"{% endif %}>
-    {% if not answer_location == "embedded" %}{% if empty %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}{% endif %}
-  </a>
-
-  {% if not answer_location == "embedded" %} • {% endif %}<a class="btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
-
   {% if not display_a == "all" %}
-    {% if content.answer_set.count > 1 %}
-       • <a href="{{ content.get_absolute_url }}">{% blocktrans with nb_ans=content.answer_set.count %}View all answers ({{ nb_ans }}){% endblocktrans %}</a>
-    {% elif content.answer_set.count == 1 %}
-       • {% trans "This is the only answer" %}
-    {% elif content.answer_set.count == 0 %}
-       • {% trans "There is no answer yet" %}
-    {% endif %}
+    {% blocktrans count nb_ans=content.answer_set.count %}
+      {{ nb_ans }} answer
+      {% plural %}
+      {{ nb_ans }} answers
+    {% endblocktrans %}{% trans ":" %}
+    <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">
+      {% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}
+    </a>
+     • 
   {% endif %}
+
+  <a class="btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
 </p>
 
 {% if answer_location == "embedded" %}

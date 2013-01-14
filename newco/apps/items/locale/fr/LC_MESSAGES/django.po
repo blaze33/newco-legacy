@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 18:04+0100\n"
-"PO-Revision-Date: 2013-01-11 18:07\n"
+"POT-Creation-Date: 2013-01-14 14:43+0100\n"
+"PO-Revision-Date: 2013-01-14 14:45\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +278,7 @@ msgstr "Dépublier et sauvegarder dans les brouillons"
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/feed_display/_feed_controls.html:43
+#: templates/items/feed_display/_feed_controls.html:44
 msgid "Save as draft"
 msgstr "Sauvegarder dans les brouillons"
 
@@ -351,8 +351,9 @@ msgid "Fill in some information about"
 msgstr "Remplissez des informations sur"
 
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
-#: templates/items/feed_display/_content_list.html:36
-#: templates/items/feed_display/_content_list.html:38
+#: templates/items/feed_display/_content_list.html:37
+#: templates/items/feed_display/_content_list.html:39
+#: templates/items/feed_display/_feed_controls.html:13
 #: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr "&nbsp;:"
@@ -469,7 +470,7 @@ msgstr "Chercher des produits avec le tag"
 #: templates/items/item_list_products.html:15
 #: templates/items/item_list_questions.html:17
 msgid "Filter"
-msgstr ""
+msgstr "Filtrer"
 
 #: templates/items/item_list_products.html:16
 #: templates/items/item_list_questions.html:18
@@ -610,7 +611,7 @@ msgstr "a <a href=\"%(url)s\">répondu</a> à une question"
 
 #: templates/items/feed_display/_content_list.html:9
 msgid "Ask a new question!"
-msgstr "Poser une nouvelle question&#x202F;!"
+msgstr "Posez une nouvelle question&#x202F;!"
 
 #: templates/items/feed_display/_content_list.html:12
 msgid "No question yet! Ask the first one here!"
@@ -618,48 +619,52 @@ msgstr ""
 "Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
 "une&#x202F;!"
 
-#: templates/items/feed_display/_content_list.html:36
+#: templates/items/feed_display/_content_list.html:37
 msgid "asked a question"
 msgstr "a posé une question"
 
-#: templates/items/feed_display/_content_list.html:38
+#: templates/items/feed_display/_content_list.html:39
 msgid "answered a question"
 msgstr "a répondu à une question"
 
-#: templates/items/feed_display/_content_list.html:56
+#: templates/items/feed_display/_content_list.html:58
 msgid "Sorry, this feed is empty."
 msgstr "Désolé, ce flux est vide."
 
 #: templates/items/feed_display/_feed_controls.html:9
+#, python-format
+msgid ""
+"\n"
+"      %(nb_ans)s answer\n"
+"      "
+msgid_plural ""
+"\n"
+"      %(nb_ans)s answers\n"
+"    "
+msgstr[0] ""
+"\n"
+"%(nb_ans)s réponse"
+msgstr[1] ""
+"\n"
+"%(nb_ans)s réponses"
+
+#: templates/items/feed_display/_feed_controls.html:18
 msgid "Answer this question"
-msgstr "Répondre à cette question"
+msgstr "Répondez à cette question"
 
-#: templates/items/feed_display/_feed_controls.html:9
+#: templates/items/feed_display/_feed_controls.html:18
 msgid "Add an answer"
-msgstr "Ajouter une réponse"
+msgstr "Ajoutez une réponse"
 
-#: templates/items/feed_display/_feed_controls.html:12
+#: templates/items/feed_display/_feed_controls.html:23
 msgid "Ask to answer"
 msgstr "Demandez à répondre"
 
-#: templates/items/feed_display/_feed_controls.html:16
-#, python-format
-msgid "View all answers (%(nb_ans)s)"
-msgstr "Voir toutes les réponses (%(nb_ans)s)"
-
-#: templates/items/feed_display/_feed_controls.html:18
-msgid "This is the only answer"
-msgstr "C'est la seule réponse"
-
-#: templates/items/feed_display/_feed_controls.html:20
-msgid "There is no answer yet"
-msgstr "Il n'y a pas encore de réponse"
-
-#: templates/items/feed_display/_feed_controls.html:36
+#: templates/items/feed_display/_feed_controls.html:37
 msgid "Please login before answering."
 msgstr "Connectez-vous avant de répondre."
 
-#: templates/items/feed_display/_feed_controls.html:42
+#: templates/items/feed_display/_feed_controls.html:43
 msgid "Answer and publish"
 msgstr "Répondre et publier"
 
@@ -689,6 +694,18 @@ msgstr "Ajouter une réponse"
 #: templates/items/feed_display/_question_1.html:20
 msgid "Category"
 msgstr "Catégorie"
+
+#~ msgid "%(nb_ans)s answers"
+#~ msgstr "%(nb_ans)s réponses"
+
+#~ msgid "View all answers (%(nb_ans)s)"
+#~ msgstr "Voir toutes les réponses (%(nb_ans)s)"
+
+#~ msgid "This is the only answer"
+#~ msgstr "C'est la seule réponse"
+
+#~ msgid "There is no answer yet"
+#~ msgstr "Il n'y a pas encore de réponse"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"
