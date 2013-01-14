@@ -1,6 +1,7 @@
 import re
 
 from django.http import HttpResponseRedirect
+from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import RedirectView
