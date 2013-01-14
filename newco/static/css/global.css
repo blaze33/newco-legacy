@@ -690,3 +690,17 @@ img {
       0   1px 0 orange;
 }
 */
+
+.button_to_text {
+  margin:0;
+  padding:0;
+  border:0;
+  font-size: 13px;
+  color:#999; /* Match your link colour */
+  background:transparent;
+}
+.button_to_text:hover {
+  color:#999;
+  background:transparent;
+  text-decoration:underline;
+}

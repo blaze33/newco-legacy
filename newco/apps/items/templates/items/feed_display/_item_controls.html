@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load account_tags %}
+{% load follow_utils %}
+{% load content_utils %}
+
+{% spaceless %}
+<div class="nf-small muted">
+<a {% if answer_location == "embedded" %}data-toggle="collapse" data-target="#question_form"{% elif answer_location == "q_detail" %}href="{{ content.get_absolute_url }}"{% else %}href="{{ content.get_absolute_url }}"{% endif %}>{% if empty %}{% trans "Add a question" %}{% else %}{% trans "Add a question" %}{% endif %}</a> • <a class="nf-small-grey" {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts_list"{% else %}href="{{ content.get_absolute_url }}?show_ask_to_answer=True"{% endif %}>{% trans "View experts" %}</a> • {% if user.is_authenticated %}{% follow_form user item display="link" %}{% endif %}
+</div>
+{% endspaceless %}

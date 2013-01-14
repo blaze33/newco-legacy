@@ -280,16 +280,42 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                     if q.id != q_id else AnswerForm(data=POST, request=request)
                 if not media:
                     media = q.answer_form.media
-            related_products = Item.objects.filter(
-                Q(tags__in=item.tags.all())).exclude(id=item.id).distinct()
+                    
+            top_products_by_tag={}
+            nb_questions_by_tag={}
+            ##### We created a list to check all the doublons and not display them twice ####
+            list_doublons=[]
+            for tag in item.tags.all():
+                related_products = Item.objects.filter(
+                    Q(tags=tag)).exclude(id=item.id).distinct()
             
-            top_products = related_products.annotate(
-                        count=Count("content__votes__vote"),
-                        score=Sum("content__votes__vote")
-                    ).filter(count__gt=0).order_by("-score")
-            
+                top_products = related_products.annotate(
+                            count=Count("content__votes__vote"),
+                            score=Sum("content__votes__vote")
+                        ).filter(count__gt=0).order_by("-score")
+                list_products_by_tag=[]
+                ##### Loop to find the 2 first related products && not in list_doublons ####
+                count=0
+                for product in top_products:
+                    if count==2:
+                        break
+                    elif product not in list_doublons:
+                        list_products_by_tag.append(product)
+                        count +=1
+                if list_products_by_tag:
+                ##### Loop to add the 2 products to list_doublons ####
+                    for i in [0,1]:
+                        if len(list_products_by_tag)>i:
+                            list_doublons.append(list_products_by_tag[i])
+                
+                ##### We display only 2 products per row ####
+                top_products_by_tag[tag]=list_products_by_tag[:2]
+                qs_tags=Tag.objects.all().filter(name=tag)
+                self.queryset = Content.objects.questions().filter(tags__in=qs_tags).select_subclasses()
+                nb_questions = self.queryset.count()
+                nb_questions_by_tag[tag]=nb_questions
 
-            context.update({"questions": questions, "scores": scores,
+            context.update({"questions": questions, "top_products_by_tag": top_products_by_tag, "nb_questions_by_tag": nb_questions_by_tag, "scores": scores,
                             "votes": votes, "media": media})
 
             # Linked affiliated products
@@ -321,17 +347,9 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
 
-<<<<<<< HEAD
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
-=======
-            if q.items.all().exists():
-                tag_ids = q.items.all().values_list("tags__id", flat=True)
-            else:
-                tag_ids = q.tags.all()
-            p_qs = Profile.objects.filter(skills__id__in=tag_ids).distinct()
->>>>>>> We can now ask the experts on Question Page for a question with tags
-
+            
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
             ).exclude(id=q.id).distinct()
