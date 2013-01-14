@@ -1,6 +1,5 @@
 import re
 
-from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
