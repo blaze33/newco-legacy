@@ -31,15 +31,17 @@
   <div class="row content" itemscope itemtype="http://schema.org/Article"><div class="span{% if display == 'mini_feed' %}4{% else %}9{%endif%}">
 
     {% if display_ctx == "True" %}
-      <div class="row"><div class="span7"><p class="nf-small-grey">
-        {% if content|to_class_name == "question" %}
-          {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}
-        {% elif content|to_class_name == "answer" %}
-          {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}{% trans ":" %}
-        {% else %}
-          Unknown content type
-        {% endif %}
-      </p></div></div>
+      <div class="row"><div class="span9">
+        <p class="nf-small-grey">
+          {% if content|to_class_name == "question" %}
+            {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}
+          {% elif content|to_class_name == "answer" %}
+            {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}{% trans ":" %}
+          {% else %}
+            Unknown content type
+          {% endif %}
+        </p>
+      </div></div>
     {% endif %}
 
     {% if content|to_class_name == "question" %}
