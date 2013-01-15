@@ -100,7 +100,7 @@
   {{ media.js }}
   <script src="{% static 'js/help.js' %}"></script>
   <script>
-    $( function() {
+    $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
     });
   </script>
