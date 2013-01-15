@@ -217,6 +217,7 @@ INSTALLED_APPS = [
     "items",
     "profiles",
     "utils",
+    "utils.help",
     "utils.redis",
     "content",
 

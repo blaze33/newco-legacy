@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -32,7 +32,7 @@ from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
 from utils.vote.views import VoteMixin
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.views.help import AskForHelpView
+from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
 
 app_name = "items"
@@ -185,8 +185,15 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, ModelFormMixin,
-                        FollowMixin, VoteMixin, AskForHelpView):
+class ContentDetailView(ContentView, AskForHelpMixin, DetailView, FormMixin,
+                        FollowMixin, VoteMixin):
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.experts = self.get_experts()
+        kwargs = {"object": self.object, "experts": self.experts}
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -217,12 +224,9 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 if not media:
                     media = q.answer_form.media
 
-            experts = Profile.objects.filter(skills__in=item.tags.all())
-
             context.update({
                 "questions": questions, "scores": scores, "votes": votes,
-                "media": media, "q_form": q_form, "experts": experts.distinct()
-            })
+                "media": media, "q_form": q_form})
 
             # Linked affiliated products
             products = item.affiliationitem_set.select_related("store")
@@ -272,6 +276,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+        self.experts = self.get_experts()
         POST = request.POST
         if "question" in POST or "answer" in POST:
             if "question" in POST:
@@ -295,6 +300,10 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
+
+    def get_experts(self):
+        return Profile.objects.filter(
+            skills__in=self.object.tags.all()).distinct()
 
 
 class ContentListView(ContentView, MultiTemplateMixin, ListView):

@@ -88,7 +88,7 @@
   </div>
 </div>
 
-{% include "items/_ask_modal.html" with experts=experts %}
+{% include "help/_ask_modal.html" with experts=experts %}
 
 {% endblock %}
 
@@ -98,6 +98,12 @@
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
+  <script src="{% static 'js/help.js' %}"></script>
+  <script>
+    $( function() {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+  </script>
   <script>// script can't go to '/static' : needs to translate text
     // ask a new question form
     $(document).ready( function() {
