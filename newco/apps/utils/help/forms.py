@@ -6,18 +6,23 @@ from django.utils.translation import ugettext_lazy as _
 from profiles.models import Profile
 
 
+class EmailInput(TextInput):
+    input_type = "email"
+
+
 class AskForHelpForm(forms.Form):
 
     experts = forms.ModelMultipleChoiceField(
-        label=_("...some of our experts"),
-        queryset=Profile.objects.all(), required=False,
+        label=_("...some of our experts"), required=False,
+        queryset=Profile.objects.all(),
         widget=SelectMultiple(attrs={"class": "input-block-level"}))
     users = forms.CharField(
-        label=_("...users you know"),
-        widget=TextInput(attrs={"class": "input-block-level"}), required=False)
+        label=_("...users you know"), required=False,
+        widget=TextInput(attrs={"class": "input-block-level"}))
     email = forms.EmailField(
-        label=_("...a non-member through an email"),
-        widget=TextInput(attrs={"class": "input-block-level"}), required=False)
+        label=_("...a non-member through an email"), required=False,
+        widget=EmailInput(attrs={"placeholder": _(
+            "Enter an email address"), "class": "input-block-level"}))
 
     def __init__(self, experts_qs, *args, **kwargs):
         super(AskForHelpForm, self).__init__(*args, **kwargs)
