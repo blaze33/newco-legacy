@@ -43,9 +43,6 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
-            form_class_name = self.model._meta.object_name + "Form"
-            if form_class_name in globals():
-                self.form_class = globals()[form_class_name]
         if "next" in request.GET:
             self.next = request.GET.get("next")
             kwargs.update({"next": self.next})
@@ -59,6 +56,10 @@ class ContentFormMixin(object):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if "model_name" in kwargs:
+            form_class_name = self.model._meta.object_name + "Form"
+            if form_class_name in globals():
+                self.form_class = globals()[form_class_name]
         return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
