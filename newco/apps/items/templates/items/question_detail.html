@@ -6,6 +6,7 @@
 
 {% block extra_style %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
     {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
 
@@ -37,8 +38,16 @@
 </div>
 {% endblock %}
 
+{% block extra_body %}{% include "help/_ask_modal.html" with experts=experts %}{% endblock %}
+
 {% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>
+  <script src="{% static 'js/help.js' %}"></script>
+  <script>
+    $(function() {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+  </script>
   {% if question %}{{ question.answer_form.media.js }}{% endif %}
   <script>
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
