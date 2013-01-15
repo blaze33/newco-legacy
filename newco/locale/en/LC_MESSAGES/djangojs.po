@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 13:00+0100\n"
+"POT-Creation-Date: 2013-01-15 17:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/items/static/js/content.js:26
+#: apps/utils/help/static/js/help.js:16
+#, c-format
+msgid "Select one expert"
+msgid_plural "Select up to %s experts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/utils/help/static/js/help.js:27
 #, c-format
 msgid "Select one user"
 msgid_plural "Select up to %s users"

@@ -9,11 +9,14 @@ from profiles.models import Profile
 class AskForHelpForm(forms.Form):
 
     experts = forms.ModelMultipleChoiceField(
+        label=_("...some of our experts"),
         queryset=Profile.objects.all(), required=False,
         widget=SelectMultiple(attrs={"class": "input-block-level"}))
     users = forms.CharField(
+        label=_("...users you know"),
         widget=TextInput(attrs={"class": "input-block-level"}), required=False)
     email = forms.EmailField(
+        label=_("...a non-member through an email"),
         widget=TextInput(attrs={"class": "input-block-level"}), required=False)
 
     def __init__(self, experts_qs, *args, **kwargs):
@@ -27,5 +30,5 @@ class AskForHelpForm(forms.Form):
             self._errors["experts"] = self.error_class([""])
             self._errors["users"] = self.error_class([""])
             self._errors["email"] = self.error_class([""])
-            raise ValidationError(_("Choose at least one field to fill"))
+            raise ValidationError(_("Fill at least one field"))
         return cleaned_data

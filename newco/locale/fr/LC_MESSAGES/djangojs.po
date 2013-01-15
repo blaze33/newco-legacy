@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 13:00+0100\n"
-"PO-Revision-Date: 2013-01-11 13:02\n"
+"POT-Creation-Date: 2013-01-15 17:27+0100\n"
+"PO-Revision-Date: 2013-01-15 17:27\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: apps/items/static/js/content.js:26
+#: apps/utils/help/static/js/help.js:16
+#, c-format
+msgid "Select one expert"
+msgid_plural "Select up to %s experts"
+msgstr[0] "Sélectionnez un expert"
+msgstr[1] "Sélectionnez jusqu'à %s experts"
+
+#: apps/utils/help/static/js/help.js:27
 #, c-format
 msgid "Select one user"
 msgid_plural "Select up to %s users"
