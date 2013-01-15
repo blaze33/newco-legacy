@@ -8,8 +8,10 @@
   </div>
   <form method="POST">{% csrf_token %}
     <div class="modal-body">
+      <br>
       {{ ask_form|as_bootstrap }}
       <input id="question-id" name="question-id" type="hidden"{% if ask_form.question_id %} value="{{ ask_form.question_id }}"{% endif %}>
+      <br>
     </div>
     <div class="modal-footer">
       <input class="btn btn-primary right" name="ask" value="{% trans 'Ask' %}" type="submit">
