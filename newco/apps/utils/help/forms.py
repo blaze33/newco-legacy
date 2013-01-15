@@ -13,9 +13,11 @@ class EmailInput(TextInput):
 class AskForHelpForm(forms.Form):
 
     experts = forms.ModelMultipleChoiceField(
-        label=_("...some of our experts"), required=False,
+        label=_("...some of our experts in this field"), required=False,
         queryset=Profile.objects.all(),
-        widget=SelectMultiple(attrs={"class": "input-block-level"}))
+        widget=SelectMultiple(attrs={"class": "input-block-level"}),
+        help_text=_("These are users that have declared being competent on "
+                    "this particular field"))
     users = forms.CharField(
         label=_("...users you know"), required=False,
         widget=TextInput(attrs={"class": "input-block-level"}))

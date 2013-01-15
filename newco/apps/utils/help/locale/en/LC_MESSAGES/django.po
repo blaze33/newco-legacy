@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 18:00+0100\n"
+"POT-Creation-Date: 2013-01-15 19:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,22 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: forms.py:16
-msgid "...some of our experts"
-msgstr ""
-
-#: forms.py:18
-msgid "...users you know"
+msgid "...some of our experts in this field"
 msgstr ""
 
 #: forms.py:19
+msgid ""
+"These are users that have declared being competent on this particular field"
+msgstr ""
+
+#: forms.py:22
+msgid "...users you know"
+msgstr ""
+
+#: forms.py:25
 msgid "...a non-member through an email"
 msgstr ""
 
-#: forms.py:28
+#: forms.py:27
 msgid "Enter an email address"
 msgstr ""
 
-#: forms.py:41
+#: forms.py:40
 msgid "Fill at least one field"
 msgstr ""
 
@@ -53,6 +58,12 @@ msgstr ""
 msgid "Ask..."
 msgstr ""
 
-#: templates/help/_ask_modal.html:17
+#: templates/help/_ask_modal.html:13
+msgid ""
+"Each user you select will receive a message explaining that you asked for "
+"his help on this question and that you would like him to answer."
+msgstr ""
+
+#: templates/help/_ask_modal.html:16
 msgid "Ask"
 msgstr ""
