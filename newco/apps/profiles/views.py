@@ -10,7 +10,7 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item
 from utils.follow.views import FollowMixin
-from utils.views import TutorialMixin
+from utils.views.tutorial import TutorialMixin
 
 
 class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,

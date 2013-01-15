@@ -32,7 +32,8 @@ from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
 from utils.vote.views import VoteMixin
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.views import AskForHelpView, TutorialMixin
+from utils.views.help import AskForHelpView
+from utils.views.tutorial import TutorialMixin
 
 app_name = "items"
 
