@@ -18,15 +18,15 @@ from utils.tools import get_class_name
 
 PARAMS = {
     get_class_name(Item): {
-        "class": Item, "pk": "id", "title_field": "name",
+        "class": Item, "pk": "id", "title_field": "name", "text_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
     get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
-        "recorded_fields": ["id", "name", "slug"]
+        "text_field": "name", "recorded_fields": ["id", "name", "slug"]
     },
     get_class_name(Tag): {
-        "class": Tag, "pk": "id", "title_field": "name",
+        "class": Tag, "pk": "id", "title_field": "name", "text_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
 }
@@ -64,11 +64,14 @@ def record_object(engine, obj, key, value, ctype=None):
         ctype = ContentType.objects.get_for_model(obj)
     obj_id = obj.__getattribute__(value["pk"])
     title = obj.__getattribute__(value["title_field"])
+    text = obj.__getattribute__(value["text_field"])
     if not title:
         return
-    title = unicodedata.normalize('NFKD', title).encode('utf-8',
-                                                        'ignore')
-    data = {"class": key, "title": title}
+    title = unicodedata.normalize("NFKD", title).encode("utf-8",
+                                                        "ignore")
+    text = unicodedata.normalize("NFKD", text).encode("utf-8",
+                                                      "ignore")
+    data = {"class": key, "title": title, "text": text}
     for field in value["recorded_fields"]:
         data.update({field: unicode(obj.__getattribute__(field))})
     engine.store_json(obj_id, title, data, ctype.id)
