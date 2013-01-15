@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 17:26+0100\n"
-"PO-Revision-Date: 2013-01-15 17:26\n"
+"POT-Creation-Date: 2013-01-15 18:00+0100\n"
+"PO-Revision-Date: 2013-01-15 18:01\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: forms.py:12
+#: forms.py:16
 msgid "...some of our experts"
 msgstr "...à plusieurs de nos experts"
 
-#: forms.py:16
+#: forms.py:18
 msgid "...users you know"
 msgstr "...à des utilisateurs que vous connaissez"
 
@@ -31,7 +31,11 @@ msgstr "...à des utilisateurs que vous connaissez"
 msgid "...a non-member through an email"
 msgstr "...à une personne extérieure via e-mail"
 
-#: forms.py:33
+#: forms.py:28
+msgid "Enter an email address"
+msgstr "Entrez une adresse e-mail"
+
+#: forms.py:41
 msgid "Fill at least one field"
 msgstr "Remplissez au moins un champ"
 
@@ -52,6 +56,6 @@ msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
 msgid "Ask..."
 msgstr "Demandez..."
 
-#: templates/help/_ask_modal.html:15
+#: templates/help/_ask_modal.html:17
 msgid "Ask"
 msgstr "Demander"
