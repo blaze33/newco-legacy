@@ -33,6 +33,7 @@ class RedisView(View):
         ids = filter_dict.getlist("id", [])
         classes = filter_dict.getlist("class")
 
+        data = []
         if phrase:
             filters = []
             filtered_fields = ["class"]
@@ -43,7 +44,6 @@ class RedisView(View):
 
             data = engine.search_json(phrase, limit=limit, filters=filters)
         elif not phrase and ids and len(classes) == 1:
-            data = []
             cls = get_class_from_string(classes[0])
             ctype = ContentType.objects.get_for_model(cls)
             for i in ids:
