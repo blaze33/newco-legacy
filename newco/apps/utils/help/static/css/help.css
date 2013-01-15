@@ -1,0 +1,7 @@
+@charset 'UTF-8';
+
+.modal-body label {
+  text-align: right;
+  font-weight: bold;
+  line-height: 32px;
+}

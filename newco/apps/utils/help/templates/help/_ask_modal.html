@@ -10,6 +10,7 @@
     <div class="modal-body">
       {{ ask_form|as_bootstrap }}
       <input id="question-id" name="question-id" type="hidden"{% if ask_form.question_id %} value="{{ ask_form.question_id }}"{% endif %}>
+      <br>
       <p>{% trans "Each user you select will receive a message explaining that you asked for his help on this question and that you would like him to answer." %}</p>
     </div>
     <div class="modal-footer">
