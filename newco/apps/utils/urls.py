@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from utils.views import TypeaheadSearchView
+from utils.views.search import TypeaheadSearchView
 
 urlpatterns = patterns("",
     url(r"^", include("utils.redis.urls")),
