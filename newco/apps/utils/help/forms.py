@@ -28,7 +28,10 @@ class AskForHelpForm(forms.Form):
 
     def __init__(self, experts_qs, *args, **kwargs):
         super(AskForHelpForm, self).__init__(*args, **kwargs)
-        self.fields["experts"].queryset = experts_qs
+        if experts_qs:
+            self.fields["experts"].queryset = experts_qs
+        else:
+            del self.fields["experts"]
 
     def clean(self):
         cleaned_data = super(AskForHelpForm, self).clean()
