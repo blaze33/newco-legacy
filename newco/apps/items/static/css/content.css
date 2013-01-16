@@ -23,6 +23,9 @@
   font-weight: bold;
   line-height: 140%;
   margin-top: 0px;
+}
+
+div[id^="q-"] {
   margin-bottom: 20px;
 }
 
