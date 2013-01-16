@@ -305,7 +305,8 @@ class ContentDetailView(ContentView, AskForHelpMixin, DetailView, FormMixin,
         tag_ids = list(self.object.tags.values_list("id", flat=True))
         if self.object.__class__ is Question:
             tag_ids.extend(self.object.items.values_list("tags", flat=True))
-        return Profile.objects.filter(skills__id__in=tag_ids).distinct()
+        return Profile.objects.filter(skills__id__in=tag_ids).order_by(
+            "-user__reputation__reputation_incremented").distinct()
 
 
 class ContentListView(ContentView, MultiTemplateMixin, ListView):
