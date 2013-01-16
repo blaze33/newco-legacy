@@ -7,11 +7,18 @@
 
 {% block list %}
 <div class="tabbable row">
-  <div class="span3"><ul class="nav nav-pills nav-stacked">
-    <li{% if pill == "browse" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat %}">{% trans "Browse products with tag" %} {{ tag|capfirst }}</a></li>
-    <li{% if pill == "search" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat 'search' %}">{% trans "Search products with tag" %} {{ tag|capfirst }}</a></li>
-  </ul></div>
-  <div class="span7">
+  <div class="span3"><ul class="nav nav-list">
+      <li class="nav-header">{% trans "What products?" %}</li>
+      <li{% if pill == "browse" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat %}">{% trans "Browse products with tag" %} {{ tag|capfirst }}</a></li>
+      <li{% if pill == "search" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat 'search' %}">{% trans "Search products with tag" %} {{ tag|capfirst }}</a></li>
+      <li class="divider"></li>
+      <li class="nav-header">{% trans "Filter" %}</li>
+      <li{% if qs_option == "popular" %} class="active"{% endif %}><a href="?qs_option=popular">{% trans "Popular" %}</a></li>
+      <li{% if qs_option == "-pub_date" %} class="active"{% endif %}><a href="?qs_option=-pub_date">{% trans "Last added" %}</a></li>
+      <li{% if qs_option == "pub_date" %} class="active"{% endif %}><a href="?qs_option=pub_date">{% trans "Old" %}</a></li>
+    </ul>
+  </div>
+  <div class="span9">
     {% if pill == "browse" %}
       <div id="thumbnails_list2">
         {% for item in object_list %}
@@ -23,13 +30,6 @@
     {% elif pill == "search" %}
       Search me
     {% endif %}
-  </div>
-  <div class="span2">{% csrf_token %}
-    <div class="btn-group btn-group-vertical" data-toggle="buttons-radio">
-      <a class="btn{% if qs_option == 'popular' %} btn-primary{% endif %}" href="?qs_option=popular"{% if qs_option == "popular" %} disabled{% endif %}>{% trans "Popular" %}</a>
-      <a class="btn{% if qs_option == '-pub_date' %} btn-primary{% endif %}" href="?qs_option=-pub_date"{% if qs_option == "-pub_date" %} disabled{% endif %}>{% trans "Last added" %}</a>
-      <a class="btn{% if qs_option == 'pub_date' %} btn-primary{% endif %}" href="?qs_option=pub_date"{% if qs_option == "pub_date" %} disabled{% endif %}>{% trans "Old" %}</a>
-    </div>
   </div>
 </div>
 {% endblock %}

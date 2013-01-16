@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 15:10+0100\n"
-"PO-Revision-Date: 2013-01-14 15:11\n"
+"POT-Creation-Date: 2013-01-16 19:23+0100\n"
+"PO-Revision-Date: 2013-01-16 20:04\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,13 +79,9 @@ msgstr "Choisissez moins de %d tags"
 msgid "Pick less than %d products"
 msgstr "Choisissez moins de %d produits"
 
-#: forms.py:187
+#: forms.py:189
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
-
-#: forms.py:207
-msgid "Please login before answering."
-msgstr "Connectez-vous avant de répondre."
 
 #: models.py:19
 msgid "Tags"
@@ -188,74 +184,49 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:265 views.py:357
+#: views.py:317 views.py:423
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:266 views.py:358
+#: views.py:318 views.py:424
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:315
+#: views.py:377
 #, python-format
 msgid "No products with tag %s"
 msgstr "Pas de produits avec le tag %s"
 
-#: views.py:321
+#: views.py:383
 #, python-format
 msgid "No questions with tag %s"
 msgstr "Pas de questions avec le tag %s"
 
-#: views.py:326
+#: views.py:389
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr "Pas de questions sur les produits avec le tag %s"
 
-#: views.py:402
+#: views.py:469
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été créé avec succès."
 
-#: views.py:406
+#: views.py:473
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été mis à jour."
 
-#: views.py:410
+#: views.py:477
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr "Merci %(user)s, votre bio a été mise à jour."
 
-#: views.py:414
+#: views.py:481
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
 "Attention %(user)s, le formulaire de l'objet %(object_name)s est invalide."
-
-#: templates/items/_ask_modal.html:8
-msgid "Ask..."
-msgstr "Demandez..."
-
-#: templates/items/_ask_modal.html:13
-msgid "...an expert:"
-msgstr "...à un expert&nbsp;:"
-
-#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:28
-#: templates/items/_ask_modal.html:35
-msgid "Ask"
-msgstr "Demander"
-
-#: templates/items/_ask_modal.html:25
-msgid "...some users you may know:"
-msgstr "...à des utilisateurs que vous connaissez&nbsp;:"
-
-#: templates/items/_ask_modal.html:32
-msgid "...a non-member:"
-msgstr "...à une personne extérieure&nbsp;:"
-
-#: templates/items/_ask_modal.html:34
-msgid "Email address"
-msgstr "Adresse e-mail"
 
 #: templates/items/_data_sheet.html:13
 msgid "Maybe they can help you?"
@@ -269,21 +240,11 @@ msgstr "Editer ce post"
 msgid "Delete this post"
 msgstr "Supprimer ce post"
 
-#: templates/items/_question_list.html:9 templates/items/item_detail.html:115
-msgid "Ask a new question!"
-msgstr "Poser une nouvelle question&#x202F;!"
-
-#: templates/items/_question_list.html:12
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-"Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
-"une&#x202F;!"
-
 #: templates/items/_vote_box.html:6
 msgid "Score"
 msgstr "Score"
 
-#: templates/items/answer_form.html:10 templates/items/item_detail.html:133
+#: templates/items/answer_form.html:10
 msgid "Answer"
 msgstr "Répondre"
 
@@ -301,7 +262,7 @@ msgstr "Dépublier et sauvegarder dans les brouillons"
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/root_display/_question.html:64
+#: templates/items/feed_display/_feed_controls.html:41
 msgid "Save as draft"
 msgstr "Sauvegarder dans les brouillons"
 
@@ -322,49 +283,45 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: templates/items/item_detail.html:36 templates/items/item_detail.html:67
+#: templates/items/item_detail.html:37 templates/items/item_detail.html:68
 msgid "Where to buy"
 msgstr "Où acheter"
 
-#: templates/items/item_detail.html:38
+#: templates/items/item_detail.html:39
 msgid "Store"
 msgstr "Magasin"
 
-#: templates/items/item_detail.html:39
+#: templates/items/item_detail.html:40
 msgid "Name"
 msgstr "Nom"
 
-#: templates/items/item_detail.html:40
+#: templates/items/item_detail.html:41
 msgid "Price"
 msgstr "Prix"
 
-#: templates/items/item_detail.html:49
+#: templates/items/item_detail.html:50
 msgid "Edit Product"
 msgstr "Editer le Produit"
 
-#: templates/items/item_detail.html:50
+#: templates/items/item_detail.html:51
 msgid "Delete Product"
 msgstr "Supprimer le Produit"
 
-#: templates/items/item_detail.html:55
+#: templates/items/item_detail.html:56
 msgid "From"
 msgstr "A partir de"
 
-#: templates/items/item_detail.html:61
+#: templates/items/item_detail.html:62
 msgid "See the detailed offers"
 msgstr "Voir les offres détaillées"
 
-#: templates/items/item_detail.html:87
+#: templates/items/item_detail.html:88
 msgid "Source:"
 msgstr "Source&nbsp;:"
 
-#: templates/items/item_detail.html:87
+#: templates/items/item_detail.html:88
 msgid "Download"
 msgstr "Télécharger"
-
-#: templates/items/item_detail.html:129
-msgid "Close"
-msgstr "Fermer"
 
 #: templates/items/item_form.html:15 templates/items/item_form.html.py:19
 #: templates/items/item_list_base.html:42
@@ -378,7 +335,10 @@ msgid "Fill in some information about"
 msgstr "Remplissez des informations sur"
 
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
-#: templates/items/feed_display/_question.html:8
+#: templates/items/feed_display/_content_list.html:37
+#: templates/items/feed_display/_content_list.html:39
+#: templates/items/feed_display/_feed_controls.html:13
+#: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr "&nbsp;:"
 
@@ -480,45 +440,58 @@ msgid "Questions"
 msgstr "Questions"
 
 #: templates/items/item_list_products.html:11
+msgid "What products?"
+msgstr "Quels produits&#x202F;?"
+
+#: templates/items/item_list_products.html:12
 msgid "Browse products with tag"
 msgstr "Parcourir des produits avec le tag"
 
-#: templates/items/item_list_products.html:12
+#: templates/items/item_list_products.html:13
 msgid "Search products with tag"
 msgstr "Chercher des produits avec le tag"
 
-#: templates/items/item_list_products.html:29
-#: templates/items/item_list_questions.html:22
+#: templates/items/item_list_products.html:15
+#: templates/items/item_list_questions.html:17
+msgid "Filter"
+msgstr "Filtrer"
+
+#: templates/items/item_list_products.html:16
+#: templates/items/item_list_questions.html:18
 msgid "Popular"
 msgstr "Populaires"
 
-#: templates/items/item_list_products.html:30
-#: templates/items/item_list_questions.html:23
+#: templates/items/item_list_products.html:17
+#: templates/items/item_list_questions.html:19
 msgid "Last added"
 msgstr "Récents"
 
-#: templates/items/item_list_products.html:31
-#: templates/items/item_list_questions.html:24
+#: templates/items/item_list_products.html:18
+#: templates/items/item_list_questions.html:20
 msgid "Old"
 msgstr "Anciens"
 
 #: templates/items/item_list_questions.html:13
+msgid "What questions?"
+msgstr "Quelles questions&#x202F;?"
+
+#: templates/items/item_list_questions.html:14
 msgid "Questions with tag"
 msgstr "Questions avec le tag"
 
-#: templates/items/item_list_questions.html:14
+#: templates/items/item_list_questions.html:15
 msgid "Questions about products with tag"
 msgstr "Questions sur les produits avec le tag"
 
-#: templates/items/item_list_questions.html:25
+#: templates/items/item_list_questions.html:21
 msgid "No answers"
 msgstr "Pas de réponses"
 
-#: templates/items/question_detail.html:21
+#: templates/items/question_detail.html:22
 msgid "Related products"
 msgstr "Produits associés"
 
-#: templates/items/question_detail.html:26
+#: templates/items/question_detail.html:27
 msgid "Related tags"
 msgstr "Tags associés"
 
@@ -615,81 +588,132 @@ msgstr ""
 "Cliquez ici si vous ne trouvez pas le produit que vous voulez lier à votre "
 "question"
 
-#: templates/items/feed_display/_answer.html:9
+#: templates/items/feed_display/_answer.html:10
 #, python-format
 msgid "<a href=\"%(url)s\">answered</a> a question"
 msgstr "a <a href=\"%(url)s\">répondu</a> à une question"
 
-#: templates/items/feed_display/_answer.html:19
+#: templates/items/feed_display/_content_list.html:9
+msgid "Ask a new question!"
+msgstr "Poser une nouvelle question&#x202F;!"
+
+#: templates/items/feed_display/_content_list.html:12
+msgid "No question yet! Ask the first one here!"
+msgstr ""
+"Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
+"une&#x202F;!"
+
+#: templates/items/feed_display/_content_list.html:37
+msgid "asked a question"
+msgstr "a posé une question"
+
+#: templates/items/feed_display/_content_list.html:39
 msgid "answered a question"
 msgstr "a répondu à une question"
 
-#: templates/items/feed_display/_answer.html:23
-#: templates/items/feed_display/_question.html:21
-msgid "Q:"
-msgstr "Q&nbsp;:"
-
-#: templates/items/feed_display/_answer.html:28
-msgid "A:"
-msgstr "R&nbsp;:"
-
-#: templates/items/feed_display/_answer.html:38
-msgid "Add an answer"
-msgstr "Ajouter une réponse"
-
-#: templates/items/feed_display/_content_list.html:16
+#: templates/items/feed_display/_content_list.html:58
 msgid "Sorry, this feed is empty."
 msgstr "Désolé, ce flux est vide."
 
-#: templates/items/feed_display/_question.html:8
+#: templates/items/feed_display/_feed_controls.html:9
+#, python-format
+msgid ""
+"\n"
+"      %(nb_ans)s answer\n"
+"      "
+msgid_plural ""
+"\n"
+"      %(nb_ans)s answers\n"
+"    "
+msgstr[0] ""
+"\n"
+"%(nb_ans)s réponse"
+msgstr[1] ""
+"\n"
+"%(nb_ans)s réponses"
+
+#: templates/items/feed_display/_feed_controls.html:15
+msgid "Answer this question"
+msgstr "Répondez à cette question"
+
+#: templates/items/feed_display/_feed_controls.html:15
+msgid "Add an answer"
+msgstr "Ajoutez une réponse"
+
+#: templates/items/feed_display/_feed_controls.html:20
+msgid "Ask to answer"
+msgstr "Demandez à quelqu'un de répondre"
+
+#: templates/items/feed_display/_feed_controls.html:34
+msgid "Please login before answering."
+msgstr "Connectez-vous avant de répondre."
+
+#: templates/items/feed_display/_feed_controls.html:40
+msgid "Answer and publish"
+msgstr "Répondre et publier"
+
+#: templates/items/feed_display/_question.html:9
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr "a posé une <a href=\"%(url)s\">question</a>"
 
-#: templates/items/feed_display/_question.html:16
-msgid "asked a question"
-msgstr "a posé une question"
-
-#: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:47
-msgid "Answer this question"
-msgstr "Répondre à cette question"
-
-#: templates/items/feed_display/_question.html:34
+#: templates/items/feed_display/_question.html:30
 #: templates/items/feed_display/_question_1.html:10
 msgid "Products related"
 msgstr "Produits liés"
 
-#: templates/items/feed_display/_question.html:35
-#: templates/items/feed_display/_question_1.html:20
-msgid "Category"
-msgstr "Catégorie"
+#: templates/items/feed_display/_question.html:31
+msgid "Categories"
+msgstr "Catégories"
 
-#: templates/items/feed_display/_question.html:38
+#: templates/items/feed_display/_question.html:56
+msgid "This question is a draft.<br>It has been anonymized."
+msgstr "Cette question est un brouillon.<br>Elle est anonyme."
+
 #: templates/items/feed_display/_question_1.html:12
 #: templates/items/feed_display/_question_1.html:21
 msgid "Add Answer"
 msgstr "Ajouter une réponse"
 
-#: templates/items/root_display/_question.html:16
-msgid "This question is a draft.<br>It has been anonymized."
-msgstr "Cette question est un brouillon.<br>Elle est anonyme."
+#: templates/items/feed_display/_question_1.html:20
+msgid "Category"
+msgstr "Catégorie"
 
-#: templates/items/root_display/_question.html:47
-msgid "Add a better answer"
-msgstr "Donner une meilleure réponse"
+#~ msgid "Ask..."
+#~ msgstr "Demandez..."
 
-#: templates/items/root_display/_question.html:48
-#: templates/items/root_display/_question.html:52
-msgid "Ask someone to answer"
-msgstr "Demandez à quelqu'un de répondre"
+#~ msgid "...an expert:"
+#~ msgstr "...à un expert&nbsp;:"
 
-#: templates/items/root_display/_question.html:63
-msgid "Answer and publish"
-msgstr "Répondre et publier"
+#~ msgid "Ask"
+#~ msgstr "Demander"
 
-#~ msgid "Email"
-#~ msgstr "Adresse e-mail"
+#~ msgid "...some users you may know:"
+#~ msgstr "...à des utilisateurs que vous connaissez&nbsp;:"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "%(nb_ans)s answers"
+#~ msgstr "%(nb_ans)s réponses"
+
+#~ msgid "View all answers (%(nb_ans)s)"
+#~ msgstr "Voir toutes les réponses (%(nb_ans)s)"
+
+#~ msgid "This is the only answer"
+#~ msgstr "C'est la seule réponse"
+
+#~ msgid "There is no answer yet"
+#~ msgstr "Il n'y a pas encore de réponse"
+
+#~ msgid "Q:"
+#~ msgstr "Q&nbsp;:"
+
+#~ msgid "A:"
+#~ msgstr "R&nbsp;:"
+
+#~ msgid "Add a better answer"
+#~ msgstr "Donner une meilleure réponse"
 
 #~ msgid "posted a <a href=\"%(url)s\">link</a>"
 #~ msgstr "a posté un <a href=\"%(url)s\">lien</a>"

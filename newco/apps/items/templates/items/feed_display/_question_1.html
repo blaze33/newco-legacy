@@ -9,7 +9,7 @@
     <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
     <div class="q_categories">{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
     </div>
-    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
+    <a href="{{ content.get_absolute_url }}" class="nf-small muted">{% trans "Add Answer" %}</a>
     <hr>
     </div>
 {% endif %}
@@ -18,7 +18,7 @@
     <div class="span7" align="left">
     <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
     <div class="q_categories">{% trans "Category" %} {% tags_display content.tags 3 %}</div>
-    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
+    <a href="{{ content.get_absolute_url }}" class="nf-small muted">{% trans "Add Answer" %}</a>
     <hr>
     </div>
 {% endif %}

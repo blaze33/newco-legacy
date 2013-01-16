@@ -462,8 +462,9 @@ class ContentInfoNode(GenericNode):
         pic_size = args[0] if not pic_size and len(args) > 0 else pic_size
 
         template, author = ["content/info.html", content.author]
+        ctx = {"pub_date": content.pub_date}
         if "signature" in display:
-            ctx = {"pub_date": content.pub_date, "signature": True}
+            ctx.update({"signature": True})
             if display == "signature":
                 ctx.update({
                     "signature_author": True,
@@ -488,13 +489,14 @@ class ContentInfoNode(GenericNode):
             else:
                 raise TemplateSyntaxError("'content_info': wrong display.")
         elif display == "header":
-            ctx = {
+            ctx.update({
                 "header": True,
-                "author_name": user_display(author),
-                "author_url": author.get_absolute_url(),
+                # "author_name": user_display(author),
+                # "author_url": author.get_absolute_url(),
+                "author": author,
                 "reputation": author.reputation.reputation_incremented,
                 "about": author.get_profile().about
-            }
+            })
         else:
             raise TemplateSyntaxError("'content_info': wrong display value.")
         return render_to_string(template, ctx, context_instance=context)

@@ -30,9 +30,14 @@ class AskForHelpMixin(object):
     experts = EmptyQuerySet(model=Profile)
 
     def form_invalid(self, form):
+        if "ask" not in self.request.POST:
+            return super(AskForHelpMixin, self).form_invalid(form)
         return self.render_to_response(self.get_context_data(ask_form=form))
 
     def form_valid(self, form):
+        if "ask" not in self.request.POST:
+            return super(AskForHelpMixin, self).form_valid(form)
+
         receiver_profiles = []
         request, user = [self.request, self.request.user]
         question = Question.objects.get(id=form.question_id)

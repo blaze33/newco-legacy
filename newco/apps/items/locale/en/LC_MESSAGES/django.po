@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 15:10+0100\n"
+"POT-Creation-Date: 2013-01-16 19:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,12 +72,8 @@ msgstr ""
 msgid "Pick less than %d products"
 msgstr ""
 
-#: forms.py:187
+#: forms.py:189
 msgid "Be concise and to the point."
-msgstr ""
-
-#: forms.py:207
-msgid "Please login before answering."
 msgstr ""
 
 #: models.py:19
@@ -179,72 +175,47 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:265 views.py:357
+#: views.py:317 views.py:423
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:266 views.py:358
+#: views.py:318 views.py:424
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:315
+#: views.py:377
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:321
+#: views.py:383
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:326
+#: views.py:389
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:402
+#: views.py:469
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:406
+#: views.py:473
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:410
+#: views.py:477
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:414
+#: views.py:481
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
-msgstr ""
-
-#: templates/items/_ask_modal.html:8
-msgid "Ask..."
-msgstr ""
-
-#: templates/items/_ask_modal.html:13
-msgid "...an expert:"
-msgstr ""
-
-#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:28
-#: templates/items/_ask_modal.html:35
-msgid "Ask"
-msgstr ""
-
-#: templates/items/_ask_modal.html:25
-msgid "...some users you may know:"
-msgstr ""
-
-#: templates/items/_ask_modal.html:32
-msgid "...a non-member:"
-msgstr ""
-
-#: templates/items/_ask_modal.html:34
-msgid "Email address"
 msgstr ""
 
 #: templates/items/_data_sheet.html:13
@@ -259,19 +230,11 @@ msgstr ""
 msgid "Delete this post"
 msgstr ""
 
-#: templates/items/_question_list.html:9 templates/items/item_detail.html:115
-msgid "Ask a new question!"
-msgstr ""
-
-#: templates/items/_question_list.html:12
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-
 #: templates/items/_vote_box.html:6
 msgid "Score"
 msgstr ""
 
-#: templates/items/answer_form.html:10 templates/items/item_detail.html:133
+#: templates/items/answer_form.html:10
 msgid "Answer"
 msgstr ""
 
@@ -289,7 +252,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/root_display/_question.html:64
+#: templates/items/feed_display/_feed_controls.html:41
 msgid "Save as draft"
 msgstr ""
 
@@ -310,48 +273,44 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:36 templates/items/item_detail.html:67
+#: templates/items/item_detail.html:37 templates/items/item_detail.html:68
 msgid "Where to buy"
 msgstr ""
 
-#: templates/items/item_detail.html:38
+#: templates/items/item_detail.html:39
 msgid "Store"
 msgstr ""
 
-#: templates/items/item_detail.html:39
+#: templates/items/item_detail.html:40
 msgid "Name"
 msgstr ""
 
-#: templates/items/item_detail.html:40
+#: templates/items/item_detail.html:41
 msgid "Price"
 msgstr ""
 
-#: templates/items/item_detail.html:49
+#: templates/items/item_detail.html:50
 msgid "Edit Product"
 msgstr ""
 
-#: templates/items/item_detail.html:50
+#: templates/items/item_detail.html:51
 msgid "Delete Product"
 msgstr ""
 
-#: templates/items/item_detail.html:55
+#: templates/items/item_detail.html:56
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:61
+#: templates/items/item_detail.html:62
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:87
+#: templates/items/item_detail.html:88
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:87
+#: templates/items/item_detail.html:88
 msgid "Download"
-msgstr ""
-
-#: templates/items/item_detail.html:129
-msgid "Close"
 msgstr ""
 
 #: templates/items/item_form.html:15 templates/items/item_form.html.py:19
@@ -366,7 +325,10 @@ msgid "Fill in some information about"
 msgstr ""
 
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
-#: templates/items/feed_display/_question.html:8
+#: templates/items/feed_display/_content_list.html:37
+#: templates/items/feed_display/_content_list.html:39
+#: templates/items/feed_display/_feed_controls.html:13
+#: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr ""
 
@@ -466,45 +428,58 @@ msgid "Questions"
 msgstr ""
 
 #: templates/items/item_list_products.html:11
-msgid "Browse products with tag"
+msgid "What products?"
 msgstr ""
 
 #: templates/items/item_list_products.html:12
+msgid "Browse products with tag"
+msgstr ""
+
+#: templates/items/item_list_products.html:13
 msgid "Search products with tag"
 msgstr ""
 
-#: templates/items/item_list_products.html:29
-#: templates/items/item_list_questions.html:22
+#: templates/items/item_list_products.html:15
+#: templates/items/item_list_questions.html:17
+msgid "Filter"
+msgstr ""
+
+#: templates/items/item_list_products.html:16
+#: templates/items/item_list_questions.html:18
 msgid "Popular"
 msgstr ""
 
-#: templates/items/item_list_products.html:30
-#: templates/items/item_list_questions.html:23
+#: templates/items/item_list_products.html:17
+#: templates/items/item_list_questions.html:19
 msgid "Last added"
 msgstr ""
 
-#: templates/items/item_list_products.html:31
-#: templates/items/item_list_questions.html:24
+#: templates/items/item_list_products.html:18
+#: templates/items/item_list_questions.html:20
 msgid "Old"
 msgstr ""
 
 #: templates/items/item_list_questions.html:13
-msgid "Questions with tag"
+msgid "What questions?"
 msgstr ""
 
 #: templates/items/item_list_questions.html:14
+msgid "Questions with tag"
+msgstr ""
+
+#: templates/items/item_list_questions.html:15
 msgid "Questions about products with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:25
+#: templates/items/item_list_questions.html:21
 msgid "No answers"
 msgstr ""
 
-#: templates/items/question_detail.html:21
+#: templates/items/question_detail.html:22
 msgid "Related products"
 msgstr ""
 
-#: templates/items/question_detail.html:26
+#: templates/items/question_detail.html:27
 msgid "Related tags"
 msgstr ""
 
@@ -590,75 +565,87 @@ msgid ""
 "Click here if you cannot find the product you want to link your question to"
 msgstr ""
 
-#: templates/items/feed_display/_answer.html:9
+#: templates/items/feed_display/_answer.html:10
 #, python-format
 msgid "<a href=\"%(url)s\">answered</a> a question"
 msgstr ""
 
-#: templates/items/feed_display/_answer.html:19
+#: templates/items/feed_display/_content_list.html:9
+msgid "Ask a new question!"
+msgstr ""
+
+#: templates/items/feed_display/_content_list.html:12
+msgid "No question yet! Ask the first one here!"
+msgstr ""
+
+#: templates/items/feed_display/_content_list.html:37
+msgid "asked a question"
+msgstr ""
+
+#: templates/items/feed_display/_content_list.html:39
 msgid "answered a question"
 msgstr ""
 
-#: templates/items/feed_display/_answer.html:23
-#: templates/items/feed_display/_question.html:21
-msgid "Q:"
-msgstr ""
-
-#: templates/items/feed_display/_answer.html:28
-msgid "A:"
-msgstr ""
-
-#: templates/items/feed_display/_answer.html:38
-msgid "Add an answer"
-msgstr ""
-
-#: templates/items/feed_display/_content_list.html:16
+#: templates/items/feed_display/_content_list.html:58
 msgid "Sorry, this feed is empty."
 msgstr ""
 
-#: templates/items/feed_display/_question.html:8
+#: templates/items/feed_display/_feed_controls.html:9
+#, python-format
+msgid ""
+"\n"
+"      %(nb_ans)s answer\n"
+"      "
+msgid_plural ""
+"\n"
+"      %(nb_ans)s answers\n"
+"    "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/items/feed_display/_feed_controls.html:15
+msgid "Answer this question"
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:15
+msgid "Add an answer"
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:20
+msgid "Ask to answer"
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:34
+msgid "Please login before answering."
+msgstr ""
+
+#: templates/items/feed_display/_feed_controls.html:40
+msgid "Answer and publish"
+msgstr ""
+
+#: templates/items/feed_display/_question.html:9
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:16
-msgid "asked a question"
-msgstr ""
-
-#: templates/items/feed_display/_question.html:28
-#: templates/items/root_display/_question.html:47
-msgid "Answer this question"
-msgstr ""
-
-#: templates/items/feed_display/_question.html:34
+#: templates/items/feed_display/_question.html:30
 #: templates/items/feed_display/_question_1.html:10
 msgid "Products related"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:35
-#: templates/items/feed_display/_question_1.html:20
-msgid "Category"
+#: templates/items/feed_display/_question.html:31
+msgid "Categories"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:38
+#: templates/items/feed_display/_question.html:56
+msgid "This question is a draft.<br>It has been anonymized."
+msgstr ""
+
 #: templates/items/feed_display/_question_1.html:12
 #: templates/items/feed_display/_question_1.html:21
 msgid "Add Answer"
 msgstr ""
 
-#: templates/items/root_display/_question.html:16
-msgid "This question is a draft.<br>It has been anonymized."
-msgstr ""
-
-#: templates/items/root_display/_question.html:47
-msgid "Add a better answer"
-msgstr ""
-
-#: templates/items/root_display/_question.html:48
-#: templates/items/root_display/_question.html:52
-msgid "Ask someone to answer"
-msgstr ""
-
-#: templates/items/root_display/_question.html:63
-msgid "Answer and publish"
+#: templates/items/feed_display/_question_1.html:20
+msgid "Category"
 msgstr ""

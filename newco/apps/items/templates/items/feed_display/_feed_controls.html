@@ -1,0 +1,48 @@
+{% spaceless %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load account_tags %}
+
+<p class="nf-small muted">
+  {% if not display_a == "all" %}
+    {% blocktrans count nb_ans=content.answer_set.count %}
+      {{ nb_ans }} answer
+      {% plural %}
+      {{ nb_ans }} answers
+    {% endblocktrans %}{% trans ":" %}
+    <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">
+      {% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}
+    </a>
+     • 
+  {% endif %}
+
+  <a class="btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
+</p>
+
+{% if answer_location == "embedded" %}
+  <br>
+  <br>
+  <div class="row" id="answer_form_{{ content.id }}">
+    <div class="span8">
+      <p>
+        {% if user.is_authenticated %}
+          {% with about=user.get_profile.about %}
+            <b>{% user_display user %}<span rel="current-user-name-and-bio">{% if about %}, {{ about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=about %}
+          {% endwith %}
+        {% else %}
+          {% trans "Please login before answering." %}
+        {% endif %}
+      </p>
+
+      <form method="POST" action="#answer_form_{{ content.id }}">{% csrf_token %}
+        {{ content.answer_form|as_bootstrap }}
+        <button class="btn btn-primary btn-small" name="answer" type="submit" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
+        <button class="btn btn-small" name="answer" type="submit" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+        <input type="hidden" name="question_id" value="{{ content.id }}"/>
+      </form>
+    </div>
+  </div>
+{% endif %}
+
+{% endspaceless %}

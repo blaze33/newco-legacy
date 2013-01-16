@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 12:13+0100\n"
-"PO-Revision-Date: 2013-01-10 18:41\n"
+"POT-Creation-Date: 2013-01-16 19:19+0100\n"
+"PO-Revision-Date: 2013-01-09 19:49\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
+
+#: views.py:105
+msgid ""
+"There is no question in this category. <a class='btn' "
+"href='{create_url}'>Ask your own!</a>"
+msgstr ""
+"Il n'y a pas de question dans cette catégorie. <a class='btn' "
+"href='{create_url}'>Posez la votre&#x202F!</a>"
 
 #: settings/common.py:63
 msgid "English"
@@ -323,8 +331,7 @@ msgstr "Connectez-vous"
 msgid "Popular products"
 msgstr "Produits populaires"
 
-#: templates/homepage_base_1.html:107 templates/homepage_questions.html:19
-#: templates/homepage_questions_1.html:18
+#: templates/homepage_base_1.html:107 templates/homepage_questions_1.html:18
 #: templates/homepage_questions_2.html:24
 msgid "Answer questions"
 msgstr "Répondez aux questions"
@@ -333,20 +340,22 @@ msgstr "Répondez aux questions"
 msgid "Filter"
 msgstr "Filtrer"
 
-#: templates/homepage_questions.html:20 templates/homepage_questions_1.html:19
+#: templates/homepage_questions.html:19
+msgid "Popular questions"
+msgstr "Questions populaires"
+
+#: templates/homepage_questions.html:21
+msgid "Last added questions"
+msgstr "Dernières questions ajoutées"
+
+#: templates/homepage_questions.html:23
+msgid "Questions without answer"
+msgstr "Questions sans réponses"
+
+#: templates/homepage_questions_1.html:19
 #: templates/homepage_questions_2.html:25
 msgid "Category"
 msgstr "Catégorie"
-
-#: templates/homepage_questions.html:45 templates/homepage_questions_1.html:69
-#: templates/homepage_questions_2.html:50
-msgid "No unanswered questions on this category."
-msgstr "Pas de questions sans réponse dans cette catégorie."
-
-#: templates/homepage_questions.html:46 templates/homepage_questions_1.html:70
-#: templates/homepage_questions_2.html:51
-msgid "Ask your own awesome question then!"
-msgstr "Poser alors votre propre question&#x202F;!"
 
 #: templates/homepage_questions_1.html:25
 msgid "Filter by category"
@@ -363,6 +372,16 @@ msgstr "Questions sur les produits"
 #: templates/homepage_questions_1.html:38
 msgid "Questions on Categories"
 msgstr "Questions sur catégories"
+
+#: templates/homepage_questions_1.html:69
+#: templates/homepage_questions_2.html:50
+msgid "No unanswered questions on this category."
+msgstr "Pas de questions sans réponse dans cette catégorie."
+
+#: templates/homepage_questions_1.html:70
+#: templates/homepage_questions_2.html:51
+msgid "Ask your own awesome question then!"
+msgstr "Poser alors votre propre question&#x202F;!"
 
 #: templates/questions_subnav.html:11
 msgid "Choose a Category"
@@ -384,21 +403,21 @@ msgstr "Récemment répondu"
 msgid "Search for a product, a user or a tag"
 msgstr "Cherchez un produit, un utilisateur ou un tag"
 
-#: templates/site_base.html:91
+#: templates/site_base.html:98
 msgid "Tell me more!"
 msgstr "Dites m'en plus&#x202F;!"
 
-#: templates/site_base.html:92
+#: templates/site_base.html:99
 msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
 "NewCo est un site d'information produit organisé autour des questions/"
 "réponses."
 
-#: templates/site_base.html:94
+#: templates/site_base.html:101
 msgid "But what if I don&#39;t find it?"
 msgstr "Et si je ne trouve pas&#x202F;?"
 
-#: templates/site_base.html:95
+#: templates/site_base.html:102
 msgid ""
 "Looking for some information or advice? See if you can find here the related "
 "product, tag or user."
@@ -406,11 +425,11 @@ msgstr ""
 "Vous cherchez des informations ou des avis ? Essayez de trouver ici le "
 "produit, le tag ou l'utilisateur correspondant."
 
-#: templates/site_base.html:97
+#: templates/site_base.html:104
 msgid "Thank you!"
 msgstr "Merci&#x202F;!"
 
-#: templates/site_base.html:98
+#: templates/site_base.html:105
 msgid ""
 "NewCo is a collaborative webapp: if you can't find what you're looking for, "
 "create it and ask something!"
@@ -704,12 +723,6 @@ msgstr "Confirmez cette adresse email pour %(site_name)s"
 
 #~ msgid "stories"
 #~ msgstr "Historique"
-
-#~ msgid "Top related questions"
-#~ msgstr "Poser une question"
-
-#~ msgid "Latest related questions"
-#~ msgstr "Dernières contributions"
 
 #~ msgid "Store"
 #~ msgstr "Historique"

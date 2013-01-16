@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-30 19:28+0100\n"
+"POT-Creation-Date: 2013-01-16 19:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,70 +17,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:17 templates/dashboard/_subnav.html:10
+#: views.py:18 templates/dashboard/_subnav.html:10
 msgid "Dashboard"
 msgstr ""
 
-#: views.py:18
+#: views.py:19
 msgid "Feed"
 msgstr ""
 
-#: views.py:19 views.py:39 templates/dashboard/_subnav.html:17
+#: views.py:20 views.py:42 templates/dashboard/_subnav.html:17
 msgid "Contribution center"
 msgstr ""
 
-#: views.py:20
+#: views.py:21
 msgid "Teamwork"
 msgstr ""
 
-#: views.py:21 views.py:47 templates/dashboard/_subnav.html:19
+#: views.py:22 views.py:50 templates/dashboard/_subnav.html:19
 msgid "Drafts"
 msgstr ""
 
-#: views.py:22 views.py:55 templates/dashboard/_subnav.html:22
+#: views.py:23 views.py:58 templates/dashboard/_subnav.html:22
 msgid "All my contributions"
 msgstr ""
 
-#: views.py:23
+#: views.py:24
 msgid "Shopping notes"
 msgstr ""
 
-#: views.py:24
+#: views.py:25
 msgid "Purchase history"
 msgstr ""
 
-#: views.py:29 templates/dashboard/_subnav.html:13
+#: views.py:32 templates/dashboard/_subnav.html:13
 msgid "My newsfeed"
 msgstr ""
 
-#: views.py:30
+#: views.py:33
 msgid "Mini feed from what you follow"
 msgstr ""
 
-#: views.py:33
+#: views.py:37
 msgid ""
 "You don't follow anything nor anyone yet. Find people or products to follow "
-"on your right, or navigating NewCo!"
+"navigating NewCo!"
 msgstr ""
 
-#: views.py:40
+#: views.py:43
 msgid ""
 "Latest activity on your skills tags. Maybe you would like to contribute?"
 msgstr ""
 
-#: views.py:48
+#: views.py:51
 msgid "Complete and publish some?"
 msgstr ""
 
-#: views.py:51
+#: views.py:54
 msgid "You don't have any drafts."
 msgstr ""
 
-#: views.py:56
+#: views.py:59
 msgid "Your latest contributions"
 msgstr ""
 
-#: views.py:76
+#: views.py:80
 #, python-format
 msgid ""
 "We don't know what to advice you to contribute on, we would need to know "
@@ -88,7 +88,7 @@ msgid ""
 "your profile?"
 msgstr ""
 
-#: views.py:82
+#: views.py:86
 #, python-format
 msgid ""
 "You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How "
@@ -119,26 +119,25 @@ msgstr ""
 msgid "This is where to go to find all your inputs"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:37
+#: templates/dashboard/_subnav.html:38
 msgid "Profiles"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:39
+#: templates/dashboard/_subnav.html:41
 msgid ""
 "My profile, exactly as other users see it&mdash;besides the &lsquo;"
 "Update&rsquo; button"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:41
+#: templates/dashboard/_subnav.html:44
 msgid "User profile"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:41
-#: templates/dashboard/contribution.html:11 templates/dashboard/feed.html:22
+#: templates/dashboard/_subnav.html:44 templates/dashboard/contribution.html:9
 msgid ":"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:46
+#: templates/dashboard/_subnav.html:49
 msgid "All Profiles"
 msgstr ""
 
@@ -163,11 +162,11 @@ msgid ""
 "ideas, send us an email!\">tools</a> we have to help you contribute."
 msgstr ""
 
-#: templates/dashboard/contribution.html:11
+#: templates/dashboard/contribution.html:9
 msgid "Activity on your domains of skills"
 msgstr ""
 
-#: templates/dashboard/contribution.html:12
+#: templates/dashboard/contribution.html:11
 msgid "Latest activity on your skills tags... Maybe you'd like to contribute?"
 msgstr ""
 
@@ -175,20 +174,8 @@ msgstr ""
 msgid "Keep here your drafts: contributions you don't want to publish (yet)."
 msgstr ""
 
-#: templates/dashboard/feed.html:7
+#: templates/dashboard/feed.html:30
 msgid "Activity from what you follow."
-msgstr ""
-
-#: templates/dashboard/feed.html:16
-msgid "Who to follow?"
-msgstr ""
-
-#: templates/dashboard/feed.html:16
-msgid "View all"
-msgstr ""
-
-#: templates/dashboard/feed.html:22
-msgid "Products you may like"
 msgstr ""
 
 #: templates/dashboard/home.html:6

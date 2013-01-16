@@ -5,9 +5,11 @@
 {% load account_tags %}
 {% load content_utils %}
 {% load pagination_tags %}
+{% load staticfiles %}
 
 {% block extra_style %}
-    {{ media.css }}
+  {{ media.css }}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
 {% endblock %}
 
 {% block body_class %}index{% endblock %}
@@ -33,7 +35,7 @@
           <div class="carousel-caption"><h4>{{ item.name }}</h4></div>
         </div>
       {% endfor %}</div>
-      
+
       <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
       <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
     </div>
@@ -46,20 +48,28 @@
 {% block content %}
 
 <div class="tabbable">
-  <div class="row"><ul class="offset3 span7 nav nav-tabs" id="main-tab">
+  <div class="row"><ul class="offset3 nav nav-tabs" id="main-tab">
     <li{% if cat == "home" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug %}">{% trans "Home" %} - {{ tag|capfirst }}</a></li>
     <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}">{% trans "Products" %}</a></li>
     <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}">{% trans "Questions" %}</a></li>
   </ul></div>
   {% block list %}{% endblock %}
 </div>
-{% if is_paginated %}{% paginate %}{% endif %}
+{% if is_paginated %}<div class="row"><div class="offset3">{% paginate %}</div></div>{% endif %}
 {% endblock %}
 
 {% endblock %}
+
+{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
 
 {% block extra_script %}
   {{ media.js }}
+  <script src="{% static 'js/help.js' %}"></script>
+  <script>
+    $(function() {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+  </script>
   <script type="text/javascript">
         $(document).ready(function() {
             $('#carousel_tag').carousel({ interval: 10000 });

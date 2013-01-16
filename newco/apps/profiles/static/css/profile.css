@@ -1,83 +1,45 @@
-    .one_row {
-        border-radius: 5px 5px 5px 5px;
-        -webkit-transition: background-color 0.9s;
-        -moz-transition: background-color 0.9s;
-    }
+.one_row {
+  border-radius: 5px 5px 5px 5px;
+  -webkit-transition: background-color 0.9s;
+     -moz-transition: background-color 0.9s;
+}
 
-    .one_row:hover {
-        background-color: #F8F8F8;
-        -webkit-transition: background-color 5s;
-        -moz-transition: background-color 5s;
-    }
+.one_row:hover {
+  background-color: #F8F8F8;
+  -webkit-transition: background-color 5s;
+     -moz-transition: background-color 5s;
+}
 
-    .controls_2 {
-        display: inline-block;
-        line-height: 14px;
-        margin: 0 0;
-        opacity: 0;
-        -webkit-transition: opacity 0.6s;
-        -moz-transition: opacity 0.6s;
-    }
-    .one_row:hover .controls_2 {
-        opacity: 1;
-        -webkit-transition: opacity 1s;
-        -moz-transition: opacity 1s;
-    }
+.one_row:hover .controls_2 {
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+     -moz-transition: opacity 1s;
+}
 
-    .row .block_controls {
-        padding-top: 3px;
-        opacity: 0;
-        -webkit-transition: opacity 0.9s;
-        -moz-transition: opacity 0.9s;
-    }
-    .row:hover .block_controls {
-        opacity: 1;
-        -webkit-transition: opacity 5s;
-        -moz-transition: opacity 5s;
-    }
+.row .block_controls {
+  padding-top: 3px;
+  opacity: 0;
+  -webkit-transition: opacity 0.9s;
+     -moz-transition: opacity 0.9s;
+}
 
-    .question hr {
-        margin: 8px 0 15px;
-    }
+.row:hover .block_controls {
+  opacity: 1;
+  -webkit-transition: opacity 5s;
+     -moz-transition: opacity 5s;
+}
 
-    .right {
-        text-align: right;
-     }
+.question hr {
+  margin: 8px 0 15px;
+}
 
-    .right .signature { padding-right: 5px; }
+.draft {
+  background-color: #e5e5e5;
+  border-radius: 5px 5px 5px 5px;
+}
 
-    .controls_2.vote {
-        vertical-align: -6px;
-    }
-
-    button[type="submit"][class*="icon-"] {
-        height: 14px;
-        width: 21px;
-        line-height: 14px;
-        border: none;
-        margin: 0 0;
-        background-color: transparent;
-        border-radius: 5px;
-    }
-
-    button[type="submit"][class*="icon-"][data-vote="True"] {
-        background-color: #f89406;
-    }
-
-    .controls_2 .icon-chevron-up {
-        background-position: -284px -120px;
-    }
-
-    .controls_2 .icon-chevron-down {
-        background-position: -309px -119px;
-    }
-
-    .draft {
-        background-color: #e5e5e5;
-        border-radius: 5px 5px 5px 5px;
-    }
-    .draft:hover .controls_2 {
-        opacity: 1;
-        -webkit-transition: opacity 1s;
-        -moz-transition: opacity 1s;
-    }
+.draft:hover .controls_2 {
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+     -moz-transition: opacity 1s;
+}

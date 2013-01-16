@@ -7,3 +7,6 @@
 [submodule "newco/static/external/javascript-load-image"]
 	path = newco/static/external/javascript-load-image
 	url = git://github.com/blueimp/JavaScript-Load-Image.git
+[submodule "newco/static/external/jquery-expander"]
+	path = newco/static/external/jquery-expander
+	url = git://github.com/kswedberg/jquery-expander.git

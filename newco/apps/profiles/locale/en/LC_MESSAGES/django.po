@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-10 18:39+0100\n"
+"POT-Creation-Date: 2013-01-16 19:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,28 +53,28 @@ msgstr ""
 msgid "reputation"
 msgstr ""
 
-#: views.py:42
+#: views.py:43
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
+msgstr ""
+
+#: templates/profiles/_profile_edit_about.html:3
+msgid "Tell us about you"
 msgstr ""
 
 #: templates/profiles/_profile_edit_about.html:4
 msgid "Edit your bio"
 msgstr ""
 
-#: templates/profiles/_profile_edit_about.html:4
-msgid "Tell us about you"
-msgstr ""
-
 #: templates/profiles/_profile_edit_about.html:9
 msgid "I can give a good answer because..."
 msgstr ""
 
-#: templates/profiles/_profile_edit_about.html:12
+#: templates/profiles/_profile_edit_about.html:13
 msgid "e.g. professional gardener, model, local tennis champion"
 msgstr ""
 
-#: templates/profiles/_profile_edit_about.html:13
+#: templates/profiles/_profile_edit_about.html:14
 msgid "Submit"
 msgstr ""
 

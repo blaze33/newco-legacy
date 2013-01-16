@@ -25,6 +25,10 @@ class AskForHelpForm(forms.Form):
             "Enter an email address"), "class": "input-block-level"}))
 
     def __init__(self, experts_qs, *args, **kwargs):
+        self.request = kwargs.pop("request", {})
+        kwargs.pop("items", {})
+        kwargs.pop("tags", {})
+        kwargs.pop("prefix", {})
         super(AskForHelpForm, self).__init__(*args, **kwargs)
         if experts_qs:
             ids = map(str, experts_qs.values_list("id", flat=True))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 15:05+0100\n"
+"POT-Creation-Date: 2013-01-16 19:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,18 +47,18 @@ msgstr ""
 msgid "%(user)s, you can't follow yourself!"
 msgstr ""
 
-#: templates/content/info.html:6
+#: templates/content/info.html:7
 msgid "Posted"
 msgstr ""
 
-#: templates/content/info.html:6
+#: templates/content/info.html:7
 #: templates/mail/_answer_notification_email.html:7
 #: templates/mail/_ask_notification_email.html:7
 #: templates/mail/_ask_notification_email.txt:7
 msgid ":"
 msgstr ""
 
-#: templates/content/info.html:12
+#: templates/content/info.html:13
 msgid "Reputation"
 msgstr ""
 
@@ -213,18 +213,6 @@ msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
-
-#: views/help.py:81
-msgid "{user}, your request has been sent to {receiver}!"
-msgstr ""
-
-#: views/help.py:85
-msgid "{user}, you can't ask yourself to answer a question!"
-msgstr ""
-
-#: views/help.py:89
-msgid "{user}, {email} is not a valid email address!"
-msgstr ""
 
 #: vote/tools.py:20
 #, python-format

@@ -158,9 +158,10 @@ class PartialQuestionForm(ModelForm):
             "class": "span4", "rows": 1,
             "placeholder": _("Ask something specific.")})}
 
-    def __init__(self, request, item, *args, **kwargs):
+    def __init__(self, request, items=[], tags=[], *args, **kwargs):
+        kwargs.pop("experts_qs", {})
         super(PartialQuestionForm, self).__init__(*args, **kwargs)
-        self.request, self.item = [request, item]
+        self.request, self.items, self.tags = [request, items, tags]
 
     def save(self, commit=True, **kwargs):
         question = super(PartialQuestionForm, self).save(commit=False)
@@ -169,7 +170,8 @@ class PartialQuestionForm(ModelForm):
         if commit:
             question.save()
             self.save_m2m()
-            question.items.add(self.item.id)
+            question.items.add(*self.items)
+            question.tags.add(*self.tags)
         return question
 
 
@@ -199,13 +201,7 @@ class AnswerForm(ModelForm):
         self.question = Question.objects.get(id=question_id) if question_id \
             else getattr(self.object, "question", None)
 
-        if self.request.user.is_authenticated():
-            profile = self.request.user.get_profile()
-            label = user_display(self.request.user)
-            label = label + ", " + profile.about if profile.about else label
-        else:
-            label = _("Please login before answering.")
-        self.fields["content"].label = label
+        self.fields["content"].label = ""
 
     def save(self, commit=True, **kwargs):
         answer = super(AnswerForm, self).save(commit=False)

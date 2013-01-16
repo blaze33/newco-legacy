@@ -3,11 +3,13 @@
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
+{% load staticfiles %}
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
 {% endblock %}
 
 {% block subnav %}{% include "dashboard/_subnav.html" %}{% endblock %}
@@ -33,4 +35,15 @@
   {% block dashboard %}{% endblock %}
 
   {% if is_paginated %}{% paginate %}{% endif %}
+{% endblock %}
+
+{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+
+{% block extra_script %}
+  <script src="{% static 'js/help.js' %}"></script>
+  <script>
+    $(function() {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+  </script>
 {% endblock %}
