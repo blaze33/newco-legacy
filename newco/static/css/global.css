@@ -13,30 +13,30 @@
 /* utilities */
 
 .boxsizingBorder {
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 /* ↓ css defs for profile page */
 
 .run-in {
-    display: run-in
+  display: run-in
 }
 
 .centered-text {
-    text-align:center
+  text-align:center
 }
 
 .no-display {
-    display:none
+  display:none
 }
 
 .profile-item .name img {
-    float: right;
-    margin-left: 5px;
-    max-height: 64px;
-    border-radius: 4px;
+  float: right;
+  margin-left: 5px;
+  max-height: 64px;
+  border-radius: 4px;
 }
 
 .profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; background-color: white; }
@@ -44,8 +44,8 @@
 .profile-item .details p { margin: 0; }
 
 #profile-follow {
-    display: block;
-    padding-left: 130px;
+  display: block;
+  padding-left: 130px;
 }
 
 .black { color: #333 }
@@ -54,11 +54,11 @@
 
 .profile-item-small { line-height: 8px; width: 100px; height: 50px; margin: 3px }
 .profile-item-small img {
-    float: right;
-    margin-left: 5px;
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
+  float: right;
+  margin-left: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
 }
 
 .product-item-small { line-height: 8px; width: 140px; height: 50px; margin: 3px }
@@ -83,11 +83,11 @@
 .content-item .details { line-height: 20px; }
 
 .content-item-small img {
-    /*float: right;*/
-    margin-left: 2px;
-    width: 124px;
-    height: 124px;
-    border-radius: 2px;
+  /*float: right;*/
+  margin-left: 2px;
+  width: 124px;
+  height: 124px;
+  border-radius: 2px;
 }
 
 .content-item-small { line-height: 18px; width: 125px; margin: 2px }
@@ -97,24 +97,24 @@
 
 .content-item-products { line-height: 1px; width: 25px; margin: 3px }
 .content-item-products img {
-    float: left;
-    margin-left: 3px;
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    margin-right:5px;
-    margin-top: 2px;
+  float: left;
+  margin-left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  margin-right:5px;
+  margin-top: 2px;
 }
 
 .carousel .item img {
-    height: 300px;
-    max-width: none;
+  height: 300px;
+  max-width: none;
 }
 
 #bulb > div{
-    display: inline-block;
-    background: #fff url(../img/bulb.png);
-    height:120px;
+  display: inline-block;
+  background: #fff url(../img/bulb.png);
+  height:120px;
 }
 
 #gears > div{
@@ -126,97 +126,97 @@
 /* ↓ css defs for image selection/sort */
 
 .selector-item {
-    position: relative;
-    list-style: none;
+  position: relative;
+  list-style: none;
 }
 
 .selected-list img {
-    min-width: 100px;
-    min-height: 128px;
-    max-height: 128px;
+  min-width: 100px;
+  min-height: 128px;
+  max-height: 128px;
 }
 
 .selected-list {
-    margin-right: 13px;
+  margin-right: 13px;
 }
 
 .img-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    height: 16px;
-    border-radius: 3px;
-    opacity: 0;
-    background-color: #BBB;
-    -webkit-transition: opacity 0.6s;
-    -moz-transition: opacity 0.6s;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 16px;
+  border-radius: 3px;
+  opacity: 0;
+  background-color: #BBB;
+  -webkit-transition: opacity 0.6s;
+     -moz-transition: opacity 0.6s;
+  cursor: pointer;
 }
 
 img:hover + .img-controls,
 .img-controls:hover {
-    opacity: 1;
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
+  opacity: 1;
+  -webkit-transition: opacity 1s;
+     -moz-transition: opacity 1s;
 }
 
 .img-selector {
-    border-collapse: initial;
+  border-collapse: initial;
 }
 
 .trash {
-    text-align: center;
-    vertical-align: middle;
-    padding: 0;
-    width: 140px;
-    padding-top: 18px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+  width: 140px;
+  padding-top: 18px;
 }
 
 .trash-list {
-    width: 100%;
-    min-height: 100px;
-    margin-left: auto;
-    margin-right: auto;
+  width: 100%;
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .trash .selector-item {
-    margin-left:20px;
+  margin-left:20px;
 }
 
 .trash img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .dropzone {
-    border: 1px dashed #ddd;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    border-color: #0088cc;
-    -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
-     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
-          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  border: 1px dashed #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  border-color: #0088cc;
+  -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
+   -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+        box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
 }
 
 .ui-sortable-placeholder {
-    min-width: 124px;
-    height: 136px;
-    border: 1px dashed #ddd;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    border-color: #0088cc;
-    -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
-     -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
-          box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  min-width: 124px;
+  height: 136px;
+  border: 1px dashed #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  border-color: #0088cc;
+  -webkit-box-shadow:  4px rgba(0, 105, 214, 0.25);
+   -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+        box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
 }
 
 .trash .ui-sortable-placeholder {
-    visibility: hidden;
-    min-width: 38px;
-    height: 38px;
-    width: 38px;
+  visibility: hidden;
+  min-width: 38px;
+  height: 38px;
+  width: 38px;
 }
 
 .popover.object-display {
@@ -437,9 +437,9 @@ img:hover + .img-controls,
 
 /* Right column details (ex: question_detail.html and feed.html) */
 .well.nc-right-col-well-span4 { /*Maybe we don't want to limit this to nc-right-col-well-span4 ?*/
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 @media (min-width: 980px) {
@@ -470,12 +470,12 @@ img:hover + .img-controls,
 .select2-bootstrap .select2-choices {
   background-color: white;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border linear .2s, box-shadow linear .2s;
-  -moz-transition: border linear .2s, box-shadow linear .2s;
-  -o-transition: border linear .2s, box-shadow linear .2s;
-  transition: border linear .2s, box-shadow linear .2s;
+     -moz-transition: border linear .2s, box-shadow linear .2s;
+       -o-transition: border linear .2s, box-shadow linear .2s;
+          transition: border linear .2s, box-shadow linear .2s;
 
   border-radius: 4px;
   border: 1px solid #CCC;
@@ -487,8 +487,8 @@ img:hover + .img-controls,
   outline: 0;
   outline: thin dotted 9;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 .select2-bootstrap.select2-dropdown-open .select2-choices {
   border-radius: 4px 4px 0 0;
