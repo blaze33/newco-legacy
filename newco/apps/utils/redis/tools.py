@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
 
+from gravatar.templatetags.gravatar import gravatar_for_user
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 from taggit.models import Tag
@@ -23,7 +24,11 @@ PARAMS = {
     },
     get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
-        "text_field": "name", "recorded_fields": ["id", "name", "slug"]
+        "text_field": "name",
+        "recorded_fields": ["id", "name", "slug", "about"],
+        "fkey_fields": {
+            "reputation": "user__reputation__reputation_incremented"},
+        "extra_fields": ["gravatar_url"]
     },
     get_class_name(Tag): {
         "class": Tag, "pk": "id", "title_field": "name", "text_field": "name",
@@ -74,6 +79,12 @@ def record_object(engine, obj, key, value, ctype=None):
     data = {"class": key, "title": title, "text": text}
     for field in value["recorded_fields"]:
         data.update({field: unicode(obj.__getattribute__(field))})
+    for field_name, fkey_field in value.get("fkey_fields", {}).items():
+        data.update({field_name: unicode(get_fkey_attr(obj, fkey_field))})
+    for field in value.get("extra_fields", []):
+        if field == "gravatar_url":
+            data.update({field: unicode(gravatar_for_user(obj.user))})
+
     engine.store_json(obj_id, title, data, ctype.id)
 
 
@@ -85,7 +96,7 @@ def update_redis_db(sender, request, user, **kwargs):
     for key, value in PARAMS.iteritems():
         # TODO: grouped query
         ctype = ContentType.objects.get_for_model(value["class"])
-        for obj in value["class"].objects.all():
+        for obj in value["class"].objects.select_related():
             record_object(engine, obj, key, value, ctype)
 
 
@@ -106,3 +117,10 @@ def redis_post_delete(sender, instance=None, **kwargs):
     obj_id = instance.__getattribute__(value["pk"])
     ctype = ContentType.objects.get_for_model(instance)
     engine.remove(obj_id, ctype.id)
+
+
+def get_fkey_attr(obj, field_name):
+    val = obj
+    for part in field_name.split('__'):
+        val = getattr(val, part)
+    return val
