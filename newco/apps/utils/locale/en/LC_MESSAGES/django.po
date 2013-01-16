@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 20:59+0100\n"
+"POT-Creation-Date: 2013-01-16 19:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,12 +22,12 @@ msgstr ""
 msgid "%(receiver)s, %(answerer)s has answered your question!"
 msgstr ""
 
-#: mailtools.py:65
+#: mailtools.py:68
 #, python-format
 msgid "%(receiver)s, %(requester)s needs your help."
 msgstr ""
 
-#: mailtools.py:92
+#: mailtools.py:95
 #, python-format
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
@@ -47,18 +47,18 @@ msgstr ""
 msgid "%(user)s, you can't follow yourself!"
 msgstr ""
 
-#: templates/content/info.html:6
+#: templates/content/info.html:7
 msgid "Posted"
 msgstr ""
 
-#: templates/content/info.html:6
+#: templates/content/info.html:7
 #: templates/mail/_answer_notification_email.html:7
 #: templates/mail/_ask_notification_email.html:7
 #: templates/mail/_ask_notification_email.txt:7
 msgid ":"
 msgstr ""
 
-#: templates/content/info.html:12
+#: templates/content/info.html:13
 msgid "Reputation"
 msgstr ""
 
@@ -213,14 +213,6 @@ msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
-
-#: views/help.py:47
-msgid "{user}, your request has been sent to {receiver}!"
-msgstr ""
-
-#: views/help.py:51
-msgid "{user}, you can't ask yourself to answer a question!"
-msgstr ""
 
 #: vote/tools.py:20
 #, python-format

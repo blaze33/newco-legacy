@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.contenttypes.models import ContentType
 
+from gravatar.templatetags.gravatar import gravatar_for_user
 from redis_completion import RedisEngine
 from redis.exceptions import ConnectionError, RedisError
 from taggit.models import Tag
@@ -18,15 +19,19 @@ from utils.tools import get_class_name
 
 PARAMS = {
     get_class_name(Item): {
-        "class": Item, "pk": "id", "title_field": "name",
+        "class": Item, "pk": "id", "title_field": "name", "text_field": "name",
         "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
     },
     get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
-        "recorded_fields": ["id", "name", "slug"]
+        "text_field": "name",
+        "recorded_fields": ["id", "name", "slug", "about"],
+        "fkey_fields": {
+            "reputation": "user__reputation__reputation_incremented"},
+        "extra_fields": ["gravatar_url"]
     },
     get_class_name(Tag): {
-        "class": Tag, "pk": "id", "title_field": "name",
+        "class": Tag, "pk": "id", "title_field": "name", "text_field": "name",
         "recorded_fields": ["id", "name", "slug"]
     },
 }
@@ -64,13 +69,26 @@ def record_object(engine, obj, key, value, ctype=None):
         ctype = ContentType.objects.get_for_model(obj)
     obj_id = obj.__getattribute__(value["pk"])
     title = obj.__getattribute__(value["title_field"])
+    text = obj.__getattribute__(value["text_field"])
     if not title:
         return
-    title = unicodedata.normalize('NFKD', title).encode('utf-8',
-                                                        'ignore')
-    data = {"class": key, "title": title}
+    title = unicodedata.normalize("NFKD", title).encode("utf-8",
+                                                        "ignore")
+    text = unicodedata.normalize("NFKD", text).encode("utf-8",
+                                                      "ignore")
+    data = {"class": key, "title": title, "text": text}
     for field in value["recorded_fields"]:
-        data.update({field: unicode(obj.__getattribute__(field))})
+        attr = obj.__getattribute__(field)
+        unicode_attr = unicode(attr) if attr is not None else u""
+        data.update({field: unicode_attr})
+    for field_name, fkey_field in value.get("fkey_fields", {}).items():
+        attr = get_fkey_attr(obj, fkey_field)
+        unicode_attr = unicode(attr) if attr is not None else u""
+        data.update({field_name: unicode_attr})
+    for field in value.get("extra_fields", []):
+        if field == "gravatar_url":
+            data.update({field: unicode(gravatar_for_user(obj.user, 40))})
+
     engine.store_json(obj_id, title, data, ctype.id)
 
 
@@ -82,7 +100,7 @@ def update_redis_db(sender, request, user, **kwargs):
     for key, value in PARAMS.iteritems():
         # TODO: grouped query
         ctype = ContentType.objects.get_for_model(value["class"])
-        for obj in value["class"].objects.all():
+        for obj in value["class"].objects.select_related():
             record_object(engine, obj, key, value, ctype)
 
 
@@ -103,3 +121,10 @@ def redis_post_delete(sender, instance=None, **kwargs):
     obj_id = instance.__getattribute__(value["pk"])
     ctype = ContentType.objects.get_for_model(instance)
     engine.remove(obj_id, ctype.id)
+
+
+def get_fkey_attr(obj, field_name):
+    val = obj
+    for part in field_name.split('__'):
+        val = getattr(val, part)
+    return val

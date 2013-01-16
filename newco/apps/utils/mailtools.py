@@ -58,9 +58,12 @@ def mail_question_author(request, answer):
               context, answerer)
 
 
-def mail_helper(request, receiver, requester, question):
-    receiver_name = user_display(receiver)
-    requester_name = user_display(requester)
+def mail_helper(request, receiver, requester, question, receiver_name=None,
+                requester_name=None):
+    if not receiver_name:
+        receiver_name = user_display(receiver)
+    if not requester_name:
+        requester_name = user_display(requester)
 
     subject = _("%(receiver)s, %(requester)s needs your help.")
     subject_kwargs = {"receiver": receiver_name, "requester": requester_name}

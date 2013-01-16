@@ -74,6 +74,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
     PROJECT_ROOT + '/apps/utils/locale',
+    PROJECT_ROOT + '/apps/utils/help/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -217,6 +218,7 @@ INSTALLED_APPS = [
     "items",
     "profiles",
     "utils",
+    "utils.help",
     "utils.redis",
     "content",
 

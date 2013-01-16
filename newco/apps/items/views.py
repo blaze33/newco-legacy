@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import FormMixin, ModelFormMixin
+from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -32,7 +32,8 @@ from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
 from utils.vote.views import VoteMixin
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.views import AskForHelpView, TutorialMixin
+from utils.help.views import AskForHelpMixin
+from utils.views.tutorial import TutorialMixin
 
 app_name = "items"
 
@@ -188,14 +189,21 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 # Won't be an issue in 1.5
 class QuestionFormMixin(object):
 
-    form_class = PartialQuestionForm
     items = []
     tags = []
 
+    def form_invalid(self, form):
+        if "question" not in self.request.POST:
+            return super(AskForHelpMixin, self).form_invalid(form)
+        return self.render_to_response(self.get_context_data(
+            question_form=form))
+
     def form_valid(self, form):
+        if "question" not in self.request.POST:
+            return super(QuestionFormMixin, self).form_valid(form)
         question = form.save()
         self.success_url = question.get_absolute_url()
-        return super(QuestionFormMixin, self).form_valid(form)
+        return HttpResponseRedirect(self.success_url)
 
     def get_form_kwargs(self):
         kwargs = super(QuestionFormMixin, self).get_form_kwargs()
@@ -206,27 +214,37 @@ class QuestionFormMixin(object):
         return kwargs
 
     def get_context_data(self, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
+        form = kwargs.pop("question_form", None)
+        if not form:
+            form_class = PartialQuestionForm
+            form = self.get_form(form_class)
         kwargs.update({"question_form": form})
         return super(QuestionFormMixin, self).get_context_data(**kwargs)
 
     def post(self, request, *args, **kwargs):
         POST = request.POST
-        if "question" in POST:
-            form_class = self.get_form_class()
-            form = self.get_form(form_class)
-            if form.is_valid():
-                display_message("created", self.request,
-                                form._meta.model._meta.verbose_name)
-                return self.form_valid(form)
-            else:
-                return self.form_invalid(form)
-        return super(QuestionFormMixin, self).post(request, *args, **kwargs)
+        if "question" not in POST:
+            return super(QuestionFormMixin, self).post(request, *args,
+                                                       **kwargs)
+        form_class = PartialQuestionForm
+        form = self.get_form(form_class)
+        if form.is_valid():
+            display_message("created", self.request,
+                            form._meta.model._meta.verbose_name)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
-class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
-                        FormMixin, FollowMixin, VoteMixin, AskForHelpView):
+class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
+                        DetailView, FormMixin, FollowMixin, VoteMixin):
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.experts = self.get_experts()
+        kwargs = {"object": self.object, "experts": self.experts}
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -254,12 +272,8 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
                 if not media:
                     media = q.answer_form.media
 
-            experts = Profile.objects.filter(skills__in=item.tags.all())
-
-            context.update({
-                "questions": questions, "scores": scores, "votes": votes,
-                "media": media, "experts": experts.distinct()
-            })
+            context.update({"questions": questions, "scores": scores,
+                            "votes": votes, "media": media})
 
             # Linked affiliated products
             products = item.affiliationitem_set.select_related("store")
@@ -284,8 +298,7 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
                     "answer_set__author__reputation").select_subclasses().get()
 
             q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST \
-                else AnswerForm(request)
+                if "answer" in POST else AnswerForm(request)
 
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
             scores, votes = qna_qs.get_scores_and_votes(user)
@@ -309,6 +322,7 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+        self.experts = self.get_experts()
         self.items = [self.object]
         POST = request.POST
         if "answer" in POST:
@@ -317,6 +331,8 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
             if form.is_valid():
                 display_message("created", self.request,
                                 form._meta.model._meta.verbose_name)
+                answer = form.save()
+                self.success_url = answer.get_absolute_url()
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
@@ -332,15 +348,23 @@ class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
 
+    def get_experts(self):
+        tag_ids = list(self.object.tags.values_list("id", flat=True))
+        if self.object.__class__ is Question:
+            tag_ids.extend(self.object.items.values_list("tags", flat=True))
+        return Profile.objects.filter(skills__id__in=tag_ids).order_by(
+            "-user__reputation__reputation_incremented").distinct()
 
-class ContentListView(ContentView, MultiTemplateMixin, QuestionFormMixin,
-                      ListView, FormMixin, VoteMixin):
+
+class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
+                      QuestionFormMixin, ListView, FormMixin, VoteMixin):
 
     paginate_by = 9
     qs_option = "-pub_date"
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
+        self.experts = self.get_experts()
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -415,6 +439,10 @@ class ContentListView(ContentView, MultiTemplateMixin, QuestionFormMixin,
                 else profile.skills.remove(self.tag.name)
             return self.get(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
+
+    def get_experts(self):
+        return Profile.objects.filter(skills=self.tag).order_by(
+            "-user__reputation__reputation_incremented").distinct()
 
 
 class ContentDeleteView(ContentView, DeleteView):

@@ -159,6 +159,7 @@ class PartialQuestionForm(ModelForm):
             "placeholder": _("Ask something specific.")})}
 
     def __init__(self, request, items=[], tags=[], *args, **kwargs):
+        kwargs.pop("experts_qs", {})
         super(PartialQuestionForm, self).__init__(*args, **kwargs)
         self.request, self.items, self.tags = [request, items, tags]
 
@@ -200,12 +201,6 @@ class AnswerForm(ModelForm):
         self.question = Question.objects.get(id=question_id) if question_id \
             else getattr(self.object, "question", None)
 
-        # if self.request.user.is_authenticated():
-        #     profile = self.request.user.get_profile()
-        #     label = user_display(self.request.user)
-        #     label = label + ", " + profile.about if profile.about else label
-        # else:
-        #     label = _("Please login before answering.")
         self.fields["content"].label = ""
 
     def save(self, commit=True, **kwargs):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 14:42+0100\n"
+"POT-Creation-Date: 2013-01-16 19:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Pick less than %d products"
 msgstr ""
 
-#: forms.py:188
+#: forms.py:189
 msgid "Be concise and to the point."
 msgstr ""
 
@@ -175,63 +175,47 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:304 views.py:400
+#: views.py:317 views.py:423
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:305 views.py:401
+#: views.py:318 views.py:424
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:354
+#: views.py:377
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:360
+#: views.py:383
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:366
+#: views.py:389
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:446
+#: views.py:469
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr ""
 
-#: views.py:450
+#: views.py:473
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr ""
 
-#: views.py:454
+#: views.py:477
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:458
+#: views.py:481
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
-msgstr ""
-
-#: templates/items/_ask_modal.html:8
-msgid "Ask..."
-msgstr ""
-
-#: templates/items/_ask_modal.html:13
-msgid "...an expert:"
-msgstr ""
-
-#: templates/items/_ask_modal.html:17 templates/items/_ask_modal.html.py:31
-msgid "Ask"
-msgstr ""
-
-#: templates/items/_ask_modal.html:25
-msgid "...some users you may know:"
 msgstr ""
 
 #: templates/items/_data_sheet.html:13
@@ -268,7 +252,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/feed_display/_feed_controls.html:44
+#: templates/items/feed_display/_feed_controls.html:41
 msgid "Save as draft"
 msgstr ""
 
@@ -491,11 +475,11 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: templates/items/question_detail.html:21
+#: templates/items/question_detail.html:22
 msgid "Related products"
 msgstr ""
 
-#: templates/items/question_detail.html:26
+#: templates/items/question_detail.html:27
 msgid "Related tags"
 msgstr ""
 
@@ -619,23 +603,23 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/items/feed_display/_feed_controls.html:18
+#: templates/items/feed_display/_feed_controls.html:15
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:18
+#: templates/items/feed_display/_feed_controls.html:15
 msgid "Add an answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:23
+#: templates/items/feed_display/_feed_controls.html:20
 msgid "Ask to answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:37
+#: templates/items/feed_display/_feed_controls.html:34
 msgid "Please login before answering."
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:43
+#: templates/items/feed_display/_feed_controls.html:40
 msgid "Answer and publish"
 msgstr ""
 

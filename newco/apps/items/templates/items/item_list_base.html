@@ -5,9 +5,11 @@
 {% load account_tags %}
 {% load content_utils %}
 {% load pagination_tags %}
+{% load staticfiles %}
 
 {% block extra_style %}
-    {{ media.css }}
+  {{ media.css }}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
 {% endblock %}
 
 {% block body_class %}index{% endblock %}
@@ -58,8 +60,16 @@
 
 {% endblock %}
 
+{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+
 {% block extra_script %}
   {{ media.js }}
+  <script src="{% static 'js/help.js' %}"></script>
+  <script>
+    $(function() {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+  </script>
   <script type="text/javascript">
         $(document).ready(function() {
             $('#carousel_tag').carousel({ interval: 10000 });
