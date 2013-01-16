@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
-from django.views.generic.edit import ModelFormMixin
+from django.views.generic.edit import FormMixin, ModelFormMixin
 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -42,9 +42,6 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
-            form_class_name = self.model._meta.object_name + "Form"
-            if form_class_name in globals():
-                self.form_class = globals()[form_class_name]
         if "next" in request.GET:
             self.next = request.GET.get("next")
             kwargs.update({"next": self.next})
@@ -58,6 +55,10 @@ class ContentFormMixin(object):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        if "model_name" in kwargs:
+            form_class_name = self.model._meta.object_name + "Form"
+            if form_class_name in globals():
+                self.form_class = globals()[form_class_name]
         return super(ContentFormMixin, self).dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -183,8 +184,49 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
         return context
 
 
-class ContentDetailView(ContentView, DetailView, ModelFormMixin,
-                        FollowMixin, VoteMixin, AskForHelpView):
+# Can't directly subclass FormMixin because of get_context_data.
+# Won't be an issue in 1.5
+class QuestionFormMixin(object):
+
+    form_class = PartialQuestionForm
+    items = []
+    tags = []
+
+    def form_valid(self, form):
+        question = form.save()
+        self.success_url = question.get_absolute_url()
+        return super(QuestionFormMixin, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(QuestionFormMixin, self).get_form_kwargs()
+        kwargs.update({"request": self.request, "prefix": "question"})
+        for attr in ["items", "tags"]:
+            if getattr(self, attr):
+                kwargs.update({attr: getattr(self, attr)})
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        kwargs.update({"question_form": form})
+        return super(QuestionFormMixin, self).get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        POST = request.POST
+        if "question" in POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            if form.is_valid():
+                display_message("created", self.request,
+                                form._meta.model._meta.verbose_name)
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+        return super(QuestionFormMixin, self).post(request, *args, **kwargs)
+
+
+class ContentDetailView(ContentView, QuestionFormMixin, DetailView,
+                        FormMixin, FollowMixin, VoteMixin, AskForHelpView):
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
@@ -200,11 +242,8 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                 "author__reputation", "answer_set__author__reputation"
             ).order_queryset("popular", scores)
 
-            q_form = PartialQuestionForm(request, item, data=POST) \
-                if "question" in POST else PartialQuestionForm(request, item)
             q_id = -1
-            if ("answer" in POST or "edit_about" in POST) \
-                    and "question_id" in POST:
+            if "answer" in POST and "question_id" in POST:
                 q_id = int(POST.get("question_id"))
                 context.update({"q_id": q_id})
 
@@ -219,7 +258,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
 
             context.update({
                 "questions": questions, "scores": scores, "votes": votes,
-                "media": media, "q_form": q_form, "experts": experts.distinct()
+                "media": media, "experts": experts.distinct()
             })
 
             # Linked affiliated products
@@ -245,7 +284,7 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
                     "answer_set__author__reputation").select_subclasses().get()
 
             q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST or "edit_about" in POST \
+                if "answer" in POST \
                 else AnswerForm(request)
 
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
@@ -270,32 +309,32 @@ class ContentDetailView(ContentView, DetailView, ModelFormMixin,
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+        self.items = [self.object]
         POST = request.POST
-        if "question" in POST or "answer" in POST:
-            if "question" in POST:
-                form = PartialQuestionForm(request, self.object, data=POST)
-            else:
-                status = int(POST.get("answer"))
-                form = AnswerForm(request, data=POST, status=status)
+        if "answer" in POST:
+            status = int(POST.get("answer"))
+            form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
                 display_message("created", self.request,
                                 form._meta.model._meta.verbose_name)
                 return self.form_valid(form)
             else:
                 return self.form_invalid(form)
-        elif "edit_about" in POST:
+        elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
             profile = request.user.get_profile()
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            return self.render_to_response(self.get_context_data())
+            data = {"is_success": "bio update success", "about": about}
+            return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,
                                                        **kwargs)
 
 
-class ContentListView(ContentView, MultiTemplateMixin, ListView):
+class ContentListView(ContentView, MultiTemplateMixin, QuestionFormMixin,
+                      ListView, FormMixin, VoteMixin):
 
     paginate_by = 9
     qs_option = "-pub_date"
@@ -315,15 +354,19 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             msg = _("No products with tag %s")
         elif self.cat == "questions":
             self.model, self.pill = [Question, kwargs.get("pill", "tag")]
-            self.queryset = Content.objects.questions()
+            self.queryset = Content.objects.all()
             if self.pill == "tag":
                 self.queryset = self.queryset.filter(tags=self.tag)
                 msg = _("No questions with tag %s")
             elif self.pill == "products":
                 item_ids = Item.objects.filter(tags=self.tag).values_list(
                     "id", flat=True)
-                self.queryset = self.queryset.filter(items__in=item_ids)
+                self.queryset = self.queryset.filter(
+                    items__in=item_ids).distinct()
                 msg = _("No questions about products with tag %s")
+            self.scores, self.votes = self.queryset.get_scores_and_votes(
+                self.request.user)
+            self.queryset = self.queryset.questions()
 
         tpl = "tags/_tag_display.html"
         self.empty_msg = mark_safe(
@@ -337,13 +380,13 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
         elif self.cat == "questions":
-            self.scores = qs.get_scores()
             qs = qs.order_queryset(self.qs_option, self.scores)
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "qs_option", "cat", "pill", "scores", "empty_msg"]:
+        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes",
+                     "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.cat == "home" and context.get("object_list"):
@@ -365,6 +408,7 @@ class ContentListView(ContentView, MultiTemplateMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.tags = [self.tag]
         if "skills" in request.POST:
             profile = request.user.get_profile()
             profile.skills.add(self.tag) if request.POST["skills"] == "add" \

@@ -2,5 +2,5 @@
 {% load voting_utils %}
 {% load content_utils %}
 
-{% get_content_url content display item as next %}
+{% if item %}{% get_content_url content display item as next %}{% endif %}{# Seb: ToDo: find what to do when there's no "item" (i.e. in tag page / item_list ) #}
 {% vote_form content vote next %}<div class="score-display">{{ score.score }}<br><span class="score-small">{% trans "Score" %}</span></div>

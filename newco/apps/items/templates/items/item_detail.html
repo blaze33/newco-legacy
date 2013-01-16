@@ -29,7 +29,8 @@
   <div class="span9">
     {% include "items/_data_sheet.html" %}
     <br>
-    {% include "items/_question_list.html" %}
+    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" display_q_form="True" question_form=question_form item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+
     <br>
     {% for prod in store_products %}
       {% if forloop.first %}
@@ -76,7 +77,7 @@
 
 {% block extra_body %}
 <!-- modal-gallery is the modal dialog used for the image gallery -->
-<div id="modal-gallery" class="modal modal-gallery hide fade" tabindex="-1">
+<div class="modal modal-gallery hide fade" id="modal-gallery" tabindex="-1">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
     <h3 class="modal-title"></h3>
@@ -88,8 +89,6 @@
   </div>
 </div>
 
-{% include "items/_ask_modal.html" with experts=experts %}
-
 {% endblock %}
 
 {% block extra_script %}
@@ -98,43 +97,7 @@
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
-  <script>// script can't go to '/static' : needs to translate text
-    // ask a new question form
-    $(document).ready( function() {
-        var form = $('#question_form');
-        var icon_change = $('[rel=add_icon]');
-        var text_change = $('[rel=add_q_text]');
-        var text_change_no_q_yet = $('[rel=add_q_text_no_q_yet]');
-        form.on('shown', function () {
-            icon_change.removeClass('icon-plus').addClass('icon-remove');
-            text_change.html("&nbsp;");
-            $('#id_content').focus();
-        })
-        form.on('hidden', function () {
-            icon_change.removeClass('icon-remove').addClass("icon-plus");
-            text_change.html("{% trans 'Ask a new question!' %}");
-        })
-        {% if not questions %}form.collapse('show');{% endif %}
-    });
-
-    // answer form
-    $(document).ready( function() {
-      var divCollection = $('div[id^="answer_form_"]');
-      $.each(divCollection, function (i, item) {
-        var bc = $("#controls_" + $(this)[0].id)
-        var icon_change = $('[rel=icon]', bc);
-        var text_change = $('[rel=text]', bc);
-        $(this).on('shown', function () {
-          icon_change.removeClass('icon-share-alt').addClass('icon-remove');
-          text_change.html("{% trans 'Close' %}");
-        })
-        $(this).on('hidden', function () {
-          icon_change.removeClass('icon-remove').addClass('icon-share-alt');
-          text_change.html("{% trans 'Answer' %}");
-        })
-      })
-    });
-    
+  <script>
     //Tracking Product name for analytics
     $(document).ready(function(){
       var product=document.getElementById("drop");

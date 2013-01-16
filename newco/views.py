@@ -1,12 +1,16 @@
 import datetime
 
+from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count, Sum
 from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
 from items.models import Item, Content
 from utils.multitemplate.views import MultiTemplateMixin
-from utils.views import TutorialMixin
+from utils.views.tutorial import TutorialMixin
+from utils.vote.views import VoteMixin
 
 DEFAULT_CATGORY = "products"
 DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
@@ -68,7 +72,8 @@ class CategoryMixin(object):
         return super(CategoryMixin, self).post(request, *args, **kwargs)
 
 
-class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView):
+class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
+                   VoteMixin):
 
     paginate_by = 14
 
@@ -93,12 +98,20 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView):
             self.queryset = Content.objects.questions()
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(pub_date__gt=delta)
+            self.scores, self.votes = self.queryset.get_scores_and_votes(
+                request.user)
             self.queryset = self.queryset.order_queryset(self.filter)
+            self.empty_msg = mark_safe(_(
+                "There is no question in this category. "
+                "<a class='btn' href='{create_url}'>Ask your own!</a>").format(
+                    create_url=reverse_lazy("item_create", args=["question"])))
 
         return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        kwargs.update({"cat": self.cat, "filter": self.filter})
+        for attr in ["cat", "filter", "scores", "votes", "empty_msg"]:
+            if hasattr(self, attr):
+                kwargs.update({attr: getattr(self, attr)})
         ctx = super(HomepageView, self).get_context_data(**kwargs)
         if self.model == Item:
             ctx.get("object_list").fetch_images()

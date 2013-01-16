@@ -22,7 +22,7 @@
         <br>
         {% tags_display profile.skills 3 %}
       </p>
-      {% if disp_follow %}<br><center>{% follow_form user thumb_user extra_class="btn-mini" %}</center>{% endif %}
+      {% if disp_follow %}<br><center>{% follow_form user profile.user extra_class="btn-mini" %}</center>{% endif %}
     </div>
   </div>
 {% endif %}

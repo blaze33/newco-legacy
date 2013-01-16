@@ -1,13 +1,55 @@
 {% load i18n %}
-{% load voting_tags %}
 {% load content_utils %}
+{% load bootstrap_tags %}
+
+{% if display_q_form == "True" %}
+  {% if contents %}
+    <div class="row nc_transition_add" data-toggle="collapse" data-target="#question_form">
+      <div class="span1" style="line-height: 60px;"><button class="btn btn-small btn-success"><i rel="add_icon" class="icon-plus"></i></button></div>
+      <div class="span8"><h2 class="muted" rel="add_q_text">{% trans "Ask a new question!" %}</h2></div>
+    </div>
+  {% else %}
+    <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
+  {% endif %}
+
+  <div class="row"><div id="question_form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %} style="position: relative; top: -75px;"{% endif %}>
+    <form method="POST" action="" class="form-inline"><br>
+      {% csrf_token %}
+      {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+        <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
+        {% include "bootstrap/_field_errors.html" %}
+        {% include "bootstrap/_field_help_text.html" %}
+      </div></div>{% endwith %}
+      <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
+    </form>
+  </div></div>
+  <hr>
+{% endif %}
 
 {% for content in contents %}
   {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
-  <div class="row content"><div class="span{% if display == 'mini_feed' %}4{% else %}7{%endif%}">
-    {% dict_entry_for_item content from scores as score %}
+  <div class="row content" itemscope itemtype="http://schema.org/Article"><div class="span{% if display == 'mini_feed' %}4{% else %}9{%endif%}">
 
-    {% include content|feed_template with content=content author=content.author score=score user=user path=request.path display=display csrf_token=csrf_token only %}
+    {% if display_ctx == "True" %}
+      <div class="row"><div class="span9">
+        <p class="nf-small muted">
+          {% if content|to_class_name == "question" %}
+            {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}{% trans ":" %}
+          {% elif content|to_class_name == "answer" %}
+            {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}{% trans ":" %}
+          {% else %}
+            Unknown content type
+          {% endif %}
+        </p>
+      </div></div>
+    {% endif %}
+
+    {% if content|to_class_name == "question" %}
+      {% include content|feed_template with content=content display=display display_img=display_img display_a=display_a disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+    {% elif content|to_class_name == "answer" %}
+      {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+    {% endif %}
+
   </div></div>
 {% empty %}
   {% if empty_msg %}
@@ -16,3 +58,5 @@
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}
 {% endfor %}
+
+{% include "items/_ask_modal.html" with experts=experts csrf_token=csrf_token only %}

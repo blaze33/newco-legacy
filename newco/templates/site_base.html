@@ -46,10 +46,10 @@
 <ul class="nav pull-left">
   <li class="offset1 span4"><form class="navbar-search form-search" action="{% url 'search' %}" method="POST">{% csrf_token %}
     <div class="input-append">
-      <input type="text" autocomplete="off" class="span4 search-query" name="q" id="global_search" placeholder="{% trans 'Search for a product, a user or a tag' %}"><button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+      <input class="span4 search-query" name="q" id="global_search" type="text" autocomplete="off" placeholder="{% trans 'Search for a product, a user or a tag' %}"><button class="btn btn-inverse" type="submit"><i class="icon-search icon-white"></i></button>
     </div>
-    <input type="hidden" id="obj_class" name="obj_class"/>
-    <input type="hidden" id="obj_id" name="obj_id"/>
+    <input id="obj_class" name="obj_class" type="hidden">
+    <input id="obj_id" name="obj_id" type="hidden">
   </form></li>
 </ul>
 {% endblock %}
@@ -78,8 +78,15 @@
           {% endif %}
         </script>
         <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/expand.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
+        <script src="{% static 'external/jquery-expander/jquery.expander.js' %}"></script>
+        <script>
+          $(document).ready(function() {$('.expander').expander({
+              slicePoint: 80,
+              expandText: '<small>(more)</small>',
+              userCollapseText: '<small>(less)</small>',
+          });});
+        </script>
     {% endcompress %}
     {% compress js %}
         {% block extra_script %}{% endblock %}

@@ -1,45 +1,106 @@
 {% load url from future %}
 {% load i18n %}
+{% load voting_tags %}
 {% load content_utils %}
 {% load date_utils %}
 
 {% if display == "mini_feed" %}
   <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-    <h5><a href="{{ author.get_absolute_url }}">{% profile_pic author 18 %}</a> {% object_display author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
+    <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
     <p>
       <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
       <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
     </p>
   </blockquote>
+
 {% elif display == "text" %}
-  <div class="row"><div class="span7">
-    <h4>{% object_display author display %} {% trans "asked a question" %} {% source_display content display %}</h4>
-  </div></div>
 
-  <div class="row {% if content.is_public %}one_row{% elif content.is_draft %}draft{% endif %}">
-    <div class="span4"><p>
-      <a class="black" href="{{ content.get_absolute_url }}">{% trans "Q:" %}&nbsp;{{ content.content }}</a>
-      {% edit_buttons user content edit_next=path delete_next=path %}
-    </p></div>
-    <div class="span1 right"><h3>{{ score.score }}</h3></div>
-    <div class="span2 right">{% content_info content "signature-author" %}</div>
-  </div>
+  {% dict_entry_for_item content from votes as vote %}
+  {% dict_entry_for_item content from scores as score %}
 
-  {% if user != author %}<div class="row block_controls"><div class="span4 offset3"><a href="{% url 'item_create' 'answer' %}?question_id={{ content.id }}" class="btn btn-mini"><i class="icon-share-alt"></i> {% trans "Answer this question" %}</a></div></div>{% endif %}
-
-{% elif display == "unanswered" %}
-  <div class="span7" align="left">
-    <a href="{{ content.get_absolute_url }}" class="black"><h4>{{ content.content }}</h4></a>
-    <div class="q_categories">
-      {% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}" class="black">{{ item.name }}</a>. {% endfor %}
-      {% elif content.tags.all %}{% trans "Category" %} {% tags_display content.tags 3 %}
-      {% endif %}
+  <div class="row one_row{% if content.is_draft %} well well-small{% endif %}" id="{{ content.anchor }}">
+    <div class="span1 vote-controls">
+      {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
     </div>
-    <a href="{{ content.get_absolute_url }}" class="black q_add_answer">{% trans "Add Answer" %}</a>
-    <hr>
+    <div class="{% if content.is_draft %}span7{% else %}span8{% endif %}">
+
+      {% if display_img == "True" %}
+        <div class="pull-right" style="max-width: 200px; padding-left: 5px;">
+          {% if content.items.all.count > 3 or content.tags.all.count > 3 %}
+            <p class="nf-small muted">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
+            {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
+            {% endif %}</p>
+          {% else %}
+            {% if content.items.all %}
+              {% for item in content.items.all|slice:":3" %}
+                <div class="span1 content-item-mini">
+                  {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
+                </div>
+              {% endfor %}
+            {% elif content.tags.all %}
+              {% for tag in content.tags.all|slice:":3" %}
+                <div class="span1 content-item-mini">
+                  <a href="{{ content.get_absolute_url }}">
+                    <img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
+                    <h6 class="black" align="center">{{ tag.name|truncatechars:25 }}</h6>
+                  </a>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if item %}{% edit_buttons user content delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user content %}{% endif %}
+      {% if q_detail == "True" %}
+        {% if content.is_draft %}<p class="pull-right span2"><small>{% trans "This question is a draft.<br>It has been anonymized." %}</small></p>{% else %}{% content_info content "signature" 32 %}{% endif %}
+        <div class="content"><h1 class="question-content" itemprop="name">{{ content.content }}</h1></div>
+      {% else %}
+        <p class="content" itemprop="name"><a class="question-nf" href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
+
+        {% if display_a == "no" %}{#  If question only => display controls here, if answers are displayed, display controls below answer  #}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" content=content user=user csrf_token=csrf_token only %}
+        {% endif %}
+      {% endif %}
+
+    </div>
   </div>
 
-{% elif display == "email_html" %}
+  {# display_a = <no|all|top|one> #}
+  {# Seb: todo: move this long code for the "slice" in the (future) templatetag node #}
+  {% if display_a == "all" or display_a == "top" or display_a == "one" %}
+    {% if display_a == "all" %}{# this "if" is only here for the "slice:1" is there any other way to do it ? #}
+      {% for answer in content.answer_set.all %}
+        {% if not forloop.first%}<br>{% endif %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+      {% empty %}
+        {% cycle "empty" as empty silent %}
+      {% endfor %}
+    {% elif display_a == "top" %}
+      {% for answer in content.answer_set.all|slice:":1" %}
+        {% if not forloop.first%}<br>{% endif %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+      {% empty %}
+        {% cycle "empty" as empty silent %}
+      {% endfor %}
+    {% elif display_a == "one" %}
+      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+    {% endif %}
+
+    <div class="row">
+      <div class="span8 offset1">
+        {% if q_detail == "True" %}
+          <br>
+          {% include "items/feed_display/_feed_controls.html" with answer_location="embedded" display_a=display_a content=content user=user statuses=statuses empty=empty csrf_token=csrf_token only %}
+          {% include "items/_ask_modal.html" with experts=experts csrf_token=csrf_token only %}
+        {% else %}
+          {% include "items/feed_display/_feed_controls.html" with answer_location="q_detail" display_a=display_a content=content user=user empty=empty csrf_token=csrf_token only %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+{% elif display == "email_html" %} {# to do: change object name (same convention in this template): question => content #}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
   <br>
 {% elif display == "email_txt" %}

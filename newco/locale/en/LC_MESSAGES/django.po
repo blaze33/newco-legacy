@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 12:13+0100\n"
+"POT-Creation-Date: 2013-01-09 19:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views.py:105
+msgid ""
+"There is no question in this category. <a class='btn' "
+"href='{create_url}'>Ask your own!</a>"
+msgstr ""
 
 #: settings/common.py:63
 msgid "English"
@@ -295,8 +301,7 @@ msgstr ""
 msgid "Popular products"
 msgstr ""
 
-#: templates/homepage_base_1.html:107 templates/homepage_questions.html:19
-#: templates/homepage_questions_1.html:18
+#: templates/homepage_base_1.html:107 templates/homepage_questions_1.html:18
 #: templates/homepage_questions_2.html:24
 msgid "Answer questions"
 msgstr ""
@@ -305,19 +310,21 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/homepage_questions.html:20 templates/homepage_questions_1.html:19
+#: templates/homepage_questions.html:19
+msgid "Popular questions"
+msgstr ""
+
+#: templates/homepage_questions.html:21
+msgid "Last added questions"
+msgstr ""
+
+#: templates/homepage_questions.html:23
+msgid "Questions without answer"
+msgstr ""
+
+#: templates/homepage_questions_1.html:19
 #: templates/homepage_questions_2.html:25
 msgid "Category"
-msgstr ""
-
-#: templates/homepage_questions.html:45 templates/homepage_questions_1.html:69
-#: templates/homepage_questions_2.html:50
-msgid "No unanswered questions on this category."
-msgstr ""
-
-#: templates/homepage_questions.html:46 templates/homepage_questions_1.html:70
-#: templates/homepage_questions_2.html:51
-msgid "Ask your own awesome question then!"
 msgstr ""
 
 #: templates/homepage_questions_1.html:25
@@ -334,6 +341,16 @@ msgstr ""
 
 #: templates/homepage_questions_1.html:38
 msgid "Questions on Categories"
+msgstr ""
+
+#: templates/homepage_questions_1.html:69
+#: templates/homepage_questions_2.html:50
+msgid "No unanswered questions on this category."
+msgstr ""
+
+#: templates/homepage_questions_1.html:70
+#: templates/homepage_questions_2.html:51
+msgid "Ask your own awesome question then!"
 msgstr ""
 
 #: templates/questions_subnav.html:11
@@ -356,29 +373,33 @@ msgstr ""
 msgid "Search for a product, a user or a tag"
 msgstr ""
 
-#: templates/site_base.html:91
+#: templates/site_base.html:73
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
+msgstr ""
+
+#: templates/site_base.html:98
 msgid "Tell me more!"
 msgstr ""
 
-#: templates/site_base.html:92
+#: templates/site_base.html:99
 msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
 
-#: templates/site_base.html:94
+#: templates/site_base.html:101
 msgid "But what if I don&#39;t find it?"
 msgstr ""
 
-#: templates/site_base.html:95
+#: templates/site_base.html:102
 msgid ""
 "Looking for some information or advice? See if you can find here the related "
 "product, tag or user."
 msgstr ""
 
-#: templates/site_base.html:97
+#: templates/site_base.html:104
 msgid "Thank you!"
 msgstr ""
 
-#: templates/site_base.html:98
+#: templates/site_base.html:105
 msgid ""
 "NewCo is a collaborative webapp: if you can't find what you're looking for, "
 "create it and ask something!"
