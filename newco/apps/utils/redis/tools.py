@@ -87,7 +87,7 @@ def record_object(engine, obj, key, value, ctype=None):
         data.update({field_name: unicode_attr})
     for field in value.get("extra_fields", []):
         if field == "gravatar_url":
-            data.update({field: unicode(gravatar_for_user(obj.user))})
+            data.update({field: unicode(gravatar_for_user(obj.user, 40))})
 
     engine.store_json(obj_id, title, data, ctype.id)
 
