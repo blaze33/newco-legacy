@@ -78,9 +78,13 @@ def record_object(engine, obj, key, value, ctype=None):
                                                       "ignore")
     data = {"class": key, "title": title, "text": text}
     for field in value["recorded_fields"]:
-        data.update({field: unicode(obj.__getattribute__(field))})
+        attr = obj.__getattribute__(field)
+        unicode_attr = unicode(attr) if attr is not None else u""
+        data.update({field: unicode_attr})
     for field_name, fkey_field in value.get("fkey_fields", {}).items():
-        data.update({field_name: unicode(get_fkey_attr(obj, fkey_field))})
+        attr = get_fkey_attr(obj, fkey_field)
+        unicode_attr = unicode(attr) if attr is not None else u""
+        data.update({field_name: unicode_attr})
     for field in value.get("extra_fields", []):
         if field == "gravatar_url":
             data.update({field: unicode(gravatar_for_user(obj.user))})
