@@ -25,10 +25,6 @@
   margin-top: 0px;
 }
 
-div[id^="q-"] {
-  margin-bottom: 20px;
-}
-
 .answer-content .content {
   padding-top: .5em;
 }

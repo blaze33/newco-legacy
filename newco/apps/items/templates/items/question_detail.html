@@ -6,6 +6,11 @@
 
 {% block extra_style %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
+    <style type="text/css">
+      div[id^="q-"] {
+        margin-bottom: 20px;
+      }
+    </style>
     {% if question %}{{ question.answer_form.media.css }}{% endif %}
 {% endblock %}
 
