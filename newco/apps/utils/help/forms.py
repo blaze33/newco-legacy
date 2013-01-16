@@ -1,9 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms.widgets import TextInput, SelectMultiple
+from django.core.urlresolvers import reverse
+from django.forms.widgets import TextInput
 from django.utils.translation import ugettext_lazy as _
-
-from profiles.models import Profile
 
 
 class EmailInput(TextInput):
@@ -12,10 +11,9 @@ class EmailInput(TextInput):
 
 class AskForHelpForm(forms.Form):
 
-    experts = forms.ModelMultipleChoiceField(
+    experts = forms.CharField(
         label=_("...some of our experts in this field"), required=False,
-        queryset=Profile.objects.all(),
-        widget=SelectMultiple(attrs={"class": "input-block-level"}),
+        widget=TextInput(attrs={"class": "input-block-level"}),
         help_text=_("These are users that have declared being competent on "
                     "this particular field"))
     users = forms.CharField(
@@ -29,7 +27,11 @@ class AskForHelpForm(forms.Form):
     def __init__(self, experts_qs, *args, **kwargs):
         super(AskForHelpForm, self).__init__(*args, **kwargs)
         if experts_qs:
-            self.fields["experts"].queryset = experts_qs
+            ids = map(str, experts_qs.values_list("id", flat=True))
+            data_url = "{url}?{get}".format(
+                url=reverse("redis", args=["profile"]),
+                get="".join(["&id={0}".format(i) for i in ids]))
+            self.fields["experts"].widget.attrs.update({"data-url": data_url})
         else:
             del self.fields["experts"]
 

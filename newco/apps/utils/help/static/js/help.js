@@ -1,5 +1,19 @@
+function reloadProfiles(element, callback) {
+    // reload profiles
+    var url, ids;
+    ids = element.val().split(",");
+    url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
+    return $.ajax({
+        url: url,
+        dataType: "json"
+    }).done( function (data) { 
+        callback(data);
+    });
+}
+
 $(function() {
-    var modalAsk, numberExperts, numberUsers;
+    var modalAsk, experts, inputExperts, numberExperts, urlExperts;
+    var numberResults, numberUsers;
 
     modalAsk = $("#modal-ask");
     $(document).on("click", ".btn-ask", function () {
@@ -9,18 +23,44 @@ $(function() {
         modalAsk.modal("show");
     });
 
+    inputExperts = $("#id_experts", modalAsk);
+    expertsUrl = inputExperts.data("url");
+    $.ajax({
+        url: expertsUrl,
+        dataType: "json",
+        async: false,
+        success: function(data) {
+            experts = data;
+        } 
+    });
+
     numberExperts = 3;
-    $("#id_experts", modalAsk).select2($.extend({}, select2BaseParameters, {
+    inputExperts.select2($.extend({}, select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one expert",
                                 "Select up to %s experts", numberExperts);
             return interpolate(text, [numberExperts]);
         },
+        multiple: true,
+        data: experts,
         maximumSelectionSize: numberExperts,
-        containerCssClass: 'select2-bootstrap'
+        initSelection: reloadProfiles,
+        containerCssClass: "select2-bootstrap",
+        formatResultCssClass: function(object) { return "expert"; },
+        formatResult: function(result, container, query) {
+            var text, markup;
+            text = [];
+            Select2.util.markMatch(result.text, query.term, text);
+            text = text.join("");
+            markup = "<img src='" + result.gravatar_url + "'>";
+            markup += text + " • <b>" + result.reputation + "</b><br>";
+            markup += "<span class='muted'>" + result.about + "</span>";
+            return markup;
+        }
     }));
 
     numberUsers = 3;
+    numberResults = 5;
     $("#id_users", modalAsk).select2($.extend({}, select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one user",
@@ -30,32 +70,16 @@ $(function() {
         multiple: true,
         maximumSelectionSize: numberUsers,
         minimumInputLength: 2,
-        tokenSeparators: [","],
-        initSelection: function (element, callback) {
-            // reload profiles
-            var url, ids;
-            ids = element.val().split(",");
-            url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
-            console.log(ids);
-            return $.ajax({
-                url: url,
-                dataType: 'json',
-            }).done( function (data) { 
-                callback(data);
-            });
-        },
-        containerCssClass: 'select2-bootstrap',
+        initSelection: reloadProfiles,
+        containerCssClass: "select2-bootstrap",
         ajax: {
-            url: URL_REDIS_PROFILE,
-            dataType: 'json',
+            url: URL_REDIS_PROFILE + "?limit=" + numberResults,
+            dataType: "json",
             quietMillis: 100,
             data: function (term, page) {
-                return { q: term, limit: 20 };
+                return { q: term };
             },
-            results: function (data, page) {
-                var more = (page * 10) < data.total;
-                return {results: data, more: more};
-            }
+            results: function (data, page) { return {results: data}; }
         }
     }));
 });

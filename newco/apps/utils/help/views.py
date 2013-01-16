@@ -39,9 +39,7 @@ class AskForHelpMixin(object):
         username = user_display(user)
 
         for key, value in form.cleaned_data.items():
-            if key == "experts" and value:
-                receiver_profiles.extend(value)
-            elif key == "users" and value:
+            if key in ["experts", "users"] and value:
                 profile_ids = map(int, re.split("\D+", value))
                 receiver_profiles.extend(Profile.objects.filter(
                     id__in=profile_ids).select_related("user"))

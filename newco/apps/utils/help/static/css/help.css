@@ -5,3 +5,12 @@
   font-weight: bold;
   line-height: 32px;
 }
+
+.expert .select2-result-label { min-height: 40px; }
+
+.expert .select2-result-label img {
+  float: right;
+  height: 40px;
+}
+
+.select2-highlighted.expert .muted { color: black; }
