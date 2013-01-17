@@ -86,7 +86,7 @@ class ContentQuerySet(InheritanceQuerySet):
                 score__lte=0, status=STATUSES.public).select_subclasses()
         return self
 
-    def get_scores(self):
+    def _get_scores(self):
         scores = Vote.objects.get_scores_in_bulk(self)
         for item in self:
             pk = item._get_pk_val()
@@ -94,11 +94,19 @@ class ContentQuerySet(InheritanceQuerySet):
                 scores.update({pk: EMPTY_SCORE})
         return scores
 
-    def get_votes(self, user):
+    def _get_votes(self, user):
         return Vote.objects.get_for_user_in_bulk(self, user)
 
-    def get_scores_and_votes(self, user):
-        return [self.get_scores(), self.get_votes(user)]
+    def get_scores_and_votes(self, user, add_related_questions=False):
+        if add_related_questions:
+            self = self.add_related_questions()
+        return [self._get_scores(), self._get_votes(user)]
+
+    def add_related_questions(self):
+        question_ids = filter(
+            None, self.values_list("answer__question", flat=True))
+        question_qs = self.model.objects.filter(id__in=question_ids)
+        return self | question_qs
 
     def public(self):
         return self.filter(status=STATUSES.public)
@@ -147,14 +155,9 @@ class ContentManager(InheritanceManager):
     def order_queryset(self, option):
         return self.get_query_set().order_queryset(option)
 
-    def get_scores(self):
-        return self.get_query_set().get_scores()
-
-    def get_votes(self, user):
-        return self.get_query_set().get_votes(user)
-
-    def get_scores_and_votes(self, user):
-        return self.get_query_set().get_scores_and_votes(user)
+    def get_scores_and_votes(self, user, add_related_questions=False):
+        return self.get_query_set().get_scores_and_votes(
+            user, add_related_questions)
 
     def public(self):
         return self.get_query_set().public()

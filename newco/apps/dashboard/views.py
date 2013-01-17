@@ -118,7 +118,7 @@ class DashboardView(AskForHelpMixin, ListView, FormMixin, FollowMixin,
 #            elif self.page == "shopping":
 #            elif self.page == "purchase":
             self.scores, self.votes = self.queryset.get_scores_and_votes(
-                self.user)
+                self.user, True)
         self.queryset = self.queryset.select_subclasses()
         self.page_name = PAGES_TITLES.get(self.page)
         return super(DashboardView, self).get(request, *args, **kwargs)
