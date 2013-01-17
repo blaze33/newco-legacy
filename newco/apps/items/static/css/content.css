@@ -2,12 +2,12 @@
   padding-top: 3px;
   opacity: 0;
   -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
+     -moz-transition: opacity 0.6s;
 }
 .question:hover .block_controls {
   opacity: 1;
   -webkit-transition: opacity 1s;
-  -moz-transition: opacity 1s;
+     -moz-transition: opacity 1s;
 }
 
 .question hr {
@@ -36,13 +36,13 @@
 .nc_qna_list_div .nc_transition_add {
   opacity: 0;
   -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
+     -moz-transition: opacity 0.6s;
 }
 
 .nc_qna_list_div:hover .nc_transition_add {
   opacity: 1;
   -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
+     -moz-transition: opacity 0.6s;
 }
 
 .nc_transition_add {

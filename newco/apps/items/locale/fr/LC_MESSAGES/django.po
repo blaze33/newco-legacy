@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:23+0100\n"
-"PO-Revision-Date: 2013-01-16 20:04\n"
+"POT-Creation-Date: 2013-01-17 17:21+0100\n"
+"PO-Revision-Date: 2013-01-17 17:22\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -184,45 +184,45 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:317 views.py:423
+#: views.py:317 views.py:424
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:318 views.py:424
+#: views.py:318 views.py:425
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:377
+#: views.py:378
 #, python-format
 msgid "No products with tag %s"
 msgstr "Pas de produits avec le tag %s"
 
-#: views.py:383
+#: views.py:384
 #, python-format
 msgid "No questions with tag %s"
 msgstr "Pas de questions avec le tag %s"
 
-#: views.py:389
+#: views.py:390
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr "Pas de questions sur les produits avec le tag %s"
 
-#: views.py:469
+#: views.py:474
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully created."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été créé avec succès."
 
-#: views.py:473
+#: views.py:478
 #, python-format
 msgid "Thanks %(user)s, %(object_name)s successfully updated."
 msgstr "Merci %(user)s, l'objet %(object_name)s a été mis à jour."
 
-#: views.py:477
+#: views.py:482
 #, python-format
 msgid "Thanks %(user)s, your bio has been successfully updated."
 msgstr "Merci %(user)s, votre bio a été mise à jour."
 
-#: views.py:481
+#: views.py:486
 #, python-format
 msgid "Warning %(user)s, %(object_name)s form is invalid."
 msgstr ""
@@ -324,7 +324,7 @@ msgid "Download"
 msgstr "Télécharger"
 
 #: templates/items/item_form.html:15 templates/items/item_form.html.py:19
-#: templates/items/item_list_base.html:42
+#: templates/items/item_list_base.html:44
 #: templates/items/question_form.html:74
 #: templates/items/question_form.html:153
 msgid "Add a product"
@@ -337,7 +337,6 @@ msgstr "Remplissez des informations sur"
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
 #: templates/items/feed_display/_content_list.html:37
 #: templates/items/feed_display/_content_list.html:39
-#: templates/items/feed_display/_feed_controls.html:13
 #: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr "&nbsp;:"
@@ -403,39 +402,39 @@ msgstr "ou"
 msgid "Create and add features"
 msgstr "Créer et ajouter des caractéristiques"
 
-#: templates/items/item_list_base.html:15
-#: templates/items/item_list_base.html:27
-#: templates/items/item_list_base.html:51
+#: templates/items/item_list_base.html:17
+#: templates/items/item_list_base.html:29
+#: templates/items/item_list_base.html:53
 msgid "Products"
 msgstr "Produits"
 
-#: templates/items/item_list_base.html:15
+#: templates/items/item_list_base.html:17
 msgid "Tag"
 msgstr "Tag"
 
-#: templates/items/item_list_base.html:23
+#: templates/items/item_list_base.html:25
 #, python-format
 msgid "Click to remove tag %(tag)s from your skill list"
 msgstr "Cliquez pour enlever le tag %(tag)s de votre liste de compétences"
 
-#: templates/items/item_list_base.html:23
+#: templates/items/item_list_base.html:25
 msgid "In my skills"
 msgstr "Dans mes compétences"
 
-#: templates/items/item_list_base.html:25
+#: templates/items/item_list_base.html:27
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
 msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
 
-#: templates/items/item_list_base.html:25
+#: templates/items/item_list_base.html:27
 msgid "Add to skills"
 msgstr "Ajouter aux compétences"
 
-#: templates/items/item_list_base.html:50
+#: templates/items/item_list_base.html:52
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/items/item_list_base.html:52
+#: templates/items/item_list_base.html:54
 msgid "Questions"
 msgstr "Questions"
 
@@ -487,11 +486,11 @@ msgstr "Questions sur les produits avec le tag"
 msgid "No answers"
 msgstr "Pas de réponses"
 
-#: templates/items/question_detail.html:22
+#: templates/items/question_detail.html:27
 msgid "Related products"
 msgstr "Produits associés"
 
-#: templates/items/question_detail.html:27
+#: templates/items/question_detail.html:32
 msgid "Related tags"
 msgstr "Tags associés"
 
@@ -615,32 +614,32 @@ msgstr "a répondu à une question"
 msgid "Sorry, this feed is empty."
 msgstr "Désolé, ce flux est vide."
 
-#: templates/items/feed_display/_feed_controls.html:9
+#: templates/items/feed_display/_feed_controls.html:8
 #, python-format
 msgid ""
 "\n"
-"      %(nb_ans)s answer\n"
-"      "
+"      %(nb_ans)s answer:\n"
+"    "
 msgid_plural ""
 "\n"
-"      %(nb_ans)s answers\n"
+"      %(nb_ans)s answers:\n"
 "    "
 msgstr[0] ""
 "\n"
-"%(nb_ans)s réponse"
+"%(nb_ans)s réponse&nbsp;:"
 msgstr[1] ""
 "\n"
-"%(nb_ans)s réponses"
+"%(nb_ans)s réponses&nbsp;:"
 
-#: templates/items/feed_display/_feed_controls.html:15
+#: templates/items/feed_display/_feed_controls.html:14
 msgid "Answer this question"
 msgstr "Répondez à cette question"
 
-#: templates/items/feed_display/_feed_controls.html:15
+#: templates/items/feed_display/_feed_controls.html:14
 msgid "Add an answer"
 msgstr "Ajoutez une réponse"
 
-#: templates/items/feed_display/_feed_controls.html:20
+#: templates/items/feed_display/_feed_controls.html:19
 msgid "Ask to answer"
 msgstr "Demandez à quelqu'un de répondre"
 
@@ -657,12 +656,12 @@ msgstr "Répondre et publier"
 msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr "a posé une <a href=\"%(url)s\">question</a>"
 
-#: templates/items/feed_display/_question.html:30
+#: templates/items/feed_display/_question.html:31
 #: templates/items/feed_display/_question_1.html:10
 msgid "Products related"
 msgstr "Produits liés"
 
-#: templates/items/feed_display/_question.html:31
+#: templates/items/feed_display/_question.html:32
 msgid "Categories"
 msgstr "Catégories"
 
