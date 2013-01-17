@@ -467,9 +467,9 @@ img:hover + .img-controls,
 
 /* quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
 .muted > a:not(.label) {
-  color: #999;
+  color: inherit;
 }
-/* End of quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
+/* End */
 
 .vote-controls {
   font-size: 180%;
