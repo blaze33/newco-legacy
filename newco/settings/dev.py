@@ -54,3 +54,9 @@ if HEROKU_DATABASES:
     DATABASES.update(HEROKU_DATABASES)
     DATABASES["default"]["ENGINE"] = "django_hstore.postgresql_psycopg2"
     SOUTH_DATABASE_ADAPTERS = {"default": "south.db.postgresql_psycopg2"}
+
+if False:  # switch to True to log every SQL request in the terminal
+    import logging
+    l = logging.getLogger('django.db.backends')
+    l.setLevel(logging.DEBUG)
+    l.addHandler(logging.StreamHandler())
