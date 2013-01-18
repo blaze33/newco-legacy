@@ -2,11 +2,12 @@ import os
 import types
 import sys
 import timeit
-from django.utils import unittest
-from django.test.client import RequestFactory, Client
-from django.core.urlresolvers import reverse, RegexURLResolver, NoReverseMatch
-from django.contrib.auth.models import AnonymousUser
 from fnmatch import fnmatch
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse, RegexURLResolver, NoReverseMatch
+from django.test.client import RequestFactory, Client
+from django.utils import unittest
+from client import TestClient
 
 
 def pycall_django_filter(call_stack, module_name, class_name, func_name, full_name):
@@ -31,8 +32,9 @@ class UrlTest(unittest.TestCase):
         # Every test needs access to the request factory.
         self.factory = RequestFactory()
         self.client = Client()
-        self.request = self.factory.get('/')
-        self.request.user = AnonymousUser()
+        self.user = User.objects.get(id=1)
+        self.staff_client = TestClient()
+        self.staff_client.login_user(self.user)
 
     def test_homepage(self):
         ''' Homepage: unit '''
@@ -89,6 +91,10 @@ def urltest_generator(url=None, skipped=True):
         response = self.client.get(url)
         self.assertNotEqual(response.status_code, 500)
         print response.status_code, ' ',
+        if response.status_code == 302:
+            response = self.staff_client.get(url)
+            self.assertNotEqual(response.status_code, 500)
+            print response.status_code, ' ',
         sys.stdout.flush()
     return test_url
 
