@@ -105,9 +105,10 @@ class ContentQuerySet(InheritanceQuerySet):
         return [self.get_scores(False), self.get_votes(user)]
 
     def add_related_questions(self):
+        self = self.distinct()
         question_ids = filter(
             None, self.values_list("answer__question", flat=True))
-        question_qs = self.model.objects.filter(id__in=question_ids)
+        question_qs = self.model.objects.filter(id__in=question_ids).distinct()
         return self | question_qs
 
     def public(self):
