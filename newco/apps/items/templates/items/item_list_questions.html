@@ -33,3 +33,8 @@
   </div>
 </div>
 {% endblock %}
+
+{% block extra_script %}
+  {{ block.super }}
+  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
+{% endblock %}
