@@ -9,7 +9,8 @@
 
 {% block extra_style %}
   {{ block.super }}
-  <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/homepage_questions.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
 {% endblock %}
 
 {% block body %}
@@ -32,6 +33,13 @@
   {% if is_paginated %}{% paginate %}{% endif %}
 </div></div>
 
+{% endblock %}
+
+{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+
+{% block extra_script %}
+  {{ block.super }}
+  <script src="{{ STATIC_URL }}js/help.js"></script>
 {% endblock %}
 
 {# TITLE: Original #}
