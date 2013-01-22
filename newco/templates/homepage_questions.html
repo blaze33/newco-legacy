@@ -8,7 +8,8 @@
 {% load staticfiles %}
 
 {% block extra_style %}
-    <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
+  {{ block.super }}
+  <link href="{% static 'css/homepage_questions.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
