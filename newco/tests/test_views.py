@@ -9,6 +9,9 @@ from django.test.client import RequestFactory, Client
 from django.utils import unittest
 from client import TestClient
 
+URLS_ARGS = {
+    "dash": [[], ["feed"], ["contribution"], ["draft"], ["all"]]}
+
 
 def pycall_django_filter(call_stack, module_name, class_name, func_name, full_name):
     exclude = ['pycallgraph.*', 'django.*']
@@ -116,15 +119,19 @@ for pattern in urlpatterns:
         continue
     if not pattern.name:
         continue
-    n += 1
-    try:
-        url = reverse(pattern.name)
-    except NoReverseMatch:
-        skipped += 1
-        continue
-    test = urltest_generator(url, skipped=False)
-    test.__doc__ = 'URL {2:3} {0} {1}'.format(pattern.name, url, n)
-    test_name = 'test_{0:03}_{1}'.format(n, pattern.name)
-    setattr(UrlTest, test_name, test)
-    success += 1
+    args_list = URLS_ARGS.get(pattern.name, [[]])
+    for args in args_list:
+        n += 1
+        try:
+            url = reverse(pattern.name, args=args)
+        except NoReverseMatch:
+            skipped += 1
+            continue
+        test = urltest_generator(url, skipped=False)
+        test.__doc__ = 'URL {0:3} {1} {2} {3}'.format(n, pattern.name,
+                                                      "/".join(args), url)
+        test_name = 'test_{0:03}_{1}_{2}'.format(n, pattern.name,
+                                                 "/".join(args))
+        setattr(UrlTest, test_name, test)
+        success += 1
 print n, 'discovered urls,', skipped, 'skipped,', success, 'to test.'
