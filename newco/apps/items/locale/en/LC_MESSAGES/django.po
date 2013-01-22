@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-17 17:21+0100\n"
+"POT-Creation-Date: 2013-01-22 18:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,6 +230,14 @@ msgstr ""
 msgid "Delete this post"
 msgstr ""
 
+#: templates/items/_partial_question_form.html:6
+msgid "Ask a new question!"
+msgstr ""
+
+#: templates/items/_partial_question_form.html:9
+msgid "No question yet! Ask the first one here!"
+msgstr ""
+
 #: templates/items/_vote_box.html:6
 msgid "Score"
 msgstr ""
@@ -273,43 +281,43 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:37 templates/items/item_detail.html:68
+#: templates/items/item_detail.html:40 templates/items/item_detail.html:71
 msgid "Where to buy"
 msgstr ""
 
-#: templates/items/item_detail.html:39
+#: templates/items/item_detail.html:42
 msgid "Store"
 msgstr ""
 
-#: templates/items/item_detail.html:40
+#: templates/items/item_detail.html:43
 msgid "Name"
 msgstr ""
 
-#: templates/items/item_detail.html:41
+#: templates/items/item_detail.html:44
 msgid "Price"
 msgstr ""
 
-#: templates/items/item_detail.html:50
+#: templates/items/item_detail.html:53
 msgid "Edit Product"
 msgstr ""
 
-#: templates/items/item_detail.html:51
+#: templates/items/item_detail.html:54
 msgid "Delete Product"
 msgstr ""
 
-#: templates/items/item_detail.html:56
+#: templates/items/item_detail.html:59
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:62
+#: templates/items/item_detail.html:65
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:88
+#: templates/items/item_detail.html:91
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:88
+#: templates/items/item_detail.html:91
 msgid "Download"
 msgstr ""
 
@@ -325,8 +333,6 @@ msgid "Fill in some information about"
 msgstr ""
 
 #: templates/items/item_form.html:19 templates/items/question_form.html:74
-#: templates/items/feed_display/_content_list.html:37
-#: templates/items/feed_display/_content_list.html:39
 #: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr ""
@@ -439,38 +445,38 @@ msgid "Search products with tag"
 msgstr ""
 
 #: templates/items/item_list_products.html:15
-#: templates/items/item_list_questions.html:17
+#: templates/items/item_list_questions.html:22
 msgid "Filter"
 msgstr ""
 
 #: templates/items/item_list_products.html:16
-#: templates/items/item_list_questions.html:18
+#: templates/items/item_list_questions.html:23
 msgid "Popular"
 msgstr ""
 
 #: templates/items/item_list_products.html:17
-#: templates/items/item_list_questions.html:19
+#: templates/items/item_list_questions.html:24
 msgid "Last added"
 msgstr ""
 
 #: templates/items/item_list_products.html:18
-#: templates/items/item_list_questions.html:20
+#: templates/items/item_list_questions.html:25
 msgid "Old"
 msgstr ""
 
-#: templates/items/item_list_questions.html:13
+#: templates/items/item_list_questions.html:18
 msgid "What questions?"
 msgstr ""
 
-#: templates/items/item_list_questions.html:14
+#: templates/items/item_list_questions.html:19
 msgid "Questions with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:15
+#: templates/items/item_list_questions.html:20
 msgid "Questions about products with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:21
+#: templates/items/item_list_questions.html:26
 msgid "No answers"
 msgstr ""
 
@@ -569,23 +575,15 @@ msgstr ""
 msgid "<a href=\"%(url)s\">answered</a> a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:9
-msgid "Ask a new question!"
-msgstr ""
-
-#: templates/items/feed_display/_content_list.html:12
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-
-#: templates/items/feed_display/_content_list.html:37
+#: templates/items/feed_display/_content_list.html:11
 msgid "asked a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:39
+#: templates/items/feed_display/_content_list.html:13
 msgid "answered a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:58
+#: templates/items/feed_display/_content_list.html:30
 msgid "Sorry, this feed is empty."
 msgstr ""
 
