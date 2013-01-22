@@ -77,6 +77,9 @@ class SignupViewTestCase(unittest.TestCase):
         self.assertEqual(response.template_name, "account/signup_closed.html")
 
     def test_post_successful(self):
+        qs = User.objects.filter(email="info@example.com")
+        if qs:
+            qs.delete()
         post = {"email": "info@example.com", "password": "pwd",
                 "password_confirm": "pwd", "profile_name": "bob"}
         request = self.factory.post(reverse("account_signup"), post)
@@ -89,7 +92,7 @@ class SignupViewTestCase(unittest.TestCase):
         setattr(request, '_messages', messages)
 
         response = SignupEnabledView.as_view()(request)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         user = User.objects.get(email="info@example.com")
         self.assertEqual(user_display(user), "bob")
         user.delete()

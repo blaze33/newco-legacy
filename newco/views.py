@@ -6,8 +6,10 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
+from django.views.generic.edit import FormMixin
 
 from items.models import Item, Content
+from utils.help.views import AskForHelpMixin
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
 from utils.vote.views import VoteMixin
@@ -72,8 +74,8 @@ class CategoryMixin(object):
         return super(CategoryMixin, self).post(request, *args, **kwargs)
 
 
-class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin, ListView,
-                   VoteMixin):
+class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin,
+                   AskForHelpMixin, ListView, FormMixin, VoteMixin):
 
     paginate_by = 14
 

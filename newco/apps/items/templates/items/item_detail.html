@@ -9,6 +9,7 @@
 {% block extra_style %}
   <link rel="stylesheet" href="{{ STATIC_URL }}external/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/content.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/affiliation.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
   {{ media.css }}
@@ -30,7 +31,9 @@
   <div class="span9">
     {% include "items/_data_sheet.html" %}
     <br>
-    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" display_q_form="True" question_form=question_form item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+    {% include "items/_partial_question_form.html" with contents=questions question_form=question_form csrf_token=csrf_token only %}
+    <hr>
+    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes only %}
     <br>
     {% for prod in store_products %}
       {% if forloop.first %}
