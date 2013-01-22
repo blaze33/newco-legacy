@@ -28,8 +28,7 @@
 
 {% for content in contents %}
   {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
-  <div class="row content" itemscope itemtype="http://schema.org/Article"><div class="span{% if display == 'mini_feed' %}4{% else %}9{%endif%}">
-
+  <div class="content" itemscope itemtype="http://schema.org/Article">
     {% if display_ctx == "True" %}
       <p class="nf-small muted">
         {% if content|to_class_name == "question" %}
@@ -47,8 +46,7 @@
     {% elif content|to_class_name == "answer" %}
       {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
     {% endif %}
-
-  </div></div>
+  </div>
 {% empty %}
   {% if empty_msg %}
     <p>{{ empty_msg }}</p>
