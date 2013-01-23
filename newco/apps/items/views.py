@@ -355,65 +355,64 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
         return Profile.objects.filter(skills__id__in=tag_ids).order_by(
             "-user__reputation__reputation_incremented").distinct()
 
+DEFAULT_CATGORY = "home"
+DEFAULT_PILL = {"home": "browse", "products": "browse", "questions": "tag"}
+DEFAULT_FILTERS = {"home": "-pub_date", "products": "popular",
+                   "questions": "popular"}
+MODELS = {"home": Item, "products": Item, "questions": Content}
+
 
 class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
                       QuestionFormMixin, ListView, FormMixin, VoteMixin):
 
     paginate_by = 9
-    qs_option = "-pub_date"
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
         self.experts = self.get_experts()
+        self.cat = kwargs.get("cat", DEFAULT_CATGORY)
+        self.pill = kwargs.get("pill", DEFAULT_PILL[self.cat])
+        self.model = MODELS[self.cat]
+        self.template_name = "items/item_list_%s.html" % self.cat
+        self.qs_option = request.GET.get("qs_option",
+                                         DEFAULT_FILTERS[self.cat])
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
-        self.cat = kwargs.get("cat", "home")
-        self.template_name = "items/item_list_%s.html" % self.cat
-        self.qs_option = self.request.GET.get("qs_option", self.qs_option)
-
-        if self.cat == "home" or self.cat == "products":
-            self.model, self.pill = [Item, kwargs.get("pill", "browse")]
-            self.queryset = Item.objects.filter(tags=self.tag)
+    def get_queryset(self):
+        qs = super(ContentListView, self).get_queryset()
+        if self.cat in ["home", "products"]:
+            qs = qs.filter(tags=self.tag)
+            field = "content__question__id"
+            qs = qs.annotate(score=Count(field)).order_by("-score") \
+                if self.qs_option == "popular" else qs.order_by(self.qs_option)
             msg = _("No products with tag %s")
         elif self.cat == "questions":
-            self.model, self.pill = [Question, kwargs.get("pill", "tag")]
-            self.queryset = Content.objects.all()
             if self.pill == "tag":
-                self.queryset = self.queryset.filter(tags=self.tag)
+                qs = qs.filter(tags=self.tag)
                 msg = _("No questions with tag %s")
             elif self.pill == "products":
                 item_ids = Item.objects.filter(tags=self.tag).values_list(
                     "id", flat=True)
-                self.queryset = self.queryset.filter(
-                    items__in=item_ids).distinct()
+                qs = qs.filter(items__in=item_ids).distinct()
                 msg = _("No questions about products with tag %s")
-            self.scores, self.votes = self.queryset.get_scores_and_votes(
+            self.scores, self.votes = qs.get_scores_and_votes(
                 self.request.user)
-            self.queryset = self.queryset.questions()
+            qs = qs.questions().order_queryset(self.qs_option, self.scores)
 
         tpl = "tags/_tag_display.html"
         self.empty_msg = mark_safe(
             msg % render_to_string(tpl, {"tag": self.tag}))
-        return super(ContentListView, self).get(request, *args, **kwargs)
-
-    def get_queryset(self):
-        qs = super(ContentListView, self).get_queryset()
-        if self.cat == "products":
-            field = "content__question__id"
-            qs = qs.annotate(score=Count(field)).order_by("-score") \
-                if self.qs_option == "popular" else qs.order_by(self.qs_option)
-        elif self.cat == "questions":
-            qs = qs.order_queryset(self.qs_option, self.scores)
         return qs
 
     def get_context_data(self, **kwargs):
+        if "object_list" not in kwargs:
+            kwargs.update({"object_list": self.object_list})
         context = super(ContentListView, self).get_context_data(**kwargs)
         for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes",
                      "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
-        if self.cat == "home" and context.get("object_list"):
+        if self.cat == "home" and context["object_list"]:
             related_questions = Content.objects.questions().filter(
                 Q(items__in=context.get("object_list")) | Q(tags=self.tag)
             ).distinct()
@@ -432,6 +431,7 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
         self.tags = [self.tag]
         if "skills" in request.POST:
             profile = request.user.get_profile()
