@@ -6,11 +6,6 @@
 {% load i18n %}
 {% load content_utils %}
 
-{% block extra_style %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
-{% endblock %}
-
 {% block list %}
 <div class="tabbable row">
   <div class="span3">
@@ -32,9 +27,4 @@
     {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="True" displ_sign="True" user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
   </div>
 </div>
-{% endblock %}
-
-{% block extra_script %}
-  {{ block.super }}
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
 {% endblock %}
