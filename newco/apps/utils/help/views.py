@@ -85,6 +85,8 @@ class AskForHelpMixin(object):
         if not form:
             form_class = self.get_form_class()
             form = self.get_form(form_class)
+            if "ask" not in self.request.POST:
+                form.errors.clear()
         kwargs.update({"ask_form": form})
         return super(AskForHelpMixin, self).get_context_data(**kwargs)
 

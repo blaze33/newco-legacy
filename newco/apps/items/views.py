@@ -218,6 +218,8 @@ class QuestionFormMixin(object):
         if not form:
             form_class = PartialQuestionForm
             form = self.get_form(form_class)
+            if "question" not in self.request.POST:
+                form.errors.clear()
         kwargs.update({"question_form": form})
         return super(QuestionFormMixin, self).get_context_data(**kwargs)
 
