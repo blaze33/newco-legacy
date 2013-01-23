@@ -1,5 +1,6 @@
 from django.http import HttpResponsePermanentRedirect
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import FormMixin
 from django.views.generic.list import MultipleObjectMixin
 
 from django.contrib.auth.models import User
@@ -10,11 +11,13 @@ from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item
 from utils.follow.views import FollowMixin
+from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
 from utils.vote.views import VoteMixin
 
 
-class ProfileDetailView(TutorialMixin, ProfileDetailView, MultipleObjectMixin,
+class ProfileDetailView(TutorialMixin, AskForHelpMixin, ProfileDetailView,
+                        FormMixin, MultipleObjectMixin,
                         FollowMixin, VoteMixin):
 
     paginate_by = 10
