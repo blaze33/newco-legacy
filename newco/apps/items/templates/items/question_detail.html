@@ -53,11 +53,10 @@
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
     });
   </script>
-  {% if question %}{{ question.answer_form.media.js }}{% endif %}
+  {{ question.answer_form.media.js }}
   <script>
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
-
 
     {% if request.GET.focus_editor %}
       $(document).ready(function(){
@@ -70,7 +69,6 @@
           });
       });
     {% endif %}
-
 
     // script for "Edit your bio"
     $(function() {
