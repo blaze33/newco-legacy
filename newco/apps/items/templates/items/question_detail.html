@@ -53,11 +53,10 @@
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
     });
   </script>
-  {% if question %}{{ question.answer_form.media.js }}{% endif %}
+  {{ question.answer_form.media.js }}
   <script>
     $(document).ready(function(){mixpanel.track("Load_question_detail");});
     if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
-
 
     {% if request.GET.focus_editor %}
       $(document).ready(function(){
@@ -71,26 +70,17 @@
       });
     {% endif %}
 
-
     // script for "Edit your bio"
     $(function() {
-        $("#submit-edit-about").click(function(event) {
-            event.preventDefault();
-            $('#modal-edit-about').modal('hide');
+        $("#form-edit-about").submit(function() {
+            $("#modal-edit-about").modal("hide");
             $.ajax({
                 type: "post",
-                data: $("#form-edit-bio").serialize() + '&edit_about=edit_about',
+                data: $(this).serialize() + "&" + $("#submit-edit-about").attr("name"),
                 success: function(data, textstatus, jqxhr) {
-                    console.log(data);
-                    if (data.about === "") {
-                        $('[rel=current-user-name-and-bio]').html("");
-                        $('#btn-add-about').css('display','inline');
-                        $('#btn-edit-about').css('display','none');
-                    } else {
-                        $('[rel=current-user-name-and-bio]').html(", " + data.about);
-                        $('#btn-add-about').css('display','none');
-                        $('#btn-edit-about').css('display','inline');
-                    }
+                    if (data.toggle) { $("button[rel=about]").toggle() }
+                    if (data.about !== "") { data.about = ", " + data.about; }
+                    $("#user-about").text(data.about);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr, status, error);
@@ -100,5 +90,4 @@
         });
     });
   </script>
-  {% if request.GET.show_ask_to_answer %}<script>$(document).ready(function(){$('#ask').modal('show')});</script>{% endif %}
 {% endblock %}

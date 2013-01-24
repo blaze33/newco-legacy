@@ -218,6 +218,8 @@ class QuestionFormMixin(object):
         if not form:
             form_class = PartialQuestionForm
             form = self.get_form(form_class)
+            if "question" not in self.request.POST:
+                form.errors.clear()
         kwargs.update({"question_form": form})
         return super(QuestionFormMixin, self).get_context_data(**kwargs)
 
@@ -338,11 +340,13 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
+            ## DJANGO 1.5: user defer and save only about field
             profile = request.user.get_profile()
+            toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            data = {"is_success": "bio update success", "about": about}
+            data = {"about": about, "result": "success", "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,

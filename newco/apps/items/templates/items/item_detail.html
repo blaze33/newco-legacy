@@ -103,12 +103,13 @@
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
   <script src="{% static 'js/help.js' %}"></script>
+  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+        if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
     });
   </script>
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
     //Tracking Product name for analytics
     $(document).ready(function(){
