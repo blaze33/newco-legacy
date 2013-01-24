@@ -1,7 +1,7 @@
 /*global jQuery*/
 
 (function ($) {
-	"use strict";
+    "use strict";
 
     $("#question-form").on("show hidden", function (eventObject) {
         $("#question-icon").toggleClass("icon-plus icon-remove");
