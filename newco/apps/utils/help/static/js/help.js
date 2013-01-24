@@ -1,4 +1,4 @@
-/*global jQuery, Select2, URL_REDIS_PROFILE, select2BaseParameters*/
+/*global jQuery, $, Select2, URL_REDIS_PROFILE, select2BaseParameters*/
 /*global ngettext, interpolate*/
 
 function reloadProfiles(element, callback) {
@@ -16,7 +16,7 @@ function reloadProfiles(element, callback) {
     });
 }
 
-(function ($) {
+$(function () {
     "use strict";
     /*jslint browser:true */
 
@@ -90,4 +90,4 @@ function reloadProfiles(element, callback) {
             results: function (data, page) { return {results: data}; }
         }
     }));
-}(jQuery));
+});
