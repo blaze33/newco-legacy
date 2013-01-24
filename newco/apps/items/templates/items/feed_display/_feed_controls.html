@@ -28,7 +28,7 @@
       <p>
         {% if user.is_authenticated %}
           {% with about=user.get_profile.about %}
-            <b>{% user_display user %}<span rel="current-user-name-and-bio">{% if about %}, {{ about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=about %}
+            <b>{% user_display user %}<span id="user-about">{% if about %}, {{ about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=about %}
           {% endwith %}
         {% else %}
           {% trans "Please login before answering." %}

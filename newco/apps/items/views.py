@@ -341,10 +341,11 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
             profile = request.user.get_profile()
+            toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
             display_message("about", self.request)
-            data = {"is_success": "bio update success", "about": about}
+            data = {"about": about, "result": "success", "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,

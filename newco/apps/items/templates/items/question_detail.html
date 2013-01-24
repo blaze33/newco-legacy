@@ -82,15 +82,9 @@
                 data: $("#form-edit-bio").serialize() + "&" + $(this).attr("name"),
                 success: function(data, textstatus, jqxhr) {
                     console.log(data);
-                    if (data.about === "") {
-                        $('[rel=current-user-name-and-bio]').html("");
-                        $('#btn-add-about').css('display','inline');
-                        $('#btn-edit-about').css('display','none');
-                    } else {
-                        $('[rel=current-user-name-and-bio]').html(", " + data.about);
-                        $('#btn-add-about').css('display','none');
-                        $('#btn-edit-about').css('display','inline');
-                    }
+                    if (data.toggle) { $("button[rel=about]").toggle() }
+                    if (data.about !== "") { data.about = ", " + data.about; }
+                    $("#user-about").text(data.about);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr, status, error);
