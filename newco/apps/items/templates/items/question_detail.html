@@ -74,14 +74,12 @@
 
     // script for "Edit your bio"
     $(function() {
-        $("#submit-edit-about").click(function(event) {
-            event.preventDefault();
-            $('#modal-edit-about').modal('hide');
+        $("#form-edit-about").submit(function() {
+            $("#modal-edit-about").modal("hide");
             $.ajax({
                 type: "post",
-                data: $("#form-edit-bio").serialize() + "&" + $(this).attr("name"),
+                data: $(this).serialize() + "&" + $("#submit-edit-about").attr("name"),
                 success: function(data, textstatus, jqxhr) {
-                    console.log(data);
                     if (data.toggle) { $("button[rel=about]").toggle() }
                     if (data.about !== "") { data.about = ", " + data.about; }
                     $("#user-about").text(data.about);

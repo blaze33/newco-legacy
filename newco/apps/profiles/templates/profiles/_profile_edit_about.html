@@ -9,7 +9,7 @@
     <h3>{% trans "I can give a good answer because..." %}</h3>
   </div>
   <div class="modal-body form-inline">
-    <form id="form-edit-bio" method="POST" action="#answer_form_{{ content.id }}">{% csrf_token %}
+    <form id="form-edit-about" method="POST" action="#answer_form_{{ content.id }}">{% csrf_token %}
       <input class="span4" type="text" name="about" autocomplete="off" {% if about %}value="{{ about }}" {% endif %}placeholder="{% trans 'e.g. professional gardener, model, local tennis champion' %}">
       <input class="btn btn-primary" id="submit-edit-about" name="edit_about" type="submit" value="{% trans 'Submit' %}">
     </form>
