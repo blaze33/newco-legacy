@@ -1,9 +1,14 @@
+/*global jQuery, Select2, URL_REDIS_PROFILE, select2BaseParameters*/
+/*global ngettext, interpolate*/
+
 function reloadProfiles(element, callback) {
+    "use strict";
+
     // reload profiles
     var url, ids;
     ids = element.val().split(",");
     url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
-    return $.ajax({
+    return jQuery.ajax({
         url: url,
         dataType: "json"
     }).done( function (data) { 
@@ -11,9 +16,12 @@ function reloadProfiles(element, callback) {
     });
 }
 
-$(function() {
-    var modalAsk, experts, inputExperts, numberExperts, urlExperts;
-    var numberResults, numberUsers;
+(function ($) {
+    "use strict";
+    /*jslint browser:true */
+
+    var modalAsk, experts, inputExperts, numberExperts, urlExperts,
+        numberResults, numberUsers;
 
     modalAsk = $("#modal-ask");
     $(document).on("click", ".btn-ask", function () {
@@ -24,9 +32,9 @@ $(function() {
     });
 
     inputExperts = $("#id_experts", modalAsk);
-    expertsUrl = inputExperts.data("url");
+    urlExperts = inputExperts.data("url");
     $.ajax({
-        url: expertsUrl,
+        url: urlExperts,
         dataType: "json",
         async: false,
         success: function(data) {
@@ -82,4 +90,4 @@ $(function() {
             results: function (data, page) { return {results: data}; }
         }
     }));
-});
+}(jQuery));
