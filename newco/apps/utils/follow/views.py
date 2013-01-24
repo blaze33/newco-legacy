@@ -10,19 +10,15 @@ class FollowMixin(object):
 
     def post(self, request, *args, **kwargs):
         if "follow" in request.POST or "unfollow" in request.POST:
-            self.object = load_object(request)
-            return self.process_following(
-                request, self.object, self.get_success_url())
+            obj = load_object(request)
+            self.success_url = getattr(self, "success_url", None)
+            if not self.success_url:
+                next = self.request.POST.get("next", None)
+                self.success_url = next if next else obj.get_absolute_url()
+            return self.process_following(request, obj, self.get_success_url())
         else:
             return super(FollowMixin, self).post(request, *args, **kwargs)
 
     @method_decorator(login_required)
     def process_following(self, request, obj, success_url):
         return _process_following(request, obj, success_url)
-
-    def get_success_url(self):
-        success_url = getattr(self, "success_url", None)
-        if success_url:
-            return success_url
-        next = self.request.POST.get("next", None)
-        return next if next else self.object.get_absolute_url()
