@@ -8,11 +8,10 @@ from utils.tools import load_object
 
 class VoteMixin(object):
 
-    success_url = None
-
     def post(self, request, *args, **kwargs):
         if "vote_button" in request.POST:
             obj = load_object(request)
+            self.success_url = getattr(self, "success_url", None)
             if not self.success_url:
                 self.success_url = obj.get_absolute_url()
             return self.process_voting(request, obj, self.success_url)
