@@ -79,7 +79,7 @@
             $('#modal-edit-about').modal('hide');
             $.ajax({
                 type: "post",
-                data: $("#form-edit-bio").serialize() + '&edit_about=edit_about',
+                data: $("#form-edit-bio").serialize() + "&" + $(this).attr("name"),
                 success: function(data, textstatus, jqxhr) {
                     console.log(data);
                     if (data.about === "") {
