@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
+from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
@@ -179,7 +180,7 @@ class Answer(Content):
         order_with_respect_to = "question"
 
     def __unicode__(self):
-        return truncatechars(self.content, 50)
+        return truncatechars(strip_tags(self.content), 50)
 
     def save(self):
         super(Answer, self).save()
