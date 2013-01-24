@@ -340,6 +340,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
+            ## DJANGO 1.5: user defer and save only about field
             profile = request.user.get_profile()
             toggle = bool(profile.about) != bool(about)
             profile.about = about
