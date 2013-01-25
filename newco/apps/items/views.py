@@ -100,6 +100,7 @@ class ContentFormMixin(object):
             display_message(key, request, model=self.model)
             return self.form_valid(form)
         else:
+            display_message("failed", request, model=self.model)
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
@@ -138,7 +139,11 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     form.save_m2m()
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
+                else:
+                    display_message("failed", request, model=formset.model)
                 ctx.update({"formset": formset})
+            else:
+                display_message("failed", request, model=self.model)
             ctx.update({"form": form})
             return self.render_to_response(self.get_context_data(**ctx))
 
@@ -233,6 +238,7 @@ class QuestionFormMixin(object):
             display_message("created", request, model=form._meta.model)
             return self.form_valid(form)
         else:
+            display_message("failed", request, model=form._meta.model)
             return self.form_invalid(form)
 
 
@@ -334,6 +340,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                 self.success_url = answer.get_absolute_url()
                 return self.form_valid(form)
             else:
+                display_message("failed", request, model=form._meta.model)
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
