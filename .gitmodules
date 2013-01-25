@@ -10,3 +10,6 @@
 [submodule "newco/static/external/jquery-expander"]
 	path = newco/static/external/jquery-expander
 	url = git://github.com/kswedberg/jquery-expander.git
+[submodule "newco/static/external/mustache.js"]
+	path = newco/static/external/mustache.js
+	url = git://github.com/janl/mustache.js.git
