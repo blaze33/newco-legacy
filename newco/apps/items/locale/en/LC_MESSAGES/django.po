@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-22 18:45+0100\n"
+"POT-Creation-Date: 2013-01-25 18:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,69 +76,69 @@ msgstr ""
 msgid "Be concise and to the point."
 msgstr ""
 
-#: models.py:19
+#: models.py:20
 msgid "Tags"
 msgstr ""
 
-#: models.py:20
+#: models.py:21
 msgid ""
 "Add one or several related categories/activities using Tab or Enter, and the "
 "Arrow keys."
 msgstr ""
 
-#: models.py:25
+#: models.py:26
 msgid "name"
 msgstr ""
 
-#: models.py:26
+#: models.py:27
 msgid "slug"
 msgstr ""
 
-#: models.py:27 models.py:84
+#: models.py:28 models.py:85
 msgid "author"
 msgstr ""
 
-#: models.py:28 models.py:85
+#: models.py:29 models.py:86
 msgid "date published"
 msgstr ""
 
-#: models.py:30
+#: models.py:31
 msgid "last modified"
 msgstr ""
 
-#: models.py:36
+#: models.py:37
 msgid "product"
 msgstr ""
 
-#: models.py:87
+#: models.py:88
 msgid "status"
 msgstr ""
 
-#: models.py:89
+#: models.py:90
 msgid "products"
 msgstr ""
 
-#: models.py:140 models.py:143 models.py:173
+#: models.py:141 models.py:144 models.py:174
 msgid "question"
 msgstr ""
 
-#: models.py:175 models.py:204
+#: models.py:176 models.py:205
 msgid "content"
 msgstr ""
 
-#: models.py:178
+#: models.py:179
 msgid "answer"
 msgstr ""
 
-#: models.py:203
+#: models.py:204
 msgid "title"
 msgstr ""
 
-#: models.py:209
+#: models.py:210
 msgid "story"
 msgstr ""
 
-#: models.py:210
+#: models.py:211
 msgid "stories"
 msgstr ""
 
@@ -158,64 +158,90 @@ msgid "the "
 msgstr ""
 
 #: translation.py:10
+msgctxt "item"
+msgid "created"
+msgstr ""
+
+#: translation.py:11
+msgctxt "question"
+msgid "created"
+msgstr ""
+
+#: translation.py:12
+msgctxt "answer"
+msgid "created"
+msgstr ""
+
+#: translation.py:16
+msgctxt "item"
+msgid "updated"
+msgstr ""
+
+#: translation.py:17
+msgctxt "question"
+msgid "updated"
+msgstr ""
+
+#: translation.py:18
+msgctxt "answer"
+msgid "updated"
+msgstr ""
+
+#: translation.py:22
 #, python-format
 msgctxt "item"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: translation.py:11
+#: translation.py:23
 #, python-format
 msgctxt "question"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: translation.py:12
+#: translation.py:24
 #, python-format
 msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:317 views.py:424
+#: views.py:323 views.py:432
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:318 views.py:425
+#: views.py:324 views.py:433
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:378
+#: views.py:397
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:384
+#: views.py:401
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:390
+#: views.py:406
 #, python-format
 msgid "No questions about products with tag %s"
 msgstr ""
 
-#: views.py:474
-#, python-format
-msgid "Thanks %(user)s, %(object_name)s successfully created."
+#: views.py:483
+msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
 msgstr ""
 
-#: views.py:478
-#, python-format
-msgid "Thanks %(user)s, %(object_name)s successfully updated."
+#: views.py:488
+msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
 msgstr ""
 
-#: views.py:482
-#, python-format
-msgid "Thanks %(user)s, your bio has been successfully updated."
+#: views.py:493
+msgid "Thanks {user}, your bio has been successfully updated."
 msgstr ""
 
-#: views.py:486
-#, python-format
-msgid "Warning %(user)s, %(object_name)s form is invalid."
+#: views.py:497
+msgid "Warning {user}, the form is invalid."
 msgstr ""
 
 #: templates/items/_data_sheet.html:13
@@ -322,7 +348,7 @@ msgid "Download"
 msgstr ""
 
 #: templates/items/item_form.html:15 templates/items/item_form.html.py:19
-#: templates/items/item_list_base.html:44
+#: templates/items/item_list_base.html:45
 #: templates/items/question_form.html:74
 #: templates/items/question_form.html:153
 msgid "Add a product"
@@ -396,39 +422,39 @@ msgstr ""
 msgid "Create and add features"
 msgstr ""
 
-#: templates/items/item_list_base.html:17
-#: templates/items/item_list_base.html:29
-#: templates/items/item_list_base.html:53
+#: templates/items/item_list_base.html:18
+#: templates/items/item_list_base.html:30
+#: templates/items/item_list_base.html:54
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list_base.html:17
+#: templates/items/item_list_base.html:18
 msgid "Tag"
 msgstr ""
 
-#: templates/items/item_list_base.html:25
+#: templates/items/item_list_base.html:26
 #, python-format
 msgid "Click to remove tag %(tag)s from your skill list"
 msgstr ""
 
-#: templates/items/item_list_base.html:25
+#: templates/items/item_list_base.html:26
 msgid "In my skills"
 msgstr ""
 
-#: templates/items/item_list_base.html:27
+#: templates/items/item_list_base.html:28
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
 msgstr ""
 
-#: templates/items/item_list_base.html:27
+#: templates/items/item_list_base.html:28
 msgid "Add to skills"
 msgstr ""
 
-#: templates/items/item_list_base.html:52
+#: templates/items/item_list_base.html:53
 msgid "Home"
 msgstr ""
 
-#: templates/items/item_list_base.html:54
+#: templates/items/item_list_base.html:55
 msgid "Questions"
 msgstr ""
 
@@ -445,38 +471,38 @@ msgid "Search products with tag"
 msgstr ""
 
 #: templates/items/item_list_products.html:15
-#: templates/items/item_list_questions.html:22
+#: templates/items/item_list_questions.html:17
 msgid "Filter"
 msgstr ""
 
 #: templates/items/item_list_products.html:16
-#: templates/items/item_list_questions.html:23
+#: templates/items/item_list_questions.html:18
 msgid "Popular"
 msgstr ""
 
 #: templates/items/item_list_products.html:17
-#: templates/items/item_list_questions.html:24
+#: templates/items/item_list_questions.html:19
 msgid "Last added"
 msgstr ""
 
 #: templates/items/item_list_products.html:18
-#: templates/items/item_list_questions.html:25
+#: templates/items/item_list_questions.html:20
 msgid "Old"
 msgstr ""
 
-#: templates/items/item_list_questions.html:18
+#: templates/items/item_list_questions.html:13
 msgid "What questions?"
 msgstr ""
 
-#: templates/items/item_list_questions.html:19
+#: templates/items/item_list_questions.html:14
 msgid "Questions with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:20
+#: templates/items/item_list_questions.html:15
 msgid "Questions about products with tag"
 msgstr ""
 
-#: templates/items/item_list_questions.html:26
+#: templates/items/item_list_questions.html:21
 msgid "No answers"
 msgstr ""
 
