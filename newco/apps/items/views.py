@@ -90,7 +90,9 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                data = {"id": item.pk, "name": item.name,
+                message = get_message("created", request,
+                                      model=form._meta.model)
+                data = {"id": item.id, "name": item.name, "message": message,
                         "next": reverse("item_edit", args=args)}
             else:
                 data = "invalid form"
