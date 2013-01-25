@@ -14,30 +14,26 @@
     <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
   {% endif %}
   {% endcomment %}
+  
+  {% if contents %}
   <div class="row">
-   <div class="span6"><h3>{% trans "The questions to watch before buying are answered by real experts" %}</h3></div>
+   <div class="span6"><h5>{% trans "The questions to watch before buying are answered by real experts" %}</h5></div>
   </div>
-  <hr>
+  {% endif %}
   {% if not contents %}
     <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
+    <div class="row"><div id="question_form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %} style="position: relative; top: -75px;"{% endif %}>
+      <form method="POST" action="" class="form-inline"><br>
+        {% csrf_token %}
+        {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+          <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
+          {% include "bootstrap/_field_errors.html" %}
+          {% include "bootstrap/_field_help_text.html" %}
+        </div></div>{% endwith %}
+        <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
+      </form>
+    </div></div>
   {% endif %}
- 
-    <div class="row"><div id="question_form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %}{% endif %}>
-
-  {% comment %}
-  <div class="row"><div id="question_form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %} style="position: relative; top: -75px;"{% endif %}>
-  {% comment %}
-
-    <form method="POST" action="" class="form-inline"><br>
-      {% csrf_token %}
-      {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
-        <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
-        {% include "bootstrap/_field_errors.html" %}
-        {% include "bootstrap/_field_help_text.html" %}
-      </div></div>{% endwith %}
-      <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
-    </form>
-  </div></div>
   <hr>
 {% endif %}
 
@@ -63,9 +59,11 @@
     {% endif %}
   </div>
 {% empty %}
+  {% comment %}
   {% if empty_msg %}
     <p>{{ empty_msg }}</p>
   {% else %}
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}
+  {% endcomment %}
 {% endfor %}
