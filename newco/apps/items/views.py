@@ -193,7 +193,7 @@ class QuestionFormMixin(object):
 
     def form_invalid(self, form):
         if "question" not in self.request.POST:
-            return super(AskForHelpMixin, self).form_invalid(form)
+            return super(QuestionFormMixin, self).form_invalid(form)
         return self.render_to_response(self.get_context_data(
             question_form=form))
 
