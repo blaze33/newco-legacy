@@ -344,12 +344,12 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
-            ## DJANGO 1.5: user defer and save only about field
+            ## DJANGO 1.5: use defer and save only about field
             profile = request.user.get_profile()
             toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
-            message = get_message("about", self.request)
+            message = get_message("about", request)
             data = {"about": about, "message": message,
                     "result": "success", "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
@@ -500,18 +500,24 @@ MESSAGES = {
 
 
 def display_message(key, request, **kwargs):
+    kwargs = update_kwargs(key, request, **kwargs)
+    messages.add_message(request, MESSAGES[key]["level"],
+                         MESSAGES[key]["text"].format(**kwargs))
+
+
+def get_message(key, request, **kwargs):
+    kwargs = update_kwargs(key, request, **kwargs)
+    message = messages.storage.base.Message(
+        MESSAGES[key]["level"], MESSAGES[key]["text"].format(**kwargs))
+    message._prepare()
+    return {"text": message.message, "tags": message.tags}
+
+
+def update_kwargs(key, request, **kwargs):
     kwargs.update({"user": user_display(request.user)})
     if "model" in kwargs:
         model = kwargs.pop("model")
         kwargs.update({"article": pgettext(model._meta.module_name, "the "),
                        key: pgettext(model._meta.module_name, key),
                        "verbose_name": model._meta.verbose_name})
-    messages.add_message(request, MESSAGES[key]["level"],
-                         MESSAGES[key]["text"].format(**kwargs))
-
-
-def get_message(key, request, **kwargs):
-    message = messages.storage.base.Message(
-        MESSAGES[key]["level"], MESSAGES[key]["text"].format(kwargs))
-    message._prepare()
-    return {"text": message.message, "tags": message.tags}
+    return kwargs
