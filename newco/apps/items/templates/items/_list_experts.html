@@ -1,0 +1,50 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load account_tags %}
+{% load content_utils %}
+{% load pagination_tags %}
+
+<div class="modal fade hide" id="experts-list">
+  <div class="modal-header expert-list-header">
+    <button class="close" data-dismiss="modal">&times;</button>
+    <h3>{% trans "The experts will answer all your questions" %}</h3>
+    
+    <div class="row"><div id="question_form" class="span6">
+    <form method="POST" action="" class="form-inline"><br>
+      {% csrf_token %}
+      {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+        <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span class="add-on" style="margin-left: 10px;"><i class="icon-question-sign"></i></span>{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
+        {% include "bootstrap/_field_errors.html" %}
+        {% include "bootstrap/_field_help_text.html" %}
+      </div></div>{% endwith %}
+      <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
+    </form>
+    </div></div>
+    {% comment %}
+    <br><div class="span6" style="margin-left: 0"><a class="btn btn-success" href="{% url 'item_create' 'question' %}"><i class="icon-plus-sign"></i> {% trans "Ask a question" %}</a></div>
+    {% endcomment %}
+  </div>
+  
+  <div class="modal-body">
+  	{% for expert in experts|slice:":8" %}
+  	<br>
+  	<p class="img-expert">{% profile_pic expert.user 40 %}</p>
+  	<b><a href="{{ expert.get_absolute_url }}" class="black">{{ expert.name }}</a></b> • <b> {{ expert.user.reputation.reputation_incremented }}</b>
+  	<br>
+  	{% if expert.about %}{{ expert.about }}{% endif %}
+  	<hr>
+  	{% endfor %}
+  </div>
+</div>
+
+<script>
+$(function() {
+    var expertsList;
+
+    expertsList = $("#experts-list");
+    $(document).on("click", function () {
+        expertsList.modal("show");
+    });
+});
+</script>
