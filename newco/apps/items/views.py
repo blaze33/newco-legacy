@@ -335,8 +335,6 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                         if len(list_questions_by_tag)>i:
                             list_doublons_q.append(list_questions_by_tag[i])
                     top_question_by_tag[tag]=list_questions_by_tag[:nb_questions]
-                    #top_question_by_tag[tag][1]=self.queryset.count()
-                #top_question_by_tag[nb]=self.queryset.count()
                 
                 nb_questions = self.queryset.count()
                 nb_questions_by_tag[tag]=nb_questions
