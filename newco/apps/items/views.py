@@ -283,8 +283,10 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                     
             top_products_by_tag={}
             nb_questions_by_tag={}
-            ##### We created a list to check all the doublons and not display them twice ####
-            list_doublons=[]
+            top_question_by_tag={}
+            ##### We created a list to check all the doublons for products and not display them twice ####
+            list_doublons_p = []
+            list_doublons_q = []
             for tag in item.tags.all():
                 related_products = Item.objects.filter(
                     Q(tags=tag)).exclude(id=item.id).distinct()
@@ -294,28 +296,52 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                             score=Sum("content__votes__vote")
                         ).filter(count__gt=0).order_by("-score")
                 list_products_by_tag=[]
-                ##### Loop to find the 2 first related products && not in list_doublons ####
-                count=0
+                ##### Loop to find the N first related products && not in list_doublons ####
+                nb_products = 2
+                count = 0
                 for product in top_products:
-                    if count==2:
+                    if count == nb_products:
                         break
-                    elif product not in list_doublons:
+                    elif product not in list_doublons_p:
                         list_products_by_tag.append(product)
-                        count +=1
+                        count += 1
                 if list_products_by_tag:
-                ##### Loop to add the 2 products to list_doublons ####
-                    for i in [0,1]:
+                ##### Loop to add the N products to list_doublons_p ####
+                    for i in range(nb_products):
                         if len(list_products_by_tag)>i:
-                            list_doublons.append(list_products_by_tag[i])
+                            list_doublons_p.append(list_products_by_tag[i])
+                ##### We display only N products per row ####
+                top_products_by_tag[tag]=list_products_by_tag[:nb_products]
                 
-                ##### We display only 2 products per row ####
-                top_products_by_tag[tag]=list_products_by_tag[:2]
+                ##### We created a list to check all the doublons for questions and not display them twice ####
                 qs_tags=Tag.objects.all().filter(name=tag)
                 self.queryset = Content.objects.questions().filter(tags__in=qs_tags).select_subclasses()
+                top_questions = self.queryset.annotate(
+                            count=Count("votes__vote"),
+                            score=Sum("votes__vote")
+                        ).filter(count__gt=0).order_by("-score")
+                list_questions_by_tag=[]
+                nb_questions = 1
+                count = 0
+                for question in top_questions:
+                    if count == nb_questions:
+                        break
+                    elif question not in list_doublons_q:
+                        list_questions_by_tag.append(question)
+                        count += 1        
+                if list_questions_by_tag:
+                ##### Loop to add the question to list_doublons_q ####
+                    for i in range(nb_questions):
+                        if len(list_questions_by_tag)>i:
+                            list_doublons_q.append(list_questions_by_tag[i])
+                    top_question_by_tag[tag]=list_questions_by_tag[:nb_questions]
+                    #top_question_by_tag[tag][1]=self.queryset.count()
+                #top_question_by_tag[nb]=self.queryset.count()
+                
                 nb_questions = self.queryset.count()
                 nb_questions_by_tag[tag]=nb_questions
 
-            context.update({"questions": questions, "top_products_by_tag": top_products_by_tag, "nb_questions_by_tag": nb_questions_by_tag, "scores": scores,
+            context.update({"questions": questions, "top_products_by_tag": top_products_by_tag, "top_question_by_tag": top_question_by_tag, "nb_questions_by_tag": nb_questions_by_tag, "scores": scores,
                             "votes": votes, "media": media})
 
             # Linked affiliated products
