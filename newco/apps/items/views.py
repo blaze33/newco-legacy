@@ -345,8 +345,9 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
-            display_message("about", self.request)
-            data = {"about": about, "result": "success", "toggle": toggle}
+            message = get_message("about", self.request)
+            data = {"about": about, "message": message,
+                    "result": "success", "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,
@@ -500,3 +501,15 @@ def display_message(msg_type, request, object_name=""):
             "object_name": object_name
         }
     )
+
+
+def get_message(msg_type, request, object_name=""):
+    message = messages.storage.base.Message(
+        MESSAGES[msg_type]["level"],
+        MESSAGES[msg_type]["text"] % {
+            "user": user_display(request.user),
+            "object_name": object_name
+        }
+    )
+    message._prepare()
+    return {"text": message.message, "tags": message.tags}

@@ -1,3 +1,16 @@
+/*global $, STATIC_URL, Mustache*/
+
+function displayMessage (message) {
+    "use strict";
+
+    console.log(message);
+    var templatePath = STATIC_URL + "mustache/_message.html";
+    $.get(templatePath, function(templates) { 
+        var template = $(templates).filter("#message").html();
+        $("#js-alert").append(Mustache.render(template, message));
+    });
+}
+
 var pics = [];
 
 function moveAnimate(element, newParent){
