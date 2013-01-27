@@ -11,7 +11,7 @@ MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
 
 
 def get_class_name(klass):
-    return "%s.%s" % (klass.__module__, klass._meta.object_name)
+    return "{0}.{1}".format(klass.__module__, klass._meta.object_name)
 
 
 def get_class_from_string(class_string, pattern=MODULE_PATTERN):
