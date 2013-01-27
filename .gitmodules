@@ -13,3 +13,6 @@
 [submodule "newco/static/external/mustache.js"]
 	path = newco/static/external/mustache.js
 	url = git://github.com/janl/mustache.js.git
+[submodule "newco/static/external/bootstrap-ajax"]
+	path = newco/static/external/bootstrap-ajax
+	url = git://github.com/eldarion/bootstrap-ajax.git
