@@ -13,6 +13,7 @@ from gravatar.templatetags.gravatar import gravatar_img_for_user
 from taggit.models import Tag
 
 from items.models import Item, Content
+from utils.tools import get_class_name
 from utils.templatetags.tools import (GenericNode, get_node_extra_arguments,
                                       generate_objs_sentence,
                                       get_content_source)
@@ -28,6 +29,11 @@ def to_app_label(value):
 @register.filter
 def to_class_name(value):
     return value._meta.module_name
+
+
+@register.filter
+def full_class_name(value):
+    return get_class_name(value)
 
 
 @register.filter
