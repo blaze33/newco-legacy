@@ -5,7 +5,7 @@
 {% load follow_utils %}
 
 {% if display == "text" %}
-  <a class="popover-object-display {% if color %} {{ color }}{% endif %}" data-original-title="{% profile_pic object 80 'single' %} <span class='pull-right'>{% follow_form user object %}</span>" data-content="{% include 'profiles/_profile_info.html' with display='popover' profile=object skills=skills %}" href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Person" itemprop="url"><span itemprop="name">{{ username }}</span></a>
+  <a class="popover-object-display {% if color %} {{ color }}{% endif %}" data-original-title="{% profile_pic object 80 'single' %} <span class='pull-right'>{% follow_form user object quote_type='single' %}</span>" data-content="{% include 'profiles/_profile_info.html' with display='popover' profile=object skills=skills %}" href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Person" itemprop="url"><span itemprop="name">{{ username }}</span></a>
 {% elif display == "thumbnail" or display == "mini_feed" %}
   <span itemscope itemtype="http://schema.org/Person"><a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemprop="url"><span itemprop="name">{{ username }}</span></a></span>
 {% endif %}

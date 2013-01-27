@@ -27,7 +27,7 @@ class FollowFormNode(GenericNode):
         except:
             return ""
 
-        fields = ["next", "extra_class", "tooltip_class"]
+        fields = ["next", "extra_class", "tooltip_class", "quote_type"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
