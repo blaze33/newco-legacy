@@ -4,7 +4,6 @@ import re
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.db.models.loading import get_model
 from django.utils.datastructures import SortedDict
 
 MODULE_PATTERN = "(?P<module_name>[\w+\.?]+)\.(?P<fromlist>\w+)$"
@@ -37,18 +36,16 @@ def load_object(request):
     """
     Loads object from hidden fields in post request
     """
-    app_label = request.POST["app_label"]
-    object_name = request.POST["object_name"]
+    model = get_class_from_string(request.POST["class_name"])
     object_id = request.POST["id"]
-    model = get_model(app_label, object_name)
 
-    lookup_kwargs = {'%s__exact' % model._meta.pk.name: object_id}
+    lookup_kwargs = {"{0}__exact".format(model._meta.pk.name): object_id}
 
     try:
         return model._default_manager.get(**lookup_kwargs)
     except ObjectDoesNotExist:
-        raise AttributeError('No %s for %s.' % (model._meta.app_label,
-                                                lookup_kwargs))
+        raise AttributeError("No {0} for {1}.".format(model._meta.app_label,
+                                                      lookup_kwargs))
 
 
 def normalize_query(str, findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
