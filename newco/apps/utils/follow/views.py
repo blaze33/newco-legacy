@@ -56,4 +56,4 @@ class FollowMixin(object):
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             display_message(key, request, **kwargs)
-        return HttpResponseRedirect(success_url)
+            return HttpResponseRedirect(success_url)
