@@ -93,6 +93,12 @@
 .top-images-small { display:none; }
 }
 
+@media (min-width: 800px) {
 .expert-list-header { height:90px; }
+}
+@media (max-width: 800px) {
+.expert-list-header { height:150px; }
+}
+
 
 .img-expert { float:right; }
