@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 
@@ -9,12 +11,20 @@ from utils.tools import load_object
 from utils.voting import Vote
 
 VOTE_DIRECTIONS = (("up", 1), ("down", -1), ("clear", 0))
+BUTTONS_CONF = {
+    1: {"up": {"value": "clear", "dataVote": "True"},
+        "down": {"value": "down", "dataVote": "False"}},
+    0: {"up": {"value": "up", "dataVote": "False"},
+        "down": {"value": "down", "dataVote": "False"}},
+    -1: {"up": {"value": "up", "dataVote": "False"},
+         "down": {"value": "clear", "dataVote": "True"}}
+}
 
 
 class VoteMixin(object):
 
     def post(self, request, *args, **kwargs):
-        if "vote_button" in request.POST:
+        if "vote-up" in request.POST or "vote-down" in request.POST:
             obj = load_object(request)
             self.success_url = getattr(self, "success_url", None)
             if not self.success_url:
@@ -26,11 +36,13 @@ class VoteMixin(object):
     @method_decorator(permission_required("profiles.can_vote",
                                           raise_exception=True))
     def process_voting(self, request, obj, success_url):
-        direction = request.POST['vote_button']
+        direction = request.POST["vote-up"] if "vote-up" in request.POST else \
+            request.POST["vote-down"]
         kwargs = {}
         if obj.author != request.user:
             vote = dict(VOTE_DIRECTIONS)[direction]
-            Vote.objects.record_vote(obj.select_parent(), request.user, vote)
+            content_obj = obj.select_parent()
+            Vote.objects.record_vote(content_obj, request.user, vote)
             if obj.__class__ is Content:
                 obj = obj.select_subclass()
             if obj.__class__ is Question:
@@ -40,7 +52,17 @@ class VoteMixin(object):
 
             kwargs.update({"object": obj})
             key = "vote-{0}".format(direction)
-            display_message(key, request, **kwargs)
+            score = Vote.objects.get_score(content_obj)
+            vote = Vote.objects.get_for_user(content_obj, request.user)
+            conf = BUTTONS_CONF[vote.vote]
+            data = {"conf": conf, "score": score, "ok": True}
         else:
-            display_message("vote-warning", request, **kwargs)
-        return HttpResponseRedirect(success_url)
+            data = {"ok": False}
+            key = "vote-warning"
+        if request.is_ajax():
+            message = get_message(key, request, **kwargs)
+            data.update({"message": message})
+            return HttpResponse(json.dumps(data), mimetype="application/json")
+        else:
+            display_message(key, request, **kwargs)
+            return HttpResponseRedirect(success_url)
