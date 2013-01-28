@@ -23,20 +23,23 @@
 
 {% block carousel %}
 <div class="row">
-  <div class="span3"><h1>{% if tag %}{{ tag|capfirst }}</h1>
-    <br>
+  <div class="span3">
+  	<h1>{% if tag %}{{ tag|capfirst }}</h1>
+      <br>
       {% include "items/feed_display/_tag_controls.html" with tag=tag user=user answer_location="embedded" csrf_token=csrf_token include_modal="True" only %}
       {% include "items/_list_experts.html" with experts=experts %}
-    {% comment %}
-    <div class="pull-right">
-    {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}{% if tag in user.get_profile.skills.all %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
-    {% else %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
-    {% endif %}</form>{% endif %}
-  </div>
-  {% endcomment %}
-  {% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
+      {% comment %}
+      <div class="pull-right">
+        {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}
+          {% if tag in user.get_profile.skills.all %}
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
+          {% else %}
+            <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
+          {% endif %}
+        </form>{% endif %}
+      </div>
+      {% endcomment %}
+    {% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
   <div class="span7" align="center">{% if item_list.count %}
     <div class="carousel slide" id="carousel_tag">
       <div class="carousel-inner">{% for item in item_list %}
