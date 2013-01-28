@@ -13,6 +13,17 @@ function displayMessage (message) {
     });
 }
 
+(function ($) {
+    "use strict";
+
+    /*jslint browser:true*/
+    $("body").ajaxComplete(function(e, xhr, settings) {
+        if ( xhr.status === 278 ) {
+            window.location.href = xhr.getResponseHeader("Location").replace(/\?.*$/, "?next="+window.location.pathname);
+        }
+    });
+}(window.jQuery));
+
 var pics = [];
 
 function moveAnimate(element, newParent){

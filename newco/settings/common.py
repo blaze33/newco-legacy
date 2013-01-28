@@ -139,6 +139,7 @@ MIDDLEWARE_CLASSES = [
     "account.middleware.TimezoneMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "utils.middleware.AjaxRedirectMiddleware",
 ]
 
 HTML_MINIFY = False
