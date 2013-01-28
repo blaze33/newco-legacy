@@ -30,13 +30,7 @@ class VoteMixin(object):
         direction = request.POST['vote_button']
         kwargs = {}
         if obj.author != request.user:
-            try:
-                vote = dict(VOTE_DIRECTIONS)[direction]
-            except KeyError:
-                raise AttributeError(
-                    "'%s' is not a valid vote type." % direction
-                )
-
+            vote = dict(VOTE_DIRECTIONS)[direction]
             Vote.objects.record_vote(obj.select_parent(), request.user, vote)
             if obj.__class__ is Content:
                 obj = obj.select_subclass()
