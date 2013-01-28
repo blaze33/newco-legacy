@@ -33,7 +33,8 @@
     {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
     {% endcomment %}
     {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" display_q_form="True" question_form=question_form item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
-    <br>
+    <br><br><br>
+    <hr>
     {% for prod in store_products %}
       {% if forloop.first %}
         <h3>{% trans "Where to buy" %}</h3>
