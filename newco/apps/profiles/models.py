@@ -13,10 +13,10 @@ from django.contrib.contenttypes.models import ContentType
 from idios.models import ProfileBase
 from follow.utils import register
 from taggit.managers import TaggableManager
-from voting.models import Vote
 
 from items.models import Content
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
+from utils.voting import Vote
 
 register(User)
 

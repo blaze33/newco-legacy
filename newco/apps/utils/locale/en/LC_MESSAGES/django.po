@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 19:35+0100\n"
+"POT-Creation-Date: 2013-01-28 22:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,18 +180,6 @@ msgid ""
 "The NewCo Project team\n"
 msgstr ""
 
-#: templates/voting/form.html:6
-msgid ""
-"Vote up: this contribution shows effort on quality; it is usefull and clear "
-"(click again to undo)"
-msgstr ""
-
-#: templates/voting/form.html:7
-msgid ""
-"Vote down: this contribution does&#39;t show effort on quality; it is not "
-"useful or unclear (click again to undo)"
-msgstr ""
-
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
 msgstr ""
@@ -240,23 +228,3 @@ msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
-
-#: vote/tools.py:20
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr ""
-
-#: vote/tools.py:24
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr ""
-
-#: vote/tools.py:28
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr ""
-
-#: vote/tools.py:32
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
-msgstr ""

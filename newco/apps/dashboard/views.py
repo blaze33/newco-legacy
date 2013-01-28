@@ -13,7 +13,7 @@ from profiles.models import Profile
 from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
-from utils.vote.views import VoteMixin
+from utils.voting.views import VoteMixin
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),

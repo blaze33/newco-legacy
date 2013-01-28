@@ -13,7 +13,7 @@ from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
-from utils.vote.views import VoteMixin
+from utils.voting.views import VoteMixin
 
 
 class ProfileDetailView(TutorialMixin, AskForHelpMixin, ProfileDetailView,

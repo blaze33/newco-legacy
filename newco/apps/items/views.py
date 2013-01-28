@@ -28,7 +28,7 @@ from items.models import Item, Content, Question
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
-from utils.vote.views import VoteMixin
+from utils.voting.views import VoteMixin
 from utils.messages import display_message, get_message
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin

@@ -3,11 +3,10 @@ from django.utils.decorators import method_decorator
 
 from django.contrib.auth.decorators import permission_required
 
-from voting.models import Vote
-
 from items.models import Content, Question, Answer
 from utils.messages import display_message, get_message
 from utils.tools import load_object
+from utils.voting import Vote
 
 VOTE_DIRECTIONS = (("up", 1), ("down", -1), ("clear", 0))
 

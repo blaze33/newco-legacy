@@ -76,6 +76,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/utils/locale',
     PROJECT_ROOT + '/apps/utils/follow/locale',
     PROJECT_ROOT + '/apps/utils/help/locale',
+    PROJECT_ROOT + '/apps/utils/voting/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -223,6 +224,7 @@ INSTALLED_APPS = [
     "utils.follow",
     "utils.help",
     "utils.redis",
+    "utils.voting",
     "content",
 
     # Foreign apps
