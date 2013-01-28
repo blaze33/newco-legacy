@@ -8,10 +8,9 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from follow.models import Follow
-
 from items.models import Content, Item
 from profiles.models import Profile
+from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
 from utils.vote.views import VoteMixin

@@ -6,10 +6,10 @@ from django.views.generic.list import MultipleObjectMixin
 from django.contrib.auth.models import User
 
 from account.utils import user_display
-from follow.models import Follow
 from idios.views import ProfileDetailView, ProfileListView
 
 from items.models import Item
+from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin

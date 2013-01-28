@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from account.utils import user_display
 from follow.utils import follow, unfollow
-from follow.models import Follow
+from utils.follow import Follow
 
 from utils.mailtools import mail_followee
 from utils.messages import display_message, get_message
