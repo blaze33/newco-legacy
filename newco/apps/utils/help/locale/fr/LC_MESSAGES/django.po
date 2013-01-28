@@ -2,67 +2,54 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 19:02+0100\n"
+"POT-Creation-Date: 2013-01-28 14:36+0100\n"
 "PO-Revision-Date: 2013-01-15 19:06\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: forms.py:16
+#: forms.py:15
 msgid "...some of our experts in this field"
 msgstr "...à plusieurs de nos experts dans ce domaine"
 
-#: forms.py:19
+#: forms.py:17
 msgid ""
 "These are users that have declared being competent on this particular field"
 msgstr ""
 "Ce sont les utilisateurs ayant déclaré être compétent dans ce domaine précis"
 
-#: forms.py:22
+#: forms.py:20
 msgid "...users you know"
 msgstr "...à des utilisateurs que vous connaissez"
 
-#: forms.py:25
+#: forms.py:23
 msgid "...a non-member through an email"
 msgstr "...à une personne extérieure via e-mail"
 
-#: forms.py:27
+#: forms.py:25
 msgid "Enter an email address"
 msgstr "Entrez une adresse e-mail"
 
-#: forms.py:40
+#: forms.py:49
 msgid "Fill at least one field"
 msgstr "Remplissez au moins un champ"
-
-#: views.py:110
-msgid "{user}, your request has been sent to {receiver}!"
-msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
-
-#: views.py:114
-msgid "{user}, you can't ask yourself to answer a question!"
-msgstr ""
-"{user}, vous ne pouvez pas vous proposer de répondre à une question&#x202F;!"
-
-#: views.py:118
-msgid "{user}, {email} is not a valid email address!"
-msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
 
 #: templates/help/_ask_modal.html:7
 msgid "Ask..."
 msgstr "Demandez..."
 
-#: templates/help/_ask_modal.html:13
+#: templates/help/_ask_modal.html:14
 msgid ""
 "Each user you select will receive a message explaining that you asked for "
 "his help on this question and that you would like him to answer."
@@ -71,6 +58,17 @@ msgstr ""
 "vous avez demandé son aide sur cette question et que vous voudriez qu'il "
 "réponde."
 
-#: templates/help/_ask_modal.html:16
+#: templates/help/_ask_modal.html:17
 msgid "Ask"
 msgstr "Demander"
+
+#~ msgid "{user}, your request has been sent to {receiver}!"
+#~ msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
+
+#~ msgid "{user}, you can't ask yourself to answer a question!"
+#~ msgstr ""
+#~ "{user}, vous ne pouvez pas vous proposer de répondre à une "
+#~ "question&#x202F;!"
+
+#~ msgid "{user}, {email} is not a valid email address!"
+#~ msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"

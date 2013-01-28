@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 01:13+0100\n"
-"PO-Revision-Date: 2013-01-28 01:13\n"
+"POT-Creation-Date: 2013-01-28 14:35+0100\n"
+"PO-Revision-Date: 2013-01-28 14:36\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,38 +34,64 @@ msgstr "%(receiver)s, %(requester)s a besoin de vous."
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr "%(followee)s, %(follower)s vous suit désormais sur NewCo."
 
-#: follow/constants.py:7
+#: messages.py:11
+msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
+msgstr "Merci {user}, {article}{verbose_name} a été {created} avec succès."
+
+#: messages.py:16
+msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
+msgstr "Merci {user}, {article}{verbose_name} a été {updated} avec succès."
+
+#: messages.py:21
+msgid "Thanks {user}, your bio has been successfully updated."
+msgstr "Merci {user}, votre bio a été mise à jour."
+
+#: messages.py:25
+msgid "Warning {user}, the form is invalid."
+msgstr "Attention {user}, le formulaire est invalide."
+
+#: messages.py:29
+msgid "{user}, you are now following {object}."
+msgstr "{user}, vous suivez désormais {object}."
+
+#: messages.py:33
+msgid "{user}, you are not following {object} anymore."
+msgstr "{user}, vous ne suivez plus {object}."
+
+#: messages.py:37
+msgid "{user}, you can't follow yourself!"
+msgstr "{user}, vous ne pouvez pas vous suivre&#x202F;!"
+
+#: messages.py:41
+msgid "{user}, your request has been sent to {receiver}!"
+msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
+
+#: messages.py:45
+msgid "{user}, you can't ask yourself to answer a question!"
+msgstr ""
+"{user}, vous ne pouvez pas vous proposer de répondre à une question&#x202F;!"
+
+#: messages.py:49
+msgid "{user}, {email} is not a valid email address!"
+msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
+
+#: follow/constants.py:6
 msgctxt "Follow button"
 msgid "Follow"
 msgstr "Suivre"
 
-#: follow/constants.py:8
+#: follow/constants.py:7
 msgid "Click to follow"
 msgstr "Cliquez pour vous abonner"
 
-#: follow/constants.py:14
+#: follow/constants.py:12
 msgctxt "Follow button"
 msgid "Following"
 msgstr "Abonné"
 
-#: follow/constants.py:15
+#: follow/constants.py:13
 msgid "Click to unfollow"
 msgstr "Cliquez pour vous désabonner"
-
-#: follow/tools.py:20
-#, python-format
-msgid "%(user)s, you are now following %(object)s."
-msgstr "%(user)s, vous suivez désormais %(object)s."
-
-#: follow/tools.py:24
-#, python-format
-msgid "%(user)s, you are not following %(object)s anymore."
-msgstr "%(user)s, vous ne suivez plus %(object)s."
-
-#: follow/tools.py:28
-#, python-format
-msgid "%(user)s, you can't follow yourself!"
-msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
 
 #: templates/content/info.html:7
 msgid "Posted"
@@ -258,16 +284,6 @@ msgstr ""
 #~ msgstr ""
 #~ "%(user)s, vous ne pouvez pas vous proposer de répondre à une "
 #~ "question&#x202F;!"
-
-#~ msgid "{user}, your request has been sent to {receiver}!"
-#~ msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
-
-#~ msgid "{user}, you can't ask yourself to answer a question!"
-#~ msgstr ""
-#~ "{user}, vous ne pouvez pas vous proposer de répondre à une question&#x202F;!"
-
-#~ msgid "{user}, {email} is not a valid email address!"
-#~ msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
 
 #~ msgid ""
 #~ "Click here if you can&#39;t find the product you want to link your question "

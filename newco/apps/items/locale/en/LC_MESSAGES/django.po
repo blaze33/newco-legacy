@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-25 18:08+0100\n"
+"POT-Creation-Date: 2013-01-28 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,43 +205,27 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:323 views.py:432
+#: views.py:326 views.py:435
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:324 views.py:433
+#: views.py:327 views.py:436
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:397
+#: views.py:400
 #, python-format
 msgid "No products with tag %s"
 msgstr ""
 
-#: views.py:401
+#: views.py:404
 #, python-format
 msgid "No questions with tag %s"
 msgstr ""
 
-#: views.py:406
+#: views.py:409
 #, python-format
 msgid "No questions about products with tag %s"
-msgstr ""
-
-#: views.py:483
-msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
-msgstr ""
-
-#: views.py:488
-msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
-msgstr ""
-
-#: views.py:493
-msgid "Thanks {user}, your bio has been successfully updated."
-msgstr ""
-
-#: views.py:497
-msgid "Warning {user}, the form is invalid."
 msgstr ""
 
 #: templates/items/_data_sheet.html:13
