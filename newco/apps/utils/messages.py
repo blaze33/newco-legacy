@@ -71,6 +71,10 @@ def update_kwargs(key, request, **kwargs):
     if "model" in kwargs:
         model = kwargs.pop("model")
         kwargs.update({"article": pgettext(model._meta.module_name, "the "),
-                       key: pgettext(model._meta.module_name, key),
                        "verbose_name": model._meta.verbose_name})
+        if key == "object-created":
+            word = "created"
+        elif key == "object-updated":
+            word = "updated"
+        kwargs.update({word: pgettext(model._meta.module_name, word)})
     return kwargs
