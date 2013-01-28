@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 15:31+0100\n"
+"POT-Creation-Date: 2013-01-28 19:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,22 @@ msgstr ""
 
 #: messages.py:49
 msgid "{user}, {email} is not a valid email address!"
+msgstr ""
+
+#: messages.py:53
+msgid "{user}, your up vote on {object} has been recorded."
+msgstr ""
+
+#: messages.py:57
+msgid "{user}, your down vote on {object} has been recorded."
+msgstr ""
+
+#: messages.py:61
+msgid "{user}, your vote on {object} has been cancelled."
+msgstr ""
+
+#: messages.py:65
+msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 
 #: templates/content/info.html:7

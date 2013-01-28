@@ -48,6 +48,22 @@ MESSAGES = {
         "level": messages.ERROR,
         "text": _("{user}, {email} is not a valid email address!")
     },
+    "vote-up": {
+        "level": messages.INFO,
+        "text": _("{user}, your up vote on {object} has been recorded.")
+    },
+    "vote-down": {
+        "level": messages.INFO,
+        "text": _("{user}, your down vote on {object} has been recorded.")
+    },
+    "vote-clear": {
+        "level": messages.INFO,
+        "text": _("{user}, your vote on {object} has been cancelled.")
+    },
+    "vote-warning": {
+        "level": messages.WARNING,
+        "text": _("{user}, you can't vote on your own contribution!")
+    },
 }
 
 
