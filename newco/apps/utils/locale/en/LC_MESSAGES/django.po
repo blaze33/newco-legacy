@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 14:35+0100\n"
+"POT-Creation-Date: 2013-01-28 15:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,24 +70,6 @@ msgstr ""
 
 #: messages.py:49
 msgid "{user}, {email} is not a valid email address!"
-msgstr ""
-
-#: follow/constants.py:6
-msgctxt "Follow button"
-msgid "Follow"
-msgstr ""
-
-#: follow/constants.py:7
-msgid "Click to follow"
-msgstr ""
-
-#: follow/constants.py:12
-msgctxt "Follow button"
-msgid "Following"
-msgstr ""
-
-#: follow/constants.py:13
-msgid "Click to unfollow"
 msgstr ""
 
 #: templates/content/info.html:7

@@ -1,6 +1,6 @@
 {% load account_tags %}
 {% load content_utils %}
-{% load follow_utils %}
+{% load follow %}
 
 {% if display == "email_html" %}
   <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>

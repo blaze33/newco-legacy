@@ -3,10 +3,8 @@ import copy
 from django.template.base import Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
-from django.utils.translation import pgettext
-from django.utils.translation import ugettext_lazy as _
 
-from follow.models import Follow
+from utils.follow import Follow
 from utils.follow.constants import DEFAULT_CONF
 from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
