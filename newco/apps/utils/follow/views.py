@@ -9,7 +9,7 @@ from utils.tools import load_object
 class FollowMixin(object):
 
     def post(self, request, *args, **kwargs):
-        if "follow" not in request.POST and "following" not in request.POST:
+        if "follow" not in request.POST:
             return super(FollowMixin, self).post(request, *args, **kwargs)
 
         obj = load_object(request)
