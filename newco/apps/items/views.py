@@ -373,7 +373,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
 
             tag_ids = q.items.all().values_list("tags__id", flat=True)
             experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
-            
+
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
             ).exclude(id=q.id).distinct()
