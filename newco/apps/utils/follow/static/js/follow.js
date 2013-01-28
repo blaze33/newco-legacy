@@ -5,7 +5,6 @@
     /*jslint browser:true, devel: true*/
 
     $(".form-follow").submit(function () {
-        console.log("caca");
         $.ajax({
             type: "post",
             data: $(this).serialize() + "&follow",
