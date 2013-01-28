@@ -3,10 +3,7 @@ import re
 from django.db.models.query import EmptyQuerySet
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
-from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
 
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -18,6 +15,7 @@ from profiles.models import Profile
 from utils.constants import EMAIL_PATTERN
 from utils.help.forms import AskForHelpForm
 from utils.mailtools import mail_helper
+from utils.messages import display_message
 
 
 def void():
@@ -58,7 +56,7 @@ class AskForHelpMixin(object):
                     receiver_profiles.append(receiver_profile)
                 else:
                     kwargs = {"user": username, "email": request.POST["email"]}
-                    display_message("email", request, **kwargs)
+                    display_message("email-error", request, **kwargs)
 
         for receiver_profile in receiver_profiles:
             receiver = receiver_profile.user
@@ -69,9 +67,9 @@ class AskForHelpMixin(object):
                 mail_helper(request, receiver, user, question, receiver_name,
                             username)
                 kwargs = {"user": username, "receiver": receiver_name}
-                display_message("sent", request, **kwargs)
+                display_message("email-sent", request, **kwargs)
             else:
-                display_message("warning", request, user=username)
+                display_message("ask-warning", request, user=username)
 
         return HttpResponseRedirect(request.path)
 
@@ -107,26 +105,3 @@ class AskForHelpMixin(object):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-
-
-MESSAGES = {
-    "sent": {
-        "level": messages.INFO,
-        "text": _("{user}, your request has been sent to {receiver}!")
-    },
-    "warning": {
-        "level": messages.WARNING,
-        "text": _("{user}, you can't ask yourself to answer a question!")
-    },
-    "email": {
-        "level": messages.ERROR,
-        "text": _("{user}, {email} is not a valid email address!")
-    },
-}
-
-
-def display_message(msg_type, request, **kwargs):
-    messages.add_message(
-        request, MESSAGES[msg_type]["level"],
-        mark_safe(MESSAGES[msg_type]["text"].format(**kwargs))
-    )

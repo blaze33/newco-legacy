@@ -10,15 +10,13 @@ from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _, pgettext
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View, ListView, CreateView, DetailView
 from django.views.generic import UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
-from account.utils import user_display
 from taggit.models import Tag
 
 from affiliation import CURRENCIES
@@ -31,6 +29,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
 from utils.vote.views import VoteMixin
+from utils.messages import display_message, get_message
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
@@ -90,7 +89,7 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                message = get_message("created", request,
+                message = get_message("object-created", request,
                                       model=form._meta.model)
                 data = {"id": item.id, "name": item.name, "message": message,
                         "next": reverse("item_edit", args=args)}
@@ -98,11 +97,11 @@ class ContentFormMixin(object):
                 data = "invalid form"
             return HttpResponse(json.dumps(data), mimetype="application/json")
         elif form.is_valid():
-            key = "updated" if self.object else "created"
+            key = "object-updated" if self.object else "object-created"
             display_message(key, request, model=self.model)
             return self.form_valid(form)
         else:
-            display_message("failed", request, model=self.model)
+            display_message("form-invalid", request, model=self.model)
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
@@ -136,16 +135,17 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     kwargs.update({"empty_permitted": False})
                 formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
-                    display_message("created", request, model=self.model)
+                    display_message("object-created", request, model=self.model)
                     self.object.save()
                     form.save_m2m()
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
                 else:
-                    display_message("failed", request, model=formset.model)
+                    display_message("form-invalid", request,
+                                    model=formset.model)
                 ctx.update({"formset": formset})
             else:
-                display_message("failed", request, model=self.model)
+                display_message("form-invalid", request, model=self.model)
             ctx.update({"form": form})
             return self.render_to_response(self.get_context_data(**ctx))
 
@@ -237,10 +237,10 @@ class QuestionFormMixin(object):
         form_class = PartialQuestionForm
         form = self.get_form(form_class)
         if form.is_valid():
-            display_message("created", request, model=form._meta.model)
+            display_message("object-created", request, model=form._meta.model)
             return self.form_valid(form)
         else:
-            display_message("failed", request, model=form._meta.model)
+            display_message("form-invalid", request, model=form._meta.model)
             return self.form_invalid(form)
 
 
@@ -337,12 +337,12 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             status = int(POST.get("answer"))
             form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
-                display_message("created", request, model=form._meta.model)
+                display_message("object-created", request, model=form._meta.model)
                 answer = form.save()
                 self.success_url = answer.get_absolute_url()
                 return self.form_valid(form)
             else:
-                display_message("failed", request, model=form._meta.model)
+                display_message("form-invalid", request, model=form._meta.model)
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
@@ -477,49 +477,3 @@ class ContentDeleteView(ContentView, DeleteView):
             return self.success_url
         else:
             return "/"
-
-
-MESSAGES = {
-    "created": {
-        "level": messages.SUCCESS,
-        "text": _("Thanks {user}, {article}{verbose_name} was successfully "
-                  "{created}.")
-    },
-    "updated": {
-        "level": messages.INFO,
-        "text": _("Thanks {user}, {article}{verbose_name} was successfully "
-                  "{updated}.")
-    },
-    "about": {
-        "level": messages.INFO,
-        "text": _("Thanks {user}, your bio has been successfully updated.")
-    },
-    "failed": {
-        "level": messages.ERROR,
-        "text": _("Warning {user}, the form is invalid.")
-    },
-}
-
-
-def display_message(key, request, **kwargs):
-    kwargs = update_kwargs(key, request, **kwargs)
-    messages.add_message(request, MESSAGES[key]["level"],
-                         MESSAGES[key]["text"].format(**kwargs))
-
-
-def get_message(key, request, **kwargs):
-    kwargs = update_kwargs(key, request, **kwargs)
-    message = messages.storage.base.Message(
-        MESSAGES[key]["level"], MESSAGES[key]["text"].format(**kwargs))
-    message._prepare()
-    return {"text": message.message, "tags": message.tags}
-
-
-def update_kwargs(key, request, **kwargs):
-    kwargs.update({"user": user_display(request.user)})
-    if "model" in kwargs:
-        model = kwargs.pop("model")
-        kwargs.update({"article": pgettext(model._meta.module_name, "the "),
-                       key: pgettext(model._meta.module_name, key),
-                       "verbose_name": model._meta.verbose_name})
-    return kwargs
