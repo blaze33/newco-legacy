@@ -31,8 +31,7 @@ class FollowMixin(object):
     @method_decorator(login_required)
     def process_following(self, request, obj, success_url):
         user = request.user
-        username = user_display(user)
-        kwargs = {"user": username}
+        kwargs = {}
         if not user == obj:
             is_following = Follow.objects.is_following(user, obj)
             follow_obj = unfollow(user, obj) if is_following else \
