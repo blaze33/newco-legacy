@@ -77,12 +77,12 @@
 @media (min-width: 700px) {
 .content-product-related { line-height: 1px; width: 60px; margin: 3px; float:right; margin-right:10px }
 .content-product-related img {
-    float: left;
-    width: 60px;
-    border-radius: 3px;
-    margin-right:0px;
-    margin-top: 2px;
-    margin-bottom: 0px;
+  float: left;
+  width: 60px;
+  border-radius: 3px;
+  margin-right:0px;
+  margin-top: 2px;
+  margin-bottom: 0px;
 }
 .no-product-related { float:right; margin-right:0px }
 }
