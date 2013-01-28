@@ -499,6 +499,7 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         else:
             context.update({"item_list": Item.objects.filter(tags=self.tag)})
             context.get("item_list").fetch_images()
+        context.update({"experts": self.get_experts})
         return context
 
     def post(self, request, *args, **kwargs):
