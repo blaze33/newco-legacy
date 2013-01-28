@@ -11,7 +11,7 @@
             data: $(this).serialize() + "&follow",
             success: function(data, textstatus, jqxhr) {
                 $("[name=follow]").toggle();
-                // displayMessage(data.message);
+                displayMessage(data.message);
             },
             error: function(xhr, status, error) {
                 console.log(xhr, status, error);
