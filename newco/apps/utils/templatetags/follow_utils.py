@@ -1,3 +1,5 @@
+import copy
+
 from django.template.base import Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
@@ -35,16 +37,21 @@ class FollowFormNode(GenericNode):
             setattr(self, field, value)
 
         is_following = Follow.objects.is_following(user, obj)
-        btn = DEFAULT_CONF["following" if is_following else "follow"].copy()
-        if user == obj:
-            btn.update({"disabled": "disabled"})
-        if self.extra_class:
-            btn.update({"extra_class": self.extra_class})
-        tooltip_class = self.tooltip_class if self.tooltip_class else \
-            btn["tooltip_class"]
-        btn.update({"class": btn["class"] + " " + tooltip_class})
+        buttons = copy.deepcopy(DEFAULT_CONF)
+        for key in buttons.keys():
+            if user == obj:
+                buttons[key].update({"disabled": "disabled"})
+            if self.extra_class:
+                buttons[key].update({"extra_class": self.extra_class})
+            tooltip_class = self.tooltip_class if self.tooltip_class else \
+                buttons[key]["tooltip_class"]
+            buttons[key].update({
+                "class": buttons[key]["class"] + " " + tooltip_class})
 
-        ctx = {"object": obj, "btn": btn}
+        buttons["follow" if is_following else "following"].update({
+            "style": "display: none;"})
+
+        ctx = {"object": obj, "buttons": buttons}
         if self.next:
             ctx.update({"next": self.next})
 
