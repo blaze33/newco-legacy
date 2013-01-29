@@ -2,20 +2,6 @@ var why_NewCo_div = $('#why_NewCo');
 var subnav2move = $('.subnav-fixed');
 
 $(function(){
-    $('#profile-pic').tooltip({
-        'trigger': 'hover',
-        'placement': 'right'
-    });
-
-    // simple example, using all default options unless overridden globally
-    $('#thumbnails_list').imagesLoaded(function(){
-        $('#thumbnails_list').masonry({
-            itemSelector : '.content-item',
-            isAnimated: true,
-            isFitWidth: true,
-        });
-    });
-
     why_NewCo_div.on('show', function () {
         subnav2move.addClass('subnav-moved');
         $('body').addClass('body-less-padding');

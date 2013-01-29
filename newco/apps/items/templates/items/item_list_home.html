@@ -10,9 +10,9 @@
     <h4>{{ title }}</h4>
     <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
   </div>{% endif %}{% endfor %}</div>
-  <div class="span9"><div id="thumbnails_list">
+  <div class="span9"><div class="thumbnail-list">
     {% for item in object_list %}
-      {% include "items/feed_display/_thumbnail_frame.html" with object=item masonry_list="1" only %}
+      {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
     {% empty %}
       {{ empty_msg }}
     {% endfor %}

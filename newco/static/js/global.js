@@ -1,7 +1,7 @@
 /*global $, URL_REDIS, URL_REDIS_TAG*/
 /*global gettext, ngettext, interpolate*/
 
-(function ($) {
+(function ($, Modernizr) {
     "use strict";
     /*jslint browser:true*/
 
@@ -17,24 +17,24 @@
         }
     });
 
-    /* Triggers several masonry shots */
-    $.triggerMasonry = function (listContainer, itemSelector) {
+    /* Triggers masonry */
+    function triggerMasonry(listContainer, itemSelector) {
         var options;
         options = {
             itemSelector: itemSelector,
-            isAnimated: true,
+            isAnimated: !Modernizr.csstransitions,
             isFitWidth: true
         };
-        setTimeout(function () {
+        /* Sexier when launched twice */
+        listContainer.masonry( options );
+        listContainer.imagesLoaded( function () {
             listContainer.masonry( options );
-        }, 500);
-        setTimeout(function () {
-            listContainer.masonry( options );
-        }, 2000);
-    };
+        });
+    }
 
+    triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
 
-}(window.jQuery));
+}(window.jQuery, window.Modernizr));
 
 var pics = [];
 

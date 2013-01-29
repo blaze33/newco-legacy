@@ -75,30 +75,6 @@
     });
   </script>
   <script type="text/javascript">
-
-      function apply_masonry(list_container, list_items){
-        $(list_container).masonry({ //'#thumbnails_list'
-          itemSelector : list_items, //'.masonry-item'
-          isAnimated: true,
-          isFitWidth: true,
-        });
-      }
-
-      function TriggerMasonry(){
-        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 500);
-        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 500);
-        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 2000);
-        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 2000);
-      }
-
-      $(document).ready(function() {
-        TriggerMasonry();
-      });
-
-      $('a[data-toggle="tab"]').on('shown', function (e) {
-        TriggerMasonry();
-      });
-
     $(document).ready(function(){
       mixpanel.track("Load_tag_page");
     });
