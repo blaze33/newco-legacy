@@ -15,7 +15,7 @@ from profiles.models import Profile
 from utils.constants import EMAIL_PATTERN
 from utils.help.forms import AskForHelpForm
 from utils.mailtools import mail_helper
-from utils.messages import display_message
+from utils.messages import add_message
 
 
 def void():
@@ -56,7 +56,7 @@ class AskForHelpMixin(object):
                     receiver_profiles.append(receiver_profile)
                 else:
                     kwargs = {"user": username, "email": request.POST["email"]}
-                    display_message("email-error", request, **kwargs)
+                    add_message("email-error", request, **kwargs)
 
         for receiver_profile in receiver_profiles:
             receiver = receiver_profile.user
@@ -67,9 +67,9 @@ class AskForHelpMixin(object):
                 mail_helper(request, receiver, user, question, receiver_name,
                             username)
                 kwargs = {"user": username, "receiver": receiver_name}
-                display_message("email-sent", request, **kwargs)
+                add_message("email-sent", request, **kwargs)
             else:
-                display_message("ask-warning", request, user=username)
+                add_message("ask-warning", request, user=username)
 
         return HttpResponseRedirect(request.path)
 

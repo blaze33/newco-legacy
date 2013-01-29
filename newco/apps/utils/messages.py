@@ -68,7 +68,7 @@ MESSAGES = {
 }
 
 
-def display_message(key, request, **kwargs):
+def add_message(key, request, **kwargs):
     kwargs = update_kwargs(key, request, **kwargs)
     messages.add_message(request, MESSAGES[key]["level"],
                          mark_safe(MESSAGES[key]["text"].format(**kwargs)))

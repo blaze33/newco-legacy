@@ -11,7 +11,7 @@ from follow.utils import follow, unfollow
 from utils.follow import Follow
 
 from utils.mailtools import mail_followee
-from utils.messages import display_message, render_messages
+from utils.messages import add_message, render_messages
 from utils.tools import load_object
 
 
@@ -49,7 +49,7 @@ class FollowMixin(object):
             kwargs.update({"object": title})
         else:
             key = "follow-warning"
-        display_message(key, request, **kwargs)
+        add_message(key, request, **kwargs)
 
         if request.is_ajax():
             messages = render_messages(request)
