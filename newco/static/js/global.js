@@ -16,6 +16,24 @@
             window.location.href = xhr.getResponseHeader("Location").replace(/\?.*$/, "?next="+window.location.pathname);
         }
     });
+
+    /* Triggers several masonry shots */
+    $.triggerMasonry = function (listContainer, itemSelector) {
+        var options;
+        options = {
+            itemSelector: itemSelector,
+            isAnimated: true,
+            isFitWidth: true
+        };
+        setTimeout(function () {
+            listContainer.masonry( options );
+        }, 500);
+        setTimeout(function () {
+            listContainer.masonry( options );
+        }, 2000);
+    };
+
+
 }(window.jQuery));
 
 var pics = [];
