@@ -97,12 +97,6 @@ function addImages(container, pics) {
 $(function () {
     "use strict";
 
-    $('#profiles_list1').masonry({
-        itemSelector : '.profile-item',
-        isAnimated: true,
-        isFitWidth: true
-    });
-
     if ( pics.length === 0 ) { $("#img-selector-1").css('display','none'); }
     if ( $("#img-selector-1").length > 0 ) {
         addImages($('#selected-list'), pics);

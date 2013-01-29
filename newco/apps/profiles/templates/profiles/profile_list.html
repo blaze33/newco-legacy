@@ -14,8 +14,16 @@
     <p class="lead">{% trans "Here is the awesome community building NewCo." %}</p>
   </header>
 
-  <div class="row" id="profile_list1">
+  <div class="row" id="profile-list">
     {% for profile in profiles %}{% include "profiles/_profile_item.html" %}{% endfor %}
   </div>
   {% if is_paginated %}{% paginate %}{% endif %}
+{% endblock %}
+
+
+{% block extra_script %}
+  {{ block.super }}
+  <script>
+    $.triggerMasonry($("#profile-list"), ".profile-item")
+  </script>
 {% endblock %}
