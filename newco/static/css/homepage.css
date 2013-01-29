@@ -1,4 +1,4 @@
-/* ↓ css defs for homepage */
+@charset 'UTF-8';
 
 @media (min-width: 768px) and (max-width: 979px) {
   .navbar-fixed-top{
@@ -46,17 +46,12 @@
   }
 }
 
+/* Glow */
 .btn-glow {
-   /*Glow*/
   -webkit-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
      -moz-box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
           box-shadow: 0px 0px 60px 30px rgba(255,255,255,1);
   z-index: 5;
-
-  /*Transition*/
-/*  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;*/
   -webkit-transition: box-shadow linear 0.4s;
      -moz-transition: box-shadow linear 0.4s;
       -ms-transition: box-shadow linear 0.4s;
@@ -71,12 +66,11 @@
 }
 
 .tutorial > a > img{
-opacity:0.1;
+  opacity:0.1;
 }
 
 .tutorial > a > img:hover {
-opacity:1.0;
-
+  opacity:1.0;
 }
 
 .homepage_sort {
