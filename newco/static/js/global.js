@@ -23,7 +23,7 @@
 
 var pics = [];
 
-function moveAnimate(element, newParent){
+function moveAnimate(element, newParent) {
     "use strict";
 
     var height, width, oldOffset, newOffset, temp;
