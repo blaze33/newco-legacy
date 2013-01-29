@@ -32,7 +32,7 @@
   <div class="row" itemscope itemtype="http://schema.org/Person">
     <div class="span thumbnail" itemprop="image">
       {% if is_me %}
-        <a href="https://fr.gravatar.com/site/signup" class="tooltip-right" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" id="profile-pic">{% profile_pic page_user 160 %}</a>
+        <a class="tooltip-right" id="profile-pic" title="{% trans 'Your profile picture is provided by Gravatar, sign up to this service to change it!' %}" target="_blank">{% profile_pic page_user 160 %}</a>
       {% else %}
         {% profile_pic page_user 160 %}
       {% endif%}
@@ -56,3 +56,15 @@
     </div>
   </div>
 {% endblock %}
+
+{% if is_me %}
+  {% block extra_script %}
+    {{ block.super }}
+    <script>
+      // costs 300 ms
+      (function ($) {
+          $("#profile-pic").attr("href", "{% gravatar_profile_url page_user %}");
+      }(window.jQuery));
+    </script>
+  {% endblock %}
+{% endif %}
