@@ -1,17 +1,5 @@
-/*global $, STATIC_URL, URL_REDIS, URL_REDIS_TAG, Mustache*/
+/*global $, URL_REDIS, URL_REDIS_TAG*/
 /*global gettext, ngettext, interpolate*/
-
-function displayMessage (message) {
-    "use strict";
-    /*jslint devel: true*/
-
-    console.log(message);
-    var templatePath = STATIC_URL + "mustache/_message.html";
-    $.get(templatePath, function(templates) { 
-        var template = $(templates).filter("#message").html();
-        $("#js-alert").append(Mustache.render(template, message));
-    });
-}
 
 (function ($) {
     "use strict";

@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import permission_required
 
 from items.models import Content, Question, Answer
-from utils.messages import display_message, get_message
+from utils.messages import display_message, render_messages
 from utils.tools import load_object
 from utils.voting import Vote
 
@@ -59,10 +59,9 @@ class VoteMixin(object):
         else:
             data = {"ok": False}
             key = "vote-warning"
+        display_message(key, request, **kwargs)
         if request.is_ajax():
-            message = get_message(key, request, **kwargs)
-            data.update({"message": message})
+            data.update({"messages": render_messages(request)})
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
-            display_message(key, request, **kwargs)
             return HttpResponseRedirect(success_url)

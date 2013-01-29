@@ -1,5 +1,6 @@
-from django.utils.translation import ugettext_lazy as _, pgettext
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _, pgettext
 
 from django.contrib import messages
 
@@ -73,13 +74,9 @@ def display_message(key, request, **kwargs):
                          mark_safe(MESSAGES[key]["text"].format(**kwargs)))
 
 
-def get_message(key, request, **kwargs):
-    kwargs = update_kwargs(key, request, **kwargs)
-    message = messages.storage.base.Message(
-        MESSAGES[key]["level"],
-        mark_safe(MESSAGES[key]["text"].format(**kwargs)))
-    message._prepare()
-    return {"text": message.message, "tags": message.tags}
+def render_messages(request):
+    context = {"messages": messages.get_messages(request)}
+    return render_to_string("pinax_theme_bootstrap:_messages.html", context)
 
 
 def update_kwargs(key, request, **kwargs):

@@ -29,7 +29,7 @@ from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
 from utils.voting.views import VoteMixin
-from utils.messages import display_message, get_message
+from utils.messages import display_message, render_messages
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
@@ -89,9 +89,10 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                message = get_message("object-created", request,
-                                      model=form._meta.model)
-                data = {"id": item.id, "name": item.name, "message": message,
+                display_message("object-created", request,
+                                model=form._meta.model)
+                messages = render_messages(request)
+                data = {"id": item.id, "name": item.name, "messages": messages,
                         "next": reverse("item_edit", args=args)}
             else:
                 data = "invalid form"
@@ -351,9 +352,10 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
-            message = get_message("about", request)
-            data = {"about": about, "message": message,
-                    "result": "success", "toggle": toggle}
+            display_message("about", request)
+            messages = render_messages(request)
+            data = {"about": about, "messages": messages, "result": "success",
+                    "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,

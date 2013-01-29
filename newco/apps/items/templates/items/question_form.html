@@ -168,7 +168,7 @@
                     $("#id_items").append('<option value=' + data.id+'>' + data.name+'</name>')
                         .select2("val", [].concat($("#id_items").val(), [String(data.id)]));
                     $('input[name="next"]').val(data.next);
-                    displayMessage(data.message)
+                    $("#js-alert").append(data.messages);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr, status, error);

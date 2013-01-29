@@ -1,5 +1,3 @@
-/*global displayMessage*/
-
 (function ($) {
     "use strict";
     /*jslint browser:true, devel: true*/
@@ -10,7 +8,7 @@
             data: $(this).serialize() + "&follow",
             success: function(data, textstatus, jqxhr) {
                 $("[name=follow]").toggle();
-                displayMessage(data.message);
+                $("#js-alert").append(data.messages);
             },
             error: function(xhr, status, error) {
                 console.log(xhr, status, error);

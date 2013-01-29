@@ -1,5 +1,3 @@
-/*global displayMessage*/
-
 (function ($) {
     "use strict";
     /*jslint browser:true, devel: true*/
@@ -23,7 +21,7 @@
                         btnDown.attr("data-vote", data.conf.down.dataVote);
                         $(".score", parentDiv).text(data.score.score);
                     }
-                    displayMessage(data.message);
+                    $("#js-alert").append(data.messages);
                 }
             },
             error: function(xhr, status, error) {
