@@ -8,12 +8,7 @@
     $.displayMessages = function (messages) {
         $("#js-alert").append(messages);
     };
-}(window.jQuery));
 
-(function ($) {
-    "use strict";
-
-    /*jslint browser:true*/
     $("body").ajaxComplete(function(e, xhr, settings) {
         if ( xhr.status === 278 ) {
             window.location.href = xhr.getResponseHeader("Location").replace(/\?.*$/, "?next="+window.location.pathname);
