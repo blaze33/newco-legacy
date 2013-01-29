@@ -21,7 +21,7 @@
                         btnDown.attr("data-vote", data.conf.down.dataVote);
                         $(".score", parentDiv).text(data.score.score);
                     }
-                    $("#js-alert").append(data.messages);
+                    $.displayMessages(data.messages);
                 }
             },
             error: function(xhr, status, error) {

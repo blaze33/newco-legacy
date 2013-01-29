@@ -8,7 +8,7 @@
             data: $(this).serialize() + "&follow",
             success: function(data, textstatus, jqxhr) {
                 $("[name=follow]").toggle();
-                $("#js-alert").append(data.messages);
+                $.displayMessages(data.messages);
             },
             error: function(xhr, status, error) {
                 console.log(xhr, status, error);

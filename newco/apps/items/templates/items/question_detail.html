@@ -81,7 +81,7 @@
                     if (data.toggle) { $("button[rel=about]").toggle() }
                     if (data.about !== "") { data.about = ", " + data.about; }
                     $("#user-about").text(data.about);
-                    $("#js-alert").append(data.messages);
+                    $.displayMessages(data.messages);
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr, status, error);
