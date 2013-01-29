@@ -82,10 +82,7 @@ $(function () {
         isAnimated: true,
         isFitWidth: true
     });
-    $('#profile-pic').tooltip({
-        'trigger': 'hover',
-        'placement': 'right'
-    });
+
     if ( pics.length === 0 ) { $("#img-selector-1").css('display','none'); }
     if ( $("#img-selector-1").length > 0 ) {
         addImages($('#selected-list'), pics);
