@@ -39,9 +39,9 @@
               {% url "item_index" as index_url %}
               {% blocktrans %}...or <a href="#" class="btn btn-primary"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
             </p>
-            <img class="arrow-search-bar-hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="arrow_search_bar" style="position: absolute; top: -140px; left: +0px;">
+            <img class="search-arrow hidden" src="{% static 'img/arrows_top_right.png' %}" type="image/png" id="search-arrow" style="position: absolute; top: -140px; left: +0px;">
             <p class="lead" style="margin-bottom: 0px; position: absolute; bottom: 24px;">
-              <a class="arrow_search_bar_trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}</a>...
+              <a id="arrow-trigger" href="#"><i class="icon-search" style="margin-right: 3px; vertical-align: middle;"></i> {% trans "Find products or tags in the search bar" %}</a>...
               <br><br>
               {% blocktrans %}...or <a href="#" class="btn btn-primary" id="explore" style="font-size: 18px; font-weight: 200; position:relative; top: -3px;"><em><i class="icon-play" style="margin-right: 3px; vertical-align:middle;"></i>explore NewCo</em></a>{% endblocktrans %}
             </p>
