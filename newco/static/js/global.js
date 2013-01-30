@@ -1,7 +1,7 @@
 /*global URL_REDIS, URL_REDIS_TAG*/
 /*global gettext, ngettext, interpolate*/
 
-var timeoutObj;
+var timeoutObj, select2BaseParameters, select2TagsParameters;
 
 (function ($, Modernizr) {
     "use strict";
@@ -180,72 +180,72 @@ var timeoutObj;
         expandText: gettext("(more)"),
         userCollapseText: gettext("(less)")
     });
+    
+    /* Overrides Select2 defaults parameters to provide translations */
+    select2BaseParameters = {
+        formatNoMatches: function () { return gettext("No matches found"); },
+        formatInputTooShort: function (input, min) {
+            var n, text;
+            n = min - input.length;
+            text = ngettext("Please enter one more character",
+                            "Please enter %s more characters", n);
+            return interpolate(text, [n]);
+        },
+        formatSelectionTooBig: function (limit) {
+            var text;
+            text = ngettext("You can only select one item",
+                            "You can only select %s items", limit);
+            return interpolate(text, [limit]);
+        },
+        formatLoadMore: function (pageNumber) { 
+            return gettext("Loading more results..."); 
+        },
+        formatSearching: function () { return gettext("Searching..."); }
+    };
+
+    /* Select2 default parameters for tags */
+    select2TagsParameters = $.extend({}, select2BaseParameters, {
+      placeholder: gettext("e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."),
+      multiple:true,
+      minimumInputLength: 2,
+      tokenSeparators: [","],
+      initSelection: function (element, callback) {
+          // reload tags
+          var data = [];
+          $(element.val().split(/, ?/)).each(function () {
+              data.push({id: this, text: this});
+          });
+          callback(data);
+      },
+      createSearchChoice: function(term, data) {
+          if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+              return {id:term.toLowerCase(), text:term.toLowerCase()};
+          }
+      },
+      ajax: {
+        url: URL_REDIS_TAG,
+        dataType: 'json',
+        quietMillis: 100,
+        data: function (term, page) { // page is the one-based page number tracked by Select2
+            return {
+                q: term, //search term
+                limit: 20 // page size
+            };
+        },
+        results: function (data, page) {
+          $.each(data, function(i){
+              data[i].id = data[i].name;
+              data[i].text = data[i].name;
+          });
+          // console.log(data);
+          var more = (page * 10) < data.total; // whether or not there are more results available
+          // notice we return the value of more so Select2 knows if more results can be loaded
+          return {results: data, more: more};
+        }
+      },
+      containerCssClass: 'select2-bootstrap'
+    });
 }(window.jQuery, window.Modernizr));
-
-// select2 default translated parameters
-var select2BaseParameters = {
-    formatNoMatches: function () { return gettext("No matches found"); },
-    formatInputTooShort: function (input, min) {
-        var n, text;
-        n = min - input.length;
-        text = ngettext("Please enter one more character",
-                        "Please enter %s more characters", n);
-        return interpolate(text, [n]);
-    },
-    formatSelectionTooBig: function (limit) {
-        var text;
-        text = ngettext("You can only select one item",
-                        "You can only select %s items", limit);
-        return interpolate(text, [limit]);
-    },
-    formatLoadMore: function (pageNumber) { 
-        return gettext("Loading more results..."); 
-    },
-    formatSearching: function () { return gettext("Searching..."); }
-};
-
-// select2 tags default parameters
-var select2TagsParameters = $.extend({}, select2BaseParameters, {
-  placeholder: gettext("e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."),
-  multiple:true,
-  minimumInputLength: 2,
-  tokenSeparators: [","],
-  initSelection: function (element, callback) {
-      // reload tags
-      var data = [];
-      $(element.val().split(/, ?/)).each(function () {
-          data.push({id: this, text: this});
-      });
-      callback(data);
-  },
-  createSearchChoice: function(term, data) {
-      if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-          return {id:term.toLowerCase(), text:term.toLowerCase()};
-      }
-  },
-  ajax: {
-    url: URL_REDIS_TAG,
-    dataType: 'json',
-    quietMillis: 100,
-    data: function (term, page) { // page is the one-based page number tracked by Select2
-        return {
-            q: term, //search term
-            limit: 20 // page size
-        };
-    },
-    results: function (data, page) {
-      $.each(data, function(i){
-          data[i].id = data[i].name;
-          data[i].text = data[i].name;
-      });
-      // console.log(data);
-      var more = (page * 10) < data.total; // whether or not there are more results available
-      // notice we return the value of more so Select2 knows if more results can be loaded
-      return {results: data, more: more};
-    }
-  },
-  containerCssClass: 'select2-bootstrap'
-});
 
 // *** Joyride tutorial ***
 
