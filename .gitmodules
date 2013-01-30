@@ -13,3 +13,6 @@
 [submodule "newco/static/external/masonry"]
 	path = newco/static/external/masonry
 	url = git://github.com/desandro/masonry.git
+[submodule "newco/static/external/joyride"]
+	path = newco/static/external/joyride
+	url = git://github.com/zurb/joyride.git
