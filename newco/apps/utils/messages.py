@@ -80,14 +80,14 @@ def render_messages(request):
 
 
 def update_kwargs(key, request, **kwargs):
+    WORDS = {"object-created": "created", "object-updated": "updated"}
+
     kwargs.update({"user": user_display(request.user)})
     if "model" in kwargs:
         model = kwargs.pop("model")
         kwargs.update({"article": pgettext(model._meta.module_name, "the "),
                        "verbose_name": model._meta.verbose_name})
-        if key == "object-created":
-            word = "created"
-        elif key == "object-updated":
-            word = "updated"
-        kwargs.update({word: pgettext(model._meta.module_name, word)})
+        if key in WORDS:
+            word = WORDS[key]
+            kwargs.update({word: pgettext(model._meta.module_name, word)})
     return kwargs
