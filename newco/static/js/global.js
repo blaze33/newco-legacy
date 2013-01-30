@@ -245,23 +245,20 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
       },
       containerCssClass: 'select2-bootstrap'
     });
+
+    /* Joyride tutorial initialization */
+    $.launchJoyride = function () {
+        $("#joyRideContent").joyride({
+            "tipContainer": ".navbar",
+            postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+                $("#help-dropdown").tooltip("show");
+                setTimeout(function () {
+                    $('#help-dropdown').tooltip("hide");
+                }, 3000);
+            }
+        });
+    }
 }(window.jQuery, window.Modernizr));
-
-// *** Joyride tutorial ***
-
-function launchJoyride() {
-    $("#joyRideContent").joyride({
-        'tipContainer': '.navbar',
-        postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
-            $('#help-dropdown').tooltip('show');
-            setTimeout("$('#help-dropdown').tooltip('hide')", 3000);
-        }
-    });
-}
-
-$('#link-tuto').click(function () {
-    launchJoyride();
-});
 
 $('.tooltip-help').tooltip({
     trigger: 'manual',
