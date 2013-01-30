@@ -122,9 +122,9 @@ var timeoutObj;
         }
     };
 
-    // Manual method using timeout, shortcutting the weird behavior of hover,
-    // which causes glitching if pointer doesn't go to the popover through the 
-    // arrow
+    /* Manual method using timeout, shortcutting the weird behavior of hover,
+       which causes glitching if pointer doesn't go to the popover through the
+       arrow */
     $(".popover-object-display").popover({
         offset: 10,
         trigger: "manual",
@@ -141,12 +141,12 @@ var timeoutObj;
     });
 
     $.each(["top", "right", "bottom", "left"], function(index, val) {
-        var selector = ".tooltip-" + val
+        var selector = ".tooltip-" + val;
         $(selector).tooltip({
             trigger: "hover",
             placement: val,
             animate: true
-        })
+        });
     });
 }(window.jQuery, window.Modernizr));
 
