@@ -148,12 +148,8 @@ var timeoutObj;
             animate: true
         });
     });
-}(window.jQuery, window.Modernizr));
 
-// typeahead javascript
-$(function () {
-    "use strict";
-
+    // Typeahead
     var labels, mapped;
     $("#global_search").typeahead({
         source: function (query, process) {
@@ -177,7 +173,7 @@ $(function () {
             return true;
         }
     });
-});
+}(window.jQuery, window.Modernizr));
 
 // select2 default translated parameters
 var select2BaseParameters = {
