@@ -46,8 +46,8 @@ class FollowFormNode(GenericNode):
             buttons[key].update({
                 "class": buttons[key]["class"] + " " + tooltip_class})
 
-        buttons["follow" if is_following else "following"].update({
-            "style": "display: none;"})
+        key = "follow" if is_following else "following"
+        buttons[key]["class"] = buttons[key]["class"] + " hidden"
 
         ctx = {"object": obj, "buttons": buttons}
         if self.next:

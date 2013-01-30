@@ -3,7 +3,7 @@
 
 <form class="form-follow" method="POST">{% csrf_token %}
   {% for key, btn in buttons.items %}
-    <input type="submit" class="{{ btn.class }}{% if btn.extra_class %} {{ btn.extra_class }}{% endif %}" name="follow" value="{{ btn.value }}" title="{{ btn.title }}"{% if btn.disabled %} disabled{% endif %}{% if btn.style %} style="{{ btn.style }}"{% endif %}>
+    <input type="submit" class="{{ btn.class }}{% if btn.extra_class %} {{ btn.extra_class }}{% endif %}" name="follow" value="{{ btn.value }}" title="{{ btn.title }}"{% if btn.disabled %} disabled{% endif %}>
   {% endfor %}
   <input type="hidden" name="class_name" value="{{ object|full_class_name }}">
   <input type="hidden" name="id" value="{{ object.id }}">
