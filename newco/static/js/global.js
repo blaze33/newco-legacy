@@ -257,11 +257,5 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
                 }, 3000);
             }
         });
-    }
+    };
 }(window.jQuery, window.Modernizr));
-
-$('.tooltip-help').tooltip({
-    trigger: 'manual',
-    placement: 'bottom'
-});
-// *** End of Joyride tutorial ***
