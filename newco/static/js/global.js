@@ -139,35 +139,16 @@ var timeoutObj;
             ref.popover('hide');
         }, 50);
     });
+
+    $.each(["top", "right", "bottom", "left"], function(index, val) {
+        var selector = ".tooltip-" + val
+        $(selector).tooltip({
+            trigger: "hover",
+            placement: val,
+            animate: true
+        })
+    });
 }(window.jQuery, window.Modernizr));
-
-$(function () {
-    $('.tooltip-top').tooltip({
-        trigger: 'hover',
-        placement: 'top',
-        //delay: 500,
-        animate: true
-    });
-    $('.tooltip-right').tooltip({
-        trigger: 'hover',
-        placement: 'right',
-        //delay: 500,
-        animate: true
-    });
-    $('.tooltip-bottom').tooltip({
-        trigger: 'hover',
-        placement: 'bottom',
-        //delay: 500,
-        animate: true
-    });
-    $('.tooltip-left').tooltip({
-        trigger: 'hover',
-        placement: 'left',
-        //delay: 500,
-        animate: true
-    });
-
-});
 
 // typeahead javascript
 $(function () {
