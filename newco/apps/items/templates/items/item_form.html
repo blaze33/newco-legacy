@@ -67,14 +67,14 @@
     {% endif %}</div>
   </div>
 
-  <table class="img-selector" id="img-selector-1">
+  <table class="img-selector" id="img-selector">
     <tbody>
     <tr>
       <td>
         <ul class="thumbnails connectedSortable selected-list" id="selected-list">
         </ul>
       </td>
-      <td class="well thumbnails connectedSortable trash hidden-phone" id="trash-1">
+      <td class="well thumbnails connectedSortable trash hidden-phone" id="trash">
         <p>Trash <i class="icon-trash"></i></p>
       </td>
     </tr>
@@ -83,7 +83,7 @@
 
   <br>
 
-  <input type="hidden" name="img_list" id="img_data">
+  <input type="hidden" name="img_list" id="img-data">
   {% if '/question/' in request.GET.next %} {# case: we come from a question page and have added a product there#}
       <input type="submit" class="btn btn-primary" value="{% trans 'Save product' %}">
   {% elif not item %}
@@ -106,6 +106,7 @@
     if (pics.length == 0) {
         pics.push.apply(pics, results);
     }
+    $.picsHandler(pics, "#img-selector", "#selected-list", "#trash", "#img-data")
 
     $(document).ready(function(){
     var item_form=document.getElementById("item_test");

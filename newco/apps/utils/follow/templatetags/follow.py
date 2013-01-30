@@ -1,10 +1,11 @@
+import copy
+
 from django.template.base import Library, Variable
 from django.template.base import TemplateSyntaxError
 from django.template.loader import render_to_string
-from django.utils.translation import pgettext
-from django.utils.translation import ugettext_lazy as _
 
-from follow.models import Follow
+from utils.follow import Follow
+from utils.follow.constants import DEFAULT_CONF
 from utils.templatetags.tools import GenericNode, get_node_extra_arguments
 
 register = Library()
@@ -27,31 +28,28 @@ class FollowFormNode(GenericNode):
         except:
             return ""
 
-        fields = ["next", "extra_class", "tooltip_class"]
+        fields = ["next", "extra_class", "tooltip_class", "quote_type"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
             setattr(self, field, value)
 
-        ctx, btn = [{}, {"class": "btn"}]
-        if user == obj:
-            btn.update({"disabled": "disabled"})
-        if self.extra_class:
-            btn.update({"extra_class": self.extra_class})
-        if Follow.objects.is_following(user, obj):
-            btn.update({"name": "unfollow",
-                        "value": pgettext("Follow button", "Following"),
-                        "class": btn.get("class") + " btn-primary"})
-            tooltip = {"title": _("Click to unfollow")}
-            tooltip_class = self.tooltip_class if self.tooltip_class \
-                else "tooltip-top"
-            tooltip.update({"class": tooltip_class})
-            ctx.update({"tooltip": tooltip})
-        else:
-            btn.update({"name": "follow",
-                        "value": pgettext("Follow button", "Follow")})
+        is_following = Follow.objects.is_following(user, obj)
+        buttons = copy.deepcopy(DEFAULT_CONF)
+        for key in buttons.keys():
+            if user == obj:
+                buttons[key].update({"disabled": "disabled"})
+            if self.extra_class:
+                buttons[key].update({"extra_class": self.extra_class})
+            tooltip_class = self.tooltip_class if self.tooltip_class else \
+                buttons[key]["tooltip_class"]
+            buttons[key].update({
+                "class": buttons[key]["class"] + " " + tooltip_class})
 
-        ctx.update({"object": obj, "btn": btn})
+        buttons["follow" if is_following else "following"].update({
+            "style": "display: none;"})
+
+        ctx = {"object": obj, "buttons": buttons}
         if self.next:
             ctx.update({"next": self.next})
 

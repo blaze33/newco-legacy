@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:24+0100\n"
+"POT-Creation-Date: 2013-01-28 22:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,19 +32,60 @@ msgstr ""
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
 
-#: follow/tools.py:18
-#, python-format
-msgid "%(user)s, you are now following %(object)s."
+#: messages.py:11
+msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
 msgstr ""
 
-#: follow/tools.py:22
-#, python-format
-msgid "%(user)s, you are not following %(object)s anymore."
+#: messages.py:16
+msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
 msgstr ""
 
-#: follow/tools.py:26
-#, python-format
-msgid "%(user)s, you can't follow yourself!"
+#: messages.py:21
+msgid "Thanks {user}, your bio has been successfully updated."
+msgstr ""
+
+#: messages.py:25
+msgid "Warning {user}, the form is invalid."
+msgstr ""
+
+#: messages.py:29
+msgid "{user}, you are now following {object}."
+msgstr ""
+
+#: messages.py:33
+msgid "{user}, you are not following {object} anymore."
+msgstr ""
+
+#: messages.py:37
+msgid "{user}, you can't follow yourself!"
+msgstr ""
+
+#: messages.py:41
+msgid "{user}, your request has been sent to {receiver}!"
+msgstr ""
+
+#: messages.py:45
+msgid "{user}, you can't ask yourself to answer a question!"
+msgstr ""
+
+#: messages.py:49
+msgid "{user}, {email} is not a valid email address!"
+msgstr ""
+
+#: messages.py:53
+msgid "{user}, your up vote on {object} has been recorded."
+msgstr ""
+
+#: messages.py:57
+msgid "{user}, your down vote on {object} has been recorded."
+msgstr ""
+
+#: messages.py:61
+msgid "{user}, your vote on {object} has been cancelled."
+msgstr ""
+
+#: messages.py:65
+msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 
 #: templates/content/info.html:7
@@ -139,18 +180,6 @@ msgid ""
 "The NewCo Project team\n"
 msgstr ""
 
-#: templates/voting/form.html:7
-msgid ""
-"Vote up: this contribution shows effort on quality; it is usefull and clear "
-"(click again to undo)"
-msgstr ""
-
-#: templates/voting/form.html:8
-msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful "
-"or unclear (click again to undo)"
-msgstr ""
-
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
 msgstr ""
@@ -184,20 +213,6 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/follow_utils.py:43
-msgctxt "Follow button"
-msgid "Following"
-msgstr ""
-
-#: templatetags/follow_utils.py:45
-msgid "Click to unfollow"
-msgstr ""
-
-#: templatetags/follow_utils.py:52
-msgctxt "Follow button"
-msgid "Follow"
-msgstr ""
-
 #: templatetags/tools.py:81 templatetags/tools.py:113
 msgid "and"
 msgstr ""
@@ -213,23 +228,3 @@ msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
 msgstr[1] ""
-
-#: vote/tools.py:20
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr ""
-
-#: vote/tools.py:24
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr ""
-
-#: vote/tools.py:28
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr ""
-
-#: vote/tools.py:32
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
-msgstr ""

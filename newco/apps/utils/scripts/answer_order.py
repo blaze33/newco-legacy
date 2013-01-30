@@ -1,6 +1,5 @@
-from voting.models import Vote
-
 from items.models import Question
+from utils.voting import Vote
 
 
 def main():

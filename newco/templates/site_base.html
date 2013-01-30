@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
     {% compress css %}
         <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
-        <link href="{% static 'css/joyride-2.0.2.css' %}" rel="stylesheet">
+        <link href="{{ STATIC_URL }}external/joyride/joyride-2.0.3.css" rel="stylesheet">
         <link href="{% static 'css/global.css' %}" rel="stylesheet">
         {% include "feedback/header.html" %}
         <!--
@@ -63,30 +63,20 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
     {% compress js %}
         <script src="{% static 'pinax/js/theme.js' %}"></script>
-        <script src="{% static 'js/jquery.masonry.min.js' %}"></script>
-        <script src="{% static 'js/jquery.joyride-2.0.2.js' %}"></script>
         <script src="{% static 'external/select2/select2.js' %}"></script>
+        <script src="{{ STATIC_URL }}external/joyride/jquery.joyride-2.0.3.js"></script>
+        <script src="{{ STATIC_URL }}external/jquery-expander/jquery.expander.min.js"></script>
+        <script src="{{ STATIC_URL }}external/masonry/jquery.masonry.min.js"></script>
+        <script src="{{ STATIC_URL }}js/modernizr-csstransitions.min.js"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script>
           var URL_REDIS = "{{ URL_REDIS }}";
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
-          {% if launch_tutorial %}
-          $(window).load(function() {
-              launchJoyride();
-          });
-          {% endif %}
         </script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
-        <script src="{% static 'external/jquery-expander/jquery.expander.js' %}"></script>
-        <script>
-          $(document).ready(function() {$('.expander').expander({
-              slicePoint: 80,
-              expandText: '<small>(more)</small>',
-              userCollapseText: '<small>(less)</small>',
-          });});
-        </script>
+        <script src="{{ STATIC_URL }}js/voting.js"></script>
     {% endcompress %}
     {% compress js %}
         {% block extra_script %}{% endblock %}
@@ -94,7 +84,7 @@
 {% endblock %}
 
 {% block extra_body_base %}
-  <ol id="joyRideContent" style="display:none">
+  <ol class="hidden" id="joyRideContent">
     <li data-class="brand" data-button="{% trans 'Tell me more!' %}">
       <p>{% trans "NewCo is a product information webapp organized around Q&amp;A." %}</p>
     </li>
@@ -111,8 +101,11 @@
       </li>
     {% endcomment %}
   </ol>
+  {% if launch_tutorial %}
+    <script>$.launchJoyride();</script>
+  {% endif %}
 
-  <div class="no-display" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
+  <div class="hidden" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
   </div>
   {% analytics %}
 

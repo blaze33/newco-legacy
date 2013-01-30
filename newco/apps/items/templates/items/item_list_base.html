@@ -29,7 +29,7 @@
     {% endif %}</form>{% endif %}
   </div>{% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
   <div class="span7" align="center">{% if item_list.count %}
-    <div id="carousel_tag" class="carousel slide">
+    <div class="carousel slide" id="carousel_tag">
       <div class="carousel-inner">{% for item in item_list %}
         <div class="{% if forloop.first %}active {% endif %}item">
           <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.data.link }}" alt=""></a>
@@ -71,36 +71,10 @@
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
         if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
+        $('#carousel_tag').carousel({ interval: 10000 });
     });
   </script>
   <script type="text/javascript">
-        $(document).ready(function() {
-            $('#carousel_tag').carousel({ interval: 10000 });
-        });
-
-      function apply_masonry(list_container, list_items){
-        $(list_container).masonry({ //'#thumbnails_list'
-          itemSelector : list_items, //'.masonry-item'
-          isAnimated: true,
-          isFitWidth: true,
-        });
-      }
-
-      function TriggerMasonry(){
-        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 500);
-        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 500);
-        setTimeout("apply_masonry('#thumbnails_list', '.masonry-item')", 2000);
-        setTimeout("apply_masonry('#thumbnails_list2', '.masonry-item2')", 2000);
-      }
-
-      $(document).ready(function() {
-        TriggerMasonry();
-      });
-
-      $('a[data-toggle="tab"]').on('shown', function (e) {
-        TriggerMasonry();
-      });
-
     $(document).ready(function(){
       mixpanel.track("Load_tag_page");
     });

@@ -2,12 +2,12 @@ from django.db import models
 from django.db.models import Q, Count
 from django.db.models.query import QuerySet
 
-from follow.models import Follow
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
-from voting.models import Vote
 
 from content.models import Item
 from items import STATUSES, EMPTY_SCORE
+from utils.follow import Follow
+from utils.voting import Vote
 
 
 class ItemQuerySet(QuerySet):

@@ -1,5 +1,6 @@
-/* rules from pinax_theme_bootstrap theme.css */
+@charset 'UTF-8';
 
+/* rules from pinax_theme_bootstrap theme.css */
 @media (min-width: 980px) {
   body {
     padding-top: 80px;
@@ -11,11 +12,44 @@
 }
 
 /* utilities */
-
 .boxsizingBorder {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+/* ↓↓↓ Masonry Transitions ↓↓↓ */
+
+.masonry,
+.masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+     -moz-transition-duration: 0.7s;
+      -ms-transition-duration: 0.7s;
+       -o-transition-duration: 0.7s;
+          transition-duration: 0.7s;
+}
+
+.masonry {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+     -moz-transition-property: left, right, top;
+      -ms-transition-property: left, right, top;
+       -o-transition-property: left, right, top;
+          transition-property: left, right, top;
+}
+
+/* ↑↑↑ Masonry Transitions ↑↑↑ */
+
+/* Expander text style */
+.read-more, .read-less {
+  font-size: 85%;
 }
 
 /* ↓ css defs for profile page */
@@ -26,10 +60,6 @@
 
 .centered-text {
   text-align:center
-}
-
-.no-display {
-  display:none
 }
 
 .profile-item .name img {
@@ -63,7 +93,7 @@
 
 .product-item-small { line-height: 8px; width: 140px; height: 50px; margin: 3px }
 
-#thumbnails_list {
+.thumbnail-list {
   margin: 0 auto;
 }
 
@@ -637,7 +667,6 @@ textarea#id_content {
 .joyride-tip-guide {
   z-index: 1001;
 }
-/* End of fix for tutorial : NewCo's subnav is z-index: 999; */
 
 /* Fix vertical position of icons in btn-mini */
 .btn-mini [class^="icon-"], .btn-mini [class*=" icon-"] {

@@ -3,10 +3,10 @@
 {% load url from future %}
 {% load i18n %}
 {% load content_utils %}
-{% load follow_utils %}
+{% load follow %}
 
 {% if display == "text" %}
-  <a class="popover-object-display {% if color %} {{ color }}{% endif %}" data-original-title="<img src='{{ object.image.data.thumbnailLink }}' alt='{{ object }}'> <span class='pull-right'>{% follow_form user object %}</span>" data-content="{% tags_display object.tags quote_type='single' sep='&thinsp;' %}" href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Product" itemprop="url"><span itemprop="name">{{ object }}</span></a>
+  <a class="popover-object-display {% if color %} {{ color }}{% endif %}" data-original-title="<img src='{{ object.image.data.thumbnailLink }}' alt='{{ object }}'> <span class='pull-right'>{% follow_form user object quote_type='single' %}</span>" data-content="{% tags_display object.tags quote_type='single' sep='&thinsp;' %}" href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Product" itemprop="url"><span itemprop="name">{{ object }}</span></a>
 {% elif display == "thumbnail" or display == "mini_feed" %}
   <a {% if color %}class="{{ color }}" {% endif %}href="{{ object.get_absolute_url }}" itemscope itemtype="http://schema.org/Product" itemprop="url"><span itemprop="name">{{ object }}</span></a>
 {% elif display == "email" %}

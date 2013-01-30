@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:24+0100\n"
-"PO-Revision-Date: 2013-01-02 11:43\n"
+"POT-Creation-Date: 2013-01-28 22:28+0100\n"
+"PO-Revision-Date: 2013-01-28 19:39\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -34,20 +34,63 @@ msgstr "%(receiver)s, %(requester)s a besoin de vous."
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr "%(followee)s, %(follower)s vous suit désormais sur NewCo."
 
-#: follow/tools.py:18
-#, python-format
-msgid "%(user)s, you are now following %(object)s."
-msgstr "%(user)s, vous suivez désormais %(object)s."
+#: messages.py:11
+msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
+msgstr "Merci {user}, {article}{verbose_name} a été {created} avec succès."
 
-#: follow/tools.py:22
-#, python-format
-msgid "%(user)s, you are not following %(object)s anymore."
-msgstr "%(user)s, vous ne suivez plus %(object)s."
+#: messages.py:16
+msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
+msgstr "Merci {user}, {article}{verbose_name} a été {updated} avec succès."
 
-#: follow/tools.py:26
-#, python-format
-msgid "%(user)s, you can't follow yourself!"
-msgstr "%(user)s, vous ne pouvez pas vous suivre&#x202F;!"
+#: messages.py:21
+msgid "Thanks {user}, your bio has been successfully updated."
+msgstr "Merci {user}, votre bio a été mise à jour."
+
+#: messages.py:25
+msgid "Warning {user}, the form is invalid."
+msgstr "Attention {user}, le formulaire est invalide."
+
+#: messages.py:29
+msgid "{user}, you are now following {object}."
+msgstr "{user}, vous suivez désormais {object}."
+
+#: messages.py:33
+msgid "{user}, you are not following {object} anymore."
+msgstr "{user}, vous ne suivez plus {object}."
+
+#: messages.py:37
+msgid "{user}, you can't follow yourself!"
+msgstr "{user}, vous ne pouvez pas vous suivre&#x202F;!"
+
+#: messages.py:41
+msgid "{user}, your request has been sent to {receiver}!"
+msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
+
+#: messages.py:45
+msgid "{user}, you can't ask yourself to answer a question!"
+msgstr ""
+"{user}, vous ne pouvez pas vous proposer de répondre à une question&#x202F;!"
+
+#: messages.py:49
+msgid "{user}, {email} is not a valid email address!"
+msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
+
+#: messages.py:53
+msgid "{user}, your up vote on {object} has been recorded."
+msgstr "{user}, votre vote positif sur {object} a été enregistré."
+
+#: messages.py:57
+msgid "{user}, your down vote on {object} has been recorded."
+msgstr "{user}, votre vote négatif sur {object} a été enregistré."
+
+#: messages.py:61
+msgid "{user}, your vote on {object} has been cancelled."
+msgstr "{user}, votre vote sur {object} a été annulé."
+
+#: messages.py:65
+msgid "{user}, you can't vote on your own contribution!"
+msgstr ""
+"{user}, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
 
 #: templates/content/info.html:7
 msgid "Posted"
@@ -155,23 +198,6 @@ msgstr ""
 "Merci,\n"
 "L'équipe de NewCo\n"
 
-#: templates/voting/form.html:7
-msgid ""
-"Vote up: this contribution shows effort on quality; it is usefull and clear "
-"(click again to undo)"
-msgstr ""
-"Vote positif&nbsp;: cette contribution montre des efforts sur la "
-"qualité&#x202F;; elle est utile et claire (cliquer à nouveau pour enlever)"
-
-#: templates/voting/form.html:8
-msgid ""
-"Vote down: this contribution does't show effort on quality; it is not useful "
-"or unclear (click again to undo)"
-msgstr ""
-"Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
-"qualité&#x202F;; elle n'est pas utile ou pas claire (cliquer à nouveau pour "
-"enlever)"
-
 #: templatetags/date_utils.py:33
 msgid "2 days ago"
 msgstr "il y a 2 jours"
@@ -205,20 +231,6 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/follow_utils.py:43
-msgctxt "Follow button"
-msgid "Following"
-msgstr "Abonné"
-
-#: templatetags/follow_utils.py:45
-msgid "Click to unfollow"
-msgstr "Cliquez pour vous désabonner"
-
-#: templatetags/follow_utils.py:52
-msgctxt "Follow button"
-msgid "Follow"
-msgstr "Suivre"
-
 #: templatetags/tools.py:81 templatetags/tools.py:113
 msgid "and"
 msgstr "et"
@@ -235,26 +247,47 @@ msgid_plural "with the tags"
 msgstr[0] "avec le tag"
 msgstr[1] "avec les tags"
 
-#: vote/tools.py:20
-#, python-format
-msgid "%(user)s, your up vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
+#~ msgid ""
+#~ "Vote up: this contribution shows effort on quality; it is usefull and "
+#~ "clear (click again to undo)"
+#~ msgstr ""
+#~ "Vote positif&nbsp;: cette contribution montre des efforts sur la "
+#~ "qualité&#x202F;; elle est utile et claire (cliquer à nouveau pour enlever)"
 
-#: vote/tools.py:24
-#, python-format
-msgid "%(user)s, your down vote on %(object)s has been recorded."
-msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
+#~ msgid ""
+#~ "Vote down: this contribution does&#39;t show effort on quality; it is not "
+#~ "useful or unclear (click again to undo)"
+#~ msgstr ""
+#~ "Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
+#~ "qualité&#x202F;; elle n'est pas utile ou pas claire (cliquez à nouveau "
+#~ "pour enlever)"
 
-#: vote/tools.py:28
-#, python-format
-msgid "%(user)s, your vote on %(object)s has been cancelled."
-msgstr "%(user)s, votre vote sur %(object)s a été annulé."
+#~ msgid "%(user)s, your up vote on %(object)s has been recorded."
+#~ msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
 
-#: vote/tools.py:32
-#, python-format
-msgid "%(user)s, you can't vote on your own contribution!"
-msgstr ""
-"%(user)s, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
+#~ msgid "%(user)s, your down vote on %(object)s has been recorded."
+#~ msgstr "%(user)s, votre vote négatif sur %(object)s a été enregistré."
+
+#~ msgid "%(user)s, your vote on %(object)s has been cancelled."
+#~ msgstr "%(user)s, votre vote sur %(object)s a été annulé."
+
+#~ msgid "%(user)s, you can't vote on your own contribution!"
+#~ msgstr ""
+#~ "%(user)s, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
+
+#~ msgctxt "Follow button"
+#~ msgid "Follow"
+#~ msgstr "Suivre"
+
+#~ msgid "Click to follow"
+#~ msgstr "Cliquez pour vous abonner"
+
+#~ msgctxt "Follow button"
+#~ msgid "Following"
+#~ msgstr "Abonné"
+
+#~ msgid "Click to unfollow"
+#~ msgstr "Cliquez pour vous désabonner"
 
 #~ msgid "%(user)s, your request has been sent to %(receiver)s!"
 #~ msgstr "%(user)s, votre requête a été envoyée à %(receiver)s&#x202F;!"
@@ -263,17 +296,6 @@ msgstr ""
 #~ msgstr ""
 #~ "%(user)s, vous ne pouvez pas vous proposer de répondre à une "
 #~ "question&#x202F;!"
-
-#~ msgid "{user}, your request has been sent to {receiver}!"
-#~ msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
-
-#~ msgid "{user}, you can't ask yourself to answer a question!"
-#~ msgstr ""
-#~ "{user}, vous ne pouvez pas vous proposer de répondre à une "
-#~ "question&#x202F;!"
-
-#~ msgid "{user}, {email} is not a valid email address!"
-#~ msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
 
 #~ msgid ""
 #~ "Click here if you can&#39;t find the product you want to link your "

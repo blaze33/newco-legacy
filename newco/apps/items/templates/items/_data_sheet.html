@@ -1,19 +1,19 @@
 {% load url from future %}
 {% load i18n %}
 {% load account_tags %}
-{% load follow_utils %}
+{% load follow %}
 {% load content_utils %}
 
 <div class="one_row" itemscope itemtype="http://schema.org/Product">
-  <div class="row"><div class="span9 product-name">
-    <div class="pull-right">{% follow_form user item extra_class="btn-large" %}</div>
-    <h1 itemprop="name">{{ item }}</h1>
-  </div></div>
+  <span class="pull-right">{% follow_form user item extra_class="btn-large" %}</span>
+  <h1 itemprop="name">{{ item }}</h1>
   
-  {% if experts %}<div class="row"><div class="span9 right"><h4 class="controls_2">{% trans "Maybe they can help you?" %}</h4></div></div>{% endif %}
+  <br>
 
-  <div class="row"><div class="span9">
-    {% tags_display item.tags %}
-    <div class="pull-right">{% for expert in experts %}<a href="{{ expert.get_absolute_url }}" class="label label-success">{% user_display expert %}</a> {% endfor %}</div>
-  </div></div>
+  {% if experts %}<h4 class="right controls_2">{% trans "Maybe they can help you?" %}</h4>{% endif %}
+
+  <br>
+
+  {% tags_display item.tags %}
+  <span class="pull-right">{% for expert in experts %}<a href="{{ expert.get_absolute_url }}" class="label label-success">{% user_display expert %}</a> {% endfor %}</span>
 </div>

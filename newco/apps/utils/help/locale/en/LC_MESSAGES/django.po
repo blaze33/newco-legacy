@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 19:02+0100\n"
+"POT-Creation-Date: 2013-01-28 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,53 +17,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:16
+#: forms.py:15
 msgid "...some of our experts in this field"
 msgstr ""
 
-#: forms.py:19
+#: forms.py:17
 msgid ""
 "These are users that have declared being competent on this particular field"
 msgstr ""
 
-#: forms.py:22
+#: forms.py:20
 msgid "...users you know"
 msgstr ""
 
-#: forms.py:25
+#: forms.py:23
 msgid "...a non-member through an email"
 msgstr ""
 
-#: forms.py:27
+#: forms.py:25
 msgid "Enter an email address"
 msgstr ""
 
-#: forms.py:40
+#: forms.py:49
 msgid "Fill at least one field"
-msgstr ""
-
-#: views.py:110
-msgid "{user}, your request has been sent to {receiver}!"
-msgstr ""
-
-#: views.py:114
-msgid "{user}, you can't ask yourself to answer a question!"
-msgstr ""
-
-#: views.py:118
-msgid "{user}, {email} is not a valid email address!"
 msgstr ""
 
 #: templates/help/_ask_modal.html:7
 msgid "Ask..."
 msgstr ""
 
-#: templates/help/_ask_modal.html:13
+#: templates/help/_ask_modal.html:14
 msgid ""
 "Each user you select will receive a message explaining that you asked for "
 "his help on this question and that you would like him to answer."
 msgstr ""
 
-#: templates/help/_ask_modal.html:16
+#: templates/help/_ask_modal.html:17
 msgid "Ask"
 msgstr ""

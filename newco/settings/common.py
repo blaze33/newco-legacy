@@ -74,7 +74,9 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/about/locale',
     PROJECT_ROOT + '/apps/custaccount/locale',
     PROJECT_ROOT + '/apps/utils/locale',
+    PROJECT_ROOT + '/apps/utils/follow/locale',
     PROJECT_ROOT + '/apps/utils/help/locale',
+    PROJECT_ROOT + '/apps/utils/voting/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -138,6 +140,7 @@ MIDDLEWARE_CLASSES = [
     "account.middleware.TimezoneMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "utils.middleware.AjaxRedirectMiddleware",
 ]
 
 HTML_MINIFY = False
@@ -218,8 +221,10 @@ INSTALLED_APPS = [
     "items",
     "profiles",
     "utils",
+    "utils.follow",
     "utils.help",
     "utils.redis",
+    "utils.voting",
     "content",
 
     # Foreign apps

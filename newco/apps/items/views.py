@@ -16,9 +16,7 @@ from django.views.generic import UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
-from account.utils import user_display
 from taggit.models import Tag
 
 from affiliation import CURRENCIES
@@ -30,7 +28,8 @@ from items.models import Item, Content, Question
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
-from utils.vote.views import VoteMixin
+from utils.voting.views import VoteMixin
+from utils.messages import add_message, render_messages
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
@@ -90,16 +89,20 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                data = {"id": item.pk, "name": item.name,
+                add_message("object-created", request,
+                                model=form._meta.model)
+                messages = render_messages(request)
+                data = {"id": item.id, "name": item.name, "messages": messages,
                         "next": reverse("item_edit", args=args)}
             else:
                 data = "invalid form"
             return HttpResponse(json.dumps(data), mimetype="application/json")
         elif form.is_valid():
-            msg = "updated" if self.object else "created"
-            display_message(msg, self.request, self.model._meta.verbose_name)
+            key = "object-updated" if self.object else "object-created"
+            add_message(key, request, model=self.model)
             return self.form_valid(form)
         else:
+            add_message("form-invalid", request, model=self.model)
             return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
@@ -133,13 +136,17 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     kwargs.update({"empty_permitted": False})
                 formset = QAFormSet(data=POST, instance=self.object, **kwargs)
                 if formset.is_valid():
-                    display_message("created", self.request,
-                                    self.object._meta.verbose_name)
+                    add_message("object-created", request, model=self.model)
                     self.object.save()
                     form.save_m2m()
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
+                else:
+                    add_message("form-invalid", request,
+                                    model=formset.model)
                 ctx.update({"formset": formset})
+            else:
+                add_message("form-invalid", request, model=self.model)
             ctx.update({"form": form})
             return self.render_to_response(self.get_context_data(**ctx))
 
@@ -194,7 +201,7 @@ class QuestionFormMixin(object):
 
     def form_invalid(self, form):
         if "question" not in self.request.POST:
-            return super(AskForHelpMixin, self).form_invalid(form)
+            return super(QuestionFormMixin, self).form_invalid(form)
         return self.render_to_response(self.get_context_data(
             question_form=form))
 
@@ -231,10 +238,10 @@ class QuestionFormMixin(object):
         form_class = PartialQuestionForm
         form = self.get_form(form_class)
         if form.is_valid():
-            display_message("created", self.request,
-                            form._meta.model._meta.verbose_name)
+            add_message("object-created", request, model=form._meta.model)
             return self.form_valid(form)
         else:
+            add_message("form-invalid", request, model=form._meta.model)
             return self.form_invalid(form)
 
 
@@ -331,22 +338,24 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             status = int(POST.get("answer"))
             form = AnswerForm(request, data=POST, status=status)
             if form.is_valid():
-                display_message("created", self.request,
-                                form._meta.model._meta.verbose_name)
+                add_message("object-created", request, model=form._meta.model)
                 answer = form.save()
                 self.success_url = answer.get_absolute_url()
                 return self.form_valid(form)
             else:
+                add_message("form-invalid", request, model=form._meta.model)
                 return self.form_invalid(form)
         elif request.is_ajax and "edit_about" in POST:
             about = POST.get("about", "")
-            ## DJANGO 1.5: user defer and save only about field
+            ## DJANGO 1.5: use defer and save only about field
             profile = request.user.get_profile()
             toggle = bool(profile.about) != bool(about)
             profile.about = about
             profile.save()
-            display_message("about", self.request)
-            data = {"about": about, "result": "success", "toggle": toggle}
+            add_message("about", request)
+            messages = render_messages(request)
+            data = {"about": about, "messages": messages, "result": "success",
+                    "toggle": toggle}
             return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             return super(ContentDetailView, self).post(request, *args,
@@ -470,33 +479,3 @@ class ContentDeleteView(ContentView, DeleteView):
             return self.success_url
         else:
             return "/"
-
-
-MESSAGES = {
-    "created": {
-        "level": messages.SUCCESS,
-        "text": _("Thanks %(user)s, %(object_name)s successfully created.")
-    },
-    "updated": {
-        "level": messages.INFO,
-        "text": _("Thanks %(user)s, %(object_name)s successfully updated.")
-    },
-    "about": {
-        "level": messages.INFO,
-        "text": _("Thanks %(user)s, your bio has been successfully updated.")
-    },
-    "failed": {
-        "level": messages.ERROR,
-        "text": _("Warning %(user)s, %(object_name)s form is invalid.")
-    },
-}
-
-
-def display_message(msg_type, request, object_name=""):
-    messages.add_message(
-        request, MESSAGES[msg_type]["level"],
-        MESSAGES[msg_type]["text"] % {
-            "user": user_display(request.user),
-            "object_name": object_name
-        }
-    )

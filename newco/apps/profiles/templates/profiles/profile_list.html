@@ -9,13 +9,21 @@
 {% block head_title %}{% trans "All Users" %}{% endblock %}
 
 {% block body %}
-    <header class="jumbotron subhead" id="overview">
-        <h1>{% trans "All Users" %}</h1>
-        <p class="lead">{% trans "Here is the awesome community building NewCo." %}</p>
-    </header>
+  <header class="jumbotron subhead" id="overview">
+    <h1>{% trans "All Users" %}</h1>
+    <p class="lead">{% trans "Here is the awesome community building NewCo." %}</p>
+  </header>
 
-    <div class="row" id="profiles_list1">
-        {% for profile in profiles %}{% include "profiles/_profile_item.html" %}{% endfor %}
-    </div>
-    {% if is_paginated %}{% paginate %}{% endif %}
+  <div class="row" id="profile-list">
+    {% for profile in profiles %}{% include "profiles/_profile_item.html" %}{% endfor %}
+  </div>
+  {% if is_paginated %}{% paginate %}{% endif %}
+{% endblock %}
+
+
+{% block extra_script %}
+  {{ block.super }}
+  <script>
+    $.triggerMasonry($("#profile-list"), ".profile-item")
+  </script>
 {% endblock %}

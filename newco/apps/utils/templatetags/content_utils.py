@@ -9,10 +9,12 @@ from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 
 from account.utils import user_display
-from gravatar.templatetags.gravatar import gravatar_img_for_user
+from gravatar.templatetags.gravatar import (gravatar_img_for_user,
+                                            gravatar_profile_for_user)
 from taggit.models import Tag
 
 from items.models import Item, Content
+from utils.tools import get_class_name
 from utils.templatetags.tools import (GenericNode, get_node_extra_arguments,
                                       generate_objs_sentence,
                                       get_content_source)
@@ -21,13 +23,13 @@ register = Library()
 
 
 @register.filter
-def to_app_label(value):
-    return value._meta.app_label
+def to_class_name(value):
+    return value._meta.module_name
 
 
 @register.filter
-def to_class_name(value):
-    return value._meta.module_name
+def full_class_name(value):
+    return get_class_name(value)
 
 
 @register.filter
@@ -131,17 +133,39 @@ def profile_pic(user, size=None, quote_type="double"):
 
     Syntax::
 
-        {% profile_pic <user> [size] %}
+        {% profile_pic <user> [size] [quote_type] %}
 
     Example::
 
         {% profile_pic request.user 48 %}
-        {% profile_pic 'max' 48 %}
+        {% profile_pic 'max' 48 'single' %}
     """
     img = gravatar_img_for_user(user, size, rating=None)
     if quote_type == "single":
         img = img.replace("\"", "\'")
     return mark_safe(img)
+
+
+@register.simple_tag
+def gravatar_profile_url(user):
+    """
+    Returns the user profile url at gravatar, or sign up url if not registered.
+
+    Syntax::
+
+        {% gravatar_profile_url <user> %}
+
+    Example::
+
+        {% gravatar_profile_url request.user %}
+        {% gravatar_profile_url 'max' %}
+    """
+    data = gravatar_profile_for_user(user)
+    if data == "User not found":
+        url = u"https://fr.gravatar.com/site/signup"
+    elif type(data) is dict:
+        url = data["entry"][0]["profileUrl"]
+    return url
 
 
 @register.simple_tag

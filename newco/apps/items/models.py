@@ -11,10 +11,10 @@ from django.contrib.contenttypes import generic
 
 from follow.utils import register
 from taggit.managers import TaggableManager
-from voting.models import Vote
 
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
 from items.managers import ContentManager, ItemManager
+from utils.voting import Vote
 
 CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")

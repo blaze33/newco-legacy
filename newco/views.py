@@ -12,7 +12,7 @@ from items.models import Item, Content
 from utils.help.views import AskForHelpMixin
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
-from utils.vote.views import VoteMixin
+from utils.voting.views import VoteMixin
 
 DEFAULT_CATGORY = "products"
 DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
