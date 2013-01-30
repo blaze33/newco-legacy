@@ -115,7 +115,7 @@
       $(function(){
         {% if request.GET.welcome %}
             setTimeout("$('.tooltip-tutorial').tooltip('show')", 1000);
-            subnav2move.addClass('subnav-moved');
+            $(".subnav-fixed").addClass('subnav-moved');
             $('body').addClass('body-less-padding');
         {% endif %}
       });
