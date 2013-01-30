@@ -20,7 +20,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     });
 
     /* Triggers masonry */
-    function triggerMasonry(listContainer, itemSelector) {
+    $.triggerMasonry = function (listContainer, itemSelector) {
         var options;
         options = {
             itemSelector: itemSelector,
@@ -34,7 +34,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
         });
     }
 
-    triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
+    $.triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
 
     function moveAnimate(element, newParent) {
         var height, width, oldOffset, newOffset, temp, postions;
