@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 17:27+0100\n"
-"PO-Revision-Date: 2013-01-15 17:27\n"
+"POT-Creation-Date: 2013-01-30 12:54+0100\n"
+"PO-Revision-Date: 2013-01-30 12:55\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,47 +19,55 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: apps/utils/help/static/js/help.js:16
+#: apps/utils/help/static/js/help.js:48
 #, c-format
 msgid "Select one expert"
 msgid_plural "Select up to %s experts"
 msgstr[0] "Sélectionnez un expert"
 msgstr[1] "Sélectionnez jusqu'à %s experts"
 
-#: apps/utils/help/static/js/help.js:27
+#: apps/utils/help/static/js/help.js:74
 #, c-format
 msgid "Select one user"
 msgid_plural "Select up to %s users"
 msgstr[0] "Sélectionnez un utilisateur"
 msgstr[1] "Sélectionnez jusqu'à %s utilisateurs"
 
-#: static/js/global.js:170
+#: static/js/global.js:180
+msgid "(more)"
+msgstr "(plus)"
+
+#: static/js/global.js:181
+msgid "(less)"
+msgstr "(moins)"
+
+#: static/js/global.js:187
 msgid "No matches found"
 msgstr "Pas de résultats correspondant"
 
-#: static/js/global.js:173
+#: static/js/global.js:191
 #, c-format
 msgid "Please enter one more character"
 msgid_plural "Please enter %s more characters"
 msgstr[0] "Tapez encore un caractère"
 msgstr[1] "Tapez encore %s caractères"
 
-#: static/js/global.js:178
+#: static/js/global.js:197
 #, c-format
 msgid "You can only select one item"
 msgid_plural "You can only select %s items"
 msgstr[0] "Vous pouvez sélectionner seulement un item"
 msgstr[1] "Vous pouvez sélectionner seulement %s items"
 
-#: static/js/global.js:183
+#: static/js/global.js:202
 msgid "Loading more results..."
 msgstr "Chargement de plus de résultats..."
 
-#: static/js/global.js:185
+#: static/js/global.js:204
 msgid "Searching..."
 msgstr "Recherche..."
 
-#: static/js/global.js:190
+#: static/js/global.js:209
 msgid ""
 "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""

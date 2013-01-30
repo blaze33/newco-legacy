@@ -1,5 +1,6 @@
-/* rules from pinax_theme_bootstrap theme.css */
+@charset 'UTF-8';
 
+/* rules from pinax_theme_bootstrap theme.css */
 @media (min-width: 980px) {
   body {
     padding-top: 80px;
@@ -11,7 +12,6 @@
 }
 
 /* utilities */
-
 .boxsizingBorder {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -46,6 +46,11 @@
 }
 
 /* ↑↑↑ Masonry Transitions ↑↑↑ */
+
+/* Expander text style */
+.read-more, .read-less {
+  font-size: 85%;
+}
 
 /* ↓ css defs for profile page */
 
@@ -666,7 +671,6 @@ textarea#id_content {
 .joyride-tip-guide {
   z-index: 1001;
 }
-/* End of fix for tutorial : NewCo's subnav is z-index: 999; */
 
 /* Fix vertical position of icons in btn-mini */
 .btn-mini [class^="icon-"], .btn-mini [class*=" icon-"] {

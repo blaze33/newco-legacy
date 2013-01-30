@@ -173,6 +173,13 @@ var timeoutObj;
             return true;
         }
     });
+
+    /* jQuery Expander initialization */
+    $(".expander").expander({
+        slicePoint: 80,
+        expandText: gettext("(more)"),
+        userCollapseText: gettext("(less)")
+    });
 }(window.jQuery, window.Modernizr));
 
 // select2 default translated parameters
