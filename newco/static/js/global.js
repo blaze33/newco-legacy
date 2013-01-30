@@ -34,104 +34,92 @@
 
     triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
 
-}(window.jQuery, window.Modernizr));
+    function moveAnimate(element, newParent) {
+        var height, width, oldOffset, newOffset, temp, postions;
+        height = element.height();
+        width = element.width();
+        oldOffset = element.offset();
+        element.appendTo(newParent);
+        newOffset = element.offset();
 
-var pics = [];
-
-function moveAnimate(element, newParent) {
-    "use strict";
-
-    var height, width, oldOffset, newOffset, temp;
-    height = element.height();
-    width = element.width();
-    oldOffset = element.offset();
-    element.appendTo(newParent);
-    newOffset = element.offset();
-
-    temp = element.clone().appendTo('body');
-    temp    .css('position', 'absolute')
-            .css('left', oldOffset.left)
-            .css('top', oldOffset.top)
-            .css('zIndex', 1000)
-            .css('width', width)
-            .css('height', height);
-    element.hide();
-    temp.animate(
-        {
+        temp = element.clone().appendTo('body');
+        temp    .css('position', 'absolute')
+                .css('left', oldOffset.left)
+                .css('top', oldOffset.top)
+                .css('zIndex', 1000)
+                .css('width', width)
+                .css('height', height);
+        element.hide();
+        postions = {
             'top': newOffset.top,
             'left':newOffset.left,
             'width':element.width(),
             'height':element.height()
-        },
-        'slow',
-        function() {
+        };
+        temp.animate(postions, 'slow', function() {
             element.show();
             temp.remove();
-        }
-    );
-}
+        });
+    }
 
-function addImages(container, pics) {
-    "use strict";
-    /*jslint browser:true, devel: true*/
-
-    $.each(pics, function(index, value) {
-        container.append(
-            $(document.createElement("li"))
-                .addClass("selector-item")
-                .attr({id: 'image_'+index})
+    function addImages(container, pics) {
+        $.each(pics, function(index, value) {
+            container.append(
+                    $("<li>").addClass("selector-item")
+                             .attr("id", "image_" + index)
                 .append(
-            $(document.createElement("img"))
-                .attr({ src: value['thumbnailLink'], title: 'image ' + index })
-                .addClass("thumbnail")
-                )
-                .append(
-            $(document.createElement("div"))
-                .addClass("img-controls")
-                .html("<i class='icon-remove'></i>")
+                    $("<img>").addClass("thumbnail")
+                              .attr({
+                                  src: value.thumbnailLink,
+                                  title: 'Image ' + index 
+                              })
+                ).append(
+                    $("<div>").addClass("img-controls")
+                              .html("<i class='icon-remove'></i>")
                 )
             );
-    });
-}
-
-$(function () {
-    "use strict";
-
-    if ( pics.length === 0 ) { $("#img-selector-1").css('display','none'); }
-    if ( $("#img-selector-1").length > 0 ) {
-        addImages($('#selected-list'), pics);
-        $( "#selected-list, #trash-1" ).sortable({
-            placeholder: 'ui-sortable-placeholder',
-            forcePlaceholderSize: true,
-            items: 'li',
-            connectWith: ".connectedSortable",
-            revert: true,
-            containment: '#img-selector-1',
-            distance: 10,
-            activate: function(event, ui) {
-                $("#trash-1").addClass("dropzone");
-            },
-            deactivate: function(event, ui) {
-                $("#trash-1").removeClass("dropzone");
-            }
-        }).disableSelection();
-        $( ".img-controls" ).click(function() {
-            var source, target;
-            source = $(this).parents('.connectedSortable');
-            if (source.attr('id') === 'selected-list') { target = '#trash-1'; }
-            else { target = '#selected-list'; }
-            moveAnimate($(this).parent('.selector-item'), target);
         });
-        $('form').submit(function(){
-            $('#img_data').val($('#selected-list').sortable( "serialize" ));
-            return true;
-        });
-        // $("#add_images").click(function() {
-        //     addImages($('#selected-list'), results);
-        //     return false;
-        // });
     }
-});
+
+    $.picsHandler = function(pics, tableSelector, listSelector, trashSelector, resultSelector) {
+        $(tableSelector).toggle(pics.length !== 0);
+        if ( $(tableSelector).length > 0 ) {
+            addImages($(listSelector), pics);
+            $([listSelector, trashSelector].join(", ")).sortable({
+                placeholder: 'ui-sortable-placeholder',
+                forcePlaceholderSize: true,
+                items: 'li',
+                connectWith: ".connectedSortable",
+                revert: true,
+                containment: tableSelector,
+                distance: 10,
+                activate: function(event, ui) {
+                    $(trashSelector).addClass("dropzone");
+                },
+                deactivate: function(event, ui) {
+                    $(trashSelector).removeClass("dropzone");
+                }
+            }).disableSelection();
+
+            $(".img-controls").click(function () {
+                var source, target;
+                source = $(this).closest(".connectedSortable");
+                if ("#" + source.attr("id") === listSelector) {
+                    target = trashSelector;
+                } else {
+                    target = listSelector;
+                }
+                moveAnimate($(this).parent('.selector-item'), target);
+            });
+
+            var form = $(tableSelector).closest("form");
+            form.submit(function () {
+                $(resultSelector).val( $(listSelector).sortable("serialize") );
+                return true;
+            });
+        }
+    };
+}(window.jQuery, window.Modernizr));
 
 var timeoutObj;
 $(function () {
