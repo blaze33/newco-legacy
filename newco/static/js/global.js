@@ -1,5 +1,7 @@
-/*global $, URL_REDIS, URL_REDIS_TAG*/
+/*global URL_REDIS, URL_REDIS_TAG*/
 /*global gettext, ngettext, interpolate*/
+
+var timeoutObj;
 
 (function ($, Modernizr) {
     "use strict";
@@ -119,30 +121,27 @@
             });
         }
     };
-}(window.jQuery, window.Modernizr));
-
-var timeoutObj;
-$(function () {
-    "use strict";
 
     // Manual method using timeout, shortcutting the weird behavior of hover,
     // which causes glitching if pointer doesn't go to the popover through the 
     // arrow
-    $('.popover-object-display').popover({
+    $(".popover-object-display").popover({
         offset: 10,
-        trigger: 'manual',
+        trigger: "manual",
         html: true,
-        placement: 'bottom',
+        placement: "bottom",
         template: '<div class="popover object-display" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-    }).mouseenter(function(e) {
-        $(this).popover('show');
-    }).mouseleave(function(e) {
+    }).mouseenter( function (eventObject) {
+        $(this).popover("show");
+    }).mouseleave(function (eventObject) {
         var ref = $(this);
-        timeoutObj = setTimeout(function(){
+        timeoutObj = setTimeout( function() {
             ref.popover('hide');
         }, 50);
     });
+}(window.jQuery, window.Modernizr));
 
+$(function () {
     $('.tooltip-top').tooltip({
         trigger: 'hover',
         placement: 'top',
