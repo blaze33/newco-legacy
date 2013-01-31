@@ -73,3 +73,8 @@
 .product-name h1 {
   margin: 0;
 }
+
+.draft {
+  background-color: #e5e5e5;
+  border-radius: 5px 5px 5px 5px;
+}
