@@ -9,7 +9,7 @@
     <div class="span6"><h5>{% trans "The questions to watch before buying are answered by real experts" %}</h5></div>
   </div>
   {% endif %}
-  
+
   {% include "items/_partial_question_form.html" with contents=contents question_form=question_form csrf_token=csrf_token only %}
   <hr>
 {% endif %}
