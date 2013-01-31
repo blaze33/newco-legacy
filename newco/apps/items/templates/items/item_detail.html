@@ -71,7 +71,7 @@
     {% endif %}
     {% for tag, top_question in top_question_by_tag.iteritems %}
       <div class="span3 well well-small nc-right-col-well-span4" style="margin-left: 0">
-        <h5><a class="label" href="{% url 'tagged_items' tag.slug 'questions' %}" class="black"> {% trans "Questions for tag" %} {{ tag.name|truncatechars:20 }}</a></h5>
+        <h5>{% trans "Top Questions for tag" %} <a class="label" href="{% url 'tagged_items' tag.slug 'questions' %}" class="black">{{ tag.name|truncatechars:20 }}</a></h5>
         {% for question in top_question %}
           <a href="{{ question.get_absolute_url }}" class="black">{{ question.content|truncatechars:70 }}</a>
         {% endfor %}
