@@ -8,9 +8,10 @@
 {% load staticfiles %}
 
 {% block extra_style %}
+  <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
   {{ media.css }}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
+  <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/partial_question_form.css" rel="stylesheet">
 {% endblock %}
 
 {% block body_class %}index{% endblock %}

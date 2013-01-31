@@ -4,25 +4,24 @@
 
 {% for content in contents %}
   {% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}
-  <div class="content" itemscope itemtype="http://schema.org/Article">
-    {% if display_ctx == "True" %}
-      <p class="nf-small muted">
-        {% if content|to_class_name == "question" %}
-          {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}
-        {% elif content|to_class_name == "answer" %}
-          {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}
-        {% else %}
-          Unknown content type
-        {% endif %}
-      </p>
-    {% endif %}
 
-    {% if content|to_class_name == "question" %}
-      {% include content|feed_template with content=content display=display display_img=display_img display_a=display_a disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
-    {% elif content|to_class_name == "answer" %}
-      {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
-    {% endif %}
-  </div>
+  {% if display_ctx == "True" %}
+    <p class="nf-small muted">
+      {% if content|to_class_name == "question" %}
+        {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}
+      {% elif content|to_class_name == "answer" %}
+        {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}
+      {% else %}
+        Unknown content type
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if content|to_class_name == "question" %}
+    {% include content|feed_template with content=content display=display display_img=display_img display_a=display_a disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+  {% elif content|to_class_name == "answer" %}
+    {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=request.path csrf_token=csrf_token only %}
+  {% endif %}
 {% empty %}
   {% if empty_msg %}
     <p>{{ empty_msg }}</p>

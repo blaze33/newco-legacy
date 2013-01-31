@@ -1,32 +1,16 @@
-.question .block_controls {
-  padding-top: 3px;
-  opacity: 0;
-  -webkit-transition: opacity 0.6s;
-     -moz-transition: opacity 0.6s;
-}
-.question:hover .block_controls {
-  opacity: 1;
-  -webkit-transition: opacity 1s;
-     -moz-transition: opacity 1s;
-}
+@charset 'UTF-8';
 
-.question hr {
-  margin: 8px 0 15px;
-}
-
-.question iframe {
-  box-sizing: border-box;
-}
-
-.question-content {
+h1.question {
   font-size: 130%;
   font-weight: bold;
   line-height: 140%;
   margin-top: 0px;
 }
 
-.answer-content .content {
-  padding-top: .5em;
+p.question {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 140%;
 }
 
 .answer-content {
@@ -48,6 +32,7 @@
   }
 }
 
+/* ↓↓↓ Modal Gallery ↓↓↓ */
 .modal-image img {
   max-height: 100%;
 }
@@ -69,6 +54,7 @@
   overflow: hidden;
   vertical-align: middle;
 }
+/* ↑↑↑ Modal Gallery ↑↑↑ */
 
 .product-name h1 {
   margin: 0;
