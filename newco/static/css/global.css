@@ -704,3 +704,7 @@ img {
   background:transparent;
   text-decoration:underline;
 }
+
+.form-follow {
+  display: inline;
+}

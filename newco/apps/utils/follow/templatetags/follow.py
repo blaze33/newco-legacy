@@ -28,7 +28,7 @@ class FollowFormNode(GenericNode):
         except:
             return ""
 
-        fields = ["next", "extra_class", "display", "tooltip_class", "quote_type"]
+        fields = ["next", "extra_class", "tooltip_class", "quote_type"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
@@ -41,15 +41,13 @@ class FollowFormNode(GenericNode):
                 buttons[key].update({"disabled": "disabled"})
             if self.extra_class:
                 buttons[key].update({"extra_class": self.extra_class})
-            if self.display:
-                buttons[key].update({"display": self.display})
             tooltip_class = self.tooltip_class if self.tooltip_class else \
                 buttons[key]["tooltip_class"]
             buttons[key].update({
                 "class": buttons[key]["class"] + " " + tooltip_class})
 
-        buttons["follow" if is_following else "following"].update({
-            "style": "display: none;"})
+        key = "follow" if is_following else "following"
+        buttons[key]["class"] = buttons[key]["class"] + " hidden"
 
         ctx = {"object": obj, "buttons": buttons}
         if self.next:
