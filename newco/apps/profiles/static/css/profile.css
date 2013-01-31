@@ -27,19 +27,6 @@
   padding-left: 130px;
 }
 
-.row .block_controls {
-  padding-top: 3px;
-  opacity: 0;
-  -webkit-transition: opacity 0.9s;
-     -moz-transition: opacity 0.9s;
-}
-
-.row:hover .block_controls {
-  opacity: 1;
-  -webkit-transition: opacity 5s;
-     -moz-transition: opacity 5s;
-}
-
 .question hr {
   margin: 8px 0 15px;
 }
