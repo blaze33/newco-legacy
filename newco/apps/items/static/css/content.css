@@ -155,3 +155,23 @@ p.question {
   line-height: 110%
 }
 /* ↑↑↑ Signature ↑↑↑ */
+
+/* ↓↓↓ Product thumbnail ↓↓↓ */
+.thumbnail.content-item {
+  display: inline-block;
+  width: 165px;
+  margin: 9px;
+  line-height: 18px;
+}
+
+.thumbnail.content-item img {
+  width: 164px;
+  max-height: 500px;
+  border-radius: 4px;
+}
+
+.thumbnail.content-item .details {
+  font-size: 12px;
+  line-height: 20px;
+}
+/* ↑↑↑ Product thumbnail ↑↑↑ */
