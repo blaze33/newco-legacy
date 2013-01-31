@@ -7,7 +7,7 @@
             type: "post",
             data: $(this).serialize() + "&follow",
             success: function(data, textstatus, jqxhr) {
-                $("[name=follow]").toggle();
+                $("[name=follow]").toggleClass("hidden");
                 $.displayMessages(data.messages);
             },
             error: function(xhr, status, error) {
