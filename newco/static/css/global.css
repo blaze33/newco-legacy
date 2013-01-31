@@ -73,7 +73,7 @@
 .profile-item h5 { display: run-in; margin: 0px; }
 .profile-item .details p { margin: 0; }
 
-#profile-follow {
+.profile-follow {
   display: block;
   padding-left: 130px;
 }
