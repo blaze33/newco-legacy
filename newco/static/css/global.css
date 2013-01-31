@@ -111,18 +111,6 @@
   max-width: none;
 }
 
-#bulb > div{
-  display: inline-block;
-  background: #fff url(../img/bulb.png);
-  height:120px;
-}
-
-#gears > div{
-  display: inline-block;
-  background: #fff url(../img/gears.png);
-  height:120px;
-}
-
 /* ↓ css defs for image selection/sort */
 
 .selector-item {
