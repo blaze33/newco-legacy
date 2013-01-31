@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:19+0100\n"
+"POT-Creation-Date: 2013-01-31 22:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:105
+#: views.py:107
 msgid ""
 "There is no question in this category. <a class='btn' "
 "href='{create_url}'>Ask your own!</a>"
@@ -186,9 +186,10 @@ msgstr ""
 
 #: templates/homepage_base.html:46
 msgid ""
-"...or <a href=\"#\" class=\"btn btn-primary\" id=\"explore\" style=\"font-"
-"size: 18px; font-weight: 200; position:relative; top: -3px;\"><em><i class="
-"\"icon-play icon-white\"></i> explore NewCo</em></a>"
+"...or <a class=\"btn btn-primary\" id=\"explore\" data-toggle=\"collapse\" "
+"data-target=\"#why_NewCo\" href=\"#\" style=\"font-size: 18px; font-weight: "
+"200; position:relative; top: -3px;\"><em><i class=\"icon-play icon-white\"></"
+"i> explore NewCo</em></a>"
 msgstr ""
 
 #: templates/homepage_base.html:52 templates/homepage_base_1.html:52
@@ -310,15 +311,15 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/homepage_questions.html:19
+#: templates/homepage_questions.html:21
 msgid "Popular questions"
 msgstr ""
 
-#: templates/homepage_questions.html:21
+#: templates/homepage_questions.html:23
 msgid "Last added questions"
 msgstr ""
 
-#: templates/homepage_questions.html:23
+#: templates/homepage_questions.html:25
 msgid "Questions without answer"
 msgstr ""
 
@@ -373,29 +374,29 @@ msgstr ""
 msgid "Search for a product, a user or a tag"
 msgstr ""
 
-#: templates/site_base.html:98
+#: templates/site_base.html:88
 msgid "Tell me more!"
 msgstr ""
 
-#: templates/site_base.html:99
+#: templates/site_base.html:89
 msgid "NewCo is a product information webapp organized around Q&amp;A."
 msgstr ""
 
-#: templates/site_base.html:101
+#: templates/site_base.html:91
 msgid "But what if I don&#39;t find it?"
 msgstr ""
 
-#: templates/site_base.html:102
+#: templates/site_base.html:92
 msgid ""
 "Looking for some information or advice? See if you can find here the related "
 "product, tag or user."
 msgstr ""
 
-#: templates/site_base.html:104
+#: templates/site_base.html:94
 msgid "Thank you!"
 msgstr ""
 
-#: templates/site_base.html:105
+#: templates/site_base.html:95
 msgid ""
 "NewCo is a collaborative webapp: if you can't find what you're looking for, "
 "create it and ask something!"
