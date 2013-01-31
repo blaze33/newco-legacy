@@ -61,37 +61,7 @@
 }
 /* ↑↑↑ Tags ↑↑↑ */
 
-/* ↓ css defs for profile page */
-.profile-item .name img {
-  float: right;
-  margin-left: 5px;
-  max-height: 64px;
-  border-radius: 4px;
-}
-
-.profile-item { line-height: 18px; width: 165px; margin: 9px; overflow: auto; background-color: white; }
-.profile-item h5 { display: run-in; margin: 0px; }
-.profile-item .details p { margin: 0; }
-
-.profile-follow {
-  display: block;
-  padding-left: 130px;
-}
-
 .black { color: #333 }
-
-/* profil item small version for homepage */
-
-.profile-item-small { line-height: 8px; width: 100px; height: 50px; margin: 3px }
-.profile-item-small img {
-  float: right;
-  margin-left: 5px;
-  width: 22px;
-  height: 22px;
-  border-radius: 4px;
-}
-
-.product-item-small { line-height: 8px; width: 140px; height: 50px; margin: 3px }
 
 .thumbnail-list {
   margin: 0 auto;

@@ -1,3 +1,32 @@
+.profile-item .name img {
+  float: right;
+  margin-left: 5px;
+  max-height: 64px;
+  border-radius: 4px;
+}
+
+.profile-item {
+  line-height: 18px;
+  width: 165px;
+  margin: 9px;
+  overflow: auto;
+  background-color: white;
+}
+
+.profile-item h5 {
+  display: run-in;
+  margin: 0;
+}
+
+.profile-item .details p {
+  margin: 0;
+}
+
+.profile-follow {
+  display: block;
+  padding-left: 130px;
+}
+
 .one_row {
   border-radius: 5px 5px 5px 5px;
   -webkit-transition: background-color 0.9s;
