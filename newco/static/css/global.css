@@ -62,15 +62,6 @@
 /* ↑↑↑ Tags ↑↑↑ */
 
 /* ↓ css defs for profile page */
-
-.run-in {
-  display: run-in
-}
-
-.centered-text {
-  text-align:center
-}
-
 .profile-item .name img {
   float: right;
   margin-left: 5px;
