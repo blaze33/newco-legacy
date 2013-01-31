@@ -4,4 +4,14 @@
 
 {% if item %}{% get_content_url content display item as next %}{% endif %}{# Seb: ToDo: find what to do when there's no "item" (i.e. in tag page / item_list ) #}
 
-{% vote_form content vote next %}<div class="score-display"><span class="score">{{ score.score }}</span><br><span class="score-small">{% trans "Score" %}</span></div>
+{% spaceless %}
+
+{% vote_form content vote next %}
+<div class="score">
+  <span class="value">{{ score.score }}</span><br><span class="title">{% trans "Score" %}</span>
+</div>
+<div class="pull-right">{% edit_buttons user content edit_next=next delete_next=delete_next %}</div>
+
+{% endspaceless %}
+
+{{ delete_next }}
