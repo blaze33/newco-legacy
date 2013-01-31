@@ -69,7 +69,7 @@ def follow_form(parser, token):
 
         {% follow_form user object %}
         {% follow_form user object next="" extra_class=""
-                tooltip_class="tooltip-top" display="link" %}
+                tooltip_class="tooltip-top" %}
 
     """
     bits = token.split_contents()

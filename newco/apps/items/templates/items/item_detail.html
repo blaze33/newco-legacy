@@ -18,21 +18,17 @@
 {% block head_title %}{{ item.name }}{% endblock %}
 
 {% block body %}
-<div class="row">
-  <div class="span12">
-    {% include "items/_data_sheet.html" %}
-  </div>
+<div class="row no-left-margin">
+  {% include "items/_data_sheet.html" %}
 </div>
 <hr>
 <div class="row">
   <div class="span9">
-    {% comment %}
-    <br>
-    {% include "items/_partial_question_form.html" with contents=questions question_form=question_form csrf_token=csrf_token only %}
-    <hr>
-    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
-    {% endcomment %}
-    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" display_q_form="True" question_form=question_form item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+    {% if questions %}
+      {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" display_q_form="True" question_form=question_form item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+    {% else %}
+      {% include "items/_partial_question_form.html" with contents=questions question_form=question_form csrf_token=csrf_token only %}
+    {% endif %}
     <br><br><br>
     <hr>
     {% for prod in store_products %}
