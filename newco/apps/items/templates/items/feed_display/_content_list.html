@@ -3,7 +3,7 @@
 {% load bootstrap_tags %}
 
 {% for content in contents %}
-  {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
+  {% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}
   <div class="content" itemscope itemtype="http://schema.org/Article">
     {% if display_ctx == "True" %}
       <p class="nf-small muted">
