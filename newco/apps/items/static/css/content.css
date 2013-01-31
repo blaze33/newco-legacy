@@ -1,5 +1,6 @@
 @charset 'UTF-8';
 
+/* ↓↓↓ Content Related Elements ↓↓↓ */
 h1.question {
   font-size: 130%;
   font-weight: bold;
@@ -17,6 +18,13 @@ p.question {
   line-height: 150%;
 }
 
+.draft {
+  background-color: #e5e5e5;
+  border-radius: 5px 5px 5px 5px;
+}
+/* ↑↑↑ Content Related Elements ↑↑↑ */
+
+/* ↓↓↓ Album ↓↓↓ */
 .album a {
   height: 128px;
   background-position: center;
@@ -25,42 +33,38 @@ p.question {
   display: block;
 }
 
-/* only display album's first image on small screens */
+/* Only display album's first image on small screens */
 @media (max-width: 767px) {
   .album :not(:first-child) {
     display: none;
   }
 }
+/* ↑↑↑ Album ↑↑↑ */
 
 /* ↓↓↓ Modal Gallery ↓↓↓ */
 .modal-image img {
   max-height: 100%;
 }
+
 .modal-gallery {
   min-width: 66%;
   max-width: 95%
 }
+
+/* Fix modal position starting with bootstrap 2.2.2 */
 .modal-gallery.fade.in {
-  /*fix modal position starting with bootstrap 2.2.2*/
   top: 50%;
 }
+
 .modal-footer {
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   vertical-align: middle;
 }
+
 .modal-download {
   overflow: hidden;
   vertical-align: middle;
 }
 /* ↑↑↑ Modal Gallery ↑↑↑ */
-
-.product-name h1 {
-  margin: 0;
-}
-
-.draft {
-  background-color: #e5e5e5;
-  border-radius: 5px 5px 5px 5px;
-}
