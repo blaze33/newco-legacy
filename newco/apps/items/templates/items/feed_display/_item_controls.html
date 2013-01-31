@@ -1,12 +1,11 @@
 {% load i18n %}
 {% load bootstrap_tags %}
-{% load url from future %}
 {% load account_tags %}
 {% load follow %}
 {% load content_utils %}
 
 {% spaceless %}
 <div class="nf-small muted">
-<a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% else %}href="{{ content.get_absolute_url }}{% endif %}>{% trans "Add a question" %}</a>{% if user.is_authenticated %} • {% follow_form user item display="link" %}{% endif %}
+<a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}</a>{% if user.is_authenticated %} • {% follow_form user item extra_class="display-link" %}{% endif %}
 </div>
 {% endspaceless %}
