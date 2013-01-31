@@ -8,8 +8,8 @@
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
+  <link href="{{ STATIC_URL }}css/profile.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
 {% endblock %}
 
 {% block subnav %}{% include "dashboard/_subnav.html" %}{% endblock %}
