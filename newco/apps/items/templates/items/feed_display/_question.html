@@ -20,7 +20,7 @@
 
   <div class="row highlight{% if content.is_draft %} well well-small{% endif %}" id="{{ content.anchor }}">
     <div class="span1 content-controls">
-      {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display user=user delete_next=request.path csrf_token=csrf_token only %}
+      {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=request.path csrf_token=csrf_token only %}
     </div>
     <div class="{% if content.is_draft %}span7{% else %}span8{% endif %}">
 
