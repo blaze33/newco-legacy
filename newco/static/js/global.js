@@ -20,19 +20,19 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     });
 
     /* Triggers masonry */
-    $.triggerMasonry = function (listContainer, itemSelector) {
-        var options;
-        options = {
+    $.triggerMasonry = function (listContainer, itemSelector, extraOptions) {
+        extraOptions = extraOptions || {};
+        var options = $.extend({
             itemSelector: itemSelector,
             isAnimated: !Modernizr.csstransitions,
             isFitWidth: true
-        };
+        }, extraOptions);
         /* Sexier when launched twice */
         listContainer.masonry( options );
         listContainer.imagesLoaded( function () {
             listContainer.masonry( options );
         });
-    }
+    };
 
     $.triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
 
