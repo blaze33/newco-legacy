@@ -80,6 +80,8 @@ def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None, sep=" ",
                 sentence = ", ".join(words[:-1]) + \
                     " " + _("and") + " " + words[-1]
         else:
+            if max_nb:
+                words = words[:max_nb]
             sentence = sep.join(words)
     return sentence
 
