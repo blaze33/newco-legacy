@@ -174,4 +174,8 @@ p.question {
   font-size: 12px;
   line-height: 20px;
 }
+
+.thumbnail-list {
+  margin: 0 auto;
+}
 /* ↑↑↑ Product thumbnail ↑↑↑ */

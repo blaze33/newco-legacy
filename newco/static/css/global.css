@@ -391,10 +391,6 @@
   color: #333
 }
 
-.thumbnail-list {
-  margin: 0 auto;
-}
-
 /* Rules from pinax_theme_bootstrap theme.css */
 @media (min-width: 980px) {
   body {
