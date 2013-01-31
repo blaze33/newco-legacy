@@ -68,3 +68,90 @@ p.question {
   vertical-align: middle;
 }
 /* ↑↑↑ Modal Gallery ↑↑↑ */
+
+/* ↓↓↓ Content controls ↓↓↓ */
+.content-controls {
+  font-size: 180%;
+  font-weight: bold;
+  line-height: 180%;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+     -moz-transition: opacity 1s;
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  .content-controls {
+    margin-left: 5px;
+    width: 57px;
+  }
+}
+
+.content-controls div,
+.content-controls .vote {
+  display: inline-block;
+  line-height: 14px;
+  margin: 0 0;
+}
+
+.content-controls .vote {
+  vertical-align: middle;
+}
+
+.vote button {
+  height: 14px;
+  width: 21px;
+  line-height: 14px;
+  border: none;
+  margin: 0 0;
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.vote button[data-vote="True"] {
+  background-color: #f89406;
+}
+
+.vote .icon-chevron-up {
+  background-position: -284px -120px;
+}
+
+.vote .icon-chevron-down {
+  background-position: -309px -119px;
+}
+
+.content-controls .score {
+  display: inline-block;
+  line-height: 10px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.score .title {
+  font-size: 10px;
+}
+/* ↑↑↑ Content controls ↑↑↑ */
+
+/* ↓↓↓ Signature ↓↓↓ */
+.signature {
+  float: right;
+  padding: 2px 2px 5px 5px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.signature-header {
+  display: inline;
+  margin-bottom: 1em;
+}
+
+.signature .author img {
+  float: left;
+  margin-right: 3px;
+}
+
+.signature .author div {
+  margin-left: 40px;
+  line-height: 110%
+}
+/* ↑↑↑ Signature ↑↑↑ */
