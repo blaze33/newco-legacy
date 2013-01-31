@@ -328,30 +328,25 @@
 }
 
 
-/* ↓ Newsfeed and vote elements */
-.one_row {
+/* ↓↓↓ Row properties ↓↓↓ */
+.row.highlight {
   border-radius: 5px 5px 5px 5px;
-  -webkit-transition: background-color 0.9s;
-  -moz-transition: background-color 0.9s;
+  -webkit-transition: background-color 1s;
+     -moz-transition: background-color 1s;
 }
 
-.one_row:hover {
+.row.highlight:hover {
   background-color: #F8F8F8;
   -webkit-transition: background-color 5s;
-  -moz-transition: background-color 5s;
+     -moz-transition: background-color 5s;
 }
 
-.one_row:hover .controls_2 {
+.row.highlight:hover .controls_2 {
   opacity: 1;
   -webkit-transition: opacity 1s;
-  -moz-transition: opacity 1s;
+     -moz-transition: opacity 1s;
 }
-
-.question-nf {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 140%;
-}
+/* ↑↑↑ Row properties ↑↑↑ */
 
 .nf-small {
   font-size: 13px;

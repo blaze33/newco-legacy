@@ -18,7 +18,7 @@
   {% dict_entry_for_item content from votes as vote %}
   {% dict_entry_for_item content from scores as score %}
 
-  <div class="row one_row{% if content.is_draft %} well well-small{% endif %}" id="{{ content.anchor }}">
+  <div class="row highlight{% if content.is_draft %} well well-small{% endif %}" id="{{ content.anchor }}">
     <div class="span1 vote-controls">
       {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
       {% if item %}{% edit_buttons user content delete_next=item.get_absolute_url %}{% else %}{% edit_buttons user content %}{% endif %}
