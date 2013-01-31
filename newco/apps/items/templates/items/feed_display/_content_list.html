@@ -4,13 +4,9 @@
 
 
 {% if display_q_form == "True" %}
-  {% if contents %}
   <div class="row">
     <div class="span6"><h5>{% trans "The questions to watch before buying are answered by real experts" %}</h5></div>
   </div>
-  {% endif %}
-
-  {% include "items/_partial_question_form.html" with contents=contents question_form=question_form csrf_token=csrf_token only %}
   <hr>
 {% endif %}
 
@@ -36,11 +32,9 @@
     {% endif %}
   </div>
 {% empty %}
-  {% comment %}
   {% if empty_msg %}
     <p>{{ empty_msg }}</p>
   {% else %}
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}
-  {% endcomment %}
 {% endfor %}
