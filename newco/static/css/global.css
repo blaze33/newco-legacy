@@ -341,7 +341,7 @@
      -moz-transition: background-color 5s;
 }
 
-.row.highlight:hover .controls_2 {
+.row.highlight:hover .content-controls {
   opacity: 1;
   -webkit-transition: opacity 1s;
      -moz-transition: opacity 1s;
@@ -410,7 +410,7 @@
   line-height: 110%
 }
 
-.controls_2 {
+.content-controls {
   display: inline-block;
   line-height: 14px;
   margin: 0 0;
@@ -419,7 +419,7 @@
   -moz-transition: opacity 0.6s;
 }
 
-.controls_2.vote {
+.content-controls.vote {
   vertical-align: middle;
 }
 
@@ -437,11 +437,11 @@ button[type="submit"][class*="icon-"][data-vote="True"] {
   background-color: #f89406;
 }
 
-.controls_2 .icon-chevron-up {
+.content-controls .icon-chevron-up {
   background-position: -284px -120px;
 }
 
-.controls_2 .icon-chevron-down {
+.content-controls .icon-chevron-down {
   background-position: -309px -119px;
 }
 /* End of Newsfeed and vote elements */
