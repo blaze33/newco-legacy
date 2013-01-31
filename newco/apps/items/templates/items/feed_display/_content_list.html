@@ -2,6 +2,18 @@
 {% load content_utils %}
 {% load bootstrap_tags %}
 
+
+{% if display_q_form == "True" %}
+  {% if contents %}
+  <div class="row">
+    <div class="span6"><h5>{% trans "The questions to watch before buying are answered by real experts" %}</h5></div>
+  </div>
+  {% endif %}
+  
+  {% include "items/_partial_question_form.html" with contents=contents question_form=question_form csrf_token=csrf_token only %}
+  <hr>
+{% endif %}
+
 {% for content in contents %}
   {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
   <div class="content" itemscope itemtype="http://schema.org/Article">
@@ -24,9 +36,11 @@
     {% endif %}
   </div>
 {% empty %}
+  {% comment %}
   {% if empty_msg %}
     <p>{{ empty_msg }}</p>
   {% else %}
     <p>{% trans "Sorry, this feed is empty." %}</p>
   {% endif %}
+  {% endcomment %}
 {% endfor %}

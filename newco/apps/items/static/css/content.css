@@ -73,3 +73,32 @@
 .product-name h1 {
   margin: 0;
 }
+
+@media (min-width: 700px) {
+.content-product-related { line-height: 1px; width: 60px; margin: 3px; float:right; margin-right:10px }
+.content-product-related img {
+  float: left;
+  width: 60px;
+  border-radius: 3px;
+  margin-right:0px;
+  margin-top: 2px;
+  margin-bottom: 0px;
+}
+.no-product-related { float:right; margin-right:0px }
+}
+
+@media (max-width: 1000px) {.top-products { display:none; }}
+
+@media (max-width: 800px) {
+.top-images-small { display:none; }
+}
+
+@media (min-width: 800px) {
+.expert-list-header { height:90px; }
+}
+@media (max-width: 800px) {
+.expert-list-header { height:150px; }
+}
+
+
+.img-expert { float:right; }

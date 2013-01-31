@@ -10,6 +10,7 @@ settings.LANGUAGE_CODE = 'en-us'
 
 from items.models import Question, Answer, Item
 from profiles.models import Profile
+from taggit.models import Tag
 
 
 def pub_date(x):
@@ -19,13 +20,19 @@ def pub_date(x):
 def author(x):
     return [x.author.get_profile()]
 
+def url(x):
+    return [x.get_absolute_url()]
+
+def slug(x):
+    return [x.slug]
 
 def items(x):
-    return [item for item in x.items.all()]
-
+    items = [item for item in x.items.all()]
+    return ['items'] + items if items else []
 
 def tags(x):
-    return [tag for tag in x.tags.all()]
+    tags = [tag for tag in x.tags.all()]
+    return ['tags'] + tags if tags else []
 
 
 def date_joined(x):
@@ -34,9 +41,10 @@ def date_joined(x):
 # list models to export
 # for each model you define functions to add data to each row
 models = {
-    Question: (pub_date, author, items, tags),
+    Question: (pub_date, author, url, items, tags),
     Answer: (pub_date, author, items, tags),
-    Item: (pub_date, tags),
+    Item: (pub_date, url, tags),
+    Tag: (slug,),
     Profile: (date_joined,)
 }
 file_suffix = 'file.2012'
@@ -55,6 +63,7 @@ for model in models:
             for f in filters:
                 row += f(x)
             rows.append(row)
+        
         # 2- using list comprehension to get rid of one loop
         # for x in data:
         #     rows.append(list(itertools.chain.from_iterable([f(x) for f in filters])))

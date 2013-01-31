@@ -1,7 +1,7 @@
 
 {% with image=image.data %}
   <a href="{{ item.get_absolute_url }}">
-    <img style="margin-bottom: 0" height="{% widthratio image.thumbnailHeight image.thumbnailWidth 60 %}" src="{{ image.thumbnailLink }}" alt="{{ item.name }}">
+    <img style="margin-bottom: 0" height="{% widthratio image.thumbnailHeight image.thumbnailWidth 60 %}" src="{{ image.thumbnailLink }}" alt="{{ item.name }}" title="{{ item.name }}">
     {% if display_prod_name == "True" %}<p class="black" align="center" style="line-height: 11px; font-size: 11px;"><b>{{ item.name|truncatechars:25 }}</b></p>{% endif %}
   </a>
 {% endwith %}
