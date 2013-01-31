@@ -41,6 +41,16 @@
   display: block;
 }
 
+.album li:nth-child(n+3) { width: 60px;}
+.album li:nth-child(n+3) .gallery-item { height: 30px;}
+.album .span3:nth-child(n+5) { display: none; }
+.album-more a {
+  height: auto;
+  font-size: 13px;
+  color: #999;
+}
+.album-more:hover { cursor: hand; cursor: pointer; }
+
 /* only display album's first image on small screens */
 @media (max-width: 767px) {
   .album :not(:first-child) {
