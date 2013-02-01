@@ -6,6 +6,8 @@
     <div class="row one_row"><div class="span7">
         <h4><a href="{{ user.get_absolute_url }}">{% user_display user %}</a>
     </div></div>
+    {# Seb: better display but adds +10% load time on profiles with many followee/ers. Keep it in comment until better perf ? #}
+    {% comment %}{% include "profiles/_profile_item.html" with display="thumbnail_wide" profile=user.get_profile %}{% endcomment %}
     {% if not forloop.last or items %}<hr>{% endif %}
 </div></div>{% endfor %}
 
