@@ -30,11 +30,7 @@
     <h3>{% trans "You can push this question to experts" %}</h3>
     <hr>
     {% for expert in experts|slice:":8" %}
-      <br>
-      <p class="img-expert">{% profile_pic expert.user 40 %}</p>
-      <b><a href="{{ expert.get_absolute_url }}" class="black">{{ expert.name }}</a></b> • <b> {{ expert.user.reputation.reputation_incremented }}</b>
-      <br>
-      {% if expert.about %}{{ expert.about }}{% endif %}
+      {% include "profiles/_profile_item.html" with display="thumbnail_wide" %}
       <hr>
     {% endfor %}
   </div>
