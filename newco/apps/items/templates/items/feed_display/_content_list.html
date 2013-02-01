@@ -2,12 +2,6 @@
 {% load content_utils %}
 {% load bootstrap_tags %}
 
-
-{% if display_q_form == "True" %}
-  <h5>{% trans "The questions to watch before buying are answered by real experts" %}</h5>
-  <hr>
-{% endif %}
-
 {% for content in contents %}
   {% if not forloop.first %}{% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}{% endif %}
   <div class="content" itemscope itemtype="http://schema.org/Article">
