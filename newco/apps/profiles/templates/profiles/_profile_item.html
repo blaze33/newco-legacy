@@ -8,7 +8,7 @@
   {% include "profiles/_profile_info.html" with display="email_html" %}
 {% elif display == "thumbnail_wide" %}
   <br>
-  <p class="img-expert">{% profile_pic expert.user 40 %}</p>
+  <p class="pull-right">{% profile_pic expert.user 40 %}</p>
   <b><a href="{{ expert.get_absolute_url }}" class="black">{{ expert.name }}</a></b> • <b> {{ expert.user.reputation.reputation_incremented }}</b>
   <br>
   {% if expert.about %}{{ expert.about }}{% endif %}
