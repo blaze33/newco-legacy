@@ -28,7 +28,8 @@ class FollowFormNode(GenericNode):
         except:
             return ""
 
-        fields = ["next", "extra_class", "tooltip_class", "quote_type"]
+        fields = ["next", "base_class", "success_class", "extra_class",
+                  "tooltip_class", "quote_type"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
             value = args[index] if not value and len(args) > index else value
@@ -39,12 +40,16 @@ class FollowFormNode(GenericNode):
         for key in buttons.keys():
             if user == obj:
                 buttons[key].update({"disabled": "disabled"})
+            if self.base_class:
+                buttons[key].update({"class": self.base_class})
             if self.extra_class:
                 buttons[key].update({"extra_class": self.extra_class})
             tooltip_class = self.tooltip_class if self.tooltip_class else \
                 buttons[key]["tooltip_class"]
             buttons[key].update({
                 "class": buttons[key]["class"] + " " + tooltip_class})
+            if key == "following" and self.success_class:
+                buttons[key]["class"] += " " + self.success_class
 
         key = "follow" if is_following else "following"
         buttons[key]["class"] = buttons[key]["class"] + " hidden"
@@ -63,13 +68,13 @@ def follow_form(parser, token):
     """
     Renders the following form. This can optionally take a success url,
     an extra class for the follow button, and a tooltip class for tooltip
-    position
+    position, or complety override the default btn + btn-primary behaviour
 
     Usage ('next' is optional)::
 
         {% follow_form user object %}
-        {% follow_form user object next="" extra_class=""
-                tooltip_class="tooltip-top" %}
+        {% follow_form user object next="" base_class="btn"
+                success_class="btn-primary" tooltip_class="tooltip-top" %}
 
     """
     bits = token.split_contents()
