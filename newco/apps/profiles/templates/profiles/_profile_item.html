@@ -2,11 +2,6 @@
 {% load content_utils %}
 {% load follow %}
 
-{% if display == "email_html" %}
-  <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>
-
-  {% include "profiles/_profile_info.html" with display="email_html" %}
-{% else %}
   <div class="profile-item thumbnail">
     <div class="name">
       <a href="{{ profile.get_absolute_url }}"><h5>
@@ -25,4 +20,3 @@
       {% if disp_follow %}<br><center>{% follow_form user profile.user extra_class="btn-mini" %}</center>{% endif %}
     </div>
   </div>
-{% endif %}

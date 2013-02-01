@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 22:28+0100\n"
+"POT-Creation-Date: 2013-02-01 18:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,59 +32,59 @@ msgstr ""
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr ""
 
-#: messages.py:11
+#: messages.py:12
 msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
 msgstr ""
 
-#: messages.py:16
+#: messages.py:17
 msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
 msgstr ""
 
-#: messages.py:21
+#: messages.py:22
 msgid "Thanks {user}, your bio has been successfully updated."
 msgstr ""
 
-#: messages.py:25
+#: messages.py:26
 msgid "Warning {user}, the form is invalid."
 msgstr ""
 
-#: messages.py:29
+#: messages.py:30
 msgid "{user}, you are now following {object}."
 msgstr ""
 
-#: messages.py:33
+#: messages.py:34
 msgid "{user}, you are not following {object} anymore."
 msgstr ""
 
-#: messages.py:37
+#: messages.py:38
 msgid "{user}, you can't follow yourself!"
 msgstr ""
 
-#: messages.py:41
+#: messages.py:42
 msgid "{user}, your request has been sent to {receiver}!"
 msgstr ""
 
-#: messages.py:45
+#: messages.py:46
 msgid "{user}, you can't ask yourself to answer a question!"
 msgstr ""
 
-#: messages.py:49
+#: messages.py:50
 msgid "{user}, {email} is not a valid email address!"
 msgstr ""
 
-#: messages.py:53
+#: messages.py:54
 msgid "{user}, your up vote on {object} has been recorded."
 msgstr ""
 
-#: messages.py:57
+#: messages.py:58
 msgid "{user}, your down vote on {object} has been recorded."
 msgstr ""
 
-#: messages.py:61
+#: messages.py:62
 msgid "{user}, your vote on {object} has been cancelled."
 msgstr ""
 
-#: messages.py:65
+#: messages.py:66
 msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 
@@ -135,15 +135,15 @@ msgstr ""
 msgid "To see %(question)s, go there"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.html:7
+#: templates/mail/_follow_notification_email.html:8
 #: templates/mail/_follow_notification_email.txt:7
 msgid "is now following you on NewCo!"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.html:14
+#: templates/mail/_follow_notification_email.html:21
 #, python-format
 msgid ""
-"To follow back <a href=\"%(follower_url)s\">%(follower)s</a>, go on his "
+"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go on his "
 "profile."
 msgstr ""
 
@@ -213,17 +213,17 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:81 templatetags/tools.py:113
+#: templatetags/tools.py:81 templatetags/tools.py:115
 msgid "and"
 msgstr ""
 
-#: templatetags/tools.py:109
+#: templatetags/tools.py:111
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:115
+#: templatetags/tools.py:117
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""
