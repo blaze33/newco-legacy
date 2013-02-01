@@ -7,7 +7,7 @@
 
   {% include "profiles/_profile_info.html" with display="email_html" %}
 {% else %}
-  <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
+  <div class="profile-item thumbnail">
     <div class="name">
       <a href="{{ profile.get_absolute_url }}"><h5>
         {% profile_pic profile.user 64 %}

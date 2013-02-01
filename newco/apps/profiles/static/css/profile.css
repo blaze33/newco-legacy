@@ -1,16 +1,19 @@
+.profile-item {
+  line-height: 18px;
+  width: 165px;
+  overflow: auto;
+  background-color: white;
+}
+
+#profile-list .profile-item {
+  margin: 9px;
+}
+
 .profile-item .name img {
   float: right;
   margin-left: 5px;
   max-height: 64px;
   border-radius: 4px;
-}
-
-.profile-item {
-  line-height: 18px;
-  width: 165px;
-  margin: 9px;
-  overflow: auto;
-  background-color: white;
 }
 
 .profile-item h5 {
