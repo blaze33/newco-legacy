@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Count, Sum
 from django.db.models.loading import get_model
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
@@ -42,6 +42,15 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
+        try:
+            self.kwargs = kwargs
+            self.object = self.get_object()
+            slug = self.object.slug
+            if slug and kwargs['slug'] != slug:
+                url = self.object.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+        except:
+            pass  # no get_object method, we're not accessing a single object.
         if "next" in request.GET:
             self.next = request.GET.get("next")
             kwargs.update({"next": self.next})
