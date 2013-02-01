@@ -30,7 +30,7 @@
     <h3>{% trans "You can push this question to experts" %}</h3>
     <hr>
     {% for expert in experts|slice:":8" %}
-      {% include "profiles/_profile_item.html" with display="thumbnail_wide" %}
+      {% include "profiles/_profile_item.html" with display="thumbnail_wide" profile=expert %}
       <hr>
     {% endfor %}
   </div>
