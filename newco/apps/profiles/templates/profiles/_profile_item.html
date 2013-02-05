@@ -6,6 +6,12 @@
   <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>
 
   {% include "profiles/_profile_info.html" with display="email_html" %}
+{% elif display == "thumbnail_wide" %}
+  <br>
+  <p class="pull-right">{% profile_pic profile.user 40 %}</p>
+  <b><a href="{{ profile.get_absolute_url }}" class="black">{{ profile.name }}</a></b> • <b> {{ profile.user.reputation.reputation_incremented }}</b>
+  <br>
+  {% if profile.about %}{{ profile.about }}{% endif %}
 {% else %}
   <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
     <div class="name">
