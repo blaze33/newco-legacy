@@ -4,7 +4,7 @@
 
     var extraOptions = {
         columnWidth: function( containerWidth ) {
-            return containerWidth / 10;
+            return containerWidth / 2;
         }
     };
     $.triggerMasonry($("#boxes"), ".box", extraOptions);

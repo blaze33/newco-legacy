@@ -1,0 +1,13 @@
+@charset 'UTF-8';
+
+.box {
+  width: 47%;
+  margin: auto 1%;
+}
+
+@media (max-width: 480px) {
+  .box {
+    width: 98%;
+    margin: auto;
+  }
+}
