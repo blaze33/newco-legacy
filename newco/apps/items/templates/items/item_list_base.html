@@ -12,7 +12,6 @@
   <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
   {{ media.css }}
   <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
-  <link href="{{ STATIC_URL }}css/partial_question_form.css" rel="stylesheet">
 {% endblock %}
 
 {% block body_class %}index{% endblock %}
@@ -76,11 +75,9 @@
 {% block extra_script %}
   {{ media.js }}
   <script src="{{ STATIC_URL }}js/help.js"></script>
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-        if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
         $('#carousel_tag').carousel({ interval: 10000 });
     });
   </script>

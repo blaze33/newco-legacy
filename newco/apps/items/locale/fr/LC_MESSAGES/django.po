@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 13:28+0100\n"
+"POT-Creation-Date: 2013-02-05 15:16+0100\n"
 "PO-Revision-Date: 2013-01-25 18:09\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,17 +27,17 @@ msgstr "Brouillon"
 msgid "Public"
 msgstr "Public"
 
-#: forms.py:69
+#: forms.py:68
 msgctxt "parent"
 msgid "products"
 msgstr "des produits"
 
-#: forms.py:70
+#: forms.py:69
 msgctxt "parent"
 msgid "tags"
 msgstr "des tags"
 
-#: forms.py:76
+#: forms.py:75
 msgid "Select {max} product using Tab or Enter, and the Arrow keys."
 msgid_plural ""
 "Select up to {max} products using Tab or Enter, and the Arrow keys."
@@ -48,38 +48,38 @@ msgstr[1] ""
 "Sélectionnez jusqu'à {max} produits en utilisant la touche Entrée ou "
 "Tabulation, et les flèches de direction."
 
-#: forms.py:81
+#: forms.py:80
 msgid "No results matched"
 msgstr "Pas de résultats correspondant à la requête"
 
-#: forms.py:83
+#: forms.py:82
 msgid "My question refers to"
 msgstr "Ma question concerne"
 
-#: forms.py:91 forms.py:159
+#: forms.py:90 forms.py:158
 msgid "Ask something specific."
 msgstr "Demandez quelque chose de précis."
 
-#: forms.py:135
+#: forms.py:134
 msgid "Choose between either products or tags to link your question to."
 msgstr "Choisissez soit des produits, soit des tags à lier à votre question."
 
-#: forms.py:138
+#: forms.py:137
 msgid "Link your question to at least either one product or one tag."
 msgstr ""
 "Liez votre question à au moins soit un produit, soit une catégorie/activité."
 
-#: forms.py:142
+#: forms.py:141
 #, python-format
 msgid "Pick less than %d tags"
 msgstr "Choisissez moins de %d tags"
 
-#: forms.py:146
+#: forms.py:145
 #, python-format
 msgid "Pick less than %d products"
 msgstr "Choisissez moins de %d produits"
 
-#: forms.py:189
+#: forms.py:188
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
@@ -257,12 +257,6 @@ msgstr "Posez une question à propos du produit"
 msgid "You can push this question to experts"
 msgstr "Vous pouvez soumettre cette question à des experts"
 
-#: templates/items/_partial_question_form.html:15
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-"Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
-"une&#x202F;!"
-
 #: templates/items/answer_form.html:10
 msgid "Answer"
 msgstr "Répondre"
@@ -305,6 +299,13 @@ msgstr "Non"
 #: templates/items/item_detail.html:28
 msgid "What you need to know before buying!"
 msgstr "Ce qu'il faut savoir avant d'acheter&#x202F;!"
+
+#: templates/items/item_detail.html:32
+#: templates/items/item_list_questions.html:28
+msgid "No question yet! Ask the first one here!"
+msgstr ""
+"Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
+"une&#x202F;!"
 
 #: templates/items/item_detail.html:40
 msgid "Where to buy"
@@ -446,21 +447,21 @@ msgstr "ou"
 msgid "Create and add features"
 msgstr "Créer et ajouter des caractéristiques"
 
-#: templates/items/item_list_base.html:20
-#: templates/items/item_list_base.html:43
-#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:19
+#: templates/items/item_list_base.html:42
+#: templates/items/item_list_base.html:64
 msgid "Products"
 msgstr "Produits"
 
-#: templates/items/item_list_base.html:20
+#: templates/items/item_list_base.html:19
 msgid "Tag"
 msgstr "Tag"
 
-#: templates/items/item_list_base.html:64
+#: templates/items/item_list_base.html:63
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/items/item_list_base.html:66
+#: templates/items/item_list_base.html:65
 msgid "Questions"
 msgstr "Questions"
 

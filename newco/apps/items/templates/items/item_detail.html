@@ -9,7 +9,6 @@
 {% block extra_style %}
   <link rel="stylesheet" href="{{ STATIC_URL }}external/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/content.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/affiliation.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
   {{ media.css }}
@@ -25,12 +24,14 @@
 
 <div class="row">
   <div class="span9">
-    <h4>{% trans "What you need to know before buying!" %}</h4>
-
     {% if questions %}
+      <h4>{% trans "What you need to know before buying!" %}</h4>
+
       {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
     {% else %}
-      {% include "items/_partial_question_form.html" with contents=questions question_form=question_form csrf_token=csrf_token only %}
+      <h2 class="muted">{% trans "No question yet! Ask the first one here!" %}</h2>
+
+      {% include "items/_partial_question_form.html" with question_form=question_form csrf_token=csrf_token only %}
     {% endif %}
     <br><br><br>
     <hr>
@@ -156,11 +157,9 @@
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
   <script src="{% static 'js/help.js' %}"></script>
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-        if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
     });
   </script>
   <script src="{{ STATIC_URL }}js/follow.js"></script>
