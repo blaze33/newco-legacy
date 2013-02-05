@@ -35,8 +35,10 @@
   {% if not is_me and not profile_form and profile %}<li class="active">
     <b>{% trans "User profile" %}{% trans ":" %}</b>
     <br>
-    <a href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a>
+    <a href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile %}</a>
   </li>{% endif %}
-  <li class="divider"></li>
+  {% if user.is_authenticated or profile %}
+    <li class="divider"></li>
+  {% endif %}
   <li{% if profiles and not profile %} class="active"{% endif %}><a href="{{ profile_list_url }}">{% trans "All Profiles" %}</a></li>
 </ul>
