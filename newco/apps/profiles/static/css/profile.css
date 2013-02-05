@@ -1,6 +1,6 @@
 @charset 'UTF-8';
 
-.profile-item {
+.profile-item.thumbnail {
   line-height: 18px;
   max-width: 165px;
   width: 100%;
@@ -8,11 +8,11 @@
   background-color: white;
 }
 
-#profile-list .profile-item {
+#profile-list .profile-item.thumbnail {
   margin: 9px;
 }
 
-.profile-item .name img {
+.profile-item.thumbnail .name img {
   float: right;
   margin-left: 5px;
   max-width: 64px;
@@ -20,13 +20,35 @@
   border-radius: 4px;
 }
 
-.profile-item h5 {
+.profile-item.thumbnail h5 {
   display: run-in;
   margin: 0;
 }
 
-.profile-item .details p {
+.profile-item.thumbnail .details p {
   margin: 0;
+}
+
+ul.profiles {
+  padding: 0 0 0 4px;
+  margin: 4px 4px 4px 0;
+}
+
+ul.profiles li {
+  list-style: none;
+}
+
+ul.profiles hr {
+  margin: 10px 0;
+}
+
+li.profile-item {
+  min-height: 40px;
+}
+
+li.profile-item img {
+  float: right;
+  height: 40px;
 }
 
 .profile-follow {

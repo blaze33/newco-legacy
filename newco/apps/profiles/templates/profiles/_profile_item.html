@@ -2,21 +2,30 @@
 {% load content_utils %}
 {% load follow %}
 
-<div class="profile-item thumbnail">
-  <div class="name">
-    <a href="{{ profile.get_absolute_url }}"><h5>
-      {% profile_pic profile.user 64 %}
-      {% user_display profile %}
-    </h5></a>
+{% if not display %}
+  <div class="profile-item thumbnail">
+    <div class="name">
+      <a href="{{ profile.get_absolute_url }}"><h5>
+        {% profile_pic profile.user 64 %}
+        {% user_display profile %}
+      </h5></a>
+    </div>
+    <div class="details">
+      <h5>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h5>
+      <p>
+        {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
+        {% if profile.website %}<a href="{{ profile.website }}"{% if profile.user.reputation.reputation_incremented < 20 %} rel="nofollow"{% endif %}><i class="icon-globe"></i></a>{% endif %}
+        <br>
+        {% tags_display profile.skills 3 %}
+      </p>
+      {% if disp_follow %}<br><center>{% follow_form user profile.user extra_class="btn-mini" %}</center>{% endif %}
+    </div>
   </div>
-  <div class="details">
-    <h5>{{ profile.user.reputation.reputation_incremented }}&nbsp;</h5>
-    <p>
-      {% if profile.location %}{{ profile.location }}&nbsp;{% endif %}
-      {% if profile.website %}<a href="{{ profile.website }}"{% if profile.user.reputation.reputation_incremented < 20 %} rel="nofollow"{% endif %}><i class="icon-globe"></i></a>{% endif %}
-      <br>
-      {% tags_display profile.skills 3 %}
-    </p>
-    {% if disp_follow %}<br><center>{% follow_form user profile.user extra_class="btn-mini" %}</center>{% endif %}
-  </div>
-</div>
+{% elif display == "list" %}
+  <li class="profile-item">
+    {% profile_pic profile.user 40 %}
+    <b><a href="{{ profile.get_absolute_url }}" class="black">{{ profile.name }}</a>&nbsp;• {{ profile.user.reputation.reputation_incremented }}</b>
+    <br>
+    <span class="muted">{{ profile.about }}</span>
+  </li>
+{% endif %}

@@ -9,44 +9,31 @@
   <div class="modal-header expert-list-header">
     <button class="close" data-dismiss="modal">&times;</button>
     <h3>{% trans "Ask a question about" %} {% if item %}{{ item.name|truncatechars:20 }}{% elif tag %}{{ tag.name|truncatechars:20 }}{% endif %}</h3>
-    
+
     <div class="row"><div id="question_form" class="span6">
-    <form method="POST" action="" class="form-inline"><br>
-      {% csrf_token %}
-      {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
-        <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
-        {% include "bootstrap/_field_errors.html" %}
-        {% include "bootstrap/_field_help_text.html" %}
-      </div></div>{% endwith %}
-      <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
-    </form>
+      <form method="POST" action="" class="form-inline"><br>
+        {% csrf_token %}
+        {% with field=question_form.content %}<div id="div_{{ field.auto_id }}" class="control-group {% if field.errors %}error{% endif %} {% if field.css_classes %} {{ field.css_classes }}{% endif %}"><div class="controls">
+          <div class="input-prepend input-append">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{ field }}<button type="submit" class="btn" name="question"><i class="icon-share-alt"></i></button></div>
+          {% include "bootstrap/_field_errors.html" %}
+          {% include "bootstrap/_field_help_text.html" %}
+        </div></div>{% endwith %}
+        <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
+      </form>
     </div></div>
     {% comment %}
     <br><div class="span6" style="margin-left: 0"><a class="btn btn-success" href="{% url 'item_create' 'question' %}"><i class="icon-plus-sign"></i> {% trans "Ask a question" %}</a></div>
     {% endcomment %}
   </div>
-  
+
   <div class="modal-body">
-  	<h3>{% trans "You can push this question to experts" %}</h3>
-  	<hr>
-  	{% for expert in experts|slice:":8" %}
-  	<br>
-  	<p class="pull-right">{% profile_pic expert.user 40 %}</p>
-  	<b><a href="{{ expert.get_absolute_url }}" class="black">{{ expert.name }}</a></b> • <b> {{ expert.user.reputation.reputation_incremented }}</b>
-  	<br>
-  	{% if expert.about %}{{ expert.about }}{% endif %}
-  	<hr>
-  	{% endfor %}
+    <h3>{% trans "You can push this question to experts" %}</h3>
+    <hr>
+    <ul class="profiles">
+    {% for expert in experts|slice:":8" %}
+      {% include "profiles/_profile_item.html" with display="list" profile=expert %}
+      <hr>
+    {% endfor %}
+    </ul>
   </div>
 </div>
-
-<script>
-$(function() {
-    var expertsList;
-
-    expertsList = $("#experts-list");
-    $(document).on("click", function () {
-        expertsList.modal("show");
-    });
-});
-</script>
