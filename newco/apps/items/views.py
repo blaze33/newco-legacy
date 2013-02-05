@@ -2,9 +2,9 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.db.models.loading import get_model
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
@@ -42,6 +42,15 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
+        try:
+            self.kwargs = kwargs
+            self.object = self.get_object()
+            slug = self.object.slug
+            if slug and kwargs['slug'] != slug:
+                url = self.object.get_absolute_url()
+                return HttpResponsePermanentRedirect(url)
+        except:
+            pass  # no get_object method, we're not accessing a single object.
         if "next" in request.GET:
             self.next = request.GET.get("next")
             kwargs.update({"next": self.next})
@@ -280,8 +289,66 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                     if q.id != q_id else AnswerForm(data=POST, request=request)
                 if not media:
                     media = q.answer_form.media
+                    
+            top_products_by_tag={}
+            nb_questions_by_tag={}
+            top_question_by_tag={}
+            ##### We created a list to check all the doublons for products and not display them twice ####
+            list_doublons_p = []
+            list_doublons_q = []
+            for tag in item.tags.all():
+                related_products = Item.objects.filter(
+                    Q(tags=tag)).exclude(id=item.id).distinct()
+            
+                top_products = related_products.annotate(
+                            count=Count("content__votes__vote"),
+                            score=Sum("content__votes__vote")
+                        ).filter(count__gt=0).order_by("-score")
+                list_products_by_tag=[]
+                ##### Loop to find the N first related products && not in list_doublons ####
+                nb_products = 2
+                count = 0
+                for product in top_products:
+                    if count == nb_products:
+                        break
+                    elif product not in list_doublons_p:
+                        list_products_by_tag.append(product)
+                        count += 1
+                if list_products_by_tag:
+                ##### Loop to add the N products to list_doublons_p ####
+                    for i in range(nb_products):
+                        if len(list_products_by_tag)>i:
+                            list_doublons_p.append(list_products_by_tag[i])
+                ##### We display only N products per row ####
+                top_products_by_tag[tag]=list_products_by_tag[:nb_products]
+                
+                ##### We created a list to check all the doublons for questions and not display them twice ####
+                qs_tags=Tag.objects.all().filter(name=tag)
+                self.queryset = Content.objects.questions().filter(tags__in=qs_tags).select_subclasses()
+                top_questions = self.queryset.annotate(
+                            count=Count("votes__vote"),
+                            score=Sum("votes__vote")
+                        ).filter(count__gt=0).order_by("-score")
+                list_questions_by_tag=[]
+                nb_questions = 1
+                count = 0
+                for question in top_questions:
+                    if count == nb_questions:
+                        break
+                    elif question not in list_doublons_q:
+                        list_questions_by_tag.append(question)
+                        count += 1        
+                if list_questions_by_tag:
+                ##### Loop to add the question to list_doublons_q ####
+                    for i in range(nb_questions):
+                        if len(list_questions_by_tag)>i:
+                            list_doublons_q.append(list_questions_by_tag[i])
+                    top_question_by_tag[tag]=list_questions_by_tag[:nb_questions]
+                
+                nb_questions = self.queryset.count()
+                nb_questions_by_tag[tag]=nb_questions
 
-            context.update({"questions": questions, "scores": scores,
+            context.update({"questions": questions, "top_products_by_tag": top_products_by_tag, "top_question_by_tag": top_question_by_tag, "nb_questions_by_tag": nb_questions_by_tag, "scores": scores,
                             "votes": votes, "media": media})
 
             # Linked affiliated products
@@ -441,6 +508,7 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         else:
             context.update({"item_list": Item.objects.filter(tags=self.tag)})
             context.get("item_list").fetch_images()
+        context.update({"experts": self.get_experts})
         return context
 
     def post(self, request, *args, **kwargs):

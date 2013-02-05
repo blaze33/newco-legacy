@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load account_tags %}
+{% load follow %}
+{% load content_utils %}
+
+{% spaceless %}
+<div class="nf-small muted">
+<a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}</a>{% if user.is_authenticated %} • {% follow_form user item base_class="button_to_text" %}{% endif %}
+</div>
+{% endspaceless %}

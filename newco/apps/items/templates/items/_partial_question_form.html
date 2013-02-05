@@ -1,5 +1,6 @@
 {% load i18n %}
 
+{% comment %}
 {% if contents %}
   <div class="row nc_transition_add" data-toggle="collapse" data-target="#question-form">
     <div class="span1" style="line-height: 60px;"><button class="btn btn-small btn-success"><i class="icon-plus" id="question-icon"></i></button></div>
@@ -8,6 +9,10 @@
 {% else %}
   <div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
 {% endif %}
+{% endcomment %}
+
+{% if not contents %}
+<div class="row"><h2 class="span8 offset1 muted">{% trans "No question yet! Ask the first one here!" %}</h2></div>
 
 <div class="row"><div id="question-form" class="span8 offset1{% if contents %} collapse out{% endif %}"{% if contents %} style="position: relative; top: -75px;"{% endif %}>
   <form method="POST" class="form-inline"><br>
@@ -20,3 +25,4 @@
     <input type="hidden" name="next" value="{{ item.get_absolute_url }}">
   </form>
 </div></div>
+{% endif %}
