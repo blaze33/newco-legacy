@@ -22,7 +22,7 @@
     </ul>
   </div>
   <div class="span9">
-    {% if questions %}
+    {% if object_list %}
       {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="True" displ_sign="True" user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
     {% else %}
       <h2 class="muted">{% trans "No question yet! Ask the first one here!" %}</h2>
