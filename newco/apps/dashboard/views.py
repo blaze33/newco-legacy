@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from items.models import Content, Item
-from profiles.models import Profile
+from profiles.views import MyProfileMixin
 from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
@@ -70,8 +70,8 @@ WHAT_TO_FOLLOW_PARAMS = {
 }
 
 
-class DashboardView(AskForHelpMixin, ListView, FormMixin, FollowMixin,
-                    VoteMixin):
+class DashboardView(AskForHelpMixin, MyProfileMixin, ListView, FormMixin,
+                    FollowMixin, VoteMixin):
 
     queryset = Content.objects.all().prefetch_related(
         "author__reputation", "items")
@@ -157,12 +157,7 @@ class DashboardView(AskForHelpMixin, ListView, FormMixin, FollowMixin,
                     wtf.update({key: non_fwed.order_by("?")[:nb_obj]})
                 context.update({"wtf": wtf})
 
-        context.update({
-            "my_profile": Profile.objects.get(user=self.user),
-            "data_source_profile": Profile.objects.get_all_names(),
-            "page": self.page,
-            "page_name": self.page_name,
-            "scores": getattr(self, "scores", {}),
-            "votes": getattr(self, "votes", {})
-        })
+        context.update({"page": self.page, "page_name": self.page_name,
+                        "scores": getattr(self, "scores", {}),
+                        "votes": getattr(self, "votes", {})})
         return context

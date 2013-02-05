@@ -1,6 +1,7 @@
 .profile-item {
   line-height: 18px;
-  width: 165px;
+  max-width: 165px;
+  width: 100%;
   overflow: auto;
   background-color: white;
 }
@@ -12,7 +13,8 @@
 .profile-item .name img {
   float: right;
   margin-left: 5px;
-  max-height: 64px;
+  max-width: 64px;
+  width: 40%;
   border-radius: 4px;
 }
 

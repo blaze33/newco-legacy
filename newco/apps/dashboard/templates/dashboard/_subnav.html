@@ -5,6 +5,10 @@
 
 {% url "profile_list" as profile_list_url %}
 
+{% if my_profile %}{% include "profiles/_profile_item.html" with profile=my_profile %}{% endif %}
+
+<br>
+
 <ul class="nav nav-list">
   {% if user.is_authenticated %}
     <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" class="tooltip-right" title="{% trans 'Monitor all that&#39;s related to you' %}"><b>{% trans "Dashboard" %}</b></a></li>
