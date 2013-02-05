@@ -6,7 +6,6 @@ from django.forms.widgets import Textarea, RadioSelect, SelectMultiple
 from django.utils.translation import (ugettext_lazy as _, ungettext_lazy,
                                       pgettext_lazy)
 
-from account.utils import user_display
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagWidget
