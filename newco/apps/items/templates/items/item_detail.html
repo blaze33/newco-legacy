@@ -50,7 +50,7 @@
 
     <hr>
 
-    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
+    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}" id="edit-product" data-name="{{ item.name }}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
     {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Product" %}</a>{% endif %}
   </div>
 
@@ -58,7 +58,7 @@
     <br>
     {% if store_products %}
       <div class="dropdown controls">
-        <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest.price cheapest.currency LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+        <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest.price cheapest.currency LANGUAGE_CODE %}</b> <span class="caret"></span></a>
         <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
           {% for prod in store_products %}
             {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
@@ -137,7 +137,7 @@
   <script>
     //Tracking Product name for analytics
     $(document).ready(function(){
-      var product=document.getElementById("drop");
+      var product=document.getElementById("edit-product");
       var name=product.getAttribute("data-name");
       mixpanel.track("Load_item_detail", {"product":name});
       if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
