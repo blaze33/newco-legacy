@@ -23,9 +23,7 @@
     {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=path csrf_token=csrf_token only %}
   {% endif %}
 {% empty %}
-  {% if empty_msg %}
-    <p>{{ empty_msg }}</p>
-  {% else %}
-    <p>{% trans "Sorry, this feed is empty." %}</p>
-  {% endif %}
+  <p class="empty-message">
+    {% if empty_msg %}{{ empty_msg }}{% else %}{% trans "Sorry, this feed is empty." %}{% endif %}
+  </p>
 {% endfor %}

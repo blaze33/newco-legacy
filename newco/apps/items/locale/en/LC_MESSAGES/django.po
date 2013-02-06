@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 23:03+0100\n"
+"POT-Creation-Date: 2013-02-07 00:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,19 +205,23 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:380
-msgid "Top related questions"
+#: views.py:315
+msgid "No question yet! Ask the first one here!"
 msgstr ""
 
 #: views.py:381
+msgid "Top related questions"
+msgstr ""
+
+#: views.py:382
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:452
+#: views.py:453
 msgid "No product with tag {tag}"
 msgstr ""
 
-#: views.py:455
+#: views.py:456
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 
@@ -284,59 +288,55 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:29
+#: templates/items/item_detail.html:28
 msgid "What you need to know before buying!"
 msgstr ""
 
-#: templates/items/item_detail.html:33
-msgid "No question yet! Ask the first one here!"
-msgstr ""
-
-#: templates/items/item_detail.html:41
+#: templates/items/item_detail.html:38
 msgid "Where to buy"
 msgstr ""
 
-#: templates/items/item_detail.html:43
+#: templates/items/item_detail.html:40
 msgid "Store"
 msgstr ""
 
-#: templates/items/item_detail.html:44
+#: templates/items/item_detail.html:41
 msgid "Name"
 msgstr ""
 
-#: templates/items/item_detail.html:45
+#: templates/items/item_detail.html:42
 msgid "Price"
 msgstr ""
 
-#: templates/items/item_detail.html:54
+#: templates/items/item_detail.html:51
 msgid "Edit Product"
 msgstr ""
 
-#: templates/items/item_detail.html:55
+#: templates/items/item_detail.html:52
 msgid "Delete Product"
 msgstr ""
 
-#: templates/items/item_detail.html:62
+#: templates/items/item_detail.html:59
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:68
+#: templates/items/item_detail.html:65
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:75
+#: templates/items/item_detail.html:72
 msgid "Top Questions for tag"
 msgstr ""
 
-#: templates/items/item_detail.html:83
+#: templates/items/item_detail.html:80
 msgid "Top related products"
 msgstr ""
 
-#: templates/items/item_detail.html:116
+#: templates/items/item_detail.html:113
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:116
+#: templates/items/item_detail.html:113
 msgid "Download"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr ""
 msgid "answered a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:29
+#: templates/items/feed_display/_content_list.html:27
 msgid "Sorry, this feed is empty."
 msgstr ""
 

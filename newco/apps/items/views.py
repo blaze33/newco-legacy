@@ -311,7 +311,8 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        context.update({"statuses": STATUSES})
+        context.update({"statuses": STATUSES, "empty_msg": mark_safe(_(
+            "No question yet! Ask the first one here!"))})
         request = self.request
         POST, user = [request.POST, request.user]
         content_qs = Content.objects.can_view(user)
@@ -334,7 +335,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
                     if q.id != q_id else AnswerForm(data=POST, request=request)
                 if not media:
                     media = q.answer_form.media
-                    
+
             context.update({"questions": questions, "scores": scores,
                             "votes": votes, "media": media})
 
@@ -459,7 +460,6 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
             qs = qs.questions().order_queryset(self.qs_option, self.scores)
 
         tpl = "tags/_tag_display.html"
-        print render_to_string(tpl, {"tag": self.tag})
         self.empty_msg = mark_safe(
             msg.format(tag=render_to_string(tpl, {"tag": self.tag})))
         return qs

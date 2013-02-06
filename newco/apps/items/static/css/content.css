@@ -22,6 +22,17 @@ p.question {
   background-color: #e5e5e5;
   border-radius: 5px 5px 5px 5px;
 }
+
+.questions .empty-message {
+  color: #999;
+  font-size: 31.5px;
+  font-weight: bold;
+  line-height: 40px;
+}
+.questions .empty-message .tag {
+  font-size: 26px;
+  line-height: 28px;
+}
 /* ↑↑↑ Content Related Elements ↑↑↑ */
 
 /* ↓↓↓ Album ↓↓↓ */
@@ -147,7 +158,6 @@ p.question {
 /* ↑↑↑ Content controls ↑↑↑ */
 
 /* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
-
 .product-controls,
 .tag-controls,
 .question-controls {
@@ -161,7 +171,7 @@ p.question {
   color: #999;
 }
 
-/* quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
+/* Overrides anchor blue color */
 .product-controls > a:not(.label),
 .tag-controls > a:not(.label),
 .question-controls > a:not(.label),
@@ -172,8 +182,7 @@ p.question {
 .tag-controls form {
   display: inherit;
 }
-
-/* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
+/* ↑↑↑ Text controls (Product, Tag, Question) ↑↑↑ */
 
 /* ↓↓↓ Signature ↓↓↓ */
 .signature {
