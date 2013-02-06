@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 16:10+0100\n"
+"POT-Creation-Date: 2013-02-06 23:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,27 +205,20 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:393 views.py:503
+#: views.py:380
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:394 views.py:504
+#: views.py:381
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:468
-#, python-format
-msgid "No products with tag %s"
+#: views.py:452
+msgid "No product with tag {tag}"
 msgstr ""
 
-#: views.py:472
-#, python-format
-msgid "No questions with tag %s"
-msgstr ""
-
-#: views.py:477
-#, python-format
-msgid "No questions about products with tag %s"
+#: views.py:455
+msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 
 #: templates/items/_content_controls.html:11
@@ -270,7 +263,7 @@ msgstr ""
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:40
 #: templates/items/question_form.html:63
-#: templates/items/feed_display/_feed_controls.html:41
+#: templates/items/feed_display/_feed_controls.html:40
 msgid "Save as draft"
 msgstr ""
 
@@ -296,7 +289,6 @@ msgid "What you need to know before buying!"
 msgstr ""
 
 #: templates/items/item_detail.html:33
-#: templates/items/item_list_questions.html:28
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
@@ -340,15 +332,11 @@ msgstr ""
 msgid "Top related products"
 msgstr ""
 
-#: templates/items/item_detail.html:100
-msgid "No related product"
-msgstr ""
-
-#: templates/items/item_detail.html:147
+#: templates/items/item_detail.html:116
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:147
+#: templates/items/item_detail.html:116
 msgid "Download"
 msgstr ""
 
@@ -427,68 +415,38 @@ msgid "Create and add features"
 msgstr ""
 
 #: templates/items/item_list_base.html:20
-#: templates/items/item_list_base.html:43
-#: templates/items/item_list_base.html:65
-msgid "Products"
-msgstr ""
-
-#: templates/items/item_list_base.html:20
 msgid "Tag"
 msgstr ""
 
-#: templates/items/item_list_base.html:64
-msgid "Home"
+#: templates/items/item_list_base.html:51
+msgid "Products"
 msgstr ""
 
-#: templates/items/item_list_base.html:66
+#: templates/items/item_list_base.html:52
 msgid "Questions"
 msgstr ""
 
 #: templates/items/item_list_products.html:11
-msgid "What products?"
-msgstr ""
-
-#: templates/items/item_list_products.html:12
-msgid "Browse products with tag"
-msgstr ""
-
-#: templates/items/item_list_products.html:13
-msgid "Search products with tag"
-msgstr ""
-
-#: templates/items/item_list_products.html:15
-#: templates/items/item_list_questions.html:17
+#: templates/items/item_list_questions.html:13
 msgid "Filter"
 msgstr ""
 
-#: templates/items/item_list_products.html:16
-#: templates/items/item_list_questions.html:18
+#: templates/items/item_list_products.html:12
+#: templates/items/item_list_questions.html:14
 msgid "Popular"
 msgstr ""
 
-#: templates/items/item_list_products.html:17
-#: templates/items/item_list_questions.html:19
+#: templates/items/item_list_products.html:13
+#: templates/items/item_list_questions.html:15
 msgid "Last added"
 msgstr ""
 
-#: templates/items/item_list_products.html:18
-#: templates/items/item_list_questions.html:20
+#: templates/items/item_list_products.html:14
+#: templates/items/item_list_questions.html:16
 msgid "Old"
 msgstr ""
 
-#: templates/items/item_list_questions.html:13
-msgid "What questions?"
-msgstr ""
-
-#: templates/items/item_list_questions.html:14
-msgid "Questions with tag"
-msgstr ""
-
-#: templates/items/item_list_questions.html:15
-msgid "Questions about products with tag"
-msgstr ""
-
-#: templates/items/item_list_questions.html:21
+#: templates/items/item_list_questions.html:17
 msgid "No answers"
 msgstr ""
 
@@ -600,7 +558,7 @@ msgstr ""
 msgid "Sorry, this feed is empty."
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:8
+#: templates/items/feed_display/_feed_controls.html:9
 #, python-format
 msgid ""
 "\n"
@@ -621,15 +579,15 @@ msgstr ""
 msgid "Add an answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:19
+#: templates/items/feed_display/_feed_controls.html:17
 msgid "Ask to answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:34
+#: templates/items/feed_display/_feed_controls.html:33
 msgid "Please login before answering."
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:40
+#: templates/items/feed_display/_feed_controls.html:39
 msgid "Answer and publish"
 msgstr ""
 
@@ -639,7 +597,6 @@ msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:34
-#: templates/items/feed_display/_question_1.html:10
 msgid "Products related"
 msgstr ""
 
@@ -651,33 +608,24 @@ msgstr ""
 msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
 
-#: templates/items/feed_display/_question_1.html:12
-#: templates/items/feed_display/_question_1.html:21
-msgid "Add Answer"
-msgstr ""
-
-#: templates/items/feed_display/_question_1.html:20
-msgid "Category"
-msgstr ""
-
-#: templates/items/feed_display/_tag_controls.html:9
+#: templates/items/feed_display/_tag_controls.html:6
 msgid "Add a question"
 msgstr ""
 
-#: templates/items/feed_display/_tag_controls.html:13
+#: templates/items/feed_display/_tag_controls.html:8
+msgid "In my skills"
+msgstr ""
+
+#: templates/items/feed_display/_tag_controls.html:8
 #, python-format
 msgid "Click to remove tag %(tag)s from your skill list"
 msgstr ""
 
-#: templates/items/feed_display/_tag_controls.html:14
-msgid "In my skills"
+#: templates/items/feed_display/_tag_controls.html:9
+msgid "Add to skills"
 msgstr ""
 
-#: templates/items/feed_display/_tag_controls.html:17
+#: templates/items/feed_display/_tag_controls.html:9
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
-msgstr ""
-
-#: templates/items/feed_display/_tag_controls.html:18
-msgid "Add to skills"
 msgstr ""

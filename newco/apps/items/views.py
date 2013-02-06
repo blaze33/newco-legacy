@@ -422,11 +422,9 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
         return Profile.objects.filter(skills__id__in=tag_ids).order_by(
             "-user__reputation__reputation_incremented").distinct()
 
-DEFAULT_CATGORY = "home"
-DEFAULT_PILL = {"home": "browse", "products": "browse", "questions": "tag"}
-DEFAULT_FILTERS = {"home": "-pub_date", "products": "popular",
-                   "questions": "popular"}
-MODELS = {"home": Item, "products": Item, "questions": Content}
+DEFAULT_CATGORY = "products"
+DEFAULT_FILTERS = {"products": "popular", "questions": "popular"}
+MODELS = {"products": Item, "questions": Content}
 
 
 class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
@@ -438,7 +436,6 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
         self.experts = self.get_experts()
         self.cat = kwargs.get("cat", DEFAULT_CATGORY)
-        self.pill = kwargs.get("pill", DEFAULT_PILL[self.cat])
         self.model = MODELS[self.cat]
         self.template_name = "items/item_list_%s.html" % self.cat
         self.qs_option = request.GET.get("qs_option",
@@ -447,49 +444,34 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
-        if self.cat in ["home", "products"]:
+        if self.cat == "products":
             qs = qs.filter(tags=self.tag)
             field = "content__question__id"
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
-            msg = _("No products with tag %s")
+            msg = _("No product with tag {tag}")
         elif self.cat == "questions":
-            if self.pill == "tag":
-                qs = qs.filter(tags=self.tag)
-                msg = _("No questions with tag %s")
-            elif self.pill == "products":
-                item_ids = Item.objects.filter(tags=self.tag).values_list(
-                    "id", flat=True)
-                qs = qs.filter(items__in=item_ids).distinct()
-                msg = _("No questions about products with tag %s")
+            qs = qs.filter(tags=self.tag)
+            msg = _("No question with tag {tag} yet. "
+                    "Be the first to ask one!")
             self.scores, self.votes = qs.get_scores_and_votes(
                 self.request.user)
             qs = qs.questions().order_queryset(self.qs_option, self.scores)
 
         tpl = "tags/_tag_display.html"
+        print render_to_string(tpl, {"tag": self.tag})
         self.empty_msg = mark_safe(
-            msg % render_to_string(tpl, {"tag": self.tag}))
+            msg.format(tag=render_to_string(tpl, {"tag": self.tag})))
         return qs
 
     def get_context_data(self, **kwargs):
         if "object_list" not in kwargs:
             kwargs.update({"object_list": self.object_list})
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes",
+        for attr in ["tag", "qs_option", "cat", "scores", "votes",
                      "empty_msg"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
-        if self.cat == "home" and context["object_list"]:
-            related_questions = Content.objects.questions().filter(
-                Q(items__in=context.get("object_list")) | Q(tags=self.tag)
-            ).distinct()
-            top_questions = related_questions.order_queryset("popular")
-            related_questions = related_questions.select_subclasses()
-
-            context.update({"related_questions": SortedDict({
-                _("Top related questions"): top_questions[:3],
-                _("Latest related questions"): related_questions[:3]
-            })})
         if self.model is Item:
             context.get("object_list").fetch_images()
         else:
