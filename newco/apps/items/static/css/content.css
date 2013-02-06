@@ -36,12 +36,17 @@ p.question {
 .album li:nth-child(n+3) { width: 60px;}
 .album li:nth-child(n+3) .gallery-item { height: 30px;}
 .album .span3:nth-child(n+5) { display: none; }
+
 .album-more a {
   height: auto;
   font-size: 13px;
   color: #999;
 }
-.album-more:hover { cursor: hand; cursor: pointer; }
+
+.album-more:hover {
+  cursor: hand;
+  cursor: pointer;
+}
 
 /* Only display album's first image on small screens */
 @media (max-width: 767px) {
@@ -220,12 +225,8 @@ textarea.partial-form {
   -webkit-border-radius: 0 4px 4px 0;
      -moz-border-radius: 0 4px 4px 0;
           border-radius: 0 4px 4px 0;
-
-/* ↑↑↑ Partial Question Form ↑↑↑ */
-
-.product-name h1 {
-  margin: 0;
 }
+/* ↑↑↑ Partial Question Form ↑↑↑ */
 
 @media (min-width: 700px) {
 .content-product-related { line-height: 1px; width: 60px; margin: 3px; float:right; margin-right:10px }
