@@ -163,8 +163,8 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     /* Joyride tutorial initialization */
     $.launchJoyride = function () {
         $("#joyRideContent").joyride({
-            "tipContainer": ".navbar",
-            postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+            tipContainer: ".navbar",
+            postRideCallback: function() {
                 $("#help-dropdown").tooltip("show");
                 setTimeout(function () {
                     $('#help-dropdown').tooltip("hide");
