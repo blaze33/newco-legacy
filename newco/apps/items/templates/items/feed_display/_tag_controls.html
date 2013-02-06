@@ -7,17 +7,12 @@
 {% spaceless %}
 
 <div class="tag-controls">
-  <a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}
-  </a>
+  <a href="#" data-toggle="modal" data-target="#experts-list">{% trans "Add a question" %}</a>
   {% if user.is_authenticated %} • <form method="POST" class="display-inline">{% csrf_token %}
     {% if tag in user.get_profile.skills.all %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}">
-      <button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button>
-      </a>
+      <button class="btn btn-mini btn-primary tooltip-bottom" type="submit" name="skills" value="remove" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}">{% trans "In my skills" %}</button>
     {% else %}
-      <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">
-        {% trans "Add to skills" %}</button>
-      </a>
+      <button class="btn btn-mini tooltip-bottom" type="submit" name="skills" value="add" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}">{% trans "Add to skills" %}</button>
     {% endif %}
   </form>{% endif %}
 </div>
