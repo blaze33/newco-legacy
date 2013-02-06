@@ -190,6 +190,39 @@ p.question {
 }
 /* ↑↑↑ Product thumbnail ↑↑↑ */
 
+/* ↓↓↓ Partial Question Form ↓↓↓ */
+
+textarea.partial-form {
+  resize: vertical;
+  width: 80%;
+}
+
+/* Same properties as input */
+.input-append textarea {
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.input-append textarea + .btn-group .btn:last-child {
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+}
+
+.input-prepend.input-append textarea {
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+
+.input-prepend.input-append textarea + .btn-group .btn {
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+
+/* ↑↑↑ Partial Question Form ↑↑↑ */
+
 .product-name h1 {
   margin: 0;
 }

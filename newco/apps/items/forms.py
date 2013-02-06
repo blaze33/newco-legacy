@@ -154,7 +154,7 @@ class PartialQuestionForm(ModelForm):
         model = Question
         fields = ("content", )
         widgets = {"content": Textarea(attrs={
-            "class": "span6", "rows": 1,
+            "class": "partial-form", "rows": 1,
             "placeholder": _("Ask something specific.")})}
 
     def __init__(self, request, items=[], tags=[], *args, **kwargs):
