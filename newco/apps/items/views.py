@@ -469,7 +469,7 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
             kwargs.update({"object_list": self.object_list})
         context = super(ContentListView, self).get_context_data(**kwargs)
         for attr in ["tag", "qs_option", "cat", "scores", "votes",
-                     "empty_msg"]:
+                     "empty_msg", "experts"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.model is Item:
@@ -477,7 +477,6 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         else:
             context.update({"item_list": Item.objects.filter(tags=self.tag)})
             context.get("item_list").fetch_images()
-        context.update({"experts": self.get_experts})
         return context
 
     def post(self, request, *args, **kwargs):
