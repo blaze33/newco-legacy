@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.db.models.query import QuerySet
 
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
@@ -38,6 +38,13 @@ class ItemQuerySet(QuerySet):
                     obj.image = i
         return self
 
+    #### TODO: Take into account products with "score=0" contents ####
+    def order_queryset(self, option):
+        if option == "popular":
+            return self.annotate(count=Count("content__votes__vote"),
+                            score=Sum("content__votes__vote")
+                        ).filter(count__gt=0).order_by("-score")
+
 
 class ItemManager(models.Manager):
     def get_query_set(self):
@@ -45,6 +52,9 @@ class ItemManager(models.Manager):
 
     def fetch_images(self):
         return self.get_query_set().fetch_images()
+    
+    def order_queryset(self, option):
+        return self.get_query_set().order_queryset()
 
 
 class ContentQuerySet(InheritanceQuerySet):
@@ -157,6 +167,9 @@ class ContentManager(InheritanceManager):
 
     def order_queryset(self, option):
         return self.get_query_set().order_queryset(option)
+
+    def top_objects_queryset(self):
+        return self.get_query_set().top_objects_queryset()
 
     def get_scores(self, add_related_questions=False):
         return self.get_query_set().get_scores(add_related_questions)
