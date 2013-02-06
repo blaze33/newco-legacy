@@ -5,7 +5,7 @@
 -    
 
     $(".dropdown controls").ready(function () {
-		var product=document.getElementById("drop");
+		var product=document.getElementById("edit-product");
 	    var lab=product.getAttribute("data-name");
         category = 'Load Item Detail';
 -       _gaq.push(['_trackEvent', category, 'pageload',lab]);

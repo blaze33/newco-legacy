@@ -153,3 +153,32 @@ def unescape(text):
                 pass
         return text  # leave as is
     return re.sub("&#?\w+;", fixup, text)
+
+def fill_product_list_by_tag(list_products_by_tag,nb_products,top_products,list_doublons_p):
+        count = 0
+        for product in top_products:
+            if count == nb_products:
+                break
+            elif product not in list_doublons_p:
+                list_products_by_tag.append(product)
+                count += 1
+        if list_products_by_tag:
+            ##### Loop to add the N products to list_doublons_p ####
+                for i in range(nb_products):
+                    if len(list_products_by_tag)>i:
+                        list_doublons_p.append(list_products_by_tag[i])
+
+def fill_question_list_by_tag(list_questions_by_tag,nb_questions,top_questions,list_doublons_q,tag,top_question_by_tag):
+        count = 0
+        for question in top_questions:
+            if count == nb_questions:
+                break
+            elif question not in list_doublons_q:
+                list_questions_by_tag.append(question)
+                count += 1  
+        if list_questions_by_tag:
+        ##### Loop to add the question to list_doublons_q ####
+            for i in range(nb_questions):
+                if len(list_questions_by_tag)>i:
+                    list_doublons_q.append(list_questions_by_tag[i])
+            top_question_by_tag[tag]=list_questions_by_tag[:nb_questions]
