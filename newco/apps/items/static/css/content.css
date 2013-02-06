@@ -146,6 +146,31 @@ p.question {
 }
 /* ↑↑↑ Content controls ↑↑↑ */
 
+/* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
+
+.product-controls,
+.tag-controls,
+.question-controls {
+  font-size: 13px;
+  display: inline;
+  color: #999;
+}
+
+.content-context {
+  font-size: 13px;
+  color: #999;
+}
+
+/* quick fix for Bootstrap's "muted" class that poses pb when (link isn't muted): "<p class="muted"> blabla <a>My Link</a> </p>" Maybe find a better way to do it?  */
+.product-controls > a:not(.label),
+.tag-controls > a:not(.label),
+.question-controls > a:not(.label),
+.content-context > a:not(.label) {
+  color: inherit;
+}
+
+/* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
+
 /* ↓↓↓ Signature ↓↓↓ */
 .signature {
   float: right;

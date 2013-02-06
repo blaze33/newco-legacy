@@ -416,7 +416,7 @@
   padding: 0;
   font-size: inherit;
   color: inherit;
-  vertical-align: top;
+  vertical-align: inherit;
 }
 
 .btn-anchor:hover {
@@ -424,6 +424,6 @@
 }
 
 .form-follow {
-  display: inline;
+  display: inherit;
 }
 /* ↑↑↑ One time tweaks/fixes ↑↑↑ */

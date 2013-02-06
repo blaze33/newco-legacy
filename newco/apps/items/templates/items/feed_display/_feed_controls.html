@@ -3,21 +3,20 @@
 {% load account_tags %}
 
 {% spaceless %}
-<p class="nf-small muted">
+
+<div class="question-controls">
   {% if not display_a == "all" %}
     {% blocktrans count nb_ans=content.answer_set.count %}
       {{ nb_ans }} answer:
     {% plural %}
       {{ nb_ans }} answers:
     {% endblocktrans %}
-    <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">
-      {% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}
-    </a>
-    • 
+    <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">{% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
   {% endif %}
 
   <a class="btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
-</p>
+</div>
+
 {% endspaceless %}
 
 {% if answer_location == "embedded" %}

@@ -5,7 +5,8 @@
 {% load content_utils %}
 
 {% spaceless %}
-<div class="nf-small muted display-inline">
+
+<div class="tag-controls">
   <a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}
   </a>
   {% if user.is_authenticated %} • <form method="POST" class="display-inline">{% csrf_token %}
@@ -20,4 +21,5 @@
     {% endif %}
   </form>{% endif %}
 </div>
+
 {% endspaceless %}

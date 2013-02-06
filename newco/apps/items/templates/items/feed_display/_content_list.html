@@ -6,7 +6,7 @@
   {% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}
 
   {% if display_ctx == "True" %}
-    <p class="nf-small muted">
+    <p class="content-context">
       {% if content|to_class_name == "question" %}
         {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}
       {% elif content|to_class_name == "answer" %}
