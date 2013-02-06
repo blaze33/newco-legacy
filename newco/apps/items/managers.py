@@ -38,25 +38,13 @@ class ItemQuerySet(QuerySet):
                     obj.image = i
         return self
 
-    def top_objects_queryset(self):
-        return self.annotate(count=Count("content__votes__vote"),
+    #### TODO: Take into account products with "score=0" contents ####
+    def order_queryset(self, option):
+        if option == "popular":
+            return self.annotate(count=Count("content__votes__vote"),
                             score=Sum("content__votes__vote")
                         ).filter(count__gt=0).order_by("-score")
-                        
-    def fill_list_by_tag(self, list_products_by_tag,nb_products,top_products,list_doublons_p):
-        count = 0
-        for product in top_products:
-            if count == nb_products:
-                break
-            elif product not in list_doublons_p:
-                list_products_by_tag.append(product)
-                count += 1
-        if list_products_by_tag:
-            ##### Loop to add the N products to list_doublons_p ####
-                for i in range(nb_products):
-                    if len(list_products_by_tag)>i:
-                        list_doublons_p.append(list_products_by_tag[i])
-        return self
+
 
 class ItemManager(models.Manager):
     def get_query_set(self):
@@ -65,11 +53,8 @@ class ItemManager(models.Manager):
     def fetch_images(self):
         return self.get_query_set().fetch_images()
     
-    def top_objects_queryset(self):
-        return self.get_query_set().top_objects_queryset()
-    
-    def fill_list_by_tag(self):
-        return self.get_query_set().fill_list_by_tag()
+    def order_queryset(self, option):
+        return self.get_query_set().order_queryset()
 
 
 class ContentQuerySet(InheritanceQuerySet):
@@ -109,27 +94,6 @@ class ContentQuerySet(InheritanceQuerySet):
         elif option in ["no_answers", "unanswered"]:
             return self.annotate(score=Count("question__answer")).filter(
                 score__lte=0, status=STATUSES.public).select_subclasses()
-        return self
-    
-    def top_objects_queryset(self):
-        return self.annotate(count=Count("votes__vote"),
-                            score=Sum("votes__vote")
-                        ).filter(count__gt=0).order_by("-score")
-                        
-    def fill_list_by_tag(self, list_questions_by_tag,nb_questions,top_questions,list_doublons_q,tag,top_question_by_tag):
-        count = 0
-        for question in top_questions:
-            if count == nb_questions:
-                break
-            elif question not in list_doublons_q:
-                list_questions_by_tag.append(question)
-                count += 1  
-        if list_questions_by_tag:
-        ##### Loop to add the question to list_doublons_q ####
-            for i in range(nb_questions):
-                if len(list_questions_by_tag)>i:
-                    list_doublons_q.append(list_questions_by_tag[i])
-            top_question_by_tag[tag]=list_questions_by_tag[:nb_questions]
         return self
 
     def get_scores(self, add_related_questions=False):
@@ -203,12 +167,9 @@ class ContentManager(InheritanceManager):
 
     def order_queryset(self, option):
         return self.get_query_set().order_queryset(option)
-    
+
     def top_objects_queryset(self):
         return self.get_query_set().top_objects_queryset()
-    
-    def fill_list_by_tag(self):
-        return self.get_query_set().fill_list_by_tag()
 
     def get_scores(self, add_related_questions=False):
         return self.get_query_set().get_scores(add_related_questions)

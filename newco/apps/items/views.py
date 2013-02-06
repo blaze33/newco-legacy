@@ -33,6 +33,7 @@ from utils.messages import add_message, render_messages
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
+from utils.tools import fill_product_list_by_tag, fill_question_list_by_tag
 
 app_name = "items"
 
@@ -275,22 +276,22 @@ class RelatedObjectsMixin(object):
                 related_products = Item.objects.filter(
                     Q(tags=tag)).exclude(id=item.id).distinct()
             
-                top_products = related_products.top_objects_queryset()
+                top_products = related_products.order_queryset("popular")
                 list_products_by_tag=[]
                 ##### Loop to find the N first related products && not in list_doublons ####
                 nb_products = 2
-                related_products.fill_list_by_tag(list_products_by_tag,nb_products,top_products,list_doublons_p)
+                fill_product_list_by_tag(list_products_by_tag,nb_products,top_products,list_doublons_p)
                 ##### We display only N products per row ####
                 top_products_by_tag[tag]=list_products_by_tag[:nb_products]
                 
                 ##### We created a list to check all the doublons for questions and not display them twice ####
                 qs_tags=Tag.objects.all().filter(name=tag)
                 self.queryset = Content.objects.questions().filter(tags__in=qs_tags).select_subclasses()
-                top_questions = self.queryset.top_objects_queryset()
+                top_questions = self.queryset.order_queryset("popular")
                 
                 list_questions_by_tag=[]
                 nb_questions = 1
-                self.queryset.fill_list_by_tag(list_questions_by_tag,nb_questions,top_questions,list_doublons_q,tag,top_question_by_tag)
+                fill_question_list_by_tag(list_questions_by_tag,nb_questions,top_questions,list_doublons_q,tag,top_question_by_tag)
                 
 #                nb_questions = self.queryset.count()
 #                nb_questions_by_tag[tag]=nb_questions

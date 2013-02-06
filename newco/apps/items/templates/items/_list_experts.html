@@ -8,7 +8,7 @@
 <div class="modal fade hide" id="experts-list">
   <div class="modal-header expert-list-header">
     <button class="close" data-dismiss="modal">&times;</button>
-    <h5>{% trans "Ask a question about" %} {% if item %}{{ item.name|truncatechars:20 }}{% elif tag %}{{ tag.name|truncatechars:20 }}{% endif %}</h5>
+    <h4>{% trans "Ask a question about" %} {% if item %}{{ item.name|truncatechars:20 }}{% elif tag %}{{ tag.name|truncatechars:20 }}{% endif %}</h4>
     
     <div class="row"><div id="question_form" class="span6">
       <form method="POST" action="" class="form-inline"><br>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="modal-body">
-    <h3>{% trans "You can push this question to experts" %}</h3>
+    <h5>{% trans "You can push this question to experts" %}</h5>
     <hr>
     {% for expert in experts|slice:":8" %}
       {% include "profiles/_profile_item.html" with display="thumbnail_wide" profile=expert %}
