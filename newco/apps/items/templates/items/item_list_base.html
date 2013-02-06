@@ -65,9 +65,21 @@
   {{ media.js }}
   <script src="{{ STATIC_URL }}js/help.js"></script>
   <script>
-    $(function() {
+    $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
         $('#carousel_tag').carousel({ interval: 10000 });
+        $("#form-toggle-skill").submit(function () {
+            var form = $(this)
+            $.ajax({
+                type: "post",
+                data: form.serialize() + "&toggle-skill",
+                success: function(data, textstatus, jqxhr) {
+                    $("input", form).toggleClass("hidden");
+                    $.displayMessages(data.messages);
+                },
+            });
+            return false;
+        });
     });
   </script>
   <script type="text/javascript">

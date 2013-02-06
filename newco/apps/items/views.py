@@ -514,8 +514,8 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         self.tags = [self.tag]
-        if "skills" in request.POST:
-            return self.toggle_to_skills(request, *args, **kwargs)
+        if "toggle-skill" in request.POST:
+            return self.toggle_skill(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
     def get_experts(self):
@@ -523,13 +523,20 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
             "-user__reputation__reputation_incremented").distinct()
 
     @method_decorator(login_required)
-    def toggle_to_skills(self, request, *args, **kwargs):
+    def toggle_skill(self, request, *args, **kwargs):
         profile = request.user.get_profile()
         if self.tag in profile.skills.all():
             profile.skills.remove(self.tag.name)
+            add_message("skill-removed", request, tag=self.tag)
         else:
             profile.skills.add(self.tag)
-        return self.get(request, *args, **kwargs)
+            add_message("skill-added", request, tag=self.tag)
+
+        if request.is_ajax():
+            data = {"messages": render_messages(request)}
+            return HttpResponse(json.dumps(data), mimetype="application/json")
+        else:
+            return HttpResponseRedirect(request.path)
 
 
 class ContentDeleteView(ContentView, DeleteView):

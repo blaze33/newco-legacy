@@ -65,6 +65,15 @@ MESSAGES = {
         "level": messages.WARNING,
         "text": _("{user}, you can't vote on your own contribution!")
     },
+    "skill-added": {
+        "level": messages.SUCCESS,
+        "text": _("{user}, the tag {tag} has been added to your skill set.")
+    },
+    "skill-removed": {
+        "level": messages.INFO,
+        "text": _(
+            "{user}, the tag {tag} has been removed from your skill set.")
+    },
 }
 
 

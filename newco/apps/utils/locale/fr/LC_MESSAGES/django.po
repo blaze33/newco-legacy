@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-01 18:09+0100\n"
-"PO-Revision-Date: 2013-02-01 18:10\n"
+"POT-Creation-Date: 2013-02-06 19:03+0100\n"
+"PO-Revision-Date: 2013-02-06 19:04\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,14 @@ msgstr "{user}, votre vote sur {object} a été annulé."
 msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 "{user}, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
+
+#: messages.py:70
+msgid "{user}, the tag {tag} has been added to your skill set."
+msgstr "{user}, le tag {tag} a été ajouté à votre liste de compétences."
+
+#: messages.py:75
+msgid "{user}, the tag {tag} has been removed from your skill set."
+msgstr "{user}, le tag {tag} a été enlevé de votre liste de compétences."
 
 #: templates/content/info.html:7
 msgid "Posted"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-01 18:10+0100\n"
+"POT-Creation-Date: 2013-02-06 19:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,6 +86,14 @@ msgstr ""
 
 #: messages.py:66
 msgid "{user}, you can't vote on your own contribution!"
+msgstr ""
+
+#: messages.py:70
+msgid "{user}, the tag {tag} has been added to your skill set."
+msgstr ""
+
+#: messages.py:75
+msgid "{user}, the tag {tag} has been removed from your skill set."
 msgstr ""
 
 #: templates/content/info.html:7
