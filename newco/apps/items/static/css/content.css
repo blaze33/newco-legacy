@@ -169,6 +169,10 @@ p.question {
   color: inherit;
 }
 
+.tag-controls form {
+  display: inherit;
+}
+
 /* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
 
 /* ↓↓↓ Signature ↓↓↓ */

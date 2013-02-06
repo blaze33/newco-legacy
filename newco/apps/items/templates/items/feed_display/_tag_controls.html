@@ -7,14 +7,14 @@
 {% spaceless %}
 
 <div class="tag-controls">
-  <a href="#" data-toggle="modal" data-target="#experts-list">{% trans "Add a question" %}</a>
-  {% if user.is_authenticated %} • <form method="POST" class="display-inline">{% csrf_token %}
+  <a data-toggle="modal" data-target="#experts-list" href="#">{% trans "Add a question" %}</a>&nbsp;•
+  <form method="POST">{% csrf_token %}
     {% if tag in user.get_profile.skills.all %}
       <button class="btn btn-mini btn-primary tooltip-bottom" type="submit" name="skills" value="remove" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}">{% trans "In my skills" %}</button>
     {% else %}
       <button class="btn btn-mini tooltip-bottom" type="submit" name="skills" value="add" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}">{% trans "Add to skills" %}</button>
     {% endif %}
-  </form>{% endif %}
+  </form>
 </div>
 
 {% endspaceless %}

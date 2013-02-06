@@ -515,15 +515,21 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         self.object_list = self.get_queryset()
         self.tags = [self.tag]
         if "skills" in request.POST:
-            profile = request.user.get_profile()
-            profile.skills.add(self.tag) if request.POST["skills"] == "add" \
-                else profile.skills.remove(self.tag.name)
-            return self.get(request, *args, **kwargs)
+            return self.toggle_to_skills(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
     def get_experts(self):
         return Profile.objects.filter(skills=self.tag).order_by(
             "-user__reputation__reputation_incremented").distinct()
+
+    @method_decorator(login_required)
+    def toggle_to_skills(self, request, *args, **kwargs):
+        profile = request.user.get_profile()
+        if self.tag in profile.skills.all():
+            profile.skills.remove(self.tag.name)
+        else:
+            profile.skills.add(self.tag)
+        return self.get(request, *args, **kwargs)
 
 
 class ContentDeleteView(ContentView, DeleteView):
