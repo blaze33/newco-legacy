@@ -26,7 +26,7 @@
   <div class="span3">
   	<h1>{% if tag %}{{ tag|capfirst }}</h1>
       <br>
-      {% include "items/feed_display/_tag_controls.html" with tag=tag user=user answer_location="embedded" csrf_token=csrf_token include_modal="True" only %}
+      {% include "items/feed_display/_tag_controls.html" with tag=tag user=user csrf_token=csrf_token only %}
       {% include "items/_list_experts.html" with experts=experts %}
       {% comment %}
       <div class="pull-right">
