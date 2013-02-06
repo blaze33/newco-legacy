@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 15:16+0100\n"
+"POT-Creation-Date: 2013-02-06 16:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,6 +232,10 @@ msgstr ""
 msgid "Score"
 msgstr ""
 
+#: templates/items/_data_sheet.html:25
+msgid "See More"
+msgstr ""
+
 #: templates/items/_edit_buttons.html:3
 msgid "Edit this post"
 msgstr ""
@@ -244,7 +248,7 @@ msgstr ""
 msgid "Ask a question about"
 msgstr ""
 
-#: templates/items/_list_experts.html:31
+#: templates/items/_list_experts.html:17
 msgid "You can push this question to experts"
 msgstr ""
 
@@ -287,64 +291,64 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/items/item_detail.html:28
+#: templates/items/item_detail.html:29
 msgid "What you need to know before buying!"
 msgstr ""
 
-#: templates/items/item_detail.html:32
+#: templates/items/item_detail.html:33
 #: templates/items/item_list_questions.html:28
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: templates/items/item_detail.html:40
+#: templates/items/item_detail.html:41
 msgid "Where to buy"
 msgstr ""
 
-#: templates/items/item_detail.html:42
+#: templates/items/item_detail.html:43
 msgid "Store"
 msgstr ""
 
-#: templates/items/item_detail.html:43
+#: templates/items/item_detail.html:44
 msgid "Name"
 msgstr ""
 
-#: templates/items/item_detail.html:44
+#: templates/items/item_detail.html:45
 msgid "Price"
 msgstr ""
 
-#: templates/items/item_detail.html:53
+#: templates/items/item_detail.html:54
 msgid "Edit Product"
 msgstr ""
 
-#: templates/items/item_detail.html:54
+#: templates/items/item_detail.html:55
 msgid "Delete Product"
 msgstr ""
 
-#: templates/items/item_detail.html:61
+#: templates/items/item_detail.html:62
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:67
+#: templates/items/item_detail.html:68
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:74
+#: templates/items/item_detail.html:75
 msgid "Top Questions for tag"
 msgstr ""
 
-#: templates/items/item_detail.html:82
+#: templates/items/item_detail.html:83
 msgid "Top related products"
 msgstr ""
 
-#: templates/items/item_detail.html:99
+#: templates/items/item_detail.html:100
 msgid "No related product"
 msgstr ""
 
-#: templates/items/item_detail.html:146
+#: templates/items/item_detail.html:147
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:146
+#: templates/items/item_detail.html:147
 msgid "Download"
 msgstr ""
 
@@ -422,21 +426,21 @@ msgstr ""
 msgid "Create and add features"
 msgstr ""
 
-#: templates/items/item_list_base.html:19
-#: templates/items/item_list_base.html:42
-#: templates/items/item_list_base.html:64
+#: templates/items/item_list_base.html:20
+#: templates/items/item_list_base.html:43
+#: templates/items/item_list_base.html:65
 msgid "Products"
 msgstr ""
 
-#: templates/items/item_list_base.html:19
+#: templates/items/item_list_base.html:20
 msgid "Tag"
 msgstr ""
 
-#: templates/items/item_list_base.html:63
+#: templates/items/item_list_base.html:64
 msgid "Home"
 msgstr ""
 
-#: templates/items/item_list_base.html:65
+#: templates/items/item_list_base.html:66
 msgid "Questions"
 msgstr ""
 
@@ -501,6 +505,7 @@ msgid "Question"
 msgstr ""
 
 #: templates/items/question_form.html:28
+#: templates/items/feed_display/_item_controls.html:7
 msgid "Ask a question"
 msgstr ""
 
@@ -628,11 +633,6 @@ msgstr ""
 msgid "Answer and publish"
 msgstr ""
 
-#: templates/items/feed_display/_item_controls.html:9
-#: templates/items/feed_display/_tag_controls.html:9
-msgid "Add a question"
-msgstr ""
-
 #: templates/items/feed_display/_question.html:12
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a>"
@@ -658,6 +658,10 @@ msgstr ""
 
 #: templates/items/feed_display/_question_1.html:20
 msgid "Category"
+msgstr ""
+
+#: templates/items/feed_display/_tag_controls.html:9
+msgid "Add a question"
 msgstr ""
 
 #: templates/items/feed_display/_tag_controls.html:13
