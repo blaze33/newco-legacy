@@ -410,18 +410,17 @@
           box-sizing: border-box;
 }
 
-.button_to_text {
-  margin:0;
-  padding:0;
-  border:0;
-  font-size: 13px;
-  color:#999; /* Match your link colour */
-  background:transparent;
+.btn-anchor {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  vertical-align: top;
 }
-.button_to_text:hover {
-  color:#999;
-  background:transparent;
-  text-decoration:underline;
+
+.btn-anchor:hover {
+  text-decoration: underline;
 }
 
 .form-follow {

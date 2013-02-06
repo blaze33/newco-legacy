@@ -6,6 +6,6 @@
 
 {% spaceless %}
 <div class="nf-small muted">
-<a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}</a>{% if user.is_authenticated %} • {% follow_form user item base_class="button_to_text" %}{% endif %}
+<a {% if include_modal == "True" %}href="#" data-toggle="modal" data-target="#experts-list"{% endif %}>{% trans "Add a question" %}</a>{% if user.is_authenticated %} • {% follow_form user item base_class="btn-anchor" %}{% endif %}
 </div>
 {% endspaceless %}
