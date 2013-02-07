@@ -1,4 +1,4 @@
-/*global jQuery, $, Select2, URL_REDIS_PROFILE, select2BaseParameters*/
+/*global jQuery, $, Select2, URL_REDIS_PROFILE*/
 /*global ngettext, interpolate*/
 
 function reloadProfiles(element, callback) {
@@ -43,7 +43,7 @@ $(function () {
     });
 
     numberExperts = 3;
-    inputExperts.select2($.extend({}, select2BaseParameters, {
+    inputExperts.select2($.extend({}, $.select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one expert",
                                 "Select up to %s experts", numberExperts);
@@ -69,7 +69,7 @@ $(function () {
 
     numberUsers = 3;
     numberResults = 5;
-    $("#id_users", modalAsk).select2($.extend({}, select2BaseParameters, {
+    $("#id_users", modalAsk).select2($.extend({}, $.select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one user",
                                 "Select up to %s users", numberUsers);

@@ -132,8 +132,8 @@
         mixpanel.track("Load_add_question");
     });
 
-    $("#id_tags").select2(select2TagsParameters);
-    $("#id_item-tags").select2(select2TagsParameters);
+    $("#id_tags").select2($.select2TagsParameters);
+    $("#id_item-tags").select2($.select2TagsParameters);
 
     function addProduct(term) {
         $("#id_items").select2("close");
@@ -142,7 +142,7 @@
         $('#itemModal').modal('show');
     };
 
-    $("#id_items").select2($.extend({}, select2BaseParameters, {
+    $("#id_items").select2($.extend({}, $.select2BaseParameters, {
         placeholder: "{% trans 'Search for a product' %}",
         maximumSelectionSize: "{{ form.max_products }}",
         formatNoMatches: function (term) {

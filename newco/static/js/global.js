@@ -1,7 +1,6 @@
-/*global URL_REDIS, URL_REDIS_TAG*/
-/*global gettext, ngettext, interpolate*/
+/*global URL_REDIS, URL_REDIS_TAG, gettext, ngettext, interpolate*/
 
-var timeoutObj, select2BaseParameters, select2TagsParameters;
+var timeoutObj;
 
 (function ($, Modernizr) {
     "use strict";
@@ -96,7 +95,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     });
     
     /* Overrides Select2 defaults parameters to provide translations */
-    select2BaseParameters = {
+    $.select2BaseParameters = {
         formatNoMatches: function () { return gettext("No matches found"); },
         formatInputTooShort: function (input, min) {
             var n, text;
@@ -118,7 +117,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     };
 
     /* Select2 default parameters for tags */
-    select2TagsParameters = $.extend({}, select2BaseParameters, {
+    $.select2TagsParameters = $.extend({}, $.select2BaseParameters, {
       placeholder: gettext("e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."),
       multiple:true,
       minimumInputLength: 2,
