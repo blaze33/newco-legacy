@@ -415,6 +415,7 @@
 }
 
 .form-follow {
+  margin: 2px 0;
   display: inherit;
 }
 /* ↑↑↑ One time tweaks/fixes ↑↑↑ */

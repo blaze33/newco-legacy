@@ -6,24 +6,19 @@
 
 {% block subnav %}
   {{ block.super }}
-  {% comment %} {# Seb: commented for now since these wells are in a span2 (subnav), but larger than that => display problems. Maybe re-display these once size of columns is standardized (=> span3) ?  #}
-  <br>
-  <br>
-  <br>
-  <br>
 
-  <div class="row">
-    <div class="well well-small pull-right nc-right-col-well">
-      <h5>{% trans "Who to follow?" %} (<a href="{% url 'profile_list' %}">{% trans "View all" %}</a>)</h5>
-      <div id="profiles_list2">{% for thumb_user in wtf.users %}{% include "profiles/_profile_item.html" with profile=thumb_user.get_profile disp_follow="True" user=user request=request csrf_token=csrf_token only %}<br>{% endfor %}</div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="well well-small pull-right nc-right-col-well">
-      <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
-      <div>{% for item in wtf.items %}{% include "items/feed_display/_thumbnail_frame.html" with object=item disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}</div>
-    </div>
-  </div>{% endcomment %}
+  <br>
+  <br>
+  
+  <h5>{% trans "Who to follow?" %}</h5>
+  {% for thumb_user in wtf.users %}{% include "profiles/_profile_item.html" with profile=thumb_user.get_profile disp_follow="True" user=user request=request csrf_token=csrf_token only %}<br>{% endfor %}
+
+  {% comment %}
+
+  <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
+  {% for item in wtf.items %}{% include "items/feed_display/_thumbnail_frame.html" with object=item disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}
+
+  {% endcomment %}
 {% endblock %}
 
 {% block subtitle %}{% trans "Activity from what you follow." %}{% endblock %}
