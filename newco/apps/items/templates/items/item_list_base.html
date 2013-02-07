@@ -47,7 +47,7 @@
 {% block content %}
 
 <div class="tabbable">
-  <div class="row"><ul class="offset3 nav nav-tabs" id="main-tab">
+  <div class="row"><ul class="offset2 nav nav-tabs" id="main-tab">
     <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}">{% trans "Products" %}</a></li>
     <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}">{% trans "Questions" %}</a></li>
   </ul></div>

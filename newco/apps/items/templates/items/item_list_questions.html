@@ -8,7 +8,7 @@
 
 {% block list %}
 <div class="tabbable row">
-  <div class="span3">
+  <div class="span2">
     <ul class="nav nav-list">
       <li class="nav-header">{% trans "Filter" %}</li>
       <li{% if qs_option == "popular" %} class="active"{% endif %}><a href="?qs_option=popular">{% trans "Popular" %}</a></li>
@@ -17,7 +17,7 @@
       <li{% if qs_option == "no_answers" %} class="active"{% endif %}><a href="?qs_option=no_answers">{% trans "No answers" %}</a></li>
     </ul>
   </div>
-  <div class="span9 questions">
+  <div class="span10 questions">
     {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="True" displ_sign="True" user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
   </div>
 </div>
