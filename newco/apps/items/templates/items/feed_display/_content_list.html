@@ -3,7 +3,7 @@
 {% load bootstrap_tags %}
 
 {% for content in contents %}
-  {% if display == "mini_feed" %}<br>{% else %}<hr>{% endif %}
+  {% if not forloop.first %}<hr>{% endif %}
 
   {% if display_ctx == "True" %}
     <p class="content-context">
