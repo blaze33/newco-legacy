@@ -266,6 +266,17 @@ textarea.partial-form {
 }
 /* ↑↑↑ Partial Question Form ↑↑↑ */
 
+/* ↓↓↓ Carousel ↓↓↓ */
+.carousel .item img {
+  height: 250px;
+  max-width: none;
+}
+
+#carousel-tag .carousel-caption {
+  padding: 10px;
+}
+/* ↑↑↑ Carousel ↑↑↑ */
+
 @media (min-width: 700px) {
 .content-product-related { line-height: 1px; width: 60px; margin: 3px; float:right; margin-right:10px }
 .content-product-related img {

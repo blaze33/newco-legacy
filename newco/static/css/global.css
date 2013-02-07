@@ -382,11 +382,6 @@
   float: right;
 }
 
-.carousel .item img {
-  height: 300px;
-  max-width: none;
-}
-
 .black {
   color: #333
 }
