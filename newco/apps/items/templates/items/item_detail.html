@@ -29,12 +29,10 @@
 
     {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
 
-    {% if not questions %}{% include "items/_partial_question_form.html" with question_form=question_form csrf_token=csrf_token only %}{% endif %}
-    
     <br><br><br>
-    <hr>
     {% for prod in store_products %}
       {% if forloop.first %}
+        <hr>
         <h3>{% trans "Where to buy" %}</h3>
         <div class="row" id="prices">
           <div class="span2"><h4>{% trans "Store" %}</h4></div>

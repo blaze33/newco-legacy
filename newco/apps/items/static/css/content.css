@@ -23,15 +23,15 @@ p.question {
   border-radius: 5px 5px 5px 5px;
 }
 
-.questions .empty-message {
+.questions .empty-message p {
   color: #999;
   font-size: 31.5px;
   font-weight: bold;
   line-height: 40px;
 }
-.questions .empty-message .tag {
-  font-size: 26px;
-  line-height: 28px;
+.questions .empty-message p .tag {
+  font-size: 22px;
+  line-height: 23.5px;
 }
 /* ↑↑↑ Content Related Elements ↑↑↑ */
 

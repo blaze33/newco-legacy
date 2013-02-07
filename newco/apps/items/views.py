@@ -6,6 +6,7 @@ from django.db.models import Q, Count, Sum
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
+from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
@@ -254,6 +255,16 @@ class QuestionFormMixin(object):
             add_message("form-invalid", request, model=form._meta.model)
             return self.form_invalid(form)
 
+    def get_empty_message(self, question_form, message):
+        template = u"<p>{message}</p>{form}"
+        form = render_to_string(
+            "items/_partial_question_form.html",
+            {"question_form": question_form},
+            context_instance=RequestContext(self.request))
+
+        return mark_safe(template.format(message=message, form=form))
+
+
 class RelatedObjectsMixin(object):
 
     def get_context_data(self, **kwargs):
@@ -311,8 +322,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
 
     def get_context_data(self, **kwargs):
         context = super(ContentDetailView, self).get_context_data(**kwargs)
-        context.update({"statuses": STATUSES, "empty_msg": mark_safe(_(
-            "No question yet! Ask the first one here!"))})
+        context.update({"statuses": STATUSES})
         request = self.request
         POST, user = [request.POST, request.user]
         content_qs = Content.objects.can_view(user)
@@ -355,6 +365,9 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
                 )
                 context.update({'album': images})
 
+            message = _("No question yet! Ask the first one here!")
+            context.update({"empty_msg": self.get_empty_message(
+                context["question_form"], message)})
         elif self.model == Question:
             # TODO: override get_object?
             q = Content.objects.filter(
@@ -426,6 +439,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
 DEFAULT_CATGORY = "products"
 DEFAULT_FILTERS = {"products": "popular", "questions": "popular"}
 MODELS = {"products": Item, "questions": Content}
+TAG_TEMPLATE = "tags/_tag_display.html"
 
 
 class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
@@ -450,18 +464,11 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
             field = "content__question__id"
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
-            msg = _("No product with tag {tag}")
         elif self.cat == "questions":
             qs = qs.filter(tags=self.tag)
-            msg = _("No question with tag {tag} yet. "
-                    "Be the first to ask one!")
             self.scores, self.votes = qs.get_scores_and_votes(
                 self.request.user)
             qs = qs.questions().order_queryset(self.qs_option, self.scores)
-
-        tpl = "tags/_tag_display.html"
-        self.empty_msg = mark_safe(
-            msg.format(tag=render_to_string(tpl, {"tag": self.tag})))
         return qs
 
     def get_context_data(self, **kwargs):
@@ -469,14 +476,21 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
             kwargs.update({"object_list": self.object_list})
         context = super(ContentListView, self).get_context_data(**kwargs)
         for attr in ["tag", "qs_option", "cat", "scores", "votes",
-                     "empty_msg", "experts"]:
+                     "experts"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
         if self.model is Item:
             context.get("object_list").fetch_images()
+            empty_msg = mark_safe(_("No product with tag {tag}").format(
+                tag=render_to_string(TAG_TEMPLATE, {"tag": self.tag})))
         else:
+            txt = _("No question with tag {tag} yet. Be the first to ask one!")
+            msg = mark_safe(txt.format(tag=render_to_string(
+                TAG_TEMPLATE, {"tag": self.tag})))
+            empty_msg = self.get_empty_message(context["question_form"], msg)
             context.update({"item_list": Item.objects.filter(tags=self.tag)})
             context.get("item_list").fetch_images()
+        context.update({"empty_msg": empty_msg})
         return context
 
     def post(self, request, *args, **kwargs):
