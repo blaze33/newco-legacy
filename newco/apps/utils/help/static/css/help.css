@@ -1,5 +1,10 @@
 @charset 'UTF-8';
 
+.btn-ask {
+  cursor: hand;
+  cursor: pointer;
+}
+
 .modal-body label {
   text-align: right;
   font-weight: bold;
