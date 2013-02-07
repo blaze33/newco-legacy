@@ -210,20 +210,20 @@ p.question {
 /* ↑↑↑ Signature ↑↑↑ */
 
 /* ↓↓↓ Product thumbnail ↓↓↓ */
-.thumbnail.content-item {
+.thumbnail.product-item {
   display: inline-block;
   width: 165px;
   margin: 9px;
   line-height: 18px;
 }
 
-.thumbnail.content-item img {
+.thumbnail.product-item img {
   width: 164px;
   max-height: 500px;
   border-radius: 4px;
 }
 
-.thumbnail.content-item .details {
+.thumbnail.product-item .details {
   font-size: 12px;
   line-height: 20px;
 }

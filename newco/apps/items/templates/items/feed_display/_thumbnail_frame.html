@@ -2,7 +2,7 @@
 {% load url from future %}
 {% load follow %}
 
-<div class="content-item thumbnail">
+<div class="product-item thumbnail">
   <div class="name"><a href="{{ object.get_absolute_url }}"><img src="{{ object.image.data.thumbnailLink }}" alt=""></a></div>
   <div class="details" style="font-size:12px;">
     {% object_display object "thumbnail" "black" %}
