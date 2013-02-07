@@ -317,11 +317,18 @@ class SourceDisplayNode(GenericNode):
         color = kwargs.get("color", None)
         color = args[0] if not color and len(args) > 0 else color
 
+        sep = kwargs.get("sep", None)
+        sep = args[1] if not sep and len(args) > 1 else sep
+
+        kwargs = {}
+        if sep:
+            kwargs.update({"sep": sep})
         if not (obj.__class__ is Content or hasattr(obj, "content_ptr")):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        html = get_content_source(obj, display, color=color, context=context)
+        html = get_content_source(obj, display, color=color, context=context,
+                                  **kwargs)
 
         return self.render_output(context, html)
 
@@ -332,6 +339,7 @@ def source_display(parser, token):
     Renders the sources of a content object whether it be
     one or several products and/or one or several tags.
     Can add a css defined color and paste html in a variable.
+    Can add a separator (default is 'text').
 
     Usage::
 

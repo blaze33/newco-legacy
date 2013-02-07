@@ -87,16 +87,16 @@ def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None, sep=" ",
 
 
 def get_content_source(content, display, color=None, context=None,
-                       request=None):
+                       request=None, sep="text"):
     nb = [content.items.count(), content.tags.count()]
     prods_kwargs = {
-        "obj_qs": content.items.all(), "obj_tpl_name": "object", "sep": "text",
+        "obj_qs": content.items.all(), "obj_tpl_name": "object", "sep": sep,
         "obj_tpl": "items/_product_display.html", "context": context,
         "obj_tpl_ctx": {"display": display}
     }
     tags_kwargs = {
         "obj_qs": content.tags.all(), "obj_tpl_name": "tag",
-        "obj_tpl": "tags/_tag_display.html", "sep": "text", "context": context,
+        "obj_tpl": "tags/_tag_display.html", "sep": sep, "context": context,
         "obj_tpl_ctx": {"display": display}
     }
 
@@ -106,16 +106,22 @@ def get_content_source(content, display, color=None, context=None,
     if color:
         prods_kwargs.get("obj_tpl_ctx").update({"color": color})
 
-    words = list()
-    if nb[0]:
-        s = ungettext("about the product", "about the products", nb[0])\
-            + " " + generate_objs_sentence(**prods_kwargs)
-        words.append(s)
-    if all(n for n in nb):
-        words.append(" " + _("and") + " ")
-    if nb[1]:
-        s = ungettext("with the tag", "with the tags", nb[1])\
-            + " " + generate_objs_sentence(**tags_kwargs)
-        words.append(s)
+    words = []
+    if sep == "text":
+        if nb[0]:
+            s = ungettext("about the product", "about the products", nb[0])\
+                + " " + generate_objs_sentence(**prods_kwargs)
+            words.append(s)
+        if all(nb):
+            words.append(" " + _("and") + " ")
+        if nb[1]:
+            s = ungettext("with the tag", "with the tags", nb[1])\
+                + " " + generate_objs_sentence(**tags_kwargs)
+            words.append(s)
+    else:
+        words.append(generate_objs_sentence(**prods_kwargs))
+        if all(nb):
+            words.append(sep)
+        words.append(generate_objs_sentence(**tags_kwargs))
 
     return string.join(words, "")

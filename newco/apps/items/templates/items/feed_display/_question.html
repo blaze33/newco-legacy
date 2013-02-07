@@ -30,28 +30,17 @@
 
       {% if display_img == "True" %}
         <div class="pull-right" style="max-width: 200px; padding-left: 5px;">
-          {% if content.items.all.count > 3 or content.tags.all.count > 3 %}
-            <p class="nf-small muted">{% if content.items.all %}{% trans "Products related" %}: {% for item in content.items.all %} <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
-            {% elif content.tags.all %}{% trans "Categories" %} {% tags_display content.tags %}
-            {% endif %}</p>
+          {% if content.items.all.count > 3 %}
+            <p class="nf-small muted">{% source_display content display sep=", " %}
+            </p>
           {% else %}
-            {% if content.items.all %}
-              {% for item in content.items.all|slice:":3" %}
+              {% for item in content.items.all %}
                 <div class="span1 content-item-mini">
                   {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
                 </div>
               {% endfor %}
-            {% elif content.tags.all %}
-              {% for tag in content.tags.all|slice:":3" %}
-                <div class="span1 content-item-mini">
-                  <a href="{{ content.get_absolute_url }}">
-                    <img src='http://www.kwe-tech.com/img/general/cardboard-box.png' width='60' height='60'>
-                    <h6 class="black" align="center">{{ tag.name|truncatechars:25 }}</h6>
-                  </a>
-                </div>
-              {% endfor %}
-            {% endif %}
           {% endif %}
+          {% tags_display content.tags %}
         </div>
       {% endif %}
 
