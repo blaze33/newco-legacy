@@ -223,7 +223,8 @@ p.question {
   border-radius: 4px;
 }
 
-.thumbnail.product-item .details {
+.thumbnail.product-item .name a {
+  color: #333;
   font-size: 12px;
   line-height: 20px;
 }

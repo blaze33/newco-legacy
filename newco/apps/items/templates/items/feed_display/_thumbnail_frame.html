@@ -1,13 +1,9 @@
 {% load content_utils %}
-{% load url from future %}
 {% load follow %}
 
 <div class="product-item thumbnail">
-  <div class="name"><a href="{{ object.get_absolute_url }}"><img src="{{ object.image.data.thumbnailLink }}" alt=""></a></div>
-  <div class="details" style="font-size:12px;">
-    {% object_display object "thumbnail" "black" %}
-    <br>
-    {% tags_display object.tags 3 %}
-    {% if disp_follow %}<div class="pull-right">{% follow_form user object extra_class="btn-mini" %}</div>{% endif %}
-  </div>
+  <a href="{{ object.get_absolute_url }}"><img src="{{ object.image.data.thumbnailLink }}" alt=""></a>
+  <div class="name">{% object_display object "thumbnail" %}</div>
+  <div class="tags">{% tags_display object.tags 3 %}</div>
+  {% if disp_follow %}<div class="pull-right">{% follow_form user object extra_class="btn-mini" %}</div>{% endif %}
 </div>
