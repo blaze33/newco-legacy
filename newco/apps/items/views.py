@@ -445,7 +445,7 @@ TAG_TEMPLATE = "tags/_tag_display.html"
 class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
                       QuestionFormMixin, ListView, FormMixin, VoteMixin):
 
-    paginate_by = 9
+    paginate_by = 15
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
