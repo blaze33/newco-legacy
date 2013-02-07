@@ -30,12 +30,12 @@
   {% block dashboard %}{% endblock %}
 
   {% if is_paginated %}{% paginate %}{% endif %}
+
+  {% include "help/_ask_modal.html" %}
 {% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
-
 {% block extra_script %}
-  <script src="{% static 'js/help.js' %}"></script>
+  <script src="{{ STATIC_URL }}js/help.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }

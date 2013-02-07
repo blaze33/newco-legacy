@@ -53,12 +53,13 @@
   </ul></div>
   {% block list %}{% endblock %}
 </div>
-{% if is_paginated %}<div class="row"><div class="offset3">{% paginate %}</div></div>{% endif %}
-{% endblock %}
+{% if is_paginated %}<div class="row"><div class="offset2">{% paginate %}</div></div>{% endif %}
 
 {% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+{% include "help/_ask_modal.html" %}
+
+{% endblock %}
 
 {% block extra_script %}
   {{ media.js }}

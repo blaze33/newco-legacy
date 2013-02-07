@@ -96,6 +96,8 @@
   </div>
 </div>
 
+{% include "help/_ask_modal.html" %}
+
 {% endblock %}
 
 {% block extra_body %}
@@ -111,9 +113,6 @@
     <a class="modal-download" target="_blank">{% trans "Source:" %} <span>{% trans "Download" %}</span></a>
   </div>
 </div>
-
-{% include "help/_ask_modal.html" %}
-
 {% endblock %}
 
 {% block extra_script %}

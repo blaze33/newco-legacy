@@ -33,9 +33,9 @@
   {% if is_paginated %}{% paginate %}{% endif %}
 </div></div>
 
-{% endblock %}
+{% include "help/_ask_modal.html" %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+{% endblock %}
 
 {% block extra_script %}
   {{ block.super }}

@@ -41,9 +41,10 @@
     {% endfor %}
   </div>
 </div>
-{% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+{% include "help/_ask_modal.html" %}
+
+{% endblock %}
 
 {% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>
