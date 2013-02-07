@@ -14,7 +14,7 @@
     <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">{% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
   {% endif %}
 
-  <a class="btn-ask" href="#" data-question-id="{{ content.id }}" data-toggle="modal" data-target="#modal-ask">{% trans "Ask to answer" %}</a>
+  <a class="btn-ask" data-question-id="{{ content.id }}">{% trans "Ask to answer" %}</a>
 </div>
 
 {% endspaceless %}
