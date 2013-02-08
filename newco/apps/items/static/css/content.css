@@ -264,10 +264,14 @@ p.question {
 /* ↑↑↑ Content Parents display ↑↑↑ */
 
 /* ↓↓↓ Partial Question Form ↓↓↓ */
+.partial-form .input-prepend.input-append {
+  text-align: center;
+  width: 100%;
+}
 
-textarea.partial-form {
+.partial-form textarea {
   resize: vertical;
-  width: 80%;
+  width: 70%;
 }
 
 /* Same properties as input */
