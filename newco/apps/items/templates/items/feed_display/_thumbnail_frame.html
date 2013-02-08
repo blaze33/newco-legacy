@@ -2,7 +2,7 @@
 {% load follow %}
 
 <div class="product-item thumbnail">
-  <a href="{{ object.get_absolute_url }}"><img src="{{ object.image.data.thumbnailLink }}" alt=""></a>
+  <a href="{{ object.get_absolute_url }}" title="{{ object }}"><img src="{{ object.image.data.thumbnailLink }}" alt="{{ object }}"></a>
   <div class="name">{% object_display object "thumbnail" %}</div>
   {% if tags %}<div class="tags">{% tags_display object.tags 3 %}</div>{% endif %}
   {% if disp_follow %}<div class="pull-right">{% follow_form user object extra_class="btn-mini" %}</div>{% endif %}
