@@ -211,7 +211,6 @@ p.question {
 
 /* ↓↓↓ Product thumbnail ↓↓↓ */
 .product-item.thumbnail {
-  float: left;
   display: inline-block;
   max-width: 165px;
   width: 100%;
@@ -234,6 +233,7 @@ p.question {
 }
 
 .thumbnail-list .product-item.thumbnail {
+  float: left;
   margin: 9px 18px 9px 0;
 }
 /* ↑↑↑ Product thumbnail ↑↑↑ */
