@@ -63,28 +63,31 @@
           <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
         </ul>
       </div>
-    <hr>
+      <hr>
     {% endif %}
-    {% for tag, top_question in top_question_by_tag.iteritems %}
-      <div class="span3 well well-small nc-right-col-well-span4" style="margin-left: 0">
-        <h5><a class="black" href="{% url 'tagged_items' tag.slug 'questions' %}" class="black">{% trans "Top Questions for tag" %}</a> <a class="label" href="{% url 'tagged_items' tag.slug %}" class="black">{{ tag.name|truncatechars:20 }}</a></h5>
-        {% for question in top_question %}
-          <a href="{{ question.get_absolute_url }}" class="black">{{ question.content|truncatechars:70 }}</a>
-        {% endfor %}
-      </div>
-    {% endfor %}
 
-    <h5>{% trans "Top related products" %}</h5>
-    {% for tag, product_list in top_products_by_tag.iteritems %}
-      {% if product_list %}<hr>
-        <ul class="top-products thumbnails">
-          <li class="span1">{% tag_display tag %}</li>
-          {% for item in product_list %}
-            <li class="span1">{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endfor %}
+    <h5>{% trans "Best associated questions" %}</h5>
+    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}<br>
+      <!-- Bit of a hack to use thumbnail class here but it does the job well (display: table; etc.) and matches the display below -->
+      <ul class="thumbnails">
+        <li class="span1">{% tag_display tag %}</li>
+        {% for question in top_question %}
+          <li class="span2" title="{{ question.content }}"><a class="black" href="{{ question.get_absolute_url }}">{{ question.content|truncatechars:70 }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}{% endfor %}
+
+    <hr>
+
+    <h5>{% trans "Popular associated products" %}</h5>
+    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}<br>
+      <ul class="top-products thumbnails">
+        <li class="span1">{% tag_display tag %}</li>
+        {% for item in product_list %}
+          <li class="span1">{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}{% endfor %}
   </div>
 </div>
 
