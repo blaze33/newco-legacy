@@ -273,38 +273,6 @@
 }
 /* ↑↑↑ Row properties ↑↑↑ */
 
-/* ↓↓↓ Right column details ↓↓↓ */
-.well.nc-right-col-well-span4 { /*Maybe we don't want to limit this to nc-right-col-well-span4 ?*/
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-@media (min-width: 980px) {
-  .nc-right-col-well {
-    width: 180px;
-  }
-  .nc-right-col-well-span4 {
-    /*width: 100%;*/
-    padding: 5px;
-  }
-  .nc-right-col-well-span4 .thumbnail {
-    margin: 2px;
-  }
-}
-
-@media (max-width: 979px) {
-  .nc-right-col-well {
-    width: 172px;
-    padding: 2px;
-  }
-  .nc-right-col-well-span4 {
-    /*width: 220px;*/
-    /*padding: 2px;*/
-  }
-}
-/* ↑↑↑ Right column details ↑↑↑ */
-
 /* ↓↓↓ Select2 ↓↓↓ */
 
 /* select2 tweaked to be bootstrap friendly */
