@@ -210,29 +210,57 @@ p.question {
 /* ↑↑↑ Signature ↑↑↑ */
 
 /* ↓↓↓ Product thumbnail ↓↓↓ */
-.thumbnail.product-item {
+.product-item.thumbnail {
+  float: left;
   display: inline-block;
-  width: 165px;
-  margin: 9px;
-  line-height: 18px;
+  max-width: 165px;
+  width: 100%;
+  background-color: white;
 }
 
-.thumbnail.product-item img {
-  width: 164px;
+.product-item.thumbnail img {
+  width: 100%;
   max-height: 500px;
   border-radius: 4px;
 }
 
-.thumbnail.product-item .name a {
+.product-item.thumbnail .name a {
   color: #333;
   font-size: 12px;
-  line-height: 20px;
 }
 
 .thumbnail-list {
   margin: 0 auto;
 }
+
+.thumbnail-list .product-item.thumbnail {
+  margin: 9px 18px 9px 0;
+}
 /* ↑↑↑ Product thumbnail ↑↑↑ */
+
+/* ↓↓↓ Content Parents display ↓↓↓ */
+.content-parents {
+  padding-left: 10px;
+  max-width: 160px;
+}
+
+.content-parents .product-item.thumbnail {
+  width: 64px;
+  margin: 2px 4px 2px 0;
+}
+
+.content-parents .product-item.thumbnail .name a {
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 11px;
+  display: block;
+  -ms-text-overflow: ellipsis;
+   -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+/* ↑↑↑ Content Parents display ↑↑↑ */
 
 /* ↓↓↓ Partial Question Form ↓↓↓ */
 

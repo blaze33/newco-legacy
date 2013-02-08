@@ -29,16 +29,14 @@
     <div class="{% if content.is_draft %}span7{% else %}span8{% endif %}">
 
       {% if display_img == "True" %}
-        <div class="pull-right" style="max-width: 200px; padding-left: 5px;">
-          {% if content.items.all.count > 3 %}
+        <div class="pull-right">
+          {% if content.items.all.count > 4 %}
             <p class="nf-small muted">{% source_display content display sep=", " %}
             </p>
           {% else %}
-              {% for item in content.items.all %}
-                <div class="span1 content-item-mini">
-                  {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
-                </div>
-              {% endfor %}
+            <div class="content-parents thumbnail-list">{% for item in content.items.all %}
+              {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+            {% endfor %}</div>
           {% endif %}
           {% tags_display content.tags %}
         </div>
