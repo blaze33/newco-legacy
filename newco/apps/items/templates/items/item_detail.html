@@ -74,25 +74,17 @@
       </div>
     {% endfor %}
 
-    <div class="span3 well well-small nc-right-col-well-span4 top-products" style="margin-left: 0">
-        <h5>{% trans "Top related products" %}</h5>
-        {% for tag, product_list in top_products_by_tag.iteritems %}
-          {% if product_list %}<hr>
-            <div class="row">
-      	      <div class="span3">
-      	        <div class="span1 tag-product-related">
-      		      <h5><a class="label" href="{% url 'tagged_items' tag.slug %}">{{ tag.name|truncatechars:20 }}</a></h5>
-      	        </div>
-                {% for item in product_list %}
-                  <div class="content-product-related">
-                    {% include "items/feed_display/_image.html" with image=item.image display_prod_name="True" item=item only %}
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-    </div>
+    <h5>{% trans "Top related products" %}</h5>
+    {% for tag, product_list in top_products_by_tag.iteritems %}
+      {% if product_list %}<hr>
+        <ul class="top-products thumbnails">
+          <li class="span1">{% tag_display tag %}</li>
+          {% for item in product_list %}
+            <li class="span1">{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endfor %}
   </div>
 </div>
 

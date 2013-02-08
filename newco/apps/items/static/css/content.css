@@ -238,7 +238,7 @@ p.question {
 }
 /* ↑↑↑ Product thumbnail ↑↑↑ */
 
-/* ↓↓↓ Content Parents display ↓↓↓ */
+/* ↓↓↓ Content Parents and Related Items display ↓↓↓ */
 .content-parents {
   padding-left: 10px;
   max-width: 160px;
@@ -249,7 +249,8 @@ p.question {
   margin: 2px 4px 2px 0;
 }
 
-.content-parents .product-item.thumbnail .name a {
+.content-parents .product-item.thumbnail .name a,
+.top-products .product-item.thumbnail .name a {
   font-size: 9px;
   font-weight: bold;
   line-height: 11px;
