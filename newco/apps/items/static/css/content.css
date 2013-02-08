@@ -318,30 +318,10 @@ textarea.partial-form {
   margin-bottom: 0px;
 }
 
-@media (min-width: 1000px) {.top-products { margin-left: 0px; }}
-
-@media (max-width: 1000px) {.top-products { display:none; }}
-
-@media (max-width: 800px) {
-.top-images-small { display:none; }
-}
-
 @media (min-width: 800px) {
 .expert-list-header { height:90px; }
 }
 
 @media (max-width: 800px) {
 .expert-list-header { height:150px; }
-}
-
-/* in item_detail.html */
-.no-left-margin { margin-left: 0px; }
-
-.tag-product-related { margin-left: 0px; }
-
-/* in feed_display/image.html */
-.feed-image {
-  margin-bottom: 0;
-  max-height:60px;
-  width:60px
 }
