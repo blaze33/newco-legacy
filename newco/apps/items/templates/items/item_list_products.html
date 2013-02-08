@@ -16,7 +16,7 @@
   <div class="span10">
     <div class="thumbnail-list">
       {% for item in object_list %}
-        {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+        {% include "items/feed_display/_thumbnail_frame.html" with object=item tags=1 only %}
       {% empty %}
         {{ empty_msg }}
       {% endfor %}

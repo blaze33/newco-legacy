@@ -26,7 +26,7 @@
       {% if question.items.count %}
         <h3>{% trans "Related products" %}</h3>
         <div class="thumbnail-list">{% for item in question.items.all %}
-          {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+          {% include "items/feed_display/_thumbnail_frame.html" with object=item tags=1 only %}
         {% endfor %}</div>
       {% elif question.tags.count %}
         <h3>{% trans "Related tags" %}</h3>
