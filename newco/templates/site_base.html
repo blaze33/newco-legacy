@@ -7,6 +7,9 @@
 {% load account_tags %}
 {% load compress %}
 
+
+{% block head_title_base %}{% block head_title %}{% endblock %}{% if SITE_NAME %} | {{ SITE_NAME }}{% endif %}{% endblock %}
+
 {% block style_base %}
   <link href="{{ STATIC_URL }}img/favicon.png" type="image/png" rel="icon">
   <link href="{{ STATIC_URL }}favicon.ico" rel="shortcut icon">
