@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:24+0100\n"
+"POT-Creation-Date: 2013-02-07 15:19+0100\n"
 "PO-Revision-Date: 2013-01-10 18:39\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr "profil"
 msgid "reputation"
 msgstr "réputation"
 
-#: views.py:43
+#: views.py:53
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
 msgstr "%(page_user_display)s n'a pas contribué pour le moment."
@@ -120,12 +120,12 @@ msgid "Skills"
 msgstr "Compétences"
 
 #: templates/profiles/_profile_info.html:35
-#: templates/profiles/profile_detail.html:54
+#: templates/profiles/profile_detail.html:45
 msgid "Following"
 msgstr "Abonnements"
 
 #: templates/profiles/_profile_info.html:39
-#: templates/profiles/profile_detail.html:55
+#: templates/profiles/profile_detail.html:46
 msgid "Followers"
 msgstr "Abonnés"
 
@@ -141,20 +141,20 @@ msgstr "&nbsp;:"
 msgid "Members:"
 msgstr "Membres&nbsp;:"
 
-#: templates/profiles/_profile_user_list.html:12
+#: templates/profiles/_profile_user_list.html:15
 msgid "Products:"
 msgstr "Produits&nbsp;:"
 
-#: templates/profiles/profile_detail.html:18
+#: templates/profiles/profile_detail.html:12
 #, python-format
 msgid "Profile for %(page_user_display)s"
 msgstr "Profil de %(page_user_display)s"
 
-#: templates/profiles/profile_detail.html:26
+#: templates/profiles/profile_detail.html:18
 msgid "Update my profile"
 msgstr "Mettre à jour mon profil"
 
-#: templates/profiles/profile_detail.html:40
+#: templates/profiles/profile_detail.html:32
 msgid ""
 "Your profile picture is provided by Gravatar, sign up to this service to "
 "change it!"
@@ -162,7 +162,7 @@ msgstr ""
 "Votre photo de profil est fournie par Gravatar, enregistrez-vous sur ce "
 "service pour pouvoir la modifier&#x202F;!"
 
-#: templates/profiles/profile_detail.html:53
+#: templates/profiles/profile_detail.html:44
 msgid "History"
 msgstr "Historique"
 

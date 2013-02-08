@@ -6,6 +6,7 @@ from django.db.models import Q, Count, Sum
 from django.db.models.loading import get_model
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
+from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
@@ -254,6 +255,16 @@ class QuestionFormMixin(object):
             add_message("form-invalid", request, model=form._meta.model)
             return self.form_invalid(form)
 
+    def get_empty_message(self, question_form, message):
+        template = u"<p>{message}</p>{form}"
+        form = render_to_string(
+            "items/_partial_question_form.html",
+            {"question_form": question_form},
+            context_instance=RequestContext(self.request))
+
+        return mark_safe(template.format(message=message, form=form))
+
+
 class RelatedObjectsMixin(object):
 
     def get_context_data(self, **kwargs):
@@ -334,7 +345,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
                     if q.id != q_id else AnswerForm(data=POST, request=request)
                 if not media:
                     media = q.answer_form.media
-                    
+
             context.update({"questions": questions, "scores": scores,
                             "votes": votes, "media": media})
 
@@ -354,6 +365,9 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
                 )
                 context.update({'album': images})
 
+            message = _("No question yet! Ask the first one here!")
+            context.update({"empty_msg": self.get_empty_message(
+                context["question_form"], message)})
         elif self.model == Question:
             # TODO: override get_object?
             q = Content.objects.filter(
@@ -422,23 +436,21 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
         return Profile.objects.filter(skills__id__in=tag_ids).order_by(
             "-user__reputation__reputation_incremented").distinct()
 
-DEFAULT_CATGORY = "home"
-DEFAULT_PILL = {"home": "browse", "products": "browse", "questions": "tag"}
-DEFAULT_FILTERS = {"home": "-pub_date", "products": "popular",
-                   "questions": "popular"}
-MODELS = {"home": Item, "products": Item, "questions": Content}
+DEFAULT_CATGORY = "products"
+DEFAULT_FILTERS = {"products": "popular", "questions": "popular"}
+MODELS = {"products": Item, "questions": Content}
+TAG_TEMPLATE = "tags/_tag_display.html"
 
 
 class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
                       QuestionFormMixin, ListView, FormMixin, VoteMixin):
 
-    paginate_by = 9
+    paginate_by = 15
 
     def dispatch(self, request, *args, **kwargs):
         self.tag = get_object_or_404(Tag, slug=kwargs.get("tag_slug", ""))
         self.experts = self.get_experts()
         self.cat = kwargs.get("cat", DEFAULT_CATGORY)
-        self.pill = kwargs.get("pill", DEFAULT_PILL[self.cat])
         self.model = MODELS[self.cat]
         self.template_name = "items/item_list_%s.html" % self.cat
         self.qs_option = request.GET.get("qs_option",
@@ -447,70 +459,66 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
 
     def get_queryset(self):
         qs = super(ContentListView, self).get_queryset()
-        if self.cat in ["home", "products"]:
+        if self.cat == "products":
             qs = qs.filter(tags=self.tag)
             field = "content__question__id"
             qs = qs.annotate(score=Count(field)).order_by("-score") \
                 if self.qs_option == "popular" else qs.order_by(self.qs_option)
-            msg = _("No products with tag %s")
         elif self.cat == "questions":
-            if self.pill == "tag":
-                qs = qs.filter(tags=self.tag)
-                msg = _("No questions with tag %s")
-            elif self.pill == "products":
-                item_ids = Item.objects.filter(tags=self.tag).values_list(
-                    "id", flat=True)
-                qs = qs.filter(items__in=item_ids).distinct()
-                msg = _("No questions about products with tag %s")
+            qs = qs.filter(tags=self.tag)
             self.scores, self.votes = qs.get_scores_and_votes(
                 self.request.user)
             qs = qs.questions().order_queryset(self.qs_option, self.scores)
-
-        tpl = "tags/_tag_display.html"
-        self.empty_msg = mark_safe(
-            msg % render_to_string(tpl, {"tag": self.tag}))
         return qs
 
     def get_context_data(self, **kwargs):
         if "object_list" not in kwargs:
             kwargs.update({"object_list": self.object_list})
         context = super(ContentListView, self).get_context_data(**kwargs)
-        for attr in ["tag", "qs_option", "cat", "pill", "scores", "votes",
-                     "empty_msg"]:
+        for attr in ["tag", "qs_option", "cat", "scores", "votes",
+                     "experts"]:
             if hasattr(self, attr):
                 context.update({attr: getattr(self, attr)})
-        if self.cat == "home" and context["object_list"]:
-            related_questions = Content.objects.questions().filter(
-                Q(items__in=context.get("object_list")) | Q(tags=self.tag)
-            ).distinct()
-            top_questions = related_questions.order_queryset("popular")
-            related_questions = related_questions.select_subclasses()
-
-            context.update({"related_questions": SortedDict({
-                _("Top related questions"): top_questions[:3],
-                _("Latest related questions"): related_questions[:3]
-            })})
         if self.model is Item:
             context.get("object_list").fetch_images()
+            empty_msg = mark_safe(_("No product with tag {tag}").format(
+                tag=render_to_string(TAG_TEMPLATE, {"tag": self.tag})))
         else:
+            txt = _("No question with tag {tag} yet. Be the first to ask one!")
+            msg = mark_safe(txt.format(tag=render_to_string(
+                TAG_TEMPLATE, {"tag": self.tag})))
+            empty_msg = self.get_empty_message(context["question_form"], msg)
             context.update({"item_list": Item.objects.filter(tags=self.tag)})
             context.get("item_list").fetch_images()
-        context.update({"experts": self.get_experts})
+        context.update({"empty_msg": empty_msg})
         return context
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         self.tags = [self.tag]
-        if "skills" in request.POST:
-            profile = request.user.get_profile()
-            profile.skills.add(self.tag) if request.POST["skills"] == "add" \
-                else profile.skills.remove(self.tag.name)
-            return self.get(request, *args, **kwargs)
+        if "toggle-skill" in request.POST:
+            return self.toggle_skill(request, *args, **kwargs)
         return super(ContentListView, self).post(request, *args, **kwargs)
 
     def get_experts(self):
         return Profile.objects.filter(skills=self.tag).order_by(
             "-user__reputation__reputation_incremented").distinct()
+
+    @method_decorator(login_required)
+    def toggle_skill(self, request, *args, **kwargs):
+        profile = request.user.get_profile()
+        if self.tag in profile.skills.all():
+            profile.skills.remove(self.tag.name)
+            add_message("skill-removed", request, tag=self.tag)
+        else:
+            profile.skills.add(self.tag)
+            add_message("skill-added", request, tag=self.tag)
+
+        if request.is_ajax():
+            data = {"messages": render_messages(request)}
+            return HttpResponse(json.dumps(data), mimetype="application/json")
+        else:
+            return HttpResponseRedirect(request.path)
 
 
 class ContentDeleteView(ContentView, DeleteView):

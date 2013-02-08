@@ -1,7 +1,6 @@
-/*global URL_REDIS, URL_REDIS_TAG*/
-/*global gettext, ngettext, interpolate*/
+/*global URL_REDIS, URL_REDIS_TAG, gettext, ngettext, interpolate*/
 
-var timeoutObj, select2BaseParameters, select2TagsParameters;
+var timeoutObj;
 
 (function ($, Modernizr) {
     "use strict";
@@ -20,107 +19,21 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     });
 
     /* Triggers masonry */
-    $.triggerMasonry = function (listContainer, itemSelector) {
-        var options;
-        options = {
+    $.triggerMasonry = function (listContainer, itemSelector, extraOptions) {
+        extraOptions = extraOptions || {};
+        var options = $.extend({
             itemSelector: itemSelector,
             isAnimated: !Modernizr.csstransitions,
             isFitWidth: true
-        };
+        }, extraOptions);
         /* Sexier when launched twice */
         listContainer.masonry( options );
         listContainer.imagesLoaded( function () {
             listContainer.masonry( options );
         });
-    }
-
-    $.triggerMasonry($(".thumbnail-list"), ".content-item.thumbnail");
-
-    function moveAnimate(element, newParent) {
-        var height, width, oldOffset, newOffset, temp, postions;
-        height = element.height();
-        width = element.width();
-        oldOffset = element.offset();
-        element.appendTo(newParent);
-        newOffset = element.offset();
-
-        temp = element.clone().appendTo('body');
-        temp    .css('position', 'absolute')
-                .css('left', oldOffset.left)
-                .css('top', oldOffset.top)
-                .css('zIndex', 1000)
-                .css('width', width)
-                .css('height', height);
-        element.hide();
-        postions = {
-            'top': newOffset.top,
-            'left':newOffset.left,
-            'width':element.width(),
-            'height':element.height()
-        };
-        temp.animate(postions, 'slow', function() {
-            element.show();
-            temp.remove();
-        });
-    }
-
-    function addImages(container, pics) {
-        $.each(pics, function(index, value) {
-            container.append(
-                    $("<li>").addClass("selector-item")
-                             .attr("id", "image_" + index)
-                .append(
-                    $("<img>").addClass("thumbnail")
-                              .attr({
-                                  src: value.thumbnailLink,
-                                  title: 'Image ' + index 
-                              })
-                ).append(
-                    $("<div>").addClass("img-controls")
-                              .html("<i class='icon-remove'></i>")
-                )
-            );
-        });
-    }
-
-    $.picsHandler = function(pics, tableSelector, listSelector, trashSelector, resultSelector) {
-        $(tableSelector).toggle(pics.length !== 0);
-        if ( $(tableSelector).length > 0 ) {
-            addImages($(listSelector), pics);
-            $([listSelector, trashSelector].join(", ")).sortable({
-                placeholder: 'ui-sortable-placeholder',
-                forcePlaceholderSize: true,
-                items: 'li',
-                connectWith: ".connectedSortable",
-                revert: true,
-                containment: tableSelector,
-                distance: 10,
-                activate: function(event, ui) {
-                    $(trashSelector).addClass("dropzone");
-                },
-                deactivate: function(event, ui) {
-                    $(trashSelector).removeClass("dropzone");
-                }
-            }).disableSelection();
-
-            $(".img-controls").click(function () {
-                var source, target;
-                source = $(this).closest(".connectedSortable");
-                if ("#" + source.attr("id") === listSelector) {
-                    target = trashSelector;
-                } else {
-                    target = listSelector;
-                }
-                moveAnimate($(this).parent('.selector-item'), target);
-            });
-
-            var form = $(tableSelector).closest("form");
-            form.submit(function () {
-                $(resultSelector).val( $(listSelector).sortable("serialize") );
-                return true;
-            });
-        }
     };
+
+    $.triggerMasonry($(".thumbnail-list"), ".product-item.thumbnail");
 
     /* Manual method using timeout, shortcutting the weird behavior of hover,
        which causes glitching if pointer doesn't go to the popover through the
@@ -182,7 +95,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     });
     
     /* Overrides Select2 defaults parameters to provide translations */
-    select2BaseParameters = {
+    $.select2BaseParameters = {
         formatNoMatches: function () { return gettext("No matches found"); },
         formatInputTooShort: function (input, min) {
             var n, text;
@@ -204,7 +117,7 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     };
 
     /* Select2 default parameters for tags */
-    select2TagsParameters = $.extend({}, select2BaseParameters, {
+    $.select2TagsParameters = $.extend({}, $.select2BaseParameters, {
       placeholder: gettext("e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."),
       multiple:true,
       minimumInputLength: 2,
@@ -249,8 +162,8 @@ var timeoutObj, select2BaseParameters, select2TagsParameters;
     /* Joyride tutorial initialization */
     $.launchJoyride = function () {
         $("#joyRideContent").joyride({
-            "tipContainer": ".navbar",
-            postRideCallback: function(){ //seb : it works with and without '' (around 'postRideCallback') : what should we do?
+            tipContainer: ".navbar",
+            postRideCallback: function() {
                 $("#help-dropdown").tooltip("show");
                 setTimeout(function () {
                     $('#help-dropdown').tooltip("hide");

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:26+0100\n"
+"POT-Creation-Date: 2013-02-07 15:20+0100\n"
 "PO-Revision-Date: 2013-01-11 17:13\n"
 "Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,47 +19,47 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: views.py:18 templates/dashboard/_subnav.html:10
+#: views.py:19 templates/dashboard/_subnav.html:14
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: views.py:19
+#: views.py:20
 msgid "Feed"
 msgstr "Flux"
 
-#: views.py:20 views.py:42 templates/dashboard/_subnav.html:17
+#: views.py:21 views.py:43 templates/dashboard/_subnav.html:21
 msgid "Contribution center"
 msgstr "Centre de contributions"
 
-#: views.py:21
+#: views.py:22
 msgid "Teamwork"
 msgstr "Travail en équipe"
 
-#: views.py:22 views.py:50 templates/dashboard/_subnav.html:19
+#: views.py:23 views.py:51 templates/dashboard/_subnav.html:23
 msgid "Drafts"
 msgstr "Brouillons"
 
-#: views.py:23 views.py:58 templates/dashboard/_subnav.html:22
+#: views.py:24 views.py:59 templates/dashboard/_subnav.html:26
 msgid "All my contributions"
 msgstr "Toutes mes contributions"
 
-#: views.py:24
+#: views.py:25
 msgid "Shopping notes"
 msgstr "Notes de shopping"
 
-#: views.py:25
+#: views.py:26
 msgid "Purchase history"
 msgstr "Historique d'achat"
 
-#: views.py:32 templates/dashboard/_subnav.html:13
+#: views.py:33 templates/dashboard/_subnav.html:17
 msgid "My newsfeed"
 msgstr "Mon flux"
 
-#: views.py:33
+#: views.py:34
 msgid "Mini feed from what you follow"
 msgstr "Mini feed de ce que vous suivez"
 
-#: views.py:37
+#: views.py:38
 msgid ""
 "You don't follow anything nor anyone yet. Find people or products to follow "
 "navigating NewCo!"
@@ -67,26 +67,26 @@ msgstr ""
 "Vous ne suivez rien ni personne pour le moment. Consultez les profils et les "
 "produits à suivre en navigant sur NewCo&#x202F;!"
 
-#: views.py:43
+#: views.py:44
 msgid ""
 "Latest activity on your skills tags. Maybe you would like to contribute?"
 msgstr ""
 "Dernière activité sur vos tags de compétences. Peut-être voulez-vous "
 "contribuer&#x202F;?"
 
-#: views.py:51
+#: views.py:52
 msgid "Complete and publish some?"
 msgstr "Pourquoi ne pas terminer et publier certaines contributions&#x202F;?"
 
-#: views.py:54
+#: views.py:55
 msgid "You don't have any drafts."
 msgstr "Vous n'avez pas de brouillons."
 
-#: views.py:59
+#: views.py:60
 msgid "Your latest contributions"
 msgstr "Vos dernières contributions"
 
-#: views.py:80
+#: views.py:82
 #, python-format
 msgid ""
 "We don't know what to advice you to contribute on, we would need to know "
@@ -97,7 +97,7 @@ msgstr ""
 "savoir plus sur vous. Peut être vous pourriez <a href='%(url_ed)s'>ajouter "
 "des compétences</a> à votre profil&#x202F;?"
 
-#: views.py:86
+#: views.py:88
 #, python-format
 msgid ""
 "You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How "
@@ -106,37 +106,37 @@ msgstr ""
 "Vous n'avez pas contribué pour le moment. Avez-vous visité la page <a "
 "href='%(url_cont)s'>Comment contribuer</a>&#x202F;?"
 
-#: templates/dashboard/_subnav.html:10
+#: templates/dashboard/_subnav.html:14
 msgid "Monitor all that&#39;s related to you"
 msgstr "Gardez un œil sur tout ce qui vous concerne"
 
-#: templates/dashboard/_subnav.html:13
+#: templates/dashboard/_subnav.html:17
 msgid "Activity feed based on what you follow"
 msgstr "Flux d'activité basé sur ce que vous suivez"
 
-#: templates/dashboard/_subnav.html:16
+#: templates/dashboard/_subnav.html:20
 msgid "Contributing"
 msgstr "Contribuer"
 
-#: templates/dashboard/_subnav.html:17
+#: templates/dashboard/_subnav.html:21
 msgid "If you want to use your time and knowledge wisely, this is the place!"
 msgstr ""
 "Si vous voulez utiliser votre temps et vos connaissances intelligemment, "
 "cliquez ici&#x202F;!"
 
-#: templates/dashboard/_subnav.html:19
+#: templates/dashboard/_subnav.html:23
 msgid "&lsquo;Drafts&rsquo; contains your unpublished contributions"
 msgstr "&lsquo;Brouillons&rsquo; contient vos contributions non-publiées"
 
-#: templates/dashboard/_subnav.html:22
+#: templates/dashboard/_subnav.html:26
 msgid "This is where to go to find all your inputs"
 msgstr "Vous trouverez ici toutes vos contributions"
 
-#: templates/dashboard/_subnav.html:38
+#: templates/dashboard/_subnav.html:30
 msgid "Profiles"
 msgstr "Profils"
 
-#: templates/dashboard/_subnav.html:41
+#: templates/dashboard/_subnav.html:33
 msgid ""
 "My profile, exactly as other users see it&mdash;besides the &lsquo;"
 "Update&rsquo; button"
@@ -144,15 +144,15 @@ msgstr ""
 "Mon profil, tel que les autres utilisateurs le voient &mdash;&nbsp;à "
 "l'exception du bouton &lsquo;Mettre à jour&rsquo;"
 
-#: templates/dashboard/_subnav.html:44
+#: templates/dashboard/_subnav.html:36
 msgid "User profile"
 msgstr "Profil utilisateur"
 
-#: templates/dashboard/_subnav.html:44 templates/dashboard/contribution.html:9
+#: templates/dashboard/_subnav.html:36 templates/dashboard/contribution.html:9
 msgid ":"
 msgstr "&nbsp;:"
 
-#: templates/dashboard/_subnav.html:49
+#: templates/dashboard/_subnav.html:43
 msgid "All Profiles"
 msgstr "Tous les profils"
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Search in all my contributions - Not functional yet"
 msgstr "En construction - Chercher dans toutes mes contributions"
 
-#: templates/dashboard/base.html:17
+#: templates/dashboard/base.html:20
 #, python-format
 msgid "%(username)s's dashboard | %(page_name)s"
 msgstr "Tableau de bord de %(username)s | %(page_name)s"
@@ -199,11 +199,15 @@ msgstr ""
 "Gardez ici vos brouillons : contributions que vous ne voulez pas (encore) "
 "publier."
 
-#: templates/dashboard/feed.html:30
+#: templates/dashboard/feed.html:13
+msgid "Who to follow?"
+msgstr "Qui suivre&#x202F;?"
+
+#: templates/dashboard/feed.html:25
 msgid "Activity from what you follow."
 msgstr "Activité de ce que vous suivez."
 
-#: templates/dashboard/home.html:6
+#: templates/dashboard/home.html:11
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
@@ -211,7 +215,7 @@ msgstr ""
 "Nous mettons à votre disposition sur cette page tout ce qui vous concerne. "
 "Si vous n'avez qu'un passage rapide à faire sur NewCo, tout est ici."
 
-#: templates/dashboard/home.html:20
+#: templates/dashboard/home.html:25
 #, python-format
 msgid ""
 " More tools to come very soon on the dashboard! If you have some ideas about "
@@ -225,9 +229,6 @@ msgstr ""
 #: templates/dashboard/purchase.html:11
 msgid "Search in all my purchases"
 msgstr "Chercher dans tous mes achats"
-
-#~ msgid "Who to follow?"
-#~ msgstr "Qui suivre&#x202F;?"
 
 #~ msgid "View all"
 #~ msgstr "Voir tous"

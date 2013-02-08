@@ -2,15 +2,21 @@
 
 {% load i18n %}
 {% load account_tags %}
+{% load content_utils %}
 
 {% block body_title %}
-    <h4><a href="{{ follower_url }}">{% user_display follower %}</a> {% trans "is now following you on NewCo!" %}
+  <h4><a href="{{ follower_url }}">{{ follower_name }}</a> {% trans "is now following you on NewCo!" %}
 {% endblock %}
 
 {% block body_answer %}
-	{% include "profiles/_profile_item.html" with display="email_html" profile=follower.get_profile followee=followee %}
-	<br>
-	<br>
-	{% user_display follower as follower %}{% blocktrans %}To follow back <a href="{{ follower_url }}">{{ follower }}</a>, go on his profile.{% endblocktrans %}
+  <a href="{{ follower_url }}">
+    <h4>{% profile_pic follower 36 %} {{ follower_name }}</h4>
+  </a>
 
+  {% include "profiles/_profile_info.html" with profile=follower.get_profile display="email_html" %}
+
+  <br>
+  <br>
+
+  {% blocktrans %}To follow back <a href="{{ follower_url }}">{{ follower_name }}</a>, go on his profile.{% endblocktrans %}
 {% endblock %}

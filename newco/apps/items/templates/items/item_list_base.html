@@ -9,39 +9,27 @@
 {% load follow %}
 
 {% block extra_style %}
+  <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
   {{ media.css }}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/content.css">
+  <link href="{{ STATIC_URL }}css/profile.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
 {% endblock %}
 
 {% block body_class %}index{% endblock %}
 
-{% block head_title %}{% trans "Products" %}{% if tag %} | {% trans "Tag" %} {{ tag }}{% endif %}{% endblock %}
+{% block head_title %}{% trans "Tag" %} {{ tag }}{% endblock %}
 
 {% block body %}
 
 {% block carousel %}
 <div class="row">
-  <div class="span3">
-  	<h1>{% if tag %}{{ tag|capfirst }}</h1>
-      <br>
-      {% include "items/feed_display/_tag_controls.html" with tag=tag user=user answer_location="embedded" csrf_token=csrf_token include_modal="True" only %}
-      {% include "items/_list_experts.html" with experts=experts %}
-      {% comment %}
-      <div class="pull-right">
-        {% if user.is_authenticated %}<form method="POST" action="">{% csrf_token %}
-          {% if tag in user.get_profile.skills.all %}
-            <a class="tooltip-bottom" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini btn-primary" name="skills" value="remove">{% trans "In my skills" %}</button></a>
-          {% else %}
-            <a class="tooltip-bottom" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}"><button type="submit" class="btn btn-mini" name="skills" value="add">{% trans "Add to skills" %}</button></a>
-          {% endif %}
-        </form>{% endif %}
-      </div>
-      {% endcomment %}
-    {% elif search_terms %}{{ search_terms }}{% else %}{% trans "Products" %}{% endif %}</div>
-  <div class="span7" align="center">{% if item_list.count %}
-    <div class="carousel slide" id="carousel_tag">
+  <div class="span7">
+  	<h1>{{ tag }}</h1>
+    {% include "items/feed_display/_tag_controls.html" with tag=tag user=user csrf_token=csrf_token only %}
+    {% include "items/_list_experts.html" with experts=experts %}
+  </div>
+  <div class="span5" align="center">{% if item_list.count %}
+    <div class="carousel slide" id="carousel-tag">
       <div class="carousel-inner">{% for item in item_list %}
         <div class="{% if forloop.first %}active {% endif %}item">
           <a href="{{ item.get_absolute_url }}"><img src="{{ item.image.data.link }}" alt=""></a>
@@ -49,8 +37,8 @@
         </div>
       {% endfor %}</div>
 
-      <a class="carousel-control left" data-slide="prev" href="#carousel_tag">&lsaquo;</a>
-      <a class="carousel-control right" data-slide="next" href="#carousel_tag">&rsaquo;</a>
+      <a class="carousel-control left" data-slide="prev" href="#carousel-tag">&lsaquo;</a>
+      <a class="carousel-control right" data-slide="next" href="#carousel-tag">&rsaquo;</a>
     </div>
   {% else %}&nbsp;{% endif %}</div>
 </div>
@@ -59,29 +47,39 @@
 {% block content %}
 
 <div class="tabbable">
-  <div class="row"><ul class="offset3 nav nav-tabs" id="main-tab">
-    <li{% if cat == "home" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug %}">{% trans "Home" %} - {{ tag|capfirst }}</a></li>
+  <div class="row"><ul class="offset2 nav nav-tabs" id="main-tab">
     <li{% if cat == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'products' %}">{% trans "Products" %}</a></li>
     <li{% if cat == "questions" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug 'questions' %}">{% trans "Questions" %}</a></li>
   </ul></div>
   {% block list %}{% endblock %}
 </div>
-{% if is_paginated %}<div class="row"><div class="offset3">{% paginate %}</div></div>{% endif %}
-{% endblock %}
+{% if is_paginated %}<div class="row"><div class="offset2">{% paginate %}</div></div>{% endif %}
 
 {% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+{% include "help/_ask_modal.html" %}
+
+{% endblock %}
 
 {% block extra_script %}
   {{ media.js }}
   <script src="{{ STATIC_URL }}js/help.js"></script>
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
-    $(function() {
+    $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-        if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
-        $('#carousel_tag').carousel({ interval: 10000 });
+        $('#carousel-tag').carousel({ interval: 10000 });
+        $("#form-toggle-skill").submit(function () {
+            var form = $(this)
+            $.ajax({
+                type: "post",
+                data: form.serialize() + "&toggle-skill",
+                success: function(data, textstatus, jqxhr) {
+                    $("input", form).toggleClass("hidden");
+                    $.displayMessages(data.messages);
+                },
+            });
+            return false;
+        });
     });
   </script>
   <script type="text/javascript">

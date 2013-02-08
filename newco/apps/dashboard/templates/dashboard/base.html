@@ -8,8 +8,9 @@
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
 {% block extra_style %}
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
+  <link href="{{ STATIC_URL }}css/profile.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
 {% endblock %}
 
 {% block subnav %}{% include "dashboard/_subnav.html" %}{% endblock %}
@@ -21,26 +22,20 @@
 
 {% block body %}
   <header class="jumbotron subhead" id="overview">
-    <div class="row">
-      <div class="span8">
-        <h1>{% block title %}{{ page_name }}{% endblock %}</h1>
-        <br>
-        <p class="lead muted">{% block subtitle %}{% endblock %}</p>
-      </div>
-      <div class="span2 pull-right">{% include "profiles/_profile_item.html" with profile=my_profile %}</div>
-    </div>
-    <hr>
+    <h1>{% block title %}{{ page_name }}{% endblock %}</h1>
+    <br>
+    <p class="lead muted">{% block subtitle %}{% endblock %}</p>
   </header>
 
   {% block dashboard %}{% endblock %}
 
   {% if is_paginated %}{% paginate %}{% endif %}
+
+  {% include "help/_ask_modal.html" %}
 {% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
-
 {% block extra_script %}
-  <script src="{% static 'js/help.js' %}"></script>
+  <script src="{{ STATIC_URL }}js/help.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }

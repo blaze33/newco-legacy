@@ -2,18 +2,8 @@
 {% load content_utils %}
 {% load follow %}
 
-{% if display == "email_html" %}
-  <a href="{% get_absolute_uri profile request %}"><h4>{% profile_pic profile.user 36 %} {% user_display profile.user %}</h4></a>
-
-  {% include "profiles/_profile_info.html" with display="email_html" %}
-{% elif display == "thumbnail_wide" %}
-  <br>
-  <p class="pull-right">{% profile_pic profile.user 40 %}</p>
-  <b><a href="{{ profile.get_absolute_url }}" class="black">{{ profile.name }}</a></b> • <b> {{ profile.user.reputation.reputation_incremented }}</b>
-  <br>
-  {% if profile.about %}{{ profile.about }}{% endif %}
-{% else %}
-  <div class="profile-item thumbnail"{% if not profiles %} style="margin: 0px;"{% endif %}>
+{% if not display %}
+  <div class="profile-item thumbnail">
     <div class="name">
       <a href="{{ profile.get_absolute_url }}"><h5>
         {% profile_pic profile.user 64 %}
@@ -28,7 +18,14 @@
         <br>
         {% tags_display profile.skills 3 %}
       </p>
-      {% if disp_follow %}<br><center>{% follow_form user profile.user extra_class="btn-mini" %}</center>{% endif %}
     </div>
+    {% if disp_follow %}<div class="pull-right">{% follow_form user profile.user extra_class="btn-mini" tooltip_class="tooltip-bottom" %}</div>{% endif %}
   </div>
+{% elif display == "list" %}
+  <li class="profile-item">
+    {% profile_pic profile.user 40 %}
+    <b><a href="{{ profile.get_absolute_url }}" class="black">{{ profile.name }}</a>&nbsp;• {{ profile.user.reputation.reputation_incremented }}</b>
+    <br>
+    <span class="muted">{{ profile.about }}</span>
+  </li>
 {% endif %}

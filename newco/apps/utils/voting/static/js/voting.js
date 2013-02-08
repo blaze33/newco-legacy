@@ -6,7 +6,7 @@
         var form, btnUp, btnDown, parentDiv;
         eventObject.preventDefault();
         form = $(this).closest("form.vote");
-        parentDiv = form.closest("div.vote-controls");
+        parentDiv = form.closest("div.content-controls");
         btnUp = $("[name=vote-up]", form);
         btnDown = $("[name=vote-down]", form);
         $.ajax({
@@ -19,7 +19,7 @@
                         btnUp.attr("data-vote", data.conf.up.dataVote);
                         btnDown.val(data.conf.down.value);
                         btnDown.attr("data-vote", data.conf.down.dataVote);
-                        $(".score", parentDiv).text(data.score.score);
+                        $(".score .value", parentDiv).text(data.score.score);
                     }
                     $.displayMessages(data.messages);
                 }
