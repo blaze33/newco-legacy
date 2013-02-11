@@ -234,6 +234,7 @@ INSTALLED_APPS = [
     "gravatar",
     "tastypie",
     "amazonproduct",
+    "softhyphen",
 ]
 
 FIXTURE_DIRS = [
