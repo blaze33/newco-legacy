@@ -9,8 +9,8 @@
 {% block extra_style %}
   <link rel="stylesheet" href="{{ STATIC_URL }}external/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/content.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/partial_question_form.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/affiliation.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
   {{ media.css }}
 {% endblock %}
@@ -24,19 +24,15 @@
 <hr>
 
 <div class="row">
-  <div class="span9">
-    <h4>{% trans "What you need to know before buying!" %}</h4>
+  <div class="span9 questions">
+    {% if questions %}<h4>{% trans "What you need to know before buying!" %}</h4><hr>{% endif %}
 
-    <hr>
-    {% if questions %}
-      {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
-    {% else %}
-      {% include "items/_partial_question_form.html" with contents=questions question_form=question_form csrf_token=csrf_token only %}
-    {% endif %}
+    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+
     <br><br><br>
-    <hr>
     {% for prod in store_products %}
       {% if forloop.first %}
+        <hr>
         <h3>{% trans "Where to buy" %}</h3>
         <div class="row" id="prices">
           <div class="span2"><h4>{% trans "Store" %}</h4></div>
@@ -50,7 +46,7 @@
 
     <hr>
 
-    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
+    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}" id="edit-product" data-name="{{ item.name }}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
     {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Product" %}</a>{% endif %}
   </div>
 
@@ -58,7 +54,7 @@
     <br>
     {% if store_products %}
       <div class="dropdown controls">
-        <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#" data-name="{{ item.name }}">{% trans "From" %} <b>{% price cheapest.price cheapest.currency LANGUAGE_CODE %}</b> <span class="caret"></span></a>
+        <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest.price cheapest.currency LANGUAGE_CODE %}</b> <span class="caret"></span></a>
         <ul class="dropdown-menu input-large" role="menu" aria-labelledby="drop">
           {% for prod in store_products %}
             {% include "affiliation/_affiliation_item.html" with prod=prod display="dropdown" %}
@@ -67,68 +63,36 @@
           <li><a href="#prices">{% trans "See the detailed offers" %} <i class="icon-chevron-right"></i></a></li>
         </ul>
       </div>
-    <hr>
+      <hr>
     {% endif %}
-    {% for tag, top_question in top_question_by_tag.iteritems %}
-      <div class="span3 well well-small nc-right-col-well-span4" style="margin-left: 0">
-        <h5><a class="black" href="{% url 'tagged_items' tag.slug 'questions' %}" class="black">{% trans "Top Questions for tag" %}</a> <a class="label" href="{% url 'tagged_items' tag.slug %}" class="black">{{ tag.name|truncatechars:20 }}</a></h5>
-        {% for question in top_question %}
-          <a href="{{ question.get_absolute_url }}" class="black">{{ question.content|truncatechars:70 }}</a>
-        {% endfor %}
-      </div>
-    {% endfor %}
 
-    <div class="span3 well well-small nc-right-col-well-span4 top-products" style="margin-left: 0">
-        <h3>{% trans "Top related products" %}</h3>
-        {% for tag, product_list in top_products_by_tag.iteritems %}
-        <hr>
-          <div class="row">
-      	    <div class="span3">
-      	      <div class="span1" style="margin-left: 0">
-      		    <h5><a class="label" href="{% url 'tagged_items' tag.slug %}">{{ tag.name|truncatechars:20 }}</a></h5>
-      	      </div>
-      	      {% if product_list %}
-                {% for item in product_list %}
-                  <div class="span2 content-product-related">
-                    {% include "items/feed_display/_image.html" with image=item.image %}
-                    <br><a href="{{ item.get_absolute_url }}"><h6 class="black" align="center">{{ item.name|truncatechars:15 }}</h6></a>
-                  </div>
-                {% endfor %}
-             <!-- ###### Todo: Surement l'enlever completement du well ##### -->
-              {% else %}
-              <div class="span2 no-product-related">{% trans "No related product" %}</div>
-              {% endif %}
-            </div>
-          </div>
+    <h5>{% trans "Best associated questions" %}</h5>
+    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}<br>
+      <!-- Bit of a hack to use thumbnail class here but it does the job well (display: table; etc.) and matches the display below -->
+      <ul class="thumbnails">
+        <li class="span1">{% tag_display tag %}</li>
+        {% for question in top_question %}
+          <li class="span2" title="{{ question.content }}"><a class="black" href="{{ question.get_absolute_url }}">{{ question.content|truncatechars:70 }}</a></li>
         {% endfor %}
-    </div>
-    {% comment %}
-    <div class="span3 well well-small nc-right-col-well-span4 top-products" style="margin-left: 0">
-      {% if top_products_by_tag %}
-        <h3>{% trans "Top related products" %}</h3>
-        {% for tag, product_list in top_products_by_tag.iteritems %}
-          {% if product_list %}
-          <hr>
-            <div class="span2" style="margin-left: 0">
-              <h5>{% trans "In" %} <a class="label" href="{% url 'tagged_items' tag.slug %}">{{ tag.name|truncatechars:15 }}</a>:</h5>
-      	    </div>
-            <div class="row" id="thumbnails_list">
-      	      <div class="span3">
-                {% for item in product_list %}
-                  <div class="span3 content-product-related">
-                    {% include "items/feed_display/_image.html" with content=item image=item.image %}
-                    <br><a href="{{ item.get_absolute_url }}"><h6 class="black" align="center">{{ item.name|truncatechars:15 }}</h6></a>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
+      </ul>
+    {% endif %}{% endfor %}
+
+    <hr>
+
+    <h5>{% trans "Popular associated products" %}</h5>
+    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}<br>
+      <ul class="top-products thumbnails">
+        <li class="span1">{% tag_display tag %}</li>
+        {% for item in product_list %}
+          <li class="span1">{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}</li>
         {% endfor %}
-      {% endif %}
-    </div>
-    {% endcomment %}
+      </ul>
+    {% endif %}{% endfor %}
   </div>
 </div>
+
+{% include "help/_ask_modal.html" %}
+
 {% endblock %}
 
 {% block extra_body %}
@@ -144,9 +108,6 @@
     <a class="modal-download" target="_blank">{% trans "Source:" %} <span>{% trans "Download" %}</span></a>
   </div>
 </div>
-
-{% include "help/_ask_modal.html" %}
-
 {% endblock %}
 
 {% block extra_script %}
@@ -156,18 +117,16 @@
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
   <script src="{% static 'js/help.js' %}"></script>
-  <script src="{{ STATIC_URL }}js/partial_question_form.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-        if ( '{{ question_form.errors }}' ) { $("#question-form").collapse("show"); }
     });
   </script>
   <script src="{{ STATIC_URL }}js/follow.js"></script>
   <script>
     //Tracking Product name for analytics
     $(document).ready(function(){
-      var product=document.getElementById("drop");
+      var product=document.getElementById("edit-product");
       var name=product.getAttribute("data-name");
       mixpanel.track("Load_item_detail", {"product":name});
       if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};

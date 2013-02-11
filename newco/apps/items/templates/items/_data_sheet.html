@@ -4,24 +4,26 @@
 {% load follow %}
 {% load content_utils %}
 
-<div class="row one_row" itemscope itemtype="http://schema.org/Product">
-  <div class="span5 product-name">
+<div class="row highlight" itemscope itemtype="http://schema.org/Product">
+  <div class="span5">
     {% tags_display item.tags %}<br><br>
     <h1 itemprop="name">{{ item }}</h1>
     <br>
-    {% include "items/feed_display/_item_controls.html" with item=item user=user answer_location="embedded" csrf_token=csrf_token include_modal="True" only %}
+    {% include "items/feed_display/_item_controls.html" with item=item user=user csrf_token=csrf_token only %}
     {% include "items/_list_experts.html" with experts=experts %}
   </div>
   <div class="span7">
     <ul class="thumbnails album" data-toggle="modal-gallery" data-target="#modal-gallery" data-selector="a.gallery-item">
-    {% for image in album %}
-      <li class="span3">
-        <div class="thumbnail">
-          <a class="gallery-item" href="{{ image.data.link }}" style="background-image: url('{{ image.data.thumbnailLink }}')" title="{{ image.data.snippet }}" rel="gallery" data-context="{{ image.data.contextLink }}"></a>
-        </div>
-      </li>
-    {% endfor %}
-    <li class="album-more"><a id="start-slideshow" data-target="#modal-gallery" data-selector="a.gallery-item"><b>See More</b></a></li>
+      {% for image in album %}
+        <li class="span3">
+          <div class="thumbnail">
+            <a class="gallery-item" href="{{ image.data.link }}" style="background-image: url('{{ image.data.thumbnailLink }}')" title="{{ image.data.snippet }}" rel="gallery" data-context="{{ image.data.contextLink }}"></a>
+          </div>
+        </li>
+      {% endfor %}
+      {% if album.count > 4 %}
+        <li class="album-more"><a id="start-slideshow" data-target="#modal-gallery" data-selector="a.gallery-item"><b>{% trans "See More" %}</b></a></li>
+      {% endif %}
     </ul>
   </div>
 </div>

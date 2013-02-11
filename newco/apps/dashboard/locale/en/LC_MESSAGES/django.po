@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 19:26+0100\n"
+"POT-Creation-Date: 2013-02-07 15:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,70 +17,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:18 templates/dashboard/_subnav.html:10
+#: views.py:19 templates/dashboard/_subnav.html:14
 msgid "Dashboard"
 msgstr ""
 
-#: views.py:19
+#: views.py:20
 msgid "Feed"
 msgstr ""
 
-#: views.py:20 views.py:42 templates/dashboard/_subnav.html:17
+#: views.py:21 views.py:43 templates/dashboard/_subnav.html:21
 msgid "Contribution center"
 msgstr ""
 
-#: views.py:21
+#: views.py:22
 msgid "Teamwork"
 msgstr ""
 
-#: views.py:22 views.py:50 templates/dashboard/_subnav.html:19
+#: views.py:23 views.py:51 templates/dashboard/_subnav.html:23
 msgid "Drafts"
 msgstr ""
 
-#: views.py:23 views.py:58 templates/dashboard/_subnav.html:22
+#: views.py:24 views.py:59 templates/dashboard/_subnav.html:26
 msgid "All my contributions"
 msgstr ""
 
-#: views.py:24
+#: views.py:25
 msgid "Shopping notes"
 msgstr ""
 
-#: views.py:25
+#: views.py:26
 msgid "Purchase history"
 msgstr ""
 
-#: views.py:32 templates/dashboard/_subnav.html:13
+#: views.py:33 templates/dashboard/_subnav.html:17
 msgid "My newsfeed"
 msgstr ""
 
-#: views.py:33
+#: views.py:34
 msgid "Mini feed from what you follow"
 msgstr ""
 
-#: views.py:37
+#: views.py:38
 msgid ""
 "You don't follow anything nor anyone yet. Find people or products to follow "
 "navigating NewCo!"
 msgstr ""
 
-#: views.py:43
+#: views.py:44
 msgid ""
 "Latest activity on your skills tags. Maybe you would like to contribute?"
 msgstr ""
 
-#: views.py:51
+#: views.py:52
 msgid "Complete and publish some?"
 msgstr ""
 
-#: views.py:54
+#: views.py:55
 msgid "You don't have any drafts."
 msgstr ""
 
-#: views.py:59
+#: views.py:60
 msgid "Your latest contributions"
 msgstr ""
 
-#: views.py:80
+#: views.py:82
 #, python-format
 msgid ""
 "We don't know what to advice you to contribute on, we would need to know "
@@ -88,56 +88,56 @@ msgid ""
 "your profile?"
 msgstr ""
 
-#: views.py:86
+#: views.py:88
 #, python-format
 msgid ""
 "You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How "
 "to contribute</a> page?"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:10
+#: templates/dashboard/_subnav.html:14
 msgid "Monitor all that&#39;s related to you"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:13
+#: templates/dashboard/_subnav.html:17
 msgid "Activity feed based on what you follow"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:16
+#: templates/dashboard/_subnav.html:20
 msgid "Contributing"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:17
+#: templates/dashboard/_subnav.html:21
 msgid "If you want to use your time and knowledge wisely, this is the place!"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:19
+#: templates/dashboard/_subnav.html:23
 msgid "&lsquo;Drafts&rsquo; contains your unpublished contributions"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:22
+#: templates/dashboard/_subnav.html:26
 msgid "This is where to go to find all your inputs"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:38
+#: templates/dashboard/_subnav.html:30
 msgid "Profiles"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:41
+#: templates/dashboard/_subnav.html:33
 msgid ""
 "My profile, exactly as other users see it&mdash;besides the &lsquo;"
 "Update&rsquo; button"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:44
+#: templates/dashboard/_subnav.html:36
 msgid "User profile"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:44 templates/dashboard/contribution.html:9
+#: templates/dashboard/_subnav.html:36 templates/dashboard/contribution.html:9
 msgid ":"
 msgstr ""
 
-#: templates/dashboard/_subnav.html:49
+#: templates/dashboard/_subnav.html:43
 msgid "All Profiles"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Search in all my contributions - Not functional yet"
 msgstr ""
 
-#: templates/dashboard/base.html:17
+#: templates/dashboard/base.html:20
 #, python-format
 msgid "%(username)s's dashboard | %(page_name)s"
 msgstr ""
@@ -174,17 +174,21 @@ msgstr ""
 msgid "Keep here your drafts: contributions you don't want to publish (yet)."
 msgstr ""
 
-#: templates/dashboard/feed.html:30
+#: templates/dashboard/feed.html:13
+msgid "Who to follow?"
+msgstr ""
+
+#: templates/dashboard/feed.html:25
 msgid "Activity from what you follow."
 msgstr ""
 
-#: templates/dashboard/home.html:6
+#: templates/dashboard/home.html:11
 msgid ""
 "We provide you with all the things that concern you on this page. If you "
 "have only a 'quick check' to do on NewCo, this page is the one!"
 msgstr ""
 
-#: templates/dashboard/home.html:20
+#: templates/dashboard/home.html:25
 #, python-format
 msgid ""
 " More tools to come very soon on the dashboard! If you have some ideas about "

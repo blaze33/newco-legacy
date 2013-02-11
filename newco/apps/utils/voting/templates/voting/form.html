@@ -3,7 +3,7 @@
 
 {% spaceless %}
 
-<form class="controls_2 vote" method="POST">
+<form class="vote" method="POST">
   {% csrf_token %}
   <button type="submit" class="icon-chevron-up" name="vote-up" title="{% trans 'Vote up: this contribution shows effort on quality; it is usefull and clear (click again to undo)' %}" value="{% if vote.is_upvote %}clear{% else %}up{% endif %}" data-vote="{{ vote.is_upvote }}"></button>
   <br>

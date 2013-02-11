@@ -21,16 +21,15 @@
   {% dict_entry_for_item content from scores as score %}
 
   {% if display_q == "True" %}
-    <div class="row one_row" id="{{ content.anchor }}">
+    <div class="row highlight" id="{{ content.anchor }}">
       <div class="span8 offset1">
         <p><a class="question-nf" href="{{ content.question.get_absolute_url }}"><small>{{ content.question.content }}</small></a></p>
       </div>
     </div>
   {% endif %}
-  <div class="row one_row" id="{{ content.anchor }}">
-    <div class="span1 vote-controls">
-      {% include "items/_vote_box.html" with content=content item=item score=score vote=vote display=display csrf_token=csrf_token only %}
-      {% edit_buttons user content delete_next=request.path %}
+  <div class="row highlight" id="{{ content.anchor }}">
+    <div class="span1 content-controls">
+      {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=request.path csrf_token=csrf_token only %}
     </div>
     <div class="span8 answer-content">
       {% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}

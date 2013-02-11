@@ -19,31 +19,38 @@
 
 {% block body %}
 <div class="row">
-  <div class="span9" itemscope itemtype="http://schema.org/Article">{% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}</div>
+  <div class="span9" itemscope itemtype="http://schema.org/Article">
+    {% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}
+  </div>
 
-  <div class="span3 pull-right">
-    <div class="row"><div class="span3 well well-small nc-right-col-well-span4">
-      {% if question.items.count %}
-        <h3>{% trans "Related products" %}</h3>
-        <div class="thumbnail-list">{% for item in question.items.all %}
-          {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
-        {% endfor %}</div>
-      {% elif question.tags.count %}
-        <h3>{% trans "Related tags" %}</h3>
-        {% tags_display question.tags %}
-      {% endif %}
-    </div></div>
+  <div class="span3">
+    {% if question.items.all %}
+      <h4 class="text-right">{% trans "Related products" %}</h4>
+      <div class="thumbnail-list">{% for item in question.items.all %}
+        {% include "items/feed_display/_thumbnail_frame.html" with object=item tags=1 only %}
+      {% endfor %}</div>
+    {% endif %}
+
+    {% if question.tags.all %}
+      <hr>
+      <h4 class="text-right">{% trans "Related tags" %}</h4>
+      {% tags_display question.tags %}
+    {% endif %}
+
     {% for title, content_list in related_questions.iteritems %}
-      {% if content_list %}<div class="row"><div class="span3 well well-small nc-right-col-well-span4">
-        <h3>{{ title }}</h3>
-        <ul>{% for content in content_list %}<li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>{% endfor %}</ul>
-      </div></div>{% endif %}
+        <ul>{% for content in content_list %}
+          {% if forloop.first %}<hr><h4 class="text-right">{{ title }}</h4>{% endif %}
+          <li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>
+        {% endfor %}</ul>
+      {% if content_list %}
+      {% endif %}
     {% endfor %}
   </div>
 </div>
-{% endblock %}
 
-{% block extra_body %}{% include "help/_ask_modal.html" %}{% endblock %}
+{% include "help/_ask_modal.html" %}
+
+{% endblock %}
 
 {% block extra_script %}
   <script src="{% static 'js/content.js' %}"></script>

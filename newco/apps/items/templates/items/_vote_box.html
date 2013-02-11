@@ -1,7 +1,0 @@
-{% load i18n %}
-{% load voting %}
-{% load content_utils %}
-
-{% if item %}{% get_content_url content display item as next %}{% endif %}{# Seb: ToDo: find what to do when there's no "item" (i.e. in tag page / item_list ) #}
-
-{% vote_form content vote next %}<div class="score-display"><span class="score">{{ score.score }}</span><br><span class="score-small">{% trans "Score" %}</span></div>

@@ -8,7 +8,8 @@
 {% load format_utils %}
 
 {% block extra_style %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/affiliation.css">
+  <link href="{{ STATIC_URL }}css/affiliation.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/pics.css" rel="stylesheet">
   {{ form.media.css }}
 {% endblock %}
 
@@ -97,9 +98,10 @@
 {% endblock %}
 
 {% block extra_script %}
+  <script src="{{ STATIC_URL }}js/pics.js"></script>
   {{ form.media.js }}
   <script>
-    $("#id_tags").select2(select2TagsParameters);
+    $("#id_tags").select2($.select2TagsParameters);
 
     pics = {% if img_album %}{{ img_album|safe }}{% else %}[]{% endif %};
     results = {% if img_search %}{{ img_search|safe }}{% else %}[]{% endif %};

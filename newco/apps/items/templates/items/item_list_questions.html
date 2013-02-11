@@ -8,12 +8,8 @@
 
 {% block list %}
 <div class="tabbable row">
-  <div class="span3">
+  <div class="span2">
     <ul class="nav nav-list">
-      <li class="nav-header">{% trans "What questions?" %}</li>
-      <li{% if pill == "tag" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat %}">{% trans "Questions with tag" %} {{ tag|capfirst }}</a></li>
-      <li{% if pill == "products" %} class="active"{% endif %}><a href="{% url 'tagged_items' tag.slug cat 'products' %}">{% trans "Questions about products with tag" %} {{ tag|capfirst }}</a></li>
-      <li class="divider"></li>
       <li class="nav-header">{% trans "Filter" %}</li>
       <li{% if qs_option == "popular" %} class="active"{% endif %}><a href="?qs_option=popular">{% trans "Popular" %}</a></li>
       <li{% if qs_option == "-pub_date" %} class="active"{% endif %}><a href="?qs_option=-pub_date">{% trans "Last added" %}</a></li>
@@ -21,11 +17,8 @@
       <li{% if qs_option == "no_answers" %} class="active"{% endif %}><a href="?qs_option=no_answers">{% trans "No answers" %}</a></li>
     </ul>
   </div>
-  <div class="span9">
-    {% include "items/_partial_question_form.html" with contents=object_list question_form=question_form csrf_token=csrf_token only %}
-    {% if object_list %}
-      {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="True" displ_sign="True" user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
-    {% endif %}
+  <div class="span10 questions">
+    {% include "items/feed_display/_content_list.html" with contents=object_list display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="True" displ_sign="True" user=user path=request.path experts=experts empty_msg=empty_msg scores=scores votes=votes csrf_token=csrf_token only %}
   </div>
 </div>
 {% endblock %}

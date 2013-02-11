@@ -6,7 +6,6 @@ from django.forms.widgets import Textarea, RadioSelect, SelectMultiple
 from django.utils.translation import (ugettext_lazy as _, ungettext_lazy,
                                       pgettext_lazy)
 
-from account.utils import user_display
 from model_utils import Choices
 from newco_bw_editor.widgets import BW_small_Widget
 from taggit.forms import TagWidget
@@ -155,7 +154,7 @@ class PartialQuestionForm(ModelForm):
         model = Question
         fields = ("content", )
         widgets = {"content": Textarea(attrs={
-            "class": "span4", "rows": 1,
+            "class": "partial-form", "rows": 1,
             "placeholder": _("Ask something specific.")})}
 
     def __init__(self, request, items=[], tags=[], *args, **kwargs):

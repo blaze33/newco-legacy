@@ -101,6 +101,8 @@ def mail_followee(request, fwee, fwer):
     context = Context({
         "followee": fwee,
         "follower": fwer,
+        "followee_name": followee_name,
+        "follower_name": follower_name,
         "followee_url": request.build_absolute_uri(fwee.get_absolute_url()),
         "follower_url": request.build_absolute_uri(fwer.get_absolute_url()),
         "request": request,

@@ -1,38 +1,41 @@
-.question .block_controls {
-  padding-top: 3px;
-  opacity: 0;
-  -webkit-transition: opacity 0.6s;
-     -moz-transition: opacity 0.6s;
-}
-.question:hover .block_controls {
-  opacity: 1;
-  -webkit-transition: opacity 1s;
-     -moz-transition: opacity 1s;
-}
+@charset 'UTF-8';
 
-.question hr {
-  margin: 8px 0 15px;
-}
-
-.question iframe {
-  box-sizing: border-box;
-}
-
-.question-content {
+/* ↓↓↓ Content Related Elements ↓↓↓ */
+h1.question {
   font-size: 130%;
   font-weight: bold;
   line-height: 140%;
   margin-top: 0px;
 }
 
-.answer-content .content {
-  padding-top: .5em;
+p.question {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 140%;
 }
 
 .answer-content {
   line-height: 150%;
 }
 
+.draft {
+  background-color: #e5e5e5;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.questions .empty-message p {
+  color: #999;
+  font-size: 31.5px;
+  font-weight: bold;
+  line-height: 40px;
+}
+.questions .empty-message p .tag {
+  font-size: 22px;
+  line-height: 23.5px;
+}
+/* ↑↑↑ Content Related Elements ↑↑↑ */
+
+/* ↓↓↓ Album ↓↓↓ */
 .album a {
   height: 128px;
   background-position: center;
@@ -44,83 +47,262 @@
 .album li:nth-child(n+3) { width: 60px;}
 .album li:nth-child(n+3) .gallery-item { height: 30px;}
 .album .span3:nth-child(n+5) { display: none; }
+
 .album-more a {
   height: auto;
   font-size: 13px;
   color: #999;
 }
-.album-more:hover { cursor: hand; cursor: pointer; }
 
-/* only display album's first image on small screens */
+.album-more:hover {
+  cursor: hand;
+  cursor: pointer;
+}
+
+/* Only display album's first image on small screens */
 @media (max-width: 767px) {
   .album :not(:first-child) {
     display: none;
   }
 }
+/* ↑↑↑ Album ↑↑↑ */
 
+/* ↓↓↓ Modal Gallery ↓↓↓ */
 .modal-image img {
   max-height: 100%;
 }
+
 .modal-gallery {
   min-width: 66%;
   max-width: 95%
 }
+
+/* Fix modal position starting with bootstrap 2.2.2 */
 .modal-gallery.fade.in {
-  /*fix modal position starting with bootstrap 2.2.2*/
   top: 50%;
 }
+
 .modal-footer {
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   vertical-align: middle;
 }
+
 .modal-download {
   overflow: hidden;
   vertical-align: middle;
 }
+/* ↑↑↑ Modal Gallery ↑↑↑ */
 
-.product-name h1 {
+/* ↓↓↓ Content controls ↓↓↓ */
+.content-controls {
+  font-size: 180%;
+  font-weight: bold;
+  line-height: 180%;
+  opacity: 0.1;
+  -webkit-transition: opacity 1s;
+     -moz-transition: opacity 1s;
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  .content-controls {
+    margin-left: 5px;
+    width: 57px;
+  }
+}
+
+.content-controls div,
+.content-controls .vote {
+  display: inline-block;
+  line-height: 14px;
+  margin: 0 0;
+}
+
+.content-controls .vote {
+  vertical-align: middle;
+}
+
+.vote button {
+  height: 14px;
+  width: 21px;
+  line-height: 14px;
+  border: none;
+  margin: 0 0;
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.vote button[data-vote="True"] {
+  background-color: #f89406;
+}
+
+.vote .icon-chevron-up {
+  background-position: -284px -120px;
+}
+
+.vote .icon-chevron-down {
+  background-position: -309px -119px;
+}
+
+.content-controls .score {
+  display: inline-block;
+  line-height: 10px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.score .title {
+  font-size: 10px;
+}
+/* ↑↑↑ Content controls ↑↑↑ */
+
+/* ↓↓↓ Text controls (Product, Tag, Question) ↓↓↓ */
+.product-controls,
+.tag-controls,
+.question-controls {
+  font-size: 13px;
+  display: inline;
+  color: #999;
+}
+
+.content-context {
+  font-size: 13px;
+  color: #999;
+}
+
+/* Overrides anchor blue color */
+.product-controls > a:not(.label),
+.tag-controls > a:not(.label),
+.question-controls > a:not(.label),
+.content-context > a:not(.label) {
+  color: inherit;
+}
+
+.tag-controls form {
+  display: inherit;
+}
+/* ↑↑↑ Text controls (Product, Tag, Question) ↑↑↑ */
+
+/* ↓↓↓ Signature ↓↓↓ */
+.signature {
+  float: right;
+  padding: 2px 2px 5px 5px;
   margin: 0;
+  font-size: 14px;
+  font-weight: normal;
 }
 
-@media (min-width: 700px) {
-.content-product-related { line-height: 1px; width: 60px; margin: 3px; float:right; margin-right:10px }
-.content-product-related img {
+.signature-header {
+  display: inline;
+  margin-bottom: 1em;
+}
+
+.signature .author img {
   float: left;
-  width: 60px;
-  border-radius: 3px;
-  margin-right:0px;
-  margin-top: 2px;
-  margin-bottom: 0px;
-}
-.no-product-related { float:right; margin-right:0px }
+  margin-right: 3px;
 }
 
-@media (max-width: 1000px) {.top-products { display:none; }}
+.signature .author div {
+  margin-left: 40px;
+  line-height: 110%
+}
+/* ↑↑↑ Signature ↑↑↑ */
 
-@media (max-width: 800px) {
-.top-images-small { display:none; }
+/* ↓↓↓ Product thumbnail ↓↓↓ */
+.product-item.thumbnail {
+  display: inline-block;
+  max-width: 165px;
+  width: 100%;
+  background-color: white;
 }
 
-@media (min-width: 800px) {
-.expert-list-header { height:90px; }
+.product-item.thumbnail img {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 4px;
 }
-@media (max-width: 800px) {
-.expert-list-header { height:150px; }
+
+.product-item.thumbnail .name a {
+  color: #333;
+  font-size: 12px;
 }
 
-
-.img-expert { float:right; }
-
-/* in item_detail.html */
-.no-left-margin { margin-left: 0px; }
-
-
-/* in feed_display/image.html */
-.feed-image {
-  margin-bottom: 0;
-  max-height:60px;
-  max-width:60px;
-  width:60px
+.thumbnail-list {
+  margin: 0 auto;
 }
+
+.thumbnail-list .product-item.thumbnail {
+  float: left;
+  margin: 9px 18px 9px 0;
+}
+/* ↑↑↑ Product thumbnail ↑↑↑ */
+
+/* ↓↓↓ Content Parents and Related Items display ↓↓↓ */
+.content-parents {
+  padding-left: 10px;
+  max-width: 160px;
+}
+
+.content-parents .product-item.thumbnail {
+  width: 64px;
+  margin: 2px 4px 2px 0;
+}
+
+.content-parents .product-item.thumbnail .name a,
+.top-products .product-item.thumbnail .name a {
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 11px;
+  display: block;
+  -ms-text-overflow: ellipsis;
+   -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+/* ↑↑↑ Content Parents display ↑↑↑ */
+
+/* ↓↓↓ Partial Question Form ↓↓↓ */
+
+textarea.partial-form {
+  resize: vertical;
+  width: 80%;
+}
+
+/* Same properties as input */
+.input-append textarea {
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.input-append textarea + .btn-group .btn:last-child {
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+}
+
+.input-prepend.input-append textarea {
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+
+.input-prepend.input-append textarea + .btn-group .btn {
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+}
+/* ↑↑↑ Partial Question Form ↑↑↑ */
+
+/* ↓↓↓ Carousel ↓↓↓ */
+.carousel .item img {
+  height: 250px;
+  max-width: none;
+}
+
+#carousel-tag .carousel-caption {
+  padding: 10px;
+}
+/* ↑↑↑ Carousel ↑↑↑ */

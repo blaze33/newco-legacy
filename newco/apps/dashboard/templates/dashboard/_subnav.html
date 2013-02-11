@@ -5,6 +5,10 @@
 
 {% url "profile_list" as profile_list_url %}
 
+{% if my_profile %}{% include "profiles/_profile_item.html" with profile=my_profile %}{% endif %}
+
+<br>
+
 <ul class="nav nav-list">
   {% if user.is_authenticated %}
     <li {% if page == "dashboard" %} class="active"{% endif %}><a href="{% url 'dash' %}" class="tooltip-right" title="{% trans 'Monitor all that&#39;s related to you' %}"><b>{% trans "Dashboard" %}</b></a></li>
@@ -21,17 +25,6 @@
     <li class="divider"></li>
     <li{% if page == "all" %} class="active"{% endif %}><a href="{% url 'dash' 'all' %}" class="tooltip-right" title="{% trans 'This is where to go to find all your inputs' %}">{% trans "All my contributions" %}</a></li>
 
-
-    {% comment %}
-    <li{% if page == "collaboration" %} class="active"{% endif %}><a class="tooltip-right" title="{% trans 'Working on it' %}"><span class="muted">{% trans "Teamwork" %}</span></a></li>
-    
-    <li class="divider"></li>
-    <li class="nav-header">{% trans "Shopping" %}</li>
-    <li{% if page == "shopping" %} class="active"{% endif %} class="disabled"><a class="tooltip-right" title="{% trans 'We are working on it!' %}"><span class="muted">{% trans "Shopping notes" %}</span></a></li>
-
-    <li{% if page == "purchase" %} class="active"{% endif %}><a class="tooltip-right" title="{% trans 'We are working on it!' %}"><span class="muted">{% trans "Purchase history" %}</span></a></li>
-    {% endcomment %}
-
     <li class="divider"></li>
   {% endif %}
   <li class="nav-header">{% trans "Profiles" %}</li>
@@ -42,8 +35,10 @@
   {% if not is_me and not profile_form and profile %}<li class="active">
     <b>{% trans "User profile" %}{% trans ":" %}</b>
     <br>
-    <a href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile.user %}</a>
+    <a href="{{ profile.user.get_absolute_url }}">{% profile_pic profile.user 18 %} {% user_display profile %}</a>
   </li>{% endif %}
-  <li class="divider"></li>
+  {% if user.is_authenticated or profile %}
+    <li class="divider"></li>
+  {% endif %}
   <li{% if profiles and not profile %} class="active"{% endif %}><a href="{{ profile_list_url }}">{% trans "All Profiles" %}</a></li>
 </ul>

@@ -1,30 +1,27 @@
-/*global jQuery, $, Select2, URL_REDIS_PROFILE, select2BaseParameters*/
-/*global ngettext, interpolate*/
+/*global URL_REDIS_PROFILE, ngettext, interpolate*/
 
-function reloadProfiles(element, callback) {
-    "use strict";
-
-    // reload profiles
-    var url, ids;
-    ids = element.val().split(",");
-    url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
-    return jQuery.ajax({
-        url: url,
-        dataType: "json"
-    }).done( function (data) { 
-        callback(data);
-    });
-}
-
-$(function () {
+(function ($, Select2) {
     "use strict";
     /*jslint browser:true */
+
+    function reloadProfiles(element, callback) {
+        // reload profiles
+        var url, ids;
+        ids = element.val().split(",");
+        url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
+        return $.ajax({
+            url: url,
+            dataType: "json"
+        }).done( function (data) { 
+            callback(data);
+        });
+    }
 
     var modalAsk, experts, inputExperts, numberExperts, urlExperts,
         numberResults, numberUsers;
 
     modalAsk = $("#modal-ask");
-    $(document).on("click", ".btn-ask", function () {
+    $(".btn-ask").on("click", function (eventObject) {
         var questionId, inputs;
         questionId = $(this).data("question-id");
         $("#question-id", modalAsk).val(questionId);
@@ -33,17 +30,19 @@ $(function () {
 
     inputExperts = $("#id_experts", modalAsk);
     urlExperts = inputExperts.data("url");
-    $.ajax({
-        url: urlExperts,
-        dataType: "json",
-        async: false,
-        success: function(data) {
-            experts = data;
-        } 
-    });
+    if ( urlExperts ) {
+        $.ajax({
+            url: urlExperts,
+            dataType: "json",
+            async: false,
+            success: function(data) {
+                experts = data;
+            } 
+        });
+    }
 
     numberExperts = 3;
-    inputExperts.select2($.extend({}, select2BaseParameters, {
+    inputExperts.select2($.extend({}, $.select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one expert",
                                 "Select up to %s experts", numberExperts);
@@ -69,7 +68,7 @@ $(function () {
 
     numberUsers = 3;
     numberResults = 5;
-    $("#id_users", modalAsk).select2($.extend({}, select2BaseParameters, {
+    $("#id_users", modalAsk).select2($.extend({}, $.select2BaseParameters, {
         placeholder: function () {
             var text = ngettext("Select one user",
                                 "Select up to %s users", numberUsers);
@@ -90,4 +89,4 @@ $(function () {
             results: function (data, page) { return {results: data}; }
         }
     }));
-});
+}(window.jQuery, window.Select2));

@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 22:28+0100\n"
-"PO-Revision-Date: 2013-01-28 19:39\n"
+"POT-Creation-Date: 2013-02-06 19:03+0100\n"
+"PO-Revision-Date: 2013-02-06 19:04\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -34,63 +34,71 @@ msgstr "%(receiver)s, %(requester)s a besoin de vous."
 msgid "%(followee)s, %(follower)s is now following you on NewCo."
 msgstr "%(followee)s, %(follower)s vous suit désormais sur NewCo."
 
-#: messages.py:11
+#: messages.py:12
 msgid "Thanks {user}, {article}{verbose_name} was successfully {created}."
 msgstr "Merci {user}, {article}{verbose_name} a été {created} avec succès."
 
-#: messages.py:16
+#: messages.py:17
 msgid "Thanks {user}, {article}{verbose_name} was successfully {updated}."
 msgstr "Merci {user}, {article}{verbose_name} a été {updated} avec succès."
 
-#: messages.py:21
+#: messages.py:22
 msgid "Thanks {user}, your bio has been successfully updated."
 msgstr "Merci {user}, votre bio a été mise à jour."
 
-#: messages.py:25
+#: messages.py:26
 msgid "Warning {user}, the form is invalid."
 msgstr "Attention {user}, le formulaire est invalide."
 
-#: messages.py:29
+#: messages.py:30
 msgid "{user}, you are now following {object}."
 msgstr "{user}, vous suivez désormais {object}."
 
-#: messages.py:33
+#: messages.py:34
 msgid "{user}, you are not following {object} anymore."
 msgstr "{user}, vous ne suivez plus {object}."
 
-#: messages.py:37
+#: messages.py:38
 msgid "{user}, you can't follow yourself!"
 msgstr "{user}, vous ne pouvez pas vous suivre&#x202F;!"
 
-#: messages.py:41
+#: messages.py:42
 msgid "{user}, your request has been sent to {receiver}!"
 msgstr "{user}, votre requête a été envoyée à {receiver}&#x202F;!"
 
-#: messages.py:45
+#: messages.py:46
 msgid "{user}, you can't ask yourself to answer a question!"
 msgstr ""
 "{user}, vous ne pouvez pas vous proposer de répondre à une question&#x202F;!"
 
-#: messages.py:49
+#: messages.py:50
 msgid "{user}, {email} is not a valid email address!"
 msgstr "{user}, {email} n'est pas une adresse e-mail valide&#x202F!"
 
-#: messages.py:53
+#: messages.py:54
 msgid "{user}, your up vote on {object} has been recorded."
 msgstr "{user}, votre vote positif sur {object} a été enregistré."
 
-#: messages.py:57
+#: messages.py:58
 msgid "{user}, your down vote on {object} has been recorded."
 msgstr "{user}, votre vote négatif sur {object} a été enregistré."
 
-#: messages.py:61
+#: messages.py:62
 msgid "{user}, your vote on {object} has been cancelled."
 msgstr "{user}, votre vote sur {object} a été annulé."
 
-#: messages.py:65
+#: messages.py:66
 msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 "{user}, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
+
+#: messages.py:70
+msgid "{user}, the tag {tag} has been added to your skill set."
+msgstr "{user}, le tag {tag} a été ajouté à votre liste de compétences."
+
+#: messages.py:75
+msgid "{user}, the tag {tag} has been removed from your skill set."
+msgstr "{user}, le tag {tag} a été enlevé de votre liste de compétences."
 
 #: templates/content/info.html:7
 msgid "Posted"
@@ -139,19 +147,19 @@ msgstr "Pour voir le profil de %(asker)s, rendez-vous ici"
 msgid "To see %(question)s, go there"
 msgstr "Pour voir %(question)s, rendez-vous ici"
 
-#: templates/mail/_follow_notification_email.html:7
+#: templates/mail/_follow_notification_email.html:8
 #: templates/mail/_follow_notification_email.txt:7
 msgid "is now following you on NewCo!"
 msgstr "vous suit désormais sur NewCo&#x202F;!"
 
-#: templates/mail/_follow_notification_email.html:14
+#: templates/mail/_follow_notification_email.html:21
 #, python-format
 msgid ""
-"To follow back <a href=\"%(follower_url)s\">%(follower)s</a>, go on his "
-"profile."
+"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go on his"
+" profile."
 msgstr ""
-"Pour suivre <a href=\"%(follower_url)s\">%(follower)s</a> en retour, allez "
-"sur son profile."
+"Pour suivre <a href=\"%(follower_url)s\">%(follower_name)s</a> en retour, "
+"allez sur son profile."
 
 #: templates/mail/_follow_notification_email.txt:12
 #, python-format
@@ -166,34 +174,25 @@ msgstr "Merci,<br> L'équipe NewCo Project"
 #, python-format
 msgid ""
 "\n"
-"        This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go <a href=\"%(settings_url)s"
-"\" >here</a> (available soon, please forgive us for the emails you didn't "
-"want in the mean time).\n"
+"        This email has been sent because you allowed it in your account configuration. If you want to change it, please go <a href=\"%(settings_url)s\" >here</a> (available soon, please forgive us for the emails you didn't want in the mean time).\n"
 "      "
 msgstr ""
 "\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement)."
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement)."
 
 #: templates/mail/_notification_email.txt:27
 #, python-format
 msgid ""
 "\n"
 "---\n"
-"This email has been sent because you allowed it in your account "
-"configuration. If you want to change it, please go there: %(settings_url)s "
-"(available soon).\n"
+"This email has been sent because you allowed it in your account configuration. If you want to change it, please go there: %(settings_url)s (available soon).\n"
 "---\n"
 "Thanks !\n"
 "The NewCo Project team\n"
 msgstr ""
 "\n"
 "---\n"
-"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de "
-"vos notifications. Si vous voulez les changer, rendez-vous <a href="
-"\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
+"Cet email vous a été envoyé car vous l'avez autorisé dans les paramètres de vos notifications. Si vous voulez les changer, rendez-vous <a href=\"%(settings_url)s\" >ici</a> (disponible prochainement).\n"
 "---\n"
 "Merci,\n"
 "L'équipe de NewCo\n"
@@ -231,25 +230,25 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/tools.py:81 templatetags/tools.py:113
+#: templatetags/tools.py:81 templatetags/tools.py:115
 msgid "and"
 msgstr "et"
 
-#: templatetags/tools.py:109
+#: templatetags/tools.py:111
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/tools.py:115
+#: templatetags/tools.py:117
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] "avec le tag"
 msgstr[1] "avec les tags"
 
 #~ msgid ""
-#~ "Vote up: this contribution shows effort on quality; it is usefull and "
-#~ "clear (click again to undo)"
+#~ "Vote up: this contribution shows effort on quality; it is usefull and clear "
+#~ "(click again to undo)"
 #~ msgstr ""
 #~ "Vote positif&nbsp;: cette contribution montre des efforts sur la "
 #~ "qualité&#x202F;; elle est utile et claire (cliquer à nouveau pour enlever)"
@@ -259,8 +258,8 @@ msgstr[1] "avec les tags"
 #~ "useful or unclear (click again to undo)"
 #~ msgstr ""
 #~ "Vote négatif&nbsp;: cette contribution ne montre pas d'efforts sur la "
-#~ "qualité&#x202F;; elle n'est pas utile ou pas claire (cliquez à nouveau "
-#~ "pour enlever)"
+#~ "qualité&#x202F;; elle n'est pas utile ou pas claire (cliquez à nouveau pour "
+#~ "enlever)"
 
 #~ msgid "%(user)s, your up vote on %(object)s has been recorded."
 #~ msgstr "%(user)s, votre vote positif sur %(object)s a été enregistré."
@@ -298,8 +297,8 @@ msgstr[1] "avec les tags"
 #~ "question&#x202F;!"
 
 #~ msgid ""
-#~ "Click here if you can&#39;t find the product you want to link your "
-#~ "question to"
+#~ "Click here if you can&#39;t find the product you want to link your question "
+#~ "to"
 #~ msgstr ""
 #~ "Cliquez ici si vous ne trouvez pas le produit que vous souhaitez lier à "
 #~ "votre question"
@@ -314,11 +313,11 @@ msgstr[1] "avec les tags"
 #~ msgstr "par"
 
 #~ msgid ""
-#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
-#~ "s'>%(answerer)s</a> has answered your question "
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+#~ "href='%(answerer_url)s'>%(answerer)s</a> has answered your question "
 #~ msgstr ""
-#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a href='%(answerer_url)"
-#~ "s'>%(answerer)s</a> a répondu a votre question"
+#~ "<a href='%(receiver_url)s'>%(receiver)s</a>,<br><a "
+#~ "href='%(answerer_url)s'>%(answerer)s</a> a répondu a votre question"
 
 #~ msgid "Product"
 #~ msgstr "Produit"
