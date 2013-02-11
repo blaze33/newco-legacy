@@ -4,11 +4,11 @@
 {% load account_tags %}
 
 {% block body_title %}
-    {% user_display follower %} {% trans "is now following you on NewCo!" %}
+  {% user_display follower %} {% trans "is now following you on NewCo!" %}
 
 {% endblock %}
 
 {% block go_to_urls %}
-    {% user_display follower as follower %}{% blocktrans %}To see {{ follower }}'s profile, go there{% endblocktrans %}:
-        {{ follower_url }}
+  {% user_display follower as follower %}{% blocktrans %}To see {{ follower }}'s profile, go there{% endblocktrans %}:
+    {{ follower_url }}
 {% endblock %}
