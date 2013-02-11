@@ -10,3 +10,8 @@
 {% block body_answer %}
   {% include "items/feed_display/_question.html" with display="email_html" content=question %}
 {% endblock %}
+
+{% block extra_body %}
+  <a href="{% get_absolute_uri question request %}">{% trans "Click here to see the question on NewCo." %}</a>
+  <br>
+{% endblock %}
