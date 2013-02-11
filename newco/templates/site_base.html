@@ -65,10 +65,12 @@
         <script src="{{ STATIC_URL }}external/masonry/jquery.masonry.min.js"></script>
         <script src="{{ STATIC_URL }}js/modernizr-csstransitions.min.js"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
+        <script src="{{ STATIC_URL }}js/utils.js"></script>
         <script>
           var URL_REDIS = "{{ URL_REDIS }}";
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
+          var user = JSON.parse(htmlDecode("{{ user_json }}"))
         </script>
         <script src="{% static 'js/global.js' %}"></script>
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
@@ -101,6 +103,7 @@
     <script>$.launchJoyride();</script>
   {% endif %}
 
+  <!-- To remove -->
   <div class="hidden" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
   </div>
   {% analytics %}
