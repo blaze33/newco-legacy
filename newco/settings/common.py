@@ -223,6 +223,7 @@ INSTALLED_APPS = [
     "utils",
     "utils.follow",
     "utils.help",
+    "utils.hyphenate",
     "utils.redis",
     "utils.voting",
     "content",

@@ -29,11 +29,12 @@
 
 /* ↓↓↓ Tags ↓↓↓ */
 .label.tag {
-  -webkit-hyphens: auto;
+  /* Works in firefox, not in chrome */
+  /*-webkit-hyphens: auto;
      -moz-hyphens: auto;
       -ms-hyphens: auto;
        -o-hyphens: auto;
-          hyphens: auto;
+          hyphens: auto;*/
   white-space: pre-wrap;
   text-align: center;
 }
