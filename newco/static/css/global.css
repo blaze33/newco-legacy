@@ -28,6 +28,16 @@
 /* ↑↑↑ Masonry Transitions ↑↑↑ */
 
 /* ↓↓↓ Tags ↓↓↓ */
+.label.tag {
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+      -ms-hyphens: auto;
+       -o-hyphens: auto;
+          hyphens: auto;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
 .label.tag:hover {
   background-color: #3a87ad;
   -webkit-transition: background-color 0.5s;
