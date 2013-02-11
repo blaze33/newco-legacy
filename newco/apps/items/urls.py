@@ -11,7 +11,7 @@ urlpatterns = patterns("",
     url(r"^tag/(?P<tag_slug>[-\w]+)/(?P<cat>products|questions)"
         "/(?P<pill>search|products)$",
         ContentListView.as_view(), name="tagged_items"),
-    url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w]*)",
+    url(r"^(?P<model_name>[-\w]+)/(?P<pk>\d+)/(?P<slug>[-\w.]*)",
         ContentDetailView.as_view(),
         name="item_detail"),
     url(r"^add/(?P<model_name>[-\w]+)$",
