@@ -17,12 +17,13 @@
 
 {% block body %}
 
-<button class="btn btn-info pull-right" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Tips" %}</button>
+<button class="btn btn-info pull-right" data-toggle="collapse" data-target="#tips"><i class="icon-info-sign icon-white"></i> {% trans "Tips" %}</button>
 <h1>{% if not question %}{% trans "Ask a question" %}{% else %}{% trans "Edit your question" %}{% endif %}</h1>
+
+<br>
 
 <div class="row">
   <div class="span8">
-    <br>
     <form class="form-horizontal" method="POST">{% csrf_token %}
       {{ form|as_bootstrap_question_form }}
 
@@ -35,7 +36,7 @@
 
       {% if formset %}
         <div class="control-group"><div class="controls">
-          <button class="btn btn-mini btn-info pull-right" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
+          <button class="btn btn-mini btn-info pull-right" type="button" data-toggle="collapse" data-target="#tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
           <label class="checkbox">
             <input name="cb_answer" id="checkbox-answer" type="checkbox"{% if cb_answer %} checked{% endif %}>
             {% trans "Answer your own question" %}
@@ -58,12 +59,9 @@
 
       <input type="hidden" name="next" {% if next %}value="{{ next }}"{% endif %}>
     </form>
-
-    
-
   </div>
 
-  <div class="span4"><div class="collapse out" id="div_tips"><div class="well well-small">
+  <div class="span4"><div class="collapse out" id="tips"><div class="well well-small">
     <p>{% blocktrans %}
       Here, you can ask a question about one or several products:
       <ol>
@@ -92,7 +90,6 @@
         $("#submit-question").toggleClass("invisible");
         $("#submit-both").toggleClass("hidden");
     });
-    
 
     $(document).ready(function(){
         mixpanel.track("Load_add_question");
