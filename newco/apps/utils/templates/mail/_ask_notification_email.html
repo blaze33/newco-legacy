@@ -4,9 +4,14 @@
 {% load content_utils %}
 
 {% block body_title %}
-    <h4><a href="{{ receiver_url }}" style="color: #010101;">{{ receiver }}</a>,<br><a href="{{ asker_url }}" style="color: #010101;">{{ asker }}</a> {% trans "would like you to answer a question" %} {% source_display question "email" "#010101" %}{% trans ":" %}</h4>
+  <h4><a href="{{ receiver_url }}" style="color: #010101;">{{ receiver }}</a>,<br><a href="{{ asker_url }}" style="color: #010101;">{{ asker }}</a> {% trans "would like you to answer a question" %} {% source_display question "email" "#010101" %}{% trans ":" %}</h4>
 {% endblock %}
 
 {% block body_answer %}
-	{% include "items/feed_display/_question.html" with display="email_html" content=question %}
+  {% include "items/feed_display/_question.html" with display="email_html" content=question %}
+{% endblock %}
+
+{% block extra_body %}
+  <a href="{% get_absolute_uri question request %}">{% trans "Click here to see the question on NewCo." %}</a>
+  <br>
 {% endblock %}

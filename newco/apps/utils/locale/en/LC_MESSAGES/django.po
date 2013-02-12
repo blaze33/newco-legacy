@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 19:03+0100\n"
+"POT-Creation-Date: 2013-02-11 16:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,6 +115,10 @@ msgstr ""
 msgid "has answered your question"
 msgstr ""
 
+#: templates/mail/_answer_notification_email.html:15
+msgid "Click here to see the answer on NewCo."
+msgstr ""
+
 #: templates/mail/_answer_notification_email.txt:15
 #, python-format
 msgid "To see %(answerer)s's profile, go there:"
@@ -127,6 +131,10 @@ msgstr ""
 
 #: templates/mail/_ask_notification_email.html:7
 msgid "would like you to answer a question"
+msgstr ""
+
+#: templates/mail/_ask_notification_email.html:15
+msgid "Click here to see the question on NewCo."
 msgstr ""
 
 #: templates/mail/_ask_notification_email.txt:7
@@ -148,11 +156,11 @@ msgstr ""
 msgid "is now following you on NewCo!"
 msgstr ""
 
-#: templates/mail/_follow_notification_email.html:21
+#: templates/mail/_follow_notification_email.html:23
 #, python-format
 msgid ""
-"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go on his "
-"profile."
+"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go to <a "
+"href=\"%(follower_url)s\">his profile</a>."
 msgstr ""
 
 #: templates/mail/_follow_notification_email.txt:12
@@ -160,11 +168,11 @@ msgstr ""
 msgid "To see %(follower)s's profile, go there"
 msgstr ""
 
-#: templates/mail/_notification_email.html:35
+#: templates/mail/_notification_email.html:36
 msgid "Thanks,<br>The NewCo Project team"
 msgstr ""
 
-#: templates/mail/_notification_email.html:37
+#: templates/mail/_notification_email.html:38
 #, python-format
 msgid ""
 "\n"
@@ -221,17 +229,17 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:81 templatetags/tools.py:115
+#: templatetags/tools.py:81 templatetags/tools.py:116
 msgid "and"
 msgstr ""
 
-#: templatetags/tools.py:111
+#: templatetags/tools.py:112
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:117
+#: templatetags/tools.py:118
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""

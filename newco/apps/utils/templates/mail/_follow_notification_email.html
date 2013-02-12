@@ -16,7 +16,10 @@
   {% include "profiles/_profile_info.html" with profile=follower.get_profile display="email_html" %}
 
   <br>
-  <br>
 
-  {% blocktrans %}To follow back <a href="{{ follower_url }}">{{ follower_name }}</a>, go on his profile.{% endblocktrans %}
+{% endblock %}
+
+{% block extra_body %}
+  {% blocktrans %}To follow back <a href="{{ follower_url }}">{{ follower_name }}</a>, go to <a href="{{ follower_url }}">his profile</a>.{% endblocktrans %}
+  <br>
 {% endblock %}
