@@ -15,7 +15,6 @@
   <style type="text/css">
     #div_id_items, #div_id_tags {
       display: none;
-      opacity: 0;
     }
   </style>
 {% endblock %}
@@ -33,7 +32,7 @@
     <form class="form-horizontal" method="POST">{% csrf_token %}
       {{ form|as_bootstrap_question_form }}
 
-      <div class="control-group" id="div_submit_q"{% if cb_answer %} style="visibility: hidden;" {% endif %}>
+      <div class="control-group{% if cb_answer %} invisible{% endif %}" id="submit-question">
         <div class="controls">
           <button class="btn btn-primary" name="add_question" type="submit" value="{{ statuses.public }}">{% if question.is_public %}{% trans "Update and keep public" %}{% elif question.is_draft %}{% trans "Update and publish" %}{% else %}{% trans "Publish your question" %}{% endif %}</button>
           <button class="btn" name="add_question" type="submit" value="{{ statuses.draft }}">{% if question.is_public %}{% trans "Unpublish and save as draft" %}{% elif question.is_draft %}{% trans "Update and keep as draft" %}{% else %}{% trans "Save as draft" %}{% endif %}</button>
@@ -44,7 +43,7 @@
         <div class="control-group"><div class="controls">
           <button class="btn btn-mini btn-info pull-right" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
           <label class="checkbox">
-            <input name="cb_answer" data-toggle="collapse" data-target="#answer_form" type="checkbox"{% if cb_answer %} checked{% endif %}>
+            <input name="cb_answer" id="checkbox-answer" type="checkbox"{% if cb_answer %} checked{% endif %}>
             {% trans "Answer your own question" %}
           </label>
         </div></div>
@@ -54,7 +53,8 @@
             {{ form|as_bootstrap }}
           {% endfor %}
         </div>
-        <div class="control-group" id="div_submit_qa"{% if not cb_answer %} style="display: none;"{% endif %}>
+
+        <div class="control-group{% if not cb_answer %} hidden{% endif %}" id="submit-both">
           <div class="controls">
             <button class="btn btn-primary" name="add_question" type="submit" value="{{ statuses.public }}">{% trans "Publish your question and answer" %}</button>
             <button class="btn" name="add_question" type="submit" value="{{ statuses.draft }}">{% trans "Save as draft" %}</button>
@@ -65,19 +65,19 @@
       <input type="hidden" name="next" {% if next %}value="{{ next }}"{% endif %}>
     </form>
 
-      <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
-        <div class="modal-header">
-          <a class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</a>
-          <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
-        </div>
-        <form class="form-horizontal">
-          <div class="modal-body">{{ i_form|as_bootstrap }}</div>
-          <div class="modal-footer">
-            <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
-            <input class="btn btn-primary" name="add_item" id="add-item" type="button" value="{% trans 'Add product' %}">
-          </div>
-        </form>
+    <div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</a>
+        <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
       </div>
+      <form class="form-horizontal">
+        <div class="modal-body">{{ i_form|as_bootstrap }}</div>
+        <div class="modal-footer">
+          <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
+          <input class="btn btn-primary" name="add_item" id="add-item" type="button" value="{% trans 'Add product' %}">
+        </div>
+      </form>
+    </div>
 
   </div>
 
@@ -102,32 +102,26 @@
   {{ formset.media.js }}
   <script type="text/javascript">
     {% if show %}$("#itemModal").modal("show"){% endif %}
-    $('#answer_form').on('hide', function () {
-        $('#div_submit_q').css('visibility','visible');
-        $('#div_submit_qa').css('display','none');
-    })
-    $('#answer_form').on('show', function () {
-        $('#div_submit_q').css('visibility','hidden');
-        $('#div_submit_qa').css('display','inline');
+    $("#checkbox-answer").on("click", function (eventObject) {
+        $("#answer_form").collapse("toggle")
+        $("#submit-question").toggleClass("invisible")
+        $("#submit-both").toggleClass("hidden")
     })
 
-    function hide_tags_show_items() {
-        $('#div_id_items').show().animate({opacity: 1});
-        $('#div_id_tags').hide().animate({opacity: 0});
-    }
-    function hide_items_show_tags() {
-        $('#div_id_items').hide().animate({opacity: 0});
-        $('#div_id_tags').show().animate({opacity: 1});
-    }
+    var radioSelector = ":radio[name=parents]";
 
-    if($("#id_parents_1").is(":checked")){hide_tags_show_items();}
-    if($("#id_parents_2").is(":checked")){hide_items_show_tags();}
-    $('#id_parents_1').click(function () {hide_tags_show_items();})
-    $('#id_parents_2').click(function () {hide_items_show_tags();})
+    $.showChecked = function () {
+        var selectedValue = $(radioSelector + ":checked").val();
+        if ( selectedValue ) {
+            $("#div_id_" + selectedValue).fadeToggle();
+        }
+    };
 
-    $(document).ready(function(){
-        mixpanel.track("Load_add_question");
-    });
+    $.showChecked();
+    $(radioSelector).on("click", function (eventObject) {
+        $("#div_id_items, #div_id_tags").hide();
+        $.showChecked();
+    })
 
     $("#id_tags").select2($.select2TagsParameters);
     $("#id_item-tags").select2($.select2TagsParameters);
@@ -175,5 +169,8 @@
         });
     });
 
+    $(document).ready(function(){
+        mixpanel.track("Load_add_question");
+    });
   </script>
 {% endblock %}

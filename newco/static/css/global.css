@@ -361,6 +361,10 @@
   color: #333
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 /* Rules from pinax_theme_bootstrap theme.css */
 @media (min-width: 980px) {
   body {
