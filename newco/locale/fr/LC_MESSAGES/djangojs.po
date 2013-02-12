@@ -2,73 +2,91 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 12:54+0100\n"
-"PO-Revision-Date: 2013-01-30 12:55\n"
+"POT-Creation-Date: 2013-02-12 18:24+0100\n"
+"PO-Revision-Date: 2013-02-12 18:23\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
-#: apps/utils/help/static/js/help.js:48
+#: apps/items/static/js/question_form.js:32
+msgid "Search for a product"
+msgstr "Chercher un produit"
+
+#: apps/items/static/js/question_form.js:36
+msgid "not found"
+msgstr "n'existe pas"
+
+#: apps/items/static/js/question_form.js:37
+msgid ""
+"Click here if you cannot find the product you want to link your question to."
+msgstr ""
+"Cliquez ici si vous ne trouvez pas le produit que vous voulez lier à votre "
+"question."
+
+#: apps/items/static/js/question_form.js:41
+msgid "Create product"
+msgstr "Créer le produit"
+
+#: apps/utils/help/static/js/help.js:47
 #, c-format
 msgid "Select one expert"
 msgid_plural "Select up to %s experts"
 msgstr[0] "Sélectionnez un expert"
 msgstr[1] "Sélectionnez jusqu'à %s experts"
 
-#: apps/utils/help/static/js/help.js:74
+#: apps/utils/help/static/js/help.js:73
 #, c-format
 msgid "Select one user"
 msgid_plural "Select up to %s users"
 msgstr[0] "Sélectionnez un utilisateur"
 msgstr[1] "Sélectionnez jusqu'à %s utilisateurs"
 
-#: static/js/global.js:180
+#: static/js/global.js:93
 msgid "(more)"
 msgstr "(plus)"
 
-#: static/js/global.js:181
+#: static/js/global.js:94
 msgid "(less)"
 msgstr "(moins)"
 
-#: static/js/global.js:187
+#: static/js/global.js:99
 msgid "No matches found"
 msgstr "Pas de résultats correspondant"
 
-#: static/js/global.js:191
+#: static/js/global.js:103
 #, c-format
 msgid "Please enter one more character"
 msgid_plural "Please enter %s more characters"
 msgstr[0] "Tapez encore un caractère"
 msgstr[1] "Tapez encore %s caractères"
 
-#: static/js/global.js:197
+#: static/js/global.js:109
 #, c-format
 msgid "You can only select one item"
 msgid_plural "You can only select %s items"
 msgstr[0] "Vous pouvez sélectionner seulement un item"
 msgstr[1] "Vous pouvez sélectionner seulement %s items"
 
-#: static/js/global.js:202
+#: static/js/global.js:114
 msgid "Loading more results..."
 msgstr "Chargement de plus de résultats..."
 
-#: static/js/global.js:204
+#: static/js/global.js:116
 msgid "Searching..."
 msgstr "Recherche..."
 
-#: static/js/global.js:209
-msgid ""
-"e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
+#: static/js/global.js:121
+msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
 "ex. : tennis, randonnée, chaussures, ménage, cuisine, GPS, smartphone, etc."

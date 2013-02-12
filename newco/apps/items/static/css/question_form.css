@@ -1,0 +1,5 @@
+@charset 'UTF-8';
+
+#div_id_items, #div_id_tags {
+  display: none;
+}

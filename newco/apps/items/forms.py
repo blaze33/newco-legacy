@@ -92,6 +92,12 @@ class QuestionForm(ModelForm):
             "tags": TagWidget(attrs={"class": "input-block-level"})
         }
 
+    class Media:
+        css = {
+            "all": ("css/question_form.css",)
+        }
+        js = ("js/question_form.js",)
+
     def __init__(self, request, *args, **kwargs):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)

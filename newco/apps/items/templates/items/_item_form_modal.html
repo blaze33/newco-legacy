@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+
+<div class="modal fade hide" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</a>
+    <h3 id="itemModalLabel">{% trans "Add a product"%}{% trans ":" %}</h3>
+  </div>
+  <form class="form-horizontal">
+    <div class="modal-body">{{ form|as_bootstrap }}</div>
+    <div class="modal-footer">
+      <a class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Cancel" %}</a>
+      <input class="btn btn-primary" name="add_item" id="add-item" type="button" value="{% trans 'Add product' %}">
+    </div>
+  </form>
+</div>

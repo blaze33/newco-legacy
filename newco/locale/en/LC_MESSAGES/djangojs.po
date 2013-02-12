@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 12:54+0100\n"
+"POT-Creation-Date: 2013-02-12 18:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/utils/help/static/js/help.js:48
+#: apps/items/static/js/question_form.js:32
+msgid "Search for a product"
+msgstr ""
+
+#: apps/items/static/js/question_form.js:36
+msgid "not found"
+msgstr ""
+
+#: apps/items/static/js/question_form.js:37
+msgid ""
+"Click here if you cannot find the product you want to link your question to."
+msgstr ""
+
+#: apps/items/static/js/question_form.js:41
+msgid "Create product"
+msgstr ""
+
+#: apps/utils/help/static/js/help.js:47
 #, c-format
 msgid "Select one expert"
 msgid_plural "Select up to %s experts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: apps/utils/help/static/js/help.js:74
+#: apps/utils/help/static/js/help.js:73
 #, c-format
 msgid "Select one user"
 msgid_plural "Select up to %s users"
 msgstr[0] ""
 msgstr[1] ""
 
-#: static/js/global.js:180
+#: static/js/global.js:93
 msgid "(more)"
 msgstr ""
 
-#: static/js/global.js:181
+#: static/js/global.js:94
 msgid "(less)"
 msgstr ""
 
-#: static/js/global.js:187
+#: static/js/global.js:99
 msgid "No matches found"
 msgstr ""
 
-#: static/js/global.js:191
+#: static/js/global.js:103
 #, c-format
 msgid "Please enter one more character"
 msgid_plural "Please enter %s more characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: static/js/global.js:197
+#: static/js/global.js:109
 #, c-format
 msgid "You can only select one item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: static/js/global.js:202
+#: static/js/global.js:114
 msgid "Loading more results..."
 msgstr ""
 
-#: static/js/global.js:204
+#: static/js/global.js:116
 msgid "Searching..."
 msgstr ""
 
-#: static/js/global.js:209
+#: static/js/global.js:121
 msgid "e.g. tennis, trekking, shoes, housework, cooking, GPS, smartphone, etc."
 msgstr ""
