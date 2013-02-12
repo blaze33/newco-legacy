@@ -8,23 +8,16 @@
 {% load compress %}
 
 {% block style_base %}
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-    {% compress css %}
-        <link href="{% static 'external/select2/select2.css' %}" rel="stylesheet">
-        <link href="{{ STATIC_URL }}external/joyride/joyride-2.0.3.css" rel="stylesheet">
-        <link href="{% static 'css/global.css' %}" rel="stylesheet">
-        {% include "feedback/header.html" %}
-        <!--
-            We may need to use font-awesome. Won't replace glyphicons for the moment
-            due to bad pixel fitting of small icons.
-            <link rel="stylesheet" href="{% static "css/font-awesome.css" %}">
-        -->
-    {% endcompress %}
-    {% compress css %}
-        {% block extra_style %}{% endblock %}
-    {% endcompress %}
+  <link href="{{ STATIC_URL }}img/favicon.png" type="image/png" rel="icon">
+  <link href="{{ STATIC_URL }}favicon.ico" rel="shortcut icon">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+  {% compress css %}
+    <link href="{{ STATIC_URL }}external/select2/select2.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}external/joyride/joyride-2.0.3.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/global.css" rel="stylesheet">
+    {% include "feedback/header.html" %}
+  {% endcompress %}
+  {% compress css %}{% block extra_style %}{% endblock %}{% endcompress %}
 {% endblock %}
 
 {% block extra_head_base %}
@@ -52,7 +45,6 @@
 
 {% block footer %}{% include "_footer.html" %}{% endblock %}
 
-
 {% block script_base %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
@@ -76,9 +68,7 @@
         <script src="{% static 'js/mixpanel_functions.js' %}"></script>
         <script src="{{ STATIC_URL }}js/voting.js"></script>
     {% endcompress %}
-    {% compress js %}
-        {% block extra_script %}{% endblock %}
-    {% endcompress %}
+    {% compress js %}{% block extra_script %}{% endblock %}{% endcompress %}
 {% endblock %}
 
 {% block extra_body_base %}
