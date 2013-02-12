@@ -83,8 +83,6 @@
   {{ form.media.js }}
   {{ formset.media.js }}
   <script type="text/javascript">
-    {% if show %}$("#itemModal").modal("show"){% endif %}
-
     $("#checkbox-answer").on("click", function (eventObject) {
         $("#answer_form").collapse("toggle");
         $("#submit-question").toggleClass("invisible");
