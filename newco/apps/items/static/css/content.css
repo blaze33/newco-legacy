@@ -312,6 +312,7 @@ p.question {
 /* ↑↑↑ Carousel ↑↑↑ */
 
 /* ↓↓↓ Bootstrap-WYSIWYG ↓↓↓ */
+/* Should be in form media */
 .wysiwyg {
   width: 100%;
   -webkit-box-sizing: border-box;
