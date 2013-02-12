@@ -65,8 +65,8 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     PARENTS = Choices(
-        ("0", "products", pgettext_lazy("parent", "products")),
-        ("1", "tags", pgettext_lazy("parent", "tags"))
+        ("items", "products", pgettext_lazy("parent", "products")),
+        ("tags", "tags", pgettext_lazy("parent", "tags"))
     )
 
     max_tags = 10
@@ -86,11 +86,9 @@ class QuestionForm(ModelForm):
         fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
-                "class": "input-block-level",
-                "placeholder": _("Ask something specific."),
-                "rows": 2}),
-            "items": SelectMultiple(attrs={
-                "class": "input-block-level", "rows": 1}),
+                "class": "input-block-level", "rows": 2,
+                "placeholder": _("Ask something specific.")}),
+            "items": SelectMultiple(attrs={"class": "input-block-level"}),
             "tags": TagWidget(attrs={"class": "input-block-level"})
         }
 
@@ -101,9 +99,11 @@ class QuestionForm(ModelForm):
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
         if self.object:
-            self.fields.get("parents").initial = self.PARENTS.products \
-                if self.object.items.count() else self.PARENTS.tags
-        self.fields.get("items").help_text = self.PRODUCTS_HELP_TEXT.format(
+            if self.object.items.all():
+                self.fields["parents"].initial = self.PARENTS.products
+            elif self.object.tags.all():
+                self.fields["parents"].initial = self.PARENTS.tags
+        self.fields["items"].help_text = self.PRODUCTS_HELP_TEXT.format(
             max=self.max_products)
 
     def save(self, commit=True, **kwargs):
