@@ -23,10 +23,8 @@
 
 {% block body %}
 
-<div>
-  <span class="pull-right"><button class="btn btn-success" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Tips" %}</button></span>
-  <h1>{% if not question %}{% trans "Ask a question" %}{% else %}{% trans "Edit your question" %}{% endif %}</h1>
-</div>
+<button class="btn btn-info pull-right" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Tips" %}</button>
+<h1>{% if not question %}{% trans "Ask a question" %}{% else %}{% trans "Edit your question" %}{% endif %}</h1>
 
 <div class="row">
   <div class="span8">
@@ -43,9 +41,7 @@
 
       {% if formset %}
         <div class="control-group"><div class="controls">
-          <span class="pull-right">
-            <button class="btn btn-mini btn-success" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
-          </span>
+          <button class="btn btn-mini btn-info pull-right" type="button" data-toggle="collapse" data-target="#div_tips"><i class="icon-info-sign icon-white"></i> {% trans "Why is it encouraged?" %}</button>
           <label class="checkbox">
             <input name="cb_answer" data-toggle="collapse" data-target="#answer_form" type="checkbox"{% if cb_answer %} checked{% endif %}>
             {% trans "Answer your own question" %}
