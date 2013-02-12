@@ -310,13 +310,3 @@ p.question {
   padding: 10px;
 }
 /* ↑↑↑ Carousel ↑↑↑ */
-
-/* ↓↓↓ Bootstrap-WYSIWYG ↓↓↓ */
-/* Should be in form media */
-.wysiwyg {
-  width: 100%;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-/* ↑↑↑ Bootstrap-WYSIWYG ↑↑↑ */

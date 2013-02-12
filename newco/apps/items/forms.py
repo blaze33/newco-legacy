@@ -186,6 +186,11 @@ class AnswerForm(ModelForm):
                 "placeholder": _("Be concise and to the point.")}),
         }
 
+    class Media:
+        css = {
+            "all": ("css/answer_form.css",)
+        }
+
     def __init__(self, request, *args, **kwargs):
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
