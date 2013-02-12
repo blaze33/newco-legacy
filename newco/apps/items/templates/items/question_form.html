@@ -9,6 +9,7 @@
 {% load staticfiles %}
 
 {% block extra_style %}
+  <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
   {{ form.media.css }}
   {{ formset.media.css }}
   <style type="text/css">
@@ -47,12 +48,12 @@
             {% trans "Answer your own question" %}
           </label>
         </div></div>
-        <div class="row collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}" id="answer_form"><div class="span7">
+        <div class="collapse {% if formset_errors or cb_answer %}in{% else %}out{% endif %}" id="answer_form">
           {{ formset.management_form }}
           {% for form in formset %}
             {{ form|as_bootstrap }}
           {% endfor %}
-        </div></div>
+        </div>
         <div class="control-group" id="div_submit_qa"{% if not cb_answer %} style="display: none;"{% endif %}>
           <div class="controls">
             <button class="btn btn-primary" name="add_question" type="submit" value="{{ statuses.public }}">{% trans "Publish your question and answer" %}</button>

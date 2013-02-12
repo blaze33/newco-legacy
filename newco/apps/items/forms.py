@@ -182,11 +182,8 @@ class AnswerForm(ModelForm):
         fields = ("content", )
         widgets = {
             "content": BW_small_Widget(attrs={
-                "rows": 10,
-                "style": "width: 100%; box-sizing: border-box;",
-                "placeholder": _("Be concise and to the point."),
-                "rel": "bw_editor_small",
-            }),
+                "rows": 10, "class": "wysiwyg", "rel": "bw_editor_small",
+                "placeholder": _("Be concise and to the point.")}),
         }
 
     def __init__(self, request, *args, **kwargs):
