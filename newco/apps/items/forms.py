@@ -198,15 +198,16 @@ class AnswerForm(ModelForm):
         }
 
     def __init__(self, request, *args, **kwargs):
+        kwargs.pop("experts_qs", {})
+        kwargs.pop("items", {})
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
-        question_id = request.REQUEST.get("question_id", 0)
-        self.question = Question.objects.get(id=question_id) if question_id \
-            else getattr(self.object, "question", None)
-
+        if "question-id" in request.POST:
+            question_id = request.POST["question-id"]
+            self.question = Question.objects.get(id=question_id)
         self.fields["content"].label = ""
 
     def save(self, commit=True, **kwargs):

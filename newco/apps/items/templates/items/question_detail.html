@@ -19,7 +19,7 @@
         width:         calc(100% - 40px);
       }
     </style>
-    {{ question.answer_form.media.css }}
+    {{ answer_form.media.css }}
 {% endblock %}
 
 {% block head_title %}{{ question.content }}{% endblock %}
@@ -28,6 +28,12 @@
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
     {% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}
+
+    <br>
+    <br>
+
+    {% include "items/_answer_form.html" with form=answer_form %}
+    
   </div>
 
   <div class="span3">
@@ -62,13 +68,13 @@
 {% block extra_script %}
   <script src="{{ STATIC_URL }}js/content.js"></script>
   <script src="{{ STATIC_URL }}js/help.js"></script>
-  {{ question.answer_form.media.js }}
+  {{ answer_form.media.js }}
   <script>
     $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
 
         var hash = window.location.hash.substring(1);
-        if ( /answer_form/.test(hash) ) {
+        if ( /answer-form/.test(hash) ) {
             editor.focus();
         }
 

@@ -207,9 +207,6 @@ class ContentUpdateView(ContentView, ContentFormMixin, UpdateView):
 # Won't be an issue in 1.5
 class QuestionFormMixin(object):
 
-    items = []
-    tags = []
-
     def form_invalid(self, form):
         if "question" not in self.request.POST:
             return super(QuestionFormMixin, self).form_invalid(form)
@@ -225,9 +222,9 @@ class QuestionFormMixin(object):
 
     def get_form_kwargs(self):
         kwargs = super(QuestionFormMixin, self).get_form_kwargs()
-        kwargs.update({"request": self.request, "prefix": "question"})
+        kwargs.update({"request": self.request})
         for attr in ["items", "tags"]:
-            if getattr(self, attr):
+            if hasattr(self, attr):
                 kwargs.update({attr: getattr(self, attr)})
         return kwargs
 
@@ -263,6 +260,55 @@ class QuestionFormMixin(object):
             context_instance=RequestContext(self.request))
 
         return mark_safe(template.format(message=message, form=form))
+
+
+class AnswerFormMixin(object):
+
+    def form_invalid(self, form):
+        if "answer" not in self.request.POST:
+            return super(AnswerFormMixin, self).form_invalid(form)
+        return self.render_to_response(self.get_context_data(
+            answer_form=form))
+
+    def form_valid(self, form):
+        if "answer" not in self.request.POST:
+            return super(AnswerFormMixin, self).form_valid(form)
+        answer = form.save()
+        self.success_url = answer.get_absolute_url()
+        return HttpResponseRedirect(self.success_url)
+
+    def get_form_kwargs(self):
+        kwargs = super(AnswerFormMixin, self).get_form_kwargs()
+        kwargs.update({"request": self.request})
+        if hasattr(self, "status"):
+            kwargs.update({"status": self.status})
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        form = kwargs.pop("answer_form", None)
+        if not form:
+            form_class = AnswerForm
+            form = self.get_form(form_class)
+            if "answer" not in self.request.POST:
+                form.errors.clear()
+        kwargs.update({"answer_form": form})
+        return super(AnswerFormMixin, self).get_context_data(**kwargs)
+
+    def post(self, request, *args, **kwargs):
+        POST = request.POST
+        if "answer" not in POST:
+            return super(AnswerFormMixin, self).post(request, *args, **kwargs)
+
+        self.status = int(POST.get("answer"))
+        form_class = AnswerForm
+        form = self.get_form(form_class)
+        if form.is_valid():
+            add_message("object-created", request, model=form._meta.model)
+            return self.form_valid(form)
+        else:
+            add_message("form-invalid", request, model=form._meta.model)
+            del self.status
+            return self.form_invalid(form)
 
 
 class RelatedObjectsMixin(object):
@@ -311,8 +357,8 @@ class RelatedObjectsMixin(object):
 
 
 class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
-                        RelatedObjectsMixin, DetailView, FormMixin,
-                        FollowMixin, VoteMixin):
+                        AnswerFormMixin, RelatedObjectsMixin, DetailView,
+                        FormMixin, FollowMixin, VoteMixin):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -363,9 +409,6 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
                 id=context["question"].id).prefetch_related(
                     "answer_set__author__reputation").select_subclasses().get()
 
-            q.answer_form = AnswerForm(request, data=POST) \
-                if "answer" in POST else AnswerForm(request)
-
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
@@ -391,18 +434,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
         self.experts = self.get_experts()
         self.items = [self.object]
         POST = request.POST
-        if "answer" in POST:
-            status = int(POST.get("answer"))
-            form = AnswerForm(request, data=POST, status=status)
-            if form.is_valid():
-                add_message("object-created", request, model=form._meta.model)
-                answer = form.save()
-                self.success_url = answer.get_absolute_url()
-                return self.form_valid(form)
-            else:
-                add_message("form-invalid", request, model=form._meta.model)
-                return self.form_invalid(form)
-        elif request.is_ajax() and "about" in POST:
+        if request.is_ajax() and "about" in POST:
             about = POST["about"]
             ## DJANGO 1.5: use defer and save only about field
             profile = request.user.get_profile()
