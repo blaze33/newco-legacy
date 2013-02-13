@@ -166,10 +166,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
     "pinax_theme_bootstrap.context_processors.theme",
-    "utils.context_processors.settings_mp",
-    "utils.context_processors.site_settings",
+    "utils.context_processors.mixpanel",
+    "utils.context_processors.site",
     "utils.redis.context_processors.redis_url",
-    "django.core.context_processors.i18n",
 ]
 
 INSTALLED_APPS = [

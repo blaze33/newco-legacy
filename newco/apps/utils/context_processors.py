@@ -8,7 +8,7 @@ from django.contrib.sites.models import Site
 from account.utils import user_display
 
 
-def site_settings(request):
+def site(request):
     site = Site.objects.get_current()
     return {
         "SITE_NAME": site.name,
@@ -16,7 +16,7 @@ def site_settings(request):
     }
 
 
-def settings_mp(request):
+def mixpanel(request):
     output = {"MIXPANEL_KEY_ID": settings.MIXPANEL_KEY_ID}
     user = request.user
     if user.is_authenticated():
