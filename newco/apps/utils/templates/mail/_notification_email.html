@@ -31,7 +31,8 @@
   	<td style="width: 95px;">
     </td>
   	<td style="width:585px; padding: 10px 0 0 10px; border-top: 1px = solid #EAEAEA">
-	  <br>
+      {% block extra_body %}{% endblock %}
+  	  <br>
       {% trans "Thanks,<br>The NewCo Project team" %}<br>
       <hr>
       <small>{% blocktrans %}

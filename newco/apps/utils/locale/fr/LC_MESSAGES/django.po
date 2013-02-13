@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 19:03+0100\n"
-"PO-Revision-Date: 2013-02-06 19:04\n"
-"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
+"POT-Creation-Date: 2013-02-11 16:58+0100\n"
+"PO-Revision-Date: 2013-02-11 17:00\n"
+"Last-Translator:   <sebastien.worms@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,6 +119,10 @@ msgstr "Réputation"
 msgid "has answered your question"
 msgstr "a répondu à votre question"
 
+#: templates/mail/_answer_notification_email.html:15
+msgid "Click here to see the answer on NewCo."
+msgstr "Cliquez ici pour voir la réponse sur NewCo."
+
 #: templates/mail/_answer_notification_email.txt:15
 #, python-format
 msgid "To see %(answerer)s's profile, go there:"
@@ -132,6 +136,10 @@ msgstr "Pour voir %(question)s, rendez-vous ici&nbsp;:"
 #: templates/mail/_ask_notification_email.html:7
 msgid "would like you to answer a question"
 msgstr "aimerait que vous répondiez à une question"
+
+#: templates/mail/_ask_notification_email.html:15
+msgid "Click here to see the question on NewCo."
+msgstr "Cliquez ici pour voir la question sur NewCo."
 
 #: templates/mail/_ask_notification_email.txt:7
 msgid "would like you to answer the question"
@@ -152,25 +160,25 @@ msgstr "Pour voir %(question)s, rendez-vous ici"
 msgid "is now following you on NewCo!"
 msgstr "vous suit désormais sur NewCo&#x202F;!"
 
-#: templates/mail/_follow_notification_email.html:21
+#: templates/mail/_follow_notification_email.html:23
 #, python-format
 msgid ""
-"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go on his"
-" profile."
+"To follow back <a href=\"%(follower_url)s\">%(follower_name)s</a>, go to <a "
+"href=\"%(follower_url)s\">his profile</a>."
 msgstr ""
 "Pour suivre <a href=\"%(follower_url)s\">%(follower_name)s</a> en retour, "
-"allez sur son profile."
+"allez sur <a href=\"%(follower_url)s\">son profile</a>."
 
 #: templates/mail/_follow_notification_email.txt:12
 #, python-format
 msgid "To see %(follower)s's profile, go there"
 msgstr "Pour voir le profil de %(follower)s, rendez-vous ici"
 
-#: templates/mail/_notification_email.html:35
+#: templates/mail/_notification_email.html:36
 msgid "Thanks,<br>The NewCo Project team"
 msgstr "Merci,<br> L'équipe NewCo Project"
 
-#: templates/mail/_notification_email.html:37
+#: templates/mail/_notification_email.html:38
 #, python-format
 msgid ""
 "\n"
@@ -230,17 +238,17 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/tools.py:81 templatetags/tools.py:115
+#: templatetags/tools.py:81 templatetags/tools.py:116
 msgid "and"
 msgstr "et"
 
-#: templatetags/tools.py:111
+#: templatetags/tools.py:112
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/tools.py:117
+#: templatetags/tools.py:118
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] "avec le tag"
