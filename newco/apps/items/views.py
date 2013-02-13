@@ -310,8 +310,9 @@ class RelatedObjectsMixin(object):
         return super(RelatedObjectsMixin, self).get_context_data(**kwargs)
 
 
-class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, RelatedObjectsMixin,
-                        DetailView, FormMixin, FollowMixin, VoteMixin):
+class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
+                        RelatedObjectsMixin, DetailView, FormMixin,
+                        FollowMixin, VoteMixin):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -334,20 +335,8 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
                 "author__reputation", "answer_set__author__reputation"
             ).order_queryset("popular", scores)
 
-            q_id = -1
-            if "answer" in POST and "question_id" in POST:
-                q_id = int(POST.get("question_id"))
-                context.update({"q_id": q_id})
-
-            media = None
-            for q in questions:
-                q.answer_form = AnswerForm(request=request) \
-                    if q.id != q_id else AnswerForm(data=POST, request=request)
-                if not media:
-                    media = q.answer_form.media
-
             context.update({"questions": questions, "scores": scores,
-                            "votes": votes, "media": media})
+                            "votes": votes})
 
             # Linked affiliated products
             products = item.affiliationitem_set.select_related("store")
