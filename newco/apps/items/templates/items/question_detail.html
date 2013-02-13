@@ -72,7 +72,7 @@
                 type: "post",
                 data: $(this).serialize() + "&" + $("#submit-edit-about").attr("name"),
                 success: function(data, textstatus, jqxhr) {
-                    if (data.toggle) { $("button[rel=about]").toggle() }
+                    if (data.toggle) { $("button[rel=about]").toggleClass("hidden") }
                     if (data.about !== "") { data.about = ", " + data.about; }
                     $("#user-about").text(data.about);
                     $.displayMessages(data.messages);
