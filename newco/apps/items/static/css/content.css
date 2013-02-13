@@ -1,14 +1,14 @@
 @charset 'UTF-8';
 
 /* ↓↓↓ Content Related Elements ↓↓↓ */
-h1.question {
+.question > div > h1 {
   font-size: 130%;
   font-weight: bold;
   line-height: 140%;
   margin-top: 0px;
 }
 
-p.question {
+.question > div > p {
   font-size: 16px;
   font-weight: bold;
   line-height: 140%;
