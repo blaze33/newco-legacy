@@ -30,7 +30,7 @@
   <li class="nav-header">{% trans "Profiles" %}</li>
 
   {% if user.is_authenticated %}
-    <li{% if is_me or profile_form %} class="active"{% endif %}><a class="tooltip-right" title="{% trans 'My profile, exactly as other users see it&mdash;besides the &lsquo;Update&rsquo; button' %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {% user_display user %}</a></li>
+    <li{% if is_me or profile_form %} class="active"{% endif %}><a class="tooltip-right" title="{% trans 'My profile, exactly as other users see it&mdash;besides the &lsquo;Update&rsquo; button' %}" href="{{ user.get_absolute_url }}">{% profile_pic user 18 %} {{ USERNAME }}</a></li>
   {% endif %}
   {% if not is_me and not profile_form and profile %}<li class="active">
     <b>{% trans "User profile" %}{% trans ":" %}</b>
