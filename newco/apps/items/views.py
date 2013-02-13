@@ -570,12 +570,14 @@ class TopCategoriesView(ListView):
         weight=Count('taggit_taggeditem_items')).order_by('-weight')
 
     def render_json(self, context):
-        data, data['object_list'] = {}, []
-        for tag in context['object_list']:
-            data['object_list'].append([unicode(tag), tag.id, tag.weight])
-        data['more'] = context['page_obj'].has_next()
-        data['page_number'] = context['page_obj'].number
-        data['num_pages'] = context['paginator'].num_pages
+        output_format = lambda t: [unicode(t), t.id, t.weight]
+        data = {'object_list': map(output_format,
+                                   context['object_list'])}
+        data.update({
+                'more': context['page_obj'].has_next(),
+                'page_number': context['page_obj'].number,
+                'num_pages': context['paginator'].num_pages,
+            })
         return HttpResponse(json.dumps(data), 'application/json')
 
     def render_to_response(self, context, **response_kwargs):
