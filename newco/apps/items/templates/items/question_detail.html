@@ -8,8 +8,15 @@
     <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
     <style>
-      div.question {
-        margin-bottom: 20px;
+      div.question { margin-bottom: 20px; }
+
+      #edit-about {
+        width: 100%;
+      }
+      #edit-about input:first-child {
+        width: -webkit-calc(100% - 40px);
+        width:    -moz-calc(100% - 40px);
+        width:         calc(100% - 40px);
       }
     </style>
     {{ question.answer_form.media.css }}
@@ -65,24 +72,36 @@
             editor.focus();
         }
 
-        // script for "Edit your bio"
+        // Edit profile.about with ajax
         $("#form-edit-about").submit(function() {
             $("#modal-edit-about").modal("hide");
             $.ajax({
                 type: "post",
-                data: $(this).serialize() + "&" + $("#submit-edit-about").attr("name"),
+                data: $(this).serialize() + "&" + $("[type='submit']", $(this)).attr("name"),
                 success: function(data, textstatus, jqxhr) {
-                    if (data.toggle) { $("button[rel=about]").toggleClass("hidden") }
-                    if (data.about !== "") { data.about = ", " + data.about; }
+                    if ( data.toggle ) {
+                        $(".about").toggleClass("hidden");
+                    }
+                    if ( data.about !== "" ) {
+                        data.about = ", " + data.about;
+                    }
                     $("#user-about").text(data.about);
                     $.displayMessages(data.messages);
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr, status, error);
                 }
             });
             return false;
         });
+
+        // Focus input on modal load
+        $(".about").click( function (eventObject) {
+            $("#modal-edit-about").modal("show");
+        });
+        $("#modal-edit-about").on("shown", function (eventObject) {
+            var input = $("#edit-about input");
+            input.focus();
+            input.val(input.val());
+        });
+
     });
 
     $(document).ready(function(){mixpanel.track("Load_question_detail");});

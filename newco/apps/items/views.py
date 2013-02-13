@@ -413,8 +413,8 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin, Related
             else:
                 add_message("form-invalid", request, model=form._meta.model)
                 return self.form_invalid(form)
-        elif request.is_ajax and "edit_about" in POST:
-            about = POST.get("about", "")
+        elif request.is_ajax() and "about" in POST:
+            about = POST["about"]
             ## DJANGO 1.5: use defer and save only about field
             profile = request.user.get_profile()
             toggle = bool(profile.about) != bool(about)
