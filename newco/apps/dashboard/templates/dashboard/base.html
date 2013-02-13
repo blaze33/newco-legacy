@@ -1,7 +1,6 @@
 {% extends "subnav_base.html" %}
 
 {% load i18n %}
-{% load account_tags %}
 {% load pagination_tags %}
 {% load staticfiles %}
 
@@ -16,8 +15,7 @@
 {% block subnav %}{% include "dashboard/_subnav.html" %}{% endblock %}
 
 {% block head_title %}
-  {% user_display user as username %}
-  {% blocktrans %}{{ username }}'s dashboard | {{ page_name }}{% endblocktrans %}
+  {% blocktrans %}{{ USERNAME }}'s dashboard | {{ page_name }}{% endblocktrans %}
 {% endblock %}
 
 {% block body %}
