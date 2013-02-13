@@ -11,7 +11,7 @@
     {% plural %}
       {{ nb_ans }} answers:
     {% endblocktrans %}
-    <a href="{{ content.get_absolute_url }}?focus_editor=True#answer_form_{{ content.id }}">{% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
+    <a href="{{ content.get_absolute_url }}#answer_form_{{ content.id }}">{% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
   {% endif %}
 
   <a class="btn-ask" data-question-id="{{ content.id }}">{% trans "Ask to answer" %}</a>
