@@ -6,7 +6,7 @@
 {% load staticfiles %}
 
 {% block head_title %}
-    {% if user.is_authenticated %}{% user_display user as username %}{% blocktrans %}Home: {{ username }}{% endblocktrans %}{% else %}{% trans "Home" %}{% endif %}
+  {% trans "Home" %}{% if USERNAME %} - {{ USERNAME }}{% endif %}
 {% endblock %}
 
 
