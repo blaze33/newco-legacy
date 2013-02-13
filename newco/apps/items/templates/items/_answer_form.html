@@ -1,16 +1,11 @@
 {% load i18n %}
 {% load bootstrap_tags %}
-{% load account_tags %}
 
-<p>
-  {% if user.is_authenticated %}
-    {% with about=user.get_profile.about %}
-      <b>{% user_display user %}<span id="user-about">{% if about %}, {{ about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=about %}
-    {% endwith %}
-  {% else %}
-    {% trans "Please login before answering." %}
-  {% endif %}
-</p>
+{% if PROFILE %}
+  <p><b>{{ USERNAME }}<span id="user-about">{% if PROFILE.about %}, {{ PROFILE.about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=PROFILE.about %}</p>
+{% else %}
+  <p>{% trans "Please login before answering." %}</p>
+{% endif %}
 
 <form id="answer-form" method="POST" action="#answer-form">{% csrf_token %}
   {{ form|as_bootstrap }}
