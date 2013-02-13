@@ -561,3 +561,25 @@ class ContentDeleteView(ContentView, DeleteView):
             return self.success_url
         else:
             return "/"
+
+
+class TopCategoriesView(ListView):
+
+    paginate_by = 8
+    queryset = Tag.objects.annotate(
+        weight=Count('taggit_taggeditem_items')).order_by('-weight')
+
+    def render_json(self, context):
+        data, data['object_list'] = {}, []
+        for tag in context['object_list']:
+            data['object_list'].append([unicode(tag), tag.id, tag.weight])
+        data['more'] = context['page_obj'].has_next()
+        data['page_number'] = context['page_obj'].number
+        data['num_pages'] = context['paginator'].num_pages
+        return HttpResponse(json.dumps(data), 'application/json')
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.kwargs.get("format", None) == 'json':
+            return self.render_json(context)
+        return super(TopCategoriesView, self).render_to_response(
+            context, **response_kwargs)
