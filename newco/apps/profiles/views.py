@@ -16,16 +16,9 @@ from utils.views.tutorial import TutorialMixin
 from utils.voting.views import VoteMixin
 
 
-class MyProfileMixin(object):
-    def get_context_data(self, **kwargs):
-        if self.request.user.is_authenticated():
-            kwargs.update({"my_profile": self.request.user.get_profile()})
-        return super(MyProfileMixin, self).get_context_data(**kwargs)
-
-
-class ProfileDetailView(TutorialMixin, AskForHelpMixin, MyProfileMixin,
-                        ProfileDetailView, FormMixin, MultipleObjectMixin,
-                        FollowMixin, VoteMixin):
+class ProfileDetailView(TutorialMixin, AskForHelpMixin, ProfileDetailView,
+                        FormMixin, MultipleObjectMixin, FollowMixin,
+                        VoteMixin):
 
     paginate_by = 10
 
@@ -81,7 +74,7 @@ class ProfileDetailView(TutorialMixin, AskForHelpMixin, MyProfileMixin,
         return context
 
 
-class ProfileListView(TutorialMixin, MyProfileMixin, ProfileListView):
+class ProfileListView(TutorialMixin, ProfileListView):
 
     paginate_by = 15
     template_name = "profiles/profiles.html"

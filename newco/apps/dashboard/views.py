@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from items.models import Content, Item
-from profiles.views import MyProfileMixin
 from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
@@ -70,7 +69,7 @@ WHAT_TO_FOLLOW_PARAMS = {
 }
 
 
-class DashboardView(AskForHelpMixin, MyProfileMixin, ListView, FormMixin,
+class DashboardView(AskForHelpMixin, ListView, FormMixin,
                     FollowMixin, VoteMixin):
 
     queryset = Content.objects.all().prefetch_related(
