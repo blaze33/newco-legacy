@@ -446,7 +446,7 @@ class TagsDisplayNode(GenericNode):
                 f_kwargs.update({field: value})
 
         html = generate_objs_sentence(**f_kwargs)
-        html = hyphenate(html)
+        # html = hyphenate(html)
 
         return self.render_output(context, html)
 

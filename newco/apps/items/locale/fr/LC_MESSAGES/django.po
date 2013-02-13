@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-12 18:36+0100\n"
-"PO-Revision-Date: 2013-02-08 13:54\n"
+"POT-Creation-Date: 2013-02-13 23:26+0100\n"
+"PO-Revision-Date: 2013-02-13 23:26\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Translated-Using: django-rosetta 0.6.8\n"
 
@@ -89,8 +89,8 @@ msgstr "Tags"
 
 #: models.py:21
 msgid ""
-"Add one or several related categories/activities using Tab or Enter, and the "
-"Arrow keys."
+"Add one or several related categories/activities using Tab or Enter, and the"
+" Arrow keys."
 msgstr ""
 "Ajoutez une ou plusieurs catégories/activités en rapport en utilisant la "
 "touche Entrée ou Tabulation, et les flèches de direction."
@@ -214,29 +214,42 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:368
+#: views.py:403
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 "Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
 "une&#x202F;!"
 
-#: views.py:394
+#: views.py:426
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:395
+#: views.py:427
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:484
+#: views.py:505
 msgid "No product with tag {tag}"
 msgstr "Pas de produit avec le tag {tag}"
 
-#: views.py:487
+#: views.py:508
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 "Pas de question avec le tag {tag} pour l'instant. Soyez le premier à en "
 "poser une&#x202F;!"
+
+#: templates/items/_answer_form.html:7
+msgid "Please login before answering."
+msgstr "Connectez-vous avant de répondre."
+
+#: templates/items/_answer_form.html:12
+msgid "Answer and publish"
+msgstr "Répondre et publier"
+
+#: templates/items/_answer_form.html:13 templates/items/answer_form.html:20
+#: templates/items/question_form.html:33 templates/items/question_form.html:55
+msgid "Save as draft"
+msgstr "Sauvegarder dans les brouillons"
 
 #: templates/items/_content_controls.html:11
 msgid "Score"
@@ -295,12 +308,6 @@ msgstr "Publier"
 #: templates/items/answer_form.html:20 templates/items/question_form.html:33
 msgid "Unpublish and save as draft"
 msgstr "Dépublier et sauvegarder dans les brouillons"
-
-#: templates/items/answer_form.html:20 templates/items/question_form.html:33
-#: templates/items/question_form.html:55
-#: templates/items/feed_display/_feed_controls.html:40
-msgid "Save as draft"
-msgstr "Sauvegarder dans les brouillons"
 
 #: templates/items/confirm_delete.html:6
 msgid "Delete"
@@ -379,7 +386,7 @@ msgstr "Remplissez des informations sur"
 msgid "Edit"
 msgstr "Modifier"
 
-#: templates/items/item_form.html:25 templates/items/question_form.html:21
+#: templates/items/item_form.html:25 templates/items/question_form.html:20
 msgid "Tips"
 msgstr "Astuces"
 
@@ -387,33 +394,21 @@ msgstr "Astuces"
 #, python-format
 msgid ""
 "\n"
-"  Here, you can create a new product page in 10 seconds. To do so, you need "
-"to:\n"
+"  Here, you can create a new product page in 10 seconds. To do so, you need to:\n"
 "  <ol>\n"
-"    <li>Fill in the product name and its associated <b><a class=\"black "
-"tooltip-bottom\" href=\"%(url)s\" target=\"_blank\" title=\"Click here for "
-"help on tags\">tags</a></b>.</li>\n"
-"    <i class=\"icon-play\"></i> You want to do more? <b>Add features!</b> "
-"You can:\n"
-"    <li>Create the associated Store links using <em>Stores search</em>.</"
-"li>\n"
-"    <li>Drag and drop the right corresponding images on the top positions, "
-"and trash the irrelevant ones.</li>\n"
+"    <li>Fill in the product name and its associated <b><a class=\"black tooltip-bottom\" href=\"%(url)s\" target=\"_blank\" title=\"Click here for help on tags\">tags</a></b>.</li>\n"
+"    <i class=\"icon-play\"></i> You want to do more? <b>Add features!</b> You can:\n"
+"    <li>Create the associated Store links using <em>Stores search</em>.</li>\n"
+"    <li>Drag and drop the right corresponding images on the top positions, and trash the irrelevant ones.</li>\n"
 "  </ol>\n"
 msgstr ""
 "\n"
-"Ici, vous pouvez créer une page produit en 10 secondes. Pour ce faire, vous "
-"devez&nbsp;:\n"
+"Ici, vous pouvez créer une page produit en 10 secondes. Pour ce faire, vous devez&nbsp;:\n"
 "<ol>\n"
-"<li>Remplir le champ nom ainsi que les <b><a class=\"black tooltip-bottom\" "
-"href=\"%(url)s\" target=\"_blank\" title=\"Cliquez ici pour de l'aide sur "
-"les tags\">tags</a></b> associés.</li>\n"
-"<i class=\"icon-play\"></i> Il vous en reste sous le coude ? <b>Ajoutez des "
-"caractéristiques !</b> Vous pouvez&nbsp;:\n"
-"<li>Créer les liens vers les sites marchands en utilisant le bouton "
-"<em>Recherche chez les e-commerçants</em>.</li>\n"
-"<li>Glissez et déposez les meilleures images correspondantes au début de la "
-"liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
+"<li>Remplir le champ nom ainsi que les <b><a class=\"black tooltip-bottom\" href=\"%(url)s\" target=\"_blank\" title=\"Cliquez ici pour de l'aide sur les tags\">tags</a></b> associés.</li>\n"
+"<i class=\"icon-play\"></i> Il vous en reste sous le coude ? <b>Ajoutez des caractéristiques !</b> Vous pouvez&nbsp;:\n"
+"<li>Créer les liens vers les sites marchands en utilisant le bouton <em>Recherche chez les e-commerçants</em>.</li>\n"
+"<li>Glissez et déposez les meilleures images correspondantes au début de la liste, et débarrassez vous de celles qui n'ont rien à voir.</li>\n"
 "</ol>\n"
 
 #: templates/items/item_form.html:44
@@ -484,24 +479,24 @@ msgstr "Anciens"
 msgid "No answers"
 msgstr "Pas de réponses"
 
-#: templates/items/question_detail.html:28
+#: templates/items/question_detail.html:41
 msgid "Related products"
 msgstr "Produits associés"
 
-#: templates/items/question_detail.html:36
+#: templates/items/question_detail.html:49
 msgid "Related tags"
 msgstr "Tags associés"
 
-#: templates/items/question_form.html:17
+#: templates/items/question_form.html:16
 msgid "Question"
 msgstr "Question"
 
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 #: templates/items/feed_display/_item_controls.html:7
 msgid "Ask a question"
 msgstr "Posez une question"
 
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 msgid "Edit your question"
 msgstr "Editez votre question"
 
@@ -533,16 +528,14 @@ msgstr "Répondez à votre propre question."
 msgid "Publish your question and answer"
 msgstr "Publier votre question et la réponse"
 
-#: templates/items/question_form.html:68
+#: templates/items/question_form.html:65
 msgid ""
 "\n"
 "      Here, you can ask a question about one or several products:\n"
 "      <ol>\n"
 "        <li>Write down your question.</li>\n"
-"        <li>Select products or tags to bind that question to, using the "
-"search bars.</li>\n"
-"        <li>Once the question submitted, you can wait for an answer or, if "
-"you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
+"        <li>Select products or tags to bind that question to, using the search bars.</li>\n"
+"        <li>Once the question submitted, you can wait for an answer or, if you are getting impatient, <b>ask an expert</b> to help you out.</li>\n"
 "      </ol>\n"
 "    "
 msgstr ""
@@ -550,13 +543,11 @@ msgstr ""
 "Ici, vous pouvez poser une question à propos d'un ou plusieurs produits :\n"
 "<ol>\n"
 "<li>Ecrivez votre question.</li>\n"
-"<li>Sélectionnez des produits ou des tags à lier à cette question, en "
-"utilisant les menus de recherche.</li>\n"
-"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si "
-"vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
+"<li>Sélectionnez des produits ou des tags à lier à cette question, en utilisant les menus de recherche.</li>\n"
+"<li>Une fois la question soumise, vous pouvez attendre une réponse ou, si vous devenez impatient, <b>demander à un expert</b> de vous aider.</li>\n"
 "</ol>"
 
-#: templates/items/question_form.html:77
+#: templates/items/question_form.html:74
 msgid ""
 "You can also answer your own question if there is something you would like "
 "to share and you haven't found the related question. That way, you document "
@@ -584,16 +575,16 @@ msgstr "a répondu à une question"
 msgid "Sorry, this feed is empty."
 msgstr "Désolé, ce flux est vide."
 
-#: templates/items/feed_display/_feed_controls.html:9
+#: templates/items/feed_display/_feed_controls.html:6
 #, python-format
 msgid ""
 "\n"
-"      %(nb_ans)s answer:\n"
-"    "
+"    %(nb_ans)s answer:\n"
+"  "
 msgid_plural ""
 "\n"
-"      %(nb_ans)s answers:\n"
-"    "
+"    %(nb_ans)s answers:\n"
+"  "
 msgstr[0] ""
 "\n"
 "%(nb_ans)s réponse&nbsp;:"
@@ -601,25 +592,17 @@ msgstr[1] ""
 "\n"
 "%(nb_ans)s réponses&nbsp;:"
 
-#: templates/items/feed_display/_feed_controls.html:14
+#: templates/items/feed_display/_feed_controls.html:11
 msgid "Answer this question"
 msgstr "Répondez à cette question"
 
-#: templates/items/feed_display/_feed_controls.html:14
+#: templates/items/feed_display/_feed_controls.html:11
 msgid "Add an answer"
 msgstr "Ajoutez une réponse"
 
-#: templates/items/feed_display/_feed_controls.html:17
+#: templates/items/feed_display/_feed_controls.html:13
 msgid "Ask to answer"
 msgstr "Demandez à quelqu'un de répondre"
-
-#: templates/items/feed_display/_feed_controls.html:33
-msgid "Please login before answering."
-msgstr "Connectez-vous avant de répondre."
-
-#: templates/items/feed_display/_feed_controls.html:39
-msgid "Answer and publish"
-msgstr "Répondre et publier"
 
 #: templates/items/feed_display/_question.html:12
 #, python-format

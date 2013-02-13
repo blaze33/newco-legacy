@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-12 18:36+0100\n"
+"POT-Creation-Date: 2013-02-13 23:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,24 +205,37 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:368
+#: views.py:403
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: views.py:394
+#: views.py:426
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:395
+#: views.py:427
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:484
+#: views.py:505
 msgid "No product with tag {tag}"
 msgstr ""
 
-#: views.py:487
+#: views.py:508
 msgid "No question with tag {tag} yet. Be the first to ask one!"
+msgstr ""
+
+#: templates/items/_answer_form.html:7
+msgid "Please login before answering."
+msgstr ""
+
+#: templates/items/_answer_form.html:12
+msgid "Answer and publish"
+msgstr ""
+
+#: templates/items/_answer_form.html:13 templates/items/answer_form.html:20
+#: templates/items/question_form.html:33 templates/items/question_form.html:55
+msgid "Save as draft"
 msgstr ""
 
 #: templates/items/_content_controls.html:11
@@ -281,12 +294,6 @@ msgstr ""
 
 #: templates/items/answer_form.html:20 templates/items/question_form.html:33
 msgid "Unpublish and save as draft"
-msgstr ""
-
-#: templates/items/answer_form.html:20 templates/items/question_form.html:33
-#: templates/items/question_form.html:55
-#: templates/items/feed_display/_feed_controls.html:40
-msgid "Save as draft"
 msgstr ""
 
 #: templates/items/confirm_delete.html:6
@@ -366,7 +373,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: templates/items/item_form.html:25 templates/items/question_form.html:21
+#: templates/items/item_form.html:25 templates/items/question_form.html:20
 msgid "Tips"
 msgstr ""
 
@@ -457,24 +464,24 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: templates/items/question_detail.html:28
+#: templates/items/question_detail.html:41
 msgid "Related products"
 msgstr ""
 
-#: templates/items/question_detail.html:36
+#: templates/items/question_detail.html:49
 msgid "Related tags"
 msgstr ""
 
-#: templates/items/question_form.html:17
+#: templates/items/question_form.html:16
 msgid "Question"
 msgstr ""
 
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 #: templates/items/feed_display/_item_controls.html:7
 msgid "Ask a question"
 msgstr ""
 
-#: templates/items/question_form.html:22
+#: templates/items/question_form.html:21
 msgid "Edit your question"
 msgstr ""
 
@@ -506,7 +513,7 @@ msgstr ""
 msgid "Publish your question and answer"
 msgstr ""
 
-#: templates/items/question_form.html:68
+#: templates/items/question_form.html:65
 msgid ""
 "\n"
 "      Here, you can ask a question about one or several products:\n"
@@ -520,7 +527,7 @@ msgid ""
 "    "
 msgstr ""
 
-#: templates/items/question_form.html:77
+#: templates/items/question_form.html:74
 msgid ""
 "You can also answer your own question if there is something you would like "
 "to share and you haven't found the related question. That way, you document "
@@ -544,37 +551,29 @@ msgstr ""
 msgid "Sorry, this feed is empty."
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:9
+#: templates/items/feed_display/_feed_controls.html:6
 #, python-format
 msgid ""
 "\n"
-"      %(nb_ans)s answer:\n"
-"    "
+"    %(nb_ans)s answer:\n"
+"  "
 msgid_plural ""
 "\n"
-"      %(nb_ans)s answers:\n"
-"    "
+"    %(nb_ans)s answers:\n"
+"  "
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/items/feed_display/_feed_controls.html:14
+#: templates/items/feed_display/_feed_controls.html:11
 msgid "Answer this question"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:14
+#: templates/items/feed_display/_feed_controls.html:11
 msgid "Add an answer"
 msgstr ""
 
-#: templates/items/feed_display/_feed_controls.html:17
+#: templates/items/feed_display/_feed_controls.html:13
 msgid "Ask to answer"
-msgstr ""
-
-#: templates/items/feed_display/_feed_controls.html:33
-msgid "Please login before answering."
-msgstr ""
-
-#: templates/items/feed_display/_feed_controls.html:39
-msgid "Answer and publish"
 msgstr ""
 
 #: templates/items/feed_display/_question.html:12

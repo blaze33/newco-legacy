@@ -3,16 +3,14 @@
 {% spaceless %}
 
 <div class="question-controls">
-  {% if not display_a == "all" %}
-    {% blocktrans count nb_ans=content.answer_set.count %}
-      {{ nb_ans }} answer:
-    {% plural %}
-      {{ nb_ans }} answers:
-    {% endblocktrans %}
-    <a href="{{ content.get_absolute_url }}#answer-form">{% if content.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
-  {% endif %}
+  {% blocktrans count nb_ans=question.answer_set.count %}
+    {{ nb_ans }} answer:
+  {% plural %}
+    {{ nb_ans }} answers:
+  {% endblocktrans %}
+  <a href="{{ question.get_absolute_url }}#answer-form">{% if question.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
 
-  <a class="btn-ask" data-question-id="{{ content.id }}">{% trans "Ask to answer" %}</a>
+  <a class="btn-ask" data-question-id="{{ question.id }}">{% trans "Ask to answer" %}</a>
 </div>
 
 {% endspaceless %}
