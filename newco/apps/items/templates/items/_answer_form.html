@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% if PROFILE %}
+  <p><b>{{ USERNAME }}<span id="user-about">{% if PROFILE.about %}, {{ PROFILE.about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=PROFILE.about %}</p>
+{% else %}
+  <p>{% trans "Please login before answering." %}</p>
+{% endif %}
+
+<form id="answer-form" method="POST" action="#answer-form">{% csrf_token %}
+  {{ form|as_bootstrap }}
+  <button class="btn btn-primary btn-small" name="answer" type="submit" value="{{ statuses.public }}"><i class="icon-share-alt icon-white"></i> {% trans "Answer and publish" %}</button>
+  <button class="btn btn-small" name="answer" type="submit" value="{{ statuses.draft }}"><i class="icon-pencil"></i> {% trans "Save as draft" %}</button>
+  <input type="hidden" name="question-id" value="{{ question.id }}"/>
+</form>

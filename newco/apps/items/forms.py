@@ -65,8 +65,8 @@ class ItemForm(ModelForm):
 class QuestionForm(ModelForm):
 
     PARENTS = Choices(
-        ("0", "products", pgettext_lazy("parent", "products")),
-        ("1", "tags", pgettext_lazy("parent", "tags"))
+        ("items", "products", pgettext_lazy("parent", "products")),
+        ("tags", "tags", pgettext_lazy("parent", "tags"))
     )
 
     max_tags = 10
@@ -86,13 +86,17 @@ class QuestionForm(ModelForm):
         fields = ("content", "parents", "items", "tags")
         widgets = {
             "content": Textarea(attrs={
-                "class": "input-block-level",
-                "placeholder": _("Ask something specific."),
-                "rows": 2}),
-            "items": SelectMultiple(attrs={
-                "class": "input-block-level", "rows": 1}),
+                "class": "input-block-level", "rows": 2,
+                "placeholder": _("Ask something specific.")}),
+            "items": SelectMultiple(attrs={"class": "input-block-level"}),
             "tags": TagWidget(attrs={"class": "input-block-level"})
         }
+
+    class Media:
+        css = {
+            "all": ("css/question_form.css",)
+        }
+        js = ("js/question_form.js",)
 
     def __init__(self, request, *args, **kwargs):
         default_status = Content._meta.get_field("status").default
@@ -101,9 +105,11 @@ class QuestionForm(ModelForm):
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
         if self.object:
-            self.fields.get("parents").initial = self.PARENTS.products \
-                if self.object.items.count() else self.PARENTS.tags
-        self.fields.get("items").help_text = self.PRODUCTS_HELP_TEXT.format(
+            if self.object.items.all():
+                self.fields["parents"].initial = self.PARENTS.products
+            elif self.object.tags.all():
+                self.fields["parents"].initial = self.PARENTS.tags
+        self.fields["items"].help_text = self.PRODUCTS_HELP_TEXT.format(
             max=self.max_products)
 
     def save(self, commit=True, **kwargs):
@@ -154,8 +160,7 @@ class PartialQuestionForm(ModelForm):
         model = Question
         fields = ("content", )
         widgets = {"content": Textarea(attrs={
-            "class": "partial-form", "rows": 1,
-            "placeholder": _("Ask something specific.")})}
+            "rows": 1, "placeholder": _("Ask something specific.")})}
 
     def __init__(self, request, items=[], tags=[], *args, **kwargs):
         kwargs.pop("experts_qs", {})
@@ -183,23 +188,26 @@ class AnswerForm(ModelForm):
         fields = ("content", )
         widgets = {
             "content": BW_small_Widget(attrs={
-                "rows": 10,
-                "style": "width: 100%; box-sizing: border-box;",
-                "placeholder": _("Be concise and to the point."),
-                "rel": "bw_editor_small",
-            }),
+                "rows": 10, "class": "wysiwyg", "rel": "bw_editor_small",
+                "placeholder": _("Be concise and to the point.")}),
+        }
+
+    class Media:
+        css = {
+            "all": ("css/answer_form.css",)
         }
 
     def __init__(self, request, *args, **kwargs):
+        kwargs.pop("experts_qs", {})
+        kwargs.pop("items", {})
         default_status = Content._meta.get_field("status").default
         self.status = kwargs.pop("status", default_status)
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
-        question_id = request.REQUEST.get("question_id", 0)
-        self.question = Question.objects.get(id=question_id) if question_id \
-            else getattr(self.object, "question", None)
-
+        if "question-id" in request.POST:
+            question_id = request.POST["question-id"]
+            self.question = Question.objects.get(id=question_id)
         self.fields["content"].label = ""
 
     def save(self, commit=True, **kwargs):

@@ -1,40 +1,40 @@
 <div class="modal fade hide" id="feedbackModal">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
-        <h3>Faites nous part de votre avis&nbsp;:</h3>
-    </div>
-    <form action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Faites nous part de votre avis&nbsp;:</h3>
+  </div>
+  <form action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
     <div class="modal-body form-horizontal">
-        <div class="control-group">
-            <label class="control-label" for="feedback-name">Nom (optionnel)</label>
-            <div class="controls">
-                <input type="text" id="feedback-name" name="Name" class="input-large"/>
-            </div>
+      <div class="control-group">
+        <label class="control-label" for="feedback-name">Nom (optionnel)</label>
+        <div class="controls">
+          <input type="text" id="feedback-name" name="Name" class="input-large"/>
         </div>
+      </div>
 
-        <div class="control-group">
-            <label class="control-label" for="feedback-email">Email (optionnel)</label>
-            <div class="controls">
-                <input type="text" id="feedback-email" name="email" class="input-large"/>
-            </div>
+      <div class="control-group">
+        <label class="control-label" for="feedback-email">Email (optionnel)</label>
+        <div class="controls">
+          <input type="text" id="feedback-email" name="email" class="input-large"/>
         </div>
+      </div>
 
-        <div class="control-group">
-            <label class="control-label" for="feedback-subject">Sujet (optionnel)</label>
-            <div class="controls">
-                <input type="text" id="feedback-subject" name="subject" class="input-large"/>
-            </div>
+      <div class="control-group">
+        <label class="control-label" for="feedback-subject">Sujet (optionnel)</label>
+        <div class="controls">
+          <input type="text" id="feedback-subject" name="subject" class="input-large"/>
         </div>
+      </div>
 
-        <textarea class="boxsizingBorder" id="feedback-input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
+      <textarea class="boxsizingBorder" id="feedback-input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
     </div>
     <div class="modal-footer">
-        Merci pour votre feedback :
-        <button class="btn btn-primary" type="submit">
-            Envoyer !
-        </button>
+      Merci pour votre feedback :
+      <button class="btn btn-primary" type="submit">
+        Envoyer !
+      </button>
     </div>
-    </form>
+  </form>
 </div>
 
 <div class="feedbackTab" data-toggle="modal" href="#feedbackModal"></div>

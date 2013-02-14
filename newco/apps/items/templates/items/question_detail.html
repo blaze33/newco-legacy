@@ -5,14 +5,21 @@
 {% load content_utils %}
 
 {% block extra_style %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/content.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/help.css">
-    <style type="text/css">
-      div[id^="q-"] {
-        margin-bottom: 20px;
+    <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
+    <style>
+      div.question { margin-bottom: 20px; }
+
+      #edit-about {
+        width: 100%;
+      }
+      #edit-about input:first-child {
+        width: -webkit-calc(100% - 40px);
+        width:    -moz-calc(100% - 40px);
+        width:         calc(100% - 40px);
       }
     </style>
-    {% if question %}{{ question.answer_form.media.css }}{% endif %}
+    {{ answer_form.media.css }}
 {% endblock %}
 
 {% block head_title %}{{ question.content }}{% endblock %}
@@ -21,6 +28,12 @@
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
     {% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}
+
+    <br>
+    <br>
+
+    {% include "items/_answer_form.html" with form=answer_form %}
+    
   </div>
 
   <div class="span3">
@@ -53,49 +66,51 @@
 {% endblock %}
 
 {% block extra_script %}
-  <script src="{% static 'js/content.js' %}"></script>
-  <script src="{% static 'js/help.js' %}"></script>
+  <script src="{{ STATIC_URL }}js/content.js"></script>
+  <script src="{{ STATIC_URL }}js/help.js"></script>
+  {{ answer_form.media.js }}
   <script>
-    $(function() {
+    $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-    });
-  </script>
-  {{ question.answer_form.media.js }}
-  <script>
-    $(document).ready(function(){mixpanel.track("Load_question_detail");});
-    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
 
-    {% if request.GET.focus_editor %}
-      $(document).ready(function(){
-          // .focus is triggered two times:
-          // _ when $(document).ready: if $(document).ready after edito.on("load")
-          // _ when edito.on("load"): if $(document).ready before edito.on("load")
-          editor.focus();
-          editor.on("load", function() {
-              editor.focus();
-          });
-      });
-    {% endif %}
+        var hash = window.location.hash.substring(1);
+        if ( /answer-form/.test(hash) ) {
+            editor.focus();
+        }
 
-    // script for "Edit your bio"
-    $(function() {
+        // Edit profile.about with ajax
         $("#form-edit-about").submit(function() {
             $("#modal-edit-about").modal("hide");
             $.ajax({
                 type: "post",
-                data: $(this).serialize() + "&" + $("#submit-edit-about").attr("name"),
+                data: $(this).serialize() + "&" + $("[type='submit']", $(this)).attr("name"),
                 success: function(data, textstatus, jqxhr) {
-                    if (data.toggle) { $("button[rel=about]").toggle() }
-                    if (data.about !== "") { data.about = ", " + data.about; }
+                    if ( data.toggle ) {
+                        $(".about").toggleClass("hidden");
+                    }
+                    if ( data.about !== "" ) {
+                        data.about = ", " + data.about;
+                    }
                     $("#user-about").text(data.about);
                     $.displayMessages(data.messages);
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr, status, error);
                 }
             });
             return false;
         });
+
+        // Focus input on modal load
+        $(".about").click( function (eventObject) {
+            $("#modal-edit-about").modal("show");
+        });
+        $("#modal-edit-about").on("shown", function (eventObject) {
+            var input = $("#edit-about input");
+            input.focus();
+            input.val(input.val());
+        });
+
     });
+
+    $(document).ready(function(){mixpanel.track("Load_question_detail");});
+    if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Question Page");};
   </script>
 {% endblock %}

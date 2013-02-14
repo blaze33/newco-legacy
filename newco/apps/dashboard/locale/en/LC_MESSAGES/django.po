@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 15:20+0100\n"
+"POT-Creation-Date: 2013-02-13 21:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,70 +17,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views.py:19 templates/dashboard/_subnav.html:14
+#: views.py:18 templates/dashboard/_subnav.html:14
 msgid "Dashboard"
 msgstr ""
 
-#: views.py:20
+#: views.py:19
 msgid "Feed"
 msgstr ""
 
-#: views.py:21 views.py:43 templates/dashboard/_subnav.html:21
+#: views.py:20 views.py:42 templates/dashboard/_subnav.html:21
 msgid "Contribution center"
 msgstr ""
 
-#: views.py:22
+#: views.py:21
 msgid "Teamwork"
 msgstr ""
 
-#: views.py:23 views.py:51 templates/dashboard/_subnav.html:23
+#: views.py:22 views.py:50 templates/dashboard/_subnav.html:23
 msgid "Drafts"
 msgstr ""
 
-#: views.py:24 views.py:59 templates/dashboard/_subnav.html:26
+#: views.py:23 views.py:58 templates/dashboard/_subnav.html:26
 msgid "All my contributions"
 msgstr ""
 
-#: views.py:25
+#: views.py:24
 msgid "Shopping notes"
 msgstr ""
 
-#: views.py:26
+#: views.py:25
 msgid "Purchase history"
 msgstr ""
 
-#: views.py:33 templates/dashboard/_subnav.html:17
+#: views.py:32 templates/dashboard/_subnav.html:17
 msgid "My newsfeed"
 msgstr ""
 
-#: views.py:34
+#: views.py:33
 msgid "Mini feed from what you follow"
 msgstr ""
 
-#: views.py:38
+#: views.py:37
 msgid ""
 "You don't follow anything nor anyone yet. Find people or products to follow "
 "navigating NewCo!"
 msgstr ""
 
-#: views.py:44
+#: views.py:43
 msgid ""
 "Latest activity on your skills tags. Maybe you would like to contribute?"
 msgstr ""
 
-#: views.py:52
+#: views.py:51
 msgid "Complete and publish some?"
 msgstr ""
 
-#: views.py:55
+#: views.py:54
 msgid "You don't have any drafts."
 msgstr ""
 
-#: views.py:60
+#: views.py:59
 msgid "Your latest contributions"
 msgstr ""
 
-#: views.py:82
+#: views.py:81
 #, python-format
 msgid ""
 "We don't know what to advice you to contribute on, we would need to know "
@@ -88,7 +88,7 @@ msgid ""
 "your profile?"
 msgstr ""
 
-#: views.py:88
+#: views.py:87
 #, python-format
 msgid ""
 "You haven't contributed yet. Have you checked the <a href='%(url_cont)s'>How "
@@ -150,9 +150,9 @@ msgstr ""
 msgid "Search in all my contributions - Not functional yet"
 msgstr ""
 
-#: templates/dashboard/base.html:20
+#: templates/dashboard/base.html:18
 #, python-format
-msgid "%(username)s's dashboard | %(page_name)s"
+msgid "%(USERNAME)s's dashboard | %(page_name)s"
 msgstr ""
 
 #: templates/dashboard/contribution.html:5

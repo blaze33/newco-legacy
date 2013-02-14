@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form method="POST">{% csrf_token %}{% with field=question_form.content %}
+<form class="partial-form" method="POST">{% csrf_token %}{% with field=question_form.content %}
   <div class="control-group{% if field.errors %} error{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}" id="div_{{ field.auto_id }}"><div class="controls">
     <div class="input-prepend input-append"><span class="add-on"><i class="icon-question-sign"></i></span>{{ field }}<button class="btn" type="submit" name="question"><i class="icon-share-alt"></i></button></div>
     {% include "bootstrap/_field_errors.html" %}

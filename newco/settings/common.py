@@ -166,10 +166,11 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "account.context_processors.account",
     "pinax_theme_bootstrap.context_processors.theme",
-    "utils.context_processors.settings_mp",
-    "utils.context_processors.site_settings",
+
+    "profiles.context_processors.profile",
+    "utils.context_processors.mixpanel",
+    "utils.context_processors.site",
     "utils.redis.context_processors.redis_url",
-    "django.core.context_processors.i18n",
 ]
 
 INSTALLED_APPS = [
@@ -223,6 +224,7 @@ INSTALLED_APPS = [
     "utils",
     "utils.follow",
     "utils.help",
+    "utils.hyphenate",
     "utils.redis",
     "utils.voting",
     "content",
@@ -234,6 +236,7 @@ INSTALLED_APPS = [
     "gravatar",
     "tastypie",
     "amazonproduct",
+    "softhyphen",
 ]
 
 FIXTURE_DIRS = [

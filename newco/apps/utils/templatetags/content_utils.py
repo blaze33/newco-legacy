@@ -14,6 +14,7 @@ from gravatar.templatetags.gravatar import (gravatar_img_for_user,
 from taggit.models import Tag
 
 from items.models import Item, Content
+from utils.hyphenate.tools import hyphenate
 from utils.tools import get_class_name
 from utils.templatetags.tools import (GenericNode, get_node_extra_arguments,
                                       generate_objs_sentence,
@@ -386,6 +387,7 @@ class TagDisplayNode(GenericNode):
                 ctx.update({field: value})
 
         html = render_to_string(template, ctx, context_instance=context)
+        html = hyphenate(html)
 
         return self.render_output(context, html)
 
@@ -444,6 +446,7 @@ class TagsDisplayNode(GenericNode):
                 f_kwargs.update({field: value})
 
         html = generate_objs_sentence(**f_kwargs)
+        # html = hyphenate(html)
 
         return self.render_output(context, html)
 

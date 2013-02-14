@@ -1,14 +1,14 @@
 @charset 'UTF-8';
 
 /* ↓↓↓ Content Related Elements ↓↓↓ */
-h1.question {
+.question > div > h1 {
   font-size: 130%;
   font-weight: bold;
   line-height: 140%;
   margin-top: 0px;
 }
 
-p.question {
+.question > div > p {
   font-size: 16px;
   font-weight: bold;
   line-height: 140%;
@@ -19,7 +19,7 @@ p.question {
 }
 
 .draft {
-  background-color: #e5e5e5;
+  background-color: lightgrey;
   border-radius: 5px 5px 5px 5px;
 }
 
@@ -264,10 +264,14 @@ p.question {
 /* ↑↑↑ Content Parents display ↑↑↑ */
 
 /* ↓↓↓ Partial Question Form ↓↓↓ */
+.partial-form .input-prepend.input-append {
+  text-align: center;
+  width: 100%;
+}
 
-textarea.partial-form {
+.partial-form textarea {
   resize: vertical;
-  width: 80%;
+  width: 70%;
 }
 
 /* Same properties as input */

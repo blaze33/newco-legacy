@@ -7,13 +7,8 @@
         $("body").toggleClass("body-less-padding");
     });
 
-    $("#why_NewCo").on({
-        shown: function () {
-            $(".tooltip-tutorial").tooltip("show");
-        },
-        hide: function () {
-            $(".tooltip-tutorial").tooltip("hide");
-        }
+    $("#why_NewCo").on("shown hide", function (eventObject) {
+        $(".tooltip-tutorial").tooltip("toggle");
     });
 
     $("#arrow-trigger").on({
