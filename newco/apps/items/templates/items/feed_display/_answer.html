@@ -12,7 +12,7 @@
 
     <p>
       <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
-      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
+      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.created|datediff:"SHORT_DATE_FORMAT" }}</span>
     </p>
   </blockquote>
 {% elif display == "text" %}

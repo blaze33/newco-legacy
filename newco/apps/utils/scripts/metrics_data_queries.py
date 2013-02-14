@@ -14,7 +14,7 @@ from taggit.models import Tag
 
 
 def pub_date(x):
-    return [x.pub_date]
+    return [x.created]
 
 
 def author(x):

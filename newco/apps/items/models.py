@@ -2,13 +2,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import slugify, truncatechars
-from django.utils import timezone
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
+from django_extensions.db.models import TimeStampedModel
 from follow.utils import register
 from taggit.managers import TaggableManager
 
@@ -22,13 +22,10 @@ TAG_HELP_TEXT = _("Add one or several related categories/activities using"
                   " Tab or Enter, and the Arrow keys.")
 
 
-class Item(models.Model):
+class Item(TimeStampedModel):
     name = models.CharField(_("name"), max_length=255)
     slug = models.SlugField(_("slug"), editable=False)
     author = models.ForeignKey(User, verbose_name=_("author"), null=True)
-    pub_date = models.DateTimeField(_('date published'), default=timezone.now,
-                                    editable=False)
-    last_modified = models.DateTimeField(_("last modified"), auto_now=True)
     tags = TaggableManager(TAG_VERBOSE_NAME, help_text=TAG_HELP_TEXT)
 
     objects = ItemManager()
@@ -81,10 +78,8 @@ class Item(models.Model):
 register(Item)
 
 
-class Content(models.Model):
+class Content(TimeStampedModel):
     author = models.ForeignKey(User, verbose_name=_("author"), null=True)
-    pub_date = models.DateTimeField(_("date published"), default=timezone.now,
-                                    editable=False)
     status = models.SmallIntegerField(_("status"), choices=STATUSES,
                                       default=STATUSES.public)
     items = models.ManyToManyField(Item, verbose_name=_("products"),
@@ -96,7 +91,7 @@ class Content(models.Model):
     objects = ContentManager()
 
     class Meta:
-        ordering = ["-pub_date"]
+        ordering = ["-created"]
 
     def delete(self):
         try:
