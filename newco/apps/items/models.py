@@ -12,6 +12,7 @@ from django_extensions.db.models import TimeStampedModel
 from follow.utils import register
 from taggit.managers import TaggableManager
 
+from content.models import VoteModel
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
 from items.managers import ContentManager, ItemManager
 from utils.vote import Vote
@@ -78,13 +79,12 @@ class Item(TimeStampedModel):
 register(Item)
 
 
-class Content(TimeStampedModel):
+class Content(VoteModel):
     author = models.ForeignKey(User, verbose_name=_("author"), null=True)
     status = models.SmallIntegerField(_("status"), choices=STATUSES,
                                       default=STATUSES.public)
     items = models.ManyToManyField(Item, verbose_name=_("products"),
                                    blank=True)
-    votes = generic.GenericRelation(Vote)
     tags = TaggableManager(TAG_VERBOSE_NAME, help_text=TAG_HELP_TEXT,
                            blank=True)
 
@@ -92,13 +92,6 @@ class Content(TimeStampedModel):
 
     class Meta:
         ordering = ["-created"]
-
-    def delete(self):
-        try:
-            self.votes.all().delete()
-        except:
-            pass
-        super(Content, self).delete()
 
     @property
     def is_public(self):
