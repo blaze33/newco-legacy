@@ -18,6 +18,8 @@
   <div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
     <b>{% object_display content.author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
   </div>
+{% elif case == "date" %}
+  <b><small class="pull-right" title="{{ pub_date }}" itemprop="dateModified">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></b>
 {% endif %}
 
 {#Seb: (about 'itemprop') I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#}

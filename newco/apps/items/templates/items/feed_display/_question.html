@@ -51,6 +51,12 @@
         
         <h1 itemprop="name">{{ content.content }}</h1>
       {% else %}
+        {% if content.is_draft %}
+          <b class="pull-right">{% trans "Draft" %}</b>
+        {% else %}
+          {% content_info content "date" 32 %}
+        {% endif %}
+
         <p itemprop="name"><a href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
       {% endif %}
 
