@@ -214,6 +214,15 @@ INSTALLED_APPS = [
     # Project-external
     "newco_bw_editor",
 
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
+    "gravatar",
+    "tastypie",
+    "amazonproduct",
+    "softhyphen",
+
     # Project
     "about",
     "affiliation",
@@ -228,15 +237,6 @@ INSTALLED_APPS = [
     "utils.redis",
     "utils.vote",
     "content",
-
-    # Foreign apps
-    "taggit",
-    "voting",
-    "follow",
-    "gravatar",
-    "tastypie",
-    "amazonproduct",
-    "softhyphen",
 ]
 
 FIXTURE_DIRS = [

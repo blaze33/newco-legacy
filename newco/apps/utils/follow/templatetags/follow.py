@@ -13,7 +13,7 @@ register = Library()
 
 class FollowFormNode(GenericNode):
 
-    template = "follow/form.html"
+    template = "follow/follow_form.html"
 
     def __init__(self, user, obj, *args, **kwargs):
         self.user = Variable(user)
