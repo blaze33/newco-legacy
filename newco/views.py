@@ -35,7 +35,7 @@ class CategoryMixin(object):
             self.template_name = "homepage_questions.html"
             self.queryset = Content.objects.questions()
             if self.filter == "popular":
-                self.queryset = self.queryset.filter(pub_date__gt=delta)
+                self.queryset = self.queryset.filter(created__gt=delta)
             self.queryset = self.queryset.order_queryset(self.filter)
             if "category" in self.request.GET:
                 self.search_terms = self.request.GET.get("category", "")
@@ -46,7 +46,7 @@ class CategoryMixin(object):
                         "id", flat=True)
                     if self.filter == "popular":
                         self.queryset = Content.objects.questions()
-                        self.queryset = self.queryset.filter(pub_date__gt=delta)
+                        self.queryset = self.queryset.filter(created__gt=delta)
                         self.queryset = self.queryset.filter(Q(items__in=item_ids) | Q(tags__name__contains=category))
                         self.queryset = self.queryset.order_queryset(self.filter)
                     else:
@@ -89,17 +89,17 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin,
             self.template_name = "homepage_products.html"
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(
-                    content__pub_date__gt=delta).annotate(
+                    content__created__gt=delta).annotate(
                         count=Count("content__votes__vote"),
                         score=Sum("content__votes__vote")
                     ).filter(count__gt=0).order_by("-score")
             elif self.filter == "last":
-                self.queryset = self.queryset.order_by("-pub_date")
+                self.queryset = self.queryset.order_by("-created")
         elif self.cat == "questions":
             self.template_name = "homepage_questions.html"
             self.queryset = Content.objects.questions()
             if self.filter == "popular":
-                self.queryset = self.queryset.filter(pub_date__gt=delta)
+                self.queryset = self.queryset.filter(created__gt=delta)
             self.scores, self.votes = self.queryset.get_scores_and_votes(
                 request.user)
             self.queryset = self.queryset.order_queryset(self.filter)
