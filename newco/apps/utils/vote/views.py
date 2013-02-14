@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from items.models import Content, Question, Answer
 from utils.messages import add_message, render_messages
 from utils.tools import load_object
-from utils.voting import Vote
+from utils.vote import Vote
 
 VOTE_DIRECTIONS = (("up", 1), ("down", -1), ("clear", 0))
 BUTTONS_CONF = {
