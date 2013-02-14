@@ -20,7 +20,7 @@ from utils.tools import get_class_name
 PARAMS = {
     get_class_name(Item): {
         "class": Item, "pk": "id", "title_field": "name", "text_field": "name",
-        "recorded_fields": ["id", "name", "slug", "author", "pub_date"]
+        "recorded_fields": ["id", "name", "slug", "author", "created"]
     },
     get_class_name(Profile): {
         "class": Profile, "pk": "id", "title_field": "name",
