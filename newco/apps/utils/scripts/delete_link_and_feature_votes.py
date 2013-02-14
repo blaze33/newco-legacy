@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
 
 from items.models import Content
-from utils.voting import Vote
+from utils.vote import Vote
 
 content_ctype = ContentType.objects.get_for_model(Content)
 

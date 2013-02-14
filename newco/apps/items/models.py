@@ -14,7 +14,7 @@ from taggit.managers import TaggableManager
 
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
 from items.managers import ContentManager, ItemManager
-from utils.voting import Vote
+from utils.vote import Vote
 
 CONTENT_URL_PATTERN = "%(path)s?%(query_string)s#%(anchor)s"
 TAG_VERBOSE_NAME = _("Tags")

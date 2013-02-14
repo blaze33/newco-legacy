@@ -12,7 +12,7 @@ from items.models import Content, Item
 from utils.follow import Follow
 from utils.follow.views import FollowMixin
 from utils.help.views import AskForHelpMixin
-from utils.voting.views import VoteMixin
+from utils.vote.views import VoteMixin
 
 PAGES_TITLES = {
     "dashboard": _("Dashboard"),
