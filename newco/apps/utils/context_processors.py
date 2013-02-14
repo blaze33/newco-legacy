@@ -26,6 +26,7 @@ def mixpanel(request):
                 "reputation": user.reputation.reputation_incremented}
     else:
         data = {"userId": 0}
-    output = {"MIXPANEL_KEY_ID": settings.MIXPANEL_KEY_ID,
-              "user_json": json.dumps(data, cls=DjangoJSONEncoder)}
+    user = json.dumps(data, cls=DjangoJSONEncoder).replace(
+        "\\r", "\\\\r").replace("\\n", "\\\\n")
+    output = {"MIXPANEL_KEY_ID": settings.MIXPANEL_KEY_ID, "user_json": user}
     return output
