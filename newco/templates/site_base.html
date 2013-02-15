@@ -66,6 +66,9 @@
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
           var user = JSON.parse(htmlDecode("{{ user_json }}"))
+          mixpanel.people.identify(user.userId);
+          mixpanel.people.set(user);
+          mixpanel.name_tag(user.name);
         </script>
         <script src="{{ STATIC_URL }}js/global.js"></script>
         <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
