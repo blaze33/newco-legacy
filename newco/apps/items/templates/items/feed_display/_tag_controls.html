@@ -5,8 +5,8 @@
 <div class="tag-controls">
   <a data-toggle="modal" data-target="#experts-list" href="#">{% trans "Add a question" %}</a>&nbsp;•
   <form id="form-toggle-skill" method="POST">{% csrf_token %}
-    <input class="btn btn-mini btn-primary tooltip-bottom{% if tag not in user.get_profile.skills.all or not user.is_authenticated %} hidden{% endif %}" type="submit" name="toggle-skill" value="{% trans 'In my skills' %}" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}">
-    <input class="btn btn-mini tooltip-bottom{% if tag in user.get_profile.skills.all %} hidden{% endif %}" type="submit" name="toggle-skill" value="{% trans 'Add to skills' %}" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}">
+    <input class="btn btn-mini btn-primary tooltip-bottom{% if tag not in PROFILE.skills.all or not PROFILE %} hidden{% endif %}" type="submit" name="toggle-skill" value="{% trans 'In my skills' %}" title="{% blocktrans %}Click to remove tag {{ tag }} from your skill list{% endblocktrans %}">
+    <input class="btn btn-mini tooltip-bottom{% if tag in PROFILE.skills.all %} hidden{% endif %}" type="submit" name="toggle-skill" value="{% trans 'Add to skills' %}" title="{% blocktrans %}Click to add tag {{ tag }} to your skill list{% endblocktrans %}">
   </form>
 </div>
 
