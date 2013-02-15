@@ -54,10 +54,10 @@
         initSelection: reloadProfiles,
         containerCssClass: "select2-bootstrap",
         formatResultCssClass: function(object) { return "expert"; },
-        formatResult: function(result, container, query) {
+        formatResult: function(result, container, query, escapeMarkup) {
             var text, markup;
             text = [];
-            Select2.util.markMatch(result.text, query.term, text);
+            Select2.util.markMatch(result.text, query.term, text, escapeMarkup);
             text = text.join("");
             markup = "<img src='" + result.gravatar_url + "'>";
             markup += text + " • <b>" + result.reputation + "</b><br>";
