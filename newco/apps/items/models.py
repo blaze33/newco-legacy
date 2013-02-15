@@ -110,7 +110,7 @@ class Content(VoteModel):
         return QUERY_STR_PATTERNS.get(self.__class__.__name__) % self.__dict__
 
     def select_subclass(self):
-        subclasses = ["answer", "question", "feature", "link"]
+        subclasses = ["answer", "question"]
         for subclass in subclasses:
             try:
                 return getattr(self, subclass)
