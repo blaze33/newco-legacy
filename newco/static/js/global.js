@@ -12,7 +12,7 @@ var timeoutObj;
     };
 
     /* Handles 302 redirects */
-    $("body").ajaxComplete(function(e, xhr, settings) {
+    $(document).ajaxComplete(function(e, xhr, settings) {
         if ( xhr.status === 278 ) {
             window.location.href = xhr.getResponseHeader("Location").replace(/\?.*$/, "?next="+window.location.pathname);
         }
