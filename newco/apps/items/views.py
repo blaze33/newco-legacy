@@ -100,8 +100,7 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                add_message("object-created", request,
-                                model=form._meta.model)
+                add_message("object-created", request, model=form._meta.model)
                 messages = render_messages(request)
                 data = {"id": item.id, "name": item.name, "messages": messages,
                         "next": reverse("item_edit", args=args)}
@@ -153,8 +152,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
                 else:
-                    add_message("form-invalid", request,
-                                    model=formset.model)
+                    add_message("form-invalid", request, model=formset.model)
                 ctx.update({"formset": formset})
             else:
                 add_message("form-invalid", request, model=self.model)
