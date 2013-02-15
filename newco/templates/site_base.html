@@ -26,8 +26,6 @@
 {% block extra_head_base %}
     {% compress js %}
     <script src="{% static 'js/ga.js' %}"></script>
-    <script>var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-    <script src="{% static 'js/mixpanel.js' %}"></script>
     {% block extra_head_script %}{% endblock%}
     {% endcompress %}
 {% endblock %}
@@ -61,6 +59,8 @@
         <script src="{{ STATIC_URL }}js/modernizr-csstransitions.min.js"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script src="{{ STATIC_URL }}js/utils.js"></script>
+        <script>var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
+        <script src="{% static 'js/mixpanel.js' %}"></script>
         <script>
           var URL_REDIS = "{{ URL_REDIS }}";
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
@@ -99,9 +99,6 @@
     <script>$.launchJoyride();</script>
   {% endif %}
 
-  <!-- To remove -->
-  <div class="hidden" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
-  </div>
   {% analytics %}
 
   {% block extra_body %}{% endblock %}
