@@ -208,6 +208,8 @@ class AnswerForm(ModelForm):
         if "question-id" in request.POST:
             question_id = request.POST["question-id"]
             self.question = Question.objects.get(id=question_id)
+        elif "instance" in kwargs:
+            self.question = kwargs["instance"].question
         self.fields["content"].label = ""
 
     def save(self, commit=True, **kwargs):
