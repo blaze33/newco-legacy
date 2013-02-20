@@ -562,14 +562,22 @@ class ContentDeleteView(ContentView, DeleteView):
         else:
             return "/"
 
+from django.core.handlers.wsgi import WSGIRequest
+
 
 class TopCategoriesView(ListView):
 
     paginate_by = 8
     queryset = Tag.objects.annotate(
         weight=Count('taggit_taggeditem_items')).order_by('-weight')
+    api_request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
+
+    def api_context_data(self):
+        self.kwargs, self.request = {}, self.api_request
+        return self.get_context_data(object_list=self.queryset)
 
     def render_json(self, context):
+        print self.request
         output_format = lambda t: [unicode(t), t.id, t.weight]
         data = {'object_list': map(output_format,
                                    context['object_list'])}

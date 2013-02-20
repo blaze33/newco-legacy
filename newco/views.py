@@ -9,6 +9,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
 
 from items.models import Item, Content
+from items.views import TopCategoriesView
 from utils.help.views import AskForHelpMixin
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
@@ -74,7 +75,14 @@ class CategoryMixin(object):
         return super(CategoryMixin, self).post(request, *args, **kwargs)
 
 
-class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin,
+class TopCommunitiesMixin(object):
+    def get_context_data(self, **kwargs):
+        kwargs.update({"top_communities": TopCategoriesView().api_context_data()})
+        return super(CategoryMixin, self).get_context_data(**kwargs)
+
+
+class HomepageView(TopCommunitiesMixin,
+                   CategoryMixin, MultiTemplateMixin, TutorialMixin,
                    AskForHelpMixin, ListView, FormMixin, VoteMixin):
 
     paginate_by = 14

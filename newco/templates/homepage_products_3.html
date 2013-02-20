@@ -1,0 +1,71 @@
+{% extends "homepage_base.html" %}
+
+{% load i18n %}
+{% load content_utils %}
+{% load account_tags %}
+
+{% block extra_style %}
+  <style type="text/css">
+    .select2-results {
+      max-height: none;
+    }
+    .top-categories .title {
+      text-align: center;
+      margin: 2em 0;
+    }
+    .top-categories .thumbnail {
+      margin-bottom: 0.75em;
+      padding: 1em;
+      color: #222;
+    }
+    .thumbnail:hover {color: #000;}
+    .thumbnail .images-list {
+      overflow: hidden;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .thumbnail .images-list:hover {text-decoration: none;}
+    .thumbnail .images-list img:last-child {margin-right: 0;}
+
+    .top-categories img {
+      display: inline-block;
+      margin: 0 8px 0 0;
+    }
+    .cat-controls {
+      font-size: 13px;
+      color: #999;
+      margin: 10px 0;
+    }
+    .top-categories .thumbnail:hover .cat-controls {
+      text-decoration: underline;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+<section class="top-categories">
+<div class="row title">
+  Browse our top categories or search for a specific product<br>
+</div>
+<div class="row">
+    {% for community in top_communities.object_list %}
+    <div class="{% cycle 'offset1 ' '' %}span5">
+      <a class="thumbnail" href="/?community={{ community }}">
+        <span class="pull-right cat-controls">See more</span>
+        <h4>{{ community|capfirst }}</h4>
+        <div class="images-list">
+          {% for i in 'xxxxxx'%}<img src=http://placehold.it/64x64>{% endfor %}
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+</div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript">
+</script>
+{% endblock %}
+
+{# TITLE: Categories/Communities mockup #}

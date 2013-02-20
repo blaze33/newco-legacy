@@ -73,6 +73,15 @@
 
   <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
     <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans 'Click here to close the tutorial' %}" data-trigger="manual" data-placement="top" data-animation="true" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
+    <li class="{% if cat == 'category' %}active {% endif %}dropdown">
+      <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Categories" %} <b class="caret"></b></a>
+      <ul class="dropdown-menu pull-right">
+        {% for c in top_communities.object_list %}
+        <li><a href="/?community={{ c }}">{{ c }}</a></li>
+        {% endfor %}
+        <li><a href="/?page=2">More...</a></li>
+      </ul>
+    </li>
     <li class="{% if cat == 'products' %}active {% endif %}dropdown">
   	  <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Products" %} <b class="caret"></b></a>
       <ul class="dropdown-menu pull-right">
