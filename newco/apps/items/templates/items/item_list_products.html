@@ -10,8 +10,8 @@
   <div class="span2"><ul class="nav nav-list">
     <li class="nav-header">{% trans "Filter" %}</li>
     <li{% if qs_option == "popular" %} class="active"{% endif %}><a href="?qs_option=popular">{% trans "Popular" %}</a></li>
-    <li{% if qs_option == "-pub_date" %} class="active"{% endif %}><a href="?qs_option=-pub_date">{% trans "Last added" %}</a></li>
-    <li{% if qs_option == "pub_date" %} class="active"{% endif %}><a href="?qs_option=pub_date">{% trans "Old" %}</a></li>
+    <li{% if qs_option == "-created" %} class="active"{% endif %}><a href="?qs_option=-created">{% trans "Last added" %}</a></li>
+    <li{% if qs_option == "created" %} class="active"{% endif %}><a href="?qs_option=created">{% trans "Old" %}</a></li>
   </ul></div>
   <div class="span10">
     <div class="thumbnail-list">
