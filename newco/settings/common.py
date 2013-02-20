@@ -76,7 +76,7 @@ LOCALE_PATHS = (
     PROJECT_ROOT + '/apps/utils/locale',
     PROJECT_ROOT + '/apps/utils/follow/locale',
     PROJECT_ROOT + '/apps/utils/help/locale',
-    PROJECT_ROOT + '/apps/utils/voting/locale',
+    PROJECT_ROOT + '/apps/utils/vote/locale',
     PROJECT_ROOT + '/venv_locales/account/locale',
 )
 
@@ -214,6 +214,15 @@ INSTALLED_APPS = [
     # Project-external
     "newco_bw_editor",
 
+    # Foreign apps
+    "taggit",
+    "voting",
+    "follow",
+    "gravatar",
+    "tastypie",
+    "amazonproduct",
+    "softhyphen",
+
     # Project
     "about",
     "affiliation",
@@ -226,17 +235,8 @@ INSTALLED_APPS = [
     "utils.help",
     "utils.hyphenate",
     "utils.redis",
-    "utils.voting",
+    "utils.vote",
     "content",
-
-    # Foreign apps
-    "taggit",
-    "voting",
-    "follow",
-    "gravatar",
-    "tastypie",
-    "amazonproduct",
-    "softhyphen",
 ]
 
 FIXTURE_DIRS = [

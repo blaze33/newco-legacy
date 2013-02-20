@@ -12,7 +12,7 @@
       <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
       <p>
         <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
-        <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.pub_date|datediff:"SHORT_DATE_FORMAT" }}</span>
+        <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.created|datediff:"SHORT_DATE_FORMAT" }}</span>
       </p>
     </blockquote>
   {% endif %}
@@ -51,6 +51,12 @@
         
         <h1 itemprop="name">{{ content.content }}</h1>
       {% else %}
+        {% if content.is_draft %}
+          <b class="pull-right">{% trans "Draft" %}</b>
+        {% else %}
+          {% content_info content "date" 32 %}
+        {% endif %}
+
         <p itemprop="name"><a href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
       {% endif %}
 

@@ -2,23 +2,24 @@
 {% load date_utils %}
 {% load content_utils %}
 
-{% if signature %}
-<div class="signature">
-  <span class="right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
-  {% if signature_author %}<br><div class="author">
-    {% if signature_pic %}{{ profile_pic }}{% endif %}
-    <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-      <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
-      <br>
-      <b title="{% trans 'Reputation' %}">{{ reputation }}</b>
-    </div>
-  </div>{% endif %}
-</div>
-{% elif header %}
-<div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-  <b>{% object_display content.author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
-</div>
+{% if case == "signature" %}
+  <div class="signature">
+    <span class="pull-right text-right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
+    {% if signature_author %}<br><div class="author">
+      {% if signature_pic %}{{ profile_pic }}{% endif %}
+      <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+        <a href="{{ author_url }}" itemprop="url"><span itemprop="name">{{ author_name }}</span></a>
+        <br>
+        <b title="{% trans 'Reputation' %}">{{ reputation }}</b>
+      </div>
+    </div>{% endif %}
+  </div>
+{% elif case == "header" %}
+  <div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
+    <b>{% object_display content.author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
+  </div>
+{% elif case == "date" %}
+  <b><small class="pull-right" title="{{ pub_date }}" itemprop="dateModified">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></b>
 {% endif %}
 
-{% comment %}<div class="right nf-small muted" itemprop="dateModified" title="{{ pub_date }}"><small>{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></div>{% endcomment %}
 {#Seb: (about 'itemprop') I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#}

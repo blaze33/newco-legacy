@@ -16,7 +16,7 @@ from taggit.managers import TaggableManager
 
 from items.models import Content
 from profiles.settings import POINTS_TABLE_RATED, POINTS_TABLE_RATING
-from utils.voting import Vote
+from utils.vote import Vote
 
 register(User)
 

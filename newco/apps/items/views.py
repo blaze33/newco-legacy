@@ -29,7 +29,7 @@ from items.models import Item, Content, Question
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
-from utils.voting.views import VoteMixin
+from utils.vote.views import VoteMixin
 from utils.messages import add_message, render_messages
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
@@ -75,9 +75,9 @@ class ContentFormMixin(object):
     def get_form_kwargs(self):
         kwargs = super(ContentFormMixin, self).get_form_kwargs()
         kwargs.update({"request": self.request})
-        for field in ["add_question", "add_answer"]:
-            if field in self.request.POST:
-                kwargs.update({"status": int(self.request.POST.get(field))})
+        for key in ["add_question", "answer"]:
+            if key in self.request.POST:
+                kwargs.update({"status": int(self.request.POST[key])})
                 break
         return kwargs
 
@@ -100,8 +100,7 @@ class ContentFormMixin(object):
             if form.is_valid():
                 item = form.save()
                 args = [item._meta.module_name, item.id]
-                add_message("object-created", request,
-                                model=form._meta.model)
+                add_message("object-created", request, model=form._meta.model)
                 messages = render_messages(request)
                 data = {"id": item.id, "name": item.name, "messages": messages,
                         "next": reverse("item_edit", args=args)}
@@ -153,8 +152,7 @@ class ContentCreateView(ContentView, ContentFormMixin, MultiTemplateMixin,
                     formset.save()
                     return HttpResponseRedirect(self.get_success_url())
                 else:
-                    add_message("form-invalid", request,
-                                    model=formset.model)
+                    add_message("form-invalid", request, model=formset.model)
                 ctx.update({"formset": formset})
             else:
                 add_message("form-invalid", request, model=self.model)

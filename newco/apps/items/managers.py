@@ -7,7 +7,7 @@ from model_utils.managers import InheritanceQuerySet, InheritanceManager
 from content.models import Item
 from items import STATUSES, EMPTY_SCORE
 from utils.follow import Follow
-from utils.voting import Vote
+from utils.vote import Vote
 
 
 class ItemQuerySet(QuerySet):

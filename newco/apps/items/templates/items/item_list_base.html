@@ -25,7 +25,7 @@
 <div class="row">
   <div class="span7">
   	<h1>{{ tag }}</h1>
-    {% include "items/feed_display/_tag_controls.html" with tag=tag user=user csrf_token=csrf_token only %}
+    {% include "items/feed_display/_tag_controls.html" with tag=tag PROFILE=PROFILE csrf_token=csrf_token only %}
     {% include "items/_list_experts.html" with experts=experts %}
   </div>
   <div class="span5" align="center">{% if item_list.count %}

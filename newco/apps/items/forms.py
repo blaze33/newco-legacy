@@ -205,7 +205,9 @@ class AnswerForm(ModelForm):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.request, self.object = [request, kwargs.get("instance", None)]
         self.create = True if not self.object else False
-        if "question-id" in request.POST:
+        if "instance" in kwargs:
+            self.question = kwargs["instance"].question
+        elif "question-id" in request.POST:
             question_id = request.POST["question-id"]
             self.question = Question.objects.get(id=question_id)
         self.fields["content"].label = ""

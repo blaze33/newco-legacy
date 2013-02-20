@@ -8,7 +8,7 @@ from django_extensions.db.models import TimeStampedModel
 from django_hstore import hstore
 
 from content.manager import Manager
-from utils.voting import Vote
+from utils.vote import Vote
 
 
 class GraphQuery(object):
