@@ -87,10 +87,10 @@ class ContentQuerySet(InheritanceQuerySet):
             qs = self.select_subclasses()
             return sorted(qs, key=lambda c: scores.get(c.id).get("score"),
                           reverse=True)
-        elif "pub_date" in option:
+        elif "created" in option:
             return self.order_by(option).select_subclasses()
         elif option == "last":
-            return self.order_by("-pub_date").select_subclasses()
+            return self.order_by("-created").select_subclasses()
         elif option in ["no_answers", "unanswered"]:
             return self.annotate(score=Count("question__answer")).filter(
                 score__lte=0, status=STATUSES.public).select_subclasses()
