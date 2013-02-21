@@ -9,11 +9,12 @@ from memcacheify import memcacheify
 # Only works in production. In debug, all hosts are allowed as well.
 # Used if host is grabbed through get_host method of django.http.HttpRequest,
 # not by 'request.META.HTTP_HOST'.
-ALLOWED_HOSTS = [
-    ".newco-project.fr",
-    ".newco-project.com",
-    "newco-staging.herokuapp.com",
-]
+# ALLOWED_HOSTS = [
+#     ".newco-project.fr",
+#     ".newco-project.com",
+#     "newco-staging.herokuapp.com",
+#     "newco-project.s3.amazonaws.com",
+# ]
 
 # memcache settings
 if os.environ.get('USE_MEMCACHE'):
