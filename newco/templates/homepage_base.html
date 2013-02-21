@@ -17,7 +17,7 @@
 
 
 {% block body_base %}
-  <div id="why_NewCo" class="collapse{% if request.GET.welcome %} in{% else %} out{% endif %}" style="background-image: url({% static 'img/bg/sp/subtle-grey.jpg' %});">
+  <div id="why_NewCo" class="collapse out">
     <div class="container" style="position: relative; z-index: +2;">
 
       <header class="jumbotron subhead" id="newco" style="border-top: 30px solid transparent;">
@@ -72,30 +72,30 @@
   </div>
 
   <div class="subnav subnav-fixed" rel="subnav"><ul class="nav nav-pills">
-    <li style="padding:10px"><b><a class="black tooltip-tutorial" title="{% trans 'Click here to close the tutorial' %}" data-trigger="manual" data-placement="top" data-animation="true" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b></li>
     <li class="{% if cat == 'category' %}active {% endif %}dropdown">
       <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Categories" %} <b class="caret"></b></a>
       <ul class="dropdown-menu pull-right">
         {% for c in top_communities.object_list %}
-        <li><a href="/?community={{ c }}">{{ c }}</a></li>
+        <li{% if c.name in communities %} class="active"{% endif %}><a href="/?communities={{ c }}">{{ c|capfirst }}</a></li>
         {% endfor %}
-        <li><a href="/?page=2">More...</a></li>
+        {# <li><a href="/?page=2">More...</a></li> #}
+        {# TODO: communities listview with pagination #}
       </ul>
     </li>
     <li class="{% if cat == 'products' %}active {% endif %}dropdown">
-  	  <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Products" %} <b class="caret"></b></a>
+      <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Products" %} <b class="caret"></b></a>
       <ul class="dropdown-menu pull-right">
-        <li{% if cat == "products" and filter == "popular" %} class="active"{% endif %}><a href="{% url 'home' 'products' 'popular' %}" id="mixpanel_popular"><i class="icon-star"></i> <b>{% trans "Popular" %}</b></a></li>
-        <li{% if cat == "products" and filter == "last" %} class="active"{% endif %}><a href="{% url 'home' 'products' 'last' %}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
+        <li{% if cat == "products" and filter == "popular" %} class="active"{% endif %}><a href="{% url 'home' 'products' 'popular' %}{{communities_query}}" id="mixpanel_popular"><i class="icon-star"></i> <b>{% trans "Popular" %}</b></a></li>
+        <li{% if cat == "products" and filter == "last" %} class="active"{% endif %}><a href="{% url 'home' 'products' 'last' %}{{communities_query}}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
       </ul>
     </li>
     
     <li class="{% if cat == 'questions' %}active {% endif %}dropdown">
       <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Questions" %} <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li{% if cat == "questions" and filter == "unanswered" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'unanswered' %}"><i class="icon-time"></i> <b>{% trans "Unanswered" %}</b></a></li>
-        <li{% if cat == "questions" and filter == "last" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'last' %}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
-        <li{% if cat == "questions" and filter == "popular" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'popular' %}" id="mixpanel_popular"><i class="icon-star"></i> <b>{% trans "Popular" %}</b></a></li>
+        <li{% if cat == "questions" and filter == "unanswered" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'unanswered' %}{{communities_query}}"><i class="icon-time"></i> <b>{% trans "Unanswered" %}</b></a></li>
+        <li{% if cat == "questions" and filter == "last" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'last' %}{{communities_query}}"><i class="icon-plus"></i> <b>{% trans "Last added" %}</b></a></li>
+        <li{% if cat == "questions" and filter == "popular" %} class="active"{% endif %}><a href="{% url 'home' 'questions' 'popular' %}{{communities_query}}" id="mixpanel_popular"><i class="icon-star"></i> <b>{% trans "Popular" %}</b></a></li>
       </ul>
     </li>
 

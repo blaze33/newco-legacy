@@ -15,7 +15,7 @@
     }
     .top-categories .thumbnail {
       margin-bottom: 0.75em;
-      padding: 1em;
+      padding: 0em 1em 1em;
       color: #222;
     }
     .thumbnail:hover {color: #000;}
@@ -23,15 +23,17 @@
       overflow: hidden;
       white-space: nowrap;
       text-align: center;
+      margin-top: 1em;
     }
     .thumbnail .images-list:hover {text-decoration: none;}
+    .thumbnail .images-list img {width: 64px; height: 64px}
     .thumbnail .images-list img:last-child {margin-right: 0;}
 
     .top-categories img {
       display: inline-block;
       margin: 0 8px 0 0;
     }
-    .cat-controls {
+    span.pull-right {
       font-size: 13px;
       color: #999;
       margin: 10px 0;
@@ -45,17 +47,22 @@
 {% block body %}
 <section class="top-categories">
 <div class="row title">
-  Browse our top categories or search for a specific product<br>
+  <b><a class="black tooltip-tutorial" title="{% trans 'Click here to close the tutorial' %}" data-trigger="manual" data-placement="top" data-animation="true" data-toggle="collapse" data-target="#why_NewCo" href="#">{% trans "NewCo empowers you to buy better" %}</a></b><br>
+  {% trans "Browse what our top communities said or search for a specific product" %}<br>
 </div>
 <div class="row">
     {% for community in top_communities.object_list %}
     <div class="{% cycle 'offset1 ' '' %}span5">
-      <a class="thumbnail" href="/?community={{ community }}">
-        <span class="pull-right cat-controls">See more</span>
+      <a class="thumbnail" href="/?communities={{ community }}">
+        <span class="pull-right">{{community.weight}} contributions • <span class="cat-controls">See more</span></span>
         <h4>{{ community|capfirst }}</h4>
+        {% spaceless %}
         <div class="images-list">
-          {% for i in 'xxxxxx'%}<img src=http://placehold.it/64x64>{% endfor %}
+          {% for p in top_products|getitem:community %}
+            <img src="{{ p.image.data.thumbnailLink }}" title="{{ p }}">
+          {% endfor %}
         </div>
+        {% endspaceless %}
       </a>
     </div>
     {% endfor %}
