@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.db.models import Q, Count
 from django.db.models.query import QuerySet
@@ -9,6 +11,8 @@ from items import STATUSES, EMPTY_SCORE
 from utils import SumWithDefault
 from utils.follow import Follow
 from utils.vote import Vote
+
+OPTION_REGEX = re.compile("-?(?P<field>\w+)")
 
 
 class ItemQuerySet(QuerySet):
@@ -40,10 +44,11 @@ class ItemQuerySet(QuerySet):
         return self
 
     def order_queryset(self, option):
+        field = OPTION_REGEX.match(option).group("field")
         if option == "popular":
             return self.annotate(score=SumWithDefault(
                 "content__votes__vote", default=0)).order_by("-score")
-        elif option in self.model._meta.get_all_field_names():
+        elif field in self.model._meta.get_all_field_names():
             return self.order_by(option)
         elif option == "last":
             return self.order_by("-created")
@@ -86,13 +91,14 @@ class ContentQuerySet(InheritanceQuerySet):
         return self.filter(items__in=item_qs)
 
     def order_queryset(self, option, scores=None):
+        field = OPTION_REGEX.match(option).group("field")
         if option == "popular":
             if not scores:
                 scores = self.get_scores()
             qs = self.select_subclasses()
             return sorted(qs, key=lambda c: scores.get(c.id).get("score"),
                           reverse=True)
-        elif option in self.model._meta.get_all_field_names():
+        elif field in self.model._meta.get_all_field_names():
             return self.order_by(option).select_subclasses()
         elif option == "last":
             return self.order_by("-created").select_subclasses()
