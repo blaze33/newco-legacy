@@ -22,8 +22,6 @@ DEFAULT_FILTERS = {"products": "popular", "questions": "unanswered"}
 from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from taggit.models import Tag
 
 
 class CategoryMixin(object):
@@ -31,29 +29,39 @@ class CategoryMixin(object):
     def get(self, request, *args, **kwargs):
         self.cat = kwargs.get("cat", DEFAULT_CATGORY)
         self.filter = kwargs.get("filter", DEFAULT_FILTERS.get(self.cat))
+        self.groups = request.GET.get('communities', '').split(',')
+        self.template_name = "homepage_products.html"
         delta = timezone.now() - datetime.timedelta(days=61)
-        if self.cat == "questions":
+        if self.cat == "products":
+            self.model = Item
+            self.queryset = Item.objects.all()
+            if self.groups:
+                self.queryset = self.queryset.filter(tags__name__in=self.groups)
+            if self.filter == "popular":
+                self.queryset = self.queryset.filter(
+                    content__created__gt=delta).annotate(
+                        count=Count("content__votes__vote"),
+                        score=Sum("content__votes__vote")
+                    ).filter(count__gt=0).order_by("-score")
+            elif self.filter == "last":
+                self.queryset = self.queryset.order_by("-created")
+        elif self.cat == "questions":
             self.template_name = "homepage_questions.html"
             self.queryset = Content.objects.questions()
+            if self.groups != ['']:
+                item_ids = Item.objects.filter(tags__name__in=self.groups).values_list("id", flat=True)
+                self.queryset = self.queryset.filter(
+                    Q(items__in=item_ids) | Q(tags__name__in=self.groups)).distinct()
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(created__gt=delta)
+            self.scores, self.votes = self.queryset.get_scores_and_votes(
+                request.user)
             self.queryset = self.queryset.order_queryset(self.filter)
-            if "category" in self.request.GET:
-                self.search_terms = self.request.GET.get("category", "")
-                category = self.search_terms
-                try:
-                    self.tag = get_object_or_404(Tag, slug=category)
-                    item_ids = Item.objects.filter(tags=self.tag).values_list(
-                        "id", flat=True)
-                    if self.filter == "popular":
-                        self.queryset = Content.objects.questions()
-                        self.queryset = self.queryset.filter(created__gt=delta)
-                        self.queryset = self.queryset.filter(Q(items__in=item_ids) | Q(tags__name__contains=category))
-                        self.queryset = self.queryset.order_queryset(self.filter)
-                    else:
-                        self.queryset = self.queryset.filter(Q(items__in=item_ids) | Q(tags__name__contains=category))
-                except:
-                    return super(CategoryMixin, self).get(request, *args, **kwargs)
+            self.empty_msg = mark_safe(_(
+                "There is no question in this category. "
+                "<a class='btn' href='{create_url}'>Ask your own!</a>").format(
+                    create_url=reverse_lazy("item_create", args=["question"])))
+
         return super(CategoryMixin, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -61,6 +69,9 @@ class CategoryMixin(object):
             self.search_terms = self.request.GET.get("category", "")
             category_name = self.search_terms
             kwargs.update({"category_name": category_name})
+        if "communities" in self.request.GET:
+            kwargs.update({"communities": self.groups})
+            kwargs.update({'communities_query': '?communities=' + ','.join(self.groups)})
         return super(CategoryMixin, self).get_context_data(**kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -76,9 +87,23 @@ class CategoryMixin(object):
 
 
 class TopCommunitiesMixin(object):
+
+    def top_products_by_categories(self, category):
+        delta = timezone.now() - datetime.timedelta(days=61)
+        return Item.objects.filter(tags__name__in=[unicode(category)],
+                content__created__gt=delta).annotate(
+                count=Count("content__votes__vote"),
+                score=Sum("content__votes__vote")
+            ).filter(count__gt=0).order_by("-score")[:6].fetch_images()
+
     def get_context_data(self, **kwargs):
         kwargs.update({"top_communities": TopCategoriesView().api_context_data()})
-        return super(CategoryMixin, self).get_context_data(**kwargs)
+        if "communities" not in self.request.GET:
+            self.template_name = "homepage_communities.html"
+            kwargs['top_products'] = {}
+            for cat in kwargs['top_communities']['object_list']:
+                kwargs['top_products'].update({cat: self.top_products_by_categories(cat)})
+        return super(TopCommunitiesMixin, self).get_context_data(**kwargs)
 
 
 class HomepageView(TopCommunitiesMixin,
@@ -86,37 +111,6 @@ class HomepageView(TopCommunitiesMixin,
                    AskForHelpMixin, ListView, FormMixin, VoteMixin):
 
     paginate_by = 14
-
-    def get(self, request, *args, **kwargs):
-        self.cat = kwargs.get("cat", DEFAULT_CATGORY)
-        self.filter = kwargs.get("filter", DEFAULT_FILTERS.get(self.cat))
-        delta = timezone.now() - datetime.timedelta(days=61)
-        if self.cat == "products":
-            self.model = Item
-            self.queryset = Item.objects.all()
-            self.template_name = "homepage_products.html"
-            if self.filter == "popular":
-                self.queryset = self.queryset.filter(
-                    content__created__gt=delta).annotate(
-                        count=Count("content__votes__vote"),
-                        score=Sum("content__votes__vote")
-                    ).filter(count__gt=0).order_by("-score")
-            elif self.filter == "last":
-                self.queryset = self.queryset.order_by("-created")
-        elif self.cat == "questions":
-            self.template_name = "homepage_questions.html"
-            self.queryset = Content.objects.questions()
-            if self.filter == "popular":
-                self.queryset = self.queryset.filter(created__gt=delta)
-            self.scores, self.votes = self.queryset.get_scores_and_votes(
-                request.user)
-            self.queryset = self.queryset.order_queryset(self.filter)
-            self.empty_msg = mark_safe(_(
-                "There is no question in this category. "
-                "<a class='btn' href='{create_url}'>Ask your own!</a>").format(
-                    create_url=reverse_lazy("item_create", args=["question"])))
-
-        return super(HomepageView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         for attr in ["cat", "filter", "scores", "votes", "empty_msg"]:
