@@ -40,13 +40,11 @@ class ItemQuerySet(QuerySet):
         return self
 
     def order_queryset(self, option):
-
         if option == "popular":
-            return self.annotate(
-                score=SumWithDefault("content__votes__vote", default=0)
-            ).order_by("-score")
+            return self.annotate(score=SumWithDefault(
+                "content__votes__vote", default=0)).order_by("-score")
         elif option in self.model._meta.get_all_field_names():
-            return self.order_by(option).select_subclasses()
+            return self.order_by(option)
         elif option == "last":
             return self.order_by("-created")
         else:
