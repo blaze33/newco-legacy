@@ -94,6 +94,8 @@ class ContentQuerySet(InheritanceQuerySet):
         elif option in ["no_answers", "unanswered"]:
             return self.annotate(score=Count("question__answer")).filter(
                 score__lte=0, status=STATUSES.public).select_subclasses()
+        else:
+            return self.select_subclasses()
         return self
 
     def get_scores(self, add_related_questions=False):
