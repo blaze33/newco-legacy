@@ -5,6 +5,16 @@ from postgresify import postgresify
 from memcacheify import memcacheify
 ### other production-specific stuff
 
+# Default is empty list => everything is allowed.
+# Only works in production. In debug, all hosts are allowed as well.
+# Used if host is grabbed through get_host method of django.http.HttpRequest,
+# not by 'request.META.HTTP_HOST'.
+ALLOWED_HOSTS = [
+    ".newco-project.fr",
+    ".newco-project.com",
+    "newco-staging.herokuapp.com",
+]
+
 # memcache settings
 if os.environ.get('USE_MEMCACHE'):
     MIDDLEWARE_CLASSES = ["django.middleware.cache.UpdateCacheMiddleware",] + \
