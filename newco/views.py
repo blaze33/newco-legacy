@@ -31,7 +31,7 @@ class CategoryMixin(object):
         self.filter = kwargs.get("filter", DEFAULT_FILTERS.get(self.cat))
         self.groups = request.GET.get('communities', '').split(',')
         self.template_name = "homepage_products.html"
-        delta = timezone.now() - datetime.timedelta(days=61)
+        delta = timezone.now() - datetime.timedelta(days=4*31)
         if self.cat == "products":
             self.model = Item
             self.queryset = Item.objects.all()
@@ -89,7 +89,7 @@ class CategoryMixin(object):
 class TopCommunitiesMixin(object):
 
     def top_products_by_categories(self, category):
-        delta = timezone.now() - datetime.timedelta(days=61)
+        delta = timezone.now() - datetime.timedelta(days=4*31)
         return Item.objects.filter(tags__name__in=[unicode(category)],
                 content__created__gt=delta).annotate(
                 count=Count("content__votes__vote"),
