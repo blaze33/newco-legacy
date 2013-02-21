@@ -16,7 +16,7 @@ v1_api.register(ItemResource())
 v1_api.register(RelationResource())
 
 urlpatterns = patterns("",
-    url(r"^$", HomepageView.as_view(), name="home"),
+    url(r"^$", HomepageView.as_view(), {"choose_community": True}, name="home"),
     url(r"^(?P<cat>products|questions)$", HomepageView.as_view(), name="home"),
     url(r"^(?P<cat>products|questions)/(?P<filter>last|popular|unanswered)$",
         HomepageView.as_view(), name="home"),

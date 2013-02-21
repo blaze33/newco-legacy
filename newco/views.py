@@ -91,7 +91,7 @@ class TopCommunitiesMixin(object):
 
     def get_context_data(self, **kwargs):
         kwargs.update({"top_communities": TopCategoriesView().api_context_data()})
-        if "communities" not in self.request.GET:
+        if "choose_community" in self.kwargs and "communities" not in self.request.GET:
             self.template_name = "homepage_communities.html"
             kwargs['top_products'] = {}
             for cat in kwargs['top_communities']['object_list']:
