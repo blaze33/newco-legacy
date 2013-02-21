@@ -1,11 +1,12 @@
 from django.db import models
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count
 from django.db.models.query import QuerySet
 
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
 
 from content.models import Item
 from items import STATUSES, EMPTY_SCORE
+from utils import SumWithDefault
 from utils.follow import Follow
 from utils.vote import Vote
 
@@ -38,12 +39,18 @@ class ItemQuerySet(QuerySet):
                     obj.image = i
         return self
 
-    #### TODO: Take into account products with "score=0" contents ####
     def order_queryset(self, option):
+
         if option == "popular":
-            return self.annotate(count=Count("content__votes__vote"),
-                            score=Sum("content__votes__vote")
-                        ).filter(count__gt=0).order_by("-score")
+            return self.annotate(
+                score=SumWithDefault("content__votes__vote", default=0)
+            ).order_by("-score")
+        elif option in self.model._meta.get_all_field_names():
+            return self.order_by(option).select_subclasses()
+        elif option == "last":
+            return self.order_by("-created")
+        else:
+            return self
 
 
 class ItemManager(models.Manager):
@@ -52,7 +59,7 @@ class ItemManager(models.Manager):
 
     def fetch_images(self):
         return self.get_query_set().fetch_images()
-    
+
     def order_queryset(self, option):
         return self.get_query_set().order_queryset()
 
@@ -87,7 +94,7 @@ class ContentQuerySet(InheritanceQuerySet):
             qs = self.select_subclasses()
             return sorted(qs, key=lambda c: scores.get(c.id).get("score"),
                           reverse=True)
-        elif "created" in option:
+        elif option in self.model._meta.get_all_field_names():
             return self.order_by(option).select_subclasses()
         elif option == "last":
             return self.order_by("-created").select_subclasses()

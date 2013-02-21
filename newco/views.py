@@ -89,12 +89,8 @@ class HomepageView(CategoryMixin, MultiTemplateMixin, TutorialMixin,
             self.template_name = "homepage_products.html"
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(
-                    content__created__gt=delta).annotate(
-                        count=Count("content__votes__vote"),
-                        score=Sum("content__votes__vote")
-                    ).filter(count__gt=0).order_by("-score")
-            elif self.filter == "last":
-                self.queryset = self.queryset.order_by("-created")
+                    content__created__gt=delta)
+            self.queryset = self.queryset.order_queryset(self.filter)
         elif self.cat == "questions":
             self.template_name = "homepage_questions.html"
             self.queryset = Content.objects.questions()
