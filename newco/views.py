@@ -1,7 +1,6 @@
 import datetime
 
 from django.core.urlresolvers import reverse_lazy
-from django.db.models import Count, Sum
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -39,12 +38,8 @@ class CategoryMixin(object):
                 self.queryset = self.queryset.filter(tags__name__in=self.groups)
             if self.filter == "popular":
                 self.queryset = self.queryset.filter(
-                    content__created__gt=delta).annotate(
-                        count=Count("content__votes__vote"),
-                        score=Sum("content__votes__vote")
-                    ).filter(count__gt=0).order_by("-score")
-            elif self.filter == "last":
-                self.queryset = self.queryset.order_by("-created")
+                    content__created__gt=delta)
+            self.queryset = self.queryset.order_queryset(self.filter)
         elif self.cat == "questions":
             self.template_name = "homepage_questions.html"
             self.queryset = Content.objects.questions()

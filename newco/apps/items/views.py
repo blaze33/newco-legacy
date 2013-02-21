@@ -477,14 +477,10 @@ class ContentListView(ContentView, MultiTemplateMixin, AskForHelpMixin,
         return super(ContentView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        qs = super(ContentListView, self).get_queryset()
+        qs = super(ContentListView, self).get_queryset().filter(tags=self.tag)
         if self.cat == "products":
-            qs = qs.filter(tags=self.tag)
-            field = "content__question__id"
-            qs = qs.annotate(score=Count(field)).order_by("-score") \
-                if self.qs_option == "popular" else qs.order_by(self.qs_option)
+            qs = qs.order_queryset(self.qs_option)
         elif self.cat == "questions":
-            qs = qs.filter(tags=self.tag)
             self.scores, self.votes = qs.get_scores_and_votes(
                 self.request.user)
             qs = qs.questions().order_queryset(self.qs_option, self.scores)

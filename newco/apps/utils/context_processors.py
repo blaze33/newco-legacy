@@ -3,17 +3,7 @@ import json
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 
-from django.contrib.sites.models import Site
-
 from account.utils import user_display
-
-
-def site(request):
-    site = Site.objects.get_current()
-    return {
-        "SITE_NAME": site.name,
-        "SITE_DOMAIN": site.domain
-    }
 
 
 def mixpanel(request):

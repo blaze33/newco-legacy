@@ -1,13 +1,18 @@
+import re
+
 from django.db import models
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count
 from django.db.models.query import QuerySet
 
 from model_utils.managers import InheritanceQuerySet, InheritanceManager
 
 from content.models import Item
 from items import STATUSES, EMPTY_SCORE
+from utils import SumWithDefault
 from utils.follow import Follow
 from utils.vote import Vote
+
+OPTION_REGEX = re.compile("-?(?P<field>\w+)")
 
 
 class ItemQuerySet(QuerySet):
@@ -38,12 +43,17 @@ class ItemQuerySet(QuerySet):
                     obj.image = i
         return self
 
-    #### TODO: Take into account products with "score=0" contents ####
     def order_queryset(self, option):
+        field = OPTION_REGEX.match(option).group("field")
         if option == "popular":
-            return self.annotate(count=Count("content__votes__vote"),
-                            score=Sum("content__votes__vote")
-                        ).filter(count__gt=0).order_by("-score")
+            return self.annotate(score=SumWithDefault(
+                "content__votes__vote", default=0)).order_by("-score")
+        elif field in self.model._meta.get_all_field_names():
+            return self.order_by(option)
+        elif option == "last":
+            return self.order_by("-created")
+        else:
+            return self
 
 
 class ItemManager(models.Manager):
@@ -52,7 +62,7 @@ class ItemManager(models.Manager):
 
     def fetch_images(self):
         return self.get_query_set().fetch_images()
-    
+
     def order_queryset(self, option):
         return self.get_query_set().order_queryset()
 
@@ -81,19 +91,22 @@ class ContentQuerySet(InheritanceQuerySet):
         return self.filter(items__in=item_qs)
 
     def order_queryset(self, option, scores=None):
+        field = OPTION_REGEX.match(option).group("field")
         if option == "popular":
             if not scores:
                 scores = self.get_scores()
             qs = self.select_subclasses()
             return sorted(qs, key=lambda c: scores.get(c.id).get("score"),
                           reverse=True)
-        elif "created" in option:
+        elif field in self.model._meta.get_all_field_names():
             return self.order_by(option).select_subclasses()
         elif option == "last":
             return self.order_by("-created").select_subclasses()
         elif option in ["no_answers", "unanswered"]:
             return self.annotate(score=Count("question__answer")).filter(
                 score__lte=0, status=STATUSES.public).select_subclasses()
+        else:
+            return self.select_subclasses()
         return self
 
     def get_scores(self, add_related_questions=False):
