@@ -169,7 +169,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "profiles.context_processors.profile",
     "utils.context_processors.mixpanel",
-    "utils.context_processors.site",
     "utils.redis.context_processors.redis_url",
 ]
 
