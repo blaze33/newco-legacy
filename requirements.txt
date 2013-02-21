@@ -1,5 +1,5 @@
 ## web framework
-Django==1.4.3
+Django==1.4.5
 
 ## Pinax ecosystem (from pinax basic project requirements/base.txt)
 --extra-index-url=http://dist.pinaxproject.com/dev/
