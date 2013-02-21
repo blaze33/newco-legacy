@@ -96,10 +96,15 @@
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
+  text-align: center;
 }
 .subnav .nav {
   margin-bottom: 0;
+  display: inline-block;
 }
+.subnav .nav > li {
+  text-align: left;
+ }
 .subnav .nav > li > a {
   margin: 0;
   padding-top:    11px;
@@ -161,7 +166,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* IE6-9 */
   }
   .subnav-fixed .nav {
-    width: 938px;
+    /*width: 938px;*/
     margin: 0 auto;
     padding: 0 1px;
   }
