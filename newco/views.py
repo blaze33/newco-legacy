@@ -86,10 +86,8 @@ class TopCommunitiesMixin(object):
     def top_products_by_categories(self, category):
         delta = timezone.now() - datetime.timedelta(days=4*31)
         return Item.objects.filter(tags__name__in=[unicode(category)],
-                content__created__gt=delta).annotate(
-                count=Count("content__votes__vote"),
-                score=Sum("content__votes__vote")
-            ).filter(count__gt=0).order_by("-score")[:6].fetch_images()
+                content__created__gt=delta).order_queryset(
+                "popular")[:6].fetch_images()
 
     def get_context_data(self, **kwargs):
         kwargs.update({"top_communities": TopCategoriesView().api_context_data()})
