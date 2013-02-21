@@ -1,7 +1,6 @@
 import datetime
 
 from django.core.urlresolvers import reverse_lazy
-from django.db.models import Count, Sum
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
