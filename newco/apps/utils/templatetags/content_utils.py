@@ -315,9 +315,6 @@ class SourceDisplayNode(GenericNode):
         except:
             return ""
 
-        color = kwargs.get("color", None)
-        color = args[0] if not color and len(args) > 0 else color
-
         sep = kwargs.get("sep", None)
         sep = args[1] if not sep and len(args) > 1 else sep
 
@@ -328,7 +325,7 @@ class SourceDisplayNode(GenericNode):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        html = get_content_source(obj, display, color=color, context=context,
+        html = get_content_source(obj, display, context=context,
                                   **kwargs)
 
         return self.render_output(context, html)
@@ -339,14 +336,13 @@ def source_display(parser, token):
     """
     Renders the sources of a content object whether it be
     one or several products and/or one or several tags.
-    Can add a css defined color and paste html in a variable.
-    Can add a separator (default is 'text').
+    Can add a separator (default is 'text') and paste html in a variable.
 
     Usage::
 
         {% source_display content display %}
-        {% source_display content display color="green" %}
-        {% object_display content "list" "black" as source %}
+        {% source_display content "list" as source %}
+        {% source_display content "list" sep="," as source %}
 
     """
     bits = token.split_contents()
@@ -430,8 +426,8 @@ class TagsDisplayNode(GenericNode):
         except:
             return ""
 
-        f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
-                    "obj_tpl_name": "tag", "context": context}
+        f_kwargs = {"queryset": tags.all(), "object_name": "tag",
+                    "template": "tags/_tag_display.html", "context": context}
         fields = ["max_nb", "quote_type", "sep", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)

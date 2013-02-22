@@ -8,9 +8,9 @@
   {% if display_ctx == "True" %}
     <p class="content-context">
       {% if content|to_class_name == "question" %}
-        {% object_display content.author display %} {% trans "asked a question" %} {% source_display content display %}
+        {% object_display content.author "text" %} {% trans "asked a question" %} {% source_display content "text" %}
       {% elif content|to_class_name == "answer" %}
-        {% object_display content.author display %} {% trans "answered a question" %} {% source_display content display %}
+        {% object_display content.author "text" %} {% trans "answered a question" %} {% source_display content "text" %}
       {% else %}
         Unknown content type
       {% endif %}
