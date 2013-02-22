@@ -17,7 +17,7 @@
     </blockquote>
   {% endif %}
 
-{% elif display == "list" or display == "page" %}
+{% elif display == "list" or display == "detail" %}
 
   {% dict_entry_for_item content from votes as vote %}
   {% dict_entry_for_item content from scores as score %}
@@ -27,10 +27,13 @@
       {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=path csrf_token=csrf_token only %}
     </div>
     <div class="span8">
-      {% if content.is_draft %}<b class="text-center">{% trans "Draft" %}</b>{% endif %}
 
       <div class="pull-right">
-        {% content_info content display 32 %}
+        {% if content.is_draft %}
+          <b class="text-right">{% trans "Draft" %}</b>
+        {% else %}
+          {% content_info content display 32 %}
+        {% endif %}
         <br>
         {% if display_img == "True" %}
           {% if content.items.all.count > 4 %}
@@ -45,7 +48,7 @@
         {% endif %}
       </div>
 
-      {% if display == "page" %}
+      {% if display == "detail" %}
         <h1 itemprop="name">{{ content.content }}</h1>
       {% elif display == "list" %}
         <p itemprop="name"><a href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
