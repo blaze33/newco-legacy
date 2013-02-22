@@ -27,7 +27,7 @@
 {% block body %}
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
-    {% include "items/feed_display/_question.html" with content=question display="text" q_detail="True" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}
+    {% include "items/feed_display/_question.html" with content=question display="page" experts=experts display_a="all" displ_sign="True" scores=scores votes=votes user=user path=request.path statuses=statuses csrf_token=csrf_token only %}
 
     <br>
     <br>

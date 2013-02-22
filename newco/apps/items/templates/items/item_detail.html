@@ -27,7 +27,7 @@
   <div class="span9 questions">
     {% if questions %}<h4>{% trans "What you need to know before buying!" %}</h4><hr>{% endif %}
 
-    {% include "items/feed_display/_content_list.html" with contents=questions display="text" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
+    {% include "items/feed_display/_content_list.html" with contents=questions display="list" display_ctx="False" display_img="False" display_a="no" disp_exp="False" displ_sign="True" item=item user=user path=request.path experts=experts csrf_token=csrf_token empty_msg=empty_msg scores=scores votes=votes only %}
 
     <br><br><br>
     {% for prod in store_products %}

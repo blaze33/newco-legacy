@@ -6,7 +6,7 @@
 
 {% if display == "mini_feed" %}
   {% if display_a == "one" %}
-      {% include "items/feed_display/_answer.html" with content=answer display="mini_feed" only %}
+    {% include "items/feed_display/_answer.html" with content=answer display="mini_feed" only %}
   {% else %}
     <blockquote{% if content.is_draft %} class="draft"{% endif %}>
       <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
@@ -17,7 +17,7 @@
     </blockquote>
   {% endif %}
 
-{% elif display == "text" %}
+{% elif display == "list" or display == "page" %}
 
   {% dict_entry_for_item content from votes as vote %}
   {% dict_entry_for_item content from scores as score %}
@@ -27,9 +27,12 @@
       {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=path csrf_token=csrf_token only %}
     </div>
     <div class="span8">
+      {% if content.is_draft %}<b class="text-center">{% trans "Draft" %}</b>{% endif %}
 
-      {% if display_img == "True" %}
-        <div class="pull-right">
+      <div class="pull-right">
+        {% content_info content display 32 %}
+        <br>
+        {% if display_img == "True" %}
           {% if content.items.all.count > 4 %}
             <p class="nf-small muted">{% source_display content display sep=", " %}
             </p>
@@ -39,24 +42,12 @@
             {% endfor %}</div>
           {% endif %}
           {% tags_display content.tags %}
-        </div>
-      {% endif %}
-
-      {% if q_detail == "True" %}
-        {% if content.is_draft %}
-          <b class="pull-right">{% trans "Draft" %}</b>
-        {% else %}
-          {% content_info content "signature" 32 %}
         {% endif %}
-        
+      </div>
+
+      {% if display == "page" %}
         <h1 itemprop="name">{{ content.content }}</h1>
-      {% else %}
-        {% if content.is_draft %}
-          <b class="pull-right">{% trans "Draft" %}</b>
-        {% else %}
-          {% content_info content "date" 32 %}
-        {% endif %}
-
+      {% elif display == "list" %}
         <p itemprop="name"><a href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
       {% endif %}
 
@@ -71,19 +62,19 @@
     {% if display_a == "all" %}{# this "if" is only here for the "slice:1" is there any other way to do it ? #}
       {% for answer in content.answer_set.all %}
         {% if not forloop.first%}<br>{% endif %}
-        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
       {% empty %}
         {% cycle "empty" as empty silent %}
       {% endfor %}
     {% elif display_a == "top" %}
       {% for answer in content.answer_set.all|slice:":1" %}
         {% if not forloop.first%}<br>{% endif %}
-        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
       {% empty %}
         {% cycle "empty" as empty silent %}
       {% endfor %}
     {% elif display_a == "one" %}
-      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display=display disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
+      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
     {% endif %}
 
   {% endif %}

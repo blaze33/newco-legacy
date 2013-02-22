@@ -15,7 +15,7 @@
       <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.created|datediff:"SHORT_DATE_FORMAT" }}</span>
     </p>
   </blockquote>
-{% elif display == "text" %}
+{% elif display == "list" %}
 
   {% dict_entry_for_item content from votes as vote %}
   {% dict_entry_for_item content from scores as score %}

@@ -498,9 +498,9 @@ class ContentInfoNode(GenericNode):
 
         template, author = ["content/info.html", content.author]
         ctx = {"pub_date": content.created}
-        if "signature" in display:
+        if "signature" in display or display == "page":
             ctx.update({"case": "signature"})
-            if display == "signature":
+            if display in ["signature", "page"]:
                 ctx.update({
                     "signature_author": True,
                     "signature_pic": True,
@@ -532,7 +532,7 @@ class ContentInfoNode(GenericNode):
                 "reputation": author.reputation.reputation_incremented,
                 "about": author.get_profile().about
             })
-        elif display == "date":
+        elif display in ["date", "list"]:
             ctx.update({"case": "date"})
         else:
             raise TemplateSyntaxError("'content_info': wrong display value.")
