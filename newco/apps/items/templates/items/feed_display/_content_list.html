@@ -5,22 +5,10 @@
 {% for content in contents %}
   {% if not forloop.first %}<hr>{% endif %}
 
-  {% if display_ctx == "True" %}
-    <p class="content-context">
-      {% if content|to_class_name == "question" %}
-        {% object_display content.author "text" %} {% trans "asked a question" %} {% source_display content "text" %}
-      {% elif content|to_class_name == "answer" %}
-        {% object_display content.author "text" %} {% trans "answered a question" %} {% source_display content "text" %}
-      {% else %}
-        Unknown content type
-      {% endif %}
-    </p>
-  {% endif %}
-
   {% if content|to_class_name == "question" %}
-    {% include content|feed_template with content=content display=display display_img=display_img display_a=display_a disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=path csrf_token=csrf_token only %}
+    {% include content|feed_template with content=content display=display options=options display_a=display_a disp_exp=disp_exp displ_sign=displ_sign %}
   {% elif content|to_class_name == "answer" %}
-    {% include "items/feed_display/_question.html" with content=content.question answer=content display=display display_img=display_img display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" item=item scores=scores votes=votes user=user path=path csrf_token=csrf_token only %}
+    {% include "items/feed_display/_question.html" with content=content.question answer=content display=display options=options display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" %}
   {% endif %}
 {% empty %}
   <div class="empty-message">

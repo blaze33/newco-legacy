@@ -28,7 +28,7 @@
 
   <br><hr>
 
-  {% include "items/feed_display/_content_list.html" with contents=object_list display="list" display_ctx="False" display_img="True" display_a="no" user=user path=request.path scores=scores votes=votes experts=experts csrf_token=csrf_token empty_msg=empty_msg only %}
+  {% include "items/feed_display/_content_list.html" with contents=object_list display="list" options="parents" display_a="no" user=user path=request.path scores=scores votes=votes experts=experts csrf_token=csrf_token empty_msg=empty_msg only %}
 
   {% if is_paginated %}{% paginate %}{% endif %}
 </div></div>

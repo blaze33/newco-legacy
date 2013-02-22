@@ -22,20 +22,30 @@
   {% dict_entry_for_item content from votes as vote %}
   {% dict_entry_for_item content from scores as score %}
 
+  {% if "context" in options %}
+    <p class="content-context">
+      {% if answer %}
+        {% object_display answer.author "text" %} {% trans "answered a question" %}
+      {% elif content|to_class_name == "question" %}
+        {% object_display content.author "text" %} {% trans "asked a question" %}
+      {% endif %}
+    </p>
+  {% endif %}
+
   <div class="row highlight question{% if content.is_draft %} draft{% endif %}" id="{{ content.anchor }}">
     <div class="span1 content-controls">
       {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=path csrf_token=csrf_token only %}
     </div>
     <div class="span8">
 
-      <div class="pull-right">
+      <div class="content-extra">
         {% if content.is_draft %}
           <b class="text-right">{% trans "Draft" %}</b>
         {% else %}
           {% content_info content display 32 %}
         {% endif %}
         <br>
-        {% if display_img == "True" %}
+        {% if "parents" in options %}
           <div class="content-parents thumbnail-list">
             {% source_display content "context" sep=" " %}
           </div>
