@@ -84,7 +84,7 @@
       <ul class="top-products thumbnails">
         <li class="span1">{% tag_display tag %}</li>
         {% for item in product_list %}
-          <li class="span1">{% include "items/feed_display/_thumbnail_frame.html" with object=item only %}</li>
+          <li class="span1">{% include "items/_product_display.html" with object=item display="thumbnail" only %}</li>
         {% endfor %}
       </ul>
     {% endif %}{% endfor %}

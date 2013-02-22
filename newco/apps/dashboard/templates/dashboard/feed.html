@@ -16,7 +16,7 @@
   {% comment %}
 
   <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
-  {% for item in wtf.items %}{% include "items/feed_display/_thumbnail_frame.html" with object=item disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}
+  {% for item in wtf.items %}{% include "items/_product_display.html" with object=item display="thumbnail" disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}
 
   {% endcomment %}
 {% endblock %}

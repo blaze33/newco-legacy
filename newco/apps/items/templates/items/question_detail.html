@@ -40,7 +40,7 @@
     {% if question.items.all %}
       <h4 class="text-right">{% trans "Related products" %}</h4>
       <div class="thumbnail-list">{% for item in question.items.all %}
-        {% include "items/feed_display/_thumbnail_frame.html" with object=item tags=1 only %}
+        {% include "items/_product_display.html" with object=item display="thumbnail" tags=1 only %}
       {% endfor %}</div>
     {% endif %}
 

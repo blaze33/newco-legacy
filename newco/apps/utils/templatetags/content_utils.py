@@ -498,9 +498,9 @@ class ContentInfoNode(GenericNode):
 
         template, author = ["content/info.html", content.author]
         ctx = {"pub_date": content.created}
-        if "signature" in display or display == "page":
+        if "signature" in display or display == "detail":
             ctx.update({"case": "signature"})
-            if display in ["signature", "page"]:
+            if display in ["signature", "detail"]:
                 ctx.update({
                     "signature_author": True,
                     "signature_pic": True,

@@ -41,7 +41,7 @@
             </p>
           {% else %}
             <div class="content-parents thumbnail-list">{% for item in content.items.all %}
-              {% include "items/feed_display/_thumbnail_frame.html" with object=item only %}
+              {% include "items/_product_display.html" with object=item display="thumbnail" only %}
             {% endfor %}</div>
           {% endif %}
           {% tags_display content.tags %}
