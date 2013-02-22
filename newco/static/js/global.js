@@ -33,7 +33,7 @@ var timeoutObj;
         });
     };
 
-    $.triggerMasonry($(".thumbnail-list"), ".product-item.thumbnail");
+    $.triggerMasonry($(".thumbnail-list").has(".product-item.thumbnail"), ".product-item.thumbnail");
 
     /* Manual method using timeout, shortcutting the weird behavior of hover,
        which causes glitching if pointer doesn't go to the popover through the
