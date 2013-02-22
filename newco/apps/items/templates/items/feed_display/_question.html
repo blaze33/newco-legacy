@@ -36,15 +36,9 @@
         {% endif %}
         <br>
         {% if display_img == "True" %}
-          {% if content.items.all.count > 4 %}
-            <p class="nf-small muted">{% source_display content display sep=", " %}
-            </p>
-          {% else %}
-            <div class="content-parents thumbnail-list">{% for item in content.items.all %}
-              {% include "items/_product_display.html" with object=item display="thumbnail" only %}
-            {% endfor %}</div>
-          {% endif %}
-          {% tags_display content.tags %}
+          <div class="content-parents thumbnail-list">
+            {% source_display content "context" sep=" " %}
+          </div>
         {% endif %}
       </div>
 

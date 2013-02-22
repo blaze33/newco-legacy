@@ -88,16 +88,20 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
 
 def get_content_source(content, display, context=None,
                        request=None, sep="text"):
+    if display == "context":
+        products_display, tags_display = ["thumbnail", ""]
+    else:
+        products_display, tags_display = [display, ""]
     nb = [content.items.count(), content.tags.count()]
     prods_kwargs = {
         "queryset": content.items.all(), "object_name": "object", "sep": sep,
         "template": "items/_product_display.html", "context": context,
-        "template_context": {"display": display}
+        "template_context": {"display": products_display}
     }
     tags_kwargs = {
-        "queryset": content.tags.all(), "object_name": "tag",
-        "template": "tags/_tag_display.html", "sep": sep, "context": context,
-        "template_context": {"display": display}
+        "queryset": content.tags.all(), "object_name": "tag", "sep": sep,
+        "template": "tags/_tag_display.html", "context": context,
+        "template_context": {"display": tags_display}
     }
 
     if request:

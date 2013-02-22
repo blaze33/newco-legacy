@@ -435,7 +435,7 @@ class TagsDisplayNode(GenericNode):
             if not value:
                 continue
             if field == "extra_class":
-                f_kwargs.update({"obj_tpl_ctx": {field: value}})
+                f_kwargs.update({"template_context": {field: value}})
             elif field == "quote_type":
                 setattr(self, field, value)
             else:
