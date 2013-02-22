@@ -61,13 +61,14 @@ def get_node_extra_arguments(parser, bits, tag_name, max_args):
 
 
 def generate_objs_sentence(queryset, template, object_name, max_nb=None,
-                           sep=" ", template_context={}, context=None):
+                           sep=" ", template_context={}, context=None,
+                           container=""):
 
     words = []
     for index, obj in enumerate(queryset):
         template_context.update({object_name: obj})
         words.append(render_to_string(template, template_context,
-                     context_instance=context))
+                                      context_instance=context))
 
     sentence = ""
     if words:
@@ -82,12 +83,13 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
         else:
             if max_nb:
                 words = words[:max_nb]
-            sentence = sep.join(words)
+            sentence = u"<div class={container}>{html}</div>".format(
+                container=container, html=unicode(sep.join(words)))
+
     return sentence
 
 
-def get_content_source(content, display, context=None,
-                       request=None, sep="text"):
+def get_content_source(content, display, context=None, sep="text"):
     if display == "context":
         products_display, tags_display = ["thumbnail", ""]
     else:
@@ -96,17 +98,15 @@ def get_content_source(content, display, context=None,
     prods_kwargs = {
         "queryset": content.items.all(), "object_name": "object", "sep": sep,
         "template": "items/_product_display.html", "context": context,
-        "template_context": {"display": products_display}
+        "template_context": {"display": products_display},
+        "container": "products"
     }
     tags_kwargs = {
         "queryset": content.tags.all(), "object_name": "tag", "sep": sep,
         "template": "tags/_tag_display.html", "context": context,
-        "template_context": {"display": tags_display}
+        "template_context": {"display": tags_display},
+        "container": "tags"
     }
-
-    if request:
-        prods_kwargs.get("template_context").update({"request": request})
-        tags_kwargs.get("template_context").update({"request": request})
 
     words = []
     if sep == "text":
