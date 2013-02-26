@@ -69,7 +69,7 @@ django-heroku-postgresify==0.3
 git+git://github.com/aino/django-hstore.git@688f19f177#egg=django-hstore
 
 ## monitoring
-newrelic==1.6.0.13
+newrelic==1.10.2.38
 raven==2.0.7.1
 
 ## utils
