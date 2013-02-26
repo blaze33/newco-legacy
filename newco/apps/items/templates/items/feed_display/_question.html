@@ -5,87 +5,48 @@
 {% load date_utils %}
 
 {% if display == "mini_feed" %}
-  {% if display_a == "one" %}
-    {% include "items/feed_display/_answer.html" with content=answer display="mini_feed" only %}
-  {% else %}
-    <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-      <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display content display %}{% trans ":" %}</h5>
-      <p>
-        <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
-        <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.created|datediff:"SHORT_DATE_FORMAT" }}</span>
-      </p>
-    </blockquote>
-  {% endif %}
-
+  <blockquote{% if question.is_draft %} class="draft"{% endif %}>
+    <h5><a href="{{ question.author.get_absolute_url }}">{% profile_pic question.author 18 %}</a> {% object_display question.author display %} {% blocktrans with url=question.get_absolute_url %}asked a <a href="{{ url }}">question</a>{% endblocktrans %} {% source_display question display %}{% trans ":" %}</h5>
+    <p>
+      <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ question.content }}{% endautoescape %}</small>
+      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ question.created|datediff:"SHORT_DATE_FORMAT" }}</span>
+    </p>
+  </blockquote>
 {% elif display == "list" or display == "detail" %}
 
-  {% dict_entry_for_item content from votes as vote %}
-  {% dict_entry_for_item content from scores as score %}
+  {% dict_entry_for_item question from votes as vote %}
+  {% dict_entry_for_item question from scores as score %}
 
-  {% if "context" in options %}
-    <p class="content-context">
-      {% if answer %}
-        {% object_display answer.author "text" %} {% trans "answered a question" %}
-      {% elif content|to_class_name == "question" %}
-        {% object_display content.author "text" %} {% trans "asked a question" %}
-      {% endif %}
-    </p>
-  {% endif %}
-
-  <div class="row highlight question{% if content.is_draft %} draft{% endif %}" id="{{ content.anchor }}">
+  <div class="row highlight question{% if question.is_draft %} draft{% endif %}" id="{{ question.anchor }}">
     <div class="span1 content-controls">
-      {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=path csrf_token=csrf_token only %}
+      {% include "items/_content_controls.html" with content=question item=item score=score vote=vote user=user delete_next=request.path csrf_token=csrf_token only %}
     </div>
     <div class="span8">
 
       <div class="content-extra">
-        {% if content.is_draft %}
+        {% if question.is_draft %}
           <b class="text-right">{% trans "Draft" %}</b>
         {% else %}
-          {% content_info content display 32 %}
+          {% content_info question display 32 %}
         {% endif %}
         <br>
         {% if "parents" in options %}
           <div class="content-parents thumbnail-list">
-            {% source_display content "context" sep=" " %}
+            {% source_display question "context" sep=" " %}
           </div>
         {% endif %}
       </div>
 
       {% if display == "detail" %}
-        <h1 itemprop="name">{{ content.content }}</h1>
+        <h1 itemprop="name">{{ question.content }}</h1>
       {% elif display == "list" %}
-        <p itemprop="name"><a href="{{ content.get_absolute_url }}" itemprop="url">{{ content.content }}</a></p>
+        <p itemprop="name"><a href="{{ question.get_absolute_url }}" itemprop="url">{{ question.content }}</a></p>
       {% endif %}
 
-      {% include "items/feed_display/_feed_controls.html" with question=content only %}
+      {% include "items/feed_display/_feed_controls.html" with question=question only %}
 
     </div>
   </div>
-
-  {# display_a = <no|all|top|one> #}
-  {# Seb: todo: move this long code for the "slice" in the (future) templatetag node #}
-  {% if display_a == "all" or display_a == "top" or display_a == "one" %}
-    {% if display_a == "all" %}{# this "if" is only here for the "slice:1" is there any other way to do it ? #}
-      {% for answer in content.answer_set.all %}
-        {% if not forloop.first%}<br>{% endif %}
-        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
-      {% empty %}
-        {% cycle "empty" as empty silent %}
-      {% endfor %}
-    {% elif display_a == "top" %}
-      {% for answer in content.answer_set.all|slice:":1" %}
-        {% if not forloop.first%}<br>{% endif %}
-        {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
-      {% empty %}
-        {% cycle "empty" as empty silent %}
-      {% endfor %}
-    {% elif display_a == "one" %}
-      {% include "items/feed_display/_answer.html" with content=answer item=item user=user display="list" disp_exp=disp_exp displ_sign=displ_sign scores=scores votes=votes csrf_token=csrf_token only %}
-    {% endif %}
-
-  {% endif %}
-
 {% elif display == "email_html" %} {# to do: change object name (same convention in this template): question => content #}
   <a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{{ question.content }}</a>
   <br>

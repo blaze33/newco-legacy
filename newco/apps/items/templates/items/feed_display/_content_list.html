@@ -6,9 +6,29 @@
   {% if not forloop.first %}<hr>{% endif %}
 
   {% if content|to_class_name == "question" %}
-    {% include content|feed_template with content=content display=display options=options display_a=display_a disp_exp=disp_exp displ_sign=displ_sign %}
+
+    {% if "context" in options %}<p class="content-context">
+      {% object_display content.author "text" %} {% trans "asked a question" %}
+    </p>{% endif %}
+
+    {% include QUESTION_TEMPLATE with question=content display=display options=options %}
+
+    {% if "all-answers" in options %}
+      {% for answer in content.answer_set.all %}
+        {% if not forloop.first%}<br>{% endif %}
+        {% include ANSWER_TEMPLATE with answer=answer display="list" %}
+      {% endfor %}
+    {% elif "top-answer" in options %}
+      {% include ANSWER_TEMPLATE with answer=answer.answer_set.all.0 display="list" %}
+    {% endif %}
   {% elif content|to_class_name == "answer" %}
-    {% include "items/feed_display/_question.html" with content=content.question answer=content display=display options=options display_a="one" disp_exp=disp_exp displ_sign=displ_sign display_q="True" %}
+    {% if "context" in options %}<p class="content-context">
+      {% object_display content.author "text" %} {% trans "answered a question" %}
+    </p>{% endif %}
+
+    {% if display != "mini_feed" %}{% include QUESTION_TEMPLATE with question=content.question display=display options=options %}{% endif %}
+
+    {% include ANSWER_TEMPLATE with answer=content display=display options=options %}
   {% endif %}
 {% empty %}
   <div class="empty-message">

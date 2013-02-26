@@ -3,50 +3,39 @@
 {% load date_utils %}
 {% load voting_tags %}
 
-{% with question=content.question %}
+{% with question=answer.question %}
 
 {% if display == "mini_feed" %}
-  <blockquote{% if content.is_draft %} class="draft"{% endif %}>
-    <h5><a href="{{ content.author.get_absolute_url }}">{% profile_pic content.author 18 %}</a> {% object_display content.author display %} {% blocktrans with url=content.get_absolute_url %}<a href="{{ url }}">answered</a> a question{% endblocktrans %} {% source_display content display %}</h5>
+  <blockquote{% if answer.is_draft %} class="draft"{% endif %}>
+    <h5><a href="{{ answer.author.get_absolute_url }}">{% profile_pic answer.author 18 %}</a> {% object_display answer.author display %} {% blocktrans with url=answer.get_absolute_url %}<a href="{{ url }}">answered</a> a question{% endblocktrans %} {% source_display answer display %}</h5>
     <p{% if question.is_draft %} class="draft"{% endif %}><small><a class="black" href="{{ question.get_absolute_url }}">{{ question.content }}</a></small></p>
 
     <p>
-      <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ content.content }}{% endautoescape %}</small>
-      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ content.created|datediff:"SHORT_DATE_FORMAT" }}</span>
+      <small class="black" style="font-size: 11px !important; font-weight: normal !important; line-height: 11px; text-rendering: optimizelegibility;">{% autoescape off %}{{ answer.content }}{% endautoescape %}</small>
+      <span class="pull-right" style="color: #999; font-size: 11px; line-height: 11px; position: relative; top: -1px; left: 0px">{{ answer.created|datediff:"SHORT_DATE_FORMAT" }}</span>
     </p>
   </blockquote>
 {% elif display == "list" %}
 
-  {% dict_entry_for_item content from votes as vote %}
-  {% dict_entry_for_item content from scores as score %}
+  {% dict_entry_for_item answer from votes as vote %}
+  {% dict_entry_for_item answer from scores as score %}
 
-  {% if display_q == "True" %}
-    <div class="row highlight" id="{{ content.anchor }}">
-      <div class="span8 offset1">
-        <p><a class="question-nf" href="{{ content.question.get_absolute_url }}"><small>{{ content.question.content }}</small></a></p>
-      </div>
-    </div>
-  {% endif %}
-  <div class="row highlight" id="{{ content.anchor }}">
+  <div class="row highlight answer{% if answer.is_draft %} draft{% endif %}" id="{{ answer.anchor }}">
     <div class="span1 content-controls">
-      {% include "items/_content_controls.html" with content=content item=item score=score vote=vote display=display user=user delete_next=request.path csrf_token=csrf_token only %}
+      {% include "items/_content_controls.html" with content=answer item=item score=score vote=vote user=user delete_next=request.path csrf_token=csrf_token only %}
     </div>
-    <div class="span8 answer-content">
-      {% if displ_sign == "True" %}{% content_info content "signature" 32 %}{% endif %}
-      {% content_info content "header" %}
-      <div class="content{% if disp_exp == "True" %} expander{% endif %}{% if content.is_draft %} muted{% endif %}" itemprop="description">{% autoescape off %}{{ content.content }}{% endautoescape %}</div>
-      {% if display_q == "True" %}{# if display_q = True => it means this answer is alone, not in a list below a question #}
-        <br>
-        {% include "items/feed_display/_feed_controls.html" with question=content only %}
-      {% endif %}
+    <div class="span8">
+      {% if "answer-signature" in options %}{% content_info answer "signature" 32 %}{% endif %}
+      {% content_info answer "header" %}
+      <div class="{% if 'expander' in options %} expander{% endif %}" itemprop="description">{% autoescape off %}{{ answer.content }}{% endautoescape %}</div>
     </div>
   </div>
 
 {% elif display == "email_html" %}
   <p><small><b><a href="{% get_absolute_uri question request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ question.content }}{% endautoescape %}</a></b></small></p>
-  <p><a href="{% get_absolute_uri content request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ content.content }}{% endautoescape %}</a></p>
+  <p><a href="{% get_absolute_uri answer request %}" style="color: #010101; text-decoration: none;">{% autoescape off %}{{ answer.content }}{% endautoescape %}</a></p>
 {% elif display == "email_txt" %}
-  {% autoescape off %}{{ content.content }}{% endautoescape %}
+  {% autoescape off %}{{ answer.content }}{% endautoescape %}
 {% endif %}
 
 {% endwith %}

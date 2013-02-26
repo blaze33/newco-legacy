@@ -16,7 +16,7 @@
   </div>
 {% elif case == "header" %}
   <div class="signature-header" itemprop="contributor" itemscope itemtype="http://schema.org/Person">
-    <b>{% object_display content.author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
+    <b>{% object_display author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
   </div>
 {% elif case == "date" %}
   <b><small class="pull-right" title="{{ pub_date }}" itemprop="dateModified">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></b>
