@@ -65,7 +65,7 @@ greenlet==0.4.0
 ## PostgreSQL adapter for Python
 psycopg2==2.4.5
 ## Database configuration for heroku
-django-heroku-postgresify==0.2
+django-heroku-postgresify==0.3
 git+git://github.com/aino/django-hstore.git@688f19f177#egg=django-hstore
 
 ## monitoring
