@@ -57,7 +57,7 @@ django-pylibmc-sasl==0.2.4
 django-heroku-memcacheify==0.3
 
 ## production webserver
-gunicorn==0.17
+gunicorn==0.17.2
 gevent==0.13.8
 greenlet==0.4.0
 
@@ -69,7 +69,7 @@ django-heroku-postgresify==0.2
 git+git://github.com/aino/django-hstore.git@688f19f177#egg=django-hstore
 
 ## monitoring
-newrelic==1.6.0.13
+newrelic==1.10.2.38
 raven==2.0.7.1
 
 ## utils
