@@ -573,15 +573,14 @@ class TopCategoriesView(ListView):
         return self.get_context_data(object_list=self.queryset)
 
     def render_json(self, context):
-        print self.request
         output_format = lambda t: [unicode(t), t.id, t.weight]
         data = {'object_list': map(output_format,
                                    context['object_list'])}
         data.update({
-                'more': context['page_obj'].has_next(),
-                'page_number': context['page_obj'].number,
-                'num_pages': context['paginator'].num_pages,
-            })
+            'more': context['page_obj'].has_next(),
+            'page_number': context['page_obj'].number,
+            'num_pages': context['paginator'].num_pages,
+        })
         return HttpResponse(json.dumps(data), 'application/json')
 
     def render_to_response(self, context, **response_kwargs):
