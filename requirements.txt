@@ -21,7 +21,7 @@ Babel==0.9.6
 django-pagination==1.0.7
 idios==0.2a2.dev2
 metron==0.2.dev3
-django-model-utils==1.1.0
+django-model-utils==1.2.0
 django-tastypie==0.9.11
 
 django-admin-tools==0.4.1
