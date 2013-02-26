@@ -73,7 +73,7 @@ newrelic==1.6.0.13
 raven==2.0.7.1
 
 ## utils
-requests==1.0.4
+requests==1.1.0
 django-htmlmin==0.5.2
 django-softhyphen==0.15
 
