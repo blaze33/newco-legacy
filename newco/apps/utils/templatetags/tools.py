@@ -83,15 +83,17 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
         else:
             if max_nb:
                 words = words[:max_nb]
-            sentence = u"<div class={container}>{html}</div>".format(
+            sentence = u"<div class='{container}'>{html}</div>".format(
                 container=container, html=unicode(sep.join(words)))
 
     return sentence
 
 
 def get_content_source(content, display, context=None, sep="text"):
+    products_container = "products"
     if display == "context":
         products_display, tags_display = ["thumbnail", ""]
+        products_container += " thumbnail-list"
     else:
         products_display, tags_display = [display, ""]
     nb = [content.items.count(), content.tags.count()]
@@ -99,7 +101,7 @@ def get_content_source(content, display, context=None, sep="text"):
         "queryset": content.items.all(), "object_name": "object", "sep": sep,
         "template": "items/_product_display.html", "context": context,
         "template_context": {"display": products_display},
-        "container": "products"
+        "container": products_container
     }
     tags_kwargs = {
         "queryset": content.tags.all(), "object_name": "tag", "sep": sep,

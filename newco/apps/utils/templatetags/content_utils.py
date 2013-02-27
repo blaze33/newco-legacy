@@ -427,7 +427,8 @@ class TagsDisplayNode(GenericNode):
             return ""
 
         f_kwargs = {"queryset": tags.all(), "object_name": "tag",
-                    "template": "tags/_tag_display.html", "context": context}
+                    "template": "tags/_tag_display.html", "context": context,
+                    "container": "tags"}
         fields = ["max_nb", "quote_type", "sep", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
