@@ -411,6 +411,11 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
 
+            tag_ids = set(q.tags.values_list("id", flat=True))
+            tag_ids.update(q.items.values_list("tags", flat=True))
+            tag_qs = Tag.objects.filter(id__in=tag_ids).annotate(
+                weight=Count("taggit_taggeditem_items")).order_by("-weight")
+            context.update({"tags": tag_qs, "products": q.items.all()})
 
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())

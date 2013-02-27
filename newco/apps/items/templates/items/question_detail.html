@@ -8,8 +8,6 @@
     <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
     <style>
-      div.question { margin-bottom: 20px; }
-
       #edit-about {
         width: 100%;
       }
@@ -25,9 +23,28 @@
 {% block head_title %}{{ question.content }}{% endblock %}
 
 {% block body %}
+
+<div class="row question-header">
+  <div class="span9">
+    {% tags_display tags %}
+    <br>
+    {% include QUESTION_TEMPLATE with content=question display="detail" %}
+  </div>
+  <div class="span3">
+    {% if products %}
+      <div class="products thumbnail-list">
+        {% for item in products %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<br>
+
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
-    {% include QUESTION_TEMPLATE with content=question display="detail" %}
 
     {% for answer in question.answer_set.all %}
       {% if not forloop.first%}<br>{% endif %}
@@ -38,27 +55,14 @@
     <br>
 
     {% include "items/_answer_form.html" with form=answer_form %}
-    
   </div>
 
   <div class="span3">
-    {% if question.items.all %}
-      <h4 class="text-right">{% trans "Related products" %}</h4>
-      <div class="thumbnail-list">{% for item in question.items.all %}
-        {% include "items/_product_display.html" with object=item display="thumbnail" tags=1 only %}
-      {% endfor %}</div>
-    {% endif %}
-
-    {% if question.tags.all %}
-      <hr>
-      <h4 class="text-right">{% trans "Related tags" %}</h4>
-      {% tags_display question.tags %}
-    {% endif %}
-
     {% for title, content_list in related_questions.iteritems %}
+      {% if not forloop.first %}<hr>{% endif %}
       {% if content_list %}
+        <h4 class="text-right">{{ title }}</h4>
         <ul>{% for content in content_list %}
-          {% if forloop.first %}<hr><h4 class="text-right">{{ title }}</h4>{% endif %}
           <li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>
         {% endfor %}</ul>
       {% endif %}
@@ -75,6 +79,18 @@
   <script src="{{ STATIC_URL }}js/help.js"></script>
   {{ answer_form.media.js }}
   <script>
+    var extraOptions = {
+        columnWidth: function( containerWidth ) {
+            if ( containerWidth < 440 ) {
+                return containerWidth / 2;
+            } else {
+                return containerWidth / 4;
+            }
+        },
+        isFitWidth: false
+    };
+    $.triggerMasonry($(".thumbnail-list"), ".product-item.thumbnail", extraOptions);
+
     $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
 
