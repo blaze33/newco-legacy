@@ -208,9 +208,7 @@
 /* ↓↓↓ Product thumbnail ↓↓↓ */
 .product-item.thumbnail {
   display: inline-block;
-  max-width: 165px;
-  width: 100%;
-  background-color: white;
+  width: 165px;
 }
 
 .product-item.thumbnail img {
