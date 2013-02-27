@@ -240,21 +240,22 @@
   padding-left: 10px;
 }
 
-.content-parents {
+.content-extra .products,
+.content-extra .tags {
   max-width: 160px;
 }
 
-.content-parents .tags {
+.content-extra .tags {
   text-align: right;
   white-space: pre-wrap;
 }
 
-.content-parents .product-item.thumbnail {
+.content-extra .product-item.thumbnail {
   width: 64px;
   margin: 2px 4px 2px 0;
 }
 
-.content-parents .product-item.thumbnail .name a,
+.content-extra .product-item.thumbnail .name a,
 .top-products .product-item.thumbnail .name a {
   font-size: 9px;
   font-weight: bold;
