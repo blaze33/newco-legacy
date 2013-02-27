@@ -75,7 +75,7 @@
     <li class="{% if cat == 'category' %}active {% endif %}dropdown">
       <a class="black dropdown-toggle" data-toggle="dropdown" data-target="#" href="">{% trans "Categories" %} <b class="caret"></b></a>
       <ul class="dropdown-menu pull-right">
-        {% for c in top_communities.object_list %}
+        {% for c in top_communities %}
         <li{% if c.name in communities %} class="active"{% endif %}><a href="/?communities={{ c }}">{{ c|capfirst }}</a></li>
         {% endfor %}
         {# <li><a href="/?page=2">More...</a></li> #}

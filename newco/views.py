@@ -8,8 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
 
-from items.models import Item, Content
-from items.views import TopCategoriesView
+from items.models import Item, Content, TopCategories
 from utils.help.views import AskForHelpMixin
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.views.tutorial import TutorialMixin
@@ -67,23 +66,16 @@ class CategoryMixin(object):
 
 class TopCommunitiesMixin(object):
 
-    def top_products_by_categories(self, category):
-        delta = timezone.now() - datetime.timedelta(days=4 * 31)
-        return Item.objects.filter(
-            tags__name__in=[unicode(category)],
-            content__created__gt=delta).order_queryset(
-                "popular")[:6].fetch_images()
+    top_groups = TopCategories()
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            "top_communities": TopCategoriesView().api_context_data()})
+            "top_communities": self.top_groups.by_contributions()[:8]})
         if "choose_community" in self.kwargs and \
                 "communities" not in self.request.GET:
             self.template_name = "homepage_communities.html"
-            kwargs["top_products"] = {}
-            for cat in kwargs["top_communities"]["object_list"]:
-                kwargs["top_products"].update({
-                    cat: self.top_products_by_categories(cat)})
+            kwargs["top_products"] = self.top_groups.top_products_by_categories(
+                kwargs["top_communities"])
         return super(TopCommunitiesMixin, self).get_context_data(**kwargs)
 
 

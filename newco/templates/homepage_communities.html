@@ -54,7 +54,7 @@
   {% trans "Browse what our top communities said or search for a specific product" %}<br>
 </div>
 <div class="row">
-    {% for community in top_communities.object_list %}
+    {% for community in top_communities %}
     <div class="{% cycle 'offset1 ' '' %}span5">
       <a class="thumbnail" href="/?communities={{ community }}">
         <span class="pull-right">{{community.weight}} contributions • <span class="cat-controls">See more</span></span>

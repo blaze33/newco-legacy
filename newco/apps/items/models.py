@@ -1,7 +1,10 @@
+import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, Count
 from django.template.defaultfilters import slugify, truncatechars
+from django.utils import timezone
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,6 +14,7 @@ from django.contrib.contenttypes import generic
 from django_extensions.db.models import TimeStampedModel
 from follow.utils import register
 from taggit.managers import TaggableManager
+from taggit.models import Tag
 
 from content.models import VoteModel
 from items import QUERY_STR_PATTERNS, ANCHOR_PATTERNS, STATUSES
@@ -199,3 +203,24 @@ class Story(models.Model):
         verbose_name_plural = _("stories")
 
 from content.transition import sync_products
+
+
+class TopCategories(object):
+    delta = timezone.now() - datetime.timedelta(days=4 * 31)
+    queryset = Tag.objects.annotate(
+        weight=Count('taggit_taggeditem_items')).order_by('-weight')
+
+    def by_contributions(self):
+        return self.queryset
+
+    def top_products_for_category(self, category, n=6):
+        return Item.objects.filter(
+            tags__name__in=[unicode(category)],
+            content__created__gt=self.delta).order_queryset(
+                "popular")[:n].fetch_images()
+
+    def top_products_by_categories(self, categories=["all"], n=6):
+        products = {}
+        for cat in categories:
+            products.update({cat: self.top_products_for_category(cat)})
+        return products

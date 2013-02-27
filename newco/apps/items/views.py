@@ -25,7 +25,7 @@ from content.transition import add_images, get_album
 from items import STATUSES
 from items.forms import QuestionForm, AnswerForm, ItemForm, QAFormSet
 from items.forms import PartialQuestionForm
-from items.models import Item, Content, Question
+from items.models import Item, Content, Question, TopCategories
 from profiles.models import Profile
 from utils.apiservices import search_images
 from utils.follow.views import FollowMixin
@@ -561,19 +561,11 @@ class ContentDeleteView(ContentView, DeleteView):
         else:
             return "/"
 
-from django.core.handlers.wsgi import WSGIRequest
-
 
 class TopCategoriesView(ListView):
 
     paginate_by = 8
-    queryset = Tag.objects.annotate(
-        weight=Count('taggit_taggeditem_items')).order_by('-weight')
-    api_request = WSGIRequest({'REQUEST_METHOD': 'GET', 'wsgi.input': ''})
-
-    def api_context_data(self):
-        self.kwargs, self.request = {}, self.api_request
-        return self.get_context_data(object_list=self.queryset)
+    queryset = TopCategories().by_contributions()
 
     def render_json(self, context):
         output_format = lambda t: [unicode(t), t.id, t.weight]
