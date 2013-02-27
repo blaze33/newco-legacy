@@ -98,6 +98,9 @@
         if ( /answer-form/.test(hash) ) {
             editor.focus();
         }
+        $("#call-answer-form").click( function (eventObject) {
+            editor.focus();
+        });
 
         // Edit profile.about with ajax
         $("#form-edit-about").submit(function() {
