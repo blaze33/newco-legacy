@@ -14,10 +14,6 @@
   line-height: 140%;
 }
 
-.answer-content {
-  line-height: 150%;
-}
-
 .draft {
   background-color: lightgrey;
   border-radius: 5px 5px 5px 5px;
@@ -239,9 +235,18 @@
 /* ↑↑↑ Product thumbnail ↑↑↑ */
 
 /* ↓↓↓ Content Parents and Related Items display ↓↓↓ */
-.content-parents {
+.content-extra {
+  float: right;
   padding-left: 10px;
+}
+
+.content-parents {
   max-width: 160px;
+}
+
+.content-parents .tags {
+  text-align: right;
+  white-space: pre-wrap;
 }
 
 .content-parents .product-item.thumbnail {

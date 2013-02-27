@@ -315,9 +315,6 @@ class SourceDisplayNode(GenericNode):
         except:
             return ""
 
-        color = kwargs.get("color", None)
-        color = args[0] if not color and len(args) > 0 else color
-
         sep = kwargs.get("sep", None)
         sep = args[1] if not sep and len(args) > 1 else sep
 
@@ -328,7 +325,7 @@ class SourceDisplayNode(GenericNode):
             raise TemplateSyntaxError("'source_display' only renders "
                                       "Content instances")
 
-        html = get_content_source(obj, display, color=color, context=context,
+        html = get_content_source(obj, display, context=context,
                                   **kwargs)
 
         return self.render_output(context, html)
@@ -339,14 +336,13 @@ def source_display(parser, token):
     """
     Renders the sources of a content object whether it be
     one or several products and/or one or several tags.
-    Can add a css defined color and paste html in a variable.
-    Can add a separator (default is 'text').
+    Can add a separator (default is 'text') and paste html in a variable.
 
     Usage::
 
         {% source_display content display %}
-        {% source_display content display color="green" %}
-        {% object_display content "list" "black" as source %}
+        {% source_display content "list" as source %}
+        {% source_display content "list" sep="," as source %}
 
     """
     bits = token.split_contents()
@@ -430,8 +426,8 @@ class TagsDisplayNode(GenericNode):
         except:
             return ""
 
-        f_kwargs = {"obj_qs": tags.all(), "obj_tpl": "tags/_tag_display.html",
-                    "obj_tpl_name": "tag", "context": context}
+        f_kwargs = {"queryset": tags.all(), "object_name": "tag",
+                    "template": "tags/_tag_display.html", "context": context}
         fields = ["max_nb", "quote_type", "sep", "extra_class"]
         for index, field in enumerate(fields):
             value = kwargs.get(field, None)
@@ -439,7 +435,7 @@ class TagsDisplayNode(GenericNode):
             if not value:
                 continue
             if field == "extra_class":
-                f_kwargs.update({"obj_tpl_ctx": {field: value}})
+                f_kwargs.update({"template_context": {field: value}})
             elif field == "quote_type":
                 setattr(self, field, value)
             else:
@@ -498,9 +494,9 @@ class ContentInfoNode(GenericNode):
 
         template, author = ["content/info.html", content.author]
         ctx = {"pub_date": content.created}
-        if "signature" in display:
+        if "signature" in display or display == "detail":
             ctx.update({"case": "signature"})
-            if display == "signature":
+            if display in ["signature", "detail"]:
                 ctx.update({
                     "signature_author": True,
                     "signature_pic": True,
@@ -532,7 +528,7 @@ class ContentInfoNode(GenericNode):
                 "reputation": author.reputation.reputation_incremented,
                 "about": author.get_profile().about
             })
-        elif display == "date":
+        elif display in ["date", "list"]:
             ctx.update({"case": "date"})
         else:
             raise TemplateSyntaxError("'content_info': wrong display value.")

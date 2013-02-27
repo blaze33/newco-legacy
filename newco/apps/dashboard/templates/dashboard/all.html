@@ -5,16 +5,5 @@
 {% block subtitle %}{% trans "Looking for one of your contributions? Here are the tools to help you find!" %}{% endblock %}
 
 {% block dashboard %}
-  <div class="row">
-    <div class="span7">
-      <form action="#" method="POST" class="well">{% csrf_token %}
-        <div class="input-append"><input type="text" name="history_search" class="input-xlarge uneditable-input" placeholder="{% trans 'Search in all my contributions - Not functional yet' %}" style="margin: 0 auto; height:30px; width:400px; font-size:16px; font-weight:bold;"/><button class="btn disabled" type="submit" style="height:40px; "><i class="icon-search"></i></button></div>
-      </form>
-    </div>
-  </div>
-
-  <br>
-  <hr>
-
-  {% include "items/feed_display/_content_list.html" with contents=object_list scores=scores votes=votes display="text" display_img="True" display_ctx="True" display_a="no" empty_msg=empty_msg experts=experts %}
+  {% include "items/feed_display/_content_list.html" with contents=object_list display="list" options="context,parents" %}
 {% endblock %}

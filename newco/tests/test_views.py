@@ -10,7 +10,9 @@ from django.utils import unittest
 from client import TestClient
 
 URLS_ARGS = {
-    "dash": [[], ["feed"], ["contribution"], ["draft"], ["all"]]}
+    "dash": [[], ["feed"], ["contribution"], ["draft"], ["all"]],
+    "top_categories_json": [["json"]]
+}
 
 
 def pycall_django_filter(call_stack, module_name, class_name, func_name, full_name):

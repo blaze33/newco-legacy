@@ -60,14 +60,15 @@ def get_node_extra_arguments(parser, bits, tag_name, max_args):
     return [args, kwargs, asvar]
 
 
-def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None, sep=" ",
-                           obj_tpl_ctx={}, context=None):
+def generate_objs_sentence(queryset, template, object_name, max_nb=None,
+                           sep=" ", template_context={}, context=None,
+                           container=""):
 
     words = []
-    for index, obj in enumerate(obj_qs):
-        obj_tpl_ctx.update({obj_tpl_name: obj})
-        words.append(render_to_string(obj_tpl, obj_tpl_ctx,
-                     context_instance=context))
+    for index, obj in enumerate(queryset):
+        template_context.update({object_name: obj})
+        words.append(render_to_string(template, template_context,
+                                      context_instance=context))
 
     sentence = ""
     if words:
@@ -82,29 +83,30 @@ def generate_objs_sentence(obj_qs, obj_tpl, obj_tpl_name, max_nb=None, sep=" ",
         else:
             if max_nb:
                 words = words[:max_nb]
-            sentence = sep.join(words)
+            sentence = u"<div class={container}>{html}</div>".format(
+                container=container, html=unicode(sep.join(words)))
+
     return sentence
 
 
-def get_content_source(content, display, color=None, context=None,
-                       request=None, sep="text"):
+def get_content_source(content, display, context=None, sep="text"):
+    if display == "context":
+        products_display, tags_display = ["thumbnail", ""]
+    else:
+        products_display, tags_display = [display, ""]
     nb = [content.items.count(), content.tags.count()]
     prods_kwargs = {
-        "obj_qs": content.items.all(), "obj_tpl_name": "object", "sep": sep,
-        "obj_tpl": "items/_product_display.html", "context": context,
-        "obj_tpl_ctx": {"display": display}
+        "queryset": content.items.all(), "object_name": "object", "sep": sep,
+        "template": "items/_product_display.html", "context": context,
+        "template_context": {"display": products_display},
+        "container": "products"
     }
     tags_kwargs = {
-        "obj_qs": content.tags.all(), "obj_tpl_name": "tag",
-        "obj_tpl": "tags/_tag_display.html", "sep": sep, "context": context,
-        "obj_tpl_ctx": {"display": display}
+        "queryset": content.tags.all(), "object_name": "tag", "sep": sep,
+        "template": "tags/_tag_display.html", "context": context,
+        "template_context": {"display": tags_display},
+        "container": "tags"
     }
-
-    if request:
-        prods_kwargs.get("obj_tpl_ctx").update({"request": request})
-        tags_kwargs.get("obj_tpl_ctx").update({"request": request})
-    if color:
-        prods_kwargs.get("obj_tpl_ctx").update({"color": color})
 
     words = []
     if sep == "text":

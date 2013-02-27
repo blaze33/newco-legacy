@@ -167,6 +167,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "account.context_processors.account",
     "pinax_theme_bootstrap.context_processors.theme",
 
+    "items.context_processors.template_paths",
     "profiles.context_processors.profile",
     "utils.context_processors.mixpanel",
     "utils.redis.context_processors.redis_url",

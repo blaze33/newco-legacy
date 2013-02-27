@@ -1,10 +1,8 @@
 @charset 'UTF-8';
 
 
-body {background-color: #FDFCF8;}
-.thumbnail {
-      background-color: #FFFFFF;
-}
+body       { background-color: #FDFCF8; }
+.thumbnail { background-color: #FFFFFF; }
 
 /* ↓↓↓ Masonry Transitions ↓↓↓ */
 .masonry,

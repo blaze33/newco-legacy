@@ -17,7 +17,7 @@
       <h3><a href="{{ box.page_url }}" class="black">{{ box.title }}</a></h3>
       <p class="muted">{{ box.subtitle }}</p>
       <div class="collapse in" id="collapse_{{ box.name }}">
-        {% include "items/feed_display/_content_list.html" with contents=box.feed display="mini_feed" empty_msg=box.empty_msg experts=experts %}
+        {% include "items/feed_display/_content_list.html" with contents=box.feed display="mini_feed" empty_msg=box.empty_msg %}
       </div>
     </div></div>
   {% endfor %}</div>
