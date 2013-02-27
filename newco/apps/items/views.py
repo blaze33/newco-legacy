@@ -411,8 +411,6 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
 
-            tag_ids = q.items.all().values_list("tags__id", flat=True)
-            experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
 
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
@@ -420,7 +418,7 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             top_questions = related_questions.order_queryset("popular")
             related_questions = related_questions.select_subclasses()
 
-            context.update({"experts": experts, "related_questions": {
+            context.update({"related_questions": {
                 _("Top related questions"): top_questions[:3],
                 _("Latest related questions"): related_questions[:3]
             }})
