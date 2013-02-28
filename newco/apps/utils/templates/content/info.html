@@ -4,7 +4,7 @@
 
 {% if case == "signature" %}
   <div class="signature">
-    <span class="pull-right text-right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ pub_date }}">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</b></span>
+    <span class="pull-right text-right" itemprop="dateModified">{% trans "Posted" %}{% trans ":" %} <b title="{{ created }}">{{ created|datediff:"SHORT_DATE_FORMAT" }}</b></span>
     {% if signature_author %}<br><div class="author">
       {% if signature_pic %}{{ profile_pic }}{% endif %}
       <div itemprop="contributor" itemscope itemtype="http://schema.org/Person">
@@ -19,7 +19,7 @@
     <b>{% object_display author "text" "black" %}<span rel="current-user-name-and-bio">{% if about %}, <span itemprop="description">{{ about }}</span>{% endif %}</span></b>
   </div>
 {% elif case == "date" %}
-  <b><small class="pull-right" title="{{ pub_date }}" itemprop="dateModified">{{ pub_date|datediff:"SHORT_DATE_FORMAT" }}</small></b>
+  <b><small class="pull-right" title="{{ created }}" itemprop="dateModified">{{ created|datediff:"SHORT_DATE_FORMAT" }}</small></b>
 {% endif %}
 
 {#Seb: (about 'itemprop') I took contributor instead of author because author can be only one, and I dont know what it will do if Google sees many authors in one question+many answers for example ...#}

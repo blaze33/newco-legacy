@@ -494,7 +494,7 @@ class ContentInfoNode(GenericNode):
         pic_size = args[0] if not pic_size and len(args) > 0 else pic_size
 
         template, author = ["content/info.html", content.author]
-        ctx = {"pub_date": content.created}
+        ctx = {"created": content.created}
         if "signature" in display or display == "detail":
             ctx.update({"case": "signature"})
             if display in ["signature", "detail"]:
