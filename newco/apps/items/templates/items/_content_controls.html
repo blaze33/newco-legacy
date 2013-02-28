@@ -8,7 +8,8 @@
 
 {% vote_form content vote next %}
 <div class="score">
-  <span class="value">{{ score.score }}</span><br><span class="title">{% trans "Score" %}</span>
+  <span class="value" id="score_{{ content.id }}">{{ score.score }}</span>
+  <label for="score_{{ content.id }}">{% trans "Score" %}</label>
 </div>
 <div class="pull-right">{% edit_buttons user content edit_next=next delete_next=delete_next %}</div>
 

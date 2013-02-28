@@ -4,8 +4,7 @@
 .question > div > h1 {
   font-size: 200%;
   font-weight: bold;
-  line-height: 140%;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .question > div > p {
@@ -93,30 +92,50 @@
 
 /* ↓↓↓ Content controls ↓↓↓ */
 .content-controls {
-  font-size: 180%;
   font-weight: bold;
-  line-height: 180%;
   opacity: 0.1;
   -webkit-transition: opacity 1s;
      -moz-transition: opacity 1s;
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
+@media (max-width: 979px) {
   .content-controls {
     margin-left: 5px;
     width: 57px;
   }
 }
 
-.content-controls div,
+.content-controls .score,
 .content-controls .vote {
   display: inline-block;
-  line-height: 14px;
-  margin: 0 0;
+}
+
+.content-controls .score {
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* We might wanna use label abilities at some point, when
+   interacting with the score will be available */
+.content-controls .score label {
+  font-size: 10px;
+  line-height: 10px;
+  margin: 0;
+  font-weight: inherit;
+  cursor: default;
+}
+.question .content-controls .score .value {
+  font-size: 28px;
+  line-height: 28px;
+}
+.answer .content-controls .score .value   {
+  font-size: 22px;
+  line-height: 22px;
 }
 
 .content-controls .vote {
   vertical-align: middle;
+  margin: 0;
 }
 
 .vote button {
@@ -139,17 +158,6 @@
 
 .vote .icon-chevron-down {
   background-position: -309px -119px;
-}
-
-.content-controls .score {
-  display: inline-block;
-  line-height: 10px;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.score .title {
-  font-size: 10px;
 }
 /* ↑↑↑ Content controls ↑↑↑ */
 
