@@ -213,12 +213,7 @@
 }
 /* ↑↑↑ Signature ↑↑↑ */
 
-/* ↓↓↓ Product thumbnail ↓↓↓ */
-.product-item.thumbnail {
-  display: inline-block;
-  width: 165px;
-}
-
+/* ↓↓↓ Product thumbnail mosaic style ↓↓↓ */
 .product-item.thumbnail img {
   width: 100%;
   max-height: 500px;
@@ -230,12 +225,14 @@
   font-size: 12px;
 }
 
-.thumbnail-list {
-  margin: 0 auto;
-}
-
 .thumbnail-list .product-item.thumbnail {
+  display: inline-block;
   float: left;
+}
+.mosaic.thumbnail-list { margin: 0 auto; }
+.mosaic .product-item.thumbnail { width: 165px; }
+
+.mosaic.thumbnail-list .product-item.thumbnail {
   margin: 9px 18px 9px 0;
 }
 /* ↑↑↑ Product thumbnail ↑↑↑ */
@@ -278,8 +275,9 @@
   margin-bottom: 50px;
 }
 
+.top-products .product-item.thumbnail,
 .question-header .product-item.thumbnail {
-  width: 48%;
+  width: 47%;
   margin: 2px 1% 2px 0;
   box-sizing: border-box;
 }

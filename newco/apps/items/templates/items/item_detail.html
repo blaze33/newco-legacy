@@ -81,12 +81,12 @@
 
     <h5>{% trans "Popular associated products" %}</h5>
     {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}<br>
-      <ul class="top-products thumbnails">
-        <li class="span1">{% tag_display tag %}</li>
-        {% for item in product_list %}
-          <li class="span1">{% include "items/_product_display.html" with object=item display="thumbnail" only %}</li>
-        {% endfor %}
-      </ul>
+      <div class="top-products row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2 thumbnail-list">{% for item in product_list %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}</div>
+      </div>
     {% endif %}{% endfor %}
   </div>
 </div>
@@ -116,14 +116,21 @@
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
-  <script src="{% static 'js/help.js' %}"></script>
+  <script src="{{ STATIC_URL }}js/help.js"></script>
+  <script src="{{ STATIC_URL }}js/follow.js"></script>
   <script>
     $(function() {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
     });
-  </script>
-  <script src="{{ STATIC_URL }}js/follow.js"></script>
-  <script>
+
+    var extraOptions = {
+        columnWidth: function( containerWidth ) {
+            return containerWidth / 2;
+        },
+        isFitWidth: false
+    };
+    $.triggerMasonry($(".thumbnail-list"), ".product-item.thumbnail", extraOptions);
+
     //Tracking Product name for analytics
     $(document).ready(function(){
       var product=document.getElementById("edit-product");
