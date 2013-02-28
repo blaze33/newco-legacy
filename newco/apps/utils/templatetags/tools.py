@@ -64,27 +64,26 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
                            sep=" ", template_context={}, context=None,
                            container=""):
 
-    words = []
-    for index, obj in enumerate(queryset):
-        template_context.update({object_name: obj})
-        words.append(render_to_string(template, template_context,
-                                      context_instance=context))
+    if not queryset:
+        return ""
 
-    sentence = ""
-    if words:
-        if sep == "text":
-            if len(words) == 1:
-                sentence = words[0]
-            elif max_nb and len(words) > max_nb:
-                sentence = ", ".join(words[:max_nb]) + "..."
-            else:
-                sentence = ", ".join(words[:-1]) + \
-                    " " + _("and") + " " + words[-1]
+    words = [render_to_string(
+        template, dict({object_name: obj}, **template_context),
+        context_instance=context) for obj in queryset if queryset]
+
+    if sep == "text":
+        if len(words) == 1:
+            sentence = words[0]
+        elif max_nb and len(words) > max_nb:
+            sentence = ", ".join(words[:max_nb]) + "..."
         else:
-            if max_nb:
-                words = words[:max_nb]
-            sentence = u"<div class='{container}'>{html}</div>".format(
-                container=container, html=unicode(sep.join(words)))
+            sentence = _("{first_words} and {last_word}").format(
+                first_words=", ".join(words[:-1]), last_word=words[-1])
+    else:
+        if max_nb:
+            words = words[:max_nb]
+        sentence = u"<div class='{container}'>{html}</div>".format(
+            container=container, html=unicode(sep.join(words)))
 
     return sentence
 
