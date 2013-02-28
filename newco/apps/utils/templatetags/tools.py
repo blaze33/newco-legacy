@@ -93,7 +93,7 @@ def get_content_source(content, display, context=None, sep="text"):
     products_container = "products"
     if display == "context":
         products_display, tags_display = ["thumbnail", ""]
-        products_container += " thumbnail-list auto"
+        products_container += " thumbnail-list"
     else:
         products_display, tags_display = [display, ""]
     nb = [content.items.count(), content.tags.count()]
