@@ -68,13 +68,12 @@
 
     <h5>{% trans "Best associated questions" %}</h5>
     {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}<br>
-      {# Bit of a hack to use thumbnail class here but it does the job well (display: table; etc.) and matches the display below #}
-      <ul class="thumbnails">
-        <li class="span1">{% tag_display tag %}</li>
-        {% for question in top_question %}
-          <li class="span2" title="{{ question.content }}"><a class="black" href="{{ question.get_absolute_url }}">{{ question.content|truncatechars:70 }}</a></li>
-        {% endfor %}
-      </ul>
+      <div class="row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2">{% for question in top_question %}
+          <a class="black" href="{{ question.get_absolute_url }}" title="{{ question.content }}">{{ question.content|truncatechars:70 }}</a>
+        {% endfor %}</div>
+      </div>
     {% endif %}{% endfor %}
 
     <hr>
