@@ -1,4 +1,5 @@
 import datetime
+from collections import OrderedDict
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -233,8 +234,26 @@ class TopCategories(object):
         f = lambda x: x[1] > threshold
         return {cat: filter(f, [(c, self.similars(c, cat)) for c in cat_list])}
 
-    def test_sub_categories(self):
+    def test_sub_categories(self, n=14):
         import pprint
-        top = self.by_contributions()[:10]
+        top = self.by_contributions()[:n]
+        comp = OrderedDict()
         for i, t in enumerate(top):
-            pprint.pprint(TopCategories().compare(t, top[:i], .1))
+            comp.update(TopCategories().compare(t, top[:i], .1))
+        pprint.pprint(comp)
+        return comp
+
+    def sub_categories(self, n=14):
+        comp = self.test_sub_categories(n)
+        tc = self.by_contributions()[:n]
+        cleancat = []
+        for tag in comp:
+            if tag in tc:
+                is_sub = 0
+                for sub in comp[tag]:
+                    if sub[1] > 0.6:
+                        print tag, "is a sub cat of", sub[0]
+                        is_sub = 1
+                if not is_sub:
+                    cleancat.append(tag)
+        return cleancat
