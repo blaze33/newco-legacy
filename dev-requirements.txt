@@ -1,5 +1,5 @@
 ## Translation app
-django-rosetta==0.6.8
+django-rosetta==0.7.1
 
 ## tests
 selenium==2.25.0
