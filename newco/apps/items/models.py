@@ -216,3 +216,25 @@ class TopCategories(object):
         for cat in categories:
             products.update({cat: self.top_products_for_category(cat, n)})
         return products
+
+    def categories_objects(self, cat):
+        return map(lambda x: x.content_object,
+                   Tag.objects.get(name=cat).taggit_taggeditem_items.all())
+
+    def similars(self, cat1, cat2):
+        s1, s2 = map(self.categories_objects, [cat1, cat2])
+        i = 0
+        for x in s2:
+            if x in s1:
+                i += 1
+        return float(i) / len(s2)
+
+    def compare(self, cat, cat_list, threshold=0):
+        f = lambda x: x[1] > threshold
+        return {cat: filter(f, [(c, self.similars(c, cat)) for c in cat_list])}
+
+    def test_sub_categories(self):
+        import pprint
+        top = self.by_contributions()[:10]
+        for i, t in enumerate(top):
+            pprint.pprint(TopCategories().compare(t, top[:i], .1))
