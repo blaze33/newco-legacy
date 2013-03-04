@@ -279,7 +279,9 @@
 .question-header .product-item.thumbnail {
   width: 47%;
   margin: 2px 1% 2px 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .question-header .product-item.thumbnail .name a {
