@@ -64,8 +64,8 @@
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
           var user = JSON.parse(htmlDecode("{{ user_json }}"))
         </script>
-        <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/mixpanel_functions.js' %}"></script>
+        <script src="{{ STATIC_URL }}js/global.js"></script>
+        <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
         <script src="{{ STATIC_URL }}js/voting.js"></script>
     {% endcompress %}
     {% compress js %}{% block extra_script %}{% endblock %}{% endcompress %}

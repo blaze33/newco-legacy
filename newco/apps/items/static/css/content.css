@@ -259,7 +259,7 @@
 }
 
 .content-extra .product-item.thumbnail .name a,
-.top-products .product-item.thumbnail .name a {
+.products-extra .product-item.thumbnail .name a {
   font-size: 9px;
   font-weight: bold;
   line-height: 11px;
@@ -275,7 +275,7 @@
   margin-bottom: 50px;
 }
 
-.top-products .product-item.thumbnail,
+.products-extra .product-item.thumbnail,
 .question-header .product-item.thumbnail {
   width: 47%;
   margin: 2px 1% 2px 0;
@@ -298,8 +298,29 @@
     font-weight: normal;
   }
 }
-
 /* ↑↑↑ Content Parents display ↑↑↑ */
+
+/* ↓↓↓ Side questions ↓↓↓ */
+.questions-extra p {
+  -ms-text-overflow: ellipsis;
+   -o-text-overflow: ellipsis;
+      /*text-overflow: ellipsis;*/
+      text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  position: relative;
+  line-height: 18px;
+  max-height: 72px; /* 4x18 */
+}
+
+@media (-webkit-min-device-pixel-ratio: 0) {
+  .questions-extra p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+}
+/* ↑↑↑ Side questions ↑↑↑ */
+
 
 /* ↓↓↓ Partial Question Form ↓↓↓ */
 .partial-form .input-prepend.input-append {

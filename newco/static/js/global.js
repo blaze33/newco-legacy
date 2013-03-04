@@ -53,7 +53,7 @@ var timeoutObj;
         }, 50);
     });
 
-    $.each(["top", "right", "bottom", "left"], function(index, val) {
+    $.each(["top", "right", "bottom", "left"], function (index, val) {
         var selector = ".tooltip-" + val;
         $(selector).tooltip({
             trigger: "hover",
