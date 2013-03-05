@@ -6,6 +6,8 @@ var timeoutObj;
     "use strict";
     /*jslint browser:true*/
 
+    var extraOptions, labels, mapped;
+
     /* Displays server rendered html messages */
     $.displayMessages = function (messages) {
         $("#js-alert").append(messages);
@@ -23,8 +25,7 @@ var timeoutObj;
         extraOptions = extraOptions || {};
         var options = $.extend({
             itemSelector: itemSelector,
-            isAnimated: !Modernizr.csstransitions,
-            isFitWidth: true
+            isAnimated: !Modernizr.csstransitions
         }, extraOptions);
         /* Sexier when launched twice */
         listContainer.masonry( options );
@@ -33,7 +34,17 @@ var timeoutObj;
         });
     };
 
-    $.triggerMasonry($(".thumbnail-list.auto").has(".product-item.thumbnail"), ".product-item.thumbnail");
+    $.triggerMasonry($(".thumbnail-list.fit-width").has(".product-item.thumbnail"),
+                     ".product-item.thumbnail", { isFitWidth: true });
+
+
+    extraOptions = {
+        columnWidth: function( containerWidth ) {
+            return containerWidth / 2;
+        }
+    };
+    $.triggerMasonry($(".thumbnail-list.2columns").has(".product-item.thumbnail"),
+                     ".product-item.thumbnail", extraOptions);
 
     /* Manual method using timeout, shortcutting the weird behavior of hover,
        which causes glitching if pointer doesn't go to the popover through the
@@ -63,7 +74,6 @@ var timeoutObj;
     });
 
     // Typeahead
-    var labels, mapped;
     $("#global_search").typeahead({
         source: function (query, process) {
             $.get(URL_REDIS, {q: query}, function (data) {

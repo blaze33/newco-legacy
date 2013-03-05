@@ -8,7 +8,7 @@
 {% block body %}
 
 <div class="row">
-  <div class="span10 offset1"><div class="thumbnail-list auto mosaic">{% for item in object_list %}
+  <div class="span10 offset1"><div class="thumbnail-list fit-width mosaic">{% for item in object_list %}
     {% include "items/_product_display.html" with object=item display="thumbnail" tags=1 only %}
   {% endfor %}</div></div>
 </div>
