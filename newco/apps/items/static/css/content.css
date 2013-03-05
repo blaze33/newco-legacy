@@ -302,15 +302,20 @@
 /* ↑↑↑ Content Parents display ↑↑↑ */
 
 /* ↓↓↓ Side questions ↓↓↓ */
+.questions-extra p > a {
+  color: #333366;
+}
+
 .questions-extra p {
+  font-size: 12px;
+  line-height: 16px;
+  max-height: 64px; /* 4x16 */
   -ms-text-overflow: ellipsis;
    -o-text-overflow: ellipsis;
       /*text-overflow: ellipsis;*/
       text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   position: relative;
-  line-height: 18px;
-  max-height: 72px; /* 4x18 */
 }
 
 @media (-webkit-min-device-pixel-ratio: 0) {

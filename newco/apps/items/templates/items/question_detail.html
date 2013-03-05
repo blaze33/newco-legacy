@@ -57,14 +57,14 @@
     {% include "items/_answer_form.html" with form=answer_form %}
   </div>
 
-  <div class="span3">
+  <div class="span3 questions-extra">
     {% for title, content_list in related_questions.iteritems %}
       {% if not forloop.first %}<hr>{% endif %}
       {% if content_list %}
-        <h4 class="text-right">{{ title }}</h4>
-        <ul>{% for content in content_list %}
-          <li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>
-        {% endfor %}</ul>
+        <h5>{{ title }}</h5>
+        {% for content in content_list %}
+          <p><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
+        {% endfor %}
       {% endif %}
     {% endfor %}
   </div>
