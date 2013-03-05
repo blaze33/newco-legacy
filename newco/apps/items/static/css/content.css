@@ -31,6 +31,8 @@
 /* ↑↑↑ Content Related Elements ↑↑↑ */
 
 /* ↓↓↓ Album ↓↓↓ */
+.product-header .album.thumbnails { margin-bottom: -20px; }
+
 .album a {
   height: 128px;
   background-position: center;
