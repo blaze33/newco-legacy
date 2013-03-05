@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import permalink, Count
 from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
+from django.utils.datastructures import SortedDict
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
@@ -214,13 +215,16 @@ class TopCategories(object):
         return self.queryset
 
     def top_products_for_category(self, category, n=6):
-        return Item.objects.filter(
-            tags__name__in=[unicode(category)],
-            content__created__gt=self.delta).order_queryset(
-                "popular")[:n].fetch_images()
+        kwargs = {"content__created__gt": self.delta}
+        if isinstance(category, Tag):
+            kwargs.update({"tags": category})
+        else:
+            kwargs.update({"tags__name": unicode(category)})
+        return Item.objects.filter(**kwargs).order_queryset(
+            "popular")[:n].fetch_images()
 
     def top_products_by_categories(self, categories=["all"], n=6):
-        products = {}
+        products = SortedDict()
         for cat in categories:
-            products.update({cat: self.top_products_for_category(cat)})
+            products.update({cat: self.top_products_for_category(cat, n)})
         return products
