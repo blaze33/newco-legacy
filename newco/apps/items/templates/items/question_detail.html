@@ -24,18 +24,17 @@
 
 {% block body %}
 
-<div class="question-header">
-  {% tags_display tags %}
-  <div class="products">
-    {% for item in products %}
-      {% include "items/_product_display.html" with object=item display="thumbnail" only %}
-    {% endfor %}
-  </div>
-  {% include QUESTION_TEMPLATE with content=question display="detail" %}
-</div>
-
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
+    <div class="question-header">
+      {% tags_display tags %}
+      <div class="products">
+        {% for item in products %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}
+      </div>
+      {% include QUESTION_TEMPLATE with content=question display="detail" %}
+    </div>
 
     {% for answer in question.answer_set.all %}
       {% if not forloop.first%}<br>{% endif %}
@@ -48,16 +47,29 @@
     {% include "items/_answer_form.html" with form=answer_form %}
   </div>
 
-  <div class="span3 questions-extra">
-    {% for title, content_list in related_questions.iteritems %}
-      {% if not forloop.first %}<hr>{% endif %}
-      {% if content_list %}
-        <h5>{{ title }}</h5>
-        {% for content in content_list %}
-          <p><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
-        {% endfor %}
-      {% endif %}
+  <div class="span3">
+    {% for tag, product_list in top_products.items %}
+      {% if forloop.first %}<h5>{% trans "Popular products" %}</h5>{% endif %}
+      <div class="products-extra row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2 thumbnail-list 2columns">{% for item in product_list %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}</div>
+      </div>
+      <br>
     {% endfor %}
+
+    <div class="questions-extra">
+      {% for title, content_list in related_questions.iteritems %}
+        {% if not forloop.first %}<hr>{% endif %}
+        {% if content_list %}
+          <h5>{{ title }}</h5>
+          {% for content in content_list %}
+            <p><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 

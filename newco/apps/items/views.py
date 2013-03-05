@@ -416,7 +416,18 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             tag_ids.update(q.items.values_list("tags", flat=True))
             tag_qs = Tag.objects.filter(id__in=tag_ids).annotate(
                 weight=Count("taggit_taggeditem_items")).order_by("-weight")
-            context.update({"tags": tag_qs, "products": q.items.all()})
+
+            NUMBER_PRODUCTS_BY_TAG = 2
+            top_products = TopCategories().top_products_by_categories(
+                tag_qs, None)
+            ids_to_remove = list(q.items.values_list("id", flat=True))
+            for k, v in top_products.items():
+                v = v.exclude(id__in=ids_to_remove)[:NUMBER_PRODUCTS_BY_TAG]
+                ids_to_remove.extend([item.id for item in v])
+                top_products.update({k: v}) if v else top_products.pop(k)
+
+            context.update({"tags": tag_qs, "products": q.items.all(),
+                            "top_products": top_products})
 
             related_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())

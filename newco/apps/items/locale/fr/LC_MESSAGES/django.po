@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 23:26+0100\n"
-"PO-Revision-Date: 2013-02-13 23:26\n"
+"POT-Creation-Date: 2013-03-05 23:39+0100\n"
+"PO-Revision-Date: 2013-03-05 23:42+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Translated-Using: django-rosetta 0.6.8\n"
+"X-Translated-Using: django-rosetta 0.7.1\n"
 
-#: __init__.py:17
+#: __init__.py:17 templates/items/feed_display/_question.html:28
 msgid "Draft"
 msgstr "Brouillon"
 
@@ -83,11 +83,11 @@ msgstr "Choisissez moins de %d produits"
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
-#: models.py:20
+#: models.py:26
 msgid "Tags"
 msgstr "Tags"
 
-#: models.py:21
+#: models.py:27
 msgid ""
 "Add one or several related categories/activities using Tab or Enter, and the"
 " Arrow keys."
@@ -95,59 +95,51 @@ msgstr ""
 "Ajoutez une ou plusieurs catégories/activités en rapport en utilisant la "
 "touche Entrée ou Tabulation, et les flèches de direction."
 
-#: models.py:26
+#: models.py:32
 msgid "name"
 msgstr "nom"
 
-#: models.py:27
+#: models.py:33
 msgid "slug"
 msgstr "slug"
 
-#: models.py:28 models.py:85
+#: models.py:34 models.py:88
 msgid "author"
 msgstr "auteur"
 
-#: models.py:29 models.py:86
-msgid "date published"
-msgstr "date de publication"
-
-#: models.py:31
-msgid "last modified"
-msgstr "dernière modification"
-
-#: models.py:37
+#: models.py:40
 msgid "product"
 msgstr "produit"
 
-#: models.py:88
+#: models.py:89
 msgid "status"
 msgstr "statut"
 
-#: models.py:90
+#: models.py:91
 msgid "products"
 msgstr "produits"
 
-#: models.py:141 models.py:144 models.py:174
+#: models.py:134 models.py:137 models.py:167
 msgid "question"
 msgstr "question"
 
-#: models.py:176 models.py:205
+#: models.py:169 models.py:198
 msgid "content"
 msgstr "contenu"
 
-#: models.py:179
+#: models.py:172
 msgid "answer"
 msgstr "réponse"
 
-#: models.py:204
+#: models.py:197
 msgid "title"
 msgstr "titre"
 
-#: models.py:210
+#: models.py:203
 msgid "story"
 msgstr "article"
 
-#: models.py:211
+#: models.py:204
 msgid "stories"
 msgstr "articles"
 
@@ -214,25 +206,25 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:403
+#: views.py:402
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 "Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
 "une&#x202F;!"
 
-#: views.py:426
+#: views.py:441
 msgid "Top related questions"
 msgstr "Meilleures questions liées"
 
-#: views.py:427
+#: views.py:442
 msgid "Latest related questions"
 msgstr "Dernières questions liées"
 
-#: views.py:505
+#: views.py:516
 msgid "No product with tag {tag}"
 msgstr "Pas de produit avec le tag {tag}"
 
-#: views.py:508
+#: views.py:519
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 "Pas de question avec le tag {tag} pour l'instant. Soyez le premier à en "
@@ -246,16 +238,16 @@ msgstr "Connectez-vous avant de répondre."
 msgid "Answer and publish"
 msgstr "Répondre et publier"
 
-#: templates/items/_answer_form.html:13 templates/items/answer_form.html:20
+#: templates/items/_answer_form.html:13 templates/items/answer_form.html:19
 #: templates/items/question_form.html:33 templates/items/question_form.html:55
 msgid "Save as draft"
 msgstr "Sauvegarder dans les brouillons"
 
-#: templates/items/_content_controls.html:11
+#: templates/items/_content_controls.html:12
 msgid "Score"
 msgstr "Score"
 
-#: templates/items/_data_sheet.html:25
+#: templates/items/_data_sheet.html:26
 msgid "See More"
 msgstr "Voir plus"
 
@@ -273,7 +265,7 @@ msgid "Add a product"
 msgstr "Ajouter un produit"
 
 #: templates/items/_item_form_modal.html:7 templates/items/item_form.html:20
-#: templates/items/feed_display/_question.html:12
+#: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr "&nbsp;:"
 
@@ -297,15 +289,15 @@ msgstr "Vous pouvez soumettre cette question à des experts"
 msgid "Answer"
 msgstr "Répondre"
 
-#: templates/items/answer_form.html:19 templates/items/item_form.html:93
+#: templates/items/answer_form.html:18 templates/items/item_form.html:93
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: templates/items/answer_form.html:19
+#: templates/items/answer_form.html:18
 msgid "Publish"
 msgstr "Publier"
 
-#: templates/items/answer_form.html:20 templates/items/question_form.html:33
+#: templates/items/answer_form.html:19 templates/items/question_form.html:33
 msgid "Unpublish and save as draft"
 msgstr "Dépublier et sauvegarder dans les brouillons"
 
@@ -354,27 +346,27 @@ msgstr "Editer le Produit"
 msgid "Delete Product"
 msgstr "Supprimer le Produit"
 
-#: templates/items/item_detail.html:57
+#: templates/items/item_detail.html:56
 msgid "From"
 msgstr "A partir de"
 
-#: templates/items/item_detail.html:63
+#: templates/items/item_detail.html:62
 msgid "See the detailed offers"
 msgstr "Voir les offres détaillées"
 
-#: templates/items/item_detail.html:69
+#: templates/items/item_detail.html:68
 msgid "Best associated questions"
 msgstr "Meilleures questions associées"
 
-#: templates/items/item_detail.html:82
+#: templates/items/item_detail.html:80
 msgid "Popular associated products"
 msgstr "Produits associés populaires"
 
-#: templates/items/item_detail.html:108
+#: templates/items/item_detail.html:106
 msgid "Source:"
 msgstr "Source&nbsp;:"
 
-#: templates/items/item_detail.html:108
+#: templates/items/item_detail.html:106
 msgid "Download"
 msgstr "Télécharger"
 
@@ -479,13 +471,9 @@ msgstr "Anciens"
 msgid "No answers"
 msgstr "Pas de réponses"
 
-#: templates/items/question_detail.html:41
-msgid "Related products"
-msgstr "Produits associés"
-
-#: templates/items/question_detail.html:49
-msgid "Related tags"
-msgstr "Tags associés"
+#: templates/items/question_detail.html:52
+msgid "Popular products"
+msgstr "Produits populaires"
 
 #: templates/items/question_form.html:16
 msgid "Question"
@@ -567,11 +555,11 @@ msgstr "a <a href=\"%(url)s\">répondu</a> à une question"
 msgid "asked a question"
 msgstr "a posé une question"
 
-#: templates/items/feed_display/_content_list.html:13
+#: templates/items/feed_display/_content_list.html:26
 msgid "answered a question"
 msgstr "a répondu à une question"
 
-#: templates/items/feed_display/_content_list.html:27
+#: templates/items/feed_display/_content_list.html:35
 msgid "Sorry, this feed is empty."
 msgstr "Désolé, ce flux est vide."
 
@@ -604,14 +592,10 @@ msgstr "Ajoutez une réponse"
 msgid "Ask to answer"
 msgstr "Demandez à quelqu'un de répondre"
 
-#: templates/items/feed_display/_question.html:12
+#: templates/items/feed_display/_question.html:9
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a>"
 msgstr "a posé une <a href=\"%(url)s\">question</a>"
-
-#: templates/items/feed_display/_question.html:46
-msgid "This question is a draft.<br>It has been anonymized."
-msgstr "Cette question est un brouillon.<br>Elle est anonyme."
 
 #: templates/items/feed_display/_tag_controls.html:6
 msgid "Add a question"
@@ -634,3 +618,18 @@ msgstr "Ajouter aux compétences"
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
 msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
+
+#~ msgid "date published"
+#~ msgstr "date de publication"
+
+#~ msgid "last modified"
+#~ msgstr "dernière modification"
+
+#~ msgid "Related products"
+#~ msgstr "Produits associés"
+
+#~ msgid "Related tags"
+#~ msgstr "Tags associés"
+
+#~ msgid "This question is a draft.<br>It has been anonymized."
+#~ msgstr "Cette question est un brouillon.<br>Elle est anonyme."

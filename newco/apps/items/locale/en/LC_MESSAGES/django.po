@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 23:26+0100\n"
+"POT-Creation-Date: 2013-03-05 23:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: __init__.py:17
+#: __init__.py:17 templates/items/feed_display/_question.html:28
 msgid "Draft"
 msgstr ""
 
@@ -76,69 +76,61 @@ msgstr ""
 msgid "Be concise and to the point."
 msgstr ""
 
-#: models.py:20
+#: models.py:26
 msgid "Tags"
 msgstr ""
 
-#: models.py:21
+#: models.py:27
 msgid ""
 "Add one or several related categories/activities using Tab or Enter, and the "
 "Arrow keys."
 msgstr ""
 
-#: models.py:26
+#: models.py:32
 msgid "name"
 msgstr ""
 
-#: models.py:27
+#: models.py:33
 msgid "slug"
 msgstr ""
 
-#: models.py:28 models.py:85
+#: models.py:34 models.py:88
 msgid "author"
 msgstr ""
 
-#: models.py:29 models.py:86
-msgid "date published"
-msgstr ""
-
-#: models.py:31
-msgid "last modified"
-msgstr ""
-
-#: models.py:37
+#: models.py:40
 msgid "product"
 msgstr ""
 
-#: models.py:88
+#: models.py:89
 msgid "status"
 msgstr ""
 
-#: models.py:90
+#: models.py:91
 msgid "products"
 msgstr ""
 
-#: models.py:141 models.py:144 models.py:174
+#: models.py:134 models.py:137 models.py:167
 msgid "question"
 msgstr ""
 
-#: models.py:176 models.py:205
+#: models.py:169 models.py:198
 msgid "content"
 msgstr ""
 
-#: models.py:179
+#: models.py:172
 msgid "answer"
 msgstr ""
 
-#: models.py:204
+#: models.py:197
 msgid "title"
 msgstr ""
 
-#: models.py:210
+#: models.py:203
 msgid "story"
 msgstr ""
 
-#: models.py:211
+#: models.py:204
 msgid "stories"
 msgstr ""
 
@@ -205,23 +197,23 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:403
+#: views.py:402
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: views.py:426
+#: views.py:441
 msgid "Top related questions"
 msgstr ""
 
-#: views.py:427
+#: views.py:442
 msgid "Latest related questions"
 msgstr ""
 
-#: views.py:505
+#: views.py:516
 msgid "No product with tag {tag}"
 msgstr ""
 
-#: views.py:508
+#: views.py:519
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 
@@ -233,16 +225,16 @@ msgstr ""
 msgid "Answer and publish"
 msgstr ""
 
-#: templates/items/_answer_form.html:13 templates/items/answer_form.html:20
+#: templates/items/_answer_form.html:13 templates/items/answer_form.html:19
 #: templates/items/question_form.html:33 templates/items/question_form.html:55
 msgid "Save as draft"
 msgstr ""
 
-#: templates/items/_content_controls.html:11
+#: templates/items/_content_controls.html:12
 msgid "Score"
 msgstr ""
 
-#: templates/items/_data_sheet.html:25
+#: templates/items/_data_sheet.html:26
 msgid "See More"
 msgstr ""
 
@@ -260,7 +252,7 @@ msgid "Add a product"
 msgstr ""
 
 #: templates/items/_item_form_modal.html:7 templates/items/item_form.html:20
-#: templates/items/feed_display/_question.html:12
+#: templates/items/feed_display/_question.html:9
 msgid ":"
 msgstr ""
 
@@ -284,15 +276,15 @@ msgstr ""
 msgid "Answer"
 msgstr ""
 
-#: templates/items/answer_form.html:19 templates/items/item_form.html:93
+#: templates/items/answer_form.html:18 templates/items/item_form.html:93
 msgid "Update"
 msgstr ""
 
-#: templates/items/answer_form.html:19
+#: templates/items/answer_form.html:18
 msgid "Publish"
 msgstr ""
 
-#: templates/items/answer_form.html:20 templates/items/question_form.html:33
+#: templates/items/answer_form.html:19 templates/items/question_form.html:33
 msgid "Unpublish and save as draft"
 msgstr ""
 
@@ -341,27 +333,27 @@ msgstr ""
 msgid "Delete Product"
 msgstr ""
 
-#: templates/items/item_detail.html:57
+#: templates/items/item_detail.html:56
 msgid "From"
 msgstr ""
 
-#: templates/items/item_detail.html:63
+#: templates/items/item_detail.html:62
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:69
+#: templates/items/item_detail.html:68
 msgid "Best associated questions"
 msgstr ""
 
-#: templates/items/item_detail.html:82
+#: templates/items/item_detail.html:80
 msgid "Popular associated products"
 msgstr ""
 
-#: templates/items/item_detail.html:108
+#: templates/items/item_detail.html:106
 msgid "Source:"
 msgstr ""
 
-#: templates/items/item_detail.html:108
+#: templates/items/item_detail.html:106
 msgid "Download"
 msgstr ""
 
@@ -464,12 +456,8 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: templates/items/question_detail.html:41
-msgid "Related products"
-msgstr ""
-
-#: templates/items/question_detail.html:49
-msgid "Related tags"
+#: templates/items/question_detail.html:52
+msgid "Popular products"
 msgstr ""
 
 #: templates/items/question_form.html:16
@@ -543,11 +531,11 @@ msgstr ""
 msgid "asked a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:13
+#: templates/items/feed_display/_content_list.html:26
 msgid "answered a question"
 msgstr ""
 
-#: templates/items/feed_display/_content_list.html:27
+#: templates/items/feed_display/_content_list.html:35
 msgid "Sorry, this feed is empty."
 msgstr ""
 
@@ -576,13 +564,9 @@ msgstr ""
 msgid "Ask to answer"
 msgstr ""
 
-#: templates/items/feed_display/_question.html:12
+#: templates/items/feed_display/_question.html:9
 #, python-format
 msgid "asked a <a href=\"%(url)s\">question</a>"
-msgstr ""
-
-#: templates/items/feed_display/_question.html:46
-msgid "This question is a draft.<br>It has been anonymized."
 msgstr ""
 
 #: templates/items/feed_display/_tag_controls.html:6
