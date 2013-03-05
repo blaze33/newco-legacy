@@ -273,12 +273,7 @@
   white-space: nowrap;
 }
 
-.question-header {
-  margin-bottom: 50px;
-}
-
-.products-extra .product-item.thumbnail,
-.question-header .product-item.thumbnail {
+.products-extra .product-item.thumbnail {
   width: 47%;
   margin: 2px 1% 2px 0;
   -webkit-box-sizing: border-box;
@@ -286,20 +281,29 @@
           box-sizing: border-box;
 }
 
-.question-header .product-item.thumbnail .name a {
-  font-size: 11px;
-  line-height: 17px;
-  font-weight: bold;
+.question-header {
+  margin-bottom: 50px;
 }
 
-@media (max-width: 767px) and (min-width: 480px) {
-  .question-header .product-item.thumbnail {
-    width: 23%;
-  }
-  .question-header .product-item.thumbnail .name a {
-    font-size: 12px;
-    font-weight: normal;
-  }
+.question-header .tags,
+.question-header .products {
+  margin: 0 0 10px 4%;
+}
+
+.question-header .product-item.thumbnail {
+  display: inline-block;
+  vertical-align: top;
+  height: inherit;
+  width: 75px;
+  margin: 2px 4px 2px 0;
+}
+
+.question-header .product-item.thumbnail img { width: auto; }
+
+.question-header .product-item.thumbnail .name a {
+  font-size: 9px;
+  line-height: 9px;
+  font-weight: bold;
 }
 /* ↑↑↑ Content Parents display ↑↑↑ */
 

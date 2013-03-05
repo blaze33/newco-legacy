@@ -24,24 +24,15 @@
 
 {% block body %}
 
-<div class="row question-header">
-  <div class="span9">
-    {% tags_display tags %}
-    <br>
-    {% include QUESTION_TEMPLATE with content=question display="detail" %}
+<div class="question-header">
+  {% tags_display tags %}
+  <div class="products">
+    {% for item in products %}
+      {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+    {% endfor %}
   </div>
-  <div class="span3">
-    {% if products %}
-      <div class="products thumbnail-list">
-        {% for item in products %}
-          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
+  {% include QUESTION_TEMPLATE with content=question display="detail" %}
 </div>
-
-<br>
 
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
@@ -79,18 +70,6 @@
   <script src="{{ STATIC_URL }}js/help.js"></script>
   {{ answer_form.media.js }}
   <script>
-    var extraOptions = {
-        columnWidth: function( containerWidth ) {
-            if ( containerWidth < 440 ) {
-                return containerWidth / 2;
-            } else {
-                return containerWidth / 4;
-            }
-        },
-        isFitWidth: false
-    };
-    $.triggerMasonry($(".thumbnail-list"), ".product-item.thumbnail", extraOptions);
-
     $(function () {
         if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
 
