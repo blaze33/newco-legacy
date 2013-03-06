@@ -65,8 +65,8 @@
       <hr>
     {% endif %}
 
-    <h5>{% trans "Best associated questions" %}</h5>
-    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}<br>
+    <h5>{% trans "Best questions" %}</h5>
+    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}
       <div class="questions-extra row">
         <div class="span1">{% tag_display tag %}</div>
         <div class="span2">{% for question in top_question %}
@@ -77,8 +77,8 @@
 
     <hr>
 
-    <h5>{% trans "Popular associated products" %}</h5>
-    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}<br>
+    <h5>{% trans "Popular products" %}</h5>
+    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}
       <div class="products-extra row">
         <div class="span1">{% tag_display tag %}</div>
         <div class="span2 thumbnail-list 2columns">{% for item in product_list %}
