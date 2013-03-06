@@ -56,20 +56,15 @@
           {% include "items/_product_display.html" with object=item display="thumbnail" only %}
         {% endfor %}</div>
       </div>
-      <br>
     {% endfor %}
 
-    <div class="questions-extra">
-      {% for title, content_list in related_questions.iteritems %}
-        {% if not forloop.first %}<hr>{% endif %}
-        {% if content_list %}
-          <h5>{{ title }}</h5>
-          {% for content in content_list %}
-            <p><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></p>
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% for question in top_questions %}
+      {% if forloop.first %}<hr><h5>{% trans "Best questions" %}</h5>{% endif %}
+      <div class="questions-extra row">
+        <div class="span1">{% source_display question "side-questions" sep=" " %}</div>
+        <div class="span2"><p><a title="{{ question.content }}" href="{{ question.get_absolute_url }}">{{ question.content }}</a></p></div>
+      </div>
+    {% endfor %}
   </div>
 </div>
 

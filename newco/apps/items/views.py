@@ -9,7 +9,6 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -429,18 +428,12 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             context.update({"tags": tag_qs, "products": q.items.all(),
                             "top_products": top_products})
 
-            related_questions = Content.objects.questions().filter(
+            top_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
-            ).exclude(id=q.id).distinct()
-            top_questions = related_questions.order_queryset("popular")[:3]
-            latest_questions = related_questions.exclude(
-                id__in=[q.id for q in top_questions]
-            ).order_queryset("-created")[:3]
+            ).exclude(id=q.id).distinct().order_queryset("popular")[:3]
 
-            context.update({"related_questions": SortedDict({
-                _("Top related questions"): top_questions,
-                _("Latest related questions"): latest_questions
-            })})
+            if top_questions:
+                context.update({"top_questions": top_questions})
         return context
 
     @method_decorator(login_required)
