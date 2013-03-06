@@ -2,30 +2,43 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 19:52+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-06 19:04+0100\n"
+"PO-Revision-Date: 2013-03-06 19:05+0009\n"
+"Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Translated-Using: django-rosetta 0.7.1\n"
 
 #: forms.py:10
+msgid "First name"
+msgstr "Prénom"
+
+#: forms.py:11 forms.py:15 forms.py:21
+msgid "No more than 30 characters."
+msgstr "Pas plus de 30 caractères."
+
+#: forms.py:13
+msgid "Last name"
+msgstr "Nom"
+
+#: forms.py:14
+msgid "* Optionnal"
+msgstr "* Facultatif"
+
+#: forms.py:18
 msgid "Profile name"
 msgstr "Nom de profil"
 
-#: forms.py:11
+#: forms.py:19
 msgid "30 characters tops. Can be whatever you want. And can be modified."
 msgstr "30 caractères maximum. Soyez créatifs. Vous pourrez toujours changer."
-
-#: forms.py:13
-msgid "No more than 30 characters."
-msgstr "Pas plus de 30 caractères."
