@@ -220,8 +220,10 @@ class TopCategories(object):
             kwargs.update({"tags": category})
         else:
             kwargs.update({"tags__name": unicode(category)})
-        return Item.objects.filter(**kwargs).order_queryset(
-            "popular")[:n].fetch_images()
+        qs = Item.objects.filter(**kwargs)
+        if qs:
+            qs = qs.order_queryset("popular")[:n].fetch_images()
+        return qs
 
     def top_products_by_categories(self, categories=["all"], n=6):
         products = SortedDict()
