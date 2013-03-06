@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 23:39+0100\n"
-"PO-Revision-Date: 2013-03-05 23:42+0009\n"
+"POT-Creation-Date: 2013-03-06 17:34+0100\n"
+"PO-Revision-Date: 2013-03-06 17:34+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -206,25 +206,17 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr "La %(class)s <i>%(object)s</i> sera supprimée&nbsp;:"
 
-#: views.py:402
+#: views.py:401
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 "Pas de question pour l'instant&#x202F;! Soyez le premier à en poser "
 "une&#x202F;!"
 
-#: views.py:441
-msgid "Top related questions"
-msgstr "Meilleures questions liées"
-
-#: views.py:442
-msgid "Latest related questions"
-msgstr "Dernières questions liées"
-
-#: views.py:516
+#: views.py:509
 msgid "No product with tag {tag}"
 msgstr "Pas de produit avec le tag {tag}"
 
-#: views.py:519
+#: views.py:512
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 "Pas de question avec le tag {tag} pour l'instant. Soyez le premier à en "
@@ -354,13 +346,13 @@ msgstr "A partir de"
 msgid "See the detailed offers"
 msgstr "Voir les offres détaillées"
 
-#: templates/items/item_detail.html:68
-msgid "Best associated questions"
-msgstr "Meilleures questions associées"
+#: templates/items/item_detail.html:68 templates/items/question_detail.html:62
+msgid "Best questions"
+msgstr "Meilleures questions"
 
-#: templates/items/item_detail.html:80
-msgid "Popular associated products"
-msgstr "Produits associés populaires"
+#: templates/items/item_detail.html:80 templates/items/question_detail.html:52
+msgid "Popular products"
+msgstr "Produits populaires"
 
 #: templates/items/item_detail.html:106
 msgid "Source:"
@@ -470,10 +462,6 @@ msgstr "Anciens"
 #: templates/items/item_list_questions.html:17
 msgid "No answers"
 msgstr "Pas de réponses"
-
-#: templates/items/question_detail.html:52
-msgid "Popular products"
-msgstr "Produits populaires"
 
 #: templates/items/question_form.html:16
 msgid "Question"
@@ -618,6 +606,18 @@ msgstr "Ajouter aux compétences"
 #, python-format
 msgid "Click to add tag %(tag)s to your skill list"
 msgstr "Cliquez pour ajouter le tag %(tag)s à votre liste de compétences"
+
+#~ msgid "Top related questions"
+#~ msgstr "Meilleures questions liées"
+
+#~ msgid "Latest related questions"
+#~ msgstr "Dernières questions liées"
+
+#~ msgid "Best associated questions"
+#~ msgstr "Meilleures questions associées"
+
+#~ msgid "Popular associated products"
+#~ msgstr "Produits associés populaires"
 
 #~ msgid "date published"
 #~ msgstr "date de publication"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 23:39+0100\n"
+"POT-Creation-Date: 2013-03-06 17:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,23 +197,15 @@ msgctxt "answer"
 msgid "The %(class)s <i>%(object)s</i> will be deleted:"
 msgstr ""
 
-#: views.py:402
+#: views.py:401
 msgid "No question yet! Ask the first one here!"
 msgstr ""
 
-#: views.py:441
-msgid "Top related questions"
-msgstr ""
-
-#: views.py:442
-msgid "Latest related questions"
-msgstr ""
-
-#: views.py:516
+#: views.py:509
 msgid "No product with tag {tag}"
 msgstr ""
 
-#: views.py:519
+#: views.py:512
 msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 
@@ -341,12 +333,12 @@ msgstr ""
 msgid "See the detailed offers"
 msgstr ""
 
-#: templates/items/item_detail.html:68
-msgid "Best associated questions"
+#: templates/items/item_detail.html:68 templates/items/question_detail.html:62
+msgid "Best questions"
 msgstr ""
 
-#: templates/items/item_detail.html:80
-msgid "Popular associated products"
+#: templates/items/item_detail.html:80 templates/items/question_detail.html:52
+msgid "Popular products"
 msgstr ""
 
 #: templates/items/item_detail.html:106
@@ -454,10 +446,6 @@ msgstr ""
 
 #: templates/items/item_list_questions.html:17
 msgid "No answers"
-msgstr ""
-
-#: templates/items/question_detail.html:52
-msgid "Popular products"
 msgstr ""
 
 #: templates/items/question_form.html:16
