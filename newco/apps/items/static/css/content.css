@@ -257,7 +257,7 @@
 
 .content-extra .product-item.thumbnail { 
   width: 64px;
-  margin: 2px 4px 2px 0;
+  margin: 2px 0 2px 4px;
 }
 
 .content-extra .product-item.thumbnail .name a,
