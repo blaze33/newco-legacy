@@ -6,6 +6,8 @@ from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _, ungettext
 
+from utils.hyphenate.tools import hyphenate
+
 
 class GenericNode(Node):
 
@@ -90,22 +92,22 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
 
 def get_content_source(content, display, context=None, sep="text"):
     products_container = "products"
-    if display == "context":
-        products_display, tags_display = ["thumbnail", ""]
+    template_context = {"display": display}
+    if display == "context" or display == "side-questions":
+        template_context.update({"display": "thumbnail"})
         products_container += " thumbnail-list"
-    else:
-        products_display, tags_display = [display, ""]
+        if display == "side-questions":
+            products_container += " 2columns"
+
     nb = [content.items.count(), content.tags.count()]
     prods_kwargs = {
         "queryset": content.items.all(), "object_name": "object", "sep": sep,
         "template": "items/_product_display.html", "context": context,
-        "template_context": {"display": products_display},
-        "container": products_container
+        "container": products_container, "template_context": template_context
     }
     tags_kwargs = {
         "queryset": content.tags.all(), "object_name": "tag", "sep": sep,
         "template": "tags/_tag_display.html", "context": context,
-        "template_context": {"display": tags_display},
         "container": "tags"
     }
 
@@ -125,6 +127,6 @@ def get_content_source(content, display, context=None, sep="text"):
         words.append(generate_objs_sentence(**prods_kwargs))
         if all(nb):
             words.append(sep)
-        words.append(generate_objs_sentence(**tags_kwargs))
+        words.append(hyphenate(generate_objs_sentence(**tags_kwargs)))
 
     return string.join(words, "")
