@@ -8,7 +8,7 @@
   {% plural %}
     {{ nb_ans }} answers:
   {% endblocktrans %}
-  <a href="{{ question.get_absolute_url }}#answer-form">{% if question.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
+  <a id="call-answer-form" href="{{ question.get_absolute_url }}#answer-form">{% if question.answer_set.count == 0 %}{% trans "Answer this question" %}{% else %}{% trans "Add an answer" %}{% endif %}</a>&nbsp;• 
 
   <a class="btn-ask" data-question-id="{{ question.id }}">{% trans "Ask to answer" %}</a>
 </div>

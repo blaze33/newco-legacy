@@ -34,6 +34,8 @@ class SignupView(SignupView):
 
     def create_account(self, form):
         self.created_user.username = unicode(self.created_user.id)
+        self.created_user.first_name = form.cleaned_data["first_name"]
+        self.created_user.last_name = form.cleaned_data["last_name"]
         self.created_user.save()
         self.update_profile(form)
         return super(SignupView, self).create_account(form)

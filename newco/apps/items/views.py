@@ -2,13 +2,13 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count
 from django.db.models.loading import get_model
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponsePermanentRedirect
+from django.http import (HttpResponse, HttpResponseRedirect,
+                         HttpResponsePermanentRedirect)
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils.datastructures import SortedDict
 from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -411,19 +411,29 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             scores, votes = qna_qs.get_scores_and_votes(user)
             context.update({"question": q, "scores": scores, "votes": votes})
 
-            tag_ids = q.items.all().values_list("tags__id", flat=True)
-            experts = Profile.objects.filter(skills__id__in=tag_ids).distinct()
+            tag_ids = set(q.tags.values_list("id", flat=True))
+            tag_ids.update(q.items.values_list("tags", flat=True))
+            tag_qs = Tag.objects.filter(id__in=tag_ids).annotate(
+                weight=Count("taggit_taggeditem_items")).order_by("-weight")
 
-            related_questions = Content.objects.questions().filter(
+            NUMBER_PRODUCTS_BY_TAG = 2
+            top_products = TopCategories().top_products_by_categories(
+                tag_qs, None)
+            ids_to_remove = list(q.items.values_list("id", flat=True))
+            for k, v in top_products.items():
+                v = v.exclude(id__in=ids_to_remove)[:NUMBER_PRODUCTS_BY_TAG]
+                ids_to_remove.extend([item.id for item in v])
+                top_products.update({k: v}) if v else top_products.pop(k)
+
+            context.update({"tags": tag_qs, "products": q.items.all(),
+                            "top_products": top_products})
+
+            top_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
-            ).exclude(id=q.id).distinct()
-            top_questions = related_questions.order_queryset("popular")
-            related_questions = related_questions.select_subclasses()
+            ).exclude(id=q.id).distinct().order_queryset("popular")[:3]
 
-            context.update({"experts": experts, "related_questions": {
-                _("Top related questions"): top_questions[:3],
-                _("Latest related questions"): related_questions[:3]
-            }})
+            if top_questions:
+                context.update({"top_questions": top_questions})
         return context
 
     @method_decorator(login_required)

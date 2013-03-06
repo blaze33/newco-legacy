@@ -6,6 +6,8 @@ from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _, ungettext
 
+from utils.hyphenate.tools import hyphenate
+
 
 class GenericNode(Node):
 
@@ -64,47 +66,48 @@ def generate_objs_sentence(queryset, template, object_name, max_nb=None,
                            sep=" ", template_context={}, context=None,
                            container=""):
 
-    words = []
-    for index, obj in enumerate(queryset):
-        template_context.update({object_name: obj})
-        words.append(render_to_string(template, template_context,
-                                      context_instance=context))
+    if not queryset:
+        return ""
 
-    sentence = ""
-    if words:
-        if sep == "text":
-            if len(words) == 1:
-                sentence = words[0]
-            elif max_nb and len(words) > max_nb:
-                sentence = ", ".join(words[:max_nb]) + "..."
-            else:
-                sentence = ", ".join(words[:-1]) + \
-                    " " + _("and") + " " + words[-1]
+    words = [render_to_string(
+        template, dict({object_name: obj}, **template_context),
+        context_instance=context) for obj in queryset if queryset]
+
+    if sep == "text":
+        if len(words) == 1:
+            sentence = words[0]
+        elif max_nb and len(words) > max_nb:
+            sentence = ", ".join(words[:max_nb]) + "..."
         else:
-            if max_nb:
-                words = words[:max_nb]
-            sentence = u"<div class={container}>{html}</div>".format(
-                container=container, html=unicode(sep.join(words)))
+            sentence = _("{first_words} and {last_word}").format(
+                first_words=", ".join(words[:-1]), last_word=words[-1])
+    else:
+        if max_nb:
+            words = words[:max_nb]
+        sentence = u"<div class='{container}'>{html}</div>".format(
+            container=container, html=unicode(sep.join(words)))
 
     return sentence
 
 
 def get_content_source(content, display, context=None, sep="text"):
-    if display == "context":
-        products_display, tags_display = ["thumbnail", ""]
-    else:
-        products_display, tags_display = [display, ""]
+    products_container = "products"
+    template_context = {"display": display}
+    if display == "context" or display == "side-questions":
+        template_context.update({"display": "thumbnail"})
+        products_container += " thumbnail-list"
+        if display == "side-questions":
+            products_container += " 2columns"
+
     nb = [content.items.count(), content.tags.count()]
     prods_kwargs = {
         "queryset": content.items.all(), "object_name": "object", "sep": sep,
         "template": "items/_product_display.html", "context": context,
-        "template_context": {"display": products_display},
-        "container": "products"
+        "container": products_container, "template_context": template_context
     }
     tags_kwargs = {
         "queryset": content.tags.all(), "object_name": "tag", "sep": sep,
         "template": "tags/_tag_display.html", "context": context,
-        "template_context": {"display": tags_display},
         "container": "tags"
     }
 
@@ -124,6 +127,6 @@ def get_content_source(content, display, context=None, sep="text"):
         words.append(generate_objs_sentence(**prods_kwargs))
         if all(nb):
             words.append(sep)
-        words.append(generate_objs_sentence(**tags_kwargs))
+        words.append(hyphenate(generate_objs_sentence(**tags_kwargs)))
 
     return string.join(words, "")

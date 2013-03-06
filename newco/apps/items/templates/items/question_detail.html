@@ -8,8 +8,6 @@
     <link href="{{ STATIC_URL }}css/content.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/help.css" rel="stylesheet">
     <style>
-      div.question { margin-bottom: 20px; }
-
       #edit-about {
         width: 100%;
       }
@@ -25,9 +23,18 @@
 {% block head_title %}{{ question.content }}{% endblock %}
 
 {% block body %}
+
 <div class="row">
   <div class="span9" itemscope itemtype="http://schema.org/Article">
-    {% include QUESTION_TEMPLATE with content=question display="detail" %}
+    <div class="question-header">
+      {% tags_display tags %}
+      <div class="products">
+        {% for item in products %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}
+      </div>
+      {% include QUESTION_TEMPLATE with content=question display="detail" %}
+    </div>
 
     {% for answer in question.answer_set.all %}
       {% if not forloop.first%}<br>{% endif %}
@@ -38,30 +45,25 @@
     <br>
 
     {% include "items/_answer_form.html" with form=answer_form %}
-    
   </div>
 
   <div class="span3">
-    {% if question.items.all %}
-      <h4 class="text-right">{% trans "Related products" %}</h4>
-      <div class="thumbnail-list">{% for item in question.items.all %}
-        {% include "items/_product_display.html" with object=item display="thumbnail" tags=1 only %}
-      {% endfor %}</div>
-    {% endif %}
+    {% for tag, product_list in top_products.items %}
+      {% if forloop.first %}<h5>{% trans "Popular products" %}</h5>{% endif %}
+      <div class="products-extra row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2 thumbnail-list 2columns">{% for item in product_list %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}</div>
+      </div>
+    {% endfor %}
 
-    {% if question.tags.all %}
-      <hr>
-      <h4 class="text-right">{% trans "Related tags" %}</h4>
-      {% tags_display question.tags %}
-    {% endif %}
-
-    {% for title, content_list in related_questions.iteritems %}
-      {% if content_list %}
-        <ul>{% for content in content_list %}
-          {% if forloop.first %}<hr><h4 class="text-right">{{ title }}</h4>{% endif %}
-          <li><a href="{{ content.get_absolute_url }}">{{ content.content }}</a></li>
-        {% endfor %}</ul>
-      {% endif %}
+    {% for question in top_questions %}
+      {% if forloop.first %}<hr><h5>{% trans "Best questions" %}</h5>{% endif %}
+      <div class="questions-extra row">
+        <div class="span1">{% source_display question "side-questions" sep=" " %}</div>
+        <div class="span2"><p><a title="{{ question.content }}" href="{{ question.get_absolute_url }}">{{ question.content }}</a></p></div>
+      </div>
     {% endfor %}
   </div>
 </div>
@@ -82,6 +84,9 @@
         if ( /answer-form/.test(hash) ) {
             editor.focus();
         }
+        $("#call-answer-form").click( function (eventObject) {
+            editor.focus();
+        });
 
         // Edit profile.about with ajax
         $("#form-edit-about").submit(function() {

@@ -14,9 +14,9 @@
     <li{% if qs_option == "created" %} class="active"{% endif %}><a href="?qs_option=created">{% trans "Old" %}</a></li>
   </ul></div>
   <div class="span10">
-    <div class="thumbnail-list">
+    <div class="thumbnail-list fit-width mosaic">
       {% for item in object_list %}
-        {% include "items/_product_display.html" with object=item display="thumbnail" tags=1 only %}
+        {% include "items/_product_display.html" with object=item display="thumbnail" options="display-tags" only %}
       {% empty %}
         {{ empty_msg }}
       {% endfor %}

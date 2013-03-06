@@ -30,11 +30,7 @@
           {% content_info question display 32 %}
         {% endif %}
         <br>
-        {% if "parents" in options %}
-          <div class="content-parents thumbnail-list">
-            {% source_display question "context" sep=" " %}
-          </div>
-        {% endif %}
+        {% if "parents" in options %}{% source_display question "context" sep=" " %}{% endif %}
       </div>
 
       {% if display == "detail" %}

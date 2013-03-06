@@ -13,22 +13,26 @@ from profiles.models import Profile
 from taggit.models import Tag
 
 
-def pub_date(x):
+def created(x):
     return [x.created]
 
 
 def author(x):
     return [x.author.get_profile()]
 
+
 def url(x):
     return [x.get_absolute_url()]
+
 
 def slug(x):
     return [x.slug]
 
+
 def items(x):
     items = [item for item in x.items.all()]
     return ['items'] + items if items else []
+
 
 def tags(x):
     tags = [tag for tag in x.tags.all()]
@@ -41,9 +45,9 @@ def date_joined(x):
 # list models to export
 # for each model you define functions to add data to each row
 models = {
-    Question: (pub_date, author, url, items, tags),
-    Answer: (pub_date, author, items, tags),
-    Item: (pub_date, url, tags),
+    Question: (created, author, url, items, tags),
+    Answer: (created, author, items, tags),
+    Item: (created, url, tags),
     Tag: (slug,),
     Profile: (date_joined,)
 }

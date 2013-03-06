@@ -10,7 +10,7 @@
 {% block style_base %}
   <link href="{{ STATIC_URL }}img/favicon.png" type="image/png" rel="icon">
   <link href="{{ STATIC_URL }}favicon.ico" rel="shortcut icon">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   {% compress css %}
     <link href="{{ STATIC_URL }}external/select2/select2.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}external/joyride/joyride-2.0.3.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 {% block script_base %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     {% compress js %}
         <script src="{% static 'pinax/js/theme.js' %}"></script>
         <script src="{% static 'external/select2/select2.js' %}"></script>
@@ -64,8 +64,8 @@
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
           var user = JSON.parse(htmlDecode("{{ user_json }}"))
         </script>
-        <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/mixpanel_functions.js' %}"></script>
+        <script src="{{ STATIC_URL }}js/global.js"></script>
+        <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
         <script src="{{ STATIC_URL }}js/voting.js"></script>
     {% endcompress %}
     {% compress js %}{% block extra_script %}{% endblock %}{% endcompress %}

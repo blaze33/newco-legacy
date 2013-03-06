@@ -4,9 +4,10 @@
 {% load follow %}
 {% load content_utils %}
 
-<div class="row highlight" itemscope itemtype="http://schema.org/Product">
+<div class="product-header row highlight" itemscope itemtype="http://schema.org/Product">
   <div class="span5">
-    {% tags_display item.tags %}<br><br>
+    {% tags_display item.tags %}
+    <br>
     <h1 itemprop="name">{{ item }}</h1>
     <br>
     {% include "items/feed_display/_item_controls.html" with item=item user=user csrf_token=csrf_token only %}

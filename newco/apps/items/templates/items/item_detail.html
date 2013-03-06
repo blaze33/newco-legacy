@@ -51,7 +51,6 @@
   </div>
 
   <div class="span3">
-    <br>
     {% if store_products %}
       <div class="dropdown controls">
         <a class="btn btn-large dropdown-toggle" id="drop" role="button" data-toggle="dropdown" data-target="#">{% trans "From" %} <b>{% price cheapest.price cheapest.currency LANGUAGE_CODE %}</b> <span class="caret"></span></a>
@@ -66,27 +65,26 @@
       <hr>
     {% endif %}
 
-    <h5>{% trans "Best associated questions" %}</h5>
-    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}<br>
-      {# Bit of a hack to use thumbnail class here but it does the job well (display: table; etc.) and matches the display below #}
-      <ul class="thumbnails">
-        <li class="span1">{% tag_display tag %}</li>
-        {% for question in top_question %}
-          <li class="span2" title="{{ question.content }}"><a class="black" href="{{ question.get_absolute_url }}">{{ question.content|truncatechars:70 }}</a></li>
-        {% endfor %}
-      </ul>
+    <h5>{% trans "Best questions" %}</h5>
+    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}
+      <div class="questions-extra row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2">{% for question in top_question %}
+          <p><a class="black" href="{{ question.get_absolute_url }}" title="{{ question.content }}">{{ question.content }}</a></p>
+        {% endfor %}</div>
+      </div>
     {% endif %}{% endfor %}
 
     <hr>
 
-    <h5>{% trans "Popular associated products" %}</h5>
-    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}<br>
-      <ul class="top-products thumbnails">
-        <li class="span1">{% tag_display tag %}</li>
-        {% for item in product_list %}
-          <li class="span1">{% include "items/_product_display.html" with object=item display="thumbnail" only %}</li>
-        {% endfor %}
-      </ul>
+    <h5>{% trans "Popular products" %}</h5>
+    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}
+      <div class="products-extra row">
+        <div class="span1">{% tag_display tag %}</div>
+        <div class="span2 thumbnail-list 2columns">{% for item in product_list %}
+          {% include "items/_product_display.html" with object=item display="thumbnail" only %}
+        {% endfor %}</div>
+      </div>
     {% endif %}{% endfor %}
   </div>
 </div>
@@ -116,14 +114,13 @@
   <script src="{% static 'external/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js' %}"></script>
   <script src="{% static 'js/content.js' %}"></script>
   {{ media.js }}
-  <script src="{% static 'js/help.js' %}"></script>
-  <script>
-    $(function() {
-        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
-    });
-  </script>
+  <script src="{{ STATIC_URL }}js/help.js"></script>
   <script src="{{ STATIC_URL }}js/follow.js"></script>
   <script>
+    $(function () {
+        if ( '{{ ask_form.errors }}' ) { $("#modal-ask").modal("show"); }
+    });
+
     //Tracking Product name for analytics
     $(document).ready(function(){
       var product=document.getElementById("edit-product");
