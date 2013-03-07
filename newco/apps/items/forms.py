@@ -166,6 +166,11 @@ class PartialQuestionForm(ModelForm):
         kwargs.pop("experts_qs", {})
         super(PartialQuestionForm, self).__init__(*args, **kwargs)
         self.request, self.items, self.tags = [request, items, tags]
+        if not request.user.is_authenticated():
+            self.fields["content"].widget.attrs.update({
+                "disabled": "",
+                "placeholder": _("Please log in before asking your question.")
+            })
 
     def save(self, commit=True, **kwargs):
         question = super(PartialQuestionForm, self).save(commit=False)
@@ -211,6 +216,8 @@ class AnswerForm(ModelForm):
             question_id = request.POST["question-id"]
             self.question = Question.objects.get(id=question_id)
         self.fields["content"].label = ""
+        if not request.user.is_authenticated():
+            self.fields["content"].widget.attrs.update({"disabled": ""})
 
     def save(self, commit=True, **kwargs):
         answer = super(AnswerForm, self).save(commit=False)

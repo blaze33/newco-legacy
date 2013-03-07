@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-06 17:34+0100\n"
-"PO-Revision-Date: 2013-03-06 17:34+0009\n"
+"POT-Creation-Date: 2013-03-07 18:02+0100\n"
+"PO-Revision-Date: 2013-03-07 18:04+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,11 @@ msgstr "Choisissez moins de %d tags"
 msgid "Pick less than %d products"
 msgstr "Choisissez moins de %d produits"
 
-#: forms.py:192
+#: forms.py:172
+msgid "Please log in before asking your question."
+msgstr "Connectez-vous avant de poser votre question."
+
+#: forms.py:197
 msgid "Be concise and to the point."
 msgstr "Soyez concis et direct."
 
@@ -223,7 +227,7 @@ msgstr ""
 "poser une&#x202F;!"
 
 #: templates/items/_answer_form.html:7
-msgid "Please login before answering."
+msgid "Please log in before answering."
 msgstr "Connectez-vous avant de répondre."
 
 #: templates/items/_answer_form.html:12
