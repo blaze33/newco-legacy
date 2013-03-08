@@ -170,7 +170,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "items.context_processors.template_paths",
     "profiles.context_processors.profile",
     "utils.context_processors.mixpanel",
-    "utils.redis.context_processors.redis_url",
 ]
 
 INSTALLED_APPS = [

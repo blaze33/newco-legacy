@@ -59,12 +59,7 @@
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script src="{% url 'js_reverse' %}"></script>
         <script src="{{ STATIC_URL }}js/utils.js"></script>
-        <script>
-          var URL_REDIS = "{{ URL_REDIS }}";
-          var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
-          var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
-          var user = JSON.parse(htmlDecode("{{ user_json }}"))
-        </script>
+        <script>var user = JSON.parse(htmlDecode("{{ user_json }}"))</script>
         <script src="{{ STATIC_URL }}js/global.js"></script>
         <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
         <script src="{{ STATIC_URL }}js/voting.js"></script>

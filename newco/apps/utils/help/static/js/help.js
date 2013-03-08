@@ -1,4 +1,4 @@
-/*global URL_REDIS_PROFILE, ngettext, interpolate*/
+/*global Urls, ngettext, interpolate*/
 
 (function ($, Select2) {
     "use strict";
@@ -8,7 +8,7 @@
         // reload profiles
         var url, ids;
         ids = element.val().split(",");
-        url = URL_REDIS_PROFILE + "?id=" + ids.join("&id=");
+        url = Urls.redis_filtered("profile") + "?id=" + ids.join("&id=");
         return $.ajax({
             url: url,
             dataType: "json"
@@ -80,7 +80,7 @@
         initSelection: reloadProfiles,
         containerCssClass: "select2-bootstrap",
         ajax: {
-            url: URL_REDIS_PROFILE + "?limit=" + numberResults,
+            url: Urls.redis_filtered("profile") + "?limit=" + numberResults,
             dataType: "json",
             quietMillis: 100,
             data: function (term, page) {
