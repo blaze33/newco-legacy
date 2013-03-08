@@ -222,6 +222,7 @@ INSTALLED_APPS = [
     "tastypie",
     "amazonproduct",
     "softhyphen",
+    "django_js_reverse",
 
     # Project
     "about",

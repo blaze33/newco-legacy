@@ -97,6 +97,9 @@ redis-completion==0.4.0
 ## template loader
 django-apptemplates==0.0.1
 
+## js url reverse
+django-js-reverse==0.1.0
+
 ## The following requirements were added by pip --freeze:
 BeautifulSoup==3.2.1
 argparse==1.2.1
