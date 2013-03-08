@@ -57,6 +57,7 @@
         <script src="{{ STATIC_URL }}external/masonry/jquery.masonry.min.js"></script>
         <script src="{{ STATIC_URL }}js/modernizr-csstransitions.min.js"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
+        <script src="{% url 'js_reverse' %}"></script>
         <script src="{{ STATIC_URL }}js/utils.js"></script>
         <script>
           var URL_REDIS = "{{ URL_REDIS }}";

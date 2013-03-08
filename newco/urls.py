@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.views.decorators.cache import cache_page
 from django.views.generic.simple import redirect_to
 
 from django.contrib import admin
 admin.autodiscover()
 
-from content.api import ItemResource, RelationResource
+from django_js_reverse.views import urls_js
 from sitemaps import all_sitemaps as sitemaps
 from tastypie.api import Api
+
+from content.api import ItemResource, RelationResource
 from views import HomepageView
 
 
@@ -34,7 +37,7 @@ urlpatterns = patterns("",
     url(r"^utils", include("utils.urls")),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-
+    url(r"^jsreverse/$", cache_page(3600)(urls_js), name="js_reverse"),
 )
 
 if settings.DEBUG:
