@@ -59,16 +59,20 @@
         <script src="{{ STATIC_URL }}js/modernizr-csstransitions.min.js"></script>
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script src="{{ STATIC_URL }}js/utils.js"></script>
-        <script>var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-        <script src="{% static 'js/mixpanel.js' %}"></script>
+        <script>
+          var mixpanelId = "{{ MIXPANEL_KEY_ID }}",
+              user = JSON.parse(htmlDecode("{{ user_json }}"));
+        </script>
+        <script src="{{ STATIC_URL }}js/mixpanel.js"></script>
         <script>
           var URL_REDIS = "{{ URL_REDIS }}";
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
-          var user = JSON.parse(htmlDecode("{{ user_json }}"))
-          mixpanel.people.identify(user.userId);
-          mixpanel.people.set(user);
-          mixpanel.name_tag(user.name);
+          if ( user.userId > 0 ) {
+              mixpanel.people.identify(user.userId);
+              mixpanel.people.set(user);
+              mixpanel.name_tag(user.name);
+          }
         </script>
         <script src="{{ STATIC_URL }}js/global.js"></script>
         <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
