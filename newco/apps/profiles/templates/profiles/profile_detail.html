@@ -9,7 +9,7 @@
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
-{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}{{ page_user_display }} - Profile{% endblocktrans %}{% endblock %}
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}{{ page_user_display }} | Profile{% endblocktrans %}{% endblock %}
 
 {% block body %}
   {% user_display page_user as page_user_display %}
@@ -41,7 +41,7 @@
 
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active" id="tab-history"><a href="#history" data-toggle="tab">{% trans "Feed" %}</a></li>
+      <li class="active" id="tab-history"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
       <li id="tab-followees"><a href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
       <li id="tab-followers"><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
     </ul>

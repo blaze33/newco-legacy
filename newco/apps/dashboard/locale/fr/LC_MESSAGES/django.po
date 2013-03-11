@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 21:34+0100\n"
-"PO-Revision-Date: 2013-02-13 21:34\n"
+"POT-Creation-Date: 2013-03-11 18:43+0100\n"
+"PO-Revision-Date: 2013-03-11 18:46+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Translated-Using: django-rosetta 0.6.8\n"
+"X-Translated-Using: django-rosetta 0.7.1\n"
 
 #: views.py:18 templates/dashboard/_subnav.html:14
 msgid "Dashboard"
@@ -163,14 +163,10 @@ msgstr ""
 "Vous cherchez une de vos contributions&#x202F;? Ici on vous donne les outils"
 " pour vous aider à la trouver&#x202F;!"
 
-#: templates/dashboard/all.html:11
-msgid "Search in all my contributions - Not functional yet"
-msgstr "En construction - Chercher dans toutes mes contributions"
-
 #: templates/dashboard/base.html:18
 #, python-format
-msgid "%(USERNAME)s's dashboard | %(page_name)s"
-msgstr "Tableau de bord de %(USERNAME)s | %(page_name)s"
+msgid "%(USERNAME)s | %(page_name)s"
+msgstr "%(USERNAME)s | %(page_name)s"
 
 #: templates/dashboard/contribution.html:5
 msgid ""
@@ -226,9 +222,11 @@ msgstr ""
 "idées pour améliorer cette page, %(link_1)senvoyez nous un email%(link_2)s, "
 "nous avons hâte de les découvrir&#x202F;!"
 
-#: templates/dashboard/purchase.html:11
-msgid "Search in all my purchases"
-msgstr "Chercher dans tous mes achats"
+#~ msgid "Search in all my contributions - Not functional yet"
+#~ msgstr "En construction - Chercher dans toutes mes contributions"
+
+#~ msgid "Search in all my purchases"
+#~ msgstr "Chercher dans tous mes achats"
 
 #~ msgid "View all"
 #~ msgstr "Voir tous"
