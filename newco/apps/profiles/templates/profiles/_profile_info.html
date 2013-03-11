@@ -32,12 +32,12 @@
       {% endif %}
       {% if fwees or fwers %}<br>{% endif %}
       {% if fwees %}
-        <dt><a id="link-followees" href="#followees" data-toggle="tab" class="black">{% trans "Following" %} <span class="muted">{{ fwees.count }}</span></a></dt>
-        <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}{% if fwees.count > 5 %} ... {% endif %} </dd>
+        <dt><a class="black tab-link" data-target="#tab-followees" href="#">{% trans "Following" %}</a></dt>
+        <dd>{% for fwee in fwees|slice:":5" %}<a href="{{ fwee.get_absolute_url }}" title="{% user_display fwee %}">{% profile_pic fwee 16 %}</a> {% if fwees.count > 5 and forloop.last %}&hellip; <span class="muted">({{ fwees.count }})</span>{% endif %}{% endfor %}</dd>
       {% endif %}
       {% if fwers %}
-        <dt><a id="link-followers" href="#followers" data-toggle="tab" class="black">{% trans "Followers" %} <span class="muted">{{ fwers.count }}</span></a></dt>
-        <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a>{% if not forloop.last %} {% endif %}{% endfor %}{% if fwers.count > 5 %} ... {% endif %} </dd>
+        <dt><a class="black tab-link" data-target="#tab-followers" href="#">{% trans "Followers" %}</a></dt>
+        <dd>{% for fwer in fwers|slice:":5" %}<a href="{{ fwer.get_absolute_url }}" title="{% user_display fwer %}">{% profile_pic fwer 16 %}</a> {% if fwers.count > 5 and forloop.last %}&hellip; <span class="muted">({{ fwers.count }})</span>{% endif %}{% endfor %}</dd>
       {% endif %}
     </dl>
   </div>

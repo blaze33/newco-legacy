@@ -41,12 +41,12 @@
 
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active" id="tab-history"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
-      <li id="tab-followees"><a href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
-      <li id="tab-followers"><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
+      <li class="active"><a id="tab-history" href="#history" data-toggle="tab">{% trans "History" %}</a></li>
+      <li><a id="tab-followees" href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
+      <li><a id="tab-followers" href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
     </ul>
 
-    <div class="tab-content" style="overflow: visible;">
+    <div class="tab-content">
       <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list display="list" options="context,parents" display_a="no" experts=experts scores=scores votes=votes %}{% if is_paginated %}{% paginate %}{% endif %}</div>
       <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
       <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
@@ -61,26 +61,10 @@
       // costs 300 ms
       (function ($) {
           $("#profile-pic").attr("href", "{% gravatar_profile_url page_user %}");
+          $(".tab-link").click( function (eventObject) {
+              $($(this).data("target")).click()
+          });
       }(window.jQuery));
-    </script>
-    <script>
-    $(function() {
-      var link_fwees = $('#link-followees');
-      var link_fwers = $('#link-followers');
-      var tab_history = $('li[id="tab-history"]');
-      var tab_fwees = $('li[id="tab-followees"]');
-      var tab_fwers = $('li[id="tab-followers"]');
-      link_fwees.on('click', function () {
-        tab_history.removeClass('active');
-        tab_fwers.removeClass('active');
-        tab_fwees.addClass('active');
-      });
-      link_fwers.on('click', function () {
-        tab_history.removeClass('active');
-        tab_fwees.removeClass('active');
-        tab_fwers.addClass('active');
-      });
-    });
     </script>
   {% endblock %}
 {% endif %}
