@@ -91,7 +91,7 @@ django-generic-aggregation==0.3.1
 django-follow==0.6
 
 ## Redis + complete
-redis==2.7.1
+redis==2.7.2
 redis-completion==0.4.0
 
 ## template loader
