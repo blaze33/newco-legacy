@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 16:16+0100\n"
+"POT-Creation-Date: 2013-03-12 16:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,10 +89,14 @@ msgid "{user}, you can't vote on your own contribution!"
 msgstr ""
 
 #: messages.py:70
+msgid "{user}, you don't have enough reputation to vote."
+msgstr ""
+
+#: messages.py:74
 msgid "{user}, the tag {tag} has been added to your skill set."
 msgstr ""
 
-#: messages.py:75
+#: messages.py:79
 msgid "{user}, the tag {tag} has been removed from your skill set."
 msgstr ""
 
@@ -229,21 +233,21 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:80
+#: templatetags/tools.py:82
 msgid "{first_words} and {last_word}"
 msgstr ""
 
-#: templatetags/tools.py:115
+#: templatetags/tools.py:117
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templatetags/tools.py:119
+#: templatetags/tools.py:121
 msgid "and"
 msgstr ""
 
-#: templatetags/tools.py:121
+#: templatetags/tools.py:123
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] ""

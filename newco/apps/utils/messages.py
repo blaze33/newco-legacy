@@ -65,6 +65,10 @@ MESSAGES = {
         "level": messages.WARNING,
         "text": _("{user}, you can't vote on your own contribution!")
     },
+    "vote-denied": {
+        "level": messages.WARNING,
+        "text": _("{user}, you don't have enough reputation to vote.")
+    },
     "skill-added": {
         "level": messages.SUCCESS,
         "text": _("{user}, the tag {tag} has been added to your skill set.")

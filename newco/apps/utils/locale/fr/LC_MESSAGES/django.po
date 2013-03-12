@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 16:16+0100\n"
-"PO-Revision-Date: 2013-02-28 16:17\n"
+"POT-Creation-Date: 2013-03-12 16:17+0100\n"
+"PO-Revision-Date: 2013-03-12 16:18+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Translated-Using: django-rosetta 0.6.8\n"
+"X-Translated-Using: django-rosetta 0.7.1\n"
 
 #: mailtools.py:42
 #, python-format
@@ -93,10 +93,14 @@ msgstr ""
 "{user}, vous ne pouvez pas voter sur votre propre contribution&#x202F;!"
 
 #: messages.py:70
+msgid "{user}, you don't have enough reputation to vote."
+msgstr "{user}, vous n'avez pas assez de réputation pour pouvoir voter."
+
+#: messages.py:74
 msgid "{user}, the tag {tag} has been added to your skill set."
 msgstr "{user}, le tag {tag} a été ajouté à votre liste de compétences."
 
-#: messages.py:75
+#: messages.py:79
 msgid "{user}, the tag {tag} has been removed from your skill set."
 msgstr "{user}, le tag {tag} a été enlevé de votre liste de compétences."
 
@@ -238,21 +242,21 @@ msgid_plural "%(count)s hours ago"
 msgstr[0] "il y a une heure"
 msgstr[1] "il y a %(count)s heures"
 
-#: templatetags/tools.py:80
+#: templatetags/tools.py:82
 msgid "{first_words} and {last_word}"
 msgstr "{first_words} et {last_word}"
 
-#: templatetags/tools.py:115
+#: templatetags/tools.py:117
 msgid "about the product"
 msgid_plural "about the products"
 msgstr[0] "à propos du produit"
 msgstr[1] "à propos des produits"
 
-#: templatetags/tools.py:119
+#: templatetags/tools.py:121
 msgid "and"
 msgstr "et"
 
-#: templatetags/tools.py:121
+#: templatetags/tools.py:123
 msgid "with the tag"
 msgid_plural "with the tags"
 msgstr[0] "avec le tag"
