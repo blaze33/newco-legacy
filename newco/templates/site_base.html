@@ -82,9 +82,10 @@
     <li data-id="add-dropdown" data-button="{% trans 'Thank you!' %}">
       <p>{% trans "NewCo is a collaborative webapp: if you can't find what you're looking for, create it and ask something!" %}</p>
     </li>
+
     {% comment %}
-      Seb: excluded until a solution to avoid the "tip" to go out of the window is found
-      <li data-class="non_auth" data-button="{% trans "Next" %}">
+      #TODO: check for top right nub right alignment in joyride >= 2.0.4
+      <li data-class="non_auth" data-button="{% trans 'Next' %}">
         <p>{% trans "Sign up to build your reputation with your contributions." %}</p>
       </li>
     {% endcomment %}

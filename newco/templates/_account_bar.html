@@ -51,10 +51,8 @@
   </ul>
   {% else %}
   <ul class="nav btn-group">
-    <li class="btn btn-inverse"><a href="{% url 'account_login' %}"><strong>{% trans "Log in" %}</strong></a></li>
-    {% if ACCOUNT_OPEN_SIGNUP %}
-    <li class="btn btn-danger non_auth"><a href="{% url 'account_signup' %}"><strong>{% trans "Sign up" %}</strong></a></li>
-    {% endif %}
+    <li class="btn btn-inverse"><a href="{% url 'account_login' %}?next={{ request.get_full_path }}"><strong>{% trans "Log in" %}</strong></a></li>
+    <li class="btn btn-danger non_auth"><a href="{% url 'account_signup' %}?next={{ request.get_full_path }}"><strong>{% trans "Sign up" %}</strong></a></li>
   </ul>
   {% endif %}
 </div>

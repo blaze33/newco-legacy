@@ -4,7 +4,7 @@
 {% if PROFILE %}
   <p><b>{{ USERNAME }}<span id="user-about">{% if PROFILE.about %}, {{ PROFILE.about }}{% endif %}</span></b>&nbsp;&nbsp;{% include "profiles/_profile_edit_about.html" with about=PROFILE.about %}</p>
 {% else %}
-  <p>{% trans "Please login before answering." %}</p>
+  <p>{% trans "Please log in before answering." %}</p>
 {% endif %}
 
 <form id="answer-form" method="POST" action="#answer-form">{% csrf_token %}

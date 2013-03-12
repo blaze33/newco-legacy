@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-06 17:34+0100\n"
+"POT-Creation-Date: 2013-03-07 18:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,11 @@ msgstr ""
 msgid "Pick less than %d products"
 msgstr ""
 
-#: forms.py:192
+#: forms.py:172
+msgid "Please log in before asking your question."
+msgstr ""
+
+#: forms.py:197
 msgid "Be concise and to the point."
 msgstr ""
 
@@ -210,7 +214,7 @@ msgid "No question with tag {tag} yet. Be the first to ask one!"
 msgstr ""
 
 #: templates/items/_answer_form.html:7
-msgid "Please login before answering."
+msgid "Please log in before answering."
 msgstr ""
 
 #: templates/items/_answer_form.html:12
