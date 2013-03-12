@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 15:19+0100\n"
-"PO-Revision-Date: 2013-01-10 18:39\n"
+"POT-Creation-Date: 2013-03-11 18:49+0100\n"
+"PO-Revision-Date: 2013-03-11 18:44+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Translated-Using: django-rosetta 0.6.8\n"
+"X-Translated-Using: django-rosetta 0.7.1\n"
 
 #: models.py:32
 msgid "name"
@@ -55,7 +55,7 @@ msgstr "profil"
 msgid "reputation"
 msgstr "réputation"
 
-#: views.py:53
+#: views.py:46
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
 msgstr "%(page_user_display)s n'a pas contribué pour le moment."
@@ -72,13 +72,9 @@ msgstr "Editez votre bio"
 msgid "I can give a good answer because..."
 msgstr "Je peux donner une bonne réponse car..."
 
-#: templates/profiles/_profile_edit_about.html:13
+#: templates/profiles/_profile_edit_about.html:14
 msgid "e.g. professional gardener, model, local tennis champion"
 msgstr "ex.&nbsp;: jardinier professionnel, mannequin, champion de tennis"
-
-#: templates/profiles/_profile_edit_about.html:14
-msgid "Submit"
-msgstr "Soumettre"
 
 #: templates/profiles/_profile_form.html:13
 msgid "Cancel"
@@ -147,8 +143,8 @@ msgstr "Produits&nbsp;:"
 
 #: templates/profiles/profile_detail.html:12
 #, python-format
-msgid "Profile for %(page_user_display)s"
-msgstr "Profil de %(page_user_display)s"
+msgid "%(page_user_display)s | Profile"
+msgstr "%(page_user_display)s | Profil"
 
 #: templates/profiles/profile_detail.html:18
 msgid "Update my profile"
@@ -179,6 +175,15 @@ msgstr "Tous les utilisateurs"
 #: templates/profiles/profile_list.html:14
 msgid "Here is the awesome community building NewCo."
 msgstr "Voici l'incroyable communauté qui construit NewCo."
+
+#~ msgid "Feed"
+#~ msgstr "Flux"
+
+#~ msgid "Submit"
+#~ msgstr "Soumettre"
+
+#~ msgid "Profile for %(page_user_display)s"
+#~ msgstr "Profil de %(page_user_display)s"
 
 #~ msgid "Top Followers"
 #~ msgstr "Meilleurs Abonnés"
@@ -247,9 +252,6 @@ msgstr "Voici l'incroyable communauté qui construit NewCo."
 
 #~ msgid "<a href=\"%(url)s\"%(color)s>answered</a> a question about"
 #~ msgstr "a répondu à une question à propos de"
-
-#~ msgid "Home: %(page_user_display)s"
-#~ msgstr "Accueil : %(page_user_display)s"
 
 #~ msgid "Newsfeed"
 #~ msgstr "Flux"

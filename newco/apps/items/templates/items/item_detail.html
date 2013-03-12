@@ -46,7 +46,7 @@
 
     <hr>
 
-    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}" id="edit-product" data-name="{{ item.name }}"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
+    <a class="btn" href="{% url 'item_edit' item|to_class_name item.id %}" id="edit-product"><i class="icon-edit"></i> {% trans "Edit Product" %}</a>
     {% if user.is_superuser %}<a class="btn" href="{% url 'item_delete' item|to_class_name item.id %}"><i class="icon-trash"></i> {% trans "Delete Product" %}</a>{% endif %}
   </div>
 
@@ -123,10 +123,9 @@
 
     //Tracking Product name for analytics
     $(document).ready(function(){
-      var product=document.getElementById("edit-product");
-      var name=product.getAttribute("data-name");
-      mixpanel.track("Load_item_detail", {"product":name});
+      mixpanel.track("Load_item_detail", {"product":"{{ item.name }}"});
       if ($('div').hasClass('alert-success')){mixpanel.track("Event Success on Item Page");};
+      _gaq.push(['_trackEvent', 'Load Item Detail', 'pageload',"{{ item.name }}"]);
     });
      // Start slideshow button:
     $('#start-slideshow').button().click(function () {

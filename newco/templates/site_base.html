@@ -7,6 +7,8 @@
 {% load account_tags %}
 {% load compress %}
 
+{% block head_title_base %}{% block head_title %}{% endblock %}{% if SITE_NAME %} | {{ SITE_NAME }}{% endif %}{% endblock %}
+
 {% block style_base %}
   <link href="{{ STATIC_URL }}img/favicon.png" type="image/png" rel="icon">
   <link href="{{ STATIC_URL }}favicon.ico" rel="shortcut icon">
@@ -23,8 +25,6 @@
 {% block extra_head_base %}
     {% compress js %}
     <script src="{% static 'js/ga.js' %}"></script>
-    <script>var var_mixpanel="{{ MIXPANEL_KEY_ID }}";</script>
-    <script src="{% static 'js/mixpanel.js' %}"></script>
     {% block extra_head_script %}{% endblock%}
     {% endcompress %}
 {% endblock %}
@@ -59,10 +59,19 @@
         <script src="{{ STATIC_URL }}jsi18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
         <script src="{{ STATIC_URL }}js/utils.js"></script>
         <script>
+          var mixpanelId = "{{ MIXPANEL_KEY_ID }}",
+              user = JSON.parse(htmlDecode("{{ user_json }}"));
+        </script>
+        <script src="{{ STATIC_URL }}js/mixpanel.js"></script>
+        <script>
           var URL_REDIS = "{{ URL_REDIS }}";
           var URL_REDIS_TAG = "{{ URL_REDIS_TAG }}";
           var URL_REDIS_PROFILE = "{{ URL_REDIS_PROFILE }}";
-          var user = JSON.parse(htmlDecode("{{ user_json }}"))
+          if ( user.userId > 0 ) {
+              mixpanel.people.identify(user.userId);
+              mixpanel.people.set(user);
+              mixpanel.name_tag(user.name);
+          }
         </script>
         <script src="{{ STATIC_URL }}js/global.js"></script>
         <script src="{{ STATIC_URL }}js/mixpanel_functions.js"></script>
@@ -94,9 +103,6 @@
     <script>$.launchJoyride();</script>
   {% endif %}
 
-  <!-- To remove -->
-  <div class="hidden" id="mixpanel_identity"{% if user.is_authenticated %} data-user_id="{{ request.user.id }}" data-email="{{ request.user.email }}" data-created="{{ request.user.date_joined }}" data-name="{% user_display request.user %}" data-bio="{{ user.get_profile.about }}" data-reputation="{{ user.reputation.reputation_incremented }}"{% endif %}>
-  </div>
   {% analytics %}
 
   {% block extra_body %}{% endblock %}

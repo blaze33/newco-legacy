@@ -7,7 +7,6 @@ from account.utils import user_display
 
 
 def mixpanel(request):
-    output = {"MIXPANEL_KEY_ID": settings.MIXPANEL_KEY_ID}
     user = request.user
     if user.is_authenticated():
         profile = user.get_profile()

@@ -55,23 +55,6 @@ $(function() {
     mixpanel.track_links("#mixpanel_popular","Click Popular");
     mixpanel.track_links("#mixpanel_questions","Click Unanswered Questions");
     mixpanel.track_links("#mixpanel_mynewsfeed","Click My Newsfeed");
-    // Authentification (on Homepage only)
-    if ($('li').hasClass('well_auth')) {
-        // Pretty sure a loop could narrow down this part to 3 lines of code
-        var identity, user_id, user_email, user_created, user_name, user_bio, user_reputation;
-        identity = document.getElementById("mixpanel_identity");
-        user_id = identity.getAttribute("data-user_id");
-        user_email = identity.getAttribute("data-email");
-        user_created = identity.getAttribute("data-created");
-        user_name = identity.getAttribute("data-name");
-        user_bio = identity.getAttribute("data-bio");
-        user_reputation = identity.getAttribute("data-reputation");
-        mixpanel.people.identify(user_id);
-        mixpanel.people.set({
-            "email": user_email, "created": user_created, "name": user_name, "bio": user_bio, "reputation": user_reputation
-        });
-        mixpanel.name_tag(user_name);
-    }
     
     //Landing Page
     if ($('li').hasClass('non_auth')){mixpanel.register_once({ 'landing page': window.location.href });};
