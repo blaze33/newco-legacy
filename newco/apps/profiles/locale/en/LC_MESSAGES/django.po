@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 15:19+0100\n"
+"POT-Creation-Date: 2013-03-11 18:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "reputation"
 msgstr ""
 
-#: views.py:53
+#: views.py:46
 #, python-format
 msgid "%(page_user_display)s have not contributed yet."
 msgstr ""
@@ -70,12 +70,8 @@ msgstr ""
 msgid "I can give a good answer because..."
 msgstr ""
 
-#: templates/profiles/_profile_edit_about.html:13
-msgid "e.g. professional gardener, model, local tennis champion"
-msgstr ""
-
 #: templates/profiles/_profile_edit_about.html:14
-msgid "Submit"
+msgid "e.g. professional gardener, model, local tennis champion"
 msgstr ""
 
 #: templates/profiles/_profile_form.html:13
@@ -145,7 +141,7 @@ msgstr ""
 
 #: templates/profiles/profile_detail.html:12
 #, python-format
-msgid "Profile for %(page_user_display)s"
+msgid "%(page_user_display)s | Profile"
 msgstr ""
 
 #: templates/profiles/profile_detail.html:18

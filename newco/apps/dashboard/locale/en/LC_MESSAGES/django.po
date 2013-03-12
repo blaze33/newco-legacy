@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 21:34+0100\n"
+"POT-Creation-Date: 2013-03-11 18:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,13 +146,9 @@ msgid ""
 "Looking for one of your contributions? Here are the tools to help you find!"
 msgstr ""
 
-#: templates/dashboard/all.html:11
-msgid "Search in all my contributions - Not functional yet"
-msgstr ""
-
 #: templates/dashboard/base.html:18
 #, python-format
-msgid "%(USERNAME)s's dashboard | %(page_name)s"
+msgid "%(USERNAME)s | %(page_name)s"
 msgstr ""
 
 #: templates/dashboard/contribution.html:5
@@ -194,8 +190,4 @@ msgid ""
 " More tools to come very soon on the dashboard! If you have some ideas about "
 "how to improve this page, please %(link_1)stell us%(link_2)s, we can't wait "
 "to read them!"
-msgstr ""
-
-#: templates/dashboard/purchase.html:11
-msgid "Search in all my purchases"
 msgstr ""

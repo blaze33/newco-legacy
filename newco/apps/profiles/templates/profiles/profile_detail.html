@@ -9,7 +9,7 @@
 
 {% block body_class %}{% if is_me %}profile{% endif %}{% endblock %}
 
-{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
+{% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}{{ page_user_display }} | Profile{% endblocktrans %}{% endblock %}
 
 {% block body %}
   {% user_display page_user as page_user_display %}
@@ -41,12 +41,12 @@
 
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#history" data-toggle="tab">{% trans "History" %}</a></li>
-      <li><a href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
-      <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
+      <li class="active"><a id="tab-history" href="#history" data-toggle="tab">{% trans "History" %}</a></li>
+      <li><a id="tab-followees" href="#followees" data-toggle="tab">{% trans "Following" %}</a></li>
+      <li><a id="tab-followers" href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
     </ul>
 
-    <div class="tab-content" style="overflow: visible;">
+    <div class="tab-content">
       <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list display="list" options="context,parents" display_a="no" experts=experts scores=scores votes=votes %}{% if is_paginated %}{% paginate %}{% endif %}</div>
       <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
       <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
@@ -61,6 +61,9 @@
       // costs 300 ms
       (function ($) {
           $("#profile-pic").attr("href", "{% gravatar_profile_url page_user %}");
+          $(".tab-link").click( function (eventObject) {
+              $($(this).data("target")).click()
+          });
       }(window.jQuery));
     </script>
   {% endblock %}

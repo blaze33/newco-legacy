@@ -2,15 +2,7 @@
 
 -
 -$(document).ready( function() {
--    
 
-    $(".dropdown controls").ready(function () {
-		var product=document.getElementById("edit-product");
-	    var lab=product.getAttribute("data-name");
-        category = 'Load Item Detail';
--       _gaq.push(['_trackEvent', category, 'pageload',lab]);
-       
-    });
 
 -    // add an event to all "Click to Product" links for google analytics
     $(".click-to-product-thumb").click(function () {
