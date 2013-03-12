@@ -1,15 +1,12 @@
 from django.conf.urls import patterns, include, url
-from django.views.generic.simple import direct_to_template
-
-KWARGS = {
-    "faq": {"template": "about/faq.html"},
-    "team": {"template": "about/team.html"},
-    "contribute": {"template": "about/contribute.html"},
-}
+from django.views.generic import TemplateView
 
 urlpatterns = patterns("",
-    url(r"^faq/$", direct_to_template, KWARGS["faq"], name="faq"),
-    url(r"^team/$", direct_to_template, KWARGS["team"], name="team"),
-    url(r"^contribute/$", direct_to_template, KWARGS["contribute"],
+    url(r"^faq/$", TemplateView.as_view(template_name="about/faq.html"),
+        name="faq"),
+    url(r"^team/$", TemplateView.as_view(template_name="about/team.html"),
+        name="team"),
+    url(r"^contribute/$",
+        TemplateView.as_view(template_name="about/contribute.html"),
         name="contribute"),
 )

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.views.decorators.cache import cache_page
-from django.views.generic.simple import redirect_to
+from django.views.generic import RedirectView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -41,24 +41,14 @@ urlpatterns = patterns("",
 )
 
 if settings.DEBUG:
-    urlpatterns += patterns("",
-        url(r"^rosetta/", include("rosetta.urls")),
-    )
+    urlpatterns += patterns("", url(r"^rosetta/", include("rosetta.urls")))
 
 urlpatterns += patterns("",
-    url(r"^(.)riends/(?P<path>.*)$", redirect_to, {
-            'url': 'http://static.newco-project.fr/Friends/%(path)s',
-            'permanent': True
-        }
-    ),
-    url(r"^static/(?P<path>.*)$", redirect_to, {
-            'url': 'http://static.newco-project.fr/static/%(path)s',
-            'permanent': True
-        }
-    ),
+    url(r"^static/(?P<path>.*)$", RedirectView.as_view(
+        url="http://static.newco-project.fr/static/%(path)s", permanent=True)),
+    url(r"^(.)riends/(?P<path>.*)$", RedirectView.as_view(
+        url="http://static.newco-project.fr/Friends/%(path)s", permanent=True))
 )
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns("",
-        url(r"", include("staticfiles.urls")),
-    )
+    urlpatterns += patterns("", url(r"", include("staticfiles.urls")))
