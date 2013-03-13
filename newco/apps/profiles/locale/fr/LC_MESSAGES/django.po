@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-11 18:49+0100\n"
+"POT-Creation-Date: 2013-03-13 18:21+0100\n"
 "PO-Revision-Date: 2013-03-11 18:44+0009\n"
 "Last-Translator:   <guillaume.andreu.sabater@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,14 @@ msgstr "Je peux donner une bonne réponse car..."
 msgid "e.g. professional gardener, model, local tennis champion"
 msgstr "ex.&nbsp;: jardinier professionnel, mannequin, champion de tennis"
 
+#: templates/profiles/_profile_follow_list.html:6
+msgid "Members:"
+msgstr "Membres&nbsp;:"
+
+#: templates/profiles/_profile_follow_list.html:20
+msgid "Products:"
+msgstr "Produits&nbsp;:"
+
 #: templates/profiles/_profile_form.html:13
 msgid "Cancel"
 msgstr "Annuler"
@@ -132,14 +140,6 @@ msgstr "Abonnés"
 #: templates/profiles/_profile_info.html:51
 msgid ":"
 msgstr "&nbsp;:"
-
-#: templates/profiles/_profile_user_list.html:4
-msgid "Members:"
-msgstr "Membres&nbsp;:"
-
-#: templates/profiles/_profile_user_list.html:15
-msgid "Products:"
-msgstr "Produits&nbsp;:"
 
 #: templates/profiles/profile_detail.html:12
 #, python-format
