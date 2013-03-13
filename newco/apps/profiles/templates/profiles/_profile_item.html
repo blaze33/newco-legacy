@@ -19,7 +19,7 @@
         {% tags_display profile.skills 3 %}
       </p>
     </div>
-    {% if disp_follow %}<div class="pull-right">{% follow_form user profile.user extra_class="btn-mini" tooltip_class="tooltip-bottom" %}</div>{% endif %}
+    {% if "display-follow" in options %}<div class="pull-right">{% follow_form user profile.user extra_class="btn-mini" tooltip_class="tooltip-bottom" %}</div>{% endif %}
   </div>
 {% elif display == "list" %}
   <li class="profile-item">
