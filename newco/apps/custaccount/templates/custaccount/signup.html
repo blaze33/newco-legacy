@@ -7,19 +7,23 @@
 {% block extra_script %}
   <script>
     (function ($) {
+        "use strict";
+
         var fields, names, modify;
         fields = ["#id_first_name", "#id_last_name"];
         modify = true;
         $(fields.join(", ")).keyup(function (eventObject) {
             if ( modify ) {
-                names = [$(fields[0]).val(), $(fields[1]).val()]
-                $("#id_profile_name").val( names.join(" ") )
+                names = [$(fields[0]).val(), $(fields[1]).val()];
+                $("#id_profile_name").val( names.join(" ") );
             }
         });
         $("#id_profile_name").focus(function (eventObject) {
-            modify = false;
-            $("#id_profile_name").css("color", "#333")
+            if ( modify ) {
+                modify = false;
+                $("#id_profile_name").css("color", "#333");
+            }
         });
-  	}(window.jQuery));
+    }(window.jQuery));
   </script>
 {% endblock %}
