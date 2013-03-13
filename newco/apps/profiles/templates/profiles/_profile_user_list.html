@@ -1,21 +1,26 @@
 {% load i18n %}
 {% load account_tags %}
 
-{% if users and items %}<h4>{% trans "Members:" %}</h4>{% endif %}
-{% for user in users %}<div class="row content"><div class="span7">
-    <div class="row highlight"><div class="span7">
-        <h5><a href="{{ user.get_absolute_url }}">{% user_display user %}</a></h5>
-    </div></div>
-    {# Seb: better display but adds +10% load time on profiles with many followee/ers. Keep it in comment until better perf ? #}
-    {% comment %}{% include "profiles/_profile_display.html" with display="list" profile=user.get_profile %}{% endcomment %}
-    {% if not forloop.last or items %}<hr>{% endif %}
-</div></div>{% endfor %}
+<div class="row">
+  {% if users %}<div class="span5">
+    <h4>{% trans "Members:" %}</h4>
+    <br>
+    {% for usr in users %}
+      <h5><a href="{{ usr.get_absolute_url }}">{% user_display usr %}</a></h5>
+      {% comment %}
+        +10 % loading time
+        {% include "profiles/_profile_display.html" with display="list" profile=usr.get_profile %}
+      {% endcomment %}
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>{% endif %}
 
-{% if items %}<h4>{% trans "Products:" %}</h4>{% endif %}
-{% for item in items %}<div class="row content"><div class="span7">
-    <div class="row highlight"><div class="span7">
-        <h5><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h5>
-    </div></div>
-    {% if not forloop.last %}<hr>{% endif %}
-</div></div>{% endfor %}
-
+  {% if items %}<div class="span5">
+    <h4>{% trans "Products:" %}</h4>
+    <br>
+    {% for item in items %}
+      <h5><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h5>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>{% endif %}
+</div>
