@@ -11,7 +11,7 @@
 {% elif display == "thumbnail" %}
   <div class="product-item thumbnail">
     <a href="{{ object.get_absolute_url }}" title="{{ object }}"><img src="{{ object.image.data.thumbnailLink }}" alt="{{ object }}"></a>
-    <div class="name"><a href="{{ object.get_absolute_url }}">{{ object }}</a></div>
+    <div class="name"><a title="{{ object }}" href="{{ object.get_absolute_url }}">{{ object }}</a></div>
     {% if "display-tags" in options %}<div class="tags">{% tags_display object.tags 3 %}</div>{% endif %}
     {% if "display-follow" in options %}<div class="pull-right">{% follow_form user object extra_class="btn-mini" %}</div>{% endif %}
   </div>
