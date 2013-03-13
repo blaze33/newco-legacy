@@ -45,7 +45,7 @@
     }));
 
     $(function() {
-        $("#add-item").click(function(event) {
+        $("#add-item").on("click", function (eventObject) {
             event.preventDefault();
             $('#itemModal').modal('hide');
             $.ajax({
