@@ -7,7 +7,7 @@
         <h5><a href="{{ user.get_absolute_url }}">{% user_display user %}</a></h5>
     </div></div>
     {# Seb: better display but adds +10% load time on profiles with many followee/ers. Keep it in comment until better perf ? #}
-    {% comment %}{% include "profiles/_profile_item.html" with display="list" profile=user.get_profile %}{% endcomment %}
+    {% comment %}{% include "profiles/_profile_display.html" with display="list" profile=user.get_profile %}{% endcomment %}
     {% if not forloop.last or items %}<hr>{% endif %}
 </div></div>{% endfor %}
 

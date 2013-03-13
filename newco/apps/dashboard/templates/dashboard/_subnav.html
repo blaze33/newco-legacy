@@ -5,7 +5,7 @@
 
 {% url "profile_list" as profile_list_url %}
 
-{% if PROFILE %}{% include "profiles/_profile_item.html" with profile=PROFILE %}{% endif %}
+{% if PROFILE %}{% include "profiles/_profile_display.html" with profile=PROFILE display="thumbnail" %}{% endif %}
 
 <br>
 
