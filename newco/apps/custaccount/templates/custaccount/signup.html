@@ -12,7 +12,7 @@
         var fields, names, modify;
         fields = ["#id_first_name", "#id_last_name"];
         modify = true;
-        $(fields.join(", ")).keyup(function (eventObject) {
+        $(fields.join(", ")).on("keyup change", function (eventObject) {
             if ( modify ) {
                 names = [$(fields[0]).val(), $(fields[1]).val()];
                 $("#id_profile_name").val( names.join(" ") );
