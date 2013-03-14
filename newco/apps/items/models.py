@@ -189,17 +189,6 @@ class Answer(Content):
             "query_string": self.query_string, "anchor": self.anchor
         }
 
-
-class Story(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_("title"))
-    content = models.CharField(max_length=2000, verbose_name=_("content"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
-
-    class Meta:
-        verbose_name = _("story")
-        verbose_name_plural = _("stories")
-
 from content.transition import sync_products
 
 
