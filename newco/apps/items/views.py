@@ -35,7 +35,6 @@ from utils.messages import add_message, render_messages
 from utils.multitemplate.views import MultiTemplateMixin
 from utils.help.views import AskForHelpMixin
 from utils.views.tutorial import TutorialMixin
-from utils.tools import fill_product_list_by_tag, fill_question_list_by_tag
 
 app_name = "items"
 
@@ -310,54 +309,12 @@ class AnswerFormMixin(object):
             return self.form_invalid(form)
 
 
-class RelatedObjectsMixin(object):
-
-    def get_context_data(self, **kwargs):
-        context = super(RelatedObjectsMixin, self).get_context_data(**kwargs)
-        context.update({"statuses": STATUSES})
-        request = self.request
-        POST, user = [request.POST, request.user]
-        content_qs = Content.objects.can_view(user)
-        if self.model == Item:
-            item = context.get("item")
-            item_related_qs = content_qs.filter(items=item)
-            scores, votes = item_related_qs.get_scores_and_votes(user)
-            top_products_by_tag={}
-            nb_questions_by_tag={}
-            top_question_by_tag={}
-            ##### We created a list to check all the doublons for products and not display them twice ####
-            list_doublons_p = []
-            list_doublons_q = []
-            for tag in item.tags.all():
-                related_products = Item.objects.filter(
-                    Q(tags=tag)).exclude(id=item.id).distinct()
-            
-                top_products = related_products.order_queryset("popular")
-                list_products_by_tag=[]
-                ##### Loop to find the N first related products && not in list_doublons ####
-                nb_products = 2
-                fill_product_list_by_tag(list_products_by_tag,nb_products,top_products,list_doublons_p)
-                ##### We display only N products per row ####
-                top_products_by_tag[tag]=list_products_by_tag[:nb_products]
-                
-                ##### We created a list to check all the doublons for questions and not display them twice ####
-                qs_tags=Tag.objects.all().filter(name=tag)
-                self.queryset = Content.objects.questions().filter(tags__in=qs_tags).select_subclasses()
-                top_questions = self.queryset.order_queryset("popular")
-                
-                list_questions_by_tag=[]
-                nb_questions = 1
-                fill_question_list_by_tag(list_questions_by_tag,nb_questions,top_questions,list_doublons_q,tag,top_question_by_tag)
-                
-#                nb_questions = self.queryset.count()
-#                nb_questions_by_tag[tag]=nb_questions
-                kwargs.update({"top_question_by_tag": top_question_by_tag, "top_products_by_tag": top_products_by_tag })
-        return super(RelatedObjectsMixin, self).get_context_data(**kwargs)
-
-
 class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
-                        AnswerFormMixin, RelatedObjectsMixin, DetailView,
-                        FormMixin, FollowMixin, VoteMixin):
+                        AnswerFormMixin, DetailView, FormMixin, FollowMixin,
+                        VoteMixin):
+
+    NUMBER_PRODUCTS_BY_TAG = 2
+    NUMBER_QUESTIONS = 3
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -402,6 +359,17 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
             message = _("No question yet! Ask the first one here!")
             context.update({"empty_msg": self.get_empty_message(
                 context["question_form"], message)})
+
+            # Top related products
+            tag_qs = item.tags.annotate(
+                weight=Count("taggit_taggeditem_items")).order_by("-weight")
+            ids_to_remove = [item.id]
+
+            # Top related questions
+            top_questions = Content.objects.filter(
+                tags__in=tag_qs).questions().order_queryset("popular")
+            top_questions = top_questions[:self.NUMBER_QUESTIONS]
+
         elif self.model == Question:
             # TODO: override get_object?
             q = Content.objects.filter(
@@ -410,31 +378,33 @@ class ContentDetailView(ContentView, AskForHelpMixin, QuestionFormMixin,
 
             qna_qs = content_qs.filter(Q(id=q.id) | Q(answer__question=q))
             scores, votes = qna_qs.get_scores_and_votes(user)
-            context.update({"question": q, "scores": scores, "votes": votes})
+            context.update({"question": q, "scores": scores, "votes": votes,
+                            "products": q.items.all()})
 
+            # Top related products
             tag_ids = set(q.tags.values_list("id", flat=True))
             tag_ids.update(q.items.values_list("tags", flat=True))
             tag_qs = Tag.objects.filter(id__in=tag_ids).annotate(
                 weight=Count("taggit_taggeditem_items")).order_by("-weight")
-
-            NUMBER_PRODUCTS_BY_TAG = 2
-            top_products = TopCategories().top_products_by_categories(
-                tag_qs, None)
             ids_to_remove = list(q.items.values_list("id", flat=True))
-            for k, v in top_products.items():
-                v = v.exclude(id__in=ids_to_remove)[:NUMBER_PRODUCTS_BY_TAG]
-                ids_to_remove.extend([item.id for item in v])
-                top_products.update({k: v}) if v else top_products.pop(k)
 
-            context.update({"tags": tag_qs, "products": q.items.all(),
-                            "top_products": top_products})
-
+            # Top related questions
             top_questions = Content.objects.questions().filter(
                 Q(items__in=q.items.all()) | Q(tags__in=q.tags.all())
-            ).exclude(id=q.id).distinct().order_queryset("popular")[:3]
+            ).exclude(id=q.id).distinct().order_queryset("popular")
+            top_questions = top_questions[:self.NUMBER_QUESTIONS]
 
-            if top_questions:
-                context.update({"top_questions": top_questions})
+        top_products = TopCategories().top_products_by_categories(
+            tag_qs, None)
+        for k, v in top_products.items():
+            v = v.exclude(id__in=ids_to_remove)[:self.NUMBER_PRODUCTS_BY_TAG]
+            ids_to_remove.extend([item.id for item in v])
+            top_products.update({k: v}) if v else top_products.pop(k)
+
+        context.update({"tags": tag_qs, "top_products": top_products})
+        if top_questions:
+            context.update({"top_questions": top_questions})
+
         return context
 
     @method_decorator(login_required)

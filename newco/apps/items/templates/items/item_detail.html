@@ -65,27 +65,23 @@
       <hr>
     {% endif %}
 
-    <h5>{% trans "Best questions" %}</h5>
-    {% for tag, top_question in top_question_by_tag.iteritems %}{% if top_question %}
-      <div class="questions-extra row">
-        <div class="span1">{% tag_display tag %}</div>
-        <div class="span2">{% for question in top_question %}
-          <p><a class="black" href="{{ question.get_absolute_url }}" title="{{ question.content }}">{{ question.content }}</a></p>
-        {% endfor %}</div>
-      </div>
-    {% endif %}{% endfor %}
-
-    <hr>
-
-    <h5>{% trans "Popular products" %}</h5>
-    {% for tag, product_list in top_products_by_tag.iteritems %}{% if product_list %}
+    {% for tag, product_list in top_products.items %}
+      {% if forloop.first %}<h5>{% trans "Popular products" %}</h5>{% endif %}
       <div class="products-extra row">
         <div class="span1">{% tag_display tag %}</div>
         <div class="span2 thumbnail-list 2columns">{% for item in product_list %}
           {% include "items/_product_display.html" with object=item display="thumbnail" only %}
         {% endfor %}</div>
       </div>
-    {% endif %}{% endfor %}
+    {% endfor %}
+
+    {% for question in top_questions %}
+      {% if forloop.first %}<hr><h5>{% trans "Best questions" %}</h5>{% endif %}
+      <div class="questions-extra row">
+        <div class="span1">{% source_display question "side-questions" sep=" " %}</div>
+        <div class="span2"><p><a title="{{ question.content }}" href="{{ question.get_absolute_url }}">{{ question.content }}</a></p></div>
+      </div>
+    {% endfor %}
   </div>
 </div>
 
