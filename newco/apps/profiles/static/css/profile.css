@@ -2,13 +2,17 @@
 
 .profile-item.thumbnail {
   line-height: 18px;
-  max-width: 165px;
+  max-width: 175px;
   width: 100%;
   overflow: auto;
   background-color: white;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 #profile-list .profile-item.thumbnail {
+  width: 175px;
   margin: 9px;
 }
 

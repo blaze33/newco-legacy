@@ -1,8 +1,9 @@
 import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import permalink, Count
+from django.db.models import Count
 from django.template.defaultfilters import slugify, truncatechars
 from django.utils import timezone
 from django.utils.datastructures import SortedDict
@@ -52,11 +53,9 @@ class Item(TimeStampedModel):
         self.slug = truncatechars(slugify(self.name), maxl)
         super(Item, self).save()
 
-    @permalink
     def get_absolute_url(self):
-        return ("item_detail", None, {"model_name": self._meta.module_name,
-                                      "pk": self.id,
-                                      "slug": self.slug})
+        return reverse("item_detail",
+                       args=[self._meta.module_name, self.id, self.slug])
 
     def get_image(self):
         if self._image is None:
@@ -145,11 +144,9 @@ class Question(Content):
             answer.items = self.items.values_list("id", flat=True)
             answer.tags.set(*self.tags.all())
 
-    @permalink
     def get_absolute_url(self):
-        return ("item_detail", [], {"model_name": self._meta.module_name,
-                                    "pk": self.id,
-                                    "slug": slugify(unicode(self))})
+        return reverse("item_detail", args=[self._meta.module_name, self.id,
+                                            slugify(unicode(self))])
 
     def get_product_related_url(self, item):
         return CONTENT_URL_PATTERN % {
@@ -191,17 +188,6 @@ class Answer(Content):
             "path": item.get_absolute_url(),
             "query_string": self.query_string, "anchor": self.anchor
         }
-
-
-class Story(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_("title"))
-    content = models.CharField(max_length=2000, verbose_name=_("content"))
-    items = models.ManyToManyField(Item)
-    votes = generic.GenericRelation(Vote)
-
-    class Meta:
-        verbose_name = _("story")
-        verbose_name_plural = _("stories")
 
 from content.transition import sync_products
 

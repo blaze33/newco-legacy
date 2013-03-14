@@ -13,7 +13,7 @@
     <ul class="profiles">
     {% for expert in experts|slice:":8" %}
       <hr>
-      {% include "profiles/_profile_item.html" with display="list" profile=expert %}
+      {% include "profiles/_profile_display.html" with display="list" profile=expert %}
     {% endfor %}
     </ul>
   </div>

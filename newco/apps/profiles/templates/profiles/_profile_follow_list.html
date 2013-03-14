@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load account_tags %}
+
+<div class="row">
+  {% if users %}<div class="span5">
+    <h4>{% trans "Members:" %}</h4>
+    <br>
+    {% for usr in users %}
+      <h5><a href="{{ usr.get_absolute_url }}">{% user_display usr %}</a></h5>
+      {% comment %}
+        +10 % loading time
+        {% include "profiles/_profile_display.html" with display="list" profile=usr.get_profile %}
+      {% endcomment %}
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>{% endif %}
+
+  {% if items %}<div class="span5">
+    <h4>{% trans "Products:" %}</h4>
+    <br>
+    {% for item in items %}
+      <h5><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h5>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>{% endif %}
+</div>

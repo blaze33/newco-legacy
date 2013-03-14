@@ -12,7 +12,7 @@ from taggit.forms import TagWidget
 
 from affiliation.models import AffiliationItem
 from affiliation.tools import stores_product_search
-from items.models import Item, Content, Question, Answer, Story
+from items.models import Item, Content, Question, Answer
 from utils.mailtools import mail_question_author
 
 
@@ -259,11 +259,6 @@ class BaseQAFormSet(BaseInlineFormSet):
 QAFormSet = inlineformset_factory(Question, Answer, form=AnswerForm,
                                   formset=BaseQAFormSet, fk_name="question",
                                   can_delete=False, extra=1, max_num=1)
-
-
-class StoryForm(ModelForm):
-    class Meta:
-        model = Story
 
 
 def _reload_current_search(item_form):

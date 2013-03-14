@@ -1,0 +1,29 @@
+{% extends "pinax_theme_bootstrap:account/signup.html" %}
+
+{% block extra_style %}
+  <style>#id_profile_name { color: darkgrey; }</style>
+{% endblock %}
+
+{% block extra_script %}
+  <script>
+    (function ($) {
+        "use strict";
+
+        var fields, names, modify;
+        fields = ["#id_first_name", "#id_last_name"];
+        modify = true;
+        $(fields.join(", ")).on("keyup change", function (eventObject) {
+            if ( modify ) {
+                names = [$(fields[0]).val(), $(fields[1]).val()];
+                $("#id_profile_name").val( names.join(" ") );
+            }
+        });
+        $("#id_profile_name").focus(function (eventObject) {
+            if ( modify ) {
+                modify = false;
+                $("#id_profile_name").css("color", "#333");
+            }
+        });
+    }(window.jQuery));
+  </script>
+{% endblock %}

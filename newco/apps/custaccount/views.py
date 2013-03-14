@@ -16,6 +16,7 @@ class LoginView(LoginView):
 
 class SignupView(SignupView):
 
+    template_name = "custaccount/signup.html"
     form_class = SignupForm
 
     def generate_username(self, form):

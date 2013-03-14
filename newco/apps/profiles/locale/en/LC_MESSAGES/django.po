@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-11 18:49+0100\n"
+"POT-Creation-Date: 2013-03-13 18:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,6 +74,14 @@ msgstr ""
 msgid "e.g. professional gardener, model, local tennis champion"
 msgstr ""
 
+#: templates/profiles/_profile_follow_list.html:6
+msgid "Members:"
+msgstr ""
+
+#: templates/profiles/_profile_follow_list.html:20
+msgid "Products:"
+msgstr ""
+
 #: templates/profiles/_profile_form.html:13
 msgid "Cancel"
 msgstr ""
@@ -129,14 +137,6 @@ msgstr ""
 #: templates/profiles/_profile_info.html:50
 #: templates/profiles/_profile_info.html:51
 msgid ":"
-msgstr ""
-
-#: templates/profiles/_profile_user_list.html:4
-msgid "Members:"
-msgstr ""
-
-#: templates/profiles/_profile_user_list.html:15
-msgid "Products:"
 msgstr ""
 
 #: templates/profiles/profile_detail.html:12

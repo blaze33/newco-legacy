@@ -33,7 +33,7 @@ class AskForHelpForm(forms.Form):
         if experts_qs:
             ids = map(str, experts_qs.values_list("id", flat=True))
             data_url = "{url}?{get}".format(
-                url=reverse("redis", args=["profile"]),
+                url=reverse("redis_filtered", args=["profile"]),
                 get="".join(["&id={0}".format(i) for i in ids]))
             self.fields["experts"].widget.attrs.update({"data-url": data_url})
         else:

@@ -11,12 +11,12 @@
   <br>
   
   <h5>{% trans "Who to follow?" %}</h5>
-  {% for thumb_user in wtf.users %}{% include "profiles/_profile_item.html" with profile=thumb_user.get_profile disp_follow="True" user=user request=request csrf_token=csrf_token only %}<br>{% endfor %}
+  {% for thumb_user in wtf.users %}{% include "profiles/_profile_display.html" with profile=thumb_user.get_profile display="thumbnail" options="display-follow" user=user request=request csrf_token=csrf_token only %}<br>{% endfor %}
 
   {% comment %}
 
   <h5>{% trans "Products you may like" %}{% trans ":" %}</h5>
-  {% for item in wtf.items %}{% include "items/_product_display.html" with object=item display="thumbnail" disp_follow="True" user=user request=request csrf_token=csrf_token only %}{% endfor %}
+  {% for item in wtf.items %}{% include "items/_product_display.html" with object=item display="thumbnail" options="display-follow" user=user request=request csrf_token=csrf_token only %}{% endfor %}
 
   {% endcomment %}
 {% endblock %}

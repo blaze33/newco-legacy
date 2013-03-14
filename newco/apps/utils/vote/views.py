@@ -1,9 +1,6 @@
 import json
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils.decorators import method_decorator
-
-from django.contrib.auth.decorators import permission_required
 
 from items.models import Content, Question, Answer
 from utils.messages import add_message, render_messages
@@ -33,13 +30,17 @@ class VoteMixin(object):
         else:
             return super(VoteMixin, self).post(request, *args, **kwargs)
 
-    @method_decorator(permission_required("profiles.can_vote",
-                                          raise_exception=True))
     def process_voting(self, request, obj, success_url):
         direction = request.POST["vote-up"] if "vote-up" in request.POST else \
             request.POST["vote-down"]
         kwargs = {}
-        if obj.author != request.user:
+        if not request.user.has_perm("profiles.can_vote"):
+            data = {"ok": False}
+            key = "vote-denied"
+        elif obj.author == request.user:
+            data = {"ok": False}
+            key = "vote-warning"
+        else:
             vote = dict(VOTE_DIRECTIONS)[direction]
             content_obj = obj.select_parent()
             Vote.objects.record_vote(content_obj, request.user, vote)
@@ -56,9 +57,6 @@ class VoteMixin(object):
             vote = Vote.objects.get_for_user(content_obj, request.user)
             conf = BUTTONS_CONF[vote.vote]
             data = {"conf": conf, "score": score, "ok": True}
-        else:
-            data = {"ok": False}
-            key = "vote-warning"
         add_message(key, request, **kwargs)
         if request.is_ajax():
             data.update({"messages": render_messages(request)})

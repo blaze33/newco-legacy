@@ -1,4 +1,4 @@
-/*global URL_REDIS, URL_REDIS_TAG, gettext, ngettext, interpolate*/
+/*global Urls, gettext, ngettext, interpolate*/
 
 var timeoutObj;
 
@@ -76,7 +76,7 @@ var timeoutObj;
     // Typeahead
     $("#global_search").typeahead({
         source: function (query, process) {
-            $.get(URL_REDIS, {q: query}, function (data) {
+            $.get(Urls.redis(), {q: query}, function (data) {
                 labels = [];
                 mapped = {};
                 $.each(data, function (i, item) {
@@ -146,7 +146,7 @@ var timeoutObj;
           }
       },
       ajax: {
-        url: URL_REDIS_TAG,
+        url: Urls.redis_filtered("tag"),
         dataType: 'json',
         quietMillis: 100,
         data: function (term, page) { // page is the one-based page number tracked by Select2

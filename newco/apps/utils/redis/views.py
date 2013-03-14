@@ -28,8 +28,9 @@ class RedisView(View):
         limit = int(request.GET.get("limit", -1))
 
         filter_dict = request.GET.copy()
-        if "class" in kwargs:
-            filter_dict.update({"class": CLASS_MAP.get(kwargs["class"])})
+        cls = kwargs.get("class", None)
+        if cls in CLASS_MAP:
+            filter_dict.update({"class": CLASS_MAP[cls]})
         ids = filter_dict.getlist("id", [])
         classes = filter_dict.getlist("class")
 

@@ -48,8 +48,8 @@
 
     <div class="tab-content">
       <div id="history" class="tab-pane active">{% include "items/feed_display/_content_list.html" with contents=object_list display="list" options="context,parents" display_a="no" experts=experts scores=scores votes=votes %}{% if is_paginated %}{% paginate %}{% endif %}</div>
-      <div id="followees" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwees items=items_fwed display="text" %}</div>
-      <div id="followers" class="tab-pane">{% include "profiles/_profile_user_list.html" with users=fwers display="text" %}</div>
+      <div id="followees" class="tab-pane">{% include "profiles/_profile_follow_list.html" with users=fwees items=items_fwed display="text" %}</div>
+      <div id="followers" class="tab-pane">{% include "profiles/_profile_follow_list.html" with users=fwers display="text" %}</div>
     </div>
   </div>
 {% endblock %}

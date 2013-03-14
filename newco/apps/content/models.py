@@ -1,5 +1,5 @@
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import permalink, Count
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.contenttypes import generic
@@ -37,7 +37,8 @@ class GraphQuery(object):
 
     def get_image(self):
         try:
-            q = Item.objects.filter(inlinks__data__contains={'order': '0'},
+            q = Item.objects.filter(
+                inlinks__data__contains={'order': '0'},
                 inlinks__from_item__inlinks__from_item_id=self.item.id)
             return q[0]
         except IndexError:
@@ -45,9 +46,9 @@ class GraphQuery(object):
 
     def get_images(self, ids=None):
         ids = ids if ids else [self.item.id]
-        q = Item.objects.filter(inlinks__data__contains={'order': '0'},
-            inlinks__from_item__inlinks__from_item_id__in=ids
-            )
+        q = Item.objects.filter(
+            inlinks__data__contains={'order': '0'},
+            inlinks__from_item__inlinks__from_item_id__in=ids)
         return q
 
 
@@ -85,12 +86,9 @@ class BaseModel(VoteModel):
         except:
             return None
 
-    @permalink
     def get_absolute_url(self):
-        slug = self.get('slug')
-        return ('content_detail', None, {
-            "model_name": self.__class__.__name__,
-            "pk": self.id, "slug": slug})
+        return reverse("content_detail", args=[self.__class__.__name__,
+                                               self.id, self.get("slug")])
 
 
 class Item(BaseModel):
@@ -98,8 +96,8 @@ class Item(BaseModel):
     A generic class to store any kind of object.
     """
     successors = models.ManyToManyField('self', through='Relation',
-                                     symmetrical=False,
-                                     related_name='predecessors')
+                                        symmetrical=False,
+                                        related_name='predecessors')
     graph = GraphQuery()
     initial = {'data': {'_class': ''}}
 
