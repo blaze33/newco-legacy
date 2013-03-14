@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 
 from django.core.urlresolvers import reverse
@@ -47,8 +48,8 @@ class ContentView(TutorialMixin, View):
         try:
             self.kwargs = kwargs
             self.object = self.get_object()
-            slug = self.object.slug
-            if slug and kwargs['slug'] != slug:
+            slug = self.object.slug.replace(u"…", "")
+            if slug and kwargs["slug"] != slug:
                 url = self.object.get_absolute_url()
                 return HttpResponsePermanentRedirect(url)
         except:
