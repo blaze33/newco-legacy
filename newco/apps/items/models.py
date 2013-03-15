@@ -191,6 +191,7 @@ class Answer(Content):
         }
 
 from content.transition import sync_products
+from django.core.cache import cache
 
 
 class TopCategories(object):
@@ -235,15 +236,15 @@ class TopCategories(object):
         return {cat: filter(f, [(c, self.similars(c, cat)) for c in cat_list])}
 
     def test_sub_categories(self, n=14):
-        import pprint
+        # import pprint
         top = self.by_contributions()[:n]
         comp = OrderedDict()
         for i, t in enumerate(top):
             comp.update(TopCategories().compare(t, top[:i], .1))
-        pprint.pprint(comp)
+        # pprint.pprint(comp)
         return comp
 
-    def sub_categories(self, n=14):
+    def compute_sub_categories(self, n=14):
         comp = self.test_sub_categories(n)
         tc = self.by_contributions()[:n]
         cleancat = []
@@ -252,8 +253,15 @@ class TopCategories(object):
                 is_sub = 0
                 for sub in comp[tag]:
                     if sub[1] > 0.6:
-                        print tag, "is a sub cat of", sub[0]
+                        # print tag, "is a sub cat of", sub[0]
                         is_sub = 1
                 if not is_sub:
                     cleancat.append(tag)
         return cleancat
+
+    def sub_categories(self, n=14):
+        cat = cache.get('main_categories')
+        if not cat:
+            cat = self.compute_sub_categories(n)
+            cache.set('main_categories', cat, 30)
+        return cat

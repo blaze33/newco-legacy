@@ -70,7 +70,7 @@ class TopCommunitiesMixin(object):
 
     def get_context_data(self, **kwargs):
         kwargs.update({
-            "top_communities": self.top_groups.by_contributions()[:8]})
+            "top_communities": self.top_groups.sub_categories()[:8]})
         if "choose_community" in self.kwargs and \
                 "communities" not in self.request.GET:
             self.template_name = "homepage_communities.html"

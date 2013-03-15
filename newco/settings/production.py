@@ -22,6 +22,13 @@ if os.environ.get('USE_MEMCACHE'):
                          MIDDLEWARE_CLASSES + \
                          ["django.middleware.cache.FetchFromCacheMiddleware"]
     CACHES = memcacheify()
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake'
+        }
+    }
 
 # S3 storage settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
