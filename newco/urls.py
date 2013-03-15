@@ -6,7 +6,6 @@ from django.views.generic import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 
-from django_js_reverse.views import urls_js
 from sitemaps import all_sitemaps as sitemaps
 from tastypie.api import Api
 
@@ -37,11 +36,13 @@ urlpatterns = patterns("",
     url(r"^utils", include("utils.urls")),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-    url(r"^jsreverse/$", cache_page(3600)(urls_js), name="js_reverse"),
 )
 
 if settings.DEBUG:
     urlpatterns += patterns("", url(r"^rosetta/", include("rosetta.urls")))
+    from utils import jsreverse
+    jsreverse.save_static_urls_js(settings.PROJECT_ROOT)
+
 
 urlpatterns += patterns("",
     url(r"^static/(?P<path>.*)$", RedirectView.as_view(
