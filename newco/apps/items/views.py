@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Count
 from django.db.models.loading import get_model
 from django.http import (HttpResponse, HttpResponseRedirect,
-                         HttpResponsePermanentRedirect)
+                         HttpResponsePermanentRedirect, Http404)
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -44,6 +44,8 @@ class ContentView(TutorialMixin, View):
     def dispatch(self, request, *args, **kwargs):
         if "model_name" in kwargs:
             self.model = get_model(app_name, kwargs["model_name"])
+        if not self.model:
+            raise Http404
         try:
             self.kwargs = kwargs
             self.object = self.get_object()
