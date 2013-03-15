@@ -79,7 +79,7 @@ django-softhyphen==0.15
 
 ## tagging
 # django-taggit==0.9.3
-git+git://github.com/yedpodtrzitko/django-taggit.git
+git+git://github.com/yedpodtrzitko/django-taggit.git@9a87cd4#egg=django-taggit
 
 ## voting application
 django-voting==0.2
