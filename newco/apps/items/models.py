@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 import datetime
+import pickle
 from collections import OrderedDict
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -191,7 +193,11 @@ class Answer(Content):
         }
 
 from content.transition import sync_products
-from django.core.cache import cache
+#from django.core.cache import cache
+from utils.redis.tools import engine
+cache = engine.client
+CACHE_EXPIRATION = 60 * 60
+from items.tasks import update_cache
 
 
 class TopCategories(object):
@@ -259,9 +265,15 @@ class TopCategories(object):
                     cleancat.append(tag)
         return cleancat
 
+    def update_cache(self, n=14):
+        cat = self.compute_sub_categories(n)
+        cache.setex('main-categories', pickle.dumps(cat), CACHE_EXPIRATION)
+        return True
+
     def sub_categories(self, n=14):
-        cat = cache.get('main_categories')
+        cat = cache.get('main-categories')
         if not cat:
-            cat = self.compute_sub_categories(n)
-            cache.set('main_categories', cat, 60*60)
-        return cat
+            update_cache.delay(self)
+            return ["tennis", u"randonnée", "smartphone", "chaussure", "voile", "ski"]
+        else:
+            return pickle.loads(cat)
