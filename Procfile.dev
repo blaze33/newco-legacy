@@ -1,0 +1,2 @@
+django: django-admin.py runserver 0.0.0.0:8000
+#redis: echo 'port 8888\nloglevel notice' | redis-server -
