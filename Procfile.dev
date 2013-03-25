@@ -2,9 +2,9 @@ django: django-admin.py runserver 0.0.0.0:8000
 celery: django-admin.py celeryd
         start $CELERY_WORKERS
         -E
-        -P gevent
-        -c $CELERY_CONCURRENCY
+        -c 1
         --loglevel=INFO
+        --autoreload
 celerycam: django-admin.py celerycam
 #redis: echo 'port 8888\nloglevel notice' | redis-server -
 #celery_stop: pkill -SIGTERM -f celeryd
