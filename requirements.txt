@@ -56,6 +56,10 @@ django-pylibmc-sasl==0.2.4
 ## memcache configuration for heroku
 django-heroku-memcacheify==0.3
 
+## application management
+## honcho 0.3.1 fork
+git+git://github.com/blaze33/honcho.git@321ebbe0c1#egg=honcho
+
 ## production webserver
 gunicorn==0.17.2
 gevent==0.13.8
@@ -108,6 +112,7 @@ django-appconf==0.5
 django-email-confirmation==0.2
 django-forms-bootstrap==2.0.3.post1
 django-mailer==0.2a1
+jinja2==2.6
 simplejson==2.6.2
 versiontools==1.9.1
 wsgiref==0.1.2
