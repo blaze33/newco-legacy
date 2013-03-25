@@ -263,5 +263,5 @@ class TopCategories(object):
         cat = cache.get('main_categories')
         if not cat:
             cat = self.compute_sub_categories(n)
-            cache.set('main_categories', cat, 30)
+            cache.set('main_categories', cat, 60*60)
         return cat
