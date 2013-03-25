@@ -39,3 +39,7 @@ opendiff-w
 
 # ignore images in project root folder (pycallgraph)
 *.png
+
+# celery files
+celery*.log
+celery*.pid

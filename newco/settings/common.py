@@ -202,6 +202,9 @@ INSTALLED_APPS = [
     "idios",
     "metron",
 
+    # async task
+    "djcelery",
+
     # Deployment
     "south",
     "gunicorn",
@@ -322,3 +325,9 @@ MIXPANEL_API_SECRET_DEV = os.environ.get('MIXPANEL_API_SECRET_DEV')
 # django-taggit
 TAGGIT_ENABLE_SPACE_SPLIT_IF_NOT_QUOTES = False
 TAGGIT_FORCE_LOWERCASE = True
+
+# Celery
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = os.environ.get('REDISTOGO_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
