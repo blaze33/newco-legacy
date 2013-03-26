@@ -327,7 +327,7 @@ TAGGIT_ENABLE_SPACE_SPLIT_IF_NOT_QUOTES = False
 TAGGIT_FORCE_LOWERCASE = True
 
 # Celery
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = os.environ.get('REDISTOGO_URL')
-CELERY_RESULT_BACKEND = os.environ.get('REDISTOGO_URL')
+# import djcelery
+# djcelery.setup_loader()
+
+from celeryconfig import BROKER_URL, CELERY_RESULT_BACKEND

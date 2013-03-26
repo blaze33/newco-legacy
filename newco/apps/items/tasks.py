@@ -1,9 +1,8 @@
-from celery import task, current_task
+from celery import Celery
+celery = Celery('tasks')
 
-@task()
+
+@celery.task()
 def update_cache(object):
-    request = current_task.request
-    print('Executing task id %r, args: %r kwargs: %r' % (
-        request.id, request.args, request.kwargs))
     object.update_cache()
     return True

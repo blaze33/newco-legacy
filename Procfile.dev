@@ -1,4 +1,5 @@
 django: django-admin.py runserver 0.0.0.0:8000
+broker: redis/redis-server redis/redis.conf
 celery: django-admin.py celeryd
         start $CELERY_WORKERS
         -E
@@ -6,5 +7,3 @@ celery: django-admin.py celeryd
         --loglevel=INFO
         --autoreload
 celerycam: django-admin.py celerycam
-#redis: echo 'port 8888\nloglevel notice' | redis-server -
-#celery_stop: pkill -SIGTERM -f celeryd

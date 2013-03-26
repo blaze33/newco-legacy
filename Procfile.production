@@ -6,6 +6,7 @@ django: newrelic-admin run-program django-admin.py run_gunicorn
         --max-requests $GUNICORN_MAX_REQUESTS
         --preload
         --settings=$DJANGO_SETTINGS_MODULE
+broker: redis/redis-server redis/redis.conf
 celery: newrelic-admin run-program django-admin.py celeryd
         start $CELERY_WORKERS
         -E
