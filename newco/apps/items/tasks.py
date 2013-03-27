@@ -1,5 +1,6 @@
 from celery import Celery
-celery = Celery('tasks')
+from django.conf import settings
+celery = Celery('tasks', broker=settings.BROKER_URL)
 
 
 @celery.task()
