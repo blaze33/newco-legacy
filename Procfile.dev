@@ -1,5 +1,5 @@
 django: django-admin.py runserver 0.0.0.0:8000
-broker: redis-server redis/redis.conf
+broker: redis-server redis/redis-dev.conf
 celery: django-admin.py celeryd
         start $CELERY_WORKERS
         -E
