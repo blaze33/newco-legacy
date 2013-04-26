@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 
 
 class AjaxRedirectMiddleware(object):
@@ -7,3 +7,15 @@ class AjaxRedirectMiddleware(object):
             if type(response) == HttpResponseRedirect:
                 response.status_code = 278
         return response
+
+
+class MyMiddleware(object):
+    def process_request(self, request):
+        host = request.get_host()
+        old_url = [host, request.path]
+        new_host = "http://newco-prod.herokuapp.com"
+
+        if "newco-project" in old_url[0]:
+            return HttpResponsePermanentRedirect(new_host + request.path)
+        # No redirects required.
+        return

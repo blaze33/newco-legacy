@@ -141,6 +141,7 @@ MIDDLEWARE_CLASSES = [
     "pagination.middleware.PaginationMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "utils.middleware.AjaxRedirectMiddleware",
+    "utils.middleware.MyMiddleware",
 ]
 
 HTML_MINIFY = False
