@@ -118,7 +118,7 @@ ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 COMPRESS_OUTPUT_DIR = "cache"
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = "6)5+m(x@i@be*2y=je@+!yj_rt+=e_w4*1giv&aq7p%shrhy*a"
+SECRET_KEY = "eie+q)*xp+o4f@9954b(j*)@x8(h3x-u6l9p6h1fgk4x9)%(y("
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
