@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView
 
@@ -12,6 +13,9 @@ from tastypie.api import Api
 from content.api import ItemResource, RelationResource
 from views import HomepageView
 
+
+def google_webmaster_view(request):
+    return HttpResponse("google-site-verification: google009a062b2cd3a7e6.html")
 
 v1_api = Api(api_name='v1')
 v1_api.register(ItemResource())
@@ -37,6 +41,8 @@ urlpatterns = patterns("",
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
+
+urlpatterns += patterns("", url(r"^google009a062b2cd3a7e6.html", google_webmaster_view))
 
 if settings.DEBUG:
     urlpatterns += patterns("", url(r"^rosetta/", include("rosetta.urls")))
