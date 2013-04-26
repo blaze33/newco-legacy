@@ -10,7 +10,7 @@ STORES = {
         "name": "Amazon",
         "url": "http://www.amazon.fr",
         "affiliated_url": "http://www.amazon.fr/?_encoding=UTF8&"
-                          "tag=newco06-21&linkCode=ur2&camp=1642&"
+                          "tag=ne002-21&linkCode=ur2&camp=1642&"
                           "creative=6746"},
     "Decathlon": {
         "name": "Decathlon",
