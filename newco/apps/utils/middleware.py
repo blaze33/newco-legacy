@@ -15,6 +15,8 @@ class MyMiddleware(object):
         old_url = [host, request.path]
         new_host = "http://newco-prod.herokuapp.com"
 
+        if 'google009a062b2cd3a7e6.html' in request.path:
+            return
         if "newco-project" in old_url[0]:
             return HttpResponsePermanentRedirect(new_host + request.path)
         # No redirects required.
