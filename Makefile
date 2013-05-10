@@ -66,8 +66,8 @@ simple_deploy:
 	make push
 
 pg_backup2dropbox:
-	curl -o ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
-	cp  ~/Dropbox/NewCo-Shared/2.Dev.Works/db\ dumps/{$(DATE).dump,latest.dump}
+	curl -o ~/Dropbox/mansten/2.Dev.Works/db\ dumps/$(DATE).dump '$(PGDUMPURL)'
+	cp  ~/Dropbox/mansten/2.Dev.Works/db\ dumps/{$(DATE).dump,latest.dump}
 
 pg_prod2staging:
 	heroku pg:reset DATABASE --confirm newco-staging
