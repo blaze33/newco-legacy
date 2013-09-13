@@ -201,7 +201,7 @@ from items.tasks import update_cache
 
 
 class TopCategories(object):
-    delta = timezone.now() - datetime.timedelta(days=4 * 31)
+    delta = timezone.now() - datetime.timedelta(days=20 * 31)
     queryset = Tag.objects.annotate(
         weight=Count('taggit_taggeditem_items')).order_by('-weight')
 

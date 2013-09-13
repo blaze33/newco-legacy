@@ -25,7 +25,7 @@ class CategoryMixin(object):
         self.filter = kwargs.get("filter", DEFAULT_FILTERS.get(self.cat))
         self.groups = request.GET.get("communities", "").split(",")
         self.template_name = "homepage_{0}.html".format(self.cat)
-        delta = timezone.now() - datetime.timedelta(days=4 * 31)
+        delta = timezone.now() - datetime.timedelta(days=20 * 31)
         if self.cat == "products":
             self.model = Item
             self.queryset = Item.objects.all()
