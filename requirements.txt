@@ -1,9 +1,9 @@
 ## web framework
-Django==1.4.5
+Django==1.4.22
 
 ## Pinax ecosystem (from pinax basic project requirements/base.txt)
---extra-index-url=http://dist.pinaxproject.com/dev/
---extra-index-url=http://dist.pinaxproject.com/alpha/
+# --extra-index-url=https://dist.pinaxproject.com/dev/
+# --extra-index-url=https://dist.pinaxproject.com/alpha/
 django-user-accounts==1.0b8
 
 django-extensions==1.0.3
@@ -15,13 +15,15 @@ django-rosetta==0.7.6
 
 django-timezones==0.2
 pytz==2013b
-django-openid==0.3a1
+## django-openid==0.3a1
+git+git://github.com/simonw/django-openid.git@e89ea1e0ad4aeac4aaa675a0067a642b393762a2
 python-openid==2.2.5
 Babel==0.9.6
 
 django-pagination==1.0.7
-idios==0.2a2.dev2
-metron==0.2.dev3
+## idios==0.2a2.dev2
+git+git://github.com/eldarion/idios.git@ecf5c4dcd544aa3d77cf27b4b379176b0dc51ccc
+## metron==0.2.dev3
 django-model-utils==1.2.0
 django-tastypie==0.9.11
 
@@ -36,7 +38,7 @@ git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66
 python-amazon-product-api==0.2.5
 
 # lxml required by amazon api
-lxml==3.0.1
+lxml==3.7.3
 
 ## pinax-theme-bootstrap
 pinax-theme-bootstrap==3.0a4
@@ -46,8 +48,8 @@ South==0.7.6
 
 ## AWS interface & storage backend
 boto==2.6.0
-# django-storages==1.1.5
-hg+https://bitbucket.org/david/django-storages@1574890#egg=django-storages
+django-storages==1.1.8
+#hg+https://bitbucket.org/david/django-storages@1574890#egg=django-storages
 ## dateutil needed to only upload updated files
 python-dateutil==1.5
 
@@ -62,8 +64,8 @@ django-heroku-memcacheify==0.3
 git+git://github.com/blaze33/honcho.git@321ebbe0c1#egg=honcho
 
 ## production webserver
-gunicorn==0.17.2
-gevent==0.13.8
+gunicorn==19.7.1
+gevent==1.2.1
 greenlet==0.4.0
 
 ## Database backends
@@ -74,12 +76,12 @@ django-heroku-postgresify==0.3
 git+git://github.com/aino/django-hstore.git@688f19f177#egg=django-hstore
 
 ## monitoring
-newrelic==1.10.2.38
+newrelic==2.84.0.64
 raven==2.0.7.1
 
 ## asynchronous tasks aka. celery
-django-celery-with-redis==3.0
-git+git://github.com/blaze33/celery-redis-unixsocket.git@a43a0839dc#egg=celery-redis-unixsocket
+django-celery==3.0.23
+# git+git://github.com/blaze33/celery-redis-unixsocket.git@a43a0839dc#egg=celery-redis-unixsocket
 
 ## utils
 requests==1.1.0
@@ -87,8 +89,8 @@ django-htmlmin==0.5.2
 django-softhyphen==0.15
 
 ## tagging
-# django-taggit==0.9.3
-git+git://github.com/yedpodtrzitko/django-taggit.git@9a87cd4#egg=django-taggit
+django-taggit==0.9.3
+# git+git://github.com/yedpodtrzitko/django-taggit.git@9a87cd4#egg=django-taggit
 
 ## voting application
 django-voting==0.2
@@ -110,23 +112,7 @@ django-apptemplates==0.0.1
 django-js-reverse==0.1.0
 
 ## The following requirements were added by pip --freeze:
-BeautifulSoup==3.2.1
-argparse==1.2.1
-dj-database-url==0.2.1
-django-appconf==0.5
-django-email-confirmation==0.2
-django-forms-bootstrap==2.0.3.post1
-django-mailer==0.2a1
-jinja2==2.6
-simplejson==2.6.2
-versiontools==1.9.1
-wsgiref==0.1.2
-amqp==1.0.10
-amqplib==1.0.2
-billiard==2.7.3.23
-celery==3.0.17
-django-celery==3.0.11
-kombu==2.5.8
+
 
 #NewCo_bw_editor
-hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor@0d1451ac8a46#egg=NewCo-Bw-editor
+hg+https://hg@bitbucket.org/sebastien_worms/newco_bw_editor#egg=newco_bw_editor
