@@ -209,7 +209,8 @@ class TopCategories(object):
         return self.queryset
 
     def top_products_for_category(self, category, n=6):
-        kwargs = {"content__created__gt": self.delta}
+        # kwargs = {"content__created__gt": self.delta}
+        kwargs = {}
         if isinstance(category, Tag):
             kwargs.update({"tags": category})
         else:
