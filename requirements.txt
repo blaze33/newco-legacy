@@ -29,7 +29,7 @@ django-admin-bootstrapped==0.1.1
 git+git://github.com/blaze33/django-gravatar.git@6fa71ad05bd57126966a09570138f66746c408b4#egg=django-gravatar
 
 # c implementation of decimal. defaults in python 3.3
-cdecimal==2.3
+## cdecimal==2.3
 
 # Amazon
 python-amazon-product-api==0.2.5

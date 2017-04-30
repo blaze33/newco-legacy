@@ -2,7 +2,7 @@
 from __future__ import division
 
 # cdecimal is default in python >= 3.3
-import cdecimal as decimal
+import decimal
 import math
 import re
 
