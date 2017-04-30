@@ -204,6 +204,10 @@ exports.Urls = (function () {
             
                 [
                     'top_categories_json', ['content/%(format)s/top_categories', ['format']]
+                ],
+            
+                [
+                    'translate_text', ['rosetta/translate/', []]
                 ]
             
         ];

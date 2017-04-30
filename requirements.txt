@@ -11,6 +11,7 @@ django-debug-toolbar==0.9.4
 django-staticfiles==1.2.1
 django-statici18n==0.4.1
 django-compressor==1.2
+django-rosetta==0.7.6
 
 django-timezones==0.2
 pytz==2013b
