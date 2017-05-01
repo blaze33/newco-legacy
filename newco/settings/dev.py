@@ -11,7 +11,6 @@ SERVE_MEDIA = DEBUG
 
 # add development applications
 INSTALLED_APPS += [
-    "django_extensions",
     "debug_toolbar",
     "rosetta",
 ]

@@ -202,6 +202,7 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "django_extensions",
 
     # async task
     "djcelery",
