@@ -1,55 +1,43 @@
 <div class="modal fade hide" id="feedbackModal">
   <div class="modal-header">
     <button class="close" data-dismiss="modal">×</button>
-    <h3>Faites nous part de votre avis&nbsp;:</h3>
+    <h3>Merci de votre visite !</h3>
   </div>
-  <form action="http://static.newco-project.fr/Feedback/email.php" method="POST">{% csrf_token %}
-    <div class="modal-body form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="feedback-name">Nom (optionnel)</label>
-        <div class="controls">
-          <input type="text" id="feedback-name" name="Name" class="input-large"/>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label class="control-label" for="feedback-email">Email (optionnel)</label>
-        <div class="controls">
-          <input type="text" id="feedback-email" name="email" class="input-large"/>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label class="control-label" for="feedback-subject">Sujet (optionnel)</label>
-        <div class="controls">
-          <input type="text" id="feedback-subject" name="subject" class="input-large"/>
-        </div>
-      </div>
-
-      <textarea class="boxsizingBorder" id="feedback-input" name="Feedback_html" rows="8" cols="10" placeholder="Ecrivez votre message ici !"></textarea>
+    <div class="modal-body">
+      <p>
+        NewCo, comme New Company, était un projet de startup sur lequel j'ai travaillé
+        avec 3 associés entre 2012 et 2013. Même si le marché du e-commerce est un secteur où il y a
+        toujours énormément à faire, le projet NewCo n'a pas atteint son seuil de viabilité.
+      </p>
+      <p>
+        Le site est toujours en ligne comme témoin de ce qui a pu être essayé
+        pour apporter aux consommateurs un espace d'échange collaboratif sur les produits
+        qu'ils aiment et utilisent.
+      </p>
+      <p>
+        Je suis depuis parti rejoindre d'autres aventures que vous pourrez suivre sur
+        <a href="http://openbloc.fr">openbloc.fr</a>.
+      </p>
+      <p>
+        Le code est open sourcé en licence MIT:
+        <a href="https://github.com/blaze33/newco-legacy">newco-legacy</a>
+      </p>
+      <p>
+        Aux futurs entrepreneurs je recommanderai le livre :
+        <a href="http://amzn.to/2qozmDt">Bien s'associer pour mieux entreprendre.</a>
+      </p>
     </div>
     <div class="modal-footer">
-      Merci pour votre feedback :
-      <button class="btn btn-primary" type="submit">
-        Envoyer !
-      </button>
+      <a href="https://twitter.com/maxmre" class="btn btn-info" >
+        @maxmre on twitter
+      </a>
+      <a href="http://stackoverflow.com/story/maxmre" class="btn btn-info" >
+        CV stackoverflow
+      </a>
+      <a href="http://openbloc.fr" class="btn btn-primary" >
+        OpenBloc
+      </a>
     </div>
-  </form>
 </div>
 
 <div class="feedbackTab" data-toggle="modal" href="#feedbackModal"></div>
-{% comment %} # Add information about the user's config in the feedback ? 
-like : (django documentation)
-# GOOD (VERSION 1)
-def ua_display_good1(request):
-    try:
-        ua = request.META['HTTP_USER_AGENT']
-    except KeyError:
-        ua = 'unknown'
-    return HttpResponse("Your browser is %s" % ua)
-
-# GOOD (VERSION 2)
-def ua_display_good2(request):
-    ua = request.META.get('HTTP_USER_AGENT', 'unknown')
-    return HttpResponse("Your browser is %s" % ua) # %}
-{% endcomment %}
