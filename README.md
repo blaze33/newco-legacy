@@ -24,7 +24,7 @@ to cedar-14 I'll, hopefully, lay out the steps required to deploy your own versi
    on asking them to do stuff for you. Build it around what they would naturally do with
    the right tool (and build that one).
 4. Choose your co-founders wisely. If your co-founder show up one day with another associate
-   without having consulted you, run ! Trust is everything.
+   without having consulted you first, run ! Trust is everything.
 5. Making money is a necessary evil, I've got a rent to pay, food to buy. The sooner you can break even, the better.
 
 Have fun !
