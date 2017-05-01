@@ -1,4 +1,4 @@
-import datetime
+# import datetime
 
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
@@ -25,16 +25,16 @@ class CategoryMixin(object):
         self.filter = kwargs.get("filter", DEFAULT_FILTERS.get(self.cat))
         self.groups = request.GET.get("communities", "").split(",")
         self.template_name = "homepage_{0}.html".format(self.cat)
-        delta = timezone.now() - datetime.timedelta(days=20 * 31)
+        # delta = timezone.now() - datetime.timedelta(days=20 * 31)
         if self.cat == "products":
             self.model = Item
             self.queryset = Item.objects.all()
             if self.groups:
                 self.queryset = self.queryset.filter(
                     tags__name__in=self.groups)
-            if self.filter == "popular":
-                self.queryset = self.queryset.filter(
-                    content__created__gt=delta)
+            # if self.filter == "popular":
+            #     self.queryset = self.queryset.filter(
+            #         content__created__gt=delta)
             self.queryset = self.queryset.order_queryset(self.filter)
         elif self.cat == "questions":
             self.queryset = Content.objects.questions()
@@ -43,8 +43,8 @@ class CategoryMixin(object):
                 self.queryset = self.queryset.filter(
                     Q(items__in=item_qs) | Q(tags__name__in=self.groups)
                 ).distinct()
-            if self.filter == "popular":
-                self.queryset = self.queryset.filter(created__gt=delta)
+            # if self.filter == "popular":
+            #     self.queryset = self.queryset.filter(created__gt=delta)
             self.scores, self.votes = self.queryset.get_scores_and_votes(
                 request.user)
             self.queryset = self.queryset.order_queryset(self.filter,
