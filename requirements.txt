@@ -81,7 +81,7 @@ raven==2.0.7.1
 
 ## asynchronous tasks aka. celery
 django-celery==3.0.23
-# git+git://github.com/blaze33/celery-redis-unixsocket.git@a43a0839dc#egg=celery-redis-unixsocket
+git+git://github.com/blaze33/celery-redis-unixsocket.git@a43a0839dc#egg=celery-redis-unixsocket
 
 ## utils
 requests==1.1.0
