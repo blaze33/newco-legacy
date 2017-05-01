@@ -66,7 +66,7 @@ git+git://github.com/blaze33/honcho.git@321ebbe0c1#egg=honcho
 ## production webserver
 gunicorn==19.7.1
 gevent==1.2.1
-greenlet==0.4.0
+greenlet==0.4.12
 
 ## Database backends
 ## PostgreSQL adapter for Python

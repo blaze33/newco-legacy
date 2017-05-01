@@ -1,11 +1,10 @@
-django: newrelic-admin run-program django-admin.py run_gunicorn
+django: newrelic-admin run-program gunicorn newco.wsgi
         -c gunicorn.conf.py
         -b 0.0.0.0:$PORT
         -k gevent
         -w $GUNICORN_WORKERS
         --max-requests $GUNICORN_MAX_REQUESTS
         --preload
-        --settings=$DJANGO_SETTINGS_MODULE
 broker: redis/redis-server redis/redis.conf
 celery: newrelic-admin run-program django-admin.py celeryd
         start $CELERY_WORKERS
