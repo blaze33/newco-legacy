@@ -3,12 +3,13 @@
 NewCo was a startup project I worked on between 2012 and 2103.  
 The goal was to provide a place where consumers would share informations about the products they used and loved.
 
-While the technical aspects of building a website did materialize, and open-sourced,
-the financial aspects never did leading me to work on new projects you can follow on [openbloc.fr](http://openbloc.fr)
+While the technical aspects of building a website did materialize, the financial aspects never did. I've since worked on other projects that you can follow on [openbloc.fr](http://openbloc.fr)
 
 [The site is still online](http://newco-prod.herokuapp.com/) as a testimony of what was tried to make an impact at that time.
 It's part of my portfolio and it could maybe be reused (don't do this, the tech is too old ;) )
 or serve to inspire other projects.
+
+The development was mostly done by [AGASS007](https://github.com/AGASS007) and me ([blaze33](https://github.com/blaze33)).
 
 # Advice to future entrepreneurs
 
@@ -26,10 +27,10 @@ Have fun !
 
 # Deploy your own fork
 
-Nothing's nicer than working code you can actually play with. This app has been designed to be easily hosted on heroku and some updates have been made to let it run on the cedar-14, the cedar-10 we used back in 2013 being deprecated. As such I followed the [Twelve-Factor App](https://12factor.net/) guidelines.
-You will need a postgresql database [with hstore installed](http://stackoverflow.com/a/11584751/343834), `redis-server` needs to be installed too.
+Nothing's nicer than working code you can actually play with. The stack is old, Django 1.4 was all the rage in 2013. This app has been designed to be easily hosted on heroku and as such I followed the [Twelve-Factor App](https://12factor.net/) guidelines.
 
-Request for comments on the run / deploy part, your feedback is welcome → [issue 1](https://github.com/blaze33/newco-legacy/issues/1)
+Some recent updates have been made to let it run on the cedar-14 stack, the cedar-10 we used back in 2013 being deprecated. 
+You will need a postgresql database [with hstore installed](http://stackoverflow.com/a/11584751/343834), `redis-server` needs to be installed too.
 
 ```
 git clone git@github.com:blaze33/newco-legacy.git
@@ -39,20 +40,16 @@ export DATABASE_URL=postgres://user:pass@localhost:5432/newco
 foreman start
 ```
 
+Request for comments on the above run / deploy part: your feedback is welcome in [issue 1](https://github.com/blaze33/newco-legacy/issues/1)
+
 The heroku add-ons used in production are the following ones:
 
     Heroku Postgres Dev
-
     Logentries TryIt
-
     MemCachier Developer
-
     New Relic APM Wayne
-
     Redis To Go Nano
-
     SendGrid Starter
-
     Sentry Developer
 
 The app is mainly configured by environment variables, the main ones being `DJANGO_SETTINGS_MODULE=newco.settings.{production,dev}` and `DATABASE_URL`.  
