@@ -184,7 +184,7 @@ def favicon(url, size=16, quote_type="double"):
         {% favicon myurl 62 %}
     """
     template = "favicon.html"
-    icon_url = "https://getfavicon.appspot.com/%s" % url
+    icon_url = "https://plus.google.com/_/favicon?domain_url=%s" % url
     context = {"icon_url": icon_url, "size": size}
     favicon = render_to_string(template, context)
     if quote_type == "single":

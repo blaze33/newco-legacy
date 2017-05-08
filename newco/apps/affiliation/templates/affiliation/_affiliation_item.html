@@ -44,8 +44,8 @@
 {% elif display == "dropdown" %}
   <li class="click-to-product-drop" data-name="{{ item.name }}" data-store="{{ prod.store.name }}" data-ean ="{{ prod.ean }}">
     <a href="{{ prod.url }}" target="_blank" id="{{ prod.ean }}-drop">
-      {% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}
       <span class="pull-right">{% price prod.price prod.currency LANGUAGE_CODE %}</span>
+      {% favicon prod.store.url 16 %}&nbsp;{{ prod.store }}
     </a>
   </li>
 {% elif display == "select" %}
