@@ -1,7 +1,6 @@
 {% extends "theme_bootstrap/base.html" %}
 
 {% load url from future %}
-{% load metron_tags %}
 {% load i18n %}
 {% load staticfiles %}
 {% load account_tags %}
@@ -100,8 +99,6 @@
   {% if launch_tutorial %}
     <script>$.launchJoyride();</script>
   {% endif %}
-
-  {% analytics %}
 
   {% block extra_body %}{% endblock %}
 

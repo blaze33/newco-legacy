@@ -201,7 +201,6 @@ INSTALLED_APPS = [
     "timezones",
     "pagination",
     "idios",
-    "metron",
     "django_extensions",
 
     # async task
