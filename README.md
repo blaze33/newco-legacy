@@ -1,6 +1,6 @@
 # NewCo Legacy
 
-NewCo was a startup project I worked on between 2012 and 2103.  
+NewCo was a startup project I worked on between 2012 and 2013.  
 The goal was to provide a place where consumers would share informations about the products they used and loved.
 
 While the technical aspects of building a website did materialize, the financial aspects never did. I've since worked on other projects that you can follow on [openbloc.fr](http://openbloc.fr)
