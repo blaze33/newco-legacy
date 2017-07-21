@@ -36,7 +36,7 @@ STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False  # Don't include auth in every url
