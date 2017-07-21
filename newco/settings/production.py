@@ -60,7 +60,7 @@ if HEROKU_DATABASES:
 ########## Django compressor settings
 AWS_IS_GZIPPED = True
 # STATICFILES_STORAGE = 'newco.storage.CachedS3BotoStorage'
-COMPRESS_URL = STATIC_URL
+COMPRESS_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 COMPRESS_STORAGE = STATICFILES_STORAGE
 # COMPRESS_VERBOSE = True
 # COMPRESS_ENABLED = True
