@@ -22,10 +22,8 @@
 {% endblock %}
 
 {% block extra_head_base %}
-    {% compress js %}
     <script src="{% static 'js/ga.js' %}"></script>
     {% block extra_head_script %}{% endblock%}
-    {% endcompress %}
 {% endblock %}
 
 {% block navbar_class %}navbar-fixed-top navbar-inverse{% endblock %}
